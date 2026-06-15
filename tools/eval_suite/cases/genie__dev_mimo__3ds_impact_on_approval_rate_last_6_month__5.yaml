@@ -1,0 +1,35 @@
+id: genie__dev_mimo__3ds_impact_on_approval_rate_last_6_month__5
+question: 3DS impact on approval rate, last 6 months
+source: genie_benchmark:01f15e792ce1140bbf6af2f8f7c6b54c
+asof: '2026-06-08'
+ground_truth_sql: "SELECT\n    CASE WHEN ThreeDsResponseType IS NULL THEN 'No 3DS'\
+  \ ELSE '3DS' END                    AS three_ds_used,\n    COUNT(*)            \
+  \                                                                  AS attempts,\n\
+  \    SUM(CASE WHEN PaymentStatus IN ('Approved','Confirmed','Settled') THEN 1.0\
+  \ END)\n      / NULLIF(COUNT(*), 0)                                            \
+  \                   AS approval_rate\nFROM main.etoro_kpi.mimo_tp_deposits_v\nWHERE\
+  \ TransactionDate >= ADD_MONTHS(CURRENT_DATE(), -6)\n  AND CardType IS NOT NULL\n\
+  GROUP BY 1\nORDER BY three_ds_used;"
+expected_value:
+  type: tabular
+  value:
+  - - 3DS
+    - 1843575
+    - 0.7152169019432353
+  columns:
+  - three_ds_used
+  - attempts
+  - approval_rate
+  tolerance_pct: 0.5
+expected_skill_hub: _none_
+skill_coverage_status: missing
+canonical_tables:
+- main.etoro_kpi.mimo_tp_deposits_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'DEV - MIMO' (01f15e792ce1140bbf6af2f8f7c6b54c) benchmark
+  question.
+tags:
+- genie_benchmark
+- dev_mimo
+max_replicas: 3

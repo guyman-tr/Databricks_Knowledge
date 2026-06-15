@@ -1,0 +1,406 @@
+﻿Wiki: knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_Revenue_StakingFee.md
+Object: Function_Revenue_StakingFee
+Trivial rows: 50
+
+--- #4 StakingMonth (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.StakingMonth  TRIVIAL
+       Direct
+    -> Dealing_Staking_Results.StakingMonth  HAS_SEMANTIC
+       Month name (JanuaryΓאףDecember). (Tier 2)
+  new: Month name (JanuaryΓאףDecember). (Tier 2) (via Dealing_Staking_Results)
+
+--- #5 StakingYear (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.StakingYear  TRIVIAL
+       Direct
+    -> Dealing_Staking_Results.StakingYear  HAS_SEMANTIC
+       Calendar year. (Tier 2)
+  new: Calendar year. (Tier 2) (via Dealing_Staking_Results)
+
+--- #6 InstrumentID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.InstrumentID  TRIVIAL
+       Direct
+    -> Dealing_Staking_Results.InstrumentID  HAS_SEMANTIC
+       Crypto instrument. (Tier 2)
+  new: Crypto instrument. (Tier 2) (via Dealing_Staking_Results)
+
+--- #7 Instrument (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.Instrument  TRIVIAL
+       Direct
+    -> Dim_Instrument.Name  HAS_SEMANTIC
+       Display name computed by Trade.GetInstrument as BuyCurrency Abbreviation + '/' + SellCurrency Abbreviation (e.g., EUR/USD for forex, AAPL...
+  new: Display name computed by Trade.GetInstrument as BuyCurrency Abbreviation + '/' + SellCurrency Abbreviation (e.g., EUR/USD for forex, AAPL/USD for stocks). Not a company name; see InstrumentDisplayName for human-readab...
+
+--- #8 CID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.CID  TRIVIAL
+       Direct
+    -> Dealing_Staking_Results.CID  HAS_SEMANTIC
+       Client account ID. (Tier 2)
+  new: Client account ID. (Tier 2) (via Dealing_Staking_Results)
+
+--- #9 IsEligible (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.IsEligible  TRIVIAL
+       Direct
+    -> Dealing_Staking_Results.IsEligible  HAS_SEMANTIC
+       1 = meets all eligibility criteria. (Tier 2 Γאפ ETL-computed)
+  new: 1 = meets all eligibility criteria. (Tier 2 Γאפ ETL-computed) (via Dealing_Staking_Results)
+
+--- #10 NonEligible_PrimaryReason (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.NonEligible_PrimaryReason  TRIVIAL
+       Direct
+    -> Dealing_Staking_Results.NonEligible_PrimaryReason  HAS_SEMANTIC
+       First failing eligibility check when IsEligible=0. NULL when eligible. (Tier 2 Γאפ ETL-computed)
+  new: First failing eligibility check when IsEligible=0. NULL when eligible. (Tier 2 Γאפ ETL-computed) (via Dealing_Staking_Results)
+
+--- #19 ActualCompensationType (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.ActualCompensationType  TRIVIAL
+       Direct
+    -> Dealing_Staking_Results.ActualCompensationType  HAS_SEMANTIC
+       Final delivery method. May differ from OriginalCompensationType if override applied. (Tier 2)
+  new: Final delivery method. May differ from OriginalCompensationType if override applied. (Tier 2) (via Dealing_Staking_Results)
+
+--- #20 ClubCategory (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.ClubCategory  TRIVIAL
+       Direct
+    -> Dealing_Staking_Results.ClubCategory  HAS_SEMANTIC
+       Client's Club tier (Silver/Gold/Platinum/Diamond & Platinum Plus). Based on Γיñ40 USD holdings threshold. (Tier 2 Γאפ join-enriched from Deal...
+  new: Client's Club tier (Silver/Gold/Platinum/Diamond & Platinum Plus). Based on Γיñ40 USD holdings threshold. (Tier 2 Γאפ join-enriched from Dealing_Staking_Club) (via Dealing_Staking_Results)
+
+--- #21 GCID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.GCID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.GCID  HAS_TRANSFORMATION
+       Global Customer ID Γאפ the cross-platform identifier linking RealCID to demo and external systems. Source: Ext_FSC_Real_Customer_Customer (...
+  new: Global Customer ID Γאפ the cross-platform identifier linking RealCID to demo and external systems. Source: Ext_FSC_Real_Customer_Customer (primary), Ext_Dim_Customer_CustomerIdentification_DLT (fallback). (Tier 2 - SP_F...
+
+--- #22 CountryID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.CountryID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.CountryID  HAS_TRANSFORMATION
+       Customer's registered country. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.CountryID (CC). FK to Dim_Country. Key filter for valid ...
+  new: Customer's registered country. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.CountryID (CC). FK to Dim_Country. Key filter for valid customer segmentation (CountryID=250 excluded). (Tier 2 - SP_Fact_SnapshotCustom...
+
+--- #23 LabelID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.LabelID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.LabelID  HAS_TRANSFORMATION
+       Brand/label associated with the customer (e.g., eToro UK, eToro Australia). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.LabelID (CC...
+  new: Brand/label associated with the customer (e.g., eToro UK, eToro Australia). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.LabelID (CC). FK to Dim_Label. Labels 26 and 30 excluded from valid customer segment. (Tier...
+
+--- #24 LanguageID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.LanguageID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.LanguageID  HAS_TRANSFORMATION
+       Customer's preferred interface language. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.LanguageID (CC). FK to Dim_Language. (Tier 2 -...
+  new: Customer's preferred interface language. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.LanguageID (CC). FK to Dim_Language. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #25 VerificationLevelID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.VerificationLevelID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.VerificationLevelID  HAS_TRANSFORMATION
+       KYC (Know Your Customer) verification level. DEFAULT -1. Source: Ext_FSC_BackOffice_Customer.VerificationLevelID (BO). FK to Dim_Verifica...
+  new: KYC (Know Your Customer) verification level. DEFAULT -1. Source: Ext_FSC_BackOffice_Customer.VerificationLevelID (BO). FK to Dim_VerificationLevel. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #26 DocsOK (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.DocsOK  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.DocsOK  HAS_TRANSFORMATION
+       [UNVERIFIED] Legacy: documents verified flag (1=OK). NOT populated by current SP. DEFAULT 0. (Tier 4 - inferred from DDL)
+  new: [UNVERIFIED] Legacy: documents verified flag (1=OK). NOT populated by current SP. DEFAULT 0. (Tier 4 - inferred from DDL) (via Fact_SnapshotCustomer)
+
+--- #27 PlayerStatusID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.PlayerStatusID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.PlayerStatusID  HAS_TRANSFORMATION
+       Customer lifecycle status (e.g., Active, Blocked, Pending). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.PlayerStatusID (CC). FK to ...
+  new: Customer lifecycle status (e.g., Active, Blocked, Pending). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.PlayerStatusID (CC). FK to Dim_PlayerStatus. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #28 Bankruptcy (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.Bankruptcy  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.Bankruptcy  HAS_TRANSFORMATION
+       [UNVERIFIED] Legacy: bankruptcy flag. NOT populated by current SP. DEFAULT 0. (Tier 4 - inferred from DDL)
+  new: [UNVERIFIED] Legacy: bankruptcy flag. NOT populated by current SP. DEFAULT 0. (Tier 4 - inferred from DDL) (via Fact_SnapshotCustomer)
+
+--- #29 RiskStatusID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.RiskStatusID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.RiskStatusID  HAS_TRANSFORMATION
+       Customer risk assessment status. DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.RiskStatusID (BO). FK to Dim_RiskStatus. (Tier 2 - SP_Fac...
+  new: Customer risk assessment status. DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.RiskStatusID (BO). FK to Dim_RiskStatus. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #30 RiskClassificationID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.RiskClassificationID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.RiskClassificationID  HAS_TRANSFORMATION
+       Risk classification tier for compliance. DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.RiskClassificationID (BO). FK to Dim_RiskClassifi...
+  new: Risk classification tier for compliance. DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.RiskClassificationID (BO). FK to Dim_RiskClassification. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #31 CommunicationLanguageID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.CommunicationLanguageID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.CommunicationLanguageID  HAS_TRANSFORMATION
+       Preferred communication language (may differ from interface language). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.CommunicationLan...
+  new: Preferred communication language (may differ from interface language). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.CommunicationLanguageID (CC). FK to Dim_Language. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_...
+
+--- #32 PremiumAccount (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.PremiumAccount  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.PremiumAccount  HAS_TRANSFORMATION
+       [UNVERIFIED] Legacy: premium account flag. NOT populated by current SP. DEFAULT 0. (Tier 4 - inferred from DDL)
+  new: [UNVERIFIED] Legacy: premium account flag. NOT populated by current SP. DEFAULT 0. (Tier 4 - inferred from DDL) (via Fact_SnapshotCustomer)
+
+--- #33 Evangelist (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.Evangelist  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.Evangelist  HAS_TRANSFORMATION
+       [UNVERIFIED] Legacy: evangelist/ambassador status flag. NOT populated by current SP. DEFAULT 0. (Tier 4 - inferred from DDL)
+  new: [UNVERIFIED] Legacy: evangelist/ambassador status flag. NOT populated by current SP. DEFAULT 0. (Tier 4 - inferred from DDL) (via Fact_SnapshotCustomer)
+
+--- #34 GuruStatusID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.GuruStatusID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.GuruStatusID  HAS_TRANSFORMATION
+       Popular Investor (Guru) program status. DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.GuruStatusID (BO). FK to Dim_GuruStatus. (Tier 2 -...
+  new: Popular Investor (Guru) program status. DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.GuruStatusID (BO). FK to Dim_GuruStatus. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #35 RegulationID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.RegulationID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.RegulationID  HAS_TRANSFORMATION
+       Customer's assigned regulatory jurisdiction. DEFAULT 0. Sourced from Ext_FSC_BackOffice_RegulationChangeLog.ToRegulationID Γאפ end-of-day c...
+  new: Customer's assigned regulatory jurisdiction. DEFAULT 0. Sourced from Ext_FSC_BackOffice_RegulationChangeLog.ToRegulationID Γאפ end-of-day change. See ┬º2.4. FK to Dim_Regulation. (Tier 2 - SP_Fact_SnapshotCustomer) (via ...
+
+--- #36 AccountStatusID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.AccountStatusID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.AccountStatusID  HAS_TRANSFORMATION
+       Account enabled/suspended status. DEFAULT 0. Distribution: 1=93.2% (Active), 0=6.1%, 2=0.9% (Inactive). Source: Ext_FSC_Real_Customer_Cus...
+  new: Account enabled/suspended status. DEFAULT 0. Distribution: 1=93.2% (Active), 0=6.1%, 2=0.9% (Inactive). Source: Ext_FSC_Real_Customer_Customer.AccountStatusID (CC). FK to Dim_AccountStatus. (Tier 2 - SP_Fact_SnapshotC...
+
+--- #37 AccountManagerID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.AccountManagerID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.AccountManagerID  HAS_TRANSFORMATION
+       Assigned account manager (sales/retention). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.AccountManagerID (BO). FK to Dim_Manager. (Tie...
+  new: Assigned account manager (sales/retention). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.AccountManagerID (BO). FK to Dim_Manager. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #38 PlayerLevelID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.PlayerLevelID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.PlayerLevelID  HAS_TRANSFORMATION
+       Account tier: 4=demo, other values=real tiers. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.PlayerLevelID (CC). FK to Dim_PlayerLeve...
+  new: Account tier: 4=demo, other values=real tiers. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.PlayerLevelID (CC). FK to Dim_PlayerLevel. Critical for IsValidCustomer (PlayerLevelID=4 excluded). (Tier 2 - SP_Fact_Sn...
+
+--- #39 AccountTypeID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.AccountTypeID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.AccountTypeID  HAS_TRANSFORMATION
+       Account type (e.g., 7=Employee, 9=excluded type, 2=real account). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.AccountTypeID (BO). FK t...
+  new: Account type (e.g., 7=Employee, 9=excluded type, 2=real account). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.AccountTypeID (BO). FK to Dim_AccountType. Used in IsCreditReportValidCB logic. (Tier 2 - SP_Fact_Snapsh...
+
+--- #40 DateRangeID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.DateRangeID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.DateRangeID  HAS_TRANSFORMATION
+       SCD2 range key: 12-digit bigint = YYYYMMDD (row open date) + MMDDD (year-end MMDD, typically 1231). E.g., 202603101231 = open 2026-03-10,...
+  new: SCD2 range key: 12-digit bigint = YYYYMMDD (row open date) + MMDDD (year-end MMDD, typically 1231). E.g., 202603101231 = open 2026-03-10, closes 2026-12-31. Join to Dim_Range for FromDateID + ToDateID. See ┬º2.1. (Tier...
+
+--- #41 IsDepositor (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.IsDepositor  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.IsDepositor  HAS_TRANSFORMATION
+       1 if the customer has made at least one real-money deposit (FTD detected). Set when CID appears in Ext_FSC_Customer_FirstTimeDeposits. Ne...
+  new: 1 if the customer has made at least one real-money deposit (FTD detected). Set when CID appears in Ext_FSC_Customer_FirstTimeDeposits. Never reverted to 0 once set. DEFAULT 0. (Tier 2 - SP_Fact_SnapshotCustomer) (via ...
+
+--- #42 PendingClosureStatusID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.PendingClosureStatusID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.PendingClosureStatusID  HAS_TRANSFORMATION
+       Status of a pending account closure request. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.PendingClosureStatusID (CC). FK to Dim_Pen...
+  new: Status of a pending account closure request. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.PendingClosureStatusID (CC). FK to Dim_PendingClosureStatus. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #43 DocumentStatusID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.DocumentStatusID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.DocumentStatusID  HAS_TRANSFORMATION
+       KYC document review status. DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.DocumentStatusID (BO). FK to Dim_DocumentStatus. (Tier 2 - SP_...
+  new: KYC document review status. DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.DocumentStatusID (BO). FK to Dim_DocumentStatus. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #44 SuitabilityTestStatusID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.SuitabilityTestStatusID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.SuitabilityTestStatusID  HAS_TRANSFORMATION
+       MiFID suitability test completion status. DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.SuitabilityTestStatusID (BO). (Tier 2 - SP_Fact_...
+  new: MiFID suitability test completion status. DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.SuitabilityTestStatusID (BO). (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #45 MifidCategorizationID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.MifidCategorizationID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.MifidCategorizationID  HAS_TRANSFORMATION
+       MiFID II client categorization (Retail/Professional/Eligible Counterparty). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.MifidCategoriz...
+  new: MiFID II client categorization (Retail/Professional/Eligible Counterparty). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.MifidCategorizationID (BO). FK to Dim_MifidCategorization. (Tier 2 - SP_Fact_SnapshotCustomer)...
+
+--- #46 IsEmailVerified (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.IsEmailVerified  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.IsEmailVerified  HAS_TRANSFORMATION
+       1 if the customer has verified their email address. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.IsEmailVerified (CC). (Tier 2 - SP_...
+  new: 1 if the customer has verified their email address. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.IsEmailVerified (CC). (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #47 IsValidCustomer (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.IsValidCustomer  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.IsValidCustomer  HAS_TRANSFORMATION
+       1 if the customer is a valid retail customer for analytics purposes. ETL-computed from PlayerLevelID, LabelID, CountryID. See ┬º2.2. Appro...
+  new: 1 if the customer is a valid retail customer for analytics purposes. ETL-computed from PlayerLevelID, LabelID, CountryID. See ┬º2.2. Approx 98% of current rows = 1. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_Snapsho...
+
+--- #48 DesignatedRegulationID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.DesignatedRegulationID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.DesignatedRegulationID  HAS_TRANSFORMATION
+       Secondary/designated regulatory jurisdiction (separate from primary RegulationID). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.Designa...
+  new: Secondary/designated regulatory jurisdiction (separate from primary RegulationID). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.DesignatedRegulationID (BO). FK to Dim_Regulation. (Tier 2 - SP_Fact_SnapshotCustomer) ...
+
+--- #49 EvMatchStatus (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.EvMatchStatus  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.EvMatchStatus  HAS_TRANSFORMATION
+       eVerify (identity verification) match status. DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.EvMatchStatus (BO). FK to Dim_EvMatchStatus....
+  new: eVerify (identity verification) match status. DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.EvMatchStatus (BO). FK to Dim_EvMatchStatus. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #50 RegionID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.RegionID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.RegionID  HAS_TRANSFORMATION
+       Customer's geographic region (sub-country grouping). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.RegionID (CC). (Tier 2 - SP_Fact_S...
+  new: Customer's geographic region (sub-country grouping). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.RegionID (CC). (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #51 PlayerStatusReasonID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.PlayerStatusReasonID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.PlayerStatusReasonID  HAS_TRANSFORMATION
+       Reason code for the current PlayerStatusID (e.g., why account was blocked). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.PlayerStatu...
+  new: Reason code for the current PlayerStatusID (e.g., why account was blocked). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.PlayerStatusReasonID (CC). FK to Dim_PlayerStatusReasons. (Tier 2 - SP_Fact_SnapshotCustome...
+
+--- #52 IsCreditReportValidCB (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.IsCreditReportValidCB  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.IsCreditReportValidCB  HAS_TRANSFORMATION
+       1 if customer is eligible for CreditBureau credit report validation. ETL-computed. See ┬º2.3. (Tier 2 - SP_Fact_SnapshotCustomer)
+  new: 1 if customer is eligible for CreditBureau credit report validation. ETL-computed. See ┬º2.3. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #53 AffiliateID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.AffiliateID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.AffiliateID  HAS_TRANSFORMATION
+       Affiliate/partner who referred this customer. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.AffiliateID (CC). (Tier 2 - SP_Fact_Snaps...
+  new: Affiliate/partner who referred this customer. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.AffiliateID (CC). (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #54 Email (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.Email  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.Email  HAS_SEMANTIC
+       Customer email address (nvarchar(50), nullable). No DDL-level dynamic data masking is defined on this column. GDPR erasure handled in ETL...
+  new: Customer email address (nvarchar(50), nullable). No DDL-level dynamic data masking is defined on this column. GDPR erasure handled in ETL. Source: Ext_FSC_Real_Customer_Customer.Email (CC). (via Fact_SnapshotCustomer)
+
+--- #55 City (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.City  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.City  HAS_SEMANTIC
+       Customer city (nvarchar(50), nullable). No DDL-level dynamic data masking is defined on this column. GDPR erasure handled in ETL. Source:...
+  new: Customer city (nvarchar(50), nullable). No DDL-level dynamic data masking is defined on this column. GDPR erasure handled in ETL. Source: Ext_FSC_Real_Customer_Customer.City (CC). (via Fact_SnapshotCustomer)
+
+--- #56 Address (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.Address  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.Address  HAS_TRANSFORMATION
+       Customer street address. PII: dynamically masked. GDPR erasure supported. Source: Ext_FSC_Real_Customer_Customer.Address (CC). (Tier 2 - ...
+  new: Customer street address. PII: dynamically masked. GDPR erasure supported. Source: Ext_FSC_Real_Customer_Customer.Address (CC). (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #57 Zip (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.Zip  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.Zip  HAS_TRANSFORMATION
+       Customer postal code. PII: dynamically masked. GDPR erasure supported. Source: Ext_FSC_Real_Customer_Customer.Zip (CC). (Tier 2 - SP_Fact...
+  new: Customer postal code. PII: dynamically masked. GDPR erasure supported. Source: Ext_FSC_Real_Customer_Customer.Zip (CC). (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #58 PhoneNumber (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.PhoneNumber  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.PhoneNumber  HAS_TRANSFORMATION
+       Customer phone number. PII: not DDL-masked but GDPR-erased to 'DelPhoneNumber_XXXXXXX' for deleted users. Source: Ext_FSC_PhoneCustomer.P...
+  new: Customer phone number. PII: not DDL-masked but GDPR-erased to 'DelPhoneNumber_XXXXXXX' for deleted users. Source: Ext_FSC_PhoneCustomer.PhoneNumber. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #59 IsPhoneVerified (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.IsPhoneVerified  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.IsPhoneVerified  HAS_TRANSFORMATION
+       1 if the customer's phone number has been verified (PhoneVerifiedID IN (1,2) in source). Source: Ext_FSC_PhoneCustomer. (Tier 2 - SP_Fact...
+  new: 1 if the customer's phone number has been verified (PhoneVerifiedID IN (1,2) in source). Source: Ext_FSC_PhoneCustomer. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #60 PhoneVerificationDateID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.PhoneVerificationDateID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.PhoneVerificationDateID  HAS_TRANSFORMATION
+       Date the phone was verified, as YYYYMMDD string. Rows where PhoneVerificationDateID='19000101' are excluded from source. Source: Ext_FSC_...
+  new: Date the phone was verified, as YYYYMMDD string. Rows where PhoneVerificationDateID='19000101' are excluded from source. Source: Ext_FSC_PhoneCustomer. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer)
+
+--- #61 PlayerStatusSubReasonID (FOUND, 2 hops) ---
+  was: Direct
+    -> Function_Revenue_StakingFee.PlayerStatusSubReasonID  TRIVIAL
+       Direct
+    -> Fact_SnapshotCustomer.PlayerStatusSubReasonID  HAS_TRANSFORMATION
+       Sub-reason code for PlayerStatus (more granular than PlayerStatusReasonID). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.PlayerStatu...
+  new: Sub-reason code for PlayerStatus (more granular than PlayerStatusReasonID). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.PlayerStatusSubReasonID (CC). FK to Dim_PlayerStatusSubReasons. (Tier 2 - SP_Fact_SnapshotC...
+
+======================================================================
+Summary: 50 FOUND / 0 EXHAUSTED  (50 total)

@@ -1,0 +1,27 @@
+id: tableau__5eea8fea__us_msb_regulatory_reports_revenue__0
+question: Open the 'US MSB Regulatory Reports (+Revenue)' dashboard. What does the
+  headline figure (row 1 of the primary view) for 2026-06-08 show?
+source: tableau:5eea8fea-d486-4fb5-b834-b44e04aebbdd
+asof: '2026-06-08'
+ground_truth_sql: 'SELECT COUNT(*) AS row_count
+
+  FROM main.dwh.dim_position
+
+  -- workbook: US MSB Regulatory Reports (+Revenue) (luid 5eea8fea-d486-4fb5-b834-b44e04aebbdd)
+  views=1038'
+expected_value:
+  type: numeric
+  value: 2842943651
+  tolerance_pct: 1.0
+expected_skill_hub: _uc_object_map
+skill_coverage_status: covered
+canonical_tables:
+- main.dwh.dim_position
+anti_sources: []
+expected_filters: []
+notes: Auto-generated Tableau probe. Rewrite the SQL to match the specific KPI the
+  dashboard renders before pinning. Workbook total_views=1038.
+tags:
+- tableau
+- views_1038
+max_replicas: 3

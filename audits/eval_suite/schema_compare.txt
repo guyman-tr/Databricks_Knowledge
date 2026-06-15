@@ -1,0 +1,62 @@
+﻿=== Synapse: BI_DB_DDR_Fact_Revenue_Generating_Actions columns ===
+  DateID                       int            max_len=4 prec=10 scale=0 null=True
+  Date                         date           max_len=3 prec=10 scale=0 null=True
+  RealCID                      int            max_len=4 prec=10 scale=0 null=True
+  ActionTypeID                 int            max_len=4 prec=10 scale=0 null=True
+  ActionType                   varchar        max_len=50 prec=0 scale=0 null=True
+  InstrumentTypeID             int            max_len=4 prec=10 scale=0 null=True
+  IsSettled                    int            max_len=4 prec=10 scale=0 null=True
+  IsCopy                       int            max_len=4 prec=10 scale=0 null=True
+  Metric                       varchar        max_len=50 prec=0 scale=0 null=True
+  Amount                       decimal        max_len=9 prec=16 scale=6 null=True
+  CountTransactions            int            max_len=4 prec=10 scale=0 null=True
+  IncludedInTotalRevenue       int            max_len=4 prec=10 scale=0 null=True
+  CountAsActiveTrade           int            max_len=4 prec=10 scale=0 null=True
+  UpdateDate                   datetime       max_len=8 prec=23 scale=3 null=True
+  IsBuy                        int            max_len=4 prec=10 scale=0 null=True
+  IsLeveraged                  int            max_len=4 prec=10 scale=0 null=True
+  IsFuture                     int            max_len=4 prec=10 scale=0 null=True
+  IsCopyFund                   int            max_len=4 prec=10 scale=0 null=True
+  IsOpenedFromIBAN             int            max_len=4 prec=10 scale=0 null=True
+  IsClosedToIBAN               int            max_len=4 prec=10 scale=0 null=True
+  IsRecurring                  int            max_len=4 prec=10 scale=0 null=True
+  IsAirDrop                    int            max_len=4 prec=10 scale=0 null=True
+  IsSQF                        int            max_len=4 prec=10 scale=0 null=True
+  RevenueMetricID              int            max_len=4 prec=10 scale=0 null=True
+  RevenueMetricCategoryID      int            max_len=4 prec=10 scale=0 null=True
+  IsMarginTrade                int            max_len=4 prec=10 scale=0 null=True
+  IsC2P                        int            max_len=4 prec=10 scale=0 null=True
+
+=== UC: gold fact columns ===
+  DateID                       int
+  Date                         timestamp
+  RealCID                      int
+  ActionTypeID                 int
+  ActionType                   string
+  InstrumentTypeID             int
+  IsSettled                    int
+  IsCopy                       int
+  Metric                       string
+  Amount                       decimal(16,6)
+  CountTransactions            int
+  IncludedInTotalRevenue       int
+  CountAsActiveTrade           int
+  UpdateDate                   timestamp
+  IsBuy                        int
+  IsLeveraged                  int
+  IsFuture                     int
+  IsCopyFund                   int
+  IsOpenedFromIBAN             int
+  IsClosedToIBAN               int
+  IsRecurring                  int
+  IsAirDrop                    int
+  IsSQF                        int
+  RevenueMetricID              int
+  RevenueMetricCategoryID      int
+  IsMarginTrade                int
+  IsC2P                        int
+
+=== Column name match (case-insensitive) ===
+  shared: 27
+  syn_only: []
+  uc_only:  []

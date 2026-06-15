@@ -1,0 +1,14 @@
+rank,error_code,short_description,count,migration_class,notes
+1,213,Column count or value count mismatch on INSERT,727,SCHEMA_DRIFT,Source schema changed but target unchanged - common with parquet loaders
+2,404,External location HTTP 404 Not Found,482,EMPTY_LANDING,Loader runs before lake file lands - timing race
+3,208,Invalid object name #Affconv (temp table),308,SESSION_STATE,Temp table missing - usually session reuse / re-entry issue
+4,105219,Empty Parquet location (0 byte files),301,EMPTY_LANDING,Same race as 404 - landing zone empty when loader runs
+5,8114,Error converting varchar to float,215,DATA_TYPE_DIRT,Dirty data in source - cell content does not match declared type
+6,104361,Invalid WITH options for command,180,DDL_TEMPLATE_DRIFT,SQL template mismatch
+7,2714,Object already exists (LP_GS_SRPB_*_PositionValuationSummary etc),389+,DUPLICATE_LOADER,Loader retries that did not clean up - LP_* prefixes are LP recon stage tables
+8,3701,Cannot drop object (LP_HiddenRoad_balances_tmp etc),105+,IDEMPOTENCY,DROP/CREATE race against parallel loader
+9,105221,Parquet schema discovery failed (corrupted parquet),105+,DATA_QUALITY,Bad source files
+10,(cancellation),Query Cancelled (ActionCancelledException),58,USER_CANCEL,Manual cancels - probably aborted ad-hoc queries
+11,16535,File does not exist (Bronze/Assignment/*),5+,EMPTY_LANDING,Same family as 404 / 105219
+12,104162,OBJECT_DEFINITION not recognized,6,OBSERVABILITY_QUERY,Diagnostic query from an external tool
+13,111214,Transaction has failed - no corresponding transaction found,12,DDL_IN_TX,Synapse Dedicated forbids DDL in transactions

@@ -79,10 +79,14 @@ If any check fails, stop and report.
 
 Skip this entire phase if the user supplied a ticket key matching `^[A-Z]{2,5}-\d+$` in their prompt.
 
-**Default behaviour: silently create a new DA story** via the `jira-da` skill — no AskQuestion. The user has explicitly opted out of the ticket-resolution dialog (May 2026 default change). Override paths:
+> **HARD RULE — NO Q&A IN PHASE 0.5.**
+> Never AskQuestion the user about the ticket, the parent Epic, the summary, the description, or the type. Build all four internally from the defaults below and call `createJiraIssue` directly. Do NOT show the user the list of their open epics. Do NOT "preview & confirm". Do NOT mention DA-2 vs DA-68 vs DA-32 — the answer is always DA-2 for `/skills-push`. The only valid divergence is if the user explicitly named a different Epic key in their prompt (e.g. "under DA-99"); in that case use the one they named. Otherwise: silent autopilot, end to end.
+
+**Default behaviour: silently create a new DA story** via the `jira-da` skill — no AskQuestion. The user has explicitly opted out of the ticket-resolution dialog (May 2026 default change, reinforced June 2026). Override paths:
 
 - User pasted ticket key in prompt → skip this phase entirely (covered by the guard above).
 - User explicitly says `/skills-push --dry-run` or includes the literal token `dry-run` in the prompt → set `$Ticket = "DD-0000"` and print `DRY-RUN MODE: PR will reference DD-0000 (non-existent ticket). Use this only for workflow validation.` Then continue to Phase 0 step 5.
+- User explicitly named a different Epic key (`^[A-Z]{2,5}-\d+$`) preceded by a phrase like "under", "parent", "in epic", etc. → use that Epic key as the parent instead of DA-2.
 
 ### Default flow: create a new DA story (silently, no confirmation dialog)
 
@@ -119,80 +123,156 @@ Skip this entire phase if the user supplied a ticket key matching `^[A-Z]{2,5}-\
 
 ---
 
-## Phase 1 — Skill-creator CI gate (validate before any git op)
+## Phase 1 — Skill-creator CI gate (delegate to skill-creator + run canonical validators)
 
-Read the canonical `skill-creator/SKILL.md` from the DataPlatform repo to get the current CI checks. For each `<id>` in `$SkillIds`, read `knowledge/skills/<id>/SKILL.md` and verify:
+> **HARD-DEPENDENCY CONTRACT.** This phase has ONE source of truth for what passes: the canonical Python validators that the eToro/DataPlatform `skills-CI` GitHub Actions workflow runs on every PR. Phase 1 does NOT re-implement the rules. It runs the same scripts the DataPlatform CI runs, against the same skills they will see after the dry-mirror, and surfaces the same JSON reports. If you find yourself about to inline a check catalog or a regex into this skill — STOP. Read `skill-creator/SKILL.md` instead, fix the skill content, and re-run the validators.
 
-### Frontmatter checks (parse YAML between `---` fences)
+### Why this is a delegation, not a re-implementation
 
-The post-DD-1747 (May 2026) DataPlatform schema uses `name:` as the identity field — `id:` was removed across all `data-skills/skills/`. **For new / edited skills, the `id:` key MUST be omitted from frontmatter.** The validator silently drops unknown keys (Pydantic `extra="ignore"`), so a stale `id:` does not fail CI — but the DE review team will request its removal in PR review. Legacy skills authored before May 2026 may still carry `id:`; do not regenerate it, and remove it incrementally when you edit the file.
+History: a previous version of this Phase 1 inlined the entire `skill-creator` check catalog into this file as a markdown table (`QUAL-001`..`QUAL-005`, `DOMAIN-001`..`DOMAIN-007`, `AUTHOR-001/2`, `SEC-001`, `HYG-001`). It drifted the moment the canonical schema added `IDENTITY-001`..`IDENTITY-006`, renamed `HYG-001` → `HYGIENE-001..004`, and tightened the sub-skill `name:` rule to "must equal hub directory" (path-style names like `name: domain-exw-wallet/balance-and-aum` were silently accepted by the inlined catalog and silently rejected by the canonical validator). The drift was authority-laundering: the inlined catalog gave the user a green light while the real CI gave them red. **This phase exists to make that impossible.**
 
-The `name:` field value must be kebab-case (`^[a-z0-9][a-z0-9-]*[a-z0-9]$`) and unquoted. The value depends on the file layout — see the three patterns below.
+The canonical truth lives in three places and ONLY these three places:
 
-#### `name:` resolution — three layouts, three rules
+1. **`DataPlatform/databricks/data-skills/skills/skill-creator/SKILL.md`** — the human-readable authoring guide (frontmatter rules, body sections, identity rules, anti-patterns).
+2. **`DataPlatform/databricks/data-skills/scripts/validate_skills.py`** — the Pydantic schema + identity validator (full corpus on every PR — `IDENTITY-001`..`IDENTITY-006`, `SCHEMA`).
+3. **`DataPlatform/databricks/data-skills/scripts/validate_skill_quality.py`** — the quality + hygiene validator (changed-only on PR — `QUAL`, `DOMAIN`, `AUTHOR`, `SEC`, `HYGIENE`).
 
-| Layout | File path | `name:` value | Why |
-|---|---|---|---|
-| **Hub** | `skills/domain-X/SKILL.md` | `domain-X` (the hub folder name) | The validator's `_skill_name()` returns the parent directory when the file stem is `SKILL`. |
-| **Hub sub-skill** | `skills/domain-X/sub-name.md` | `domain-X` (the hub folder name, NOT `sub-name`) | Sub-skill identity is path-derived; the loader indexes the sub-skill under the hub's slug. Plain `.md` files inside a hub folder share the hub's name so Layer-2 retrieval can scope-resolve them. |
-| **Cross-cutting / shared** | `skills/_shared/sub-name.md` | `sub-name` (the file stem) | `_shared/` is a holding folder for cross-cutting policy docs (not a hub). The file behaves like a flat-layout skill that happens to live in a subdirectory, so `name:` equals the file stem. **A common authoring trap is to use a Title Case display name here (e.g. `name: "Valid-Users Filter Contract (cross-cutting)"`) — this is wrong; the DE review will reject it.** |
+Path 2 + 3 are exactly what the GitHub Actions workflow `.github/workflows/skills-ci.yml` runs. Phase 1 invokes them directly — same scripts, same flags, same exit codes — so the local gate is the cloud gate.
 
-If you're authoring a brand-new top-level skill or hub, the file path tells you which row applies. When in doubt: `name:` must be kebab-case, must match the schema regex, and must equal whichever of `parent-folder` or `file-stem` is appropriate for the layout.
+### Step 1 — Confirm the canonical sources are reachable
 
-| Check | Rule |
-|---|---|
-| `name` | required; matches `^[a-z0-9][a-z0-9-]*[a-z0-9]$`, unquoted; resolves per the three-layout table above. |
-| `id` | for new / edited skills, **must be absent**. For legacy files with `id:` still present, accept it during a content edit but flag it in the commit body so the next review pass can strip it. |
-| `version` | integer ≥ 1 |
-| `owner` | non-empty string |
-| `description` | string, ≥ 30 chars, third-person (no `I`, `me`, `you`, `your` in the description body). Noun-phrase starts are allowed (e.g. "Customer population segments...", "Production-OLTP customer truth...") — the third-person test is about absence of first/second-person pronouns, not a forced verb start. |
-| `required_tables` OR `unity_catalog_assets` | list, ≥ 1 entry, every entry matches `^[a-z0-9_]+\.[a-z0-9_]+\.[a-z0-9_]+$` (three-part UC name, all lowercase, underscores allowed). Tombstone (redirect-only) skills may declare `unity_catalog_assets: []` IFF the body's first paragraph starts with `> TOMBSTONE — superseded` (verbatim). |
+```powershell
+$DPRoot      = "C:\Users\guyman\Documents\github\DataPlatform"
+$DPSkills    = "$DPRoot\databricks\data-skills"
+$DPSkillsDir = "$DPSkills\skills"
 
-### Sub-skill `.md` files inside a hub folder
+if (-not (Test-Path "$DPSkills\scripts\validate_skills.py")) {
+    throw "validate_skills.py missing at $DPSkills\scripts — DataPlatform repo not present or not on a branch with the skills-CI scripts."
+}
+if (-not (Test-Path "$DPSkills\scripts\validate_skill_quality.py")) {
+    throw "validate_skill_quality.py missing — same fix."
+}
+if (-not (Test-Path "$DPSkillsDir\skill-creator\SKILL.md")) {
+    throw "skill-creator/SKILL.md missing — DataPlatform repo is not on dev (or on a branch lacking the skill-creator hub)."
+}
+```
 
-If a hub folder (`domain-*`) contains sibling `.md` files alongside `SKILL.md`, each one is validated with the SAME frontmatter rules above. The `name:` field MUST match the hub folder (see "Hub sub-skill" row above), NOT the sub-skill's own filename. Plain markdown files WITHOUT YAML frontmatter are tolerated (they're documentation, not registered skills) but discouraged in new authoring — prefer giving every sub-skill its own frontmatter block so the loader can index it once Layer 2 routing ships.
+### Step 2 — Read `skill-creator/SKILL.md` for context (one read, no duplication)
 
-### Cross-cutting `.md` files under `_shared/`
+Do this with the `Read` tool, NOT with `cat` / `Get-Content`. The point of the read is so the agent can answer "what rule am I about to violate?" before the validator says no — but the answer is always "see `skill-creator/SKILL.md`", never "see this skill's inlined table". If you find yourself summarising rules into this skill's body, stop.
 
-`_shared/` is a holding folder for cross-cutting policy / contract documents that several hubs reference but no single hub owns (e.g. `_shared/valid-users-filter-contract.md` — the omni-filter contract that every per-customer aggregate must follow). The validator's `validate_dir` does NOT pick up files at this path (neither flat-top-level nor a hub `SKILL.md`), so CI will not catch frontmatter mistakes here — author with extra care. Frontmatter rules:
+The single rule worth re-quoting in flight, because it's the most common authoring mistake the inlined catalog used to get wrong:
 
-- `name:` = the file stem (kebab-case), unquoted. **Not** a Title Case display name. **Not** the literal `_shared`.
-- `id:` must be absent.
-- All other fields apply as in the hub rules above (`version`, `owner`, `description`, `required_tables` or `unity_catalog_assets`).
+> **Sub-skills inside a hub folder MUST declare `name: <hub-directory-stem>`, NOT `name: <hub>/<file-stem>` and NOT `name: <file-stem>`.** The on-disk path is the canonical identity; the YAML `name:` line just confirms which hub the sub-skill belongs to. Both validators check this and the schema validator hard-fails on any mismatch.
 
-Cross-references from hub bodies into `_shared/` use a markdown link to the relative path, e.g. `[link-text](../_shared/valid-users-filter-contract.md)`. Hubs that depend on a `_shared/` contract should also inline enough of the contract's content into their own Tier 0 callout so the LLM can apply the contract even when the `_shared/` file misses Pass-1 retrieval.
+Everything else: read `skill-creator/SKILL.md` once at the start of Phase 1 and apply its rules verbatim.
 
-### Body checks (markdown after the second `---`)
+### Step 3 — Pre-flight: ensure validator dependencies are installed
 
-| Check ID | Rule |
-|---|---|
-| QUAL-001 | description ≥ 30 chars (re-check) |
-| QUAL-002 | body not empty |
-| QUAL-003 | file ≤ 500 lines |
-| QUAL-004 | no absolute filesystem paths in the body (`C:\`, `/Users/`, `/home/`, etc.) |
-| QUAL-005 | scope is concrete — `## Scope` section names tables and metrics, not vague phrases like "all revenue data" |
-| DOMAIN-001 | `## Scope` section exists |
-| DOMAIN-002 | `## Scope` contains `In scope:`, `Out of scope:`, and `Last verified:` lines |
-| DOMAIN-003 | `Last verified:` date is valid ISO `YYYY-MM-DD` and not older than 90 days |
-| DOMAIN-004 | `## When to Use` section exists |
-| DOMAIN-005 | `## Critical Warnings` (or `## Critical warnings`, optionally followed by a parenthetical / em-dash suffix) section exists. Matcher: `^##\s+Critical\s+[Ww]arnings\b.*$` |
-| DOMAIN-006 | warnings are a numbered list |
-| DOMAIN-007 | warnings are severity-ordered (tier 1 first) |
-| AUTHOR-001 | no backslash filesystem paths in the body (Windows-style `databricks\data-skills`) — use forward slashes for portability |
-| AUTHOR-002 | description in third person (no "I help", "you can use this") |
-| SEC-001 | body contains no `dapi[A-Za-z0-9_-]{20,}`, `eyJ[A-Za-z0-9_.-]{20,}`, `ghp_`, `github_pat_`, `Bearer `, or other token shapes |
-| HYG-001 | file is UTF-8, no BOM (`\ufeff` at start) |
+```powershell
+$probe = python -c "import pydantic, yaml, sqlglot" 2>&1
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Validator dependencies missing. Installing..."
+    pip install pydantic pyyaml sqlglot 2>&1 | Select-Object -Last 5
+    if ($LASTEXITCODE -ne 0) { throw "pip install of pydantic/pyyaml/sqlglot failed." }
+}
+```
 
-### How to handle failures
+### Step 4 — Dry-mirror the source skills onto the DataPlatform corpus (without committing)
 
-If ANY skill fails ANY check:
+The validators run on a `skills/` directory tree, and the schema validator's IDENTITY-005/006 checks (orphan sub-skills, hub `SKILL.md` existence) make sense only **in the context of the DataPlatform corpus** — not the workspace's `knowledge/skills/` which contains pre-existing scratch debris (`_brief_cluster_*`, `_compliance_*`, etc.) that fails identity checks but is irrelevant to this PR. Dry-mirroring puts your skills exactly where they will land after the real Phase 4 mirror, so the validator sees the post-merge corpus.
 
-1. Report every failure (skill id + check id + concrete file:line where possible).
-2. Offer to open the failing skill file in the editor.
-3. **Stop the workflow.** Do not proceed to git. The user fixes and re-runs `/skills-push`.
-4. If a Jira ticket was created in Phase 0.5, tell the user: `Ticket {key} was created but no PR opened. Either re-run /skills-push with the same ticket after fixing the skill, or close {key} manually.`
+**This is a non-destructive dry-mirror — no git operations, no commits.** The DataPlatform working tree gets dirty (untracked / modified files for the skills you're pushing) but Phase 2 will re-fetch dev and Phase 4 will overwrite again. Phase 11-equivalent rollback isn't needed; the dry-mirror IS the eventual mirror.
 
-If all skills pass, print a single green line `Skill-creator CI: PASS (N skills checked)` and proceed.
+```powershell
+foreach ($id in $SkillIds) {
+    $src = "C:\Users\guyman\Documents\github\Databricks_Knowledge\knowledge\skills\$id"
+    $dst = "$DPSkillsDir\$id"
+    if (-not (Test-Path $src)) { throw "source skill missing: $src" }
+    robocopy $src $dst /MIR /NJH /NJS /NDL /NFL | Out-Null
+    if ($LASTEXITCODE -ge 8) { throw "robocopy failed on $id (exit $LASTEXITCODE)" }
+    $global:LASTEXITCODE = 0
+}
+```
+
+### Step 5 — Run `validate_skills.py` (schema + identity, FULL CORPUS)
+
+This is the same invocation `.github/workflows/skills-ci.yml` runs. It validates every skill in the DataPlatform corpus, not just yours — but a clean dev branch should already be 0 errors / 0 warnings, so any new findings are yours.
+
+```powershell
+$schemaReport = "$env:TEMP\skillspush-schema-report.json"
+Push-Location $DPSkills
+python scripts/validate_skills.py skills/ --json-report $schemaReport 2>&1 | Tee-Object -Variable schemaOut | Select-Object -Last 20 | ForEach-Object { Write-Host $_ }
+$schemaEC = $LASTEXITCODE
+Pop-Location
+
+if ($schemaEC -ne 0) {
+    Write-Host ""
+    Write-Host "validate_skills.py FAILED. The findings above are CI-blocking and the PR will be rejected."
+    Write-Host "Read skill-creator/SKILL.md (frontmatter rules + identity rules) and fix the skill files in knowledge/skills/<id>/."
+    Write-Host "Common fixes:"
+    Write-Host "  - sub-skill 'name:' must equal hub directory stem, not 'hub/file' or 'file'"
+    Write-Host "  - 'id:' field must be absent (deprecated)"
+    Write-Host "  - hub SKILL.md must exist if sub-skills are present (IDENTITY-006)"
+    Write-Host "  - 'sub_skills:' manifest must list every sub-skill .md file (IDENTITY-005)"
+    Write-Host ""
+    Write-Host "Schema report: $schemaReport"
+    throw "Phase 1 schema validation failed (exit $schemaEC). Fix and re-run /skills-push."
+}
+```
+
+### Step 6 — Run `validate_skill_quality.py` (changed-only)
+
+Same invocation as the CI workflow. `--changed-only` takes skill IDs (kebab-case stems), one per arg. Errors are blocking; warnings are merge-safe and surfaced for visibility.
+
+```powershell
+$qualityReport = "$env:TEMP\skillspush-quality-report.json"
+Push-Location $DPSkills
+$qualityArgs = @("scripts/validate_skill_quality.py", "skills/", "--json-report", $qualityReport, "--no-colour", "--changed-only") + $SkillIds
+python $qualityArgs 2>&1 | Tee-Object -Variable qualityOut | Select-Object -Last 30 | ForEach-Object { Write-Host $_ }
+$qualityEC = $LASTEXITCODE
+Pop-Location
+
+if ($qualityEC -eq 1) {
+    Write-Host ""
+    Write-Host "validate_skill_quality.py reported BLOCKING errors. CI will reject this PR."
+    Write-Host "See skill-creator/SKILL.md sections '## Domain Skills — Required Body Sections' and '## CI Check Catalog'."
+    Write-Host "Quality report: $qualityReport"
+    throw "Phase 1 quality validation failed (exit $qualityEC). Fix and re-run /skills-push."
+}
+elseif ($qualityEC -eq 2) {
+    throw "Phase 1 quality validator hit a configuration error (exit 2). Inspect $qualityReport."
+}
+# Exit 0 with warnings is acceptable — surface them but proceed.
+```
+
+### Step 7 — Summary line
+
+If both validators returned exit 0:
+
+```powershell
+$schemaJson  = if (Test-Path $schemaReport)  { Get-Content $schemaReport  -Raw | ConvertFrom-Json } else { $null }
+$qualityJson = if (Test-Path $qualityReport) { Get-Content $qualityReport -Raw | ConvertFrom-Json } else { $null }
+$warnTotal   = ($schemaJson.warnings + $qualityJson.warnings) -as [int]
+Write-Host ("Skill-creator CI gate: PASS  ({0} skills checked, {1} warning(s) — non-blocking)" -f $SkillIds.Count, $warnTotal)
+```
+
+### Failure handling
+
+The validators are the source of truth. If they exit non-zero:
+
+1. The findings printed above ARE the failure report — no need to re-summarise.
+2. Both JSON reports stay on disk (`$env:TEMP\skillspush-*-report.json`) — point the user there if they want detail.
+3. **Stop the workflow.** Do not proceed to Phase 2 (git operations).
+4. If a Jira ticket was created in Phase 0.5, tell the user: `Ticket {key} was created but no PR opened. Either re-run /skills-push with the same ticket after fixing, or close {key} manually.`
+5. The dry-mirrored files are still in `DataPlatform/databricks/data-skills/skills/<id>/`. Phase 2's `git checkout dev && git pull` plus Phase 4's `robocopy /MIR` will re-establish them when the user re-runs after fixing — no manual cleanup required.
+
+### What NOT to do in Phase 1
+
+- **Do NOT inline the check catalog into this skill's body.** It will drift. The canonical scripts are the source of truth.
+- **Do NOT write a Python-free regex sweep that "approximates" the validators.** Same reason. PowerShell-side regex on `name:` patterns, fenced YAML, BOM bytes, etc. has been tried — every iteration drifts within weeks of the canonical schema evolving. Run the validators.
+- **Do NOT skip the dry-mirror "to save time".** The schema validator's `IDENTITY-005`/`IDENTITY-006` checks are corpus-aware (they look across hub folders for orphans); running it on `Databricks_Knowledge/knowledge/skills/` directly produces irrelevant noise (the workspace has scratch files that won't be pushed) and misses real issues that depend on the post-merge layout.
+- **Do NOT auto-fix findings.** Skill content is the user's responsibility; printing a fix suggestion is helpful, applying it silently is not.
 
 ---
 
@@ -456,6 +536,35 @@ If a stash was created in Phase 2 step 2, restore it now: `git checkout dev` the
 
 If a stash pop conflicts, leave it stashed and tell the user `Stash kept — see git stash list`.
 
+### Phase 8 step 3 — Queue the PR for `/skills-push-watch`
+
+Append the PR number to `audits/babysit/queue.txt` in the **Databricks_Knowledge** workspace
+(NOT in the DataPlatform repo). The `/skills-push-watch` command drains this file
+to babysit each open PR — auto-applying the title-checker rename if it ever
+mis-fires, and routing every other CI failure to an inbox the user reviews.
+The queue is append-only, one PR number per line. Skip the append entirely if
+running in `--dry-run` mode (the DD-0000 ticket means no real PR was opened).
+
+```powershell
+# Run with working_directory = <Databricks_Knowledge repo root>.
+$qDir  = "audits/babysit"
+$qFile = "$qDir/queue.txt"
+New-Item -ItemType Directory -Force -Path $qDir | Out-Null
+Add-Content -Path $qFile -Value $prNumber -Encoding utf8
+```
+
+Then add ONE line at the bottom of the Phase 8 summary block:
+
+```
+  babysit:       queued in audits/babysit/queue.txt — run /skills-push-watch to drain
+```
+
+Do NOT launch the watcher from inside `/skills-push`. The babysit loop is a
+separate cognitive activity — the user invokes `/skills-push-watch` when they
+want to drain the queue. This keeps `/skills-push` synchronous and bounded
+(open the PR, queue, done) while the watch loop is opt-in and can run on a
+different cadence.
+
 ---
 
 ## Failure mode catalog (what to do when something breaks)
@@ -487,6 +596,7 @@ If a stash pop conflicts, leave it stashed and tell the user `Stash kept — see
 - **Does not auto-fix CI failures.** Skill content is the user's responsibility.
 - **Does not run the MCP's `POST /admin/refresh`.** That's a post-merge concern.
 - **Does not reimplement Jira issue creation.** Phase 0.5 delegates to the `jira-da` skill — never duplicate that logic here.
+- **Does not babysit the PR after it opens.** Phase 8 step 3 queues the PR for `/skills-push-watch` (a separate command that drives `tools/babysit_dp_pr.py`). The watch loop is opt-in and the user runs it when they want to drain the queue.
 
 ## Trigger phrases
 

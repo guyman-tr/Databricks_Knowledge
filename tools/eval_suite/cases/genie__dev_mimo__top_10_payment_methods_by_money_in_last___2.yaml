@@ -1,0 +1,48 @@
+id: genie__dev_mimo__top_10_payment_methods_by_money_in_last___2
+question: Top 10 payment methods by Money In, last 3 months
+source: genie_benchmark:01f15e792ce1140bbf6af2f8f7c6b54c
+asof: '2026-06-08'
+ground_truth_sql: "WITH mimo AS (\n    SELECT MIMOAction, AmountUSD, MeanOfPayment,\
+  \ TransactionDate, IsInternalTransfer\n    FROM main.etoro_kpi.mimo_tp_deposits_v\n\
+  \    UNION ALL\n    SELECT MIMOAction, AmountUSD, MeanOfPayment, TransactionDate,\
+  \ IsInternalTransfer\n    FROM main.etoro_kpi.mimo_emoney_transactions_v\n)\nSELECT\n\
+  \    MeanOfPayment,\n    SUM(AmountUSD) AS money_in_usd\nFROM mimo\nWHERE MIMOAction\
+  \ = 'Deposit'\n  AND TransactionDate >= ADD_MONTHS(CURRENT_DATE(), -3)\n  AND COALESCE(IsInternalTransfer,\
+  \ 0) = 0\nGROUP BY MeanOfPayment\nORDER BY money_in_usd DESC NULLS LAST\nLIMIT 10;"
+expected_value:
+  type: numeric_series
+  value:
+  - - WireTransfer
+    - 911352069.28
+  - - CreditCard
+    - 864223917.34
+  - - SEPAinstantTransfer
+    - 269556126.94
+  - - FasterPayments
+    - 226173814.27
+  - - SEPAstandart
+    - 144497341.35
+  - - GCCInstantBankTransfer
+    - 108340718.31
+  - - PayPal
+    - 86597103.3
+  - - Unknown
+    - 49136023.17
+  - - OnlineBanking
+    - 29682884.81
+  - - iDEAL
+    - 27217204.94
+  tolerance_pct: 0.5
+expected_skill_hub: _none_
+skill_coverage_status: missing
+canonical_tables:
+- main.etoro_kpi.mimo_emoney_transactions_v
+- main.etoro_kpi.mimo_tp_deposits_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'DEV - MIMO' (01f15e792ce1140bbf6af2f8f7c6b54c) benchmark
+  question.
+tags:
+- genie_benchmark
+- dev_mimo
+max_replicas: 3

@@ -1,0 +1,24 @@
+id: ddr__ddr_customer_current_flags__current_active
+question: How many customers currently have IsActiveTrade=1?
+source: ddr
+asof: '2026-06-08'
+ground_truth_sql: 'SELECT COUNT(*) AS active_customers
+
+  FROM main.etoro_kpi.ddr_customer_current_flags
+
+  WHERE IsActiveTrade = 1'
+expected_value:
+  type: numeric
+  value: 85717
+  tolerance_pct: 0.5
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: covered
+canonical_tables:
+- main.etoro_kpi.ddr_customer_current_flags
+anti_sources: []
+expected_filters: []
+notes: Current-state view; asof is captured but the view always reflects latest.
+tags:
+- ddr
+- ddr_customer_current_flags
+max_replicas: 3

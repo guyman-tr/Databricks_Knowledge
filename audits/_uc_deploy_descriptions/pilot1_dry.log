@@ -1,0 +1,77 @@
+﻿============================================================
+  Function_Revenue_OptionsPlatform  ->  main.etoro_kpi_prep.v_revenue_optionsplatform
+  Wiki: 26 columns from ┬º4
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`dateid` IS 'CONVERT(NVARCHAR(8), TradeDate, 112). Sourc
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`date` IS 'CONVERT(DATE, TradeDate). Source: Sodreconcil
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`realcid` IS 'Customer ID - platform-internal primary ke
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`actiontypeid` IS 'CASE WHEN Side = ''B'' THEN 1 WHEN Si
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`actiontype` IS 'CASE WHEN Side = ''B'' THEN ''ManualPos
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`instrumenttypeid` IS 'CASE WHEN InstrumentType = ''Opti
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`issettled` IS '1. Source: Γאפ. (T2 Γאפ Function_Revenue_Opt
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`iscopy` IS '0. Source: Γאפ. (T2 Γאפ Function_Revenue_Option
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`metric` IS '''Options_PFOF''. Source: Γאפ. (T2 Γאפ Function
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`amount` IS 'SUM(ABS(CustomerPFOFPayback)) WHERE Clearin
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`counttransactions` IS 'COUNT(OrderID). Source: Sodrecon
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`includedintotalrevenue` IS '1. Source: Γאפ. (T2 Γאפ Functio
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`countasactivetrade` IS 'CASE WHEN Side = ''B'' THEN 1 E
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`updatedate` IS 'GETDATE(). Source: Γאפ. (T2 Γאפ Function_Re
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`isbuy` IS '1. Source: Γאפ. (T2 Γאפ Function_Revenue_Options
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`isleveraged` IS '0. Source: Γאפ. (T2 Γאפ Function_Revenue_O
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`isfuture` IS '0. Source: Γאפ. (T2 Γאפ Function_Revenue_Opti
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`iscopyfund` IS '0. Source: Γאפ. (T2 Γאפ Function_Revenue_Op
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`isopenedfromiban` IS '0. Source: Γאפ. (T2 Γאפ Function_Reve
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`isclosedtoiban` IS '0. Source: Γאפ. (T2 Γאפ Function_Revenu
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`isrecurring` IS '0. Source: Γאפ. (T2 Γאפ Function_Revenue_O
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`isairdrop` IS '0. Source: Γאפ. (T2 Γאפ Function_Revenue_Opt
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`isvalidcustomer` IS 'DWH-computed: 1 when not Popular I
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`iscreditreportvalidcb` IS 'DWH-computed: similar to IsV
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`firsttradedate` IS 'First row per ClearingAccount (ROW_
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_revenue_optionsplatform.`firsttradedateid` IS 'CAST(FORMAT(CAST(TradeDate AS DAT
+  -> 26 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Population_Balance_Only_Accounts  ->  main.etoro_kpi_prep.v_population_balance_only_accounts
+  Wiki: 2 columns from ┬º4
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_population_balance_only_accounts.`realcid` IS 'COALESCE(tp.RealCID, em.CID, mo.R
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_population_balance_only_accounts.`maxanyequity` IS 'ISNULL(eMoneyMaxEquity,0) + 
+  -> 2 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Population_OTD_DateRange  ->  main.etoro_kpi_prep.v_population_otd_daterange
+  Wiki: 3 columns from ┬º4
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_population_otd_daterange.`realcid` IS 'Union of filtered deposit-day aggregates 
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_population_otd_daterange.`fromdateid` IS 'MIN(DateID) over RankedDeposits (per-c
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_population_otd_daterange.`todateid` IS 'CASE WHEN MIN(TotalRows)=1 THEN CAST(FOR
+  -> 3 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Trading_Volume  ->  main.etoro_kpi_prep.v_trading_volume_and_amount
+  Wiki: 27 columns from ┬º4
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`cid` IS 'GROUP BY customer from position events. Sour
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`instrumentid` IS 'GROUP BY. Source: DWH_dbo.Dim_Posit
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`leverage` IS 'GROUP BY. Source: DWH_dbo.Dim_Position.
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`dateid` IS 'Event date from open or close leg of unio
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`volumeopen` IS 'SUM(CAST(VolumeOpen AS BIGINT)) where
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`volumeclose` IS 'SUM(CAST(VolumeClose AS BIGINT)) whe
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`investedamountopen` IS 'SUM(InvestedAmountOpen) with 
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`investedamountclosed` IS 'SUM(Amount) on close rows o
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`totalvolume` IS 'Row-level ISNULL(VolumeOpen,0)+ISNUL
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`netinvestedamount` IS 'Row-level InvestedAmountOpen -
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`countopentransactions` IS 'SUM(CountOpenTransactions)
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`countclosetransactions` IS 'SUM(CountCloseTransaction
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`counttotaltransactions` IS 'SUM(CountTotalTransaction
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`issettled` IS 'GROUP BY. Source: DWH_dbo.Dim_Position
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`iscopy` IS 'CASE WHEN MirrorID > 0 THEN 1 ELSE 0 END;
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`instrumenttypeid` IS 'JOIN; GROUP BY. Source: DWH_dbo
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`iscopyfund` IS 'CASE WHEN PositionID matched THEN 1 E
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`isrecurring` IS 'CASE WHEN PositionID matched THEN 1 
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`isopenedfromiban` IS 'CASE WHEN PositionID matched TH
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`isclosedtoiban` IS 'CASE WHEN PositionID matched THEN
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`isairdrop` IS 'ISNULL(IsAirDrop,0); GROUP BY. Source:
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`isbuy` IS 'GROUP BY. Source: DWH_dbo.Dim_Position.IsB
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`isfuture` IS 'GROUP BY. Source: DWH_dbo.Dim_Instrumen
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`settlementtypeid` IS 'GROUP BY. Source: DWH_dbo.Dim_P
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`ismargintrade` IS 'CASE WHEN SettlementTypeID = 5 THE
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`issqf` IS 'Instrument in SQF subset at @edateInt; GRO
+  [DRY] COMMENT ON COLUMN main.etoro_kpi_prep.v_trading_volume_and_amount.`isc2p` IS 'CASE WHEN PositionID matched THEN 1 ELSE 0
+  -> 27 applied, 0 no-desc, 0 failed
+
+============================================================
+DONE: 58 comments applied, 0 cols had no description, 0 failed

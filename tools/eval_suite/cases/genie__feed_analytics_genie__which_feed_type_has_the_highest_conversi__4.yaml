@@ -1,0 +1,82 @@
+id: genie__feed_analytics_genie__which_feed_type_has_the_highest_conversi__4
+question: Which feed type has the highest conversion rate from feed reads to trades
+  in the last week?
+source: genie_benchmark:01f105b421e7187baa5e81595599f7f3
+asof: '2026-06-08'
+ground_truth_sql: "WITH feed_reads AS (\n  SELECT\n    feed_type,\n    mp_user_id\n\
+  \  FROM\n    `main`.`mixpanel`.`silver`\n  WHERE\n    mp_event_name = 'Feed - Post\
+  \ Read'\n    AND etr_ymd >= CAST(date_add(CURRENT_DATE, -7) AS STRING)\n    AND\
+  \ etr_ymd <= CAST(CURRENT_DATE AS STRING)\n    AND feed_type IS NOT NULL\n    AND\
+  \ mp_user_id IS NOT NULL\n),\ntrades AS (\n  SELECT\n    mp_user_id\n  FROM\n  \
+  \  `main`.`mixpanel`.`silver`\n  WHERE\n    mp_event_name = 'Open Order - Success'\n\
+  \    AND etr_ymd >= CAST(date_add(CURRENT_DATE, -7) AS STRING)\n    AND etr_ymd\
+  \ <= CAST(CURRENT_DATE AS STRING)\n    AND category_1 = 'Success'\n    AND portfolio\
+  \ = 'Real'\n    AND mp_user_id IS NOT NULL\n)\nSELECT\n  fr.feed_type,\n  COUNT(DISTINCT\
+  \ fr.mp_user_id) AS users_read,\n  COUNT(DISTINCT\n    CASE\n      WHEN t.mp_user_id\
+  \ IS NOT NULL THEN fr.mp_user_id\n    END\n  ) AS users_traded,\n  (\n    try_divide(\n\
+  \      COUNT(DISTINCT\n        CASE\n          WHEN t.mp_user_id IS NOT NULL THEN\
+  \ fr.mp_user_id\n        END\n      )\n        * 1.0,\n      COUNT(DISTINCT fr.mp_user_id)\n\
+  \    )\n  ) AS conversion_rate\nFROM\n  feed_reads fr\n    LEFT JOIN trades t\n\
+  \      ON fr.mp_user_id = t.mp_user_id\nGROUP BY\n  fr.feed_type\nORDER BY\n  conversion_rate\
+  \ DESC,\n  users_read DESC"
+expected_value:
+  type: tabular
+  value:
+  - - language
+    - 12
+    - 8
+    - 0.6666666666666667
+  - - marketAll
+    - 4561
+    - 2771
+    - 0.6075422056566542
+  - - saved
+    - 70
+    - 40
+    - 0.5714285714285714
+  - - marketTop
+    - 98008
+    - 45992
+    - 0.4692678148722553
+  - - userAll
+    - 1351
+    - 604
+    - 0.4470762398223538
+  - - userMentions
+    - 347
+    - 153
+    - 0.4409221902017291
+  - - forYou
+    - 12787
+    - 5566
+    - 0.4352858371783843
+  - - userTop
+    - 46477
+    - 18856
+    - 0.4057060481528498
+  - - news
+    - 175310
+    - 59710
+    - 0.3405966573498374
+  - - popularInvestors
+    - 75
+    - 8
+    - 0.1066666666666667
+  columns:
+  - feed_type
+  - users_read
+  - users_traded
+  - conversion_rate
+  tolerance_pct: 0.5
+expected_skill_hub: domain-product-analytics
+skill_coverage_status: covered
+canonical_tables:
+- main.mixpanel.silver
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'Feed Analytics Genie' (01f105b421e7187baa5e81595599f7f3)
+  benchmark question.
+tags:
+- genie_benchmark
+- feed_analytics_genie
+max_replicas: 3

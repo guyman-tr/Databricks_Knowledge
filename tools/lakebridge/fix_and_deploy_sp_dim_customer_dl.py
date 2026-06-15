@@ -86,11 +86,23 @@ def rewrite_select_into(body: str) -> str:
 def fix(text: str) -> str:
     body = base.fix(text)
     body = rewrite_select_into(body)
+    # Re-run cleanup injection in case rewrite_select_into introduced
+    # additional TEMP_TABLE_* objects after base.fix already ran.
+    body = base._inject_temp_cleanup(body)
     return body
 
 
 def main() -> int:
-    token = base.fetch_token("name-of-profile")
+    token = None
+    for prof in ("name-of-profile", "guyman", "DEFAULT"):
+        try:
+            token = base.fetch_token(prof)
+            print(f"Auth: using profile '{prof}'")
+            break
+        except Exception:
+            continue
+    if not token:
+        raise SystemExit("No working Databricks profile found.")
     from databricks import sql as dbsql
     conn = dbsql.connect(
         server_hostname="adb-5142916747090026.6.azuredatabricks.net",

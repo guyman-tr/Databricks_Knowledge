@@ -1,0 +1,27 @@
+id: tableau__271c3aac__assignment_tool_volumes_outcomes_and_sla__1
+question: Open the 'Assignment Tool - Volumes, Outcomes and SLAs' dashboard. What
+  does the headline figure (row 1 of the primary view) for 2026-06-08 show?
+source: tableau:271c3aac-bc16-4b44-a700-eb1229cbd5b4
+asof: '2026-06-08'
+ground_truth_sql: 'SELECT COUNT(*) AS row_count
+
+  FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked
+
+  -- workbook: Assignment Tool - Volumes, Outcomes and SLAs (luid 271c3aac-bc16-4b44-a700-eb1229cbd5b4)
+  views=4240'
+expected_value:
+  type: numeric
+  value: 48017773
+  tolerance_pct: 1.0
+expected_skill_hub: valid-users-filter-contract
+skill_coverage_status: covered
+canonical_tables:
+- main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked
+anti_sources: []
+expected_filters: []
+notes: Auto-generated Tableau probe. Rewrite the SQL to match the specific KPI the
+  dashboard renders before pinning. Workbook total_views=4240.
+tags:
+- tableau
+- views_4240
+max_replicas: 3

@@ -1,0 +1,29 @@
+run_id,run_started_at,host,case_id,case_status,sut_name,asof,natural_language_question,expected_value,observed_value,diff_abs,diff_pct,tolerance_pct,passed,reason,sql_used,sut_text_answer,sut_error,elapsed_ms,tags,baseline_sut_name,baseline_value,baseline_diff_pct,baseline_passed,drift_verdict,judge_score,judge_label,judge_rationale,judge_model
+run-20260611T210523Z,2026-06-11T21:05:23Z,azr-we-bidev-3,ddr_revenue_totals_yesterday,live,cursor_agent,2026-06-08,"What was eToro's Total Revenue (per the DDR)
+on 2026-06-08?",2880439.782463,2900000.0,19560.217536999844,0.6790705244417342,0.5,False,"expected=2,880,439.7825; observed=2,900,000.0000; diff=+0.6791% > tol=0.5%",,"I'll help you get eToro's Total Revenue from the DDR for 2026-06-08. Let me read the revenue domain skill first to ensure I query the correct table.Running a live query via Databricks MCP — if nothing follows in ~10–15 seconds, check **Settings → MCP** (server may be disconnected).Let me check the available MCP servers and use the Python approach for Databricks queries.## eToro Total Revenue (2026-06-08)
+
+### All-Platform Total (Currently Quantifiable)
+**$2,898,477.58 USD**
+
+---
+
+### Cross-Platform Breakdown
+
+| Platform | Revenue (USD) | Status |
+|----------|---------------|--------|
+| **eToro core** (trading platform + MIMO + RevShare + Other) | **$2,896,785.88** | ✅ Live |
+| **Spaceship family** (AU) | **$1,691.70** | ✅ Live |
+| ↳ Nova (FX) | $1,322.85 | |
+| ↳ Nova (platform) | $368.85 | |
+| ↳ Super | ~$0.00 | |
+| **MoneyFarm** (UK managed investing) | **TBD** | ⚠️ Placeholder view; fees not yet flowing |
+| **WealthFrance** (FR ISA-equivalent) | **TBD** | ⚠️ Revenue surface to confirm |
+| **Zengo** (crypto platform) | **TBD** | ⚠️ Acquired, ingestion pending |
+| **Bit2C** (crypto platform) | **TBD** | ⚠️ Acquired, ingestion pending |
+| **Subscription revenue** | **TBD** | ⚠️ Work in progress |
+
+---
+
+**Source:** `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions` (eToro core with `IncludedInTotalRevenue = 1`) + `main.etoro_kpi.v_spaceship_fees` (Spaceship fees).
+
+**Note:** The $2.90M figure includes only eToro trading platform + Spaceship. MoneyFarm, WealthFrance, Zengo, Bit2C, and Subscription revenue surfaces are not yet ingested or canonically defined.",,139594,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""single-tile-poc""]",direct_sql,2880439.782463,0.0,True,SKILL_GAP,,,,

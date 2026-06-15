@@ -1,0 +1,27 @@
+id: genie__dev_mimo__what_was_total_money_in_in_the_last_30_d__8
+question: What was total Money In in the last 30 days?
+source: genie_benchmark:01f15e792ce1140bbf6af2f8f7c6b54c
+asof: '2026-06-08'
+ground_truth_sql: "WITH mimo AS (\n    SELECT MIMOAction, AmountUSD, TransactionDate,\
+  \ IsInternalTransfer\n    FROM main.etoro_kpi.mimo_tp_deposits_v\n    UNION ALL\n\
+  \    SELECT MIMOAction, AmountUSD, TransactionDate, IsInternalTransfer\n    FROM\
+  \ main.etoro_kpi.mimo_emoney_transactions_v\n)\nSELECT SUM(AmountUSD) AS money_in_usd\n\
+  FROM mimo\nWHERE MIMOAction = 'Deposit'\n  AND TransactionDate >= DATE_SUB(CURRENT_DATE(),\
+  \ 30)\n  AND COALESCE(IsInternalTransfer, 0) = 0;"
+expected_value:
+  type: numeric
+  value: 876240314.83
+  tolerance_pct: 0.5
+expected_skill_hub: _none_
+skill_coverage_status: missing
+canonical_tables:
+- main.etoro_kpi.mimo_emoney_transactions_v
+- main.etoro_kpi.mimo_tp_deposits_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'DEV - MIMO' (01f15e792ce1140bbf6af2f8f7c6b54c) benchmark
+  question.
+tags:
+- genie_benchmark
+- dev_mimo
+max_replicas: 3

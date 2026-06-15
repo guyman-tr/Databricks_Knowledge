@@ -1,0 +1,173 @@
+﻿=== Synapse: Function_Revenue_OptionsPlatform definition ===
+CREATE FUNCTION [BI_DB_dbo].[Function_Revenue_OptionsPlatform] (@sdateInt [INT],@edateInt [INT],@OnlyValidCustomers [BIT]) RETURNS TABLE
+
+AS
+
+RETURN (
+
+	WITH PREP AS 
+
+	(
+
+		SELECT * 
+
+			, ROW_NUMBER () OVER (PARTITION BY ClearingAccount ORDER BY TradeDate) AS RN
+
+		FROM [BI_DB_dbo].[Sodreconciliation_apex_EXT1047_RevenueReports]
+
+	), FIRSTTRADE AS 
+
+	(
+
+		SELECT * 
+
+		FROM PREP
+
+		WHERE RN = 1
+
+	), USBrokerAUM AS
+
+    (
+
+		SELECT * FROM ( 
+
+		    SELECT CONVERT(NVARCHAR(8), rev.TradeDate, 112) AS DateID
+
+		        , CONVERT(DATE, rev.TradeDate) AS [Date]
+
+		        , dc.RealCID
+
+		        , CASE WHEN rev.Side = 'B' THEN 1 WHEN rev.Side = 'S' THEN 4 END AS ActionTypeID
+
+		        , CASE WHEN rev.Side = 'B' THEN 'ManualPositionOpen'  WHEN rev.Side = 'S' THEN 'ManualPositionClose' END AS ActionType
+
+		        , CASE WHEN rev.InstrumentType = 'Option' THEN 9 WHEN rev.InstrumentType = 'Equity' THEN 5 END AS InstrumentTypeID
+
+		        , 1 AS IsSettled
+
+		        , 0 AS IsCopy
+
+		        , 'Options_PFOF' AS Metric
+
+		        , SUM(ABS(rev.CustomerPFOFPayback)) AS Amount
+
+		        , count(rev.OrderID) AS CountTransactions
+
+		        , 1 AS IncludedInTotalRevenue
+
+		        , CASE WHEN rev.Side = 'B' THEN 1 ELSE 0 end AS CountAsActiveTrade
+
+		        , GETDATE() AS UpdateDate
+
+		        , 1 AS IsBuy
+
+		        , 0 AS IsLeveraged
+
+		        , 0 AS IsFuture
+
+		        , 0 AS IsCopyFund
+
+		        , 0 AS IsOpenedFromIBAN
+
+		        , 0 AS IsClosedToIBAN
+
+		        , 0 AS IsRucurring
+
+		        , 0 AS IsAirDrop
+
+				, dc.IsValidCustomer
+
+				, dc.IsCreditReportValidCB
+
+				, ft.TradeDate AS FirstTradeDate
+
+				, CAST(FORMAT(CAST(ft.TradeDate AS DATE),'yyyyMMdd') as INT) AS FirstTradeDateID
+
+		    FROM PREP rev 
+
+			LEFT JOIN FIRSTTRADE ft ON rev.ClearingAccount = ft.ClearingAccount
+
+		    LEFT JOIN [BI_DB_dbo].[External_USABroker_Apex_Options] op ON rev.ClearingAccount = op.OptionsApexID 
+
+		    JOIN DWH_dbo.Dim_Customer dc ON op.GCID = dc.GCID
+
+		    WHERE rev.ClearingAccount NOT IN (
+
+		            '4GS43999'
+
+		            ,'4GS00100'
+
+		            ,'4GS00101'
+
+		            ,'4GS00103'
+
+		            ,'4GS00104'
+
+		            ) -- exclude house accounts
+
+		        AND rev.TradeDate  BETWEEN CONVERT(DATE, CONVERT(VARCHAR(8), @sdateInt), 112) AND CONVERT(DATE, CONVERT(VARCHAR(8), @edateInt), 112)
+
+		    GROUP BY CONVERT(NVARCHAR(8), rev.TradeDate, 112)
+
+		        , CONVERT(DATE, rev.TradeDate)
+
+		        , dc.RealCID
+
+		        , CASE WHEN rev.Side = 'B' THEN 1 WHEN rev.Side = 'S' THEN 4 END
+
+		        , CASE WHEN rev.Side = 'B' THEN 'ManualPositionOpen'  WHEN rev.Side = 'S' THEN 'ManualPositionClose' END
+
+		        , CASE WHEN rev.Side = 'B' THEN 1 ELSE 0 end
+
+		        , CASE WHEN rev.InstrumentType = 'Option' THEN 9 WHEN rev.InstrumentType = 'Equity' THEN 5 END
+
+				, dc.IsValidCustomer
+
+				, dc.IsCreditReportValidCB
+
+				, ft.TradeDate
+
+				, CAST(FORMAT(CAST(ft.TradeDate AS DATE),'yyyyMMdd') as INT)
+
+) a 
+
+    )
+
+    SELECT
+
+        a.*
+
+    FROM USBrokerAUM AS a
+
+    WHERE
+
+        @OnlyValidCustomers = 0 OR (@OnlyValidCustomers = 1 AND a.IsValidCustomer = 1)
+
+)
+
+=== Synapse: row counts of Options data per day, last 60d (using TVF directly) ===
+  Synapse TVF DateID=20260608 rows=371 sum_amt=1334.5714
+  Synapse TVF DateID=20260605 rows=440 sum_amt=1476.0284000000004
+  Synapse TVF DateID=20260604 rows=410 sum_amt=1216.1392000000003
+  Synapse TVF DateID=20260603 rows=262 sum_amt=481.695
+  Synapse TVF DateID=20260602 rows=333 sum_amt=506.4725
+  Synapse TVF DateID=20260601 rows=456 sum_amt=1024.522
+  Synapse TVF DateID=20260529 rows=496 sum_amt=1170.8664999999999
+  Synapse TVF DateID=20260528 rows=422 sum_amt=1132.4328999999996
+  Synapse TVF DateID=20260527 rows=410 sum_amt=1098.5961
+  Synapse TVF DateID=20260526 rows=439 sum_amt=986.3485000000001
+  Synapse TVF DateID=20260522 rows=464 sum_amt=1045.2364999999998
+  Synapse TVF DateID=20260521 rows=417 sum_amt=990.5815000000002
+  Synapse TVF DateID=20260520 rows=413 sum_amt=815.2452000000001
+  Synapse TVF DateID=20260519 rows=371 sum_amt=590.7330000000001
+  Synapse TVF DateID=20260518 rows=422 sum_amt=934.5324999999998
+  Synapse TVF DateID=20260515 rows=508 sum_amt=1264.3847647999999
+  Synapse TVF DateID=20260514 rows=438 sum_amt=1131.2837
+  Synapse TVF DateID=20260513 rows=445 sum_amt=990.9639999999999
+  Synapse TVF DateID=20260512 rows=405 sum_amt=878.1775000000002
+  Synapse TVF DateID=20260511 rows=465 sum_amt=941.0179999999998
+  Synapse TVF DateID=20260508 rows=463 sum_amt=1548.3310999999997
+  Synapse TVF DateID=20260507 rows=408 sum_amt=941.5705000000002
+  Synapse TVF DateID=20260506 rows=448 sum_amt=1018.2574999999997
+  Synapse TVF DateID=20260505 rows=399 sum_amt=0.0085
+  Synapse TVF DateID=20260504 rows=414 sum_amt=0.0

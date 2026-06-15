@@ -1,0 +1,110 @@
+case_id,tab,sheet,dashboard,headline_field,nl_question,syn_select,syn_value,uc_sql,uc_value,diff_abs,diff_pct,notes
+ddr_revenue_full_commission_yesterday,revenue,Revenue: Commission & Other Fees,Revenue: Overview & Breakdowns,FullCommission,What was the total Full Commission revenue for valid customers yesterday (2026-06-08)?,SUM(FullCommission),1229189.310500,"SELECT SUM(d.Amount) AS value
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.Metric IN ('FullCommission')
+  AND d.IncludedInTotalRevenue = 1",1229189.310500,0.000000,0.000000,FullCommission = Commission + TicketFee + TicketFeeByPercent (computed in Synapse SP).
+ddr_revenue_rollover_yesterday,revenue,Revenue: Rollover Fees Breakdown,Revenue: Overview & Breakdowns,RollOverFee,What was the total Rollover Fee revenue for valid customers yesterday (2026-06-08)?,SUM(RollOverFee),290343.400000,"SELECT SUM(d.Amount) AS value
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.Metric IN ('RollOverFee')
+  AND d.IncludedInTotalRevenue = 1",290343.400000,0.000000,0.000000,
+ddr_revenue_admin_yesterday,revenue,Revenue: Admin Fees Breakdown,Revenue: Overview & Breakdowns,AdminFee,What was the total Admin Fee (dormancy) revenue for valid customers yesterday (2026-06-08)?,SUM(AdminFee),10619.050000,"SELECT SUM(d.Amount) AS value
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.Metric IN ('AdminFee')
+  AND d.IncludedInTotalRevenue = 1",10619.050000,0.000000,0.000000,
+ddr_revenue_spot_adjust_yesterday,revenue,Revenue: Spot Adjustment Fees Breakdown,Revenue: Overview & Breakdowns,SpotAdjustFee,What was the total Spot Adjustment Fee revenue for valid customers yesterday (2026-06-08)?,SUM(SpotAdjustFee),,"SELECT SUM(d.Amount) AS value
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.Metric IN ('SpotPriceAdjustment')
+  AND d.IncludedInTotalRevenue = 1",1888.160000,,,UC Metric label is 'SpotPriceAdjustment'; Synapse TVF column is 'SpotAdjustFee'. Same dollars.
+ddr_revenue_conversion_fee_yesterday,revenue,Revenue: Commission & Other Fees,Revenue: Overview & Breakdowns,ConversionFee,What was the total Conversion Fee revenue for valid customers yesterday (2026-06-08)?,SUM(ConversionFee),414246.319200,"SELECT SUM(d.Amount) AS value
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.Metric IN ('ConversionFee')
+  AND d.IncludedInTotalRevenue = 1",414246.319200,0.000000,0.000000,
+ddr_mimo_tp_deposits_amount_yesterday,mimo,MIMO: Trading Platform's Deposits & Withdraws,Money Movement,Deposits to TP ($ Amount),What was the total deposit amount (USD) to the Trading Platform for valid customers yesterday (2026-06-08)? Include both internal and external deposits.,SUM(InternalDepositsTPAmount + ExternalDepositsTPAmount),22842980.390000,"SELECT SUM(d.AmountUSD) AS value
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.MIMOAction = 'Deposit' AND d.MIMOPlatform = 'TP' AND d.IsRedeem = 0",0.000000,-22842980.390000,-100.000000,Tile shows 'Deposits to TP ($ Amount)' = InternalDepositsTPAmount + ExternalDepositsTPAmount in the wide TVF row. UC equivalent: SUM(AmountUSD) on the long-form MIMO fact filtered to MIMOAction='Deposit' AND MIMOPlatform='TP' AND IsRedeem=0 (excludes crypto-redeem-as-deposit reclass).
+ddr_mimo_global_deposits_amount_yesterday,mimo,MIMO: Global Deposits & Withdraws,Money Movement,GlobalDepositsAmount,"What were the total global deposits (USD, all platforms — TP + IBAN + Options + MoneyFarm) for valid customers yesterday (2026-06-08)?",SUM(GlobalDepositsAmount),29898543.140000,"SELECT SUM(d.AmountUSD) AS value
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.MIMOAction = 'Deposit' AND d.IsRedeem = 0",78423857.580000,48525314.440000,162.299930,
+ddr_mimo_external_deposits_tp_yesterday,mimo,MIMO: External Deposits to TP,Money Movement,ExternalDepositsTPAmount,What was the total external (i.e. not internal-transfer) deposit amount (USD) to the Trading Platform for valid customers yesterday (2026-06-08)?,SUM(ExternalDepositsTPAmount),15471498.400000,"SELECT SUM(d.AmountUSD) AS value
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.MIMOAction = 'Deposit' AND d.MIMOPlatform = 'TP' AND d.IsInternalTransfer = 0 AND d.IsRedeem = 0",0.000000,-15471498.400000,-100.000000,
+ddr_mimo_internal_deposits_tp_yesterday,mimo,MIMO: Internal Deposits to TP,Money Movement,InternalDepositsTPAmount,What was the total internal-transfer deposit amount (USD) to the Trading Platform for valid customers yesterday (2026-06-08)?,SUM(InternalDepositsTPAmount),7371481.990000,"SELECT SUM(d.AmountUSD) AS value
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.MIMOAction = 'Deposit' AND d.MIMOPlatform = 'TP' AND d.IsInternalTransfer = 1 AND d.IsRedeem = 0",0.000000,-7371481.990000,-100.000000,
+ddr_mimo_global_cashout_users_yesterday,mimo,MIMO: Cashout & Redeem Users Count,Money Movement,GlobalCashedOut,How many valid customers had a successful global cashout (any platform) yesterday (2026-06-08)?,SUM(GlobalCashedOut),7738.000000,"SELECT SUM(d.GlobalCashedOut) AS value
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status d
+WHERE d.DateID = 20260608
+  AND d.IsCreditReportValidCB = 1",7748.000000,10.000000,0.129232,"GlobalCashedOut is a 0/1 flag per (DateID, RealCID) on the daily-status table; SUM yields a count. Distinct from MIMO event-grain — this is per-customer attribution from customer_daily_status."
+ddr_aum_equity_global_yesterday,aum_pnl,AUM & PnL: Yesterday's KPIs 1,AUM & PnL,EquityGlobal,What was the total Global Equity (TP + IBAN + Options custodied assets) for valid customers as of 2026-06-08?,SUM(EquityGlobal),16683323307.896469,"SELECT SUM(d.EquityGlobal) AS value
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608",16683397467.773949,74159.877480,0.000445,
+ddr_aum_realized_equity_global_yesterday,aum_pnl,AUM & PnL: Yesterday's KPIs 1,AUM & PnL,RealizedEquityGlobal,What was the total Global Realized Equity (excluding unrealized PnL) for valid customers as of 2026-06-08?,SUM(RealizedEquityGlobal),17243412845.966469,"SELECT SUM(d.RealizedEquityGlobal) AS value
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608",17243415676.843948,2830.877480,0.000016,
+ddr_pnl_total_position_pnl_yesterday,aum_pnl,AUM & PnL: PnL KPIs,AUM & PnL,TotalPositionPNL,What was the total open-position PnL (mark-to-market unrealized) for valid customers' open positions as of 2026-06-08?,SUM(TotalPositionPNL),-564406548.550000,"SELECT SUM(d.TotalPositionPNL) AS value
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608",-564406548.550000,0.000000,-0.000000,
+ddr_pnl_daily_realized_pnl_yesterday,aum_pnl,AUM & PnL: PnL Chart,AUM & PnL,DailyTotalPnL,What was the total realized + unrealized daily PnL across all valid customers' positions on 2026-06-08?,SUM(DailyPnLStocks + DailyPnLCrypto + DailyPnLCopy + DailyPnLManual),200678311.100000,"SELECT SUM(d.NetProfit + UnrealizedPnLChange) AS value
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608",104757898.380000,-95920412.720000,-47.798096,"Synapse TVF surfaces DailyPnLStocks/Crypto/Copy/Manual as separate columns; DailyTotalPnL on the canvas is their sum. UC fact_pnl stores NetProfit (realized) + UnrealizedPnLChange (mark-to-market delta) per (RealCID, InstrumentTypeID, IsSettled, IsCopy)."

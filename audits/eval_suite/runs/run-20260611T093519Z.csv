@@ -1,0 +1,150 @@
+run_id,run_started_at,host,case_id,case_status,sut_name,asof,natural_language_question,expected_value,observed_value,diff_abs,diff_pct,tolerance_pct,passed,reason,sql_used,sut_text_answer,sut_error,elapsed_ms,tags
+run-20260611T093527Z,2026-06-11T09:35:27Z,azr-we-bidev-3,ddr_aum_equity_global_yesterday,live,mock,2026-06-08,What was the total Global Equity (sum of customer equity across TP + IBAN + Options + custodied assets) for valid customers as of 2026-06-08?,16683397467.773949,16683397467.773949,0.0,0.0,0.5,True,"expected=16,683,397,467.7739; observed=16,683,397,467.7739; diff=+0.0000% <= tol=0.5%","SELECT SUM(d.EquityGlobal) AS EquityGlobal
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+","The answer is 16,683,397,467.7739.",,0,"[""ddr"", ""aum"", ""yesterday"", ""valid-users-cb"", ""equity-global""]"
+run-20260611T093527Z,2026-06-11T09:35:27Z,azr-we-bidev-3,ddr_aum_realized_equity_global_yesterday,live,mock,2026-06-08,What was the total Global Realized Equity (excluding mark-to-market unrealized PnL on open positions) for valid customers as of 2026-06-08?,17243415676.84395,17243415676.84395,0.0,0.0,0.5,True,"expected=17,243,415,676.8439; observed=17,243,415,676.8439; diff=+0.0000% <= tol=0.5%","SELECT SUM(d.RealizedEquityGlobal) AS RealizedEquityGlobal
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+","The answer is 17,243,415,676.8439.",,0,"[""ddr"", ""aum"", ""yesterday"", ""valid-users-cb"", ""realized-equity""]"
+run-20260611T093527Z,2026-06-11T09:35:27Z,azr-we-bidev-3,ddr_mimo_external_deposits_tp_yesterday,live,mock,2026-06-08,What was the total amount in USD of external (non-internal-transfer) deposits to the Trading Platform for valid customers yesterday (2026-06-08)? External deposits are payments made from outside the eToro ecosystem (e.g. card or wire from a customer's bank).,15471498.4,15471498.4,0.0,0.0,0.5,True,"expected=15,471,498.4000; observed=15,471,498.4000; diff=+0.0000% <= tol=0.5%","-- UC stores MIMOPlatform = 'TradingPlatform' (NOT 'TP').
+SELECT SUM(d.AmountUSD) AS ExternalDepositsTPAmount
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.MIMOAction = 'Deposit'
+  AND d.MIMOPlatform = 'TradingPlatform'
+  AND d.IsInternalTransfer = 0
+  AND d.IsRedeem = 0
+","The answer is 15,471,498.4000.",,0,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""tp-deposits"", ""external""]"
+run-20260611T093527Z,2026-06-11T09:35:27Z,azr-we-bidev-3,ddr_mimo_global_cashout_users_yesterday,live,mock,2026-06-08,"How many distinct valid customers had a successful global cashout (any platform: TP, IBAN, Options, MoneyFarm) yesterday (2026-06-08)? GlobalCashedOut is a 0/1 per-customer flag on the daily-status table.",7748.0,7748.0,0.0,0.0,0.5,True,"expected=7,748.0000; observed=7,748.0000; diff=+0.0000% <= tol=0.5%","-- customer_daily_status already carries IsCreditReportValidCB so no SCD-2 join needed.
+SELECT SUM(d.GlobalCashedOut) AS GlobalCashedOut_users
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status d
+WHERE d.DateID = 20260608
+  AND d.IsCreditReportValidCB = 1
+","The answer is 7,748.0000.",,0,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""cashout-users""]"
+run-20260611T093527Z,2026-06-11T09:35:27Z,azr-we-bidev-3,ddr_mimo_global_deposits_amount_yesterday,live,mock,2026-06-08,"What were the total external (non-internal-transfer) global deposits in USD for valid customers yesterday (2026-06-08)? Global means across all eToro platforms (TP, eMoney IBAN, Options, MoneyFarm).",29910573.3,29910573.3,0.0,0.0,0.5,True,"expected=29,910,573.3000; observed=29,910,573.3000; diff=+0.0000% <= tol=0.5%","-- Synapse GlobalDepositsAmount excludes internal transfers (eMoney->TP, etc).
+-- IsRedeem=0 also excludes crypto-redeem-as-deposit reclass.
+SELECT SUM(d.AmountUSD) AS GlobalDepositsAmount
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.MIMOAction = 'Deposit'
+  AND d.IsInternalTransfer = 0
+  AND d.IsRedeem = 0
+","The answer is 29,910,573.3000.",,0,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""deposits""]"
+run-20260611T093527Z,2026-06-11T09:35:27Z,azr-we-bidev-3,ddr_mimo_global_deposits_count_yesterday,live,mock,2026-06-08,How many global deposit transactions did valid customers make yesterday (2026-06-08)? Excludes internal transfers and crypto-redeem reclassifications.,19769.0,19769.0,0.0,0.0,0.5,True,"expected=19,769.0000; observed=19,769.0000; diff=+0.0000% <= tol=0.5%","SELECT COUNT(*) AS GlobalDepositsCount
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.MIMOAction = 'Deposit'
+  AND d.IsInternalTransfer = 0
+  AND d.IsRedeem = 0
+","The answer is 19,769.0000.",,0,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""deposit-count""]"
+run-20260611T093527Z,2026-06-11T09:35:27Z,azr-we-bidev-3,ddr_mimo_tp_first_funded_yesterday,live,mock,2026-06-08,How many valid customers made their first-ever Trading-Platform deposit yesterday (2026-06-08)? This is the TP-platform-specific FTD count (not Global FTD).,867.0,867.0,0.0,0.0,0.5,True,expected=867.0000; observed=867.0000; diff=+0.0000% <= tol=0.5%,"SELECT SUM(d.TPFirstDeposited) AS TPFirstDeposited
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status d
+WHERE d.DateID = 20260608
+  AND d.IsCreditReportValidCB = 1
+",The answer is 867.0000.,,0,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""ftd""]"
+run-20260611T093527Z,2026-06-11T09:35:27Z,azr-we-bidev-3,ddr_pnl_daily_total_pnl_yesterday,live,mock,2026-06-08,What was the total Daily PnL (realized NetProfit + unrealized mark-to-market change) across all valid customers' positions on 2026-06-08?,104757898.38,104757898.38,0.0,0.0,0.5,True,"expected=104,757,898.3800; observed=104,757,898.3800; diff=+0.0000% <= tol=0.5%","-- fact_pnl is long-form: (DateID, RealCID, InstrumentTypeID, IsSettled, IsCopy).
+-- DailyTotalPnL on the canvas = NetProfit + UnrealizedPnLChange across all rows.
+SELECT SUM(d.NetProfit + d.UnrealizedPnLChange) AS DailyTotalPnL
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+","The answer is 104,757,898.3800.",,0,"[""ddr"", ""pnl"", ""yesterday"", ""valid-users-cb"", ""daily-total-pnl""]"
+run-20260611T093527Z,2026-06-11T09:35:27Z,azr-we-bidev-3,ddr_pnl_total_position_pnl_yesterday,live,mock,2026-06-08,What was the total mark-to-market unrealized PnL across all valid customers' open positions as of 2026-06-08? Negative means open positions are aggregately under water.,-564406548.55,-564406548.55,0.0,-0.0,0.5,True,"expected=-564,406,548.5500; observed=-564,406,548.5500; diff=-0.0000% <= tol=0.5%","-- TotalPositionPNL is on fact_aum (snapshot of MtM at end-of-day).
+SELECT SUM(d.TotalPositionPNL) AS TotalPositionPNL
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+","The answer is -564,406,548.5500.",,0,"[""ddr"", ""pnl"", ""yesterday"", ""valid-users-cb"", ""open-position-pnl""]"
+run-20260611T093527Z,2026-06-11T09:35:27Z,azr-we-bidev-3,ddr_revenue_admin_yesterday,live,mock,2026-06-08,What was the total Admin Fee (dormancy/inactivity fee) revenue for valid customers yesterday (2026-06-08)?,10619.05,10619.05,0.0,0.0,0.5,True,"expected=10,619.0500; observed=10,619.0500; diff=+0.0000% <= tol=0.5%","SELECT SUM(d.Amount) AS AdminFee
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.Metric = 'AdminFee'
+  AND d.IncludedInTotalRevenue = 1
+","The answer is 10,619.0500.",,0,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""admin-fee""]"
+run-20260611T093527Z,2026-06-11T09:35:27Z,azr-we-bidev-3,ddr_revenue_conversion_fee_yesterday,live,mock,2026-06-08,What was the total Conversion Fee revenue for valid customers yesterday (2026-06-08)? Conversion fees are charged when customer trade currency differs from their wallet currency.,414246.3192,414246.3192,0.0,0.0,0.5,True,"expected=414,246.3192; observed=414,246.3192; diff=+0.0000% <= tol=0.5%","SELECT SUM(d.Amount) AS ConversionFee
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.Metric = 'ConversionFee'
+  AND d.IncludedInTotalRevenue = 1
+","The answer is 414,246.3192.",,0,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""conversion-fee""]"
+run-20260611T093527Z,2026-06-11T09:35:27Z,azr-we-bidev-3,ddr_revenue_full_commission_yesterday,live,mock,2026-06-08,What was the total Full Commission revenue for valid customers yesterday (2026-06-08)? Full Commission combines retail trading commission with both fixed and percentage-based ticket fees.,1229189.3105,1229189.3105,0.0,0.0,0.5,True,"expected=1,229,189.3105; observed=1,229,189.3105; diff=+0.0000% <= tol=0.5%","-- Per dwh-domain/cross-cutting/valid-users-filter-contract Pattern 2.
+-- FullCommission = Commission + TicketFee + TicketFeeByPercent in Synapse SP.
+SELECT SUM(d.Amount) AS FullCommission
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.Metric IN ('FullCommission')
+  AND d.IncludedInTotalRevenue = 1
+","The answer is 1,229,189.3105.",,0,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""commission""]"
+run-20260611T093527Z,2026-06-11T09:35:27Z,azr-we-bidev-3,ddr_revenue_rollover_yesterday,live,mock,2026-06-08,What was the total Rollover Fee revenue for valid customers yesterday (2026-06-08)? Rollover fees are the financing charge for keeping leveraged CFD positions open overnight.,290343.4,290343.4,0.0,0.0,0.5,True,"expected=290,343.4000; observed=290,343.4000; diff=+0.0000% <= tol=0.5%","SELECT SUM(d.Amount) AS RollOverFee
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.Metric = 'RollOverFee'
+  AND d.IncludedInTotalRevenue = 1
+","The answer is 290,343.4000.",,0,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""rollover""]"
+run-20260611T093527Z,2026-06-11T09:35:27Z,azr-we-bidev-3,ddr_revenue_spot_adjust_yesterday,live,mock,2026-06-08,What was the total Spot Price Adjustment fee revenue for valid customers yesterday (2026-06-08)? Spot price adjustments reflect the spread mark-up applied to bid/ask quotes.,1888.16,1888.16,0.0,0.0,0.5,True,"expected=1,888.1600; observed=1,888.1600; diff=+0.0000% <= tol=0.5%","-- Synapse TVF column name is 'SpotPriceAdjustment'; on the canvas this tile
+-- is labelled 'Spot Adjustment' but the underlying metric is SpotPriceAdjustment.
+SELECT SUM(d.Amount) AS SpotPriceAdjustment
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.Metric = 'SpotPriceAdjustment'
+  AND d.IncludedInTotalRevenue = 1
+","The answer is 1,888.1600.",,1,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""spot-adjust""]"
+run-20260611T093527Z,2026-06-11T09:35:27Z,azr-we-bidev-3,ddr_revenue_totals_yesterday,live,mock,2026-06-08,"What was eToro's Total Revenue (per the DDR) for valid customers
+yesterday — i.e. on 2026-06-08?",2879105.291063,2879105.291063,0.0,0.0,0.5,True,"expected=2,879,105.2911; observed=2,879,105.2911; diff=+0.0000% <= tol=0.5%","-- Per dwh-domain/cross-cutting/valid-users-filter-contract.md Pattern 2
+-- (regulatory variant — sheet pill is IsCreditReportValidCB).
+SELECT SUM(d.Amount) AS TotalRevenue
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions d
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = d.RealCID
+   AND snap.IsCreditReportValidCB = 1
+   AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE d.DateID = 20260608
+  AND d.IncludedInTotalRevenue = 1
+","The answer is 2,879,105.2911.",,0,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""single-tile-poc""]"

@@ -1,0 +1,7 @@
+phase,date_id,bad_cohort_rows,IsPlatformFTD_1,IsGlobalFTD_1,notes
+cohort_build,,13307,,,Aug 2025 cohort (8/19 + 8/20)
+pre_update,20250819,10383,0,0,no leak on this date
+pre_update,20250820,2924,2924,2,leak: SP_DDR_Fact_MIMO_Trading_Platform set IsFTD=1 without REMOVE_BAD_FTDS filter
+update,,,,,UPDATE touched 2924 rows in 0.9s
+post_update,20250819,10383,0,0,verified clean
+post_update,20250820,2924,0,0,demoted

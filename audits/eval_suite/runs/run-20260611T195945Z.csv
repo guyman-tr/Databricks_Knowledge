@@ -1,0 +1,33 @@
+run_id,run_started_at,host,case_id,case_status,sut_name,asof,natural_language_question,expected_value,observed_value,diff_abs,diff_pct,tolerance_pct,passed,reason,sql_used,sut_text_answer,sut_error,elapsed_ms,tags,baseline_sut_name,baseline_value,baseline_diff_pct,baseline_passed,drift_verdict,judge_score,judge_label,judge_rationale,judge_model
+run-20260611T195953Z,2026-06-11T19:59:53Z,azr-we-bidev-3,ddr_revenue_totals_yesterday,live,cursor_agent,2026-06-08,"What was eToro's Total Revenue (per the DDR) for valid customers
+yesterday — i.e. on 2026-06-08?",2880439.782463,,,,0.5,False,SUT returned no numeric answer,,"I'll help you get eToro's Total Revenue from the DDR for valid customers. Let me load the relevant domain skills and query the data.Running a live query via Databricks MCP to get eToro's Total Revenue for valid customers. If nothing follows in ~10-15 seconds, check **Settings ג†’ MCP** (server may be disconnected).## eToro Total Revenue (DDR) ג€” Valid Customers
+
+**YTD 2026:**
+
+| Platform | Revenue (USD M) | Notes |
+|----------|-----------------|-------|
+| **eToro core (Trading Platform + MIMO + RevShare + Other)** | **$438.41** | From `BI_DB_DDR_Fact_Revenue_Generating_Actions` WHERE `IncludedInTotalRevenue = 1` |
+| Spaceship (AU ג€” Super + Voyager + Nova + Money) | $0.01 | From `etoro_kpi.v_spaceship_fees` |
+| MoneyFarm (UK managed investing) | **TBD** | Placeholder view exists (`v_moneyfarm_fees`), fee data not yet flowing |
+| WealthFrance (FR ISA-equivalent ג€” eToro-native) | **TBD** | Balance column exists in `bi_output_vg_club`, revenue surface to confirm |
+| Zengo (crypto platform) | **TBD** | Acquired, ingestion pending |
+| Bit2C (crypto platform) | **TBD** | Acquired, ingestion pending |
+| Subscription revenue | **TBD** | Work in progress, canonical surface not yet onboarded |
+| **Total (currently quantifiable)** | **$438.42** | eToro core + Spaceship |
+
+**May 2026:**
+
+| Platform | Revenue (USD M) | Notes |
+|----------|-----------------|-------|
+| **eToro core** | **$61.85** | |
+| Spaceship | $0.00 | |
+| MoneyFarm | **TBD** | |
+| WealthFrance | **TBD** | |
+| Zengo | **TBD** | |
+| Bit2C | **TBD** | |
+| Subscription revenue | **TBD** | |
+| **Total (currently quantifiable)** | **$61.85** | eToro core + Spaceship |
+
+---
+
+**Scope:** Valid customers only (`IsValidCustomer = 1`, period-correct SCD-2 walk on `V_Fact_SnapshotCustomer_FromDateID` with `fact.DateID BETWEEN snap.FromDateID AND snap.ToDateID`). Excludes internal accounts (PlayerLevel='Internal'), dealing/ILQ labels, and eToro pseudo-jurisdiction accounts. Popular Investors are included (tracked via `GuruStatusID`, not `PlayerLevelID`).",could not parse a numeric scalar from the reply,193640,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""single-tile-poc""]",,,,,N/A,,,,

@@ -1,0 +1,143 @@
+run_id,run_started_at,host,case_id,case_status,sut_name,asof,natural_language_question,expected_value,observed_value,diff_abs,diff_pct,tolerance_pct,passed,reason,sql_used,sut_text_answer,sut_error,elapsed_ms,tags,baseline_sut_name,baseline_value,baseline_diff_pct,baseline_passed,drift_verdict,judge_score,judge_label,judge_rationale,judge_model,trace_skills_loaded,trace_sql_executed_count,trace_sql_succeeded_count,trace_tool_call_count,trace_tool_call_by_kind,trace_mcp_tool_call_by_name,trace_input_tokens,trace_output_tokens,trace_cache_read_tokens,trace_cache_write_tokens,trace_thinking_excerpt,trace_session_id,trace_model
+run-20260614T103827Z,2026-06-14T10:38:27Z,azr-we-bidev-3,ddr_aum_equity_global_yesterday,live,direct_mcp,2026-06-08,What was the total Global Equity (sum of customer equity across TP + IBAN + Options + custodied assets) as of 2026-06-08?,16683397467.773949,,,,0.5,False,SUT returned no numeric answer,"SELECT
+    SUM(pop.Equity) AS total_global_equity
+FROM main.etoro_kpi_prep.v_population_funded pop
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = pop.RealCID
+   AND snap.IsValidCustomer = 1
+   AND pop.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE pop.DateID = 20260608",,"execute_sql returned isError or no content: MCPClientError: MCP tool reported isError=true: {""error"": true, ""error_type"": ""ToolError"", ""tool"": ""execute_sql"", ""message"": ""Error calling tool 'execute_sql': Tool 'execute_sql' execution timed out after 60.0s""}",72952,"[""ddr"", ""aum"", ""yesterday"", ""valid-users-cb"", ""equity-global""]",direct_sql,16683397467.773949,0.0,True,SKILL_GAP,,,,,,,,,,,,,,,,,
+run-20260614T103827Z,2026-06-14T10:38:27Z,azr-we-bidev-3,ddr_aum_realized_equity_global_yesterday,live,direct_mcp,2026-06-08,What was the total Global Realized Equity (excluding mark-to-market unrealized PnL on open positions) as of 2026-06-08?,17243415676.84395,,,,0.5,False,SUT returned no numeric answer,"SELECT
+    SUM(aum.TotalEquityTP - aum.NOP) AS GlobalRealizedEquity
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum AS aum
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked AS snap
+    ON snap.RealCID = aum.CID
+   AND snap.IsValidCustomer = 1
+   AND aum.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE aum.DateID = 20260608",,"execute_sql returned isError or no content: MCPClientError: MCP tool reported isError=true: {""error"": true, ""error_type"": ""ToolError"", ""tool"": ""execute_sql"", ""message"": ""Error calling tool 'execute_sql': SQL query failed: [ServiceErrorCode.BAD_REQUEST] [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `aum`.`CID` cannot be resolved. Did you mean one of the following? [`aum`.`NOP`, `aum`.`Date`, `aum`.`DateID`, `snap`.`GCID`, `aum`.`RealCID`]. SQLSTATE: 42703; line 5 pos 22\nQuery: SELECT\n    SUM(aum.TotalEquityTP - aum.NOP) AS GlobalRealizedEquity",19140,"[""ddr"", ""aum"", ""yesterday"", ""valid-users-cb"", ""realized-equity""]",direct_sql,17243415676.84395,0.0,True,SKILL_GAP,,,,,,,,,,,,,,,,,
+run-20260614T103827Z,2026-06-14T10:38:27Z,azr-we-bidev-3,ddr_mimo_external_deposits_tp_yesterday,live,direct_mcp,2026-06-08,What was the total amount in USD of external (non-internal-transfer) deposits to the Trading Platform on 2026-06-08? External deposits are payments made from outside the eToro ecosystem (e.g. card or wire from a customer's bank).,15471498.4,,,,0.5,False,SUT returned no numeric answer,"SELECT
+    SUM(m.AmountUSD) AS total_external_deposits_usd
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms m
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = m.CID
+   AND snap.IsValidCustomer = 1
+   AND m.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE m.DateID = 20260608
+  AND m.MIMOPlatform = 'TradingPlatform'
+  AND m.IsMoneyIn = 1
+  AND m.IsInternalTransfer = 0",,"execute_sql returned isError or no content: MCPClientError: MCP tool reported isError=true: {""error"": true, ""error_type"": ""ToolError"", ""tool"": ""execute_sql"", ""message"": ""Error calling tool 'execute_sql': SQL query failed: [ServiceErrorCode.BAD_REQUEST] [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `m`.`CID` cannot be resolved. Did you mean one of the following? [`m`.`Date`, `m`.`DateID`, `m`.`RealCID`, `snap`.`GCID`, `m`.`etr_y`]. SQLSTATE: 42703; line 5 pos 22\nQuery: SELECT\n    SUM(m.AmountUSD) AS total_external_deposits_usd\nFROM main.bi_db",13358,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""tp-deposits"", ""external""]",direct_sql,15471498.4,0.0,True,SKILL_GAP,,,,,,,,,,,,,,,,,
+run-20260614T103827Z,2026-06-14T10:38:27Z,azr-we-bidev-3,ddr_mimo_global_cashout_users_yesterday,live,direct_mcp,2026-06-08,"How many distinct customers had a successful global cashout (any platform: TP, IBAN, Options, MoneyFarm) on 2026-06-08? GlobalCashedOut is a 0/1 per-customer flag on the daily-status table.",7748.0,,,,0.5,False,SUT returned no numeric answer,"SELECT COUNT(DISTINCT ds.CID)
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status ds
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = ds.CID
+   AND snap.IsValidCustomer = 1
+   AND ds.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE ds.DateID = 20260608
+  AND ds.GlobalCashedOut = 1",,"execute_sql returned isError or no content: MCPClientError: MCP tool reported isError=true: {""error"": true, ""error_type"": ""ToolError"", ""tool"": ""execute_sql"", ""message"": ""Error calling tool 'execute_sql': SQL query failed: [ServiceErrorCode.BAD_REQUEST] [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `ds`.`CID` cannot be resolved. Did you mean one of the following? [`ds`.`Date`, `ds`.`DateID`, `snap`.`GCID`, `ds`.`RealCID`, `ds`.`etr_y`]. SQLSTATE: 42703; line 4 pos 22\nQuery: SELECT COUNT(DISTINCT ds.CID)\nFROM main.bi_db.gold_sql_dp_prod_we_bi_d",11186,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""cashout-users""]",direct_sql,7748.0,0.0,True,SKILL_GAP,,,,,,,,,,,,,,,,,
+run-20260614T103827Z,2026-06-14T10:38:27Z,azr-we-bidev-3,ddr_mimo_global_deposits_amount_yesterday,live,direct_mcp,2026-06-08,"What were the total external (non-internal-transfer) global deposits in USD on 2026-06-08? Global means across all eToro platforms (TP, eMoney IBAN, Options, MoneyFarm).",29910573.3,,,,0.5,False,SUT returned no numeric answer,"SELECT
+    SUM(mimo.AmountUSD) AS total_external_deposits_usd
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms mimo
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = mimo.CID
+    AND snap.IsValidCustomer = 1
+    AND mimo.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE mimo.DateID = 20260608
+    AND mimo.IsDeposit = 1
+    AND mimo.IsInternalTransfer = 0",,"execute_sql returned isError or no content: MCPClientError: MCP tool reported isError=true: {""error"": true, ""error_type"": ""ToolError"", ""tool"": ""execute_sql"", ""message"": ""Error calling tool 'execute_sql': SQL query failed: [ServiceErrorCode.BAD_REQUEST] [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `mimo`.`CID` cannot be resolved. Did you mean one of the following? [`mimo`.`Date`, `mimo`.`DateID`, `mimo`.`RealCID`, `snap`.`GCID`, `mimo`.`etr_y`]. SQLSTATE: 42703; line 5 pos 22\nQuery: SELECT\n    SUM(mimo.AmountUSD) AS total_external_deposits_us",11765,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""deposits""]",direct_sql,29910573.3,0.0,True,SKILL_GAP,,,,,,,,,,,,,,,,,
+run-20260614T103827Z,2026-06-14T10:38:27Z,azr-we-bidev-3,ddr_mimo_global_deposits_count_yesterday,live,direct_mcp,2026-06-08,How many global deposit transactions were made on 2026-06-08? Excludes internal transfers and crypto-redeem reclassifications.,19769.0,,,,0.5,False,SUT returned no numeric answer,"SELECT COUNT(*) AS global_deposit_transaction_count
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms mimo
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = mimo.CID
+   AND snap.IsValidCustomer = 1
+   AND mimo.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE mimo.DateID = 20260608
+  AND mimo.IsDeposit = 1
+  AND mimo.IsInternalTransfer = 0
+  AND mimo.IsCryptoToFiat = 0",,"execute_sql returned isError or no content: MCPClientError: MCP tool reported isError=true: {""error"": true, ""error_type"": ""ToolError"", ""tool"": ""execute_sql"", ""message"": ""Error calling tool 'execute_sql': SQL query failed: [ServiceErrorCode.BAD_REQUEST] [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `mimo`.`CID` cannot be resolved. Did you mean one of the following? [`mimo`.`Date`, `mimo`.`DateID`, `mimo`.`RealCID`, `snap`.`GCID`, `mimo`.`etr_y`]. SQLSTATE: 42703; line 4 pos 22\nQuery: SELECT COUNT(*) AS global_deposit_transaction_count\nFROM mai",19563,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""deposit-count""]",direct_sql,19769.0,0.0,True,SKILL_GAP,,,,,,,,,,,,,,,,,
+run-20260614T103827Z,2026-06-14T10:38:27Z,azr-we-bidev-3,ddr_mimo_tp_first_funded_yesterday,live,direct_mcp,2026-06-08,How many customers made their first-ever Trading-Platform deposit on 2026-06-08? This is the TP-platform-specific FTD count (not Global FTD).,867.0,,,,0.5,False,SUT returned no numeric answer,"SELECT COUNT(DISTINCT mimo.CID) AS tp_ftd_count
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms mimo
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = mimo.CID
+   AND snap.IsValidCustomer = 1
+   AND mimo.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE mimo.DateID = 20260608
+  AND mimo.MIMOPlatform = 'TradingPlatform'
+  AND mimo.IsInternalTransfer = 0
+  AND mimo.IsIBANQuickTransfer = 0
+  AND mimo.MoneyIn > 0
+  AND NOT EXISTS (
+      SELECT 1
+      FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms prev
+      WHERE prev.CID = mimo.CID
+        AND prev.MIMOPlatform = 'TradingPlatform'
+        AND prev.IsInternalTransfer = 0
+        AND prev.IsIBANQuickTransfer = 0
+        AND prev.MoneyIn > 0
+        AND prev.DateID < 20260608
+  )",,"execute_sql returned isError or no content: MCPClientError: MCP tool reported isError=true: {""error"": true, ""error_type"": ""ToolError"", ""tool"": ""execute_sql"", ""message"": ""Error calling tool 'execute_sql': SQL query failed: [ServiceErrorCode.BAD_REQUEST] [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `mimo`.`CID` cannot be resolved. Did you mean one of the following? [`mimo`.`Date`, `mimo`.`DateID`, `mimo`.`RealCID`, `snap`.`GCID`, `mimo`.`etr_y`]. SQLSTATE: 42703; line 4 pos 22\nQuery: SELECT COUNT(DISTINCT mimo.CID) AS tp_ftd_count\nFROM main.bi",22828,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""ftd""]",direct_sql,867.0,0.0,True,SKILL_GAP,,,,,,,,,,,,,,,,,
+run-20260614T103827Z,2026-06-14T10:38:27Z,azr-we-bidev-3,ddr_pnl_daily_total_pnl_yesterday,live,direct_mcp,2026-06-08,What was the total Daily PnL (realized NetProfit + unrealized mark-to-market change) across all positions on 2026-06-08?,104757898.38,,,,0.5,False,SUT returned no numeric answer,"SELECT SUM(pnl.NetProfit + pnl.UnrealizedPnLChange) AS total_daily_pnl
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl pnl
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = pnl.CID
+   AND snap.IsValidCustomer = 1
+   AND pnl.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE pnl.DateID = 20260608",,"execute_sql returned isError or no content: MCPClientError: MCP tool reported isError=true: {""error"": true, ""error_type"": ""ToolError"", ""tool"": ""execute_sql"", ""message"": ""Error calling tool 'execute_sql': SQL query failed: [ServiceErrorCode.BAD_REQUEST] [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `pnl`.`CID` cannot be resolved. Did you mean one of the following? [`pnl`.`Date`, `pnl`.`DateID`, `snap`.`GCID`, `pnl`.`IsBuy`, `pnl`.`IsSQF`]. SQLSTATE: 42703; line 4 pos 22\nQuery: SELECT SUM(pnl.NetProfit + pnl.UnrealizedPnLChange) AS total_daily_p",12844,"[""ddr"", ""pnl"", ""yesterday"", ""valid-users-cb"", ""daily-total-pnl""]",direct_sql,104757898.38,0.0,True,SKILL_GAP,,,,,,,,,,,,,,,,,
+run-20260614T103827Z,2026-06-14T10:38:27Z,azr-we-bidev-3,ddr_pnl_total_position_pnl_yesterday,live,direct_mcp,2026-06-08,What was the total mark-to-market unrealized PnL across all open positions as of 2026-06-08? Negative means open positions are aggregately under water.,-564406548.55,,,,0.5,False,SUT returned no numeric answer,"SELECT
+    SUM(aum.UnrealizedPnL) AS total_unrealized_pnl
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum AS aum
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked AS snap
+    ON snap.RealCID = aum.CID
+   AND snap.IsValidCustomer = 1
+   AND aum.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE aum.DateID = 20260608",,"execute_sql returned isError or no content: MCPClientError: MCP tool reported isError=true: {""error"": true, ""error_type"": ""ToolError"", ""tool"": ""execute_sql"", ""message"": ""Error calling tool 'execute_sql': SQL query failed: [ServiceErrorCode.BAD_REQUEST] [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `aum`.`CID` cannot be resolved. Did you mean one of the following? [`aum`.`NOP`, `aum`.`Date`, `aum`.`DateID`, `snap`.`GCID`, `aum`.`RealCID`]. SQLSTATE: 42703; line 5 pos 22\nQuery: SELECT\n    SUM(aum.UnrealizedPnL) AS total_unrealized_pnl\nFROM mai",19936,"[""ddr"", ""pnl"", ""yesterday"", ""valid-users-cb"", ""open-position-pnl""]",direct_sql,-564406548.55,-0.0,True,SKILL_GAP,,,,,,,,,,,,,,,,,
+run-20260614T103827Z,2026-06-14T10:38:27Z,azr-we-bidev-3,ddr_revenue_admin_yesterday,live,direct_mcp,2026-06-08,What was the total Admin Fee (dormancy/inactivity fee) revenue on 2026-06-08?,10619.05,,,,0.5,False,SUT returned no numeric answer,"SELECT SUM(f.Amount) AS total_admin_fee_revenue
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions f
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = f.CID
+   AND snap.IsValidCustomer = 1
+   AND f.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE f.DateID = 20260608
+  AND f.Metric = 'DormantFee'",,"execute_sql returned isError or no content: MCPClientError: MCP tool reported isError=true: {""error"": true, ""error_type"": ""ToolError"", ""tool"": ""execute_sql"", ""message"": ""Error calling tool 'execute_sql': SQL query failed: [ServiceErrorCode.BAD_REQUEST] [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `f`.`CID` cannot be resolved. Did you mean one of the following? [`f`.`Date`, `f`.`DateID`, `f`.`IsBuy`, `f`.`IsC2P`, `f`.`IsSQF`]. SQLSTATE: 42703; line 4 pos 22\nQuery: SELECT SUM(f.Amount) AS total_admin_fee_revenue\nFROM main.bi_db.gold_sql_dp_pro",11280,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""admin-fee""]",direct_sql,10619.05,0.0,True,SKILL_GAP,,,,,,,,,,,,,,,,,
+run-20260614T103827Z,2026-06-14T10:38:27Z,azr-we-bidev-3,ddr_revenue_conversion_fee_yesterday,live,direct_mcp,2026-06-08,What was the total Conversion Fee revenue on 2026-06-08? Conversion fees are charged when customer trade currency differs from their wallet currency.,414246.3192,,,,0.5,False,SUT returned no numeric answer,"SELECT SUM(f.Amount) AS total_conversion_fee_revenue
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions f
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = f.CID
+   AND snap.IsValidCustomer = 1
+   AND f.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE f.Date = '2026-06-08'
+  AND f.Metric = 'ConversionFee'",,"execute_sql returned isError or no content: MCPClientError: MCP tool reported isError=true: {""error"": true, ""error_type"": ""ToolError"", ""tool"": ""execute_sql"", ""message"": ""Error calling tool 'execute_sql': SQL query failed: [ServiceErrorCode.BAD_REQUEST] [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `f`.`CID` cannot be resolved. Did you mean one of the following? [`f`.`Date`, `f`.`DateID`, `f`.`IsBuy`, `f`.`IsC2P`, `f`.`IsSQF`]. SQLSTATE: 42703; line 4 pos 22\nQuery: SELECT SUM(f.Amount) AS total_conversion_fee_revenue\nFROM main.bi_db.gold_sql_d",11063,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""conversion-fee""]",direct_sql,414246.3192,0.0,True,SKILL_GAP,,,,,,,,,,,,,,,,,
+run-20260614T103827Z,2026-06-14T10:38:27Z,azr-we-bidev-3,ddr_revenue_full_commission_yesterday,live,direct_mcp,2026-06-08,What was the total Full Commission revenue on 2026-06-08? Full Commission combines retail trading commission with both fixed and percentage-based ticket fees.,1229189.3105,,,,0.5,False,SUT returned no numeric answer,"SELECT SUM(f.Amount) AS total_full_commission_revenue
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions f
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = f.CID
+   AND snap.IsValidCustomer = 1
+   AND f.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE f.DateID = 20260608
+  AND f.Metric = 'FullCommission'",,"execute_sql returned isError or no content: MCPClientError: MCP tool reported isError=true: {""error"": true, ""error_type"": ""ToolError"", ""tool"": ""execute_sql"", ""message"": ""Error calling tool 'execute_sql': SQL query failed: [ServiceErrorCode.BAD_REQUEST] [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `f`.`CID` cannot be resolved. Did you mean one of the following? [`f`.`Date`, `f`.`DateID`, `f`.`IsBuy`, `f`.`IsC2P`, `f`.`IsSQF`]. SQLSTATE: 42703; line 4 pos 22\nQuery: SELECT SUM(f.Amount) AS total_full_commission_revenue\nFROM main.bi_db.gold_sql_",11047,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""commission""]",direct_sql,1229189.3105,0.0,True,SKILL_GAP,,,,,,,,,,,,,,,,,
+run-20260614T103827Z,2026-06-14T10:38:27Z,azr-we-bidev-3,ddr_revenue_rollover_yesterday,live,direct_mcp,2026-06-08,What was the total Rollover Fee revenue on 2026-06-08? Rollover fees are the financing charge for keeping leveraged CFD positions open overnight.,290343.4,,,,0.5,False,SUT returned no numeric answer,"SELECT SUM(f.Amount) AS total_rollover_fee_revenue
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions f
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = f.CID
+   AND snap.IsValidCustomer = 1
+   AND f.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE f.DateID = 20260608
+  AND f.Metric = 'RollOverFee'",,"execute_sql returned isError or no content: MCPClientError: MCP tool reported isError=true: {""error"": true, ""error_type"": ""ToolError"", ""tool"": ""execute_sql"", ""message"": ""Error calling tool 'execute_sql': SQL query failed: [ServiceErrorCode.BAD_REQUEST] [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `f`.`CID` cannot be resolved. Did you mean one of the following? [`f`.`Date`, `f`.`DateID`, `f`.`IsBuy`, `f`.`IsC2P`, `f`.`IsSQF`]. SQLSTATE: 42703; line 4 pos 22\nQuery: SELECT SUM(f.Amount) AS total_rollover_fee_revenue\nFROM main.bi_db.gold_sql_dp_",12265,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""rollover""]",direct_sql,290343.4,0.0,True,SKILL_GAP,,,,,,,,,,,,,,,,,
+run-20260614T103827Z,2026-06-14T10:38:27Z,azr-we-bidev-3,ddr_revenue_spot_adjust_yesterday,live,direct_mcp,2026-06-08,What was the total Spot Price Adjustment fee revenue on 2026-06-08? Spot price adjustments reflect the spread mark-up applied to bid/ask quotes.,1888.16,,,,0.5,False,SUT returned no numeric answer,"SELECT SUM(f.Amount) AS total_spot_price_adjustment_revenue
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions f
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = f.CID
+   AND snap.IsValidCustomer = 1
+   AND f.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+JOIN main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dim_revenue_metrics m
+    ON f.RevenueMetricID = m.RevenueMetricID
+WHERE f.DateID = 20260608
+  AND m.Metric = 'SpotPriceAdjustment'",,"execute_sql returned isError or no content: MCPClientError: MCP tool reported isError=true: {""error"": true, ""error_type"": ""ToolError"", ""tool"": ""execute_sql"", ""message"": ""Error calling tool 'execute_sql': SQL query failed: [ServiceErrorCode.BAD_REQUEST] [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `f`.`CID` cannot be resolved. Did you mean one of the following? [`f`.`Date`, `f`.`DateID`, `f`.`IsBuy`, `f`.`IsC2P`, `f`.`IsSQF`]. SQLSTATE: 42703; line 4 pos 22\nQuery: SELECT SUM(f.Amount) AS total_spot_price_adjustment_revenue\nFROM main.bi_db.gol",11655,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""spot-adjust""]",direct_sql,1888.16,0.0,True,SKILL_GAP,,,,,,,,,,,,,,,,,
+run-20260614T103827Z,2026-06-14T10:38:27Z,azr-we-bidev-3,ddr_revenue_totals_yesterday,live,direct_mcp,2026-06-08,"What was eToro's Total Revenue (per the DDR)
+on 2026-06-08?",2880439.782463,,,,0.5,False,SUT returned no numeric answer,"SELECT SUM(f.Amount) AS total_revenue_usd
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions f
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = f.CID
+   AND snap.IsValidCustomer = 1
+   AND f.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE f.DateID = 20260608
+  AND f.IncludedInTotalRevenue = 1",,"execute_sql returned isError or no content: MCPClientError: MCP tool reported isError=true: {""error"": true, ""error_type"": ""ToolError"", ""tool"": ""execute_sql"", ""message"": ""Error calling tool 'execute_sql': SQL query failed: [ServiceErrorCode.BAD_REQUEST] [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `f`.`CID` cannot be resolved. Did you mean one of the following? [`f`.`Date`, `f`.`DateID`, `f`.`IsBuy`, `f`.`IsC2P`, `f`.`IsSQF`]. SQLSTATE: 42703; line 4 pos 22\nQuery: SELECT SUM(f.Amount) AS total_revenue_usd\nFROM main.bi_db.gold_sql_dp_prod_we_b",11813,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""single-tile-poc""]",direct_sql,2880439.782463,0.0,True,SKILL_GAP,,,,,,,,,,,,,,,,,

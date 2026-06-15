@@ -1,0 +1,30 @@
+id: genie__dev_mimo__total_fees_and_fx_fees_last_quarter_tp_o__1
+question: Total fees and FX fees, last quarter (TP only — eMoney fees are separate
+  rows)
+source: genie_benchmark:01f15e792ce1140bbf6af2f8f7c6b54c
+asof: '2026-06-08'
+ground_truth_sql: "WITH mimo AS (\n    SELECT FeeUSD, FXFeeAmount, TransactionDate\n\
+  \    FROM main.etoro_kpi.mimo_tp_deposits_v\n    UNION ALL\n    SELECT FeeUSD, FXFeeAmount,\
+  \ TransactionDate\n    FROM main.etoro_kpi.mimo_tp_withdraws_v\n)\nSELECT\n    SUM(FeeUSD)\
+  \      AS total_fees_usd,\n    SUM(FXFeeAmount) AS total_fx_fees\nFROM mimo\nWHERE\
+  \ TransactionDate >= ADD_MONTHS(DATE_TRUNC('QUARTER', CURRENT_DATE()), -3)\n  AND\
+  \ TransactionDate <  DATE_TRUNC('QUARTER', CURRENT_DATE());"
+expected_value:
+  type: numeric_series
+  value:
+  - - 544982114.71
+    - 9020165438.0
+  tolerance_pct: 0.5
+expected_skill_hub: _none_
+skill_coverage_status: missing
+canonical_tables:
+- main.etoro_kpi.mimo_tp_deposits_v
+- main.etoro_kpi.mimo_tp_withdraws_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'DEV - MIMO' (01f15e792ce1140bbf6af2f8f7c6b54c) benchmark
+  question.
+tags:
+- genie_benchmark
+- dev_mimo
+max_replicas: 3

@@ -18,6 +18,15 @@ _upstream_wiki_routing.json
 # Auto-generated backup files from UC rewriter
 *.uc-rewrite.bak
 
+# Eval-harness MCP-only override rule — placed at run start, removed at run end
+.cursor/rules/eval-mcp-only.mdc
+
+# Local workspace backup snapshots (created by skill-edit safety nets, never commit)
+.local_workspace_backup/
+
+# Microsoft Office lock files (created while a doc is open in Word/Excel/PowerPoint)
+~$*
+
 # Audit harness outputs — large, regenerable, never committed
 audits/_tier1_audit_cache/
 audits/_sql_grounded_audit_cache/

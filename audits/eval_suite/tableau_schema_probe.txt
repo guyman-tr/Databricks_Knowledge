@@ -1,0 +1,554 @@
+﻿Signed in. Probing types ...
+
+### type Sheet  (39 fields)
+  id: ID!
+  name: String
+  documentViewId: String
+  luid: String!
+  path: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  index: Int
+  tags: [?!]!
+  tagsConnection: TagsConnection
+  worksheetFields: [CalculatedField]
+  worksheetFieldsConnection: CalculatedFieldsConnection
+  datasourceFields: [Field]
+  datasourceFieldsConnection: FieldsConnection
+  sheetFieldInstances: [Field]
+  sheetFieldInstancesConnection: FieldsConnection
+  upstreamDataQualityWarnings: [?!]!
+  upstreamDataQualityWarningsConnection: DataQualityWarningsConnection
+  upstreamLabels: [?!]!
+  upstreamLabelsConnection: LabelsConnection
+  parentEmbeddedDatasources: [?!]!
+  parentEmbeddedDatasourcesConnection: EmbeddedDatasourcesConnection
+  workbook: Workbook
+  containedInDashboards: [Dashboard]
+  containedInDashboardsConnection: DashboardsConnection
+  referencedByMetrics: [Metric]
+  referencedByMetricsConnection: MetricsConnection
+  upstreamDatasources: [Datasource]
+  upstreamDatasourcesConnection: DatasourcesConnection
+  upstreamTables: [Table]
+  upstreamTablesConnection: TablesConnection
+  upstreamFields: [Field]!
+  upstreamFieldsConnection: FieldsConnection
+  upstreamDatabases: [Database]
+  upstreamDatabasesConnection: DatabasesConnection
+  upstreamFlows: [Flow]
+  upstreamFlowsConnection: FlowsConnection
+  upstreamColumns: [Column]!
+  upstreamColumnsConnection: ColumnsConnection
+
+### type Dashboard  (37 fields)
+  id: ID!
+  name: String
+  documentViewId: String
+  luid: String!
+  path: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  index: Int
+  tags: [?!]!
+  tagsConnection: TagsConnection
+  sheets: [?!]!
+  sheetsConnection: SheetsConnection
+  askDataExtensions: [?!]!
+  askDataExtensionsConnection: AskDataExtensionsConnection
+  upstreamSheetFieldInstances: [Field]
+  upstreamSheetFieldInstancesConnection: FieldsConnection
+  upstreamDataQualityWarnings: [?!]!
+  upstreamDataQualityWarningsConnection: DataQualityWarningsConnection
+  upstreamLabels: [?!]!
+  upstreamLabelsConnection: LabelsConnection
+  referencedByMetrics: [Metric]
+  referencedByMetricsConnection: MetricsConnection
+  workbook: Workbook
+  upstreamDatabases: [Database]
+  upstreamDatabasesConnection: DatabasesConnection
+  upstreamDatasources: [Datasource]
+  upstreamDatasourcesConnection: DatasourcesConnection
+  upstreamTables: [Table]
+  upstreamTablesConnection: TablesConnection
+  upstreamFields: [Field]
+  upstreamFieldsConnection: FieldsConnection
+  upstreamFlows: [Flow]
+  upstreamFlowsConnection: FlowsConnection
+  upstreamLenses: [Lens]
+  upstreamLensesConnection: LensesConnection
+  upstreamColumns: [Column]
+  upstreamColumnsConnection: ColumnsConnection
+
+### type DatasourceField  (87 fields)
+  id: ID!
+  name: String
+  fullyQualifiedName: String
+  description: String
+  descriptionInherited: [InheritedStringResult]
+  isHidden: Boolean
+  folderName: String
+  remoteField: Field
+  downstreamColumns: [?!]!
+  downstreamColumnsConnection: ColumnsConnection
+  downstreamTables: [?!]!
+  downstreamTablesConnection: DatabaseTablesConnection
+  downstreamVirtualConnectionTables: [?!]!
+  downstreamVirtualConnectionTablesConnection: VirtualConnectionTablesConnection
+  downstreamVirtualConnections: [?!]!
+  downstreamVirtualConnectionsConnection: VirtualConnectionsConnection
+  downstreamDatabases: [?!]!
+  downstreamDatabasesConnection: DatabasesConnection
+  downstreamFlows: [?!]!
+  downstreamFlowsConnection: FlowsConnection
+  downstreamFields: [?!]!
+  downstreamFieldsConnection: FieldsConnection
+  downstreamDatasources: [PublishedDatasource!]
+  downstreamDatasourcesConnection: PublishedDatasourcesConnection
+  downstreamLenses: [Lens!]
+  downstreamLensesConnection: LensesConnection
+  downstreamSheets: [?!]!
+  downstreamSheetsConnection: SheetsConnection
+  downstreamDashboards: [?!]!
+  downstreamDashboardsConnection: DashboardsConnection
+  downstreamWorkbooks: [Workbook!]
+  downstreamWorkbooksConnection: WorkbooksConnection
+  downstreamMetrics: [Metric!]
+  downstreamMetricsConnection: MetricsConnection
+  downstreamOwners: [TableauUser!]
+  downstreamOwnersConnection: TableauUsersConnection
+  upstreamTables: [?!]!
+  upstreamTablesConnection: DatabaseTablesConnection
+  upstreamVirtualConnectionTables: [?!]!
+  upstreamVirtualConnectionTablesConnection: VirtualConnectionTablesConnection
+  upstreamVirtualConnections: [?!]!
+  upstreamVirtualConnectionsConnection: VirtualConnectionsConnection
+  upstreamDatabases: [?!]!
+  upstreamDatabasesConnection: DatabasesConnection
+  upstreamFlows: [?!]!
+  upstreamFlowsConnection: FlowsConnection
+  upstreamDatasources: [?!]!
+  upstreamDatasourcesConnection: PublishedDatasourcesConnection
+  datasource: Datasource
+  referencedByFields: [FieldReferencingField]
+  referencedByFieldsConnection: FieldReferencingFieldsConnection
+  referencedByFlowFieldInputField: [FlowFieldInputField]
+  referencedByFlowFieldInputFieldConnection: FlowFieldInputFieldsConnection
+  referencedByFlowFieldOutputField: [FlowFieldOutputField]
+  referencedByFlowFieldOutputFieldConnection: FlowFieldOutputFieldsConnection
+  derivedLensFields: [LensField]
+  derivedLensFieldsConnection: LensFieldsConnection
+  metricDefinitions: [MetricDefinition]
+  metricDefinitionsConnection: MetricDefinitionsConnection
+  referencedByFilters: [DatasourceFilter]
+  referencedByFiltersConnection: DatasourceFiltersConnection
+  referencedByBins: [BinField]
+  referencedByBinsConnection: BinFieldsConnection
+  referencedByCalculations: [CalculatedField]
+  referencedByCalculationsConnection: CalculatedFieldsConnection
+  referencedByCombinedFields: [CombinedField]
+  referencedByCombinedFieldsConnection: CombinedFieldsConnection
+  referencedByCombinedSets: [CombinedSetField]
+  referencedByCombinedSetsConnection: CombinedSetFieldsConnection
+  referencedByRemoteFields: [DatasourceField]
+  referencedByRemoteFieldsConnection: DatasourceFieldsConnection
+  referencedByGroups: [GroupField]
+  referencedByGroupsConnection: GroupFieldsConnection
+  referencedBySets: [SetField]
+  referencedBySetsConnection: SetFieldsConnection
+  referencedByHierarchies: [HierarchyField]
+  referencedByHierarchiesConnection: HierarchyFieldsConnection
+  sheets: [Sheet]
+  sheetsConnection: SheetsConnection
+  directSheets: [Sheet]
+  directSheetsConnection: SheetsConnection
+  upstreamFields: [Field]!
+  upstreamFieldsConnection: FieldsConnection
+  upstreamColumns: [Column]!
+  upstreamColumnsConnection: ColumnsConnection
+  downstreamMetricDefinitions: [MetricDefinition]
+  downstreamMetricDefinitionsConnection: MetricDefinitionsConnection
+
+### type Field  (86 fields)
+  id: ID!
+  name: String
+  fullyQualifiedName: String
+  description: String
+  descriptionInherited: [InheritedStringResult]
+  isHidden: Boolean
+  folderName: String
+  upstreamDatabases: [?!]!
+  upstreamDatabasesConnection: DatabasesConnection
+  upstreamTables: [?!]!
+  upstreamTablesConnection: DatabaseTablesConnection
+  upstreamVirtualConnectionTables: [?!]!
+  upstreamVirtualConnectionTablesConnection: VirtualConnectionTablesConnection
+  upstreamVirtualConnections: [?!]!
+  upstreamVirtualConnectionsConnection: VirtualConnectionsConnection
+  upstreamFlows: [?!]!
+  upstreamFlowsConnection: FlowsConnection
+  upstreamDatasources: [?!]!
+  upstreamDatasourcesConnection: PublishedDatasourcesConnection
+  downstreamColumns: [?!]!
+  downstreamColumnsConnection: ColumnsConnection
+  downstreamTables: [?!]!
+  downstreamTablesConnection: DatabaseTablesConnection
+  downstreamVirtualConnectionTables: [?!]!
+  downstreamVirtualConnectionTablesConnection: VirtualConnectionTablesConnection
+  downstreamVirtualConnections: [?!]!
+  downstreamVirtualConnectionsConnection: VirtualConnectionsConnection
+  downstreamDatabases: [?!]!
+  downstreamDatabasesConnection: DatabasesConnection
+  downstreamFlows: [?!]!
+  downstreamFlowsConnection: FlowsConnection
+  downstreamFields: [?!]!
+  downstreamFieldsConnection: FieldsConnection
+  downstreamDatasources: [PublishedDatasource!]
+  downstreamDatasourcesConnection: PublishedDatasourcesConnection
+  downstreamLenses: [Lens!]
+  downstreamLensesConnection: LensesConnection
+  downstreamSheets: [?!]!
+  downstreamSheetsConnection: SheetsConnection
+  downstreamDashboards: [?!]!
+  downstreamDashboardsConnection: DashboardsConnection
+  downstreamWorkbooks: [Workbook!]
+  downstreamWorkbooksConnection: WorkbooksConnection
+  downstreamMetrics: [Metric!]
+  downstreamMetricsConnection: MetricsConnection
+  downstreamOwners: [TableauUser!]
+  downstreamOwnersConnection: TableauUsersConnection
+  datasource: Datasource
+  referencedByFields: [FieldReferencingField]
+  referencedByFieldsConnection: FieldReferencingFieldsConnection
+  referencedByFlowFieldInputField: [FlowFieldInputField]
+  referencedByFlowFieldInputFieldConnection: FlowFieldInputFieldsConnection
+  referencedByFlowFieldOutputField: [FlowFieldOutputField]
+  referencedByFlowFieldOutputFieldConnection: FlowFieldOutputFieldsConnection
+  derivedLensFields: [LensField]
+  derivedLensFieldsConnection: LensFieldsConnection
+  metricDefinitions: [MetricDefinition]
+  metricDefinitionsConnection: MetricDefinitionsConnection
+  referencedByFilters: [DatasourceFilter]
+  referencedByFiltersConnection: DatasourceFiltersConnection
+  referencedByBins: [BinField]
+  referencedByBinsConnection: BinFieldsConnection
+  referencedByCalculations: [CalculatedField]
+  referencedByCalculationsConnection: CalculatedFieldsConnection
+  referencedByCombinedFields: [CombinedField]
+  referencedByCombinedFieldsConnection: CombinedFieldsConnection
+  referencedByCombinedSets: [CombinedSetField]
+  referencedByCombinedSetsConnection: CombinedSetFieldsConnection
+  referencedByRemoteFields: [DatasourceField]
+  referencedByRemoteFieldsConnection: DatasourceFieldsConnection
+  referencedByGroups: [GroupField]
+  referencedByGroupsConnection: GroupFieldsConnection
+  referencedBySets: [SetField]
+  referencedBySetsConnection: SetFieldsConnection
+  referencedByHierarchies: [HierarchyField]
+  referencedByHierarchiesConnection: HierarchyFieldsConnection
+  sheets: [Sheet]
+  sheetsConnection: SheetsConnection
+  directSheets: [Sheet]
+  directSheetsConnection: SheetsConnection
+  upstreamFields: [Field]!
+  upstreamFieldsConnection: FieldsConnection
+  upstreamColumns: [Column]!
+  upstreamColumnsConnection: ColumnsConnection
+  downstreamMetricDefinitions: [MetricDefinition]
+  downstreamMetricDefinitionsConnection: MetricDefinitionsConnection
+
+### type ColumnField  (95 fields)
+  id: ID!
+  name: String
+  fullyQualifiedName: String
+  description: String
+  descriptionInherited: [InheritedStringResult]
+  isHidden: Boolean
+  folderName: String
+  dataCategory: FieldRoleCategory
+  role: FieldRole
+  dataType: FieldDataType
+  defaultFormat: String
+  semanticRole: String
+  aggregation: String
+  aggregationParam: String
+  columns: [?!]!
+  columnsConnection: ColumnsConnection
+  downstreamColumns: [?!]!
+  downstreamColumnsConnection: ColumnsConnection
+  downstreamTables: [?!]!
+  downstreamTablesConnection: DatabaseTablesConnection
+  downstreamVirtualConnectionTables: [?!]!
+  downstreamVirtualConnectionTablesConnection: VirtualConnectionTablesConnection
+  downstreamVirtualConnections: [?!]!
+  downstreamVirtualConnectionsConnection: VirtualConnectionsConnection
+  downstreamDatabases: [?!]!
+  downstreamDatabasesConnection: DatabasesConnection
+  downstreamFlows: [?!]!
+  downstreamFlowsConnection: FlowsConnection
+  downstreamFields: [?!]!
+  downstreamFieldsConnection: FieldsConnection
+  downstreamDatasources: [PublishedDatasource!]
+  downstreamDatasourcesConnection: PublishedDatasourcesConnection
+  downstreamLenses: [Lens!]
+  downstreamLensesConnection: LensesConnection
+  downstreamSheets: [?!]!
+  downstreamSheetsConnection: SheetsConnection
+  downstreamDashboards: [?!]!
+  downstreamDashboardsConnection: DashboardsConnection
+  downstreamWorkbooks: [Workbook!]
+  downstreamWorkbooksConnection: WorkbooksConnection
+  downstreamMetrics: [Metric!]
+  downstreamMetricsConnection: MetricsConnection
+  downstreamOwners: [TableauUser!]
+  downstreamOwnersConnection: TableauUsersConnection
+  upstreamTables: [?!]!
+  upstreamTablesConnection: DatabaseTablesConnection
+  upstreamVirtualConnectionTables: [?!]!
+  upstreamVirtualConnectionTablesConnection: VirtualConnectionTablesConnection
+  upstreamVirtualConnections: [?!]!
+  upstreamVirtualConnectionsConnection: VirtualConnectionsConnection
+  upstreamDatabases: [?!]!
+  upstreamDatabasesConnection: DatabasesConnection
+  upstreamFlows: [?!]!
+  upstreamFlowsConnection: FlowsConnection
+  upstreamDatasources: [?!]!
+  upstreamDatasourcesConnection: PublishedDatasourcesConnection
+  datasource: Datasource
+  referencedByFields: [FieldReferencingField]
+  referencedByFieldsConnection: FieldReferencingFieldsConnection
+  referencedByFlowFieldInputField: [FlowFieldInputField]
+  referencedByFlowFieldInputFieldConnection: FlowFieldInputFieldsConnection
+  referencedByFlowFieldOutputField: [FlowFieldOutputField]
+  referencedByFlowFieldOutputFieldConnection: FlowFieldOutputFieldsConnection
+  derivedLensFields: [LensField]
+  derivedLensFieldsConnection: LensFieldsConnection
+  metricDefinitions: [MetricDefinition]
+  metricDefinitionsConnection: MetricDefinitionsConnection
+  referencedByFilters: [DatasourceFilter]
+  referencedByFiltersConnection: DatasourceFiltersConnection
+  referencedByBins: [BinField]
+  referencedByBinsConnection: BinFieldsConnection
+  referencedByCalculations: [CalculatedField]
+  referencedByCalculationsConnection: CalculatedFieldsConnection
+  referencedByCombinedFields: [CombinedField]
+  referencedByCombinedFieldsConnection: CombinedFieldsConnection
+  referencedByCombinedSets: [CombinedSetField]
+  referencedByCombinedSetsConnection: CombinedSetFieldsConnection
+  referencedByRemoteFields: [DatasourceField]
+  referencedByRemoteFieldsConnection: DatasourceFieldsConnection
+  referencedByGroups: [GroupField]
+  referencedByGroupsConnection: GroupFieldsConnection
+  referencedBySets: [SetField]
+  referencedBySetsConnection: SetFieldsConnection
+  referencedByHierarchies: [HierarchyField]
+  referencedByHierarchiesConnection: HierarchyFieldsConnection
+  sheets: [Sheet]
+  sheetsConnection: SheetsConnection
+  directSheets: [Sheet]
+  directSheetsConnection: SheetsConnection
+  upstreamFields: [Field]!
+  upstreamFieldsConnection: FieldsConnection
+  upstreamColumns: [Column]!
+  upstreamColumnsConnection: ColumnsConnection
+  downstreamMetricDefinitions: [MetricDefinition]
+  downstreamMetricDefinitionsConnection: MetricDefinitionsConnection
+
+### type CalculatedField  (101 fields)
+  id: ID!
+  name: String
+  fullyQualifiedName: String
+  description: String
+  descriptionInherited: [InheritedStringResult]
+  isHidden: Boolean
+  folderName: String
+  dataCategory: FieldRoleCategory
+  role: FieldRole
+  dataType: FieldDataType
+  defaultFormat: String
+  semanticRole: String
+  aggregation: String
+  aggregationParam: String
+  formula: String
+  isAutoGenerated: Boolean
+  hasUserReference: Boolean
+  fields: [?!]!
+  fieldsConnection: FieldsConnection
+  parameters: [?!]!
+  parametersConnection: ParametersConnection
+  downstreamColumns: [?!]!
+  downstreamColumnsConnection: ColumnsConnection
+  downstreamTables: [?!]!
+  downstreamTablesConnection: DatabaseTablesConnection
+  downstreamVirtualConnectionTables: [?!]!
+  downstreamVirtualConnectionTablesConnection: VirtualConnectionTablesConnection
+  downstreamVirtualConnections: [?!]!
+  downstreamVirtualConnectionsConnection: VirtualConnectionsConnection
+  downstreamDatabases: [?!]!
+  downstreamDatabasesConnection: DatabasesConnection
+  downstreamFlows: [?!]!
+  downstreamFlowsConnection: FlowsConnection
+  downstreamFields: [?!]!
+  downstreamFieldsConnection: FieldsConnection
+  downstreamDatasources: [PublishedDatasource!]
+  downstreamDatasourcesConnection: PublishedDatasourcesConnection
+  downstreamLenses: [Lens!]
+  downstreamLensesConnection: LensesConnection
+  downstreamSheets: [?!]!
+  downstreamSheetsConnection: SheetsConnection
+  downstreamDashboards: [?!]!
+  downstreamDashboardsConnection: DashboardsConnection
+  downstreamWorkbooks: [Workbook!]
+  downstreamWorkbooksConnection: WorkbooksConnection
+  downstreamMetrics: [Metric!]
+  downstreamMetricsConnection: MetricsConnection
+  downstreamOwners: [TableauUser!]
+  downstreamOwnersConnection: TableauUsersConnection
+  upstreamTables: [?!]!
+  upstreamTablesConnection: DatabaseTablesConnection
+  upstreamVirtualConnectionTables: [?!]!
+  upstreamVirtualConnectionTablesConnection: VirtualConnectionTablesConnection
+  upstreamVirtualConnections: [?!]!
+  upstreamVirtualConnectionsConnection: VirtualConnectionsConnection
+  upstreamDatabases: [?!]!
+  upstreamDatabasesConnection: DatabasesConnection
+  upstreamFlows: [?!]!
+  upstreamFlowsConnection: FlowsConnection
+  upstreamDatasources: [?!]!
+  upstreamDatasourcesConnection: PublishedDatasourcesConnection
+  datasource: Datasource
+  referencedByFields: [FieldReferencingField]
+  referencedByFieldsConnection: FieldReferencingFieldsConnection
+  referencedByFlowFieldInputField: [FlowFieldInputField]
+  referencedByFlowFieldInputFieldConnection: FlowFieldInputFieldsConnection
+  referencedByFlowFieldOutputField: [FlowFieldOutputField]
+  referencedByFlowFieldOutputFieldConnection: FlowFieldOutputFieldsConnection
+  derivedLensFields: [LensField]
+  derivedLensFieldsConnection: LensFieldsConnection
+  metricDefinitions: [MetricDefinition]
+  metricDefinitionsConnection: MetricDefinitionsConnection
+  referencedByFilters: [DatasourceFilter]
+  referencedByFiltersConnection: DatasourceFiltersConnection
+  referencedByBins: [BinField]
+  referencedByBinsConnection: BinFieldsConnection
+  referencedByCalculations: [CalculatedField]
+  referencedByCalculationsConnection: CalculatedFieldsConnection
+  referencedByCombinedFields: [CombinedField]
+  referencedByCombinedFieldsConnection: CombinedFieldsConnection
+  referencedByCombinedSets: [CombinedSetField]
+  referencedByCombinedSetsConnection: CombinedSetFieldsConnection
+  referencedByRemoteFields: [DatasourceField]
+  referencedByRemoteFieldsConnection: DatasourceFieldsConnection
+  referencedByGroups: [GroupField]
+  referencedByGroupsConnection: GroupFieldsConnection
+  referencedBySets: [SetField]
+  referencedBySetsConnection: SetFieldsConnection
+  referencedByHierarchies: [HierarchyField]
+  referencedByHierarchiesConnection: HierarchyFieldsConnection
+  sheet: Sheet
+  sheets: [Sheet]
+  sheetsConnection: SheetsConnection
+  directSheets: [Sheet]
+  directSheetsConnection: SheetsConnection
+  upstreamFields: [Field]!
+  upstreamFieldsConnection: FieldsConnection
+  upstreamColumns: [Column]!
+  upstreamColumnsConnection: ColumnsConnection
+  downstreamMetricDefinitions: [MetricDefinition]
+  downstreamMetricDefinitionsConnection: MetricDefinitionsConnection
+
+### type DataSourceField: NOT FOUND
+
+### type SheetFieldInstance: NOT FOUND
+
+### type Workbook  (50 fields)
+  id: ID!
+  name: String
+  luid: String!
+  containsUnsupportedCustomSql: Boolean
+  site: TableauSite!
+  projectVizportalUrlId: String
+  projectName: String
+  projectLuid: String
+  containerType: String!
+  containerName: String
+  owner: TableauUser!
+  tags: [?!]!
+  tagsConnection: TagsConnection
+  views: [?!]!
+  viewsConnection: ViewsConnection
+  sheets: [?!]!
+  sheetsConnection: SheetsConnection
+  dashboards: [?!]!
+  dashboardsConnection: DashboardsConnection
+  embeddedDatasources: [?!]!
+  embeddedDatasourcesConnection: EmbeddedDatasourcesConnection
+  parameters: [?!]!
+  parametersConnection: ParametersConnection
+  description: String
+  uri: String
+  vizportalUrlId: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  upstreamDataQualityWarnings: [?!]!
+  upstreamDataQualityWarningsConnection: DataQualityWarningsConnection
+  upstreamLabels: [?!]!
+  upstreamLabelsConnection: LabelsConnection
+  downstreamMetrics: [?!]!
+  downstreamMetricsConnection: MetricsConnection
+  downstreamOwners: [?!]!
+  downstreamOwnersConnection: TableauUsersConnection
+  upstreamDatabases: [Database]!
+  upstreamDatabasesConnection: DatabasesConnection
+  upstreamFlows: [Flow]
+  upstreamFlowsConnection: FlowsConnection
+  upstreamLenses: [Lens]
+  upstreamLensesConnection: LensesConnection
+  upstreamDatasources: [PublishedDatasource]!
+  upstreamDatasourcesConnection: PublishedDatasourcesConnection
+  upstreamVirtualConnectionTables: [VirtualConnectionTable]!
+  upstreamVirtualConnectionTablesConnection: VirtualConnectionTablesConnection
+  upstreamVirtualConnections: [VirtualConnection]!
+  upstreamVirtualConnectionsConnection: VirtualConnectionsConnection
+  upstreamTables: [DatabaseTable]!
+  upstreamTablesConnection: DatabaseTablesConnection
+
+--- Probe query: workbook(luid=DDR) { sheets dashboards } ---
+workbook: eToro's Daily Data Report (DDR)
+  sheets: 58
+    - 'AUM Spaceship'                                    sheetFieldInstances=8
+        * Total  (id=1e4fbb2f-aa2f-83ca-62eb-977c4ca44318)
+        * TimeRange  (id=34cb637a-7383-1bc5-6b46-73e8d35698a8)
+        * "Yesterday"  (id=91071a07-4b92-7ffe-fb89-f301684eac2c)
+        * is_funded  (id=962a86dc-351b-b398-fb48-52bb9e114d6f)
+        * Super  (id=aee771cd-40da-0f54-5766-5e7366254ebe)
+    - 'Revenue: Marketing Region Chart'                  sheetFieldInstances=12
+        * Country  (id=1d5237bf-6ac3-96bf-81c5-1e54cd2b56d5)
+        * CountryAccessFilter  (id=323bf4c5-67c4-a75b-b9fa-a375503da65b)
+        * IsCreditReportValidCB  (id=39998aca-5f94-ce15-5b2d-14afc89dd1ed)
+        * RegulationAccessFilter  (id=42b1493b-7f69-1304-015d-d6ade5544195)
+        * MarketingRegion  (id=5663c382-0db0-c036-a9f7-3b0152fe3de5)
+    - "Yesterday's: Daily Profit & Loss"                 sheetFieldInstances=18
+        * DailyPnLCrypto  (id=015432e7-ad07-ca5c-7230-0ecff4dfbb60)
+        * Country  (id=1d5237bf-6ac3-96bf-81c5-1e54cd2b56d5)
+        * CountryAccessFilter  (id=323bf4c5-67c4-a75b-b9fa-a375503da65b)
+        * IsCreditReportValidCB  (id=39998aca-5f94-ce15-5b2d-14afc89dd1ed)
+        * RegulationAccessFilter  (id=42b1493b-7f69-1304-015d-d6ade5544195)
+    - 'Global ReDeposits Amount per Marketing Region'    sheetFieldInstances=12
+        * Country  (id=1d5237bf-6ac3-96bf-81c5-1e54cd2b56d5)
+        * ReDepositsGlobalAmount  (id=2788ab4f-c556-36b4-f37e-a632c14e1283)
+        * CountryAccessFilter  (id=323bf4c5-67c4-a75b-b9fa-a375503da65b)
+        * IsCreditReportValidCB  (id=39998aca-5f94-ce15-5b2d-14afc89dd1ed)
+        * RegulationAccessFilter  (id=42b1493b-7f69-1304-015d-d6ade5544195)
+    - "Yesterday's: Trades"                              sheetFieldInstances=15
+        * NewTradesCount  (id=047646f0-dab0-dd67-8e34-bc172bfbf06f)
+        * Country  (id=1d5237bf-6ac3-96bf-81c5-1e54cd2b56d5)
+        * CountryAccessFilter  (id=323bf4c5-67c4-a75b-b9fa-a375503da65b)
+        * IsCreditReportValidCB  (id=39998aca-5f94-ce15-5b2d-14afc89dd1ed)
+        * RegulationAccessFilter  (id=42b1493b-7f69-1304-015d-d6ade5544195)
+  dashboards: 11
+    - 'Revenue: MiFID Category Breakdowns'               contains 4 sheet(s)
+    - 'Customers'                                        contains 5 sheet(s)
+    - 'EOD Club Redeposit by Marketing Region'           contains 1 sheet(s)
+    - 'Money Movement'                                   contains 14 sheet(s)
+    - 'Revenue: Overview & Breakdowns'                   contains 8 sheet(s)

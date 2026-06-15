@@ -1,0 +1,61 @@
+﻿sheet field instance: id=afc837e4-6b3a-cfaa-17d1-956b552df836 name=TotalRevenue
+{
+  "id": "afc837e4-6b3a-cfaa-17d1-956b552df836",
+  "name": "TotalRevenue",
+  "kind": "ColumnField",
+  "fully_qualified_name": "[TotalRevenue]",
+  "is_hidden": null,
+  "aggregation": null,
+  "formula": null,
+  "columns": [
+    {
+      "name": "TotalRevenue",
+      "table_full_name": null,
+      "table_name": "Custom SQL Query",
+      "table_kind": "CustomSQLTable"
+    }
+  ],
+  "upstream_columns": [
+    {
+      "name": "TotalRevenue",
+      "table_full_name": null,
+      "table_name": "Custom SQL Query",
+      "table_kind": "CustomSQLTable"
+    }
+  ],
+  "upstream_fields": [],
+  "remote_field": null
+}
+
+datasource field: id=afc837e4-6b3a-cfaa-17d1-956b552df836 name=TotalRevenue
+{
+  "id": "afc837e4-6b3a-cfaa-17d1-956b552df836",
+  "name": "TotalRevenue",
+  "kind": "ColumnField",
+  "fully_qualified_name": "[TotalRevenue]",
+  "is_hidden": false,
+  "aggregation": null,
+  "formula": null,
+  "columns": [
+    {
+      "name": "TotalRevenue",
+      "table_full_name": null,
+      "table_name": "Custom SQL Query",
+      "table_kind": "CustomSQLTable"
+    }
+  ],
+  "upstream_columns": [],
+  "upstream_fields": [],
+  "remote_field": null
+}
+
+--- probing datasource field id ---
+python : GraphQL errors: [{'message': "Validation error (InvalidFragmentType@[fields/upstreamTables]) : Fragment 
+cannot be spread here as objects of type 'DatabaseTable' can never be of type 'CustomSQLTable'", 'locations': 
+[{'line': 92, 'column': 7}], 'extensions': {'classification': 'ValidationError'}}]
+At C:\Users\guyman\AppData\Local\Temp\2\ps-script-42d9af5a-18d9-4bbb-a5f4-a02dc3af3bea.ps1:78 char:69
++ ... _Knowledge; python tools\eval_suite\loop_authoring\_probe_total_reven ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (GraphQL errors:...dationError'}}]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

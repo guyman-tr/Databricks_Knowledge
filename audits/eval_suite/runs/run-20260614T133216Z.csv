@@ -1,0 +1,9 @@
+run_id,run_started_at,host,case_id,case_status,sut_name,asof,natural_language_question,expected_value,observed_value,diff_abs,diff_pct,tolerance_pct,passed,reason,sql_used,sut_text_answer,sut_error,elapsed_ms,tags,baseline_sut_name,baseline_value,baseline_diff_pct,baseline_passed,drift_verdict,judge_score,judge_label,judge_rationale,judge_model,trace_skills_loaded,trace_sql_executed_count,trace_sql_succeeded_count,trace_tool_call_count,trace_tool_call_by_kind,trace_mcp_tool_call_by_name,trace_input_tokens,trace_output_tokens,trace_cache_read_tokens,trace_cache_write_tokens,trace_thinking_excerpt,trace_session_id,trace_model
+run-20260614T133234Z,2026-06-14T13:32:34Z,azr-we-bidev-3,ddr_revenue_admin_yesterday,live,direct_mcp,2026-06-08,What was the total Admin Fee (dormancy/inactivity fee) revenue on 2026-06-08?,10619.05,0.0,-10619.05,-100.0,0.5,False,"expected=10,619.0500; observed=0.0000; diff=-100.0000% > tol=0.5%","SELECT COALESCE(SUM(f.Amount), 0) AS total_dormant_fee_usd
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions f
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+  ON snap.RealCID = f.RealCID
+  AND snap.IsValidCustomer = 1
+  AND f.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE f.DateID = 20260608
+  AND f.Metric = 'DormantFee'","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-revenue-and-fees'; 2 describes, 6 probes, 8 rounds; row[0]=['0.000000']; scalar=0.0.",,83296,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""admin-fee""]",,,,,N/A,,,,,,,,,,,,,,,,,

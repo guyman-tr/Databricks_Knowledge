@@ -1,0 +1,45 @@
+﻿Wiki ┬º4 columns: 19
+Return-column matches: 19/19
+
+Fetching current body of main.etoro_kpi_prep.tvf_pnl_single_day...
+  Saved current body -> audits\_uc_deploy_descriptions\tvf_pnl_single_day.before.sql  (6310 chars)
+  Wrote new CREATE  -> audits\_uc_deploy_descriptions\tvf_pnl_single_day.new.sql  (9884 chars)
+
+=== Body delta check ===
+  Original body length:       6310
+  Body embedded in new SQL:   6310
+  Body is character-identical (only wrapper added).
+
+=== Pre-flight: row count of main.etoro_kpi_prep.tvf_pnl_single_day('2026-05-26') ===
+  rows before: 140,276,601
+=== Applying CREATE OR REPLACE FUNCTION ===
+  applied.
+=== Post-flight: row count of main.etoro_kpi_prep.tvf_pnl_single_day('2026-05-26') ===
+  rows after:  140,276,601
+  match: True
+=== Sample DESCRIBE FUNCTION EXTENDED ===
+  Function:      main.etoro_kpi_prep.tvf_pnl_single_day
+  Type:          TABLE
+  Input:         target_date DATE
+  Returns:       DateID              INT           '@dateID. Source: . (T2 Γאפ Function_PnL_Single_Day)'
+                 CID                 INT           'Customer ID. References Customer.Customer. (Tier 1 Γאפ Trade.PositionTbl) (via Dim_Position). Source: . (T1 Γאפ Function_PnL_Single_Day)'
+                 PositionID          BIGINT        'Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position. (Tier 1 Γאפ Trade.PositionTbl) (via Dim_Position). Source: . (T1 Γאפ Function_PnL_Single_Day)'
+                 UnrealizedPnLStart  DECIMAL(26,4) 'SUM(UnrealizedPnLStart). Source: . (T2 Γאפ Function_PnL_Single_Day)'
+                 UnrealizedPnLEnd    DECIMAL(26,4) 'SUM(UnrealizedPnLEnd). Source: . (T2 Γאפ Function_PnL_Single_Day)'
+                 UnrealizedPnLChange DECIMAL(28,4) 'SUM(UnrealizedPnLChange). Source: . (T2 Γאפ Function_PnL_Single_Day)'
+                 NetProfit           DECIMAL(29,4) 'SUM(NetProfit). Source: . (T2 Γאפ Function_PnL_Single_Day)'
+                 InstrumentID        INT           'FK to Trade.Instrument. Financial instrument being traded. (Tier 1 Γאפ Trade.PositionTbl) (via Dim_Position). Source: . (T1 Γאפ Function_PnL_Single_Day)'
+                 MirrorID            INT           'FK to Trade.Mirror. 0/NULL = manual. Positive = copy-trade position. (Tier 1 Γאפ Trade.PositionTbl) (via Dim_Position). Source: . (T1 Γאפ Function_PnL_Single_Day)'
+                 Leverage            INT           'Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type. (Tier 1 Γאפ Trade.PositionTbl) (via Dim_Position). Source: . (T1 Γאפ Function_PnL_Single_Day)'
+                 IsBuy               BOOLEAN       '1 = Long/Buy (profit when price rises), 0 = Short/Sell. (Tier 1 Γאפ Trade.PositionTbl) (via Dim_Position). Source: . (T1 Γאפ Function_PnL_Single_Day)'
+                 IsSettled           INT           '1 = real asset, 0 = CFD asset. (Tier 5 Γאפ Expert Review) (via Dim_Position). Source: . (T1 Γאפ Function_PnL_Single_Day)'
+                 HedgeServerID       INT           'FK to Trade.HedgeServer. Hedge server managing this position. (Tier 1 Γאפ Trade.PositionTbl) (via Dim_Position). Source: . (T1 Γאפ Function_PnL_Single_Day)'
+                 SettlementTypeID    INT           'Modern settlement classification. Dictionary.SettlementTypes: 0=CFD, 1=REAL, 2=TRS, 3=CMT, 4=REAL_FUTURES, 5=MARGIN_TRADE. Replaces IsSettled. (Tier 1 Γאפ Trade.PositionTbl) (via Dim_Position). Source: . (T1 Γאפ Function_PnL_Single_Day)'
+                 ClosedOnDate        INT           'ISNULL(dp.ClosedOnDate, 0) (sql-derived [coalesce, DIVERGENT] from Function_PnL_Single_Day); branches: 1 when (dp.CloseDateID = @dateID) OR 0 (fallback); where dp = DWH_dbo.Dim_Position. Source: . (T1 Γאפ Function_PnL_Single_Day)'
+                 IsFuture            INT           '1=futures contract (instrument in Trade.InstrumentGroups WHERE GroupID=25), 0=not futures. 243 flagged as futures. (Tier 2 Γאפ SP_Dim_Instrument) (via Dim_Instrument). Source: . (T1 Γאפ Function_PnL_Single_Day)'
+                 IsCopyFund          INT           'CASE WHEN NOT cpt.PositionID IS NULL THEN 1 ELSE 0 END (sql-derived [case] from Function_PnL_Single_Day); where cpt = BI_DB_dbo.BI_DB_CopyFund_Positions. Source: . (T1 Γאפ Function_PnL_Single_Day)'
+                 IsMarginTrade       INT           'COALESCE(dp.IsMarginTrade, upl.IsMarginTrade) (sql-derived [coalesce, DIVERGENT] from Function_PnL_Single_Day); branches: CASE WHEN dp.SettlementTypeID = 5 THEN 1 ELSE 0 END OR CASE WHEN bdppl.SettlementTypeID = 5 THEN 1 ELSE 0 END; where dp = DWH_dbo.Dim_Position, bdppl = BI_DB_dbo.BI_DB_PositionPnL. Source: . (T1 Γאפ Function_PnL_Single_Day)'
+                 IsSQF               INT           'case when InstrumentID is not null then 1 else 0 end. Source: . (T2 Γאפ Function_PnL_Single_Day)'
+  Deterministic: true
+  Data Access:   READS SQL DATA
+  Configs:       spark.databricks.ai.adaptiveBatch.initialSize=4

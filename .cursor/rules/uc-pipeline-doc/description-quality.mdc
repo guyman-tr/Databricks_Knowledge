@@ -1,0 +1,143 @@
+---
+description: "Quality goal for §4 Output Columns descriptions. Defines what 'good' looks like (semantic_meaning OR transformation_logic), the TRIVIAL pattern catalog that fails the goal, the upstream-hop climb protocol used to backfill trivial rows, and the visible-failure contract when the climb exhausts. Supersedes the implicit assumption that a non-empty Transformation cell is sufficient."
+globs:
+alwaysApply: false
+---
+
+# Description Quality Goal
+
+## CONTRACT
+
+| Constraint | Detail |
+|------------|--------|
+| **Scope** | Every row in the `## 4. Output Columns` markdown table of every Synapse-mirror wiki under `knowledge/synapse/Wiki/**/*.md`. |
+| **Goal** | Every row's `Transformation` cell carries **semantic_meaning** OR **transformation_logic** (ideally both). Provenance-only rows fail this goal. |
+| **MUST NOT** | Fabricate semantics from column name alone, from sample data, or from Confluence in this phase. The only permitted evidence source is the upstream wiki chain. |
+| **MUST** | When the upstream chain exhausts without a non-trivial description, write the failure visibly. Silent invention is the failure mode we are eliminating. |
+| **Failure mode** | **SOFT** — exhausted chains produce a tagged passthrough row, not an exception. Visible failure is the contract. |
+
+## Goal in one sentence
+
+A `Transformation` cell must carry **at least one** of:
+
+1. **Semantic meaning** — what the field IS in business terms: what it measures, what units, what role it plays.
+2. **Transformation logic** — the math, `CASE`, `COALESCE`, or aggregation that produced it.
+
+Cells that only restate provenance (which the `Source` column already carries) fail this goal.
+
+## TRIVIAL pattern catalog
+
+A `Transformation` cell is **TRIVIAL** if it matches any of these regexes (case-insensitive, leading/trailing whitespace stripped):
+
+| Pattern | Matches |
+|---------|---------|
+| `^\s*Direct\s*$` | `Direct` |
+| `^\s*Direct\s*\(alias[^)]*\)\s*$` | `Direct (alias DateKey → DateID)` |
+| `^\s*Direct\s*\(legacy[^)]*\)\s*$` | `Direct (legacy — always 0 since 2019)` |
+| `^\s*Direct\s+from\s+[\w\.\[\]]+\s*$` | `Direct from Fact_SnapshotEquity.X` |
+| `^\s*Same\s+as\s+upstream\s*$` | `Same as upstream` |
+| `^\s*Same\s+lineage\s+as\s+[\w\.\[\]]+\s*$` | `Same lineage as Function_Foo.Bar` |
+| `^\s*Passthrough\s*$` | `Passthrough` |
+| `^\s*$` | empty / whitespace-only |
+
+The `Direct (alias …)` and `Direct (legacy …)` variants are TRIVIAL — the parenthetical adds bookkeeping, not semantics.
+
+## CLIMB protocol
+
+When a row is TRIVIAL, the upstream climber backfills it as follows:
+
+1. **Parse the `Source` cell.** The standard shape in Synapse wikis is `ObjectName.ColumnName` (e.g. `Fact_SnapshotEquity.TotalStockMarginLoanValue`). Alias prefixes (`a`, `b`, `gc`) are not present in this column — Phase 5 already resolves them.
+2. **Resolve `ObjectName` to a wiki file.** Maintain an index of `{ObjectName: wiki_path}` built once from `knowledge/synapse/Wiki/**/*.md` filenames. No fuzzy matching. If `ObjectName` does not appear in the index, the climb terminates as **exhausted** with reason `unresolved_object`.
+3. **Parse the upstream wiki's `## 4. Output Columns` table.** Find the row whose `Column` matches `ColumnName` (case-insensitive exact match).
+4. **Inspect the upstream row's `Transformation` cell.**
+   - If **non-trivial** (does not match the TRIVIAL catalog) → terminal hit. Return the cell text and the upstream object as `terminal_source`.
+   - If **trivial** → recurse to step 1 with the upstream row's own `Source` cell.
+5. **Termination conditions:**
+   - **Found:** terminal hit per step 4.
+   - **Exhausted:** any of:
+     - The upstream `Source` cell itself is unparseable (no `Object.Column` pair).
+     - The upstream `Source` cell lists multiple objects (e.g. `Fact_X, Fact_Y`) — only transformation rows fan in, so a trivial-with-multi-source row indicates the column genuinely has no single ancestor.
+     - The wiki file or column row cannot be located.
+     - Hop counter exceeds **5**.
+     - A visited-set cycle is detected (`A.col → B.col → A.col`).
+
+## Failure contract (visible passthrough)
+
+If the climb returns **exhausted**, the rewriter writes the `Transformation` cell as:
+
+```
+Passthrough — no upstream semantic (chain: TerminalObj.TerminalCol [→ Reason])
+```
+
+Examples:
+
+| Situation | Rendered cell |
+|-----------|---------------|
+| `V_Liabilities.TotalStockMarginLoanValue` → `Fact_SnapshotEquity.TotalStockMarginLoanValue` (trivial, no further upstream) | `Passthrough — no upstream semantic (chain: Fact_SnapshotEquity.TotalStockMarginLoanValue)` |
+| Climb exceeds 5 hops | `Passthrough — no upstream semantic (chain: A.col → B.col → … → F.col, hop_cap)` |
+| Upstream object not in the wiki index | `Passthrough — no upstream semantic (chain: UnknownObj.col, unresolved_object)` |
+
+This output is **deliberately ugly** so it is easy to grep, easy to count, and impossible to confuse with a real description. A future phase can decide whether to enrich these via samples / Confluence; until that decision is made, the absence of semantic content is reported as a fact, not papered over.
+
+## Successful climb output
+
+When the climb finds a terminal, the rewriter writes:
+
+```
+{terminal text verbatim} (via {terminal_object})
+```
+
+The `(via {terminal_object})` tag is mandatory — it preserves a one-step provenance breadcrumb so a reader can trace where the meaning was adopted from. The `Source` column still carries the immediate-hop provenance.
+
+## Examples drawn from V_Liabilities
+
+Path: `knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md`
+
+### Already passes the goal (do not touch)
+
+| # | Column | Transformation cell | Verdict |
+|---|--------|---------------------|---------|
+| 21 | `ActualNWA` | `CASE WHEN NetEquity > BonusCredit THEN BonusCredit WHEN NetEquity < 0 THEN 0 ELSE NetEquity END. NetEquity = ISNULL(...)` | HAS_TRANSFORMATION |
+| 22 | `Liabilities` | `ISNULL(InProcessCashouts,0) + CASE WHEN NetEquity - BonusCredit > 0 THEN NetEquity - BonusCredit ...` | HAS_TRANSFORMATION |
+| 48 | `LiabilitiesStockReal` | `ISNULL(PositionPnLStocksReal, 0) + ISNULL(TotalRealStocks, 0)` | HAS_TRANSFORMATION |
+
+### Fails the goal — climber targets
+
+| # | Column | Transformation cell | Classification |
+|---|--------|---------------------|----------------|
+| 75 | `TotalStockMarginLoanValue` | `Direct` | TRIVIAL — climb to `Fact_SnapshotEquity.TotalStockMarginLoanValue` |
+| 70 | `TotalFuturesProviderMargin` | `Direct` | TRIVIAL |
+| 50 | `CommissionByUnitsCrypto_TRS` | `Direct` | TRIVIAL |
+| 2 | `DateID` | `Direct (alias DateKey → DateID)` | TRIVIAL — parenthetical is bookkeeping |
+| 10 | `TotalStockOrders` | `Direct (legacy — always 0 since 2019)` | TRIVIAL — the parenthetical is HISTORY, not semantic meaning. Climb anyway; the historical note can be preserved alongside the climbed semantic if present. |
+
+## Relationship to the SQL-grounded audit
+
+The existing SQL-grounded audit (`tools/cleanup_tier1/sql_grounded_audit.py`) grades **correctness** of non-trivial transformation cells against the producing SQL. It is silent on TRIVIAL rows because they have no math to validate.
+
+The two concerns are orthogonal:
+
+| | Math correct? | Math wrong? | No math (trivial) |
+|---|---|---|---|
+| **Has semantic** | both pass | math-audit FAIL | quality-grader pass |
+| **No semantic** | quality-grader FAIL | both fail | quality-grader FAIL |
+
+The math-audit pipeline is unchanged. The quality grader and climber-rewriter operate only on the bottom row.
+
+## What is deliberately out of scope (in this phase)
+
+| Out of scope | Why |
+|--------------|-----|
+| Sampling Databricks/Synapse for distribution stats | Explicit user constraint for this phase. Revisit if the climb exhausts at high rate. |
+| Pulling Confluence / Atlassian knowledge | Same. |
+| Inferring meaning from column name alone | Forbidden — high false-positive risk, the failure mode we are eliminating. |
+| Inferring from sibling columns | Same. |
+| Compressing already-good FK-with-enum rows | Different problem; deferred. |
+| UC_generated wikis | Different table shape; deferred. |
+
+## Acceptance criteria for this rule
+
+- The TRIVIAL regex catalog above is **exhaustive** for the patterns in the current corpus. New trivial idioms discovered during Phase B grading are added here, not silently handled in code.
+- The climber MUST emit, for every row it touches, a structured trace: `[(obj, col, transformation_cell, verdict)]` per hop. The trace is part of the audit artifact.
+- The rewriter MUST NOT touch non-TRIVIAL rows.
+- The rewriter MUST NOT silently drop the `(legacy …)` or `(alias …)` parentheticals when adopting an upstream terminal. If the original row had a bookkeeping parenthetical, append it after the adopted text: `{terminal} (via {upstream}; legacy — always 0 since 2019)`.

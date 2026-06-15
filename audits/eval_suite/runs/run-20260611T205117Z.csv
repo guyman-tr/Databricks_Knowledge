@@ -1,0 +1,30 @@
+run_id,run_started_at,host,case_id,case_status,sut_name,asof,natural_language_question,expected_value,observed_value,diff_abs,diff_pct,tolerance_pct,passed,reason,sql_used,sut_text_answer,sut_error,elapsed_ms,tags,baseline_sut_name,baseline_value,baseline_diff_pct,baseline_passed,drift_verdict,judge_score,judge_label,judge_rationale,judge_model
+run-20260611T205125Z,2026-06-11T20:51:25Z,azr-we-bidev-3,ddr_revenue_totals_yesterday,live,cursor_agent,2026-06-08,"What was eToro's Total Revenue (per the DDR) for valid customers
+on 2026-06-08?",2880439.782463,2880439.78,-0.002463000360876322,-8.55077886325492e-08,0.5,True,"expected=2,880,439.7825; observed=2,880,439.7800; diff=-0.0000% <= tol=0.5%",,"I'll help you get eToro's Total Revenue for valid customers on 2026-06-08 from the DDR. Let me load the relevant domain skills first to ensure I query the correct tables with the proper filters.Now I'll query the DDR (Daily Digital Report) revenue fact table for 2026-06-08, applying the valid-users filter contract.Let me find the correct snapshot customer table name in Unity Catalog.## eToro's Total Revenue on 2026-06-08
+
+**$2,880,439.78 USD**
+
+This is the eToro core trading-platform revenue from the DDR (Daily Digital Report) fact table, filtered to metrics with `IncludedInTotalRevenue = 1`.
+
+### Breakdown
+- **903,672** revenue-generating events
+- **332,237** distinct valid customers contributed
+
+### What's included
+This number covers eToro's core trading platform revenue:
+- Trading fees (FullCommission, TicketFees, RollOverFee, AdminFee, SpotPriceAdjustment)
+- MIMO fees (ConversionFee, CashoutFee, TransferCoinFee, CryptoToFiatFee)
+- Rev-share (StakingLagOneMonth, ShareLending)
+- Other (DormantFee, Options_PFOF)
+
+### What's NOT included
+Per the cross-platform rollup contract, this excludes:
+- **Spaceship** (AU — Super/Voyager/Nova/Money): separate canonical view `etoro_kpi.v_spaceship_fees`
+- **MoneyFarm** (UK): fee view exists but is a placeholder (not yet flowing)
+- **WealthFrance** (FR): revenue surface TBD
+- **Zengo/Bit2C**: acquired, ingestion pending
+- **Subscription revenue**: work in progress
+
+---
+
+**Scope:** Valid customers only (IsValidCustomer=1, period-correct SCD-2 walk on snapshot fact for DateID=20260608). Excludes test accounts, internal accounts, and etorians per the valid-users filter contract.",,119125,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""single-tile-poc""]",direct_sql,2880439.782463,0.0,True,PASS,,,,

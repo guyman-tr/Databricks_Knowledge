@@ -1,0 +1,24 @@
+id: ddr__ddr_trading_volumes_and_amounts_v__volume_open
+question: What was the total notional volume of positions opened on 2026-06-08?
+source: ddr
+asof: '2026-06-08'
+ground_truth_sql: 'SELECT SUM(VolumeOpen) AS volume_open
+
+  FROM main.etoro_kpi.ddr_trading_volumes_and_amounts_v
+
+  WHERE DateID = CAST(REPLACE(''2026-06-08'',''-'','''') AS INT)'
+expected_value:
+  type: numeric
+  value: 2272267005
+  tolerance_pct: 0.5
+expected_skill_hub: domain-trading
+skill_coverage_status: missing
+canonical_tables:
+- main.etoro_kpi.ddr_trading_volumes_and_amounts_v
+anti_sources: []
+expected_filters: []
+notes: ''
+tags:
+- ddr
+- ddr_trading_volumes_and_amounts_v
+max_replicas: 3

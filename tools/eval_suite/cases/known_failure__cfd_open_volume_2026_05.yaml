@@ -1,0 +1,24 @@
+id: known_failure__cfd_open_volume_2026_05
+question: What was the CFD open volume yesterday?
+source: known_failure
+ground_truth_sql: "SELECT SUM(VolumeOpen) AS cfd_open_volume\nFROM main.etoro_kpi.ddr_trading_volumes_and_amounts_v\n\
+  WHERE DateID = CAST(REPLACE('2026-06-08','-','') AS INT)\n  AND IsSettled = 0"
+expected_skill_hub: domain-trading
+canonical_tables:
+- main.etoro_kpi.ddr_trading_volumes_and_amounts_v
+anti_sources: []
+expected_filters:
+- IsSettled = 0
+notes: 2026-06-08 routing-failure case. MCP relevance floor (~0.55) silenced the correct
+  domain-trading match (scored 0.514, ranked 3rd). The answer was found and then discarded.
+  CFD = IsSettled=0 across all instrument types (not a specific InstrumentTypeID).
+tags:
+- known_failure
+- routing_2026_06
+asof: '2026-06-08'
+expected_value:
+  type: numeric
+  value: 2077129043
+  tolerance_pct: 0.5
+skill_coverage_status: covered
+max_replicas: 3

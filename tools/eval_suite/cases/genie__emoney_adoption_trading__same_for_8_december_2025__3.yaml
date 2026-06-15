@@ -1,0 +1,28 @@
+id: genie__emoney_adoption_trading__same_for_8_december_2025__3
+question: same for 8 december 2025
+source: genie_benchmark:01f0c51e5a4a1506bb34d4751918b4d2
+asof: '2026-06-08'
+ground_truth_sql: "SELECT \n  SUM(`num_positions_total`) - SUM(`num_positions_lc`)\
+  \ AS tp_positions_opened, \n  SUM(`num_positions_lc`) AS lc_positions_opened\nFROM\
+  \ `main`.`bi_output`.`vg_positionsvolumeandattributes_lc4_source`\nWHERE `Date_`\
+  \ = DATE('2025-12-08')\n  AND `CountryName` ILIKE '%france%'\n  AND `position_event_flag`\
+  \ ILIKE '%OpenDataFlag%'\n  AND `Club` ILIKE '%silver%';"
+expected_value:
+  type: PENDING
+  tolerance_pct: 0.5
+expected_skill_hub: _none_
+skill_coverage_status: missing
+canonical_tables:
+- main.bi_output.vg_positionsvolumeandattributes_lc4_source
+anti_sources: []
+expected_filters: []
+notes: 'Seeded from Genie space ''eMoney Adoption & Trading'' (01f0c51e5a4a1506bb34d4751918b4d2)
+  benchmark question.
+
+  [pin error] SQL FAILED: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable,
+  or function parameter with name `Date_` cannot be resolved. Did you mean one of
+  the followin'
+tags:
+- genie_benchmark
+- emoney_adoption_trading
+max_replicas: 3

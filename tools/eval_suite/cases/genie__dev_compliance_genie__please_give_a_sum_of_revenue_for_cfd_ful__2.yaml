@@ -1,0 +1,31 @@
+id: genie__dev_compliance_genie__please_give_a_sum_of_revenue_for_cfd_ful__2
+question: please give a sum of revenue for CFD Fullcomission for asic clients during
+  2025
+source: genie_benchmark:01f158ec1e0e1bb0852910e06d28c582
+asof: '2026-06-08'
+ground_truth_sql: "SELECT\n  SUM(bi_output_vg_revenue_slim.RevenueAmount) AS lifetime_revenue_cfd_fullcommission_asic_2025\n\
+  FROM\n  `main`.`etoro_kpi`.`customer_snapshot_v` AS customer_snapshot_v\n    JOIN\
+  \ `main`.`etoro_kpi_stg`.`bi_output_vg_revenue_slim` AS bi_output_vg_revenue_slim\n\
+  \      ON customer_snapshot_v.RealCID = bi_output_vg_revenue_slim.RealCID\n    \
+  \  AND customer_snapshot_v.DateID = bi_output_vg_revenue_slim.DateID\nWHERE\n  customer_snapshot_v.Regulation\
+  \ = 'ASIC'\n  AND bi_output_vg_revenue_slim.IsSettled = 0\n  AND bi_output_vg_revenue_slim.IncludedInTotalRevenue\
+  \ = 1\n  AND bi_output_vg_revenue_slim.Metric = 'FullCommission'\n  AND bi_output_vg_revenue_slim.DateID\
+  \ BETWEEN 20250101 AND 20251231\n  AND bi_output_vg_revenue_slim.RevenueAmount IS\
+  \ NOT NULL;"
+expected_value:
+  type: numeric
+  value: 123694.2761
+  tolerance_pct: 0.5
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: covered
+canonical_tables:
+- main.etoro_kpi.customer_snapshot_v
+- main.etoro_kpi_stg.bi_output_vg_revenue_slim
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'DEV - Compliance Genie' (01f158ec1e0e1bb0852910e06d28c582)
+  benchmark question.
+tags:
+- genie_benchmark
+- dev_compliance_genie
+max_replicas: 3

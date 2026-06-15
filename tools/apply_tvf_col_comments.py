@@ -14,6 +14,12 @@ import os, re, sys, argparse
 
 REPO_ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
 FUNC_DIR  = os.path.join(REPO_ROOT, "knowledge", "synapse", "Wiki", "BI_DB_dbo", "Functions")
+WIKI_ROOT = os.path.join(REPO_ROOT, "knowledge", "synapse", "Wiki")
+WIKI_OVERRIDES = {
+    # name -> wiki path (relative to WIKI_ROOT). Used when the wiki isn't under
+    # BI_DB_dbo/Functions/<name>.md.
+    "V_Liabilities": os.path.join("DWH_dbo", "Views", "V_Liabilities.md"),
+}
 
 DBX_HOST      = "adb-5142916747090026.6.azuredatabricks.net"
 DBX_HTTP_PATH = "/sql/1.0/warehouses/208214768b0e0308"
@@ -53,6 +59,8 @@ MAPPING = [
     ("Function_Instrument_Snapshot_Enriched",           "main.etoro_kpi_prep.v_dim_instrument_enriched"),
     ("Function_Trading_Volume",                         "main.etoro_kpi_prep.v_trading_volume_and_amount"),
     ("Function_Trading_Volume_PositionLevel",           "main.etoro_kpi_prep.v_trading_volume_positionlevel"),
+    ("Function_AUM_OptionsPlatform",                    "main.etoro_kpi_prep.v_options_aum"),
+    ("V_Liabilities",                                   "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities"),
 ]
 
 MAX_COMMENT = 500
@@ -76,7 +84,10 @@ def truncate(text, limit):
 
 def parse_wiki_cols(tvf_name):
     """Return {col_lower: comment_string} from §4 Output Columns."""
-    path = os.path.join(FUNC_DIR, tvf_name + ".md")
+    if tvf_name in WIKI_OVERRIDES:
+        path = os.path.join(WIKI_ROOT, WIKI_OVERRIDES[tvf_name])
+    else:
+        path = os.path.join(FUNC_DIR, tvf_name + ".md")
     if not os.path.isfile(path):
         return {}
     with open(path, encoding="utf-8") as f:
@@ -116,25 +127,60 @@ def parse_wiki_cols(tvf_name):
 def main():
     parser = argparse.ArgumentParser(description="Apply TVF column descriptions via COMMENT ON COLUMN")
     parser.add_argument("--dry-run", action="store_true", help="Print statements without executing")
-    parser.add_argument("--only", metavar="TVF", help="Run for a single TVF name (e.g. Function_Revenue_AdminFee)")
+    parser.add_argument("--only", metavar="NAMES",
+                        help="Comma-separated list of TVF names (e.g. Function_Revenue_AdminFee,V_Liabilities)")
+    parser.add_argument("--only-file", metavar="PATH",
+                        help="Read TVF names from a file (one per line, # comments allowed)")
     args = parser.parse_args()
 
-    targets = MAPPING
+    selected: set[str] = set()
     if args.only:
-        targets = [(t, u) for t, u in MAPPING if t == args.only]
-        if not targets:
-            print(f"ERROR: '{args.only}' not found in MAPPING")
+        selected |= {n.strip() for n in args.only.split(",") if n.strip()}
+    if args.only_file:
+        with open(args.only_file, encoding="utf-8") as fh:
+            for line in fh:
+                line = line.split("#", 1)[0].strip()
+                if line:
+                    selected.add(line)
+    if selected:
+        targets = [(t, u) for t, u in MAPPING if t in selected]
+        missing = selected - {t for t, _ in MAPPING}
+        if missing:
+            print(f"ERROR: not in MAPPING: {sorted(missing)}")
             sys.exit(1)
+        if not targets:
+            print(f"ERROR: no MAPPING matches selection")
+            sys.exit(1)
+    else:
+        targets = MAPPING
 
     conn = cursor = None
     if not args.dry_run:
         from databricks import sql
+        token = (os.environ.get("DATABRICKS_TOKEN") or "").strip()
         print(f"Connecting to {DBX_HOST}...")
-        conn = sql.connect(
-            server_hostname=DBX_HOST,
-            http_path=DBX_HTTP_PATH,
-            auth_type="databricks-oauth",
-        )
+        if token:
+            print("Auth: PAT (DATABRICKS_TOKEN)")
+            conn = sql.connect(
+                server_hostname=DBX_HOST,
+                http_path=DBX_HTTP_PATH,
+                access_token=token,
+            )
+        else:
+            # Use the same profile-based SDK auth that the MCP uses successfully,
+            # avoiding the CSRF-prone interactive databricks-oauth flow.
+            from databricks.sdk import WorkspaceClient
+            profile = os.environ.get("DATABRICKS_MCP_PROFILE", "guyman")
+            print(f"Auth: SDK profile '{profile}' (via ~/.databrickscfg)")
+            wc = WorkspaceClient(profile=profile)
+            def _credentials_provider():
+                hp = wc.config.authenticate  # returns dict of HTTP headers
+                return hp
+            conn = sql.connect(
+                server_hostname=DBX_HOST,
+                http_path=DBX_HTTP_PATH,
+                credentials_provider=_credentials_provider,
+            )
         cursor = conn.cursor()
         print("Connected.\n")
 

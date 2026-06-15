@@ -1,0 +1,53 @@
+﻿Scanning 3407 wikis...
+
+=== Population summary ===
+  total ┬º4 rows scanned:      22,659
+  TRIVIAL (already addressed): 1
+  WEAK candidates:             1,078  (4.8% of non-trivial)
+  OK (no weakness flags):      21,580
+
+=== Bucket counts (a row can hit multiple tags) ===
+  LEN_LT_30                : 1,070
+  PROVENANCE_ONLY          : 11
+  JUST_ID_OR_KEY           : 1
+
+=== Top wikis by weak-row count ===
+   153  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_DDR_Aggregation_ThisMonth.md
+   144  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_DDR_Aggregation_ThisQuarter.md
+   144  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_DDR_Aggregation_ThisWeek.md
+   144  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_DDR_Aggregation_ThisYear.md
+   144  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_DDR_Aggregation_Yesterday.md
+    68  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_DDR_Aggregation_MoM.md
+    68  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_DDR_Aggregation_YoY.md
+    27  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_Revenue_Total.md
+    27  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_Revenue_Trading_Instrument_Level.md
+    21  knowledge/synapse/Wiki/eMoney_dbo/Tables/ETL_SettlementsTransactions.md
+    15  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_Revenue_OptionsPlatform.md
+    14  knowledge/synapse/Wiki/Dealing_dbo/Tables/Dealing_EquityFees.md
+     8  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_Trading_Volume.md
+     8  knowledge/synapse/Wiki/Dealing_dbo/Tables/Dealing_ESMANetLoss.md
+     8  knowledge/synapse/Wiki/eMoney_dbo/Tables/eMoney_Calculated_Balance.md
+     8  knowledge/synapse/Wiki/eMoney_dbo/Tables/ETL_AccountsActivities.md
+     7  knowledge/synapse/Wiki/Dealing_dbo/Tables/Dealing_CommoditiesIntraHour_Etoro.md
+     6  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_Trading_Volume_PositionLevel.md
+     6  knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_AML_Multiple_Accounts_Dep_fulldata.md
+     5  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_PnL_Single_Day.md
+
+=== Sample rows per bucket ===
+
+[LEN_LT_30]  (showing 5 of 1070)
+  Function_DDR_Aggregation_MoM.md  ::  'RealCID'  ->  'Direct from PERIODIC CTE'
+  Function_DDR_Aggregation_MoM.md  ::  'GlobalDepositsCount'  ->  'SUM(GlobalDepositsCount)'
+  Function_DDR_Aggregation_MoM.md  ::  'GlobalWithdrawsCount'  ->  'SUM(GlobalWithdrawsCount)'
+  Function_DDR_Aggregation_MoM.md  ::  'ReDepositsGlobalAmount'  ->  'SUM(ReDepositsGlobalAmount)'
+  Function_DDR_Aggregation_MoM.md  ::  'ReDepositsGlobalCount'  ->  'SUM(ReDepositsGlobalCount)'
+
+[PROVENANCE_ONLY]  (showing 5 of 11)
+  Function_DDR_Aggregation_MoM.md  ::  'RealCID'  ->  'Direct from PERIODIC CTE'
+  Function_DDR_Aggregation_YoY.md  ::  'RealCID'  ->  'Direct from PERIODIC CTE'
+  Function_MIMO_Options_Platform.md  ::  'RealCID'  ->  'Via Options GCID Γזע Dim_Customer (MIMORecords)'
+  Function_Population_Active_Traders.md  ::  'GCID'  ->  'Direct from union branches'
+  Function_Population_First_Trading_Action.md  ::  'RealCID'  ->  'From row **WHERE** `ActionTypeID IN (1,17,39)` and airdrop excluded, **`RN = 1`**'
+
+[JUST_ID_OR_KEY]  (showing 1 of 1)
+  eMoney_Calculated_Balance.md  ::  'AccountSubProgramID'  ->  'FK to eMoney_Dictionary_AccountSubProgram.'

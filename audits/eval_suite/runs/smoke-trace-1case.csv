@@ -1,0 +1,46 @@
+run_id,run_started_at,host,case_id,case_status,sut_name,asof,natural_language_question,expected_value,observed_value,diff_abs,diff_pct,tolerance_pct,passed,reason,sql_used,sut_text_answer,sut_error,elapsed_ms,tags,baseline_sut_name,baseline_value,baseline_diff_pct,baseline_passed,drift_verdict,judge_score,judge_label,judge_rationale,judge_model,trace_skills_loaded,trace_sql_executed_count,trace_sql_succeeded_count,trace_tool_call_count,trace_tool_call_by_kind,trace_mcp_tool_call_by_name,trace_input_tokens,trace_output_tokens,trace_cache_read_tokens,trace_cache_write_tokens,trace_thinking_excerpt,trace_session_id,trace_model
+run-20260614T073953Z,2026-06-14T07:39:53Z,azr-we-bidev-3,ddr_revenue_totals_yesterday,live,cursor_agent,2026-06-08,"What was eToro's Total Revenue (per the DDR)
+on 2026-06-08?",2880439.782463,2898606.12,18166.337536999956,0.6306793027787696,0.5,False,"expected=2,880,439.7825; observed=2,898,606.1200; diff=+0.6307% > tol=0.5%","SELECT SUM(total_fees_usd) as SpaceshipRevenue, SUM(CASE WHEN product LIKE 'Super%' THEN total_fees_usd ELSE 0 END) as SuperRevenue, SUM(CASE WHEN product LIKE 'Voyager%' THEN total_fees_usd ELSE 0 END) as VoyagerRevenue, SUM(CASE WHEN product LIKE 'Nova%' THEN total_fees_usd ELSE 0 END) as NovaRevenue, SUM(CASE WHEN product LIKE 'Money%' THEN total_fees_usd ELSE 0 END) as MoneyRevenue FROM main.etoro_kpi.v_spaceship_fees WHERE date = '2026-06-08'","I'll help you find eToro's Total Revenue from the DDR for 2026-06-08. Let me load the revenue domain skill and query the data.Let me correct the table path and query again.Now let me get the Spaceship revenue contribution for the same date.Let me check the structure of the Spaceship fees view.Now let me query Spaceship fees correctly.Based on the DDR (Daily Data Report), here's **eToro's Total Revenue for 2026-06-08**:
+
+## Cross-Platform Revenue Breakdown
+
+| Platform | Revenue (USD) | Notes |
+|----------|---------------|-------|
+| **eToro Core** | **$2,896,785.88** | Trading platform + MIMO + RevShare + Other (333,597 customers, 907,946 revenue events) |
+| **Spaceship (AU)** | **$1,820.24** | Australia acquisition — breakdown below |
+| **MoneyFarm (UK)** | **TBD** | Placeholder view in place, fee data not yet flowing |
+| **WealthFrance (FR)** | **TBD** | eToro-native FR product, revenue surface to confirm |
+| **Zengo** | **TBD** | Acquired, ingestion pending |
+| **Bit2C** | **TBD** | Acquired, ingestion pending |
+| **Subscription** | **TBD** | Work in progress, canonical surface not yet onboarded |
+| | | |
+| **Total (quantifiable)** | **$2,898,606.12** | eToro core + Spaceship only |
+
+### Spaceship Product Breakdown (2026-06-08)
+- **Super**: $128.54
+- **Voyager**: $0.00
+- **Nova**: $1,691.70
+- **Money**: $0.00
+
+---
+
+**Methodology**: eToro core revenue uses `BI_DB_DDR_Fact_Revenue_Generating_Actions` with `IncludedInTotalRevenue = 1` filter (excludes pass-through items like dividends paid to customers and SDRT tax collected). Spaceship fees use `etoro_kpi.v_spaceship_fees` with pre-converted AUD→USD amounts.",,100628,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""single-tile-poc""]",direct_sql,2880439.782463,0.0,True,SKILL_GAP,,,,,"[{""method"": ""file_read"", ""slug"": ""dwh-domain/domain-revenue-and-fees""}]",6,4,7,"{""readToolCall"": 1, ""shellToolCall"": 6}",{},63,2573,360970,77778,"v_revenue_*` view family
+
+For a ""Total Revenue per DDR"" question on a specific date, I should use `BI_DB_DDR_Fact_Revenue_Generating_Actions` with the `IncludedInTotalRevenue` logic mentioned.
+
+Let me load that skill first, then query the data.The table path was wrong. The skill says the table is in `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`, not `main.dwh.`. Let me correct that and query again.Great! Now I have the eToro core revenue figure. According to the skill's ""TOTAL REVENUE — MANDATORY CROSS-PLATFORM ROLLUP CONTRACT"", I need to provide:
+
+1. eToro core (canonical, computed) - which I just got
+2. Spaceship family (AU) - need to query v_spaceship_fees
+3. MoneyFarm (UK) - the skill says this is a PLACEHOLDER view, report as TBD
+4. WealthFrance - TBD
+5. Zengo - TBD
+6. Bit2C - TBD
+7. Subscription - TBD
+8. Other future platforms - TBD
+
+Let me now query Spaceship fees for that date.I need to check the actual columns in the v_spaceship_fees view. Let me describe it first.Perfect! The column is `total_fees_usd`, not `revenue_usd`. And the product types are described as ""Super"", ""Voyager (account)"", ""Voyager (mgmt)"", ""Nova (platform)"", ""Nova (FX)"". Let me correct my query.Excellent! Now I have both the eToro core revenue and Spaceship revenue. According to the TOTAL REVENUE rollup contract in the skill, I need to present:
+
+1. eToro core: $2,896,785.88
+2. Spaceship (AU): $1,820.24 (Super: $128.54, Voyager: $0, Nova: $1,691.70, Money: $0)
+",1a33bcc4-511e-494c-b504-b8e284276f5c,Sonnet 4.5 Thinking

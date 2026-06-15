@@ -1,0 +1,28 @@
+id: genie__prod_compliance_genie__you_are_missing_a_filter_to_find_only_cf__2
+question: You are missing a filter to find only CFD position opened after Q4-2025
+source: genie_benchmark:01f137f76a75126fb15b03341732911f
+asof: '2026-06-08'
+ground_truth_sql: "WITH cysec_v3_clients AS (\n  SELECT CID\n  FROM `main`.`etoro_kpi`.`cidfirstdates_v`\n\
+  \  WHERE RegulationID = 1\n    AND VerificationLevel3Date >= '2025-10-01'\n    AND\
+  \ VerificationLevel3Date < '2026-01-01'\n),\nclients_with_cfd_after_q4_2025 AS (\n\
+  \  SELECT DISTINCT p.cid\n  FROM `main`.`etoro_kpi`.`positions_for_compliance_v`\
+  \ p\n  INNER JOIN cysec_v3_clients c ON p.cid = c.CID\n  WHERE p.issettled = 0\n\
+  \    AND p.opendateid > 20251231\n)\nSELECT COUNT(*) AS cysec_v3_clients_with_cfd_after_q4_2025\n\
+  FROM clients_with_cfd_after_q4_2025;"
+expected_value:
+  type: numeric
+  value: 10538
+  tolerance_pct: 0.5
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: covered
+canonical_tables:
+- main.etoro_kpi.cidfirstdates_v
+- main.etoro_kpi.positions_for_compliance_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'PROD - Compliance Genie' (01f137f76a75126fb15b03341732911f)
+  benchmark question.
+tags:
+- genie_benchmark
+- prod_compliance_genie
+max_replicas: 3

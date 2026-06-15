@@ -1,4 +1,4 @@
-﻿param(
+param(
     [string]$SchemaName = "",
     [string]$DocLevel = ""
 )

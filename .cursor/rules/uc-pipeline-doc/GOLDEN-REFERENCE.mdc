@@ -1,14 +1,20 @@
 ---
-description: "Golden Reference — output shape and quality bar for the UC-Pipeline pack's wiki .md file. 6 sections (not 8 like dwh-semantic-doc — pure-UC objects don't need Synapse-distribution / Synapse-index sections). Read once per session before Phase 5 generates docs."
+description: "Golden Reference — 8-section UC-Pipeline wiki output shape, ported from dwh-semantic-doc to enable §1 Business Meaning narrative, per-concept §2 Business Logic subsections, and §3 Query Advisory. Read once per session before Phase 5 generates docs."
 globs:
 alwaysApply: false
 ---
 
-# Golden Reference — UC-Pipeline Wiki Output Shape
+# Golden Reference — UC-Pipeline Wiki Output Shape (8 sections)
 
 > **Read this file ONCE before Phase 5 generates documentation.** It defines the shape,
 > structure, and quality bar. Your output must match this skeleton. If it doesn't, fix it
 > before writing to disk.
+
+**Why 8 sections (was 6)**: The earlier 6-section skeleton produced mechanical SQL re-emissions
+without business meaning. The DWH framework (`dwh-semantic-doc/GOLDEN-REFERENCE.mdc`) produces
+rich wikis precisely because it splits §1 Business Meaning from §2 Business Logic (per-concept)
+and §3 Query Advisory. The UC pipeline now follows the same 8-section split, with prose
+synthesized under the **Grounded Synthesis Contract** (§6 in `05-generate-doc.mdc`).
 
 ## A. The Skeleton
 
@@ -27,22 +33,24 @@ upstreams:
   - main.dwh.dim_position
 writer:
   kind: view_definition | NOTEBOOK | JOB | PIPELINE | UC_FUNCTION
-  path: "/Workspace/Repos/.../foo.py"                # populated only for non-view
+  path: "/Workspace/Repos/.../foo.py"
   source_code_snapshot: "_discovery/source_code/v_fact_customeraction_enriched.sql"
+concept_count: N                                   ← from concepts.json (Phase 4.5)
+formula_count: N                                   ← from formulas.json (Phase 4.6)
 tier_breakdown:
   tier1_columns: N
   tier2_columns: N
   tier3_columns: N
   tier4_columns: N
+  tier5_columns: N
   unverified_columns: N
 ---
 
-# {bare object name}                                 ← e.g. v_fact_customeraction_enriched
+# {bare object name}
 
-> {1-2 sentence summary: row count (or "view"), what this object adds vs upstream, primary upstream, writer pattern}.
-                                                     ← The summary is NOT filler — it must answer "what does this object do that upstream doesn't"
+> {1-2 sentence summary: row count, what this object adds vs upstream, primary upstream, writer pattern}.
 
-| Property | Value |                              ← Property table: 8+ rows minimum
+| Property | Value |
 |----------|-------|
 | **UC Object** | `main.{schema}.{name}` |
 | **Type** | VIEW | MANAGED | … |
@@ -51,65 +59,97 @@ tier_breakdown:
 | **Row count** | N rows | n/a |
 | **Writer** | `view_definition` | `notebook:/Workspace/Repos/.../foo.py` |
 | **Primary upstream** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction` |
-| **Downstream consumers** | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` (from `_kpi_views_index.json`) |
+| **Downstream consumers** | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` |
+| **Concepts** | N (see §2) |
 | **Generated** | YYYY-MM-DD |
 
 ---
 
-## 1. What it is                                     ← WHAT this object adds vs upstream, WHY it exists
-                                                     ← Must say: how many rows / cardinality, what transforms applied, what upstream it derives from
-                                                     ← For pure passthrough views: state "Passthrough of {upstream} with no row transformation; adds {N} JOIN-enriched columns and {M} computed columns."
+## 1. Business Meaning                           ← WHAT this object is, WHY it exists (3 paragraphs)
+
+  Paragraph 1 — WHAT: Business concept this object represents. Row grain. Name
+  the concept categories from concepts.json (e.g. "deposit/withdrawal MIMO
+  panel", "customer action enrichment with position currency"). Anchored to
+  concepts.json `kind` + `name` fields; never invented.
+
+  Paragraph 2 — WHERE: Production-to-UC lineage with pointer to the canonical
+  upstream wiki. Format: `production source (etoro.{db}.{table}) → bronze /
+  staging (synapse {schema}.{table}) → gold mirror (main.{schema}.gold_*) →
+  this view`. Each link anchored to `lineage.md` + `upstream_wikis/_index.json`.
+
+  Paragraph 3 — HOW FRESH: Refresh cadence inferred from `system.access.table_lineage`
+  event_count + writer kind. View vs MERGE-on-CDC vs INSERT-OVERWRITE-daily are
+  named explicitly. Anchored to `uc_inventory.json` + dag freshness columns.
 
 ---
 
-## 2. Transform Logic                                ← The view DDL / notebook code, distilled. Only when transforms are non-trivial.
-                                                     ← For pure-passthrough VIEWs (no CASE / aggregates / windows): collapse this entire section to a single sentence: "Pure passthrough of upstream — no transformation logic."
+## 2. Business Logic                             ← One ### 2.N per concept from concepts.json
 
-### 2.1 {Transform pattern name}                     ← One subsection per material transform pattern
-**What**: {one sentence}
-**Inputs**: {source columns}
-**Output**: {target columns}
+### 2.{N} {Concept Name from concepts.json}
+
+**What**: {one sentence from concept.name + concept.kind, predicate constants resolved}
+**Columns Involved**: `{cols from concept.columns_involved}`
 **Rules**:
-- {bullet per rule with specific values, including value enums where present}
+- {one bullet per concept.predicates row, using upstream_enum_decodes where present}
+- e.g. `TxTypeID = 5 (TransferReceived per upstream Dim_TransactionType.md)`
+- e.g. `ReferencePrefix = 'IBAN' (literal predicate, no upstream enum)`
+**Diagram** (optional, when concept.kind is `union_leg_sign_flip` or `dim_lookup`):
+```
+                  ┌─ deposit leg (sign=+1, TxTypeID IN (1,3))
+SQL UNION ALL ────┤
+                  └─ withdraw leg (sign=-1, TxTypeID IN (4,8))
+```
 
-(For materialized tables, this section also names the WRITE strategy: `MERGE`, `INSERT OVERWRITE`, `CTAS`, DLT `@dlt.table`, etc. and the rough refresh cadence inferred from `system.access.table_lineage` event_count.)
-
----
-
-## 3. Elements                                       ← THE CORE — every column documented
-
-| # | Element | Type | Nullable | Description |   ← 5-column table, every column, NO exceptions
-                                                     ← Description MUST end with (Tier N — origin)
-                                                     ← Dictionary values inline if <=15 distinct (see §C)
-                                                     ← Passthrough columns INHERIT the upstream wiki's full description verbatim — including its tier tag (the upstream's origin, not this object's name)
-
----
-
-## 4. Lineage
-
-### 4.1 Upstream UC Objects                          ← Table: Upstream | Role | Wiki path
-### 4.2 Pipeline ASCII Diagram                       ← Shows the chain from gold mirror (or bronze) through this object to known downstream
-### 4.3 Cross-check vs system.access.column_lineage  ← Summary line: parsed=N, runtime=N, mismatches=N (DETAILS in .lineage.md)
+(For MANAGED tables, this section also names the WRITE strategy from `system.access.table_lineage`:
+`MERGE`, `INSERT OVERWRITE`, `CTAS`, DLT `@dlt.table`, etc.)
 
 ---
 
-## 5. Common usage / JOINs                           ← How analysts actually query this object
+## 3. Query Advisory                             ← How analysts should query this efficiently
 
-### 5.1 Sample queries                               ← 1–2 real SQL snippets from query_history or skills/_de_existing
-### 5.2 Common JOIN partners                         ← Table: JOIN to | Condition | Purpose
-### 5.3 Gotchas                                      ← Bullet list of traps (passthrough sentinels, schema drift, NULL semantics)
+### 3.1 UC Storage Layout                        ← from uc_inventory.json: partitioned_by, clustering, table_type
+### 3.2 Common Query Patterns                    ← Table: Analyst Question | Recommended Approach. Pulls from concepts.json (dim-lookup concepts → JOIN guidance)
+### 3.3 Common JOINs                             ← Table: JOIN to | Condition | Purpose. Pulls from `kind=dim_lookup` concepts.
+### 3.4 Gotchas                                  ← Bullet list. Pulls from concepts.json `kind=filter_block` (e.g. "Settled-only filter applied — cancelled rows excluded") and union-leg sign-flip notes.
 
 ---
 
-## 6. Deploy / UC ALTER provenance
+## 4. Elements                                   ← THE CORE — every column documented, deterministic prose
 
-| Column | Description source | Tier | Cited as |
-|--------|--------------------|------|----------|
-| HistoryID | upstream wiki Fact_CustomerAction.md (passthrough) | T1 inherit | (Tier 1 — History.Credit) |
-| enrichment_flag | view DDL line 42 (CASE) | T2 | [uc_view_ddl] |
-| ... | ... | ... | ... |
+### Confidence Tier Legend
 
-*Generated: YYYY-MM-DD | Tiers: N T1, N T2, N T3, N T4 | Elements: N/N | Source: {writer.kind}*
+| # | Element | Type | Nullable | Description |   ← 5-column table, EVERY column, NO exceptions
+                                                 ← Description MUST end with (Tier N — origin)
+                                                 ← Tier 1 = byte-equal upstream wiki paste
+                                                 ← Tier 2 = {concept-meaning if column in a concept}. {formula from formulas.json}. (Tier 2 — {inputs})
+                                                 ← Tier 5 = null-with-provenance template
+                                                 ← FK columns: `FK to Dim_X.` only — no inline enum unless this wiki IS Dim_X
+
+---
+
+## 5. Lineage
+
+### 5.1 Production Sources                       ← Table: This Column | Source UC FQN | Source Column | Transform
+### 5.2 Pipeline ASCII Diagram                   ← Production → Lake → Staging → Gold → this object → known downstream
+
+---
+
+## 6. Relationships
+
+### 6.1 References To (this object points to)    ← Table: Element | Related Object | Description
+### 6.2 Referenced By (other objects point to this)  ← From _dag.json downstream edges
+
+---
+
+## 7. Sample Queries                             ← 1-2 real SQL excerpts from system.query.history or skills/_de_existing/
+
+---
+
+## 8. Atlassian Knowledge Sources                ← Confluence/Jira links OR "No sources found"
+
+---
+
+*Generated: YYYY-MM-DD | Concepts: N | Formulas: N | Tiers: N T1, N T2, N T3, N T4, N T5 | Elements: N/N | Source: {writer.kind}*
 ```
 
 ## B. Quality Assertions — Machine-Checkable
@@ -118,23 +158,22 @@ After writing, verify EVERY assertion before saving:
 
 | # | Assertion | How to Check | Hard/Soft |
 |---|-----------|-------------|-----------|
-| 1 | All 6 `## N.` sections present (1 through 6) | Count `## 1.` through `## 6.` headers | HARD |
-| 2 | Every Element description ends with `(Tier N — source)` | Grep for `\(Tier [1-5] —` in Section 3 | HARD |
+| 1 | All 8 `## N.` sections present (1 through 8) | Count `## 1.` through `## 8.` headers | HARD |
+| 2 | Every Element description ends with `(Tier N — source)` | Grep for `\(Tier [1-5U] —` in Section 4 | HARD |
 | 3 | Element table has 5 columns: `# \| Element \| Type \| Nullable \| Description` | Check header row | HARD |
 | 4 | Element count matches `column_count` in frontmatter | Compare table-row count vs frontmatter | HARD |
-| 5 | Section 4.2 has pipeline ASCII diagram | Check for code block with `→` or `▼` | HARD |
-| 6 | Section 4.3 cross-check summary line present | Grep for `parsed=` `runtime=` `mismatches=` | HARD |
-| 7 | Footer has tier breakdown counts matching frontmatter | Compare `*Tiers:` line vs frontmatter | HARD |
-| 8 | Property table has at least UC Object, Type, Writer, Primary upstream | Check for these rows | HARD |
-| 9 | `.review-needed.md` does NOT contain `## 3. Elements` | If it does, content is in the WRONG file | HARD |
-| 10 | `.lineage.md` exists and was written BEFORE `.md` | Check file existence + mtime | HARD |
-| 11 | For passthrough columns, the description text MATCHES the upstream wiki's Element description byte-for-byte | Grep upstream wiki for the same column and diff | HARD (assertion 11 enforces tier transitivity) |
-| 12 | Section 2 collapsed to "Pure passthrough" for views where every column is passthrough/rename | Check transform classifications in `.lineage.md` | SOFT |
-| 13 | Every column description falls into exactly ONE of three buckets: (a) byte-equal to upstream wiki for the same column (passthrough/rename/cast); (b) cites a source-code line range OR a SQL operator OR a quoted SQL fragment from the cached Phase-2 snapshot (CASE/arithmetic/aggregate/window/coalesce/udf); (c) exact-matches the null-with-provenance template `Source: {upstream_fqn}.{col}. No upstream wiki cached as of {YYYY-MM-DD}.` (terminal-no-wiki upstream). Anything else is AI-inferred and forbidden by §6 No-Inference Contract in `05-generate-doc.mdc`. | Run `python tools/uc_pipelines/validate_pipeline_wiki.py --assert-no-inference --wiki <path>` — exits non-zero on any unclassifiable column | HARD |
+| 5 | Section 5.2 has pipeline ASCII diagram | Check for code block with `→` or `▼` | HARD |
+| 6 | Footer has Concepts + Formulas + tier breakdown counts matching frontmatter | Compare `*Generated:` line vs frontmatter | HARD |
+| 7 | §1 Business Meaning has at least 3 paragraphs (blank-line-separated text blocks) | Count paragraphs in §1 | HARD |
+| 8 | §2 Business Logic has one `### 2.N` subsection per concept in `concepts.json` | Compare subsection count vs `concept_count` frontmatter | HARD |
+| 9 | Property table has at least UC Object, Type, Writer, Primary upstream, Concepts | Check for these rows | HARD |
+| 10 | `.review-needed.md` does NOT contain `## 4. Elements` | If it does, content is in the WRONG file | HARD |
+| 11 | `.lineage.md`, `concepts.json`, `formulas.json` all exist and were written BEFORE `.md` | Check file existence + mtime | HARD |
+| 12 | For passthrough columns, the description text MATCHES the upstream wiki's Element description byte-for-byte | Grep upstream wiki and diff | HARD |
+| 13 | For Tier-2 columns, the description contains the formula from `formulas.json` (substring match on `formula` field) | Grep description against formula text | HARD |
+| 14 | For pure-passthrough VIEWs (all transforms in `{passthrough,rename,cast}`), §2 collapses to "Pure passthrough of {upstream} — no transformation logic." | Check transform classifications in `.lineage.md` | SOFT |
 
 **If ANY HARD assertion fails: delete the file and regenerate. Do not patch.**
-
-**Assertion 13 hard contract**: There is no fourth bucket. A description that "looks plausible" but does NOT match (a), (b), or (c) is a Principle XI violation per the constitution and a hard validator failure. This applies to the 3-object pilot regression as much as to any new object — backward compatibility is enforced.
 
 ## C. Dictionary Inline Values Rule
 
@@ -153,12 +192,12 @@ The tier suffix `(Tier N — origin)` lives at the END of every Element descript
 |---|---|---|
 | Passthrough of a DWH gold-mirror column whose origin is `Trade.PositionTbl` | `(Tier 1 — Trade.PositionTbl)` | `(Tier 1 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction)` |
 | Passthrough of a column with no upstream wiki (genuinely new column added in this UC object) | `(Tier 2 — main.{schema}.{this_object})` | `(Tier 2 — view DDL)` |
-| CASE/CAST/arithmetic over an upstream column | `(Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction)` | `(Tier 2 — view DDL)` |
-| Multi-source UNION ALL | `(Tier 2 — main.dwh...fact_customeraction / main.etoro_kpi_prep.passive_actions_enriched)` | `(Tier 2 — view DDL)` |
-| Pure literal (`current_date`, `1`, `'PROD'`) | `(Tier 2 — main.{schema}.{this_object})` | `(Tier 2 — view DDL)` |
+| CASE/CAST/arithmetic over an upstream column | `(Tier 2 — from main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction)` | `(Tier 2 — view DDL)` |
+| Multi-source UNION ALL | `(Tier 2 — from main.dwh...fact_customeraction, main.etoro_kpi_prep.passive_actions_enriched)` | `(Tier 2 — view DDL)` |
+| Pure literal (`current_date`, `1`, `'PROD'`) | `(Tier 2 — literal)` | `(Tier 2 — view DDL)` |
 | join_enriched column from a join source with a wiki | inherit join source's origin tier tag | `(Tier 1 — JOIN)` |
 
-The origin **always** names a data-producing entity (a table or, in the literal/synthesized case, this object itself). It never names "view DDL" or "notebook" as such — those are evidence types cited inside the description; the tier suffix names the data origin.
+The origin **always** names a data-producing entity (a table, or for the literal/synthesized case, the keyword `literal` or `computed in source`). It never names "view DDL" or "notebook" as such — those are evidence types cited inside the description; the tier suffix names the data origin.
 
 ## E. Anti-Patterns — What Drift Looks Like
 
@@ -166,7 +205,7 @@ The origin **always** names a data-producing entity (a table or, in the literal/
 
 ```
 WRONG: | 3 | enrichment_flag | STRING | YES | Flag for copy vs manual actions |
-RIGHT: | 3 | enrichment_flag | STRING | YES | Flag derived from ActionTypeID — 'copy' for {2,5}, 'manual' otherwise (CASE in view DDL L42). (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction) |
+RIGHT: | 3 | enrichment_flag | STRING | YES | Copy-vs-manual classifier on ActionTypeID. `CASE WHEN ActionTypeID IN (2,5) THEN 'copy' ELSE 'manual' END`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) |
 ```
 
 ### E2. Synapse-mirror as origin
@@ -182,7 +221,7 @@ Tier transitivity: the Synapse mirror is a RELAY, not the origin. Always inherit
 
 ```
 WRONG: Writing the Elements table into {Object}.review-needed.md
-RIGHT: The .md file gets the full 6-section wiki. The .review-needed.md gets ONLY
+RIGHT: The .md file gets the full 8-section wiki. The .review-needed.md gets ONLY
        UNVERIFIED items, Tier 4 candidates needing review, parser warnings, and
        reviewer correction notes. It is a lightweight checklist, NOT a duplicate wiki.
 ```
@@ -194,27 +233,19 @@ WRONG: Filling Section 2 with subsections that just re-describe the upstream's l
 RIGHT: For pure-passthrough VIEWs: "Pure passthrough of `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction` — no transformation logic. See upstream wiki for source-system rules: knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_CustomerAction.md." Section 2 = 1 sentence.
 ```
 
-The point of this pack is to NOT duplicate upstream content. Inherit, link, and only add value where this object actually adds value.
-
-### E5. Missing pipeline diagram
+### E5. §2 subsection without a concept anchor
 
 ```
-WRONG: ## 4. Lineage
-       Sourced from upstream UC objects.
-
-RIGHT: ## 4. Lineage
-       ### 4.2 Pipeline ASCII Diagram
-       ```
-       Production: etoro.History.Credit / etoro.Trade.OpenPositionEndOfDay / …
-              ↓ Generic Pipeline (Bronze)
-       Synapse: DWH_dbo.Fact_CustomerAction  ── documented at knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_CustomerAction.md
-              ↓ Generic Pipeline (Gold export → Delta)
-       main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction
-              ↓ view_definition (this object)
-       main.etoro_kpi_prep.v_fact_customeraction_enriched  ←── this object
-              ↓ JOIN dim_position, UNION passive_actions_enriched
-       main.etoro_kpi_prep.v_fact_customeraction_w_metrics  (downstream)
-       ```
+WRONG: ### 2.1 Some pattern I noticed in the SQL
+RIGHT: Every ### 2.N subsection corresponds to exactly one concept in concepts.json.
+       If you have a §2 subsection without a matching concept, EITHER add the concept
+       to concepts.json (re-run Phase 4.5) OR remove the subsection.
 ```
 
-Concrete chain with object names, not vague prose.
+### E6. Missing concepts.json / formulas.json
+
+```
+WRONG: Generating §1/§2/§3 without consulting concepts.json or formulas.json.
+RIGHT: Phase 5 reads `_discovery/concepts/{obj}.json` and `_discovery/formulas/{obj}.json`
+       AS HARD INPUTS. Missing either = STOP and run Phase 4.5 / 4.6.
+```

@@ -1,0 +1,28 @@
+id: genie__prod_ddr__what_was_the_number_of_registrations_in___1
+question: What was the number of registrations in the Arabic region from Affiliate
+  ID 72493 in February 2026?
+source: genie_benchmark:01f13712cf8516878dbc9663f5f73eb7
+asof: '2026-06-08'
+ground_truth_sql: "WITH reg AS (\n  SELECT\n    f.RealCID,\n    f.RegistrationDate\n\
+  \  FROM\n    `main`.`etoro_kpi`.`vg_customer_customer_first_dates` f\n  WHERE\n\
+  \    f.RegistrationDate >= '2026-02-01'\n    AND f.RegistrationDate < '2026-03-01'\n\
+  )\nSELECT\n  COUNT(DISTINCT reg.RealCID) AS num_registrations\nFROM\n  reg\n   \
+  \ JOIN `main`.`etoro_kpi`.`customer_snapshot_v` s\n      ON reg.RealCID = s.RealCID\n\
+  WHERE\n  s.Region = 'Arabic'\n  AND s.AffiliateID = 72493\n  AND s.DateID = 20260228;"
+expected_value:
+  type: numeric
+  value: 1670
+  tolerance_pct: 0.5
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: covered
+canonical_tables:
+- main.etoro_kpi.customer_snapshot_v
+- main.etoro_kpi.vg_customer_customer_first_dates
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'PROD - DDR' (01f13712cf8516878dbc9663f5f73eb7) benchmark
+  question.
+tags:
+- genie_benchmark
+- prod_ddr
+max_replicas: 3

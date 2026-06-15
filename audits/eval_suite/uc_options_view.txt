@@ -1,0 +1,96 @@
+﻿=== UC: main.etoro_kpi_prep.v_revenue_optionsplatform definition ===
+WITH PREP AS (
+    SELECT 
+        *,
+        ROW_NUMBER() OVER (PARTITION BY ClearingAccount ORDER BY TradeDate) AS RN
+    FROM main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports
+),
+FIRSTTRADE AS (
+    SELECT * 
+    FROM PREP
+    WHERE RN = 1
+)
+SELECT 
+    CAST(DATE_FORMAT(rev.TradeDate, 'yyyyMMdd') AS INT) AS DateID,
+    CAST(rev.TradeDate AS DATE) AS Date,
+    dc.RealCID,
+    CASE WHEN rev.Side = 'B' THEN 1 WHEN rev.Side = 'S' THEN 4 END AS ActionTypeID,
+    CASE WHEN rev.Side = 'B' THEN 'ManualPositionOpen' WHEN rev.Side = 'S' THEN 'ManualPositionClose' END AS ActionType,
+    CASE WHEN rev.InstrumentType = 'Option' THEN 9 WHEN rev.InstrumentType = 'Equity' THEN 5 END AS InstrumentTypeID,
+    1 AS IsSettled,
+    0 AS IsCopy,
+    'Options_PFOF' AS Metric,
+    SUM(ABS(rev.CustomerPFOFPayback)) AS Amount,
+    COUNT(rev.OrderID) AS CountTransactions,
+    1 AS IncludedInTotalRevenue,
+    CASE WHEN rev.Side = 'B' THEN 1 ELSE 0 END AS CountAsActiveTrade,
+    CURRENT_TIMESTAMP() AS UpdateDate,
+    1 AS IsBuy,
+    0 AS IsLeveraged,
+    0 AS IsFuture,
+    0 AS IsCopyFund,
+    0 AS IsOpenedFromIBAN,
+    0 AS IsClosedToIBAN,
+    0 AS IsRecurring,
+    0 AS IsAirDrop,
+    dc.IsValidCustomer,
+    dc.IsCreditReportValidCB,
+    CAST(ft.TradeDate AS DATE) AS FirstTradeDate,
+    CAST(DATE_FORMAT(CAST(ft.TradeDate AS DATE), 'yyyyMMdd') AS INT) AS FirstTradeDateID
+FROM PREP rev 
+LEFT JOIN FIRSTTRADE ft 
+    ON rev.ClearingAccount = ft.ClearingAccount
+LEFT JOIN main.general.bronze_usabroker_apex_options op 
+    ON rev.ClearingAccount = op.OptionsApexID 
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked dc 
+    ON op.GCID = dc.GCID
+WHERE rev.ClearingAccount NOT IN (
+    '4GS43999',
+    '4GS00100',
+    '4GS00101',
+    '4GS00103',
+    '4GS00104'
+) -- exclude house accounts
+GROUP BY 
+    CAST(DATE_FORMAT(rev.TradeDate, 'yyyyMMdd') AS INT),
+    CAST(rev.TradeDate AS DATE),
+    dc.RealCID,
+    CASE WHEN rev.Side = 'B' THEN 1 WHEN rev.Side = 'S' THEN 4 END,
+    CASE WHEN rev.Side = 'B' THEN 'ManualPositionOpen' WHEN rev.Side = 'S' THEN 'ManualPositionClose' END,
+    CASE WHEN rev.Side = 'B' THEN 1 ELSE 0 END,
+    CASE WHEN rev.InstrumentType = 'Option' THEN 9 WHEN rev.InstrumentType = 'Equity' THEN 5 END,
+    dc.IsValidCustomer,
+    dc.IsCreditReportValidCB,
+    CAST(ft.TradeDate AS DATE),
+    CAST(DATE_FORMAT(CAST(ft.TradeDate AS DATE), 'yyyyMMdd') AS INT)
+
+=== UC: row counts in v_revenue_optionsplatform per day, last 60d ===
+  UC view  DateID=20260608 rows=371 sum_amt=1334.5714000000
+  UC view  DateID=20260605 rows=440 sum_amt=1476.0284000000
+  UC view  DateID=20260604 rows=410 sum_amt=1216.1392000000
+  UC view  DateID=20260603 rows=262 sum_amt=481.6950000000
+  UC view  DateID=20260602 rows=333 sum_amt=506.4725000000
+  UC view  DateID=20260601 rows=456 sum_amt=1024.5220000000
+  UC view  DateID=20260529 rows=496 sum_amt=1170.8665000000
+  UC view  DateID=20260528 rows=422 sum_amt=1132.4329000000
+  UC view  DateID=20260527 rows=410 sum_amt=1098.5961000000
+  UC view  DateID=20260526 rows=439 sum_amt=986.3485000000
+  UC view  DateID=20260522 rows=464 sum_amt=1045.2365000000
+  UC view  DateID=20260521 rows=417 sum_amt=990.5815000000
+  UC view  DateID=20260520 rows=413 sum_amt=815.2452000000
+  UC view  DateID=20260519 rows=371 sum_amt=590.7330000000
+  UC view  DateID=20260518 rows=422 sum_amt=934.5325000000
+  UC view  DateID=20260515 rows=508 sum_amt=1264.3847648000
+  UC view  DateID=20260514 rows=438 sum_amt=1131.2837000000
+  UC view  DateID=20260513 rows=445 sum_amt=990.9640000000
+  UC view  DateID=20260512 rows=405 sum_amt=878.1775000000
+  UC view  DateID=20260511 rows=465 sum_amt=941.0180000000
+  UC view  DateID=20260508 rows=463 sum_amt=1548.3311000000
+  UC view  DateID=20260507 rows=408 sum_amt=941.5705000000
+  UC view  DateID=20260506 rows=448 sum_amt=1018.2575000000
+  UC view  DateID=20260505 rows=399 sum_amt=0.0085000000
+  UC view  DateID=20260504 rows=414 sum_amt=0E-10
+
+=== UC: row counts of Options_PFOF in fact table per day, last 60d ===
+  UC fact  DateID=20260608 rows=371 sum_amt=1334.571400 max_upd=2026-06-10T12:55:48.540Z
+  UC fact  DateID=20260428 rows=406 sum_amt=772.627900 max_upd=2026-05-01T06:06:14.193Z

@@ -1,0 +1,172 @@
+﻿======================================================================
+Cohort: March 2026 staking, paid out 2026-04-07
+======================================================================
+
+=== Synapse: Function_Revenue_StakingFee body (full) ===
+L  1: CREATE FUNCTION [BI_DB_dbo].[Function_Revenue_StakingFee] (@sdateID [INT],@edateID [INT]) RETURNS TABLE
+L  2: AS
+L  3: RETURN (
+L  4: 
+L  5: /********************************************************************************************      
+L  6: Author:      Guy Manova       
+L  7: Date:        2024-10-20      
+L  8: Description: new revenue stream from staking - figured out some date logic issues
+L  9: 			this metric is distributed a couple of times per month, for the PREVIOUS month. there are no dates per say, so in order to make it compatable 
+L 10: 			to "daily" querying there is some date trickery here. also the STATUSES of the users are based on EOM because where the DATE is attributed as 
+L 11: 			when the staking happened (basically bringing the update date one month prior) the user might still not even be a user. but on the last day of the month 
+L 12: 			this cannot happen, so it's a good enough approach. 
+L 13:       
+L 14: **************************      
+L 15: ** Change History      
+L 16: **************************      
+L 17: Date			Author			Description       
+L 18:   
+L 19: 2025-05-20		Guy M			turns out by design when having a failed distribution they create a new one with a WRONG STAKING MONTH ID - 20250300 instead of 2025030 - so divide by 10
+L 20: 								to fix as this is not a one time thing. 
+L 21: 			
+L 22: ----------    ----------   ------------------------------------*/      
+L 23: 
+L 24: WITH "BadMonths" AS
+L 25: (
+L 26: SELECT DISTINCT dsr.StakingMonthID
+L 27: FROM Dealing_dbo.Dealing_Staking_Results dsr
+L 28: WHERE LEN(dsr.StakingMonthID) > 6
+L 29: ), "StakingData"
+L 30: AS
+L 31: (
+L 32: SELECT left(dss.StakingMonthID,6) AS StakingMonthID
+L 33: 	 , dateadd(MONTH,-1,dss.UpdateDate) AS [Date]
+L 34: 	 , CAST(FORMAT(CAST(dateadd(MONTH,-1,dss.UpdateDate) AS DATE),'yyyyMMdd') as INT) AS DateID
+L 35: 	 , StakingMonth
+L 36: 	 , StakingYear
+L 37: --	 , CAST(FORMAT(CAST(DATEFROMPARTS(dss.StakingMonthID / 100, dss.StakingMonthID % 100, DAY(dss.UpdateDate)) AS DATE),'yyyyMMdd') as INT) AS DateID
+L 38: 	 , dss.InstrumentID
+L 39: 	 , di.Name AS Instrument
+L 40: 	 , dss.CID
+L 41: 	 , dss.IsEligible
+L 42: 	 , dss.NonEligible_PrimaryReason
+L 43: 	 , CASE WHEN dss.IsEligible = 0 THEN dss.Etoro_Amount ELSE 0 END IneligibleCustomerRewards
+L 44: 	 , CASE WHEN dss.IsEligible = 1 THEN dss.Etoro_Amount ELSE 0 END RevShareCommission -- Including Cash equivalent clients
+L 45: 	 , dss.Client_Airdrop / nullif((dss.Client_Airdrop + dss.Etoro_Amount),0) ClientPercent
+L 46: 	 , dss.Etoro_Amount / nullif((dss.Client_Airdrop + dss.Etoro_Amount),0) EtoroPercent
+L 47: 	 , CASE WHEN dss.IsEligible = 1 THEN dss.USD_Compensation ELSE 0 END AS ClientUSDDistributed
+L 48: 	 , dss.Etoro_Amount_USD AS EtoroUSDDistributed
+L 49: 	 , CASE WHEN dss.IsEligible = 1 THEN dss.USD_Compensation ELSE 0 END + dss.Etoro_Amount_USD AS TotalUSDDistributed
+L 50: 	 , CAST(FORMAT(CAST(dss.AirdropOccurred AS DATE),'yyyyMMdd') as INT) AS AirDropDateID
+L 51: 	 , dss.ActualCompensationType
+L 52: 	 , dss.ClubCategory
+L 53: 	 , fsc.GCID
+L 54: 	 , fsc.CountryID
+L 55: 	 , fsc.LabelID
+L 56: 	 , fsc.LanguageID
+L 57: 	 , fsc.VerificationLevelID
+L 58: 	 , fsc.DocsOK
+L 59: 	 , fsc.PlayerStatusID
+L 60: 	 , fsc.Bankruptcy
+L 61: 	 , fsc.RiskStatusID
+L 62: 	 , fsc.RiskClassificationID
+L 63: 	 , fsc.CommunicationLanguageID
+L 64: 	 , fsc.PremiumAccount
+L 65: 	 , fsc.Evangelist
+L 66: 	 , fsc.GuruStatusID
+L 67: 	 , fsc.RegulationID
+L 68: 	 , fsc.AccountStatusID
+L 69: 	 , fsc.AccountManagerID
+L 70: 	 , fsc.PlayerLevelID
+L 71: 	 , fsc.AccountTypeID
+L 72: 	 , fsc.DateRangeID
+L 73: 	 , fsc.IsDepositor
+L 74: 	 , fsc.PendingClosureStatusID
+L 75: 	 , fsc.DocumentStatusID
+L 76: 	 , fsc.SuitabilityTestStatusID
+L 77: 	 , fsc.MifidCategorizationID
+L 78: 	 , fsc.IsEmailVerified
+L 79: 	 , fsc.IsValidCustomer
+L 80: 	 , fsc.DesignatedRegulationID
+L 81: 	 , fsc.EvMatchStatus
+L 82: 	 , fsc.RegionID
+L 83: 	 , fsc.PlayerStatusReasonID
+L 84: 	 , fsc.IsCreditReportValidCB
+L 85: 	 , fsc.AffiliateID
+L 86: 	 , fsc.Email
+L 87: 	 , fsc.City
+L 88: 	 , fsc.Address
+L 89: 	 , fsc.Zip
+L 90: 	 , fsc.PhoneNumber
+L 91: 	 , fsc.IsPhoneVerified
+L 92: 	 , fsc.PhoneVerificationDateID
+L 93: 	 , fsc.PlayerStatusSubReasonID
+L 94: FROM Dealing_dbo.Dealing_Staking_Results dss 
+L 95: 	JOIN DWH_dbo.Dim_Instrument di
+L 96: 		ON dss.InstrumentID = di.InstrumentID
+L 97: 	JOIN DWH_dbo.Fact_SnapshotCustomer fsc
+L 98: 		ON dss.CID = fsc.RealCID
+L 99: 	JOIN DWH_dbo.Dim_Range dr
+L100: 		ON fsc.DateRangeID = dr.DateRangeID AND CAST(FORMAT(CAST(EOMonth(dateadd(MONTH,-1,dss.UpdateDate)) AS DATE),'yyyyMMdd') as INT) BETWEEN dr.FromDateID AND dr.ToDateID
+L101: WHERE CAST(FORMAT(CAST(dateadd(MONTH,-1,dss.UpdateDate) AS DATE),'yyyyMMdd') as INT) BETWEEN @sdateID AND @edateID
+L102: AND dss.StakingMonthID NOT IN (SELECT left(StakingMonthID,6) FROM BadMonths)
+L103: )
+L104: SELECT *
+L105: FROM "StakingData" c
+L106: )
+
+=== Synapse: Function_Revenue_StakingFee(20260301, 20260331) Γאפ per-day ===
+  date=2026-03-07 06:34:51.877000 rows=771982 cid=460055 inst=10 usd=191834.24
+  date=2026-03-09 07:27:52.573000 rows=131669 cid=92004 inst=10 usd=1413877.39
+  Synapse TVF March-2026 total: 1605711.62
+
+=== Synapse: SP STEP 3 emulation: SUM grouped by CID, DateID (after +1 month) ===
+  paid=20260407 cid=460055 rows=771982 usd=191834.24
+  paid=20260409 cid=92004 rows=131669 usd=1413877.39
+
+=== UC: main.etoro_kpi_prep.v_revenue_stakingfee body ===
+L  1: WITH BadMonths AS (
+L  2:   SELECT DISTINCT StakingMonthID
+L  3:   FROM main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results
+L  4:   WHERE LENGTH(CAST(StakingMonthID AS STRING)) > 6
+L  5: )
+L  6: SELECT
+L  7:   LEFT(CAST(dss.StakingMonthID AS STRING), 6) AS StakingMonthID,
+L  8:   ADD_MONTHS(dss.UpdateDate, -1) AS Date,
+L  9:   CAST(DATE_FORMAT(CAST(ADD_MONTHS(dss.UpdateDate, -1) AS DATE), 'yyyyMMdd') AS INT) AS DateID,
+L 10:   dss.StakingMonth,
+L 11:   dss.StakingYear,
+L 12:   dss.InstrumentID,
+L 13:   di.Name AS Instrument,
+L 14:   dss.CID,
+L 15:   fsc.GCID,
+L 16:   dss.IsEligible,
+L 17:   dss.NonEligible_PrimaryReason,
+L 18:   CASE WHEN dss.IsEligible = 0 THEN dss.Etoro_Amount ELSE 0 END AS IneligibleCustomerRewards,
+L 19:   CASE WHEN dss.IsEligible = 1 THEN dss.Etoro_Amount ELSE 0 END AS RevShareCommission,
+L 20:   dss.Client_Airdrop / NULLIF(dss.Client_Airdrop + dss.Etoro_Amount, 0) AS ClientPercent,
+L 21:   dss.Etoro_Amount / NULLIF(dss.Client_Airdrop + dss.Etoro_Amount, 0) AS EtoroPercent,
+L 22:   CASE WHEN dss.IsEligible = 1 THEN dss.USD_Compensation ELSE 0 END AS ClientUSDDistributed,
+L 23:   dss.Etoro_Amount_USD AS EtoroUSDDistributed,
+L 24:   CASE WHEN dss.IsEligible = 1 THEN dss.USD_Compensation ELSE 0 END + dss.Etoro_Amount_USD AS TotalUSDDistributed,
+L 25:   CAST(DATE_FORMAT(CAST(dss.AirdropOccurred AS DATE), 'yyyyMMdd') AS INT) AS AirDropDateID,
+L 26:   dss.ActualCompensationType,
+L 27:   dss.ClubCategory,
+L 28:   fsc.IsValidCustomer
+L 29: FROM main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results dss
+L 30: JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument di
+L 31:   ON dss.InstrumentID = di.InstrumentID
+L 32: JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked fsc
+L 33:   ON dss.CID = fsc.RealCID
+L 34: JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range dr
+L 35:   ON fsc.DateRangeID = dr.DateRangeID
+L 36:   AND CAST(DATE_FORMAT(CAST(LAST_DAY(ADD_MONTHS(dss.UpdateDate, -1)) AS DATE), 'yyyyMMdd') AS INT)
+L 37:       BETWEEN dr.FromDateID AND dr.ToDateID
+L 38: WHERE CAST(DATE_FORMAT(CAST(ADD_MONTHS(dss.UpdateDate, -1) AS DATE), 'yyyyMMdd') AS INT) > 0
+L 39:   AND CAST(LEFT(CAST(dss.StakingMonthID AS STRING), 6) AS INT) NOT IN (SELECT CAST(LEFT(CAST(StakingMonthID AS STRING), 6) AS INT) FROM BadMonths)
+
+=== UC: v_revenue_stakingfee for 20260301..20260331 Γאפ per-day ===
+  DateID=20260307 rows=771982 cid=460055 inst=10 usd=191834.24
+  DateID=20260309 rows=131669 cid=92004 inst=10 usd=1413877.39
+  UC view March-2026 total: 1605711.62
+
+=== Comparison ===
+  Synapse TVF March-2026 sum: 1605711.62
+  UC view    March-2026 sum: 1605711.62
+  ratio UC/Syn: 1.000x
+  Apr-7 fact: Synapse $191,834.24  /  UC $1,605,711.62  =  8.37x

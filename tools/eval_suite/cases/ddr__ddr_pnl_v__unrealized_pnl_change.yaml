@@ -1,0 +1,24 @@
+id: ddr__ddr_pnl_v__unrealized_pnl_change
+question: What was the total unrealized P&L change for eToro customers on 2026-06-08?
+source: ddr
+asof: '2026-06-08'
+ground_truth_sql: 'SELECT SUM(UnrealizedPnLChange) AS pnl_change
+
+  FROM main.etoro_kpi.ddr_pnl_v
+
+  WHERE DateID = CAST(REPLACE(''2026-06-08'',''-'','''') AS INT)'
+expected_value:
+  type: numeric
+  value: 106583275.53
+  tolerance_pct: 0.5
+expected_skill_hub: domain-trading
+skill_coverage_status: missing
+canonical_tables:
+- main.etoro_kpi.ddr_pnl_v
+anti_sources: []
+expected_filters: []
+notes: ''
+tags:
+- ddr
+- ddr_pnl_v
+max_replicas: 3

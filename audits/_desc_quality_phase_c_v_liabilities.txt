@@ -1,0 +1,510 @@
+﻿Wiki: knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md
+Object: V_Liabilities
+Trivial rows: 63
+
+--- #1 CID (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.CID  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.CID  HAS_SEMANTIC
+       Customer ID. Grouping key for all equity aggregations. FK to Dim_Customer (CID = RealCID). HASH distribution key and part of PK. (Tier 2 ...
+  new: Customer ID. Grouping key for all equity aggregations. FK to Dim_Customer (CID = RealCID). HASH distribution key and part of PK. (Tier 2 Γאפ SP_Fact_SnapshotEquity) (via Fact_SnapshotEquity)
+
+--- #2 DateID (EXHAUSTED (section_4_not_a_column_table:ETL & Data Pipeline), 2 hops) ---
+  was: Direct (alias DateKey Γזע DateID)
+    -> V_Liabilities.DateID  TRIVIAL
+       Direct (alias DateKey Γזע DateID)
+    -> V_M2M_Date_DateRange.DateKey  WIKI_NO_TABLE  [section_4_not_a_column_table:ETL & Data Pipeline]
+  new: Passthrough Γאפ no upstream semantic (chain: V_Liabilities.DateID -> V_M2M_Date_DateRange.DateKey, section_4_not_a_column_table:ETL & Data Pipeline)
+
+--- #3 FullDate (EXHAUSTED (section_4_not_a_column_table:ETL & Data Pipeline), 2 hops) ---
+  was: Direct
+    -> V_Liabilities.FullDate  TRIVIAL
+       Direct
+    -> V_M2M_Date_DateRange.FullDate  WIKI_NO_TABLE  [section_4_not_a_column_table:ETL & Data Pipeline]
+  new: Passthrough Γאפ no upstream semantic (chain: V_Liabilities.FullDate -> V_M2M_Date_DateRange.FullDate, section_4_not_a_column_table:ETL & Data Pipeline)
+
+--- #4 RealizedEquity (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.RealizedEquity  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.RealizedEquity  HAS_TRANSFORMATION
+       Customer's **settled (realized) equity** Γאפ the realized portion of customer balance. **Excludes unrealized PnL on open positions** (the u...
+  new: Customer's **settled (realized) equity** Γאפ the realized portion of customer balance. **Excludes unrealized PnL on open positions** (the unrealized component is `Fact_CustomerUnrealized_PnL.PositionPnL`). Computed as `...
+
+--- #5 TotalPositionsAmount (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.TotalPositionsAmount  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.TotalPositionsAmount  HAS_SEMANTIC
+       Sum of all open position amounts (NewAmount) for this CID on this date. Includes all asset classes: CFD, stocks, crypto, futures, margin....
+  new: Sum of all open position amounts (NewAmount) for this CID on this date. Includes all asset classes: CFD, stocks, crypto, futures, margin. Source: open positions (Trade.OpenPositionEndOfDay) + same-day closed positions...
+
+--- #6 TotalCash (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.TotalCash  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.TotalCash  HAS_SEMANTIC
+       Customer's total cash balance for the day. Computed as: previous day's TotalCash (from last row in current year) + sum of TotalCashChange...
+  new: Customer's total cash balance for the day. Computed as: previous day's TotalCash (from last row in current year) + sum of TotalCashChange from History.ActiveCredit for @dt. This running-balance approach was introduced...
+
+--- #7 InProcessCashouts (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.InProcessCashouts  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.InProcessCashouts  HAS_SEMANTIC
+       Sum of pending withdrawal amounts for this CID that have not yet been finalized (statuses other than 3=Processed, 4=Cancelled, 5,6). Incl...
+  new: Sum of pending withdrawal amounts for this CID that have not yet been finalized (statuses other than 3=Processed, 4=Cancelled, 5,6). Includes partially processed amounts for split-payment withdrawals plus associated f...
+
+--- #8 TotalMirrorPositionsAmount (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.TotalMirrorPositionsAmount  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.TotalMirrorPositionsAmount  HAS_SEMANTIC
+       Sum of position amounts where MirrorID > 0 AND ParentPositionID != 0 (copy-trading positions only, excluding the parent/guru's own positi...
+  new: Sum of position amounts where MirrorID > 0 AND ParentPositionID != 0 (copy-trading positions only, excluding the parent/guru's own positions). Represents the CID's total investment in copy relationships. (Tier 2 Γאפ SP_...
+
+--- #9 TotalMirrorCash (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.TotalMirrorCash  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.TotalMirrorCash  HAS_TRANSFORMATION
+       Cash available for copy-trading. Formula: TotalCash - Credit. (Tier 2 Γאפ SP_Fact_SnapshotEquity)
+  new: Cash available for copy-trading. Formula: TotalCash - Credit. (Tier 2 Γאפ SP_Fact_SnapshotEquity) (via Fact_SnapshotEquity)
+
+--- #10 TotalStockOrders (FOUND, 2 hops) ---
+  was: Direct (legacy Γאפ always 0 since 2019)
+    -> V_Liabilities.TotalStockOrders  TRIVIAL
+       Direct (legacy Γאפ always 0 since 2019)
+    -> Fact_SnapshotEquity.TotalStockOrders  HAS_SEMANTIC
+       Legacy column, hardcoded to 0. Removed 2019-03-03 (Boris Slutski) Γאפ no data in PROD since 2015. Kept for schema compatibility. (Tier 2 Γאפ ...
+  new: Legacy column, hardcoded to 0. Removed 2019-03-03 (Boris Slutski) Γאפ no data in PROD since 2015. Kept for schema compatibility. (Tier 2 Γאפ SP_Fact_SnapshotEquity) (via Fact_SnapshotEquity)
+
+--- #11 TotalMirrorStockOrders (FOUND, 2 hops) ---
+  was: Direct (legacy Γאפ always 0 since 2019)
+    -> V_Liabilities.TotalMirrorStockOrders  TRIVIAL
+       Direct (legacy Γאפ always 0 since 2019)
+    -> Fact_SnapshotEquity.TotalMirrorStockOrders  HAS_SEMANTIC
+       Legacy column, hardcoded to 0. Removed 2019-03-03 alongside TotalStockOrders. Kept for schema compatibility. (Tier 2 Γאפ SP_Fact_SnapshotEq...
+  new: Legacy column, hardcoded to 0. Removed 2019-03-03 alongside TotalStockOrders. Kept for schema compatibility. (Tier 2 Γאפ SP_Fact_SnapshotEquity) (via Fact_SnapshotEquity)
+
+--- #12 Credit (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.Credit  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.Credit  HAS_SEMANTIC
+       Outstanding credit/bonus balance from History.ActiveCredit. Last credit event per CID per day (selected via ROW_NUMBER partition by CID, ...
+  new: Outstanding credit/bonus balance from History.ActiveCredit. Last credit event per CID per day (selected via ROW_NUMBER partition by CID, ordered by Occurred DESC, CreditID DESC). Negative values represent outstanding ...
+
+--- #13 AUM (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.AUM  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.AUM  HAS_TRANSFORMATION
+       Assets Under Management. Formula: TotalMirrorPositionAmount + TotalCash - Credit. For MERGE INSERT: computed as TotalMirrorPositionsAmoun...
+  new: Assets Under Management. Formula: TotalMirrorPositionAmount + TotalCash - Credit. For MERGE INSERT: computed as TotalMirrorPositionsAmount + TotalMirrorCash. Confluence: "AUC (or AUM) on PI Dashboard: Total Unrealized...
+
+--- #14 BonusCredit (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.BonusCredit  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.BonusCredit  HAS_SEMANTIC
+       Bonus credit balance from History.ActiveCredit.BonusCredit. Confluence: "History.Credit.CreditTypeID = 5, 7 Γזע BackOffice.BonusType.BonusT...
+  new: Bonus credit balance from History.ActiveCredit.BonusCredit. Confluence: "History.Credit.CreditTypeID = 5, 7 Γזע BackOffice.BonusType.BonusTypeID Γזע History.Credit.BonusTypeID". ISNULL to 0 in ETL. (Tier 2 Γאפ SP_Fact_Snaps...
+
+--- #15 TotalStockPositionAmount (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.TotalStockPositionAmount  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.TotalStockPositionAmount  HAS_SEMANTIC
+       Sum of position amounts where InstrumentTypeID IN (5,6) AND instrument is NOT a future. Represents CFD and real stock positions (excludin...
+  new: Sum of position amounts where InstrumentTypeID IN (5,6) AND instrument is NOT a future. Represents CFD and real stock positions (excluding futures that also have InstrumentTypeID 5/6). Added with mutual exclusivity fi...
+
+--- #16 TotalMirrorStockPositionAmount (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.TotalMirrorStockPositionAmount  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.TotalMirrorStockPositionAmount  HAS_SEMANTIC
+       Mirror (copy-trading) subset of TotalStockPositionAmount. Adds MirrorID > 0 AND ParentPositionID != 0. Same mutual exclusivity fix with f...
+  new: Mirror (copy-trading) subset of TotalStockPositionAmount. Adds MirrorID > 0 AND ParentPositionID != 0. Same mutual exclusivity fix with futures. (Tier 2 Γאפ SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_Snapshot...
+
+--- #17 PositionPnL (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.PositionPnL  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.PositionPnL  HAS_SEMANTIC
+       Total unrealized PnL in USD across all open positions for this CID on this date. Uses V1 formula (PnLInDollars from staging). This is the...
+  new: Total unrealized PnL in USD across all open positions for this CID on this date. Uses V1 formula (PnLInDollars from staging). This is the primary PnL metric. "The difference between Realized Equity and Unrealized Equi...
+
+--- #18 CopyPositionPnL (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.CopyPositionPnL  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.CopyPositionPnL  HAS_SEMANTIC
+       Unrealized PnL from copy-trading positions only (MirrorID > 0). Includes all asset classes. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL)
+  new: Unrealized PnL from copy-trading positions only (MirrorID > 0). Includes all asset classes. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #19 StandardDeviation (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.StandardDeviation  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.StandardDeviation  HAS_TRANSFORMATION
+       Portfolio risk measure: standard deviation of the customer's weighted portfolio computed from instrument covariance matrix. Only calculat...
+  new: Portfolio risk measure: standard deviation of the customer's weighted portfolio computed from instrument covariance matrix. Only calculated for dates >= 2012-12-31. Formula: Γטת(╬ú weight_a ├ק weight_b ├ק covariance). NULL...
+
+--- #20 CommissionOnOpen (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.CommissionOnOpen  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.CommissionOnOpen  HAS_SEMANTIC
+       Sum of opening commissions (Commission) across all open positions for this CID. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL)
+  new: Sum of opening commissions (Commission) across all open positions for this CID. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #25 StocksPositionPnL (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.StocksPositionPnL  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.StocksPositionPnL  HAS_SEMANTIC
+       Unrealized PnL from stock positions (InstrumentTypeID IN (5,6) AND NOT futures). Includes both real and CFD stocks, both manual and copy....
+  new: Unrealized PnL from stock positions (InstrumentTypeID IN (5,6) AND NOT futures). Includes both real and CFD stocks, both manual and copy. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #28 MirrorStocksPositionPnL (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.MirrorStocksPositionPnL  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.MirrorStocksPositionPnL  HAS_SEMANTIC
+       Unrealized PnL from copy-trading stock positions (InstrumentTypeID IN (5,6) AND NOT futures AND MirrorID > 0). (Tier 2 Γאפ SP_Fact_Customer...
+  new: Unrealized PnL from copy-trading stock positions (InstrumentTypeID IN (5,6) AND NOT futures AND MirrorID > 0). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #29 CryptoPositionPnL (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.CryptoPositionPnL  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.CryptoPositionPnL  HAS_SEMANTIC
+       Unrealized PnL from all crypto positions (InstrumentTypeID = 10 AND NOT futures). Includes real, CFD, manual, and copy. (Tier 2 Γאפ SP_Fact...
+  new: Unrealized PnL from all crypto positions (InstrumentTypeID = 10 AND NOT futures). Includes real, CFD, manual, and copy. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #30 ManualCryptoPositionPnL (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.ManualCryptoPositionPnL  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.ManualCryptoPositionPnL  HAS_SEMANTIC
+       Unrealized PnL from manually-opened crypto positions (InstrumentTypeID = 10 AND NOT futures AND MirrorID = 0). (Tier 2 Γאפ SP_Fact_Customer...
+  new: Unrealized PnL from manually-opened crypto positions (InstrumentTypeID = 10 AND NOT futures AND MirrorID = 0). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #31 CopyCryptoPositionPnL (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.CopyCryptoPositionPnL  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.CopyCryptoPositionPnL  HAS_SEMANTIC
+       Unrealized PnL from copy-trading crypto positions (InstrumentTypeID = 10 AND NOT futures AND MirrorID > 0). (Tier 2 Γאפ SP_Fact_CustomerUnr...
+  new: Unrealized PnL from copy-trading crypto positions (InstrumentTypeID = 10 AND NOT futures AND MirrorID > 0). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #32 TotalCryptoPositionAmount (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.TotalCryptoPositionAmount  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.TotalCryptoPositionAmount  HAS_TRANSFORMATION
+       Sum of position amounts where InstrumentTypeID = 10 AND instrument is NOT a future. Represents CFD and real crypto positions. Confluence:...
+  new: Sum of position amounts where InstrumentTypeID = 10 AND instrument is NOT a future. Represents CFD and real crypto positions. Confluence: "TotalCryptoPositionAmount + TotalStockPositionAmount = TotalPositionsAmount" (...
+
+--- #34 CopyFundAUM (EXHAUSTED (column_not_found), 2 hops) ---
+  was: Direct
+    -> V_Liabilities.CopyFundAUM  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.CopyFundAUM  COLUMN_NOT_FOUND  [column_not_in_upstream]
+  new: Passthrough Γאפ no upstream semantic (chain: V_Liabilities.CopyFundAUM -> Fact_SnapshotEquity.CopyFundAUM, column_not_found)
+
+--- #35 CopyFundPnL (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.CopyFundPnL  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.CopyFundPnL  HAS_TRANSFORMATION
+       Unrealized PnL from positions opened via copy-fund relationships (parent CID had AccountTypeID=9 at the time the copy was opened). Identi...
+  new: Unrealized PnL from positions opened via copy-fund relationships (parent CID had AccountTypeID=9 at the time the copy was opened). Identified via History.BackOfficeCustomer + History.Mirror join. (Tier 2 Γאפ SP_Fact_Cus...
+
+--- #36 NOP (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.NOP  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.NOP  HAS_SEMANTIC
+       Net Open Position Γאפ total signed directional USD exposure across all instruments. Positive = net long, negative = net short. "eToro holdi...
+  new: Net Open Position Γאפ total signed directional USD exposure across all instruments. Positive = net long, negative = net short. "eToro holding of each instrument" (Confluence). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (...
+
+--- #37 Notional (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.Notional  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.Notional  HAS_TRANSFORMATION
+       Total absolute USD exposure across all positions. Computed as SUM(ABS(per-position signed USD exposure)) grouped by CID Γאפ ABS is applied ...
+  new: Total absolute USD exposure across all positions. Computed as SUM(ABS(per-position signed USD exposure)) grouped by CID Γאפ ABS is applied per position, not per instrument. Always >= 0. (via Fact_CustomerUnrealized_PnL)
+
+--- #38 NOP_Crypto (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.NOP_Crypto  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.NOP_Crypto  HAS_SEMANTIC
+       Net Open Position for crypto instruments only (InstrumentTypeID = 10 AND NOT futures). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL)
+  new: Net Open Position for crypto instruments only (InstrumentTypeID = 10 AND NOT futures). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #39 Notional_Crypto (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.Notional_Crypto  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.Notional_Crypto  HAS_SEMANTIC
+       Absolute USD exposure for crypto instruments only. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL)
+  new: Absolute USD exposure for crypto instruments only. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #40 NOP_CFD (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.NOP_CFD  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.NOP_CFD  HAS_SEMANTIC
+       Net Open Position for all CFD positions (IsSettled = 0), all asset classes. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL)
+  new: Net Open Position for all CFD positions (IsSettled = 0), all asset classes. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #41 Notional_CFD (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.Notional_CFD  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.Notional_CFD  HAS_SEMANTIC
+       Absolute USD exposure for all CFD positions. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL)
+  new: Absolute USD exposure for all CFD positions. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #42 NOP_Crypto_CFD (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.NOP_Crypto_CFD  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.NOP_Crypto_CFD  HAS_SEMANTIC
+       Net Open Position for crypto CFD positions (InstrumentTypeID = 10 AND IsSettled = 0). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL)
+  new: Net Open Position for crypto CFD positions (InstrumentTypeID = 10 AND IsSettled = 0). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #43 Notional_Crypto_CFD (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.Notional_Crypto_CFD  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.Notional_Crypto_CFD  HAS_SEMANTIC
+       Absolute USD exposure for crypto CFD positions. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL)
+  new: Absolute USD exposure for crypto CFD positions. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #44 PositionPnLStocksReal (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.PositionPnLStocksReal  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.PositionPnLStocksReal  HAS_SEMANTIC
+       Unrealized PnL from real (settled) stock positions only (IsSettled = 1 AND InstrumentTypeID IN (5,6) AND NOT futures). Uses PnLInDollars....
+  new: Unrealized PnL from real (settled) stock positions only (IsSettled = 1 AND InstrumentTypeID IN (5,6) AND NOT futures). Uses PnLInDollars. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #45 PositionPnLCryptoReal (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.PositionPnLCryptoReal  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.PositionPnLCryptoReal  HAS_SEMANTIC
+       Unrealized PnL from real (settled) crypto positions only (IsSettled = 1 AND InstrumentTypeID = 10 AND NOT futures). Uses PnLInDollars. (T...
+  new: Unrealized PnL from real (settled) crypto positions only (IsSettled = 1 AND InstrumentTypeID = 10 AND NOT futures). Uses PnLInDollars. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #46 TotalRealStocks (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.TotalRealStocks  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.TotalRealStocks  HAS_SEMANTIC
+       Sum of position amounts where IsSettled = 1 AND InstrumentTypeID IN (5,6) AND instrument is NOT a future. "Real" means the customer owns ...
+  new: Sum of position amounts where IsSettled = 1 AND InstrumentTypeID IN (5,6) AND instrument is NOT a future. "Real" means the customer owns the underlying asset (settled/delivered). Updated via IsSettled change tracking ...
+
+--- #47 TotalRealCrypto (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.TotalRealCrypto  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.TotalRealCrypto  HAS_SEMANTIC
+       Sum of position amounts where IsSettled = 1 AND InstrumentTypeID = 10 AND instrument is NOT a future. Real crypto ownership (settled posi...
+  new: Sum of position amounts where IsSettled = 1 AND InstrumentTypeID = 10 AND instrument is NOT a future. Real crypto ownership (settled positions). Updated via IsSettled change tracking. (Tier 2 Γאפ SP_Fact_SnapshotEquity_...
+
+--- #50 CommissionByUnitsCrypto_TRS (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.CommissionByUnitsCrypto_TRS  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.CommissionByUnitsCrypto_TRS  HAS_SEMANTIC
+       Prorated commission for crypto TRS positions (IsSettled = 0 AND InstrumentTypeID = 10 AND SettlementTypeID = 2). Added 2022-01-27 (Inbal ...
+  new: Prorated commission for crypto TRS positions (IsSettled = 0 AND InstrumentTypeID = 10 AND SettlementTypeID = 2). Added 2022-01-27 (Inbal BML). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #51 CopyCryptoPositionPnL_TRS (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.CopyCryptoPositionPnL_TRS  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.CopyCryptoPositionPnL_TRS  HAS_SEMANTIC
+       Unrealized PnL from copy-trading crypto TRS positions (InstrumentTypeID = 10 AND MirrorID > 0 AND SettlementTypeID = 2). (Tier 2 Γאפ SP_Fac...
+  new: Unrealized PnL from copy-trading crypto TRS positions (InstrumentTypeID = 10 AND MirrorID > 0 AND SettlementTypeID = 2). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #52 CryptoPositionPnL_TRS (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.CryptoPositionPnL_TRS  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.CryptoPositionPnL_TRS  HAS_SEMANTIC
+       Unrealized PnL from all crypto TRS positions (InstrumentTypeID = 10 AND SettlementTypeID = 2). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL)
+  new: Unrealized PnL from all crypto TRS positions (InstrumentTypeID = 10 AND SettlementTypeID = 2). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #53 FullCommissionByUnitsCrypto_TRS (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.FullCommissionByUnitsCrypto_TRS  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.FullCommissionByUnitsCrypto_TRS  HAS_SEMANTIC
+       Full prorated commission for crypto TRS positions (IsSettled = 0 AND InstrumentTypeID = 10 AND SettlementTypeID = 2). (Tier 2 Γאפ SP_Fact_C...
+  new: Full prorated commission for crypto TRS positions (IsSettled = 0 AND InstrumentTypeID = 10 AND SettlementTypeID = 2). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #54 ManualCryptoPositionPnL_TRS (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.ManualCryptoPositionPnL_TRS  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.ManualCryptoPositionPnL_TRS  HAS_SEMANTIC
+       Unrealized PnL from manually-opened crypto TRS positions (InstrumentTypeID = 10 AND MirrorID = 0 AND SettlementTypeID = 2). (Tier 2 Γאפ SP_...
+  new: Unrealized PnL from manually-opened crypto TRS positions (InstrumentTypeID = 10 AND MirrorID = 0 AND SettlementTypeID = 2). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #55 NOP_Crypto_TRS (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.NOP_Crypto_TRS  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.NOP_Crypto_TRS  HAS_SEMANTIC
+       Net Open Position for crypto TRS positions (InstrumentTypeID = 10 AND IsSettled = 0 AND SettlementTypeID = 2). (Tier 2 Γאפ SP_Fact_Customer...
+  new: Net Open Position for crypto TRS positions (InstrumentTypeID = 10 AND IsSettled = 0 AND SettlementTypeID = 2). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #56 Notional_Crypto_TRS (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.Notional_Crypto_TRS  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.Notional_Crypto_TRS  HAS_SEMANTIC
+       Absolute USD exposure for crypto TRS positions. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL)
+  new: Absolute USD exposure for crypto TRS positions. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #57 Total_TRSCrypto (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.Total_TRSCrypto  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.Total_TRSCrypto  HAS_SEMANTIC
+       Sum of crypto position amounts where IsSettled = 0 AND InstrumentTypeID = 10 AND SettlementTypeID = 2. CFD-style crypto positions under T...
+  new: Sum of crypto position amounts where IsSettled = 0 AND InstrumentTypeID = 10 AND SettlementTypeID = 2. CFD-style crypto positions under TRS settlement (not yet settled to real ownership). Added 2022-01-27. (Tier 2 Γאפ S...
+
+--- #58 TotalCryptoPositionAmount_TRS (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.TotalCryptoPositionAmount_TRS  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.TotalCryptoPositionAmount_TRS  HAS_SEMANTIC
+       Sum of crypto position amounts where SettlementTypeID = 2 (TRS Γאפ Total Return Swap) AND instrument is NOT a future. Added 2022-01-27 (Inb...
+  new: Sum of crypto position amounts where SettlementTypeID = 2 (TRS Γאפ Total Return Swap) AND instrument is NOT a future. Added 2022-01-27 (Inbal BML). TRS positions have different regulatory treatment than settled position...
+
+--- #61 MirrorRealFuturesPositionPnL (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.MirrorRealFuturesPositionPnL  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.MirrorRealFuturesPositionPnL  HAS_SEMANTIC
+       Unrealized PnL from copy-trading futures positions (IsFuture = 1 AND MirrorID > 0). Uses PnLInDollars. Added 2024-11-10 (Daniel Kaplan). ...
+  new: Unrealized PnL from copy-trading futures positions (IsFuture = 1 AND MirrorID > 0). Uses PnLInDollars. Added 2024-11-10 (Daniel Kaplan). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #62 ManualRealFuturesPositionPnL (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.ManualRealFuturesPositionPnL  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.ManualRealFuturesPositionPnL  HAS_SEMANTIC
+       Unrealized PnL from manually-opened futures positions (IsFuture = 1 AND MirrorID = 0). Uses PnLInDollars. Added 2024-11-10. (Tier 2 Γאפ SP_...
+  new: Unrealized PnL from manually-opened futures positions (IsFuture = 1 AND MirrorID = 0). Uses PnLInDollars. Added 2024-11-10. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #63 NOP_FuturesReal (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.NOP_FuturesReal  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.NOP_FuturesReal  HAS_SEMANTIC
+       Net Open Position for futures instruments (IsFuture = 1). Added 2024-11-10. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL)
+  new: Net Open Position for futures instruments (IsFuture = 1). Added 2024-11-10. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #64 Notional_FuturesReal (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.Notional_FuturesReal  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.Notional_FuturesReal  HAS_SEMANTIC
+       Absolute USD exposure for futures instruments. Always positive (uses ABS for sell positions). Added 2024-11-10. (Tier 2 Γאפ SP_Fact_Custome...
+  new: Absolute USD exposure for futures instruments. Always positive (uses ABS for sell positions). Added 2024-11-10. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #65 PositionPnLFuturesReal (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.PositionPnLFuturesReal  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.PositionPnLFuturesReal  HAS_SEMANTIC
+       Total unrealized PnL from all futures positions (IsFuture = 1). Uses PnLInDollars. Added 2024-11-10. (Tier 2 Γאפ SP_Fact_CustomerUnrealized...
+  new: Total unrealized PnL from all futures positions (IsFuture = 1). Uses PnLInDollars. Added 2024-11-10. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #66 FullCommissionByUnitsFuturesReal (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.FullCommissionByUnitsFuturesReal  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.FullCommissionByUnitsFuturesReal  HAS_SEMANTIC
+       Full prorated commission for futures positions (IsFuture = 1). Added 2024-11-10. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL)
+  new: Full prorated commission for futures positions (IsFuture = 1). Added 2024-11-10. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #67 CommissionByUnitsFuturesReal (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.CommissionByUnitsFuturesReal  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.CommissionByUnitsFuturesReal  HAS_SEMANTIC
+       Prorated commission for futures positions (IsFuture = 1). Added 2024-11-10. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL)
+  new: Prorated commission for futures positions (IsFuture = 1). Added 2024-11-10. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #68 TotalMirrorRealFuturesPositionAmount (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.TotalMirrorRealFuturesPositionAmount  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.TotalMirrorRealFuturesPositionAmount  HAS_SEMANTIC
+       Sum of futures position amounts where MirrorID > 0. From Dim_Instrument_Snapshot.IsFuture = 1. Added 2024-10-30 (Daniel Kaplan). (Tier 2 ...
+  new: Sum of futures position amounts where MirrorID > 0. From Dim_Instrument_Snapshot.IsFuture = 1. Added 2024-10-30 (Daniel Kaplan). (Tier 2 Γאפ SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_SnapshotEquity)
+
+--- #69 TotalRealFutures (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.TotalRealFutures  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.TotalRealFutures  HAS_SEMANTIC
+       Sum of all futures position amounts. Identified via JOIN to Dim_Instrument_Snapshot where IsFuture = 1 for the snapshot DateID. Added 202...
+  new: Sum of all futures position amounts. Identified via JOIN to Dim_Instrument_Snapshot where IsFuture = 1 for the snapshot DateID. Added 2024-10-30. (Tier 2 Γאפ SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_Snapsho...
+
+--- #70 TotalFuturesProviderMargin (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.TotalFuturesProviderMargin  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.TotalFuturesProviderMargin  HAS_SEMANTIC
+       Sum of provider margin for futures positions: LotCountDecimal ├ק Dim_Instrument_Snapshot.ProviderMarginPerLot. Represents the margin requi...
+  new: Sum of provider margin for futures positions: LotCountDecimal ├ק Dim_Instrument_Snapshot.ProviderMarginPerLot. Represents the margin required by the futures provider. Added 2024-10-30. (Tier 2 Γאפ SP_Fact_SnapshotEquity_...
+
+--- #72 NOP_StocksMargin (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.NOP_StocksMargin  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.NOP_StocksMargin  HAS_SEMANTIC
+       Net Open Position for stock margin positions (SettlementTypeID = 5). Added 2025-09-25 (Daniel Kaplan). (Tier 2 Γאפ SP_Fact_CustomerUnrealiz...
+  new: Net Open Position for stock margin positions (SettlementTypeID = 5). Added 2025-09-25 (Daniel Kaplan). (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #73 PositionPnLStocksMargin (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.PositionPnLStocksMargin  TRIVIAL
+       Direct
+    -> Fact_CustomerUnrealized_PnL.PositionPnLStocksMargin  HAS_SEMANTIC
+       Unrealized PnL from stock margin positions (SettlementTypeID = 5). Uses PnLInDollars. Added 2025-09-25. (Tier 2 Γאפ SP_Fact_CustomerUnreali...
+  new: Unrealized PnL from stock margin positions (SettlementTypeID = 5). Uses PnLInDollars. Added 2025-09-25. (Tier 2 Γאפ SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL)
+
+--- #74 TotalStocksMargin (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.TotalStocksMargin  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.TotalStocksMargin  HAS_SEMANTIC
+       Sum of stock margin position amounts where SettlementTypeID = 5. Represents margin-traded stock positions (not fully settled). Added 2025...
+  new: Sum of stock margin position amounts where SettlementTypeID = 5. Represents margin-traded stock positions (not fully settled). Added 2025-09-30 (Daniel Kaplan). (Tier 2 Γאפ SP_Fact_SnapshotEquity_TotalPositionAmount) (v...
+
+--- #75 TotalStockMarginLoanValue (FOUND, 2 hops) ---
+  was: Direct
+    -> V_Liabilities.TotalStockMarginLoanValue  TRIVIAL
+       Direct
+    -> Fact_SnapshotEquity.TotalStockMarginLoanValue  HAS_TRANSFORMATION
+       Loan value for leveraged stock margin positions: InitForexRate ├ק AmountInUnitsDecimal ├ק InitConversionRate - NewAmount. Only computed whe...
+  new: Loan value for leveraged stock margin positions: InitForexRate ├ק AmountInUnitsDecimal ├ק InitConversionRate - NewAmount. Only computed when SettlementTypeID = 5 AND Leverage <> 1. Formula updated 2025-12-10 to use Init...
+
+======================================================================
+Summary: 60 FOUND / 3 EXHAUSTED  (63 total)
+Exhausted reasons:
+     2  section_4_not_a_column_table:ETL & Data Pipeline
+     1  column_not_found

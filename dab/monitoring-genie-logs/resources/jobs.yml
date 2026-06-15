@@ -1,0 +1,42 @@
+resources:
+  jobs:
+    monitoring_genie_logs_daily_capture:
+      name: monitoring-genie-logs — daily capture (${var.env})
+      description: |
+        Captures Genie conversations daily by enumerating
+        main.monitoring.genie_audit_events, fetching NL + SQL via the Genie REST API,
+        and joining system.query.history for execution metrics.
+        Writes one row per Genie message to
+        main.{de_output|de_output_stg}.de_output_monitoring_genie_logs_genie_gateway.
+      tags:
+        owner: data-platform
+        domain: platform-observability
+        sla: D+1
+        env: ${var.env}
+
+      schedule:
+        quartz_cron_expression: ${var.schedule_cron}
+        timezone_id: UTC
+        pause_status: UNPAUSED
+
+      email_notifications:
+        on_failure:
+          - ${var.notification_email}
+        no_alert_for_skipped_runs: true
+
+      max_concurrent_runs: 1
+
+      timeout_seconds: 3600
+
+      tasks:
+        - task_key: capture
+          notebook_task:
+            notebook_path: ../notebooks/genie_logs_daily_capture.py
+            base_parameters:
+              env: ${var.env}
+              backfill_days: "7"
+              max_messages: "5000"
+              dry_run: "false"
+            source: WORKSPACE
+          # Serverless job compute — no environment_key / cluster needed.
+          # If your workspace requires explicit compute, swap to a job_cluster block.

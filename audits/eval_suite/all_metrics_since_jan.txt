@@ -1,0 +1,54 @@
+﻿=== Synapse: per-(metric,day) since 2026-01-01 ===
+  1998 (metric,day) tuples
+
+=== UC: per-(metric,day) since 2026-01-01 ===
+  1946 (metric,day) tuples
+
+=== Metric coverage ===
+  Synapse metrics (17): ['AdminFee', 'CashoutFeeExclRedeem', 'Commission', 'ConversionFee', 'CryptoToFiatFee', 'Dividends', 'DormantFee', 'FullCommission', 'Options_PFOF', 'RollOverFee', 'SDRT', 'ShareLending', 'SpotPriceAdjustment', 'StakingLagOneMonth', 'TicketFee', 'TicketFeeByPercent', 'TransferCoinFee']
+  UC      metrics (17): ['AdminFee', 'CashoutFeeExclRedeem', 'Commission', 'ConversionFee', 'CryptoToFiatFee', 'Dividends', 'DormantFee', 'FullCommission', 'Options_PFOF', 'RollOverFee', 'SDRT', 'ShareLending', 'SpotPriceAdjustment', 'StakingLagOneMonth', 'TicketFee', 'TicketFeeByPercent', 'TransferCoinFee']
+  Synapse-only metrics: []
+  UC-only      metrics: []
+
+=== Per-metric coverage summary ===
+  Metric                       syn_days uc_days match diff syn_only uc_only      syn_total       uc_total  |delta|_total
+  ---------------------------- -------- ------- ----- ---- -------- ------- -------------- -------------- --------------
+  AdminFee                          108     108   108    0        0       0      729200.16      729200.16           0.00
+  CashoutFeeExclRedeem              160     160   160    0        0       0     1665880.00     1665880.00           0.00
+  Commission                        160     160   156    4        0       0   139988454.25   139988454.25           0.00
+  ConversionFee                     160     160   157    3        0       0    46899933.90    46899999.30          65.40
+  CryptoToFiatFee                   160     159   159    0        1       0       23107.68       22886.39         221.29
+  Dividends                         141     141   140    1        0       0    37742978.42    37742978.42           0.00
+  DormantFee                          5       5     5    0        0       0      960370.00      960370.00           0.00
+  FullCommission                    160     160   156    4        0       0   245409701.82   245409701.82           0.00
+  Options_PFOF                      107      59    59    0       48       0       72523.69       23296.65       49227.04
+  RollOverFee                       160     160   157    3        0       0    48971908.65    48971908.65           0.00
+  SDRT                              109     109   107    2        0       0     1896090.74     1896090.74           0.00
+  ShareLending                        6       6     6    0        0       0       70904.23       70904.23           0.00
+  SpotPriceAdjustment               100     100   100    0        0       0      414985.13      414985.13           0.00
+  StakingLagOneMonth                 12      12     9    3        0       0     9808388.13    14023383.82     4214995.69
+  TicketFee                         130     130   127    3        0       0    12193589.29    13972920.29     1779331.00
+  TicketFeeByPercent                160     157   157    0        3       0    69908932.12    68129601.12     1779331.00
+  TransferCoinFee                   160     160   160    0        0       0      679269.41      679269.41           0.00
+
+=== VERDICT BY METRIC ===
+  AdminFee                      FINE
+  CashoutFeeExclRedeem          FINE
+  Commission                    DIFF_FROM_20260427
+  ConversionFee                 DIFF_FROM_20260427
+  CryptoToFiatFee               BROKEN_FROM_20260427_(syn_has_uc_missing)
+  Dividends                     DIFF_FROM_20260428
+  DormantFee                    FINE
+  FullCommission                DIFF_FROM_20260427
+  Options_PFOF                  BROKEN_FROM_20260327_(syn_has_uc_missing)
+  RollOverFee                   DIFF_FROM_20260427
+  SDRT                          DIFF_FROM_20260428
+  ShareLending                  FINE
+  SpotPriceAdjustment           FINE
+  StakingLagOneMonth            DIFF_FROM_20260407
+  TicketFee                     DIFF_FROM_20260427
+  TicketFeeByPercent            BROKEN_FROM_20260427_(syn_has_uc_missing)
+  TransferCoinFee               FINE
+
+Per-(metric,day) CSV: C:\Users\guyman\Documents\github\Databricks_Knowledge\audits\eval_suite\all_metrics_since_jan.csv
+Per-metric summary CSV: C:\Users\guyman\Documents\github\Databricks_Knowledge\audits\eval_suite\all_metrics_since_jan_summary.csv

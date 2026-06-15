@@ -1,0 +1,27 @@
+id: tableau__2df65a2f__capital_guarantee_tactical_edge_cg_2024__1
+question: Open the 'Capital Guarantee - Tactical Edge CG 2024 ' dashboard. What does
+  the headline figure (row 1 of the primary view) for 2026-06-08 show?
+source: tableau:2df65a2f-bb2c-4206-95e2-432220b5666c
+asof: '2026-06-08'
+ground_truth_sql: 'SELECT COUNT(*) AS row_count
+
+  FROM main.dwh.dim_position
+
+  -- workbook: Capital Guarantee - Tactical Edge CG 2024  (luid 2df65a2f-bb2c-4206-95e2-432220b5666c)
+  views=571'
+expected_value:
+  type: numeric
+  value: 2842943651
+  tolerance_pct: 1.0
+expected_skill_hub: _uc_object_map
+skill_coverage_status: covered
+canonical_tables:
+- main.dwh.dim_position
+anti_sources: []
+expected_filters: []
+notes: Auto-generated Tableau probe. Rewrite the SQL to match the specific KPI the
+  dashboard renders before pinning. Workbook total_views=571.
+tags:
+- tableau
+- views_571
+max_replicas: 3

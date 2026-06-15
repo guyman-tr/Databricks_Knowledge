@@ -1,0 +1,22 @@
+id: ddr__ddr_customer_dailystatus__funded_customers
+question: How many funded customers did eToro have on 2026-06-08?
+source: ddr
+asof: '2026-06-08'
+ground_truth_sql: "SELECT COUNT(DISTINCT RealCID) AS funded\nFROM main.etoro_kpi.ddr_customer_dailystatus\n\
+  WHERE FromDateID <= CAST(REPLACE('2026-06-08','-','') AS INT)\n  AND ToDateID >=\
+  \ CAST(REPLACE('2026-06-08','-','') AS INT)\n  AND IsFunded = 1"
+expected_value:
+  type: numeric
+  value: 3935735
+  tolerance_pct: 0.5
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: missing
+canonical_tables:
+- main.etoro_kpi.ddr_customer_dailystatus
+anti_sources: []
+expected_filters: []
+notes: ''
+tags:
+- ddr
+- ddr_customer_dailystatus
+max_replicas: 3

@@ -1,0 +1,21 @@
+﻿=== CLI probe trace ===
+events:        294
+final_text:    723 chars
+duration_ms:   63503
+is_error:      False
+tool_calls:    5
+by kind:       {'readToolCall': 4, 'shellToolCall': 1}
+by mcp tool:   {}
+sql_execs:     1
+  [0] method='shell_dbx_query' succeeded=True
+      sql excerpt: SELECT COUNT(DISTINCT s.RealCID) AS funded_customers FROM main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd s JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap ON snap.RealCID = CAST(s.RealCID AS
+skills_loaded: 2
+  - method='file_read'  slug='dwh-domain/domain-customer-and-identity'
+  - method='file_read'  slug='dwh-domain/cross-cutting'
+
+=== Final assistant text (FULL) ===
+I'll help you find the number of funded users for yesterday (June 13, 2026).
+
+Let me load the relevant domain knowledge first.Running a live query via Databricks MCP ╬ף╫נ╫ñ if nothing follows in ~10╬ף╫נ╫ú15 seconds, check **Settings ╬ף╫צ╫ó MCP** (server may be disconnected).The Databricks MCP is not connected. Running via the Python query script instead.**Funded users yesterday (June 13, 2026): 3,939,347**
+
+*Scope: valid users only ╬ף╫נ╫ñ `IsValidCustomer = 1` (excludes `PlayerLevel='Internal'`, `Label IN ('Dealing','ILQ')`, `Country='eToro'`), period-correct (SCD-2). Popular Investors ARE valid. For credit-balance-valid scope, ask explicitly ("CB valid"). For unfiltered, ask explicitly ("include non-valids" / "unfiltered").*

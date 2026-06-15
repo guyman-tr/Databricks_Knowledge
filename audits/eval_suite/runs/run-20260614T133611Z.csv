@@ -1,0 +1,128 @@
+run_id,run_started_at,host,case_id,case_status,sut_name,asof,natural_language_question,expected_value,observed_value,diff_abs,diff_pct,tolerance_pct,passed,reason,sql_used,sut_text_answer,sut_error,elapsed_ms,tags,baseline_sut_name,baseline_value,baseline_diff_pct,baseline_passed,drift_verdict,judge_score,judge_label,judge_rationale,judge_model,trace_skills_loaded,trace_sql_executed_count,trace_sql_succeeded_count,trace_tool_call_count,trace_tool_call_by_kind,trace_mcp_tool_call_by_name,trace_input_tokens,trace_output_tokens,trace_cache_read_tokens,trace_cache_write_tokens,trace_thinking_excerpt,trace_session_id,trace_model
+run-20260614T133626Z,2026-06-14T13:36:26Z,azr-we-bidev-3,ddr_aum_equity_global_yesterday,live,direct_mcp,2026-06-08,What was the total Global Equity (sum of customer equity across TP + IBAN + Options + custodied assets) as of 2026-06-08?,16683397467.773949,16682889930.123947,-507537.6500015259,-0.0030421720215075966,0.5,True,"expected=16,683,397,467.7739; observed=16,682,889,930.1239; diff=-0.0030% <= tol=0.5%","SELECT SUM(aum.EquityGlobal) AS TotalGlobalEquity
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum aum
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+  ON snap.RealCID = aum.RealCID
+ AND snap.IsValidCustomer = 1
+ AND aum.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE aum.DateID = 20260608","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-payments'; 1 describes, 4 probes, 5 rounds; row[0]=['16682889930.123948']; scalar=16682889930.123947.",,51733,"[""ddr"", ""aum"", ""yesterday"", ""valid-users-cb"", ""equity-global""]",,,,,PASS,,,,,,,,,,,,,,,,,
+run-20260614T133626Z,2026-06-14T13:36:26Z,azr-we-bidev-3,ddr_aum_realized_equity_global_yesterday,live,direct_mcp,2026-06-08,What was the total Global Realized Equity (excluding mark-to-market unrealized PnL on open positions) as of 2026-06-08?,17243415676.84395,17242916216.893948,-499459.95000076294,-0.00289652560351766,0.5,True,"expected=17,243,415,676.8439; observed=17,242,916,216.8939; diff=-0.0029% <= tol=0.5%","SELECT SUM(aum.RealizedEquityGlobal)
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum aum
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = aum.RealCID
+   AND snap.IsValidCustomer = 1
+   AND aum.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE aum.DateID = 20260608","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-trading'; 2 describes, 0 probes, 2 rounds; row[0]=['17242916216.893949']; scalar=17242916216.893948.",,24141,"[""ddr"", ""aum"", ""yesterday"", ""valid-users-cb"", ""realized-equity""]",,,,,PASS,,,,,,,,,,,,,,,,,
+run-20260614T133626Z,2026-06-14T13:36:26Z,azr-we-bidev-3,ddr_mimo_external_deposits_tp_yesterday,live,direct_mcp,2026-06-08,What was the total amount in USD of external (non-internal-transfer) deposits to the Trading Platform on 2026-06-08? External deposits are payments made from outside the eToro ecosystem (e.g. card or wire from a customer's bank).,15471498.4,15424567.43,-46930.97000000067,-0.303338233871392,0.5,True,"expected=15,471,498.4000; observed=15,424,567.4300; diff=-0.3033% <= tol=0.5%","SELECT SUM(m.AmountUSD) AS total_external_deposits_usd
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms m
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+  ON snap.RealCID = m.RealCID
+  AND snap.IsValidCustomer = 1
+  AND m.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE m.DateID = 20260608
+  AND m.MIMOAction = 'Deposit'
+  AND m.MIMOPlatform = 'TradingPlatform'
+  AND m.IsInternalTransfer = 0
+  AND m.IsIBANQuickTransfer = 0","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-payments'; 2 describes, 2 probes, 4 rounds; row[0]=['15424567.430000']; scalar=15424567.43.",,47936,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""tp-deposits"", ""external""]",,,,,PASS,,,,,,,,,,,,,,,,,
+run-20260614T133626Z,2026-06-14T13:36:26Z,azr-we-bidev-3,ddr_mimo_global_cashout_users_yesterday,live,direct_mcp,2026-06-08,"How many distinct customers had a successful global cashout (any platform: TP, IBAN, Options, MoneyFarm) on 2026-06-08? GlobalCashedOut is a 0/1 per-customer flag on the daily-status table.",7748.0,7748.0,0.0,0.0,0.5,True,"expected=7,748.0000; observed=7,748.0000; diff=+0.0000% <= tol=0.5%","SELECT COUNT(DISTINCT RealCID) AS distinct_customers_global_cashedout
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status
+WHERE DateID = 20260608
+  AND IsValidCustomer = 1
+  AND GlobalCashedOut = 1","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-payments'; 1 describes, 1 probes, 3 rounds; row[0]=['7748']; scalar=7748.0.",,29203,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""cashout-users""]",,,,,PASS,,,,,,,,,,,,,,,,,
+run-20260614T133626Z,2026-06-14T13:36:26Z,azr-we-bidev-3,ddr_mimo_global_deposits_amount_yesterday,live,direct_mcp,2026-06-08,"What were the total external (non-internal-transfer) global deposits in USD on 2026-06-08? Global means across all eToro platforms (TP, eMoney IBAN, Options, MoneyFarm).",29910573.3,29863642.33,-46930.97000000253,-0.1569042810690711,0.5,True,"expected=29,910,573.3000; observed=29,863,642.3300; diff=-0.1569% <= tol=0.5%","SELECT SUM(m.AmountUSD) AS total_external_deposits_usd
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms m
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+  ON snap.RealCID = m.RealCID
+  AND snap.IsValidCustomer = 1
+  AND m.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE m.DateID = 20260608
+  AND m.MIMOAction = 'Deposit'
+  AND m.IsInternalTransfer = 0
+  AND m.IsIBANQuickTransfer = 0","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-payments'; 2 describes, 3 probes, 5 rounds; row[0]=['29863642.330000']; scalar=29863642.33.",,49578,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""deposits""]",,,,,PASS,,,,,,,,,,,,,,,,,
+run-20260614T133626Z,2026-06-14T13:36:26Z,azr-we-bidev-3,ddr_mimo_global_deposits_count_yesterday,live,direct_mcp,2026-06-08,How many global deposit transactions were made on 2026-06-08? Excludes internal transfers and crypto-redeem reclassifications.,19769.0,19769.0,0.0,0.0,0.5,True,"expected=19,769.0000; observed=19,769.0000; diff=+0.0000% <= tol=0.5%","SELECT COUNT(*) AS deposit_transaction_count
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms mimo
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+  ON snap.RealCID = mimo.RealCID
+ AND snap.IsValidCustomer = 1
+ AND mimo.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE mimo.DateID = 20260608
+  AND mimo.MIMOAction = 'Deposit'
+  AND mimo.IsInternalTransfer = 0
+  AND mimo.IsRedeem = 0","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-payments'; 2 describes, 1 probes, 4 rounds; row[0]=['19769']; scalar=19769.0.",,46436,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""deposit-count""]",,,,,PASS,,,,,,,,,,,,,,,,,
+run-20260614T133626Z,2026-06-14T13:36:26Z,azr-we-bidev-3,ddr_mimo_tp_first_funded_yesterday,live,direct_mcp,2026-06-08,How many customers made their first-ever Trading-Platform deposit on 2026-06-08? This is the TP-platform-specific FTD count (not Global FTD).,867.0,866.0,-1.0,-0.11534025374855825,0.5,True,expected=867.0000; observed=866.0000; diff=-0.1153% <= tol=0.5%,"SELECT COUNT(*) AS tp_ftd_count
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms m
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+  ON snap.RealCID = m.RealCID
+  AND snap.IsValidCustomer = 1
+  AND m.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE m.DateID = 20260608
+  AND m.MIMOPlatform = 'TradingPlatform'
+  AND m.IsPlatformFTD = 1
+  AND m.MIMOAction = 'Deposit'
+  AND m.IsInternalTransfer = 0
+  AND m.IsIBANQuickTransfer = 0","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-payments'; 2 describes, 2 probes, 4 rounds; row[0]=['866']; scalar=866.0.",,39671,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""ftd""]",,,,,PASS,,,,,,,,,,,,,,,,,
+run-20260614T133626Z,2026-06-14T13:36:26Z,azr-we-bidev-3,ddr_pnl_daily_total_pnl_yesterday,live,direct_mcp,2026-06-08,What was the total Daily PnL (realized NetProfit + unrealized mark-to-market change) across all positions on 2026-06-08?,104757898.38,104756908.79,-989.5899999886751,-0.0009446447621534226,0.5,True,"expected=104,757,898.3800; observed=104,756,908.7900; diff=-0.0009% <= tol=0.5%","SELECT SUM(pnl.NetProfit + pnl.UnrealizedPnLChange) AS total_daily_pnl
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl pnl
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = pnl.RealCID
+   AND snap.IsValidCustomer = 1
+   AND pnl.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE pnl.DateID = 20260608","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-trading'; 2 describes, 1 probes, 3 rounds; row[0]=['104756908.790000']; scalar=104756908.79.",,34141,"[""ddr"", ""pnl"", ""yesterday"", ""valid-users-cb"", ""daily-total-pnl""]",,,,,PASS,,,,,,,,,,,,,,,,,
+run-20260614T133626Z,2026-06-14T13:36:26Z,azr-we-bidev-3,ddr_pnl_total_position_pnl_yesterday,live,direct_mcp,2026-06-08,What was the total mark-to-market unrealized PnL across all open positions as of 2026-06-08? Negative means open positions are aggregately under water.,-564406548.55,-564414626.25,-8077.700000047684,0.0014311846701282722,0.5,True,"expected=-564,406,548.5500; observed=-564,414,626.2500; diff=+0.0014% <= tol=0.5%","SELECT SUM(aum.TotalPositionPNL) AS total_unrealized_pnl
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum aum
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = aum.RealCID
+   AND snap.IsValidCustomer = 1
+   AND 20260608 BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE aum.DateID = 20260608","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-trading'; 3 describes, 2 probes, 5 rounds; row[0]=['-564414626.250000']; scalar=-564414626.25.",,47421,"[""ddr"", ""pnl"", ""yesterday"", ""valid-users-cb"", ""open-position-pnl""]",,,,,PASS,,,,,,,,,,,,,,,,,
+run-20260614T133626Z,2026-06-14T13:36:26Z,azr-we-bidev-3,ddr_revenue_admin_yesterday,live,direct_mcp,2026-06-08,What was the total Admin Fee (dormancy/inactivity fee) revenue on 2026-06-08?,10619.05,10619.05,0.0,0.0,0.5,True,"expected=10,619.0500; observed=10,619.0500; diff=+0.0000% <= tol=0.5%","SELECT SUM(f.Amount) AS total_admin_fee_usd
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions f
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+  ON snap.RealCID = f.RealCID
+ AND snap.IsValidCustomer = 1
+ AND f.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE f.DateID = 20260608
+  AND f.Metric = 'AdminFee'
+  AND f.IncludedInTotalRevenue = 1","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-revenue-and-fees'; 2 describes, 4 probes, 6 rounds; row[0]=['10619.050000']; scalar=10619.05.",,58625,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""admin-fee""]",,,,,PASS,,,,,,,,,,,,,,,,,
+run-20260614T133626Z,2026-06-14T13:36:26Z,azr-we-bidev-3,ddr_revenue_conversion_fee_yesterday,live,direct_mcp,2026-06-08,What was the total Conversion Fee revenue on 2026-06-08? Conversion fees are charged when customer trade currency differs from their wallet currency.,414246.3192,414246.3192,0.0,0.0,0.5,True,"expected=414,246.3192; observed=414,246.3192; diff=+0.0000% <= tol=0.5%","SELECT SUM(f.Amount) AS total_conversion_fee_usd
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions f
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+  ON snap.RealCID = f.RealCID
+ AND snap.IsValidCustomer = 1
+ AND f.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE f.DateID = 20260608
+  AND f.Metric = 'ConversionFee'","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-revenue-and-fees'; 2 describes, 1 probes, 3 rounds; row[0]=['414246.319200']; scalar=414246.3192.",,34890,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""conversion-fee""]",,,,,PASS,,,,,,,,,,,,,,,,,
+run-20260614T133626Z,2026-06-14T13:36:26Z,azr-we-bidev-3,ddr_revenue_full_commission_yesterday,live,direct_mcp,2026-06-08,What was the total Full Commission revenue on 2026-06-08? Full Commission combines retail trading commission with both fixed and percentage-based ticket fees.,1229189.3105,2143362.1605,914172.8500000003,74.37201431796868,0.5,False,"expected=1,229,189.3105; observed=2,143,362.1605; diff=+74.3720% > tol=0.5%","SELECT SUM(f.Amount) AS total_full_commission_revenue
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions f
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+  ON snap.RealCID = f.RealCID
+ AND snap.IsValidCustomer = 1
+ AND f.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE f.DateID = 20260608
+  AND f.Metric IN ('FullCommission', 'TicketFee', 'TicketFeeByPercent')","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-revenue-and-fees'; 2 describes, 1 probes, 3 rounds; row[0]=['2143362.160500']; scalar=2143362.1605.",,30015,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""commission""]",direct_sql,,,False,BASELINE_BROKEN,,,,,,,,,,,,,,,,,
+run-20260614T133626Z,2026-06-14T13:36:26Z,azr-we-bidev-3,ddr_revenue_rollover_yesterday,live,direct_mcp,2026-06-08,What was the total Rollover Fee revenue on 2026-06-08? Rollover fees are the financing charge for keeping leveraged CFD positions open overnight.,290343.4,290343.4,0.0,0.0,0.5,True,"expected=290,343.4000; observed=290,343.4000; diff=+0.0000% <= tol=0.5%","SELECT SUM(f.Amount) AS total_rollover_fee_usd
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions f
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+  ON snap.RealCID = f.RealCID
+ AND snap.IsValidCustomer = 1
+ AND f.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE f.DateID = 20260608
+  AND f.Metric = 'RollOverFee'","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-revenue-and-fees'; 2 describes, 1 probes, 3 rounds; row[0]=['290343.400000']; scalar=290343.4.",,30546,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""rollover""]",,,,,PASS,,,,,,,,,,,,,,,,,
+run-20260614T133626Z,2026-06-14T13:36:26Z,azr-we-bidev-3,ddr_revenue_spot_adjust_yesterday,live,direct_mcp,2026-06-08,What was the total Spot Price Adjustment fee revenue on 2026-06-08? Spot price adjustments reflect the spread mark-up applied to bid/ask quotes.,1888.16,1888.16,0.0,0.0,0.5,True,"expected=1,888.1600; observed=1,888.1600; diff=+0.0000% <= tol=0.5%","SELECT SUM(f.Amount) AS total_spot_price_adjustment_revenue
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions f
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+  ON snap.RealCID = f.RealCID
+ AND snap.IsValidCustomer = 1
+ AND f.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE f.DateID = 20260608
+  AND f.Metric = 'SpotPriceAdjustment'
+  AND f.IncludedInTotalRevenue = 1","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-revenue-and-fees'; 3 describes, 1 probes, 4 rounds; row[0]=['1888.160000']; scalar=1888.16.",,38157,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""spot-adjust""]",,,,,PASS,,,,,,,,,,,,,,,,,
+run-20260614T133626Z,2026-06-14T13:36:26Z,azr-we-bidev-3,ddr_revenue_totals_yesterday,live,direct_mcp,2026-06-08,"What was eToro's Total Revenue (per the DDR)
+on 2026-06-08?",2880439.782463,2880439.782463,0.0,0.0,0.5,True,"expected=2,880,439.7825; observed=2,880,439.7825; diff=+0.0000% <= tol=0.5%","SELECT SUM(f.Amount) AS total_revenue_usd
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions f
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+  ON snap.RealCID = f.RealCID
+ AND snap.IsValidCustomer = 1
+ AND f.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE f.DateID = 20260608
+  AND f.IncludedInTotalRevenue = 1","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-revenue-and-fees'; 2 describes, 0 probes, 2 rounds; row[0]=['2880439.782463']; scalar=2880439.782463.",,25000,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""single-tile-poc""]",,,,,PASS,,,,,,,,,,,,,,,,,

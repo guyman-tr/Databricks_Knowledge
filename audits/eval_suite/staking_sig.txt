@@ -1,0 +1,53 @@
+﻿Function_Revenue_StakingFee parameters:
+  1: @sdateID (int) is_output=False
+  2: @edateID (int) is_output=False
+L1: CREATE FUNCTION [BI_DB_dbo].[Function_Revenue_StakingFee] (@sdateID [INT],@edateID [INT]) RETURNS TABLE
+L2: AS
+L3: RETURN (
+L4: 
+L5: /********************************************************************************************      
+L6: Author:      Guy Manova       
+L7: Date:        2024-10-20      
+L8: Description: new revenue stream from staking - figured out some date logic issues
+L9: 			this metric is distributed a couple of times per month, for the PREVIOUS month. there are no dates per say, so in order to make it compatable 
+L10: 			to "daily" querying there is some date trickery here. also the STATUSES of the users are based on EOM because where the DATE is attributed as 
+L11: 			when the staking happened (basically bringing the update date one month prior) the user might still not even be a user. but on the last day of the month 
+L12: 			this cannot happen, so it's a good enough approach. 
+L13:       
+L14: **************************      
+L15: ** Change History      
+L16: **************************      
+L17: Date			Author			Description       
+L18:   
+L19: 2025-05-20		Guy M			turns out by design when having a failed distribution they create a new one with a WRONG STAKING MONTH ID - 20250300 instead of 2025030 - so divide by 10
+L20: 								to fix as this is not a one time thing. 
+L21: 			
+L22: ----------    ----------   ------------------------------------*/      
+L23: 
+L24: WITH "BadMonths" AS
+L25: (
+L26: SELECT DISTINCT dsr.StakingMonthID
+L27: FROM Dealing_dbo.Dealing_Staking_Results dsr
+L28: WHERE LEN(dsr.StakingMonthID) > 6
+L29: ), "StakingData"
+L30: AS
+L31: (
+L32: SELECT left(dss.StakingMonthID,6) AS StakingMonthID
+L33: 	 , dateadd(MONTH,-1,dss.UpdateDate) AS [Date]
+L34: 	 , CAST(FORMAT(CAST(dateadd(MONTH,-1,dss.UpdateDate) AS DATE),'yyyyMMdd') as INT) AS DateID
+L35: 	 , StakingMonth
+L36: 	 , StakingYear
+L37: --	 , CAST(FORMAT(CAST(DATEFROMPARTS(dss.StakingMonthID / 100, dss.StakingMonthID % 100, DAY(dss.UpdateDate)) AS DATE),'yyyyMMdd') as INT) AS DateID
+L38: 	 , dss.InstrumentID
+L39: 	 , di.Name AS Instrument
+L40: 	 , dss.CID
+L41: 	 , dss.IsEligible
+L42: 	 , dss.NonEligible_PrimaryReason
+L43: 	 , CASE WHEN dss.IsEligible = 0 THEN dss.Etoro_Amount ELSE 0 END IneligibleCustomerRewards
+L44: 	 , CASE WHEN dss.IsEligible = 1 THEN dss.Etoro_Amount ELSE 0 END RevShareCommission -- Including Cash equivalent clients
+L45: 	 , dss.Client_Airdrop / nullif((dss.Client_Airdrop + dss.Etoro_Amount),0) ClientPercent
+L46: 	 , dss.Etoro_Amount / nullif((dss.Client_Airdrop + dss.Etoro_Amount),0) EtoroPercent
+L47: 	 , CASE WHEN dss.IsEligible = 1 THEN dss.USD_Compensation ELSE 0 END AS ClientUSDDistributed
+L48: 	 , dss.Etoro_Amount_USD AS EtoroUSDDistributed
+L49: 	 , CASE WHEN dss.IsEligible = 1 THEN dss.USD_Compensation ELSE 0 END + dss.Etoro_Amount_USD AS TotalUSDDistributed
+L50: 	 , CAST(FORMAT(CAST(dss.AirdropOccurred AS DATE),'yyyyMMdd') as INT) AS AirDropDateID

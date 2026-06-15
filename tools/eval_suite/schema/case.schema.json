@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://etoro/eval_suite/case.schema.json",
+  "title": "Eval suite case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "question",
+    "source",
+    "asof",
+    "ground_truth_sql",
+    "expected_value",
+    "expected_skill_hub",
+    "skill_coverage_status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_]+$",
+      "description": "Stable kebab/snake-case identifier. Used as filename and de-dup key."
+    },
+    "question": {
+      "type": "string",
+      "minLength": 8,
+      "description": "NL question sent verbatim to fresh Genie Code and MCP sessions."
+    },
+    "source": {
+      "type": "string",
+      "pattern": "^(ddr|tableau:[0-9a-f-]{8,}|genie_benchmark:[0-9a-f]{16,}|known_failure)$",
+      "description": "Case origin: ddr | tableau:<workbook_luid_or_prefix> | genie_benchmark:<space_id> | known_failure"
+    },
+    "asof": {
+      "type": "string",
+      "format": "date",
+      "description": "Pinned snapshot date. Ground-truth SQL is run with this date; never re-run live."
+    },
+    "ground_truth_sql": {
+      "type": "string",
+      "minLength": 12,
+      "description": "Standalone SQL that produces the expected value when run against UC at asof. Should reference UC FQNs (catalog.schema.table)."
+    },
+    "expected_value": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": {"enum": ["numeric", "numeric_series", "tabular", "textual", "PENDING"]},
+        "value": {
+          "description": "For numeric: a number. For numeric_series: list of [key,number]. For tabular: list of rows. For textual: string. PENDING means unpinned."
+        },
+        "tolerance_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 50,
+          "description": "Acceptable relative error (percent of expected) for numeric and numeric_series. Default 0.5%."
+        },
+        "tolerance_abs": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Optional absolute tolerance, used when expected near zero."
+        }
+      }
+    },
+    "expected_skill_hub": {
+      "type": "string",
+      "description": "Top-level skill hub the system SHOULD load (e.g. domain-revenue-and-fees). Use _none_ if no hub applies."
+    },
+    "skill_coverage_status": {
+      "enum": ["covered", "partial", "missing"],
+      "description": "Auto-tagged by seed_cases. covered = a hub clearly owns this question, partial = touched but not anchored, missing = no skill mentions the canonical_tables."
+    },
+    "canonical_tables": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^[a-z0-9_]+\\.[a-z0-9_]+\\.[a-z0-9_]+$"},
+      "default": [],
+      "description": "UC FQNs the agent SHOULD reference."
+    },
+    "anti_sources": {
+      "type": "array",
+      "items": {"type": "string"},
+      "default": [],
+      "description": "FQNs or table-name fragments the agent must NOT use as primary source for this question."
+    },
+    "expected_filters": {
+      "type": "array",
+      "items": {"type": "string"},
+      "default": [],
+      "description": "Required predicates (e.g. 'IncludedInTotalRevenue = 1') that must appear in the agent's SQL."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Free-text context, especially for known_failure cases."
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"},
+      "default": []
+    },
+    "max_replicas": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "default": 3,
+      "description": "How many independent fresh-context replicas to run per system per day. Default 3 to detect flakiness."
+    }
+  }
+}

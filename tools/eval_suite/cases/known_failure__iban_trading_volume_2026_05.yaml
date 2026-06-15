@@ -1,0 +1,27 @@
+id: known_failure__iban_trading_volume_2026_05
+question: What was the total trading volume opened from IBAN yesterday?
+source: known_failure
+ground_truth_sql: "SELECT SUM(VolumeOpen) AS iban_volume_open\nFROM main.etoro_kpi.ddr_trading_volumes_and_amounts_v\n\
+  WHERE DateID = CAST(REPLACE('2026-06-08','-','') AS INT)\n  AND IsOpenedFromIBAN\
+  \ = '1'"
+expected_skill_hub: domain-trading
+canonical_tables:
+- main.etoro_kpi.ddr_trading_volumes_and_amounts_v
+anti_sources:
+- main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban
+- main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban
+expected_filters:
+- IsOpenedFromIBAN = '1'
+notes: '2026-06-08 routing-failure case. Embedder name-bias scored the 3-column ETL
+  lookup tables high; correct source is the DDR volume fact filtered on IsOpenedFromIBAN=''1''
+  (note: STRING not int per DDL).'
+tags:
+- known_failure
+- routing_2026_06
+asof: '2026-06-08'
+expected_value:
+  type: numeric
+  value: 83761474
+  tolerance_pct: 0.5
+skill_coverage_status: covered
+max_replicas: 3

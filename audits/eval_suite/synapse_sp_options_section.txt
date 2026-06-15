@@ -1,0 +1,280 @@
+﻿L1381:   , NULL as IsOpenedFromIBAN
+L1382:   , NULL as IsClosedToIBAN
+L1383:   , NULL as IsRecurring
+L1384:   , NULL AS IsAirDrop
+L1385:   , NULL AS IsSQF
+L1386:   , 12 AS RevenueMetricID
+L1387:   , 4 AS RevenueMetricCategoryID
+L1388:   , NULL AS IsMarginTrade
+L1389:   , NULL AS IsC2P
+L1390: FROM BI_DB_dbo.Function_Revenue_StakingFee 
+L1391: 	(CAST(FORMAT(DATEFROMPARTS(YEAR(DATEADD(MONTH, -1, CONVERT(DATE, CONVERT(VARCHAR(8), @dateID), 112))), MONTH(DATEADD(MONTH, -1, CONVERT(DATE, CONVERT(VARCHAR(8), @dateID), 112))), 1), 'yyyyMMdd') AS INT)
+L1392: 	, CAST(FORMAT(CAST(dateadd(MONTH, -1, CONVERT(DATE, CONVERT(VARCHAR(8), @dateID), 112)) AS DATE),'yyyyMMdd') as INT)
+L1393: 	) frcf
+L1394: GROUP BY 
+L1395: 	frcf.CID, CAST(FORMAT(CAST(DATEADD(MONTH,1,frcf.Date) AS DATE),'yyyyMMdd') as INT)
+L1396: 
+L1397: 
+L1398: 
+L1399: IF OBJECT_ID('tempdb..#optionsalltime') IS NOT NULL DROP TABLE #optionsalltime
+L1400: CREATE TABLE #optionsalltime
+L1401:     WITH (HEAP,DISTRIBUTION = HASH(RealCID))
+L1402: as
+L1403: SELECT frop.DateID 
+L1404:      , frop.[Date]
+L1405: 	 , frop.RealCID
+L1406: 	 , frop.ActionTypeID
+L1407: 	 , frop.ActionType
+L1408: 	 , frop.InstrumentTypeID
+L1409: 	 , frop.IsSettled
+L1410: 	 , frop.IsCopy
+L1411: 	 , frop.Metric
+L1412: 	 , frop.Amount
+L1413: 	 , frop.CountTransactions
+L1414: 	 , frop.IncludedInTotalRevenue
+L1415: 	 , frop.CountAsActiveTrade
+L1416: 	 , GETDATE() as UpdateDate
+L1417: 	 , frop.IsBuy
+L1418: 	 , frop.IsLeveraged
+L1419: 	 , frop.IsFuture
+L1420: 	 , frop.IsCopyFund
+L1421: 	 , frop.IsOpenedFromIBAN
+L1422: 	 , frop.IsClosedToIBAN
+L1423: 	 , frop.IsRucurring
+L1424: 	 , frop.IsAirDrop
+L1425: 	 , 0 AS IsSQF
+L1426: 	 , 18 AS RevenueMetricID
+L1427: 	 , 5 AS RevenueMetricCategoryID
+L1428: 	 , NULL AS IsMarginTrade
+L1429: 	 , NULL AS IsC2P
+L1430: FROM BI_DB_dbo.Function_Revenue_OptionsPlatform (20000101, CAST(FORMAT(CAST(GETDATE() AS DATE),'yyyyMMdd') as INT), 0) frop
+L1431: 
+L1432: -- item specific updates for more sensible null handling 
+L1433: 
+L1434: -- c2f updates
+L1435: 
+L1436: UPDATE #revenue
+L1437: SET IsCopy = -1
+L1438: WHERE Metric = 'CryptoToFiatFee'
+L1439: 
+L1440: UPDATE #revenue
+L1441: SET IsBuy = -1
+L1442: WHERE Metric = 'CryptoToFiatFee'
+L1443: 
+L1444: UPDATE #revenue
+L1445: SET IsLeveraged = -1
+L1446: WHERE Metric = 'CryptoToFiatFee'
+L1447: 
+L1448: UPDATE #revenue
+L1449: SET IsFuture = -1
+L1450: WHERE Metric = 'CryptoToFiatFee'
+L1451: 
+L1452: UPDATE #revenue
+L1453: SET IsCopyFund = -1
+L1454: WHERE Metric = 'CryptoToFiatFee'
+L1455: AND IsCopyFund = 0
+L1456: 
+L1457: UPDATE #revenue
+L1458: SET IsAirDrop = -1
+L1459: WHERE Metric = 'CryptoToFiatFee'
+L1460: AND IsAirDrop = 0
+L1461: 
+L1462: -- dividend changes
+L1463: 
+L1464: 
+L1465: UPDATE #revenue
+L1466: SET IsBuy = 1
+L1467: WHERE Metric = 'Dividends'
+L1468: AND Amount > 0
+L1469: 
+L1470: UPDATE #revenue
+L1471: SET IsBuy = 0
+L1472: WHERE Metric = 'Dividends'
+L1473: AND Amount < 0
+L1474: 
+L1475: -- sdrt changes
+L1476: 
+L1477: UPDATE #revenue
+L1478: SET IncludedInTotalRevenue = 0 
+L1479: WHERE Metric = 'SDRT'
+L1480: 
+L1481: UPDATE #revenue
+L1482: SET IsSQF = 0
+L1483: WHERE Metric = 'SDRT'
+L1484: AND IsSQF = -1
+L1485: 
+L1486: UPDATE #revenue
+L1487: SET IsMarginTrade = 0
+L1488: WHERE Metric = 'SDRT'
+L1489: AND IsMarginTrade = -1
+L1490: 
+L1491: -- other changes
+L1492: 
+L1493: UPDATE #revenue
+L1494: SET IsAirDrop = -1
+L1495: WHERE Metric = 'CashoutFeeExclRedeem'
+L1496: 
+L1497: UPDATE #revenue
+L1498: SET IsAirDrop = -1
+L1499: WHERE Metric = 'ConversionFee'
+L1500: 
+L1501: UPDATE #optionsalltime
+L1502: SET IsMarginTrade = 0
+L1503: WHERE Metric = 'Options_PFOF'
+L1504: 
+L1505: 
+L1506: --SELECT * FROM #optionsalltime o WHERE o.DateID = 20251016
+L1507: --SELECT * FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions WHERE DateID = 20251016 AND Metric LIKE '%PFOF%'
+L1508: 
+L1509: 
+L1510: DELETE FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions WHERE DateID = @dateID
+L1511: 
+L1512: INSERT INTO BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions (
+L1513: 	   DateID
+L1514: 	 , [Date]
+L1515: 	 , RealCID
+L1516: 	 , ActionTypeID
+L1517: 	 , ActionType
+L1518: 	 , InstrumentTypeID
+L1519: 	 , IsSettled
+L1520: 	 , IsCopy
+L1521: 	 , Metric
+L1522: 	 , Amount
+L1523: 	 , CountTransactions
+L1524: 	 , IncludedInTotalRevenue
+L1525: 	 , CountAsActiveTrade
+L1526: 	 , UpdateDate
+L1527: 	 , IsBuy
+L1528: 	 , IsLeveraged
+L1529: 	 , IsFuture
+L1530: 	 , IsCopyFund
+L1531: 	 , IsOpenedFromIBAN
+L1532: 	 , IsClosedToIBAN
+L1533: 	 , IsRecurring
+L1534: 	 , IsAirDrop
+L1535: 	 , IsSQF
+L1536: 	 , RevenueMetricID
+L1537: 	 , RevenueMetricCategoryID
+L1538: 	 , IsMarginTrade
+L1539: 	 , IsC2P
+L1540: )
+L1541: SELECT r.DateID
+L1542:      , @date AS [Date]
+L1543: 	 , r.RealCID
+L1544: 	 , ISNULL(r.ActionTypeID,-1)
+L1545: 	 , r.ActionType
+L1546: 	 , ISNULL(r.InstrumentTypeID,-1)
+L1547: 	 , ISNULL(r.IsSettled,-1)
+L1548: 	 , ISNULL(r.IsCopy,-1)
+L1549: 	 , r.Metric
+L1550: 	 , r.Amount
+L1551: 	 , ISNULL(r.CountTransactions, 0)
+L1552: 	 , drm.IncludedInTotalRevenue
+L1553: 	 , ISNULL(CountAsActiveTrade, 0)
+L1554: 	 , GETDATE() AS UpdateDate
+L1555: 	 , ISNULL(r.IsBuy,-1)
+L1556: 	 , ISNULL(IsLeveraged,-1)
+L1557: 	 , ISNULL(IsFuture,-1)
+L1558: 	 , ISNULL(IsCopyFund,-1)
+L1559: 	 , ISNULL(IsOpenedFromIBAN,-1)
+L1560: 	 , ISNULL(IsClosedToIBAN,-1)
+L1561: 	 , ISNULL(r.IsRecurring,-1)
+L1562: 	 , ISNULL(r.IsAirDrop,-1)
+L1563: 	 , ISNULL(IsSQF,-1)
+L1564: 	 , drm.RevenueMetricID
+L1565: 	 , drm.RevenueMetricCategoryID
+L1566: 	 , ISNULL(r.IsMarginTrade,-1)
+L1567: 	 , ISNULL(r.IsC2P,-1)
+L1568: FROM #revenue r
+L1569: LEFT JOIN BI_DB_dbo.Dim_Revenue_Metrics drm
+L1570: 	ON r.Metric = drm.Metric
+L1571: 
+L1572: PRINT ' #deleteinsert Done ' + (CONVERT( VARCHAR(24), GETDATE(), 121))
+L1573: 
+L1574: 
+L1575: DELETE FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions WHERE RevenueMetricID = 18 -- remove and rewrite all options data, usually will not be ready in time for daily collection
+L1576: INSERT INTO BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions (
+L1577: 	   DateID
+L1578: 	 , [Date]
+L1579: 	 , RealCID
+L1580: 	 , ActionTypeID
+L1581: 	 , ActionType
+L1582: 	 , InstrumentTypeID
+L1583: 	 , IsSettled
+L1584: 	 , IsCopy
+L1585: 	 , Metric
+L1586: 	 , Amount
+L1587: 	 , CountTransactions
+L1588: 	 , IncludedInTotalRevenue
+L1589: 	 , CountAsActiveTrade
+L1590: 	 , UpdateDate
+L1591: 	 , IsBuy
+L1592: 	 , IsLeveraged
+L1593: 	 , IsFuture
+L1594: 	 , IsCopyFund
+L1595: 	 , IsOpenedFromIBAN
+L1596: 	 , IsClosedToIBAN
+L1597: 	 , IsRecurring
+L1598: 	 , IsAirDrop
+L1599: 	 , IsSQF
+L1600: 	 , RevenueMetricID
+L1601: 	 , RevenueMetricCategoryID
+L1602: 	 , IsMarginTrade
+L1603: 	 , IsC2P
+L1604: )
+L1605: SELECT frop.DateID 
+L1606:      , frop.[Date]
+L1607: 	 , frop.RealCID
+L1608: 	 , ISNULL(frop.ActionTypeID,-1)
+L1609: 	 , frop.ActionType
+L1610: 	 , ISNULL(frop.InstrumentTypeID,-1)
+L1611: 	 , ISNULL(frop.IsSettled,-1)
+L1612: 	 , ISNULL(frop.IsCopy,-1)
+L1613: 	 , frop.Metric
+L1614: 	 , frop.Amount
+L1615: 	 , ISNULL(frop.CountTransactions,0) 
+L1616: 	 , frop.IncludedInTotalRevenue
+L1617: 	 , ISNULL(frop.CountAsActiveTrade,0)
+L1618: 	 , GETDATE() as UpdateDate
+L1619: 	 , ISNULL(frop.IsBuy,-1)
+L1620: 	 , ISNULL(frop.IsLeveraged,-1)
+L1621: 	 , ISNULL(frop.IsFuture,-1)
+L1622: 	 , ISNULL(frop.IsCopyFund,-1)
+L1623: 	 , ISNULL(frop.IsOpenedFromIBAN,-1)
+L1624: 	 , ISNULL(frop.IsClosedToIBAN,-1)
+L1625: 	 , ISNULL(frop.IsRucurring,-1)
+L1626: 	 , ISNULL(frop.IsAirDrop,-1)
+L1627: 	 , ISNULL(IsSQF,-1)
+L1628: 	 , RevenueMetricID
+L1629: 	 , RevenueMetricCategoryID
+L1630: 	 , ISNULL(IsMarginTrade,-1)
+L1631: 	 , ISNULL(IsC2P,-1)
+L1632: FROM #optionsalltime frop
+L1633: 
+L1634: --- staking handling
+L1635: 
+L1636: 
+L1637: DELETE FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions
+L1638: WHERE Date BETWEEN  DATEADD(month, DATEDIFF(month, 0, @date), 0) AND @date 
+L1639: AND RevenueMetricID = 12
+L1640: 
+L1641: INSERT INTO BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions (
+L1642: 	   DateID
+L1643: 	 , [Date]
+L1644: 	 , RealCID
+L1645: 	 , ActionTypeID
+L1646: 	 , ActionType
+L1647: 	 , InstrumentTypeID
+L1648: 	 , IsSettled
+L1649: 	 , IsCopy
+L1650: 	 , Metric
+L1651: 	 , Amount
+L1652: 	 , CountTransactions
+L1653: 	 , IncludedInTotalRevenue
+L1654: 	 , CountAsActiveTrade
+L1655: 	 , UpdateDate
+L1656: 	 , IsBuy
+L1657: 	 , IsLeveraged
+L1658: 	 , IsFuture
+L1659: 	 , IsCopyFund
+L1660: 	 , IsOpenedFromIBAN

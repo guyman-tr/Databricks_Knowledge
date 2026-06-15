@@ -1,0 +1,41 @@
+rank,schema_name,table_name,used_gb,row_count,notes
+1,BI_DB_dbo,BI_DB_PositionPnL,26322.10,321918946508,Biggest object - daily PnL by position
+2,BI_DB_dbo,BI_DB_CID_DailyPanel_FullData,3608.40,9855710068,Daily customer panel snapshot
+3,BI_DB_dbo,BI_DB_rsk_Portfolio,2823.02,53651188201,Risk portfolio
+4,BI_DB_dbo,BI_DB_DDR_CID_Level,2267.36,9116733616,DDR customer level
+5,BI_DB_dbo,BI_DB_Stocks_HS121_CIDs,2175.47,33829265749,Stocks HS121 active
+6,BI_DB_dbo,BI_DB_Client_Balance_CID_Level_New,2114.96,13882188752,Client balance daily
+7,BI_DB_dbo,BI_DB_Stocks_HS121_CIDs_Backup_20241217,2112.91,22587588626,BACKUP - candidate for cleanup
+8,BI_DB_dbo,BI_DB_RiskAlertManagementTool,1853.28,5338965,Risk alerts (low rowcount-high bytes)
+9,BI_DB_dbo,BI_DB_CashRiskMatrix,1433.52,5161720998,Cash risk matrix
+10,DWH_dbo,Dim_Position_Backup_20250705,1383.68,17104086265,BACKUP - candidate for cleanup
+11,BI_DB_dbo,BI_DB_CIDLevel_Settlement_Report,1296.32,27850887207,Settlement report
+12,DWH_dbo,STS_User_Operations_Data_History,1248.21,4442740472,User ops history
+13,DWH_dbo,Dim_Instrument_Correlation_Archive,1234.96,21405357104,Instrument correlation archive
+14,DWH_dbo,Dim_Position,1232.14,16941276228,LIVE Dim_Position
+15,DWH_dbo,Junk_Dim_Instrument_Correlation_Active,1215.37,22688234893,Junk dim - candidate to drop
+16,BI_DB_dbo,BI_DB_Crypto_NOP_CID_Backup_20250824,1056.20,9880451061,BACKUP - candidate for cleanup
+17,DWH_Migration,Dim_Position_NEW,890.72,16997352225,Migration target table
+18,BI_DB_dbo,BI_DB_Crypto_NOP_CID,889.22,11347528935,Live crypto NOP
+19,DWH_dbo,Fact_CustomerAction,847.56,57881706655,Largest fact table (logically)
+20,Dealing_dbo,Dealing_Fails_PI,779.82,4083175789,Dealing fails
+21,BI_DB_dbo,BI_DB_DailyCommisionReport,681.95,3386752325,Daily commission
+22,eMoney_Tribe,AccountsSnapshots_AccountSnapshot-956050,640.91,3179522342,Tribe Treezor snapshot
+23,eMoney_Tribe,AccountsSnapshots_BankAccount-393561,617.65,3347099518,Tribe Treezor snapshot
+24,BI_DB_dbo,DWH_CIDsDailyRisk,599.45,14462453013,Daily risk
+25,BI_DB_dbo,BI_DB_LTV_BI_Actual_Daily_Snapshot,583.40,4800849315,LTV daily snapshot
+26,DWH_dbo,Dim_Position_Backup_20250916,575.34,2500198083,BACKUP - candidate for cleanup
+27,Dealing_staging,PricesFromProvider_MarketCurrencyPrice,549.67,7415628079,Dealing prices staging
+28,BI_DB_dbo,DWH_GainDaily,539.13,6394285103,Daily gain
+29,eMoney_Tribe,AccountsSnapshots-509416,537.98,4773880575,Tribe Treezor snapshot
+30,BI_DB_dbo,BI_DB_DDR_Fact_AUM,491.51,7734135275,DDR Fact AUM
+31,Dealing_staging,PriceLog_History_CurrencyPrice,483.89,3646723406,Dealing price history staging
+32,DWH_dbo,Util_ResultsLiabilities_Cycle,466.33,11909430843,Liabilities calc results
+33,EXW_dbo,EXW_FinanceReportsBalancesNew,456.16,1705514361,EXW crypto finance balances
+34,BI_DB_dbo,BI_DB_GAML_Real_Positions_Report_Opened_2022,440.88,8087172456,Real positions 2022
+35,BI_DB_dbo,BI_DB_CID_WeeklyPanel_FullData,428.44,820364738,Weekly customer panel
+36,DWH_pagetracking,Fact_MarketPageViews,427.06,12775717930,Page view tracking
+37,eMoney_Tribe,AccountsSnapshots_BankAccounts-795870,389.74,3172634842,Tribe Treezor snapshot
+38,BI_DB_dbo,BI_DB_Social_Activity_COPYDATA_RuningSideBySide,374.17,2554858509,Side-by-side staging - candidate to clean
+39,BI_DB_dbo,BI_DB_User_Segment_Snapshot,363.54,11258303547,User segment snapshot
+40,eMoney_dbo,eMoney_Calculated_Balance,354.14,9276465978,eMoney calculated balance

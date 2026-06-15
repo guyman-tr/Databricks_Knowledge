@@ -1,0 +1,26 @@
+id: tableau__e88c5122__kyc_dashboard__0
+question: Open the 'KYC Dashboard' dashboard. What does the headline figure (row 1
+  of the primary view) for 2026-06-08 show?
+source: tableau:e88c5122-09a6-4011-a257-9c8a3e26b12c
+asof: '2026-06-08'
+ground_truth_sql: 'SELECT COUNT(*) AS row_count
+
+  FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country
+
+  -- workbook: KYC Dashboard (luid e88c5122-09a6-4011-a257-9c8a3e26b12c) views=284'
+expected_value:
+  type: numeric
+  value: 251
+  tolerance_pct: 1.0
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: covered
+canonical_tables:
+- main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country
+anti_sources: []
+expected_filters: []
+notes: Auto-generated Tableau probe. Rewrite the SQL to match the specific KPI the
+  dashboard renders before pinning. Workbook total_views=284.
+tags:
+- tableau
+- views_284
+max_replicas: 3

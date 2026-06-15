@@ -1,0 +1,942 @@
+USE CATALOG dwh_daily_process;
+USE SCHEMA migration_tables;
+
+
+
+CREATE OR REPLACE PROCEDURE dwh_daily_process.migration_tables.CreateParquetCopyTableFromjson_new(
+IN V_tablename STRING,
+IN V_schemaname STRING,
+IN V_json STRING)
+LANGUAGE SQL
+SQL SECURITY INVOKER
+MODIFIES SQL DATA
+AS
+
+BEGIN
+
+
+
+
+DECLARE V_sql STRING;
+--DECLARE @json  nvarchar (MAX) ='
+--{
+--    "structure": [
+--        {
+--            "physicalName": "CID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "CID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "OriginalProviderID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "OriginalProviderID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "OriginalCID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "OriginalCID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "ProviderID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "ProviderID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "RealProviderID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "RealProviderID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "CountryID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "CountryID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "CountryIDByIP",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "CountryIDByIP",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "CitizenshipCountryID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "CitizenshipCountryID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "StateID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "StateID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "LanguageID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "LanguageID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "CommunicationLanguageID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "CommunicationLanguageID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "CurrencyID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "CurrencyID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "TimeZoneID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "TimeZoneID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "PlayerStatusID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "PlayerStatusID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "CampaignID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "CampaignID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "PlayerLevelID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "PlayerLevelID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "TradeLevelID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "TradeLevelID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "SpreadGroupID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "SpreadGroupID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "LabelID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "LabelID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "FunnelID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "FunnelID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "UserName",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "UserName",
+--            "physicalType": "varchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "Password",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "Password",
+--            "physicalType": "varchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "Registered",
+--            "type": "DateTime",
+--            "logicalType": "DateTime",
+--            "name": "Registered",
+--            "physicalType": "datetime",
+--            "precision": 23,
+--            "scale": 3,
+--            "DotNetType": "System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "IsReal",
+--            "type": "Boolean",
+--            "logicalType": "Boolean",
+--            "name": "IsReal",
+--            "physicalType": "bit",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "IP",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "IP",
+--            "physicalType": "varchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "Credit",
+--            "type": "Decimal",
+--            "logicalType": "Decimal",
+--            "name": "Credit",
+--            "physicalType": "money",
+--            "precision": 19,
+--            "scale": 255,
+--            "DotNetType": "System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "BirthDate",
+--            "type": "DateTime",
+--            "logicalType": "DateTime",
+--            "name": "BirthDate",
+--            "physicalType": "datetime",
+--            "precision": 23,
+--            "scale": 3,
+--            "DotNetType": "System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "Gender",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "Gender",
+--            "physicalType": "char",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "FirstName",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "FirstName",
+--            "physicalType": "nvarchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "LastName",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "LastName",
+--            "physicalType": "nvarchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "MiddleName",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "MiddleName",
+--            "physicalType": "nvarchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "Address",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "Address",
+--            "physicalType": "nvarchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "City",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "City",
+--            "physicalType": "nvarchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "Zip",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "Zip",
+--            "physicalType": "nvarchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "SerialID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "SerialID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "ReferralID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "ReferralID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "SubSerialID",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "SubSerialID",
+--            "physicalType": "varchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "Email",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "Email",
+--            "physicalType": "varchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "CAST(IsEmailVerified AS INT)",
+--            "type": "Boolean",
+--            "logicalType": "Boolean",
+--            "name": "CAST(IsEmailVerified AS INT)",
+--            "physicalType": "bit",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "Phone",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "Phone",
+--            "physicalType": "varchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "Fax",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "Fax",
+--            "physicalType": "varchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "Mobile",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "Mobile",
+--            "physicalType": "varchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "Comments",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "Comments",
+--            "physicalType": "varchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "DownloadID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "DownloadID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "BannerID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "BannerID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "ClientVersion",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "ClientVersion",
+--            "physicalType": "varchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "PersonID",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "PersonID",
+--            "physicalType": "varchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "BonusCredit",
+--            "type": "Decimal",
+--            "logicalType": "Decimal",
+--            "name": "BonusCredit",
+--            "physicalType": "money",
+--            "precision": 19,
+--            "scale": 255,
+--            "DotNetType": "System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "DownloadCounter",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "DownloadCounter",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "AccountExpirationDate",
+--            "type": "DateTime",
+--            "logicalType": "DateTime",
+--            "name": "AccountExpirationDate",
+--            "physicalType": "datetime",
+--            "precision": 23,
+--            "scale": 3,
+--            "DotNetType": "System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "HelpDeskType",
+--            "type": "Int16",
+--            "logicalType": "Int16",
+--            "name": "HelpDeskType",
+--            "physicalType": "smallint",
+--            "precision": 5,
+--            "scale": 255,
+--            "DotNetType": "System.Int16, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "LotCountGroupID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "LotCountGroupID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "PrivacyPolicyID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "PrivacyPolicyID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "GCID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "GCID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "WeekendFeePrecentage",
+--            "type": "Byte",
+--            "logicalType": "Byte",
+--            "name": "WeekendFeePrecentage",
+--            "physicalType": "tinyint",
+--            "precision": 3,
+--            "scale": 255,
+--            "DotNetType": "System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "IsEmailActivated",
+--            "type": "Byte",
+--            "logicalType": "Byte",
+--            "name": "IsEmailActivated",
+--            "physicalType": "tinyint",
+--            "precision": 3,
+--            "scale": 255,
+--            "DotNetType": "System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "UserName_LOWER",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "UserName_LOWER",
+--            "physicalType": "varchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "RealizedEquity",
+--            "type": "Decimal",
+--            "logicalType": "Decimal",
+--            "name": "RealizedEquity",
+--            "physicalType": "money",
+--            "precision": 19,
+--            "scale": 255,
+--            "DotNetType": "System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "AccountStatusID",
+--            "type": "Byte",
+--            "logicalType": "Byte",
+--            "name": "AccountStatusID",
+--            "physicalType": "tinyint",
+--            "precision": 3,
+--            "scale": 255,
+--            "DotNetType": "System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "PendingClosureStatusID",
+--            "type": "Byte",
+--            "logicalType": "Byte",
+--            "name": "PendingClosureStatusID",
+--            "physicalType": "tinyint",
+--            "precision": 3,
+--            "scale": 255,
+--            "DotNetType": "System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "IsRequestedCall",
+--            "type": "Boolean",
+--            "logicalType": "Boolean",
+--            "name": "IsRequestedCall",
+--            "physicalType": "bit",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "FunnelFromID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "FunnelFromID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "LeverageType",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "LeverageType",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "TotalCash",
+--            "type": "Decimal",
+--            "logicalType": "Decimal",
+--            "name": "TotalCash",
+--            "physicalType": "decimal",
+--            "precision": 16,
+--            "scale": 8,
+--            "DotNetType": "System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "ClientTypeID",
+--            "type": "Byte",
+--            "logicalType": "Byte",
+--            "name": "ClientTypeID",
+--            "physicalType": "tinyint",
+--            "precision": 3,
+--            "scale": 255,
+--            "DotNetType": "System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "IsHedged",
+--            "type": "Byte",
+--            "logicalType": "Byte",
+--            "name": "IsHedged",
+--            "physicalType": "tinyint",
+--            "precision": 3,
+--            "scale": 255,
+--            "DotNetType": "System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "LowerEmail",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "LowerEmail",
+--            "physicalType": "varchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "ID",
+--            "type": "Guid",
+--            "logicalType": "Guid",
+--            "name": "ID",
+--            "physicalType": "uniqueidentifier",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "VerificationTitle",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "VerificationTitle",
+--            "physicalType": "nvarchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "VerificationTitleVersion",
+--            "type": "Guid",
+--            "logicalType": "Guid",
+--            "name": "VerificationTitleVersion",
+--            "physicalType": "uniqueidentifier",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "BuildingNumber",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "BuildingNumber",
+--            "physicalType": "nvarchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "PhonePrefix",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "PhonePrefix",
+--            "physicalType": "nvarchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "PhoneBody",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "PhoneBody",
+--            "physicalType": "nvarchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "ExternalID",
+--            "type": "Decimal",
+--            "logicalType": "Decimal",
+--            "name": "ExternalID",
+--            "physicalType": "decimal",
+--            "precision": 38,
+--            "scale": 0,
+--            "DotNetType": "System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "RegionID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "RegionID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "RegionByIP_ID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "RegionByIP_ID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "PlatformID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "PlatformID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "BSLRealFunds",
+--            "type": "Decimal",
+--            "logicalType": "Decimal",
+--            "name": "BSLRealFunds",
+--            "physicalType": "money",
+--            "precision": 19,
+--            "scale": 255,
+--            "DotNetType": "System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "OptOutReasonID",
+--            "type": "Int16",
+--            "logicalType": "Int16",
+--            "name": "OptOutReasonID",
+--            "physicalType": "smallint",
+--            "precision": 5,
+--            "scale": 255,
+--            "DotNetType": "System.Int16, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "PlayerStatusReasonID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "PlayerStatusReasonID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "PlayerStatusSubReasonID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "PlayerStatusSubReasonID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "PlayerStatusSubReasonComment",
+--            "type": "String",
+--            "logicalType": "String",
+--            "name": "PlayerStatusSubReasonComment",
+--            "physicalType": "varchar",
+--            "precision": 255,
+--            "scale": 255,
+--            "DotNetType": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "POBCountryID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "POBCountryID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "SubRegionID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "SubRegionID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        },
+--        {
+--            "physicalName": "EmailVerificationProviderID",
+--            "type": "Int32",
+--            "logicalType": "Int32",
+--            "name": "EmailVerificationProviderID",
+--            "physicalType": "int",
+--            "precision": 10,
+--            "scale": 255,
+--            "DotNetType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+--        }
+--    ],
+--    "effectiveIntegrationRuntime": "AutoResolveIntegrationRuntime (West Europe)",
+--    "executionDuration": 0,
+--    "durationInQueue": {
+--        "integrationRuntimeQueue": 0
+--    },
+--    "billingReference": {
+--        "activityType": "PipelineActivity",
+--        "billableDuration": [
+--            {
+--                "meterType": "ManagedVNetIR",
+--                "duration": 0.016666666666666666,
+--                "unit": "Hours"
+--            }
+--        ]
+--    }
+--}';
+
+WITH CTE as (
+
+SELECT j.`key` id,cl.* FROM   
+OPENJSON(V_json) j 
+CROSS APPLY OPENJSON(j.`value`) cl
+);
+
+--WITH CTE as (
+
+--SELECT st.[key] id,cl.* FROM   
+--OPENJSON(@json) j 
+--CROSS APPLY OPENJSON(j.[value]) st 
+--CROSS APPLY OPENJSON(st.[value]) cl
+--where j.[key]='structure'
+----and cl.[key] ='physicalType'
+--) 
+
+
+
+SET V_sql = (SELECT 
+CONCAT ('IF OBJECT_ID("'||V_schemaname||'.'||V_tablename||'") IS NOT NULL DROP TABLE '||V_schemaname||'.'||V_tablename,
+       ' CREATE OR REPLACE TABLE ',
+	   V_schemaname||'.'||V_tablename, 
+	   ' (',
+
+
+ ARRAY_JOIN(COLLECT_LIST(CONCAT ( '`' ,c1.`value`,'` ',
+CASE 
+WHEN c2.`value` ='decimal' THEN c2.`value` ||'('|| c3.`value`|| ','||c4.`value`||  ')'
+WHEN c2.`value` IN ('STRING','STRING') THEN c2.`value` ||'(max)'
+WHEN c2.`value` = 'char'THEN c2.`value`  ||'('|| c3.`value`||  ')'
+WHEN c2.`value` = 'string'THEN c2.`value` ||'('|| c3.`value`||  ')'
+ELSE c2.`value` END )), ','),
+		  ') ;'
+				)
+		--,c3.[value],c4.[value] 
+		from 
+CTE c1 
+LEFT JOIN CTE c2 ON c1.id= c2.id AND c2.`key`='physicalType'
+LEFT JOIN CTE c3 ON c1.id = c3.id  AND  c3.`key`='precision'
+LEFT JOIN CTE c4 ON c1.id = c4.id  AND  c4.`key`='scale'
+WHERE c1.`key` ='physicalName'
+
+ limit 1);
+EXECUTE IMMEDIATE V_sql
+
+--INSERT INTO TEMP.JSONV 
+--select @json  JSON_VAL
+
+--select @json  JSON_VAL
+END;

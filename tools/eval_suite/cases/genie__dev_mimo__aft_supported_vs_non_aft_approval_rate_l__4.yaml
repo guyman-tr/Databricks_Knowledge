@@ -1,0 +1,30 @@
+id: genie__dev_mimo__aft_supported_vs_non_aft_approval_rate_l__4
+question: AFT-supported vs non-AFT approval rate, last 6 months
+source: genie_benchmark:01f15e792ce1140bbf6af2f8f7c6b54c
+asof: '2026-06-08'
+ground_truth_sql: "SELECT\n    CASE WHEN AFT = 1 THEN 'AFT-Supported' WHEN AFT = 0\
+  \ THEN 'Non-AFT' ELSE 'Unknown' END  AS aft_bucket,\n    SUM(CASE WHEN PaymentStatus\
+  \ IN ('Approved','Confirmed','Settled') THEN 1.0 END)\n      / NULLIF(COUNT(*),\
+  \ 0)                                                               AS approval_rate\n\
+  FROM main.etoro_kpi.mimo_tp_deposits_v\nWHERE TransactionDate >= ADD_MONTHS(CURRENT_DATE(),\
+  \ -6)\n  AND CardType IS NOT NULL\nGROUP BY 1\nORDER BY 1;"
+expected_value:
+  type: numeric_series
+  value:
+  - - AFT-Supported
+    - 0.7549259845529367
+  - - Non-AFT
+    - 0.6405602162128384
+  tolerance_pct: 0.5
+expected_skill_hub: _none_
+skill_coverage_status: missing
+canonical_tables:
+- main.etoro_kpi.mimo_tp_deposits_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'DEV - MIMO' (01f15e792ce1140bbf6af2f8f7c6b54c) benchmark
+  question.
+tags:
+- genie_benchmark
+- dev_mimo
+max_replicas: 3

@@ -1,0 +1,113 @@
+---
+description: "Phase 4.6 — Computation Formula Extraction. Mines the cached view DDL / notebook source for every column's transformation expression in ONE pass, producing a structured lookup that Phase 5 assembles into Tier-2 §4 Elements descriptions. Ported from dwh-semantic-doc/09-procedure-logic-extraction.mdc with the same alias-level attribution rule."
+globs:
+alwaysApply: false
+---
+
+# Phase 4.6 — Formula Extraction
+
+## CONTRACT — Phase 4.6
+
+| Constraint | Detail |
+|------------|--------|
+| **Inputs required** | `_discovery/source_code/{Object}.{sql,py}` (Phase 2), `{Object}.lineage.md` (Phase 4), `_discovery/uc_inventory.json` (Phase 1, for column list). |
+| **Outputs required** | `_discovery/formulas/{Object}.json` (one file per in-scope object). |
+| **MUST NOT** | Guess assignments. Every formula MUST come from a parsed SELECT-list expression. Alias-level attribution is mandatory — never blame a JOINed table for a column that the SELECT pulls from a different alias. |
+| **Failure mode** | **SOFT** — if a column has no parseable formula, emit `{column, formula: null, reason}`. Phase 5 will fall back to the cached SQL snippet + Tier-2 origin tagging. |
+
+## Purpose
+
+A 21-column view with 15 computed columns means 15 descriptions need formulas. Writing descriptions first and catching vague phrases in post-write validation is too slow. Extract ALL formulas in one concentrated pass, then write mechanically. This is the DWH Phase 9 algorithm verbatim, applied to view DDL instead of SP source.
+
+The output is a per-column lookup: `column → {formula, inputs, evidence_lines}`. Phase 5's §4 Elements emission for Tier-2 columns assembles:
+
+```
+{concept business meaning if column in a concept, else short gloss}. {formula from lookup}. (Tier 2 — {inputs joined with /})
+```
+
+## Algorithm
+
+1. **Read the source code** at `_discovery/source_code/{Object}.{sql,py}`.
+2. **Strip comments + string-literal contents** (re-use `_strip_sql_comments_and_strings` from `generate_wiki.py`).
+3. **Parse alias scopes** (re-use `_parse_scopes` — gives per-CTE alias map + a `main` scope).
+4. **For each column in `uc_inventory.json`**:
+   - Locate the SELECT-list expression for this column (re-use `_find_column_expression_lines`).
+   - Determine the enclosing scope (re-use `_scope_for_line`).
+   - Resolve aliased identifiers to physical UC FQNs (re-use `_resolve_terminal_upstreams`).
+   - Normalize the expression for compactness — collapse whitespace, strip trailing `AS <col>`, replace inline aliases with bare column names where unambiguous.
+   - Build the `formula` field as a predicate-explicit, alias-resolved string: e.g. `CASE WHEN TxTypeID = 5 THEN 33 ELSE 0`.
+   - Record `inputs` as the deduplicated list of source FQNs (or `["literal"]` for pure literals).
+
+5. **Validate**: every column in `uc_inventory.json` MUST have an entry (formula or `null` with reason). If any are missing, re-run the locator with relaxed pattern matching, then accept missing as `formula: null, reason: "expression not locatable in source"`.
+
+## Alias-Level Source Attribution (anti-JOIN-bleeding)
+
+When the view draws from a multi-table JOIN, the source of each column is determined by its **table alias in the SELECT list** — not by the JOIN clause.
+
+**Failure mode this prevents (JOIN clause bleeding)**:
+
+```sql
+SELECT dc.FirstDepositDate, D.FundingTypeID
+FROM Dim_Customer dc
+LEFT JOIN Fact_BillingDeposit D ON dc.FTDTransactionID = D.DepositID AND D.IsFTD=1
+```
+
+A naive parser writes: `FirstDepositDate — from Dim_Customer.FirstDepositDate via Fact_BillingDeposit WHERE IsFTD=1`. This is **wrong**. The JOIN to `Fact_BillingDeposit` serves `D.FundingTypeID`, not `dc.FirstDepositDate`.
+
+**Rule**: For each column in the formula lookup:
+1. Read the SELECT expression alias prefix (`dc.FirstDepositDate` → alias `dc`).
+2. Resolve the alias via the enclosing scope's alias map (`dc` = `main.dwh.dim_customer_masked`).
+3. That FQN is the source — **ignore all JOIN conditions on other aliases**.
+4. A column is `join-enriched` ONLY when the SELECT alias resolves to a JOINed table (not the FROM-clause table).
+
+## Output schema
+
+```json
+{
+  "object_fqn": "main.etoro_kpi_prep.v_mimo_emoneyplatform",
+  "generated_at": "2026-05-18T15:00:00Z",
+  "formula_count": 21,
+  "formulas": [
+    {
+      "column": "DateID",
+      "formula": "mfts.TxStatusModificationDateID",
+      "expression_raw": "mfts.TxStatusModificationDateID AS DateID",
+      "inputs": ["main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"],
+      "transform_kind": "passthrough",
+      "evidence_lines": "v_mimo_emoneyplatform.sql L20"
+    },
+    {
+      "column": "FundingTypeID",
+      "formula": "CASE WHEN TxTypeID IN (5) THEN 33 ELSE 0",
+      "expression_raw": "CASE WHEN mfts.TxTypeID IN (5) THEN 33 ELSE 0 END AS FundingTypeID",
+      "inputs": ["main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"],
+      "transform_kind": "case_flag",
+      "evidence_lines": "v_mimo_emoneyplatform.sql L33"
+    },
+    {
+      "column": "IsTradeFromIBAN",
+      "formula": "CASE WHEN LEFT(ReferenceNumber, 1) != 'P' AND TxStatusModificationDateID >= 20240403 AND TxTypeID = 5 THEN 1 ELSE 0",
+      "expression_raw": "CASE WHEN LEFT(ReferenceNumber, 1) != 'P' AND TxStatusModificationDateID >= 20240403 AND TxTypeID = 5 THEN 1 ELSE 0 END AS IsTradeFromIBAN",
+      "inputs": ["main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"],
+      "transform_kind": "case_flag",
+      "evidence_lines": "v_mimo_emoneyplatform.sql L40"
+    },
+    {
+      "column": "IsRecurring",
+      "formula": "0",
+      "expression_raw": "0 AS IsRecurring",
+      "inputs": ["literal"],
+      "transform_kind": "literal",
+      "evidence_lines": "v_mimo_emoneyplatform.sql L41"
+    }
+  ]
+}
+```
+
+## Anti-patterns
+
+- ❌ Treating `JOIN` clauses as the source of every column. Use SELECT-list alias prefix.
+- ❌ Treating a CTE name as a physical input. Expand CTEs to their physical sources via `_resolve_terminal_upstreams`.
+- ❌ Inventing predicate values. The formula MUST be a faithful (alias-resolved, whitespace-normalized) transcription of the SQL.
+- ❌ Skipping columns that don't match the AS pattern. Try implicit-alias bare-column matching too.
+- ❌ Emitting a formula for a column that the parser couldn't locate — emit `formula: null, reason: ...` instead.

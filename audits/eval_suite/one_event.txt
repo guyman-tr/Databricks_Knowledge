@@ -1,0 +1,66 @@
+﻿{
+  "type": "tool_call",
+  "subtype": "completed",
+  "call_id": "toolu_bdrk_015R717Si6gkvu69HuLqsxuc",
+  "tool_call": {
+    "shellToolCall": {
+      "args": {
+        "command": "python tools/dbx_query.py \"\n-- eToro core revenue for 2026-06-08\nSELECT \n  'eToro Core' AS platform,\n  SUM(Amount) AS total_revenue_usd\nFROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions\nWHERE Date = '2026-06-08'\n  AND IncludedInTotalRevenue = 1\n\"",
+        "workingDirectory": "",
+        "timeout": 45000,
+        "toolCallId": "toolu_bdrk_015R717Si6gkvu69HuLqsxuc",
+        "simpleCommands": [
+          "python"
+        ],
+        "hasInputRedirect": false,
+        "hasOutputRedirect": false,
+        "parsingResult": {
+          "parsingFailed": false,
+          "executableCommands": [
+            {
+              "name": "python",
+              "args": [
+                {
+                  "type": "word",
+                  "value": "tools/dbx_query.py"
+                },
+                {
+                  "type": "string",
+                  "value": "\"\n-- eToro core revenue for 2026-06-08\nSELECT \n  'eToro Core' AS platform,\n  SUM(Amount) AS total_revenue_usd\nFROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions\nWHERE Date = '2026-06-08'\n  AND IncludedInTotalRevenue = 1\n\""
+                }
+              ],
+              "fullText": "python tools/dbx_query.py \"\n-- eToro core revenue for 2026-06-08\nSELECT \n  'eToro Core' AS platform,\n  SUM(Amount) AS total_revenue_usd\nFROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions\nWHERE Date = '2026-06-08'\n  AND IncludedInTotalRevenue = 1\n\""
+            }
+          ],
+          "hasRedirects": false,
+          "hasCommandSubstitution": false
+        },
+        "fileOutputThresholdBytes": "40000",
+        "isBackground": false,
+        "skipApproval": false,
+        "timeoutBehavior": "TIMEOUT_BEHAVIOR_BACKGROUND",
+        "hardTimeout": 86400000,
+        "description": "Query eToro core revenue for 2026-06-08",
+        "closeStdin": false
+      },
+      "result": {
+        "success": {
+          "command": "python tools/dbx_query.py \"\n-- eToro core revenue for 2026-06-08\nSELECT \n  'eToro Core' AS platform,\n  SUM(Amount) AS total_revenue_usd\nFROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions\nWHERE Date = '2026-06-08'\n  AND IncludedInTotalRevenue = 1\n\"",
+          "workingDirectory": "",
+          "exitCode": 0,
+          "signal": "",
+          "stdout": "platform\ttotal_revenue_usd\r\neToro Core\t2896785.880063\r\n",
+          "stderr": "Profile: name-of-profile  Warehouse: 208214768b0e0308\r\n1 row(s)\r\n",
+          "executionTime": 12074,
+          "interleavedOutput": "Profile: name-of-profile  Warehouse: 208214768b0e0308\r\n1 row(s)\r\nplatform\ttotal_revenue_usd\r\neToro Core\t2896785.880063\r\n",
+          "localExecutionTimeMs": 11975
+        },
+        "isBackground": false
+      },
+      "description": "Query eToro core revenue for 2026-06-08"
+    }
+  },
+  "model_call_id": "7ffa10a1-18f0-484e-81dc-76d2bffc64d2-1-xm31",
+  "session_id": "4193fadf-f619-4c4f-9281-d5b681855e7f",
+  "timestamp_ms": 1781421754333
+}

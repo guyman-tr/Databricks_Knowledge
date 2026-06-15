@@ -1,0 +1,493 @@
+﻿Connecting to adb-5142916747090026.6.azuredatabricks.net...
+python : OAuth Token Request error CSRF Warning! State not equal in request and response.
+At C:\Users\guyman\AppData\Local\Temp\2\ps-script-fc7a9712-8e38-4401-b246-c3ca224a3a3c.ps1:76 char:1
++ python -u tools/apply_tvf_col_comments.py --only-file audits/_uc_depl ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (OAuth Token Req...t and response.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+OAuth Authorization Error: CSRF Warning! State not equal in request and response.
+
+--- Logging error ---
+
+Traceback (most recent call last):
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\authenticators.py", line 112, in _initial_get_token
+    (access_token, refresh_token) = self.oauth_manager.get_tokens(
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\oauth.py", line 282, in get_tokens
+    raise e
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\oauth.py", line 276, in get_tokens
+    auth_response = self.__get_authorization_code(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\oauth.py", line 181, in __get_authorization_code
+    raise e
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\oauth.py", line 176, in __get_authorization_code
+    authorization_code_response = client.parse_request_uri_response(
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\oauthlib\oauth2\rfc6749\clients\web_application.py", line 220, in 
+parse_request_uri_response
+    response = parse_authorization_code_response(uri, state=state)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "C:\Python311\Lib\site-packages\oauthlib\oauth2\rfc6749\parameters.py", line 277, in 
+parse_authorization_code_response
+    raise MismatchingStateError()
+
+oauthlib.oauth2.rfc6749.errors.MismatchingStateError: (mismatching_state) CSRF Warning! State not equal in request and 
+response.
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "C:\Python311\Lib\logging\__init__.py", line 1110, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+
+  File "C:\Python311\Lib\logging\__init__.py", line 953, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\logging\__init__.py", line 687, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+
+  File "C:\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+
+TypeError: not all arguments converted during string formatting
+
+Call stack:
+
+  File "C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\apply_tvf_col_comments.py", line 223, in <module>
+    main()
+
+  File "C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\apply_tvf_col_comments.py", line 160, in main
+    conn = sql.connect(
+  File "C:\Python311\Lib\site-packages\databricks\sql\__init__.py", line 93, in connect
+    return Connection(server_hostname, http_path, access_token, **kwargs)
+  File "C:\Python311\Lib\site-packages\databricks\sql\client.py", line 295, in __init__
+    self.session = Session(
+  File "C:\Python311\Lib\site-packages\databricks\sql\session.py", line 86, in __init__
+    self.auth_provider = get_python_sql_connector_auth_provider(
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\auth.py", line 134, in 
+get_python_sql_connector_auth_provider
+    return get_auth_provider(cfg, http_client)
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\auth.py", line 36, in get_auth_provider
+    base_provider = DatabricksOAuthProvider(
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\authenticators.py", line 91, in __init__
+    self._initial_get_token()
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\authenticators.py", line 123, in _initial_get_token
+    logging.error(f"unexpected error in oauth initialization", e, exc_info=True)
+Message: 'unexpected error in oauth initialization'
+Arguments: (MismatchingStateError('(mismatching_state) CSRF Warning! State not equal in request and response.'),)
+
+--- Logging error ---
+
+Traceback (most recent call last):
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\authenticators.py", line 91, in __init__
+    self._initial_get_token()
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\authenticators.py", line 124, in _initial_get_token
+    raise e
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\authenticators.py", line 112, in _initial_get_token
+    (access_token, refresh_token) = self.oauth_manager.get_tokens(
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\oauth.py", line 282, in get_tokens
+    raise e
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\oauth.py", line 276, in get_tokens
+    auth_response = self.__get_authorization_code(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\oauth.py", line 181, in __get_authorization_code
+    raise e
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\oauth.py", line 176, in __get_authorization_code
+    authorization_code_response = client.parse_request_uri_response(
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\oauthlib\oauth2\rfc6749\clients\web_application.py", line 220, in 
+parse_request_uri_response
+    response = parse_authorization_code_response(uri, state=state)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "C:\Python311\Lib\site-packages\oauthlib\oauth2\rfc6749\parameters.py", line 277, in 
+parse_authorization_code_response
+    raise MismatchingStateError()
+
+oauthlib.oauth2.rfc6749.errors.MismatchingStateError: (mismatching_state) CSRF Warning! State not equal in request and 
+response.
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "C:\Python311\Lib\logging\__init__.py", line 1110, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+
+  File "C:\Python311\Lib\logging\__init__.py", line 953, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\logging\__init__.py", line 687, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\logging\__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+
+TypeError: not all arguments converted during string formatting
+
+Call stack:
+
+  File "C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\apply_tvf_col_comments.py", line 223, in <module>
+    main()
+
+  File "C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\apply_tvf_col_comments.py", line 160, in main
+    conn = sql.connect(
+  File "C:\Python311\Lib\site-packages\databricks\sql\__init__.py", line 93, in connect
+    return Connection(server_hostname, http_path, access_token, **kwargs)
+  File "C:\Python311\Lib\site-packages\databricks\sql\client.py", line 295, in __init__
+    self.session = Session(
+  File "C:\Python311\Lib\site-packages\databricks\sql\session.py", line 86, in __init__
+    self.auth_provider = get_python_sql_connector_auth_provider(
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\auth.py", line 134, in 
+get_python_sql_connector_auth_provider
+    return get_auth_provider(cfg, http_client)
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\auth.py", line 36, in get_auth_provider
+    base_provider = DatabricksOAuthProvider(
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\authenticators.py", line 93, in __init__
+    logging.error(f"unexpected error", e, exc_info=True)
+Message: 'unexpected error'
+Arguments: (MismatchingStateError('(mismatching_state) CSRF Warning! State not equal in request and response.'),)
+
+Traceback (most recent call last):
+
+  File "C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\apply_tvf_col_comments.py", line 223, in <module>
+
+    
+main()
+
+  File "C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\apply_tvf_col_comments.py", line 160, in main
+
+    
+conn = sql.connect(
+           ^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\databricks\sql\__init__.py", line 93, in connect
+
+    
+return Connection(server_hostname, http_path, access_token, **kwargs)
+
+ 
+          ^
+^
+^^^^^^^^^^^^^^
+^
+^^^^^^^^^^
+^
+^^^^^^^^^
+^
+^^^^^^
+^
+^^^^^^^^^
+^
+^^^^^^^
+
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\client.py", line 319, in __init__
+
+    
+raise e
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\client.py", line 295, in __init__
+
+    
+self.session = Session(
+ 
+ 
+                 ^^^^^^^^
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\session.py", line 86, in __init__
+
+    
+self.auth_provider = get_python_sql_connector_auth_provider(
+      
+ 
+      
+      
+ 
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\auth.py", line 134, in 
+get_python_sql_connector_auth_provider
+
+    
+return get_auth_provider(cfg, http_client)
+
+ 
+          
+^
+^^^^^^
+^
+^^^^^^^^^^^^^
+^
+^^^^^^^^^^^^
+^
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\auth.py", line 36, in get_auth_provider
+
+    
+base_provider = DatabricksOAuthProvider(
+    
+ 
+              
+ 
+^^^^^^^^^^^^
+^
+^^^^^^^^^^^
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\authenticators.py", line 94, in __init__
+
+    
+raise e
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\authenticators.py", line 91, in __init__
+
+    
+self._initial_get_token()
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\authenticators.py", line 124, in _initial_get_token
+
+    
+raise e
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\authenticators.py", line 112, in _initial_get_token
+
+    
+(access_token, refresh_token) = self.oauth_manager.get_tokens(
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\oauth.py", line 282, in get_tokens
+
+    
+raise e
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\oauth.py", line 276, in get_tokens
+
+    
+auth_response = self.__get_authorization_code(
+    
+ 
+            
+ 
+  ^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\oauth.py", line 181, in __get_authorization_code
+
+    
+raise e
+
+  File "C:\Python311\Lib\site-packages\databricks\sql\auth\oauth.py", line 176, in __get_authorization_code
+
+    
+authorization_code_response = client.parse_request_uri_response(
+       
+                   
+        ^^^^^
+^
+^^^^
+^
+^^^^^^^^^^^^
+^
+^^^^
+^
+^^^^^
+  File "C:\Python311\Lib\site-packages\oauthlib\oauth2\rfc6749\clients\web_application.py", line 220, in 
+parse_request_uri_response
+
+    
+response = parse_authorization_code_response(uri, state=state)
+
+ 
+      
+ 
+       ^^^^^
+^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^
+^^^^^^
+^^^^^^^
+^
+
+  File "C:\Python311\Lib\site-packages\oauthlib\oauth2\rfc6749\parameters.py", line 277, in 
+parse_authorization_code_response
+
+    
+raise MismatchingStateError()
+
+oauthlib.oauth2.rfc6749.errors
+.MismatchingStateError: (mismatching_state) CSRF Warning! State not equal in request and response.
+
+
+Exception ignored in: 
+<function Connection.__del__ at 0x000001510FC0AFC0>
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\databricks\sql\client.py", line 432, in __del__
+
+    
+if self.open:
+
+ 
+      ^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\databricks\sql\client.py", line 477, in open
+
+    
+return self.session.is_open
+
+ 
+          ^^^
+^
+^^^^^^
+^
+^
+AttributeError: 'Connection' object has no attribute 'session'
+
+Connecting to adb-5142916747090026.6.azuredatabricks.net...
+Auth: SDK profile 'guyman' (via ~/.databrickscfg)
+Connected.
+
+============================================================
+  Function_Revenue_AdminFee  ->  main.etoro_kpi_prep.v_revenue_adminfee
+  Wiki: 36 columns from ┬º4
+  -> 8 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Revenue_CashoutFee_ExcludeRedeem  ->  main.etoro_kpi_prep.v_revenue_cashoutfee_excluderedeem
+  Wiki: 45 columns from ┬º4
+  -> 6 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Revenue_CashoutFee_IncRedeem  ->  main.etoro_kpi_prep.v_revenue_cashoutfee_incredeem
+  Wiki: 45 columns from ┬º4
+  -> 6 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Revenue_Commissions  ->  main.etoro_kpi_prep.v_revenue_commission
+  Wiki: 62 columns from ┬º4
+  -> 10 applied, 5 no-desc, 0 failed
+============================================================
+  Function_Revenue_ConversionFee  ->  main.etoro_kpi_prep.v_revenue_conversionfee
+  Wiki: 57 columns from ┬º4
+  -> 17 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Revenue_ConversionFee_WithPositionData  ->  main.etoro_kpi_prep.v_revenue_conversionfee_withpositiondata
+  Wiki: 67 columns from ┬º4
+  -> 27 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Revenue_CryptoToFiat_C2F  ->  main.etoro_kpi_prep.v_revenue_cryptotofiat_c2f
+  Wiki: 55 columns from ┬º4
+  -> 16 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Revenue_Dividend  ->  main.etoro_kpi_prep.v_revenue_dividend
+  Wiki: 35 columns from ┬º4
+  -> 5 applied, 1 no-desc, 0 failed
+============================================================
+  Function_Revenue_DormantFee  ->  main.etoro_kpi_prep.v_revenue_dormantfee
+  Wiki: 45 columns from ┬º4
+  -> 6 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Revenue_FullCommissions  ->  main.etoro_kpi_prep.v_revenue_fullcommission
+  Wiki: 62 columns from ┬º4
+  -> 10 applied, 5 no-desc, 0 failed
+============================================================
+  Function_Revenue_InterestFee  ->  main.etoro_kpi_prep.v_revenue_interestfee
+  Wiki: 45 columns from ┬º4
+  -> 5 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Revenue_OptionsPlatform  ->  main.etoro_kpi_prep.v_revenue_optionsplatform
+  Wiki: 26 columns from ┬º4
+  -> 25 applied, 1 no-desc, 0 failed
+============================================================
+  Function_Revenue_RolloverFee  ->  main.etoro_kpi_prep.v_revenue_rollover
+  Wiki: 36 columns from ┬º4
+  -> 5 applied, 1 no-desc, 0 failed
+============================================================
+  Function_Revenue_SDRT  ->  main.etoro_kpi_prep.v_revenue_sdrt
+  Wiki: 34 columns from ┬º4
+  -> 14 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Revenue_Share_Lending  ->  main.etoro_kpi_prep.v_revenue_share_lending
+  Wiki: 26 columns from ┬º4
+  -> 9 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Revenue_SpotAdjustFee  ->  main.etoro_kpi_prep.v_revenue_spotadjustfee
+  Wiki: 36 columns from ┬º4
+  -> 8 applied, 1 no-desc, 0 failed
+============================================================
+  Function_Revenue_StakingFee  ->  main.etoro_kpi_prep.v_revenue_stakingfee
+  Wiki: 61 columns from ┬º4
+  -> 22 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Revenue_TicketFee  ->  main.etoro_kpi_prep.v_revenue_ticketfee_fixed
+  Wiki: 37 columns from ┬º4
+  -> 4 applied, 2 no-desc, 0 failed
+============================================================
+  Function_Revenue_TicketFeeByPercent  ->  main.etoro_kpi_prep.v_revenue_ticketfee_bypercent
+  Wiki: 37 columns from ┬º4
+  -> 5 applied, 1 no-desc, 0 failed
+============================================================
+  Function_Revenue_TransferCoinFee  ->  main.etoro_kpi_prep.v_revenue_transfercoinfee
+  Wiki: 45 columns from ┬º4
+  -> 6 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Population_Active_Traders  ->  main.etoro_kpi_prep.v_population_active_traders
+  Wiki: 15 columns from ┬º4
+  -> 15 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Population_First_Time_Funded  ->  main.etoro_kpi_prep.v_population_first_time_funded
+  Wiki: 18 columns from ┬º4
+  -> 18 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Population_First_Trading_Action  ->  main.etoro_kpi_prep.v_population_first_trading_action
+  Wiki: 20 columns from ┬º4
+  -> 20 applied, 0 no-desc, 0 failed
+============================================================
+  Function_PnL_Single_Day  ->  main.etoro_kpi_prep.v_pnl_single_day
+  Wiki: 19 columns from ┬º4
+  SKIP Γאפ DESCRIBE failed: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`etoro_kpi_prep`.`v_pnl_single_day` cannot be found. Verify the spelling and correctness of the schema and catalog.
+If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 1 pos 15
+============================================================
+  Function_MIMO_First_Deposit_All_Platforms  ->  main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms
+  Wiki: 56 columns from ┬º4
+  -> 6 applied, 0 no-desc, 0 failed
+============================================================
+  Function_MIMO_Options_Platform  ->  main.etoro_kpi_prep.v_mimo_options_platform
+  Wiki: 14 columns from ┬º4
+  -> 14 applied, 0 no-desc, 0 failed
+============================================================
+  Function_Instrument_Conversion_Rates  ->  main.etoro_kpi_prep.v_instrument_conversion_rates_dwh
+  Wiki: 10 columns from ┬º4
+  -> 10 applied, 2 no-desc, 0 failed
+============================================================
+  Function_Instrument_Snapshot_Enriched  ->  main.etoro_kpi_prep.v_dim_instrument_enriched
+  Wiki: 50 columns from ┬º4
+  -> 48 applied, 2 no-desc, 0 failed
+============================================================
+  Function_Trading_Volume_PositionLevel  ->  main.etoro_kpi_prep.v_trading_volume_positionlevel
+  Wiki: 32 columns from ┬º4
+  -> 32 applied, 0 no-desc, 0 failed
+============================================================
+  V_Liabilities  ->  main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities
+  Wiki: 75 columns from ┬º4
+  -> 75 applied, 6 no-desc, 0 failed
+
+============================================================
+DONE: 452 comments applied, 27 cols had no description, 0 failed

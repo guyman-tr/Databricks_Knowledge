@@ -1,0 +1,104 @@
+---
+description: "Phase 4.5 — Concept Discovery. Mines the cached view DDL and notebook source for NAMED business concepts (CASE-flag classifiers, UNION-leg sign flips, JOIN-enriched dim lookups, filter blocks, column-name pattern groups). Output: _discovery/concepts/{Object}.json — feeds §1/§2 prose synthesis in Phase 5. Ported from dwh-semantic-doc/06-business-logic-discovery.mdc."
+globs:
+alwaysApply: false
+---
+
+# Phase 4.5 — Concept Discovery
+
+## CONTRACT — Phase 4.5
+
+| Constraint | Detail |
+|------------|--------|
+| **Inputs required** | `_discovery/source_code/{Object}.{sql,py}` (Phase 2), `{Object}.lineage.md` (Phase 4), `_discovery/upstream_wikis/_index.json` + cached bodies (Phase 3, for enum decoding). |
+| **Outputs required** | `_discovery/concepts/{Object}.json` (one file per in-scope object). |
+| **MUST NOT** | Fabricate concepts. Every concept MUST anchor to a code pattern detected in the cached source. The detector is a regex / AST walk over the SQL — not an LLM read. |
+| **Failure mode** | **SOFT** — if no concepts are detected, write `{"object_fqn": ..., "concepts": []}`. Phase 5 will collapse §2 to "Pure passthrough" in that case. |
+
+## Purpose
+
+Individual columns don't tell the story — **combinations do**. DWH Phase 6 mines the writer SP for column groups, self-references, hierarchies, etc., and emits BUSINESS CONCEPTS that Phase 11 then composes into §2 subsections. The UC pipeline equivalent mines the view DDL / notebook source for the same patterns.
+
+The output is a list of NAMED CONCEPTS — each concept is one subsection in the wiki's §2 Business Logic, plus a hook for §1 Business Meaning's first paragraph.
+
+## Concept patterns to detect
+
+| Pattern | Detector | Output concept fields |
+|---------|----------|------------------------|
+| **CASE-flag classifier** | `CASE\s+WHEN\s+(.+?)\s+THEN\s+(\d+\|'.+?')\s+(ELSE\s+(\d+\|'.+?')\s+)?END\s+AS\s+<col>` | `kind=case_flag`, `columns_involved=[<col>]`, `predicates=[{col, op, val}]`, `then_value`, `else_value` |
+| **UNION-leg sign flip** | Two SELECT blocks unioned where one projects `-1 * <amount>` or `(-1) AS <sign_col>` | `kind=union_leg_sign_flip`, `columns_involved=[<amount_col>, <sign_col>]`, `legs=[{name, sign, where}]` |
+| **JOIN-enriched dim lookup** | `JOIN\s+<dim_fqn>\s+(AS\s+)?<alias>\s+ON\s+...` where `<dim_fqn>` resolves to a wiki of an upstream `Dim_*` table | `kind=dim_lookup`, `columns_involved=[cols from this alias in SELECT list]`, `dim_fqn`, `join_condition` |
+| **Filter block (settled/active/cancelled)** | `WHERE` clause referencing a known status column with a constant predicate (`IsSettled=1`, `StatusID IN (3,5)`, etc.) | `kind=filter_block`, `predicates=[...]`, `applies_to_all_rows=true` |
+| **Column-name pattern group** | Lineage rows whose names match `Init*/End*`, `Is*+*Date`, `*ID + Parent*ID`, `*_src + *_dwh`, etc. | `kind=pair_group`, `pattern`, `columns_involved=[...]`, `meaning` |
+| **Computation pair** (today/yesterday, period_open/period_close) | Two formulas in `formulas.json` that share a base name with a `today_`/`yesterday_` or `_open`/`_close` prefix/suffix | `kind=period_pair`, `columns_involved=[...]`, `delta_relationship` |
+
+## Upstream enum decoding
+
+For each `case_flag` or `filter_block` predicate where the column is `<x>ID` (e.g. `TxTypeID`, `ActionTypeID`):
+
+1. Look up the upstream wiki for the source object (from `lineage.md` source_object column).
+2. Search the upstream wiki's §3/§4 Elements table for `<x>ID` row.
+3. If the description contains key=value pairs (`1=CardPayment, 2=Contactless, ...`), extract them into `upstream_enum_decodes`.
+4. Phase 5 will use these decodes to write `TxTypeID = 5 (TransferReceived per upstream Dim_TransactionType.md)` in the §2 Rules bullets.
+
+This is the bridge that turns `TxTypeID = 5` from a bare predicate into business-meaningful prose.
+
+## Output schema
+
+```json
+{
+  "object_fqn": "main.etoro_kpi_prep.v_mimo_emoneyplatform",
+  "generated_at": "2026-05-18T15:00:00Z",
+  "concept_count": 5,
+  "concepts": [
+    {
+      "id": "iban_discriminator",
+      "name": "IBAN-originated internal transfer discriminator",
+      "kind": "case_flag",
+      "columns_involved": ["IsTradeFromIBAN"],
+      "predicates": [
+        {"col": "ReferencePrefix", "op": "LEFT(_, 1) !=", "val": "P"},
+        {"col": "TxStatusModificationDateID", "op": ">=", "val": "20240403"},
+        {"col": "TxTypeID", "op": "=", "val": "5"}
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {
+        "TxTypeID=5": "TransferReceived (per upstream eMoney_Fact_Transaction_Status)"
+      },
+      "evidence_lines": "v_mimo_emoneyplatform.sql L40-L40"
+    },
+    {
+      "id": "internal_transfer_funding_type",
+      "name": "Internal-transfer funding-type encoding",
+      "kind": "case_flag",
+      "columns_involved": ["FundingTypeID"],
+      "predicates": [
+        {"col": "TxTypeID", "op": "IN", "val": "(5)"}
+      ],
+      "then_value": "33",
+      "else_value": "0",
+      "upstream_enum_decodes": {
+        "TxTypeID=5": "TransferReceived"
+      },
+      "evidence_lines": "v_mimo_emoneyplatform.sql L33-L33"
+    }
+  ]
+}
+```
+
+## Procedure
+
+1. Read the cached source code at `_discovery/source_code/{Object}.{sql,py}`.
+2. Strip comments + string literals (re-use `_strip_sql_comments_and_strings` from `generate_wiki.py`).
+3. For each pattern in the table above, run the detector and emit one concept per hit.
+4. For each concept whose predicate column is an `<x>ID`, attempt upstream enum decode (cross-reference `_discovery/upstream_wikis/*.md` Elements tables).
+5. Deduplicate concepts that share both `kind` and `columns_involved`.
+6. Write `_discovery/concepts/{Object}.json`.
+
+## Anti-patterns
+
+- ❌ Inventing a concept name. If the detector fires, name it after the pattern + the target column (e.g. `case_flag_IsTradeFromIBAN`). The richer name (e.g. "IBAN-originated internal transfer discriminator") is built from the predicate columns + upstream enum decodes; never from imagination.
+- ❌ Detecting a concept on a column that has no formula entry in `formulas.json` (run AFTER Phase 4.6).
+- ❌ Decoding enums from `Dim_X` wikis that aren't in this object's upstream chain. Stay anchored to `lineage.md` source objects.
+- ❌ LLM-only concept extraction with no regex evidence. The detector is mechanical and reproducible.

@@ -1,0 +1,55 @@
+﻿=== 1. Persisted fact: BI_DB_DDR_Fact_Revenue_Generating_Actions ===
+  FullCommission                 rows=   470,174  amt=    1,235,730.87
+  TicketFeeByPercent             rows=    99,361  amt=      791,802.92
+  ConversionFee                  rows=    42,485  amt=      414,246.33
+  RollOverFee                    rows=   238,839  amt=      293,002.86
+  TicketFee                      rows=    39,224  amt=      129,515.00
+  CashoutFeeExclRedeem           rows=    16,499  amt=       12,860.00
+  AdminFee                       rows=       749  amt=       10,619.05
+  TransferCoinFee                rows=       124  amt=        5,721.29
+  SpotPriceAdjustment            rows=        75  amt=        1,888.16
+  Options_PFOF                   rows=       371  amt=        1,334.57
+  CryptoToFiatFee                rows=        45  amt=           64.83
+
+=== 2. The view BI_DB_V_DDR_Revenue_Breakdown (used by the TVF) ===
+   [366224, Decimal('1334.571400'), Decimal('2896785.880063')]
+
+=== 3. The TVF directly ===
+   [Decimal('2896785.880063')]
+
+=== 4. Does the view definition mention Options_PFOF or its source? ===
+  view chars: 18680
+  ...2025-10-17 --------------------------------------
+
+	 , sum(CASE WHEN Metric = 'Options_PFOF' THEN Amount ELSE 0 end) AS Options_PFOF
+
+	 -----------------------------------...
+  ...---------
+
+	 , sum(CASE WHEN Metric = 'Options_PFOF' THEN Amount ELSE 0 end) AS Options_PFOF
+
+	 ----------------------------------------------------------------------------...
+  ...neMonth	
+
+	 ------------- 2025-03-18 -----------------------------
+
+	 , sum(cat.Options_PFOF					) as Options_PFOF	
+
+	 -----------------------------------------------------...
+  ...--- 2025-03-18 -----------------------------
+
+	 , sum(cat.Options_PFOF					) as Options_PFOF	
+
+	 ------------------------------------------------------
+
+	 , sum(TotalRevenu...
+
+=== 5. Check if the view UNIONs in something from external tables ===
+  unique sources:
+    BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status
+    BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions
+    BI_DB_dbo.Dim_Revenue_Metrics
+    CATEGORIZE
+    DWH_dbo.Dim_Date
+    REV_ACTIONS_PREP
+    USERSTATUS

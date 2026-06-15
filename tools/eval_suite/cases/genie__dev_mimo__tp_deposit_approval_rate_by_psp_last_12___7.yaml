@@ -1,0 +1,127 @@
+id: genie__dev_mimo__tp_deposit_approval_rate_by_psp_last_12___7
+question: TP-deposit approval rate by PSP, last 12 months
+source: genie_benchmark:01f15e792ce1140bbf6af2f8f7c6b54c
+asof: '2026-06-08'
+ground_truth_sql: "SELECT\n    Provider                                          \
+  \                                    AS psp,\n    COUNT(*)                     \
+  \                                                         AS attempts,\n    SUM(CASE\
+  \ WHEN PaymentStatus IN ('Approved','Confirmed','Settled') THEN 1.0 END)\n     \
+  \ / NULLIF(COUNT(*), 0)                                                        \
+  \       AS approval_rate\nFROM main.etoro_kpi.mimo_tp_deposits_v\nWHERE TransactionDate\
+  \ >= ADD_MONTHS(CURRENT_DATE(), -12)\nGROUP BY Provider\nORDER BY attempts DESC;"
+expected_value:
+  type: tabular
+  value:
+  - - Tribe
+    - 5653092
+    - 0.9987964108845212
+  - - IXOPAY-Nuvei
+    - 1627636
+    - 0.6982722181126493
+  - - Checkout
+    - 1469938
+    - 0.7601361417964567
+  - - WorldPay
+    - 731793
+    - 0.6749422309314246
+  - - PayPal
+    - 570660
+    - 0.7501314267690044
+  - - Wire (JPMorgan)
+    - 205611
+    - 0.14268691850144205
+  - - Wire(DeutscheBank)
+    - 113874
+    - 0.4106468552962046
+  - - IXOPAY-Worldpay
+    - 95883
+    - 0.7970547438023424
+  - - LEAN
+    - 95832
+    - 0.6306139911511812
+  - - PWMB
+    - 33959
+    - 0.5267528490238228
+  - - Ecommpay-Astropay
+    - 29552
+    - 0.11427314564158095
+  - - IXOPAY-Worldpay-P24
+    - 24363
+    - 0.6993802076919919
+  - - IXOPAY-powercash
+    - 13971
+    - 0.5207930713621072
+  - - MoneyBookers USD
+    - 13200
+    - 0.593939393939394
+  - - EtoroOptions
+    - 11024
+    - 1.0
+  - - Ecommpay
+    - 3628
+    - 0.2927232635060639
+  - - Neteller
+    - 2936
+    - 0.40463215258855584
+  - - Ecommpay-Paynow
+    - 2468
+    - 0.6815235008103727
+  - - eToroCryptoWallet
+    - 1443
+    - 1.0
+  - - Wire(Marsheq)
+    - 1432
+    - 0.9860335195530726
+  - - Wire (Coutts)
+    - 837
+    - 0.989247311827957
+  - - null
+    - 718
+    - 0.001392757660167131
+  - - Worldpay EUR
+    - 571
+    - null
+  - - Wire (Banking Circle)
+    - 119
+    - 0.9747899159663865
+  - - MoneyBookers AUD
+    - 102
+    - 0.3137254901960784
+  - - MoneyBookers GBP
+    - 15
+    - null
+  - - MoneyBookers EUR
+    - 14
+    - 0.35714285714285715
+  - - RapidTransfer(Skrill) USD
+    - 11
+    - null
+  - - RapidTransfer(Skrill) GBP
+    - 9
+    - null
+  - - Wire(DBS)
+    - 7
+    - 0.42857142857142855
+  - - IXOPAY-Volt
+    - 1
+    - null
+  - - Wire(CustomersBank)
+    - 1
+    - 1.0
+  columns:
+  - psp
+  - attempts
+  - approval_rate
+  tolerance_pct: 0.5
+expected_skill_hub: _none_
+skill_coverage_status: missing
+canonical_tables:
+- main.etoro_kpi.mimo_tp_deposits_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'DEV - MIMO' (01f15e792ce1140bbf6af2f8f7c6b54c) benchmark
+  question.
+tags:
+- genie_benchmark
+- dev_mimo
+max_replicas: 3

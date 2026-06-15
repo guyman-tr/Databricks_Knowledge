@@ -1,0 +1,79 @@
+wiki_path,section_4_title,semantic_header,idx,column,source,semantic_cell,verdict,signal
+knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_DocumentStatus.md,Elements,Description,1,DocumentStatusID,,"Primary key identifying the document review state. 1=Uploaded, 2=PendingReview, 3=Approved, 4=Declined, 5=Expired. See glossary Document Status (Tier 1 — Dictionary.DocumentStatus)",HAS_SEMANTIC,prose
+knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_DocumentStatus.md,Elements,Description,2,DocumentStatusName,,"Human-readable status label. Used in compliance review UI, customer communications, and regulatory reporting. (Tier 1 — Dictionary.DocumentStatus)",HAS_TRANSFORMATION,arithmetic
+knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_DocumentStatus.md,Elements,Description,3,UpdateDate,,"ETL load timestamp. Set to GETDATE() on each daily full reload by SP_Dictionaries_DL_To_Synapse. Reflects ETL run time, not source data change time. (Tier 2 — SP_Dictionaries_DL_To_Synapse)",HAS_SEMANTIC,prose
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,1,CID,Fact_SnapshotEquity.CID,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,2,DateID,V_M2M_Date_DateRange.DateKey,Direct (alias DateKey → DateID),TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,3,FullDate,V_M2M_Date_DateRange.FullDate,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,4,RealizedEquity,Fact_SnapshotEquity.RealizedEquity,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,5,TotalPositionsAmount,Fact_SnapshotEquity.TotalPositionsAmount,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,6,TotalCash,Fact_SnapshotEquity.TotalCash,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,7,InProcessCashouts,Fact_SnapshotEquity.InProcessCashouts,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,8,TotalMirrorPositionsAmount,Fact_SnapshotEquity.TotalMirrorPositionsAmount,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,9,TotalMirrorCash,Fact_SnapshotEquity.TotalMirrorCash,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,10,TotalStockOrders,Fact_SnapshotEquity.TotalStockOrders,Direct (legacy — always 0 since 2019),TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,11,TotalMirrorStockOrders,Fact_SnapshotEquity.TotalMirrorStockOrders,Direct (legacy — always 0 since 2019),TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,12,Credit,Fact_SnapshotEquity.Credit,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,13,AUM,Fact_SnapshotEquity.AUM,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,14,BonusCredit,Fact_SnapshotEquity.BonusCredit,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,15,TotalStockPositionAmount,Fact_SnapshotEquity.TotalStockPositionAmount,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,16,TotalMirrorStockPositionAmount,Fact_SnapshotEquity.TotalMirrorStockPositionAmount,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,17,PositionPnL,Fact_CustomerUnrealized_PnL.PositionPnL,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,18,CopyPositionPnL,Fact_CustomerUnrealized_PnL.CopyPositionPnL,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,19,StandardDeviation,Fact_CustomerUnrealized_PnL.StandardDeviation,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,20,CommissionOnOpen,Fact_CustomerUnrealized_PnL.CommissionOnOpen,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,21,ActualNWA,"Fact_SnapshotEquity, Fact_CustomerUnrealized_PnL","CASE WHEN NetEquity > BonusCredit THEN BonusCredit WHEN NetEquity < 0 THEN 0 ELSE NetEquity END. NetEquity = ISNULL(TotalPositionsAmount,0) + ISNULL(TotalCash,0) + ISNULL(TotalStockOrders,0) + ISNULL(PositionPnL,0)",HAS_TRANSFORMATION,case_when
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,22,Liabilities,"Fact_SnapshotEquity, Fact_CustomerUnrealized_PnL","ISNULL(InProcessCashouts,0) + CASE WHEN NetEquity - BonusCredit > 0 THEN NetEquity - BonusCredit WHEN NetEquity < 0 THEN NetEquity ELSE 0 END",HAS_TRANSFORMATION,case_when
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,23,WA_Liabilities,"Fact_SnapshotEquity, Fact_CustomerUnrealized_PnL","MIN(Liabilities_excl_cashouts, Credit) — credit-capped liabilities",HAS_TRANSFORMATION,agg
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,24,Liabilities_InUsedMargin,"Fact_SnapshotEquity, Fact_CustomerUnrealized_PnL","MAX(Liabilities_excl_cashouts - Credit, 0) — liabilities beyond credit",HAS_TRANSFORMATION,agg
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,25,StocksPositionPnL,Fact_CustomerUnrealized_PnL.StocksPositionPnL,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,26,TotalStockManualPosition,Fact_SnapshotEquity,TotalStockPositionAmount + TotalStockOrders - TotalMirrorStockPositionAmount,HAS_TRANSFORMATION,arithmetic
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,27,ManualStockPositionPnL,Fact_CustomerUnrealized_PnL,StocksPositionPnL - MirrorStocksPositionPnL,HAS_TRANSFORMATION,arithmetic
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,28,MirrorStocksPositionPnL,Fact_CustomerUnrealized_PnL.MirrorStocksPositionPnL,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,29,CryptoPositionPnL,Fact_CustomerUnrealized_PnL.CryptoPositionPnL,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,30,ManualCryptoPositionPnL,Fact_CustomerUnrealized_PnL.ManualCryptoPositionPnL,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,31,CopyCryptoPositionPnL,Fact_CustomerUnrealized_PnL.CopyCryptoPositionPnL,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,32,TotalCryptoPositionAmount,Fact_SnapshotEquity.TotalCryptoPositionAmount,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,33,TotalCryptoManualPosition,Fact_SnapshotEquity,TotalCryptoPositionAmount - TotalMirrorCryptoPositionAmount,HAS_TRANSFORMATION,arithmetic
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,34,CopyFundAUM,Fact_SnapshotEquity.CopyFundAUM,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,35,CopyFundPnL,Fact_CustomerUnrealized_PnL.CopyFundPnL,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,36,NOP,Fact_CustomerUnrealized_PnL.NOP,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,37,Notional,Fact_CustomerUnrealized_PnL.Notional,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,38,NOP_Crypto,Fact_CustomerUnrealized_PnL.NOP_Crypto,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,39,Notional_Crypto,Fact_CustomerUnrealized_PnL.Notional_Crypto,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,40,NOP_CFD,Fact_CustomerUnrealized_PnL.NOP_CFD,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,41,Notional_CFD,Fact_CustomerUnrealized_PnL.Notional_CFD,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,42,NOP_Crypto_CFD,Fact_CustomerUnrealized_PnL.NOP_Crypto_CFD,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,43,Notional_Crypto_CFD,Fact_CustomerUnrealized_PnL.Notional_Crypto_CFD,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,44,PositionPnLStocksReal,Fact_CustomerUnrealized_PnL.PositionPnLStocksReal,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,45,PositionPnLCryptoReal,Fact_CustomerUnrealized_PnL.PositionPnLCryptoReal,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,46,TotalRealStocks,Fact_SnapshotEquity.TotalRealStocks,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,47,TotalRealCrypto,Fact_SnapshotEquity.TotalRealCrypto,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,48,LiabilitiesStockReal,"Fact_SnapshotEquity, Fact_CustomerUnrealized_PnL","ISNULL(PositionPnLStocksReal, 0) + ISNULL(TotalRealStocks, 0)",HAS_TRANSFORMATION,coalesce
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,49,LiabilitiesCryptoReal,"Fact_SnapshotEquity, Fact_CustomerUnrealized_PnL","ISNULL(PositionPnLCryptoReal, 0) + ISNULL(TotalRealCrypto, 0)",HAS_TRANSFORMATION,coalesce
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,50,CommissionByUnitsCrypto_TRS,Fact_CustomerUnrealized_PnL.CommissionByUnitsCrypto_TRS,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,51,CopyCryptoPositionPnL_TRS,Fact_CustomerUnrealized_PnL.CopyCryptoPositionPnL_TRS,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,52,CryptoPositionPnL_TRS,Fact_CustomerUnrealized_PnL.CryptoPositionPnL_TRS,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,53,FullCommissionByUnitsCrypto_TRS,Fact_CustomerUnrealized_PnL.FullCommissionByUnitsCrypto_TRS,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,54,ManualCryptoPositionPnL_TRS,Fact_CustomerUnrealized_PnL.ManualCryptoPositionPnL_TRS,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,55,NOP_Crypto_TRS,Fact_CustomerUnrealized_PnL.NOP_Crypto_TRS,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,56,Notional_Crypto_TRS,Fact_CustomerUnrealized_PnL.Notional_Crypto_TRS,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,57,Total_TRSCrypto,Fact_SnapshotEquity.Total_TRSCrypto,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,58,TotalCryptoPositionAmount_TRS,Fact_SnapshotEquity.TotalCryptoPositionAmount_TRS,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,59,TotalCryptoManualPosition_TRS,Fact_SnapshotEquity,TotalCryptoPositionAmount_TRS - TotalMirrorCryptoPositionAmount_TRS,HAS_TRANSFORMATION,arithmetic
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,60,LiabilitiesCrypto_TRS,"Fact_SnapshotEquity, Fact_CustomerUnrealized_PnL","ISNULL(CryptoPositionPnL_TRS, 0) + ISNULL(Total_TRSCrypto, 0)",HAS_TRANSFORMATION,coalesce
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,61,MirrorRealFuturesPositionPnL,Fact_CustomerUnrealized_PnL.MirrorRealFuturesPositionPnL,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,62,ManualRealFuturesPositionPnL,Fact_CustomerUnrealized_PnL.ManualRealFuturesPositionPnL,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,63,NOP_FuturesReal,Fact_CustomerUnrealized_PnL.NOP_FuturesReal,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,64,Notional_FuturesReal,Fact_CustomerUnrealized_PnL.Notional_FuturesReal,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,65,PositionPnLFuturesReal,Fact_CustomerUnrealized_PnL.PositionPnLFuturesReal,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,66,FullCommissionByUnitsFuturesReal,Fact_CustomerUnrealized_PnL.FullCommissionByUnitsFuturesReal,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,67,CommissionByUnitsFuturesReal,Fact_CustomerUnrealized_PnL.CommissionByUnitsFuturesReal,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,68,TotalMirrorRealFuturesPositionAmount,Fact_SnapshotEquity.TotalMirrorRealFuturesPositionAmount,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,69,TotalRealFutures,Fact_SnapshotEquity.TotalRealFutures,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,70,TotalFuturesProviderMargin,Fact_SnapshotEquity.TotalFuturesProviderMargin,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,71,LiabilitiesFuturesReal,"Fact_SnapshotEquity, Fact_CustomerUnrealized_PnL","ISNULL(PositionPnLFuturesReal, 0) + ISNULL(TotalRealFutures, 0)",HAS_TRANSFORMATION,coalesce
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,72,NOP_StocksMargin,Fact_CustomerUnrealized_PnL.NOP_StocksMargin,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,73,PositionPnLStocksMargin,Fact_CustomerUnrealized_PnL.PositionPnLStocksMargin,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,74,TotalStocksMargin,Fact_SnapshotEquity.TotalStocksMargin,Direct,TRIVIAL,
+knowledge/synapse/Wiki/DWH_dbo/Views/V_Liabilities.md,Output Columns,Transformation,75,TotalStockMarginLoanValue,Fact_SnapshotEquity.TotalStockMarginLoanValue,Direct,TRIVIAL,

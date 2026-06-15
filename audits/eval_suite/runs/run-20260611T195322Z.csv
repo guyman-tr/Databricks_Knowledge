@@ -1,0 +1,26 @@
+run_id,run_started_at,host,case_id,case_status,sut_name,asof,natural_language_question,expected_value,observed_value,diff_abs,diff_pct,tolerance_pct,passed,reason,sql_used,sut_text_answer,sut_error,elapsed_ms,tags,baseline_sut_name,baseline_value,baseline_diff_pct,baseline_passed,drift_verdict,judge_score,judge_label,judge_rationale,judge_model
+run-20260611T195329Z,2026-06-11T19:53:29Z,azr-we-bidev-3,ddr_revenue_totals_yesterday,live,cursor_agent,2026-06-08,"What was eToro's Total Revenue (per the DDR) for valid customers
+yesterday — i.e. on 2026-06-08?",2879105.291063,2.0,-2879103.291063,-99.99993053397505,0.5,False,"expected=2,879,105.2911; observed=2.0000; diff=-99.9999% > tol=0.5%",,"I'll help you get eToro's Total Revenue from the DDR for valid customers. Let me load the relevant domain skills first.Running a live query via Databricks MCP to get eToro's Total Revenue from the DDR fact for valid customers. If nothing follows in ~10-15 seconds, check **Settings ג†’ MCP** (server may be disconnected).## eToro Total Revenue (DDR) ג€” Valid Customers
+
+| Period | Revenue (USD) |
+|--------|--------------|
+| **Yesterday** (Jun 10, 2026) | $2,719,577 |
+| **Last 7 Days** | $17,660,487 |
+| **Last 30 Days** | $28,422,980 |
+| **YTD 2026** | $438,411,504 |
+
+**Notes:**
+
+- Source: `BI_DB_DDR_Fact_Revenue_Generating_Actions` with `IncludedInTotalRevenue = 1` (excludes Commission subset, Dividends pass-through, SDRT tax collected)
+- This is **eToro-core trading platform only** ג€” does NOT include:
+  - Spaceship (AU): fees available in `etoro_kpi.v_spaceship_fees` but not yet added
+  - MoneyFarm (UK): `v_moneyfarm_fees` is currently a placeholder
+  - WealthFrance (FR): revenue surface TBD
+  - Options (US): Options_PFOF included here
+  - Zengo, Bit2C, Subscription: ingestion pending
+
+For a complete cross-platform rollup including Spaceship fees, let me know and I'll run the full calculation.
+
+---
+
+*Scope: valid users only ג€” `IsValidCustomer = 1` (excludes `PlayerLevel='Internal'`, `Label IN ('Dealing','ILQ')`, `Country='eToro'`), period-correct (SCD-2). Popular Investors ARE valid. For credit-balance-valid scope, ask explicitly (""CB valid""). For unfiltered, ask explicitly (""include non-valids"" / ""unfiltered"").*",,108375,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""single-tile-poc""]",,,,,N/A,,,,

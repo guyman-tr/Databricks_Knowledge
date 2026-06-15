@@ -1,0 +1,73 @@
+id: ddr_mimo_tp_first_funded_yesterday
+status: live
+source_kind: tableau
+provenance:
+  workbook_luid: b5d58e4d-3644-402e-aaa2-274c0a51221a
+  workbook_name: "eToro's Daily Data Report (New DDR 2025) - LIVE QUERY"
+  dashboard: "Money Movement"
+  sheet: "MIMO: Trading Platform's Deposits & Withdraws"
+  field_on_canvas: "TPFirstDeposited"
+  datasource_id: "58f7e2fa-396a-dcc8-464f-ba7003850d07"
+  datasource_name: "Main DDR Query"
+
+asof: '2026-06-08'
+
+natural_language_question: |
+ How many customers made their first-ever Trading-Platform deposit on 2026-06-08? This is the TP-platform-specific FTD count (not Global FTD).
+
+# ----- Ground truth (Synapse PROD, faithful TVF) -----
+ground_truth:
+  source_db: synapse_prod
+  routine: BI_DB_dbo.Function_DDR_Aggregation_Yesterday
+  sql: |
+    SELECT SUM(TPFirstDeposited) AS value
+    FROM BI_DB_dbo.Function_DDR_Aggregation_Yesterday('20260608', 0)
+    WHERE IsCreditReportValidCB = 1
+  value: 867
+  pinned_at: '2026-06-11T06:59:42Z'
+
+# ----- UC equivalent (canonical valid-users-filter Pattern 2) -----
+uc_equivalent:
+  status: live
+  sql: |
+    SELECT SUM(d.TPFirstDeposited) AS TPFirstDeposited
+    FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status d
+    WHERE d.DateID = 20260608
+      AND d.IsCreditReportValidCB = 1
+  value: 867
+  pinned_at: '2026-06-11T06:59:42Z'
+
+# ----- Synapse-vs-UC parity -----
+parity:
+  diff_abs: 0.0
+  diff_pct: 0.0
+  threshold_pct: 0.05
+  passed: true
+  finding: |
+    UC and Synapse agree to within +0.0000% on asof=2026-06-08.
+    Treated as parity for the eval harness (threshold 0.05%).
+
+# ----- Skill coverage cross-reference -----
+skill_coverage:
+  matched_skills:
+    - dwh-domain/cross-cutting/valid-users-filter-contract
+    - dwh-domain/domain-payments
+    - dwh-domain/domain-customer-and-identity
+  contract_used: "valid-users-filter-contract Rule 2 (CB regulatory variant)"
+  fqns_referenced:
+    - bi_db_dbo.function_ddr_aggregation_yesterday
+    - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status
+  expected_coverage_assertion: |
+    A correctly-skilled agent SHOULD answer this question by joining the
+    relevant DDR fact mirror to the SCD-2 snapshot view with IsCreditReportValidCB=1
+    (per dwh-domain/cross-cutting/valid-users-filter-contract Pattern 2 — CB regulatory variant).
+    Failures to apply the SCD-2 walk OR to use IsCreditReportValidCB
+    (vs IsValidCustomer or no filter at all) are skill-coverage gaps.
+
+# ----- Scoring config for the eval harness -----
+scoring:
+  numeric_tolerance_pct: 0.5
+  parity_diff_pct_threshold: 0.05
+  judge_signal_secondary: llm
+
+tags: ["ddr", "mimo", "yesterday", "valid-users-cb", "ftd"]

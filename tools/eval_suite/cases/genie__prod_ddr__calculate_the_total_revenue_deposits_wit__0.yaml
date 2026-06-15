@@ -1,0 +1,31 @@
+id: genie__prod_ddr__calculate_the_total_revenue_deposits_wit__0
+question: Calculate the total revenue, deposits, withdrawals for 2026-04-18
+source: genie_benchmark:01f13712cf8516878dbc9663f5f73eb7
+asof: '2026-06-08'
+ground_truth_sql: "SELECT\n  (\n    SELECT\n      SUM(`RevenueAmount`)\n    FROM\n\
+  \      `main`.`etoro_kpi`.`ddr_revenue_v`\n    WHERE\n      `DateID` = 20260418\
+  \ and IncludedInTotalRevenue = 1\n  ) AS TotalRevenue,\n  (\n    SELECT\n      SUM(`GlobalDepositsAmount`)\n\
+  \    FROM\n      `main`.`etoro_kpi`.`ddr_mimo_v`\n    WHERE\n      `DateID` = 20260418\n\
+  \  ) AS TotalDeposits,\n  (\n    SELECT\n      SUM(`GlobalWithdrawsAmount`)\n  \
+  \  FROM\n      `main`.`etoro_kpi`.`ddr_mimo_v`\n    WHERE\n      `DateID` = 20260418\n\
+  \  ) AS TotalWithdrawals"
+expected_value:
+  type: PENDING
+  tolerance_pct: 0.5
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: covered
+canonical_tables:
+- main.etoro_kpi.ddr_mimo_v
+- main.etoro_kpi.ddr_revenue_v
+anti_sources: []
+expected_filters: []
+notes: 'Seeded from Genie space ''PROD - DDR'' (01f13712cf8516878dbc9663f5f73eb7)
+  benchmark question.
+
+  [pin error] SQL FAILED: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable,
+  or function parameter with name `GlobalDepositsAmount` cannot be resolved. Did you
+  mean one'
+tags:
+- genie_benchmark
+- prod_ddr
+max_replicas: 3

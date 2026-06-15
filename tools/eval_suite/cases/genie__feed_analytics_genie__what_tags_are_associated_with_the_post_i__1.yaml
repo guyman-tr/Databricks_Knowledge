@@ -1,0 +1,28 @@
+id: genie__feed_analytics_genie__what_tags_are_associated_with_the_post_i__1
+question: What tags are associated with the post id '298e5b70-05de-11f1-8080-8000188ddd3b'?
+source: genie_benchmark:01f105b421e7187baa5e81595599f7f3
+asof: '2026-06-08'
+ground_truth_sql: "SELECT\n  EventPayloadRowData_Entity_Id AS post_id,\n  EventPayloadRowData_OperationType\
+  \ AS operation_type,\n  tag.Market.SymbolName AS tag_symbol,\n  tag.Market.Id AS\
+  \ asset_id,\n  tag.Market.DisplayName AS display_name,\n  tag.Market.AssetType AS\
+  \ asset_type,\n  EventPayloadRowData_Entity_Owner_Username AS username,\n  EventPayloadRowData_Entity_Message_Text\
+  \ AS post_text\nFROM\n  `main`.`experience`.`bronze_event_hub_prod_event_streaming_we_streams_post`\n\
+  \  LATERAL VIEW explode(EventPayloadRowData_Entity_Tags) AS tag\nWHERE\n  EventPayloadRowData_Entity_Id\
+  \ = '298e5b70-05de-11f1-8080-8000188ddd3b'"
+expected_value:
+  type: numeric
+  value: null
+  tolerance_pct: 0.5
+  _meta: empty result
+expected_skill_hub: domain-product-analytics
+skill_coverage_status: covered
+canonical_tables:
+- main.experience.bronze_event_hub_prod_event_streaming_we_streams_post
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'Feed Analytics Genie' (01f105b421e7187baa5e81595599f7f3)
+  benchmark question.
+tags:
+- genie_benchmark
+- feed_analytics_genie
+max_replicas: 3

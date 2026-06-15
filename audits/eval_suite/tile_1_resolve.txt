@@ -1,0 +1,24 @@
+﻿sheet: Revenue: Totals
+datasource_ids: ['08243498-da02-edbc-3320-7ab148047558']
+datasource_names: ['Main DDR Query']
+
+--- All embedded datasources in this workbook ---
+  - 00a3962b-b636-b28b-25db-409d89b4ff8e  'Funded SPS'              hasExtracts=True  upstream_tables=['main.spaceship.bronze_spaceship_metabase_contact', 'main.etoro_kpi.v_spaceship_aum', 'main.spaceship.bronze_spaceship_analytics_fct_money_transactions']
+  - 065b3a0e-8da4-2135-09d9-bee47aeebd94  'MIMO Spaceship'          hasExtracts=True  upstream_tables=[]
+  - 08243498-da02-edbc-3320-7ab148047558  'Main DDR Query'          hasExtracts=True  upstream_tables=[]
+      *** has TotalRevenue: kind=ColumnField formula= upcols=[]  remote=None
+  - 635cb607-060d-fb54-8fb8-c0aa40ddb558  'Fees Spaceship'          hasExtracts=True  upstream_tables=[]
+  - e6253a66-e07f-7858-ebae-8c9a1f9881d1  'AUM Spaceship'           hasExtracts=True  upstream_tables=['main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit', 'main.spaceship.bronze_spaceship_metabase_contact', 'main.etoro_kpi.v_spaceship_aum', 'main.spaceship.bronze_spaceship_analytics_fct_money_transactions']
+  - ee34e605-753b-76a5-21e6-d25ad61640e1  'Registrations'           hasExtracts=True  upstream_tables=[]
+  - fa1a6406-3aef-f121-aa11-9ac2ce3bd803  'FTDs SPS'                hasExtracts=True  upstream_tables=[]
+
+--- Custom SQL summaries ---
+  - id=1d719679-800a-41c5-e407-120af481f23e  name='Custom SQL Query'        unsupported=True  chars=1460  has_TotalRevenue=False  upstream=[]
+  - id=4b0f23b5-ebee-5657-15ee-4db61ba04425  name='Custom SQL Query'        unsupported=True  chars=12093  has_TotalRevenue=False  upstream=[]
+  - id=61b6b3d2-0fef-8b28-8233-45fafeccf7a2  name='Custom SQL Query'        unsupported=True  chars=1113  has_TotalRevenue=False  upstream=[]
+  - id=ab088fd7-c3f7-d2d7-fbba-dfd40c8594ac  name='Custom SQL Query'        unsupported=False  chars=2997  has_TotalRevenue=False  upstream=['main.spaceship.bronze_spaceship_metabase_contact', 'main.etoro_kpi.v_spaceship_aum', 'main.spaceship.bronze_spaceship_analytics_fct_money_transactions']
+  - id=cfd45240-317d-3323-a42b-be45d0ea6b73  name='Custom SQL Query'        unsupported=False  chars=3467  has_TotalRevenue=False  upstream=['main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit', 'main.spaceship.bronze_spaceship_metabase_contact', 'main.etoro_kpi.v_spaceship_aum', 'main.spaceship.bronze_spaceship_analytics_fct_money_transactions']
+  - id=d32206e2-4142-f400-68ae-82c6bc3d3869  name='Custom SQL Query'        unsupported=True  chars=1193  has_TotalRevenue=False  upstream=[]
+  - id=f791c78d-d13d-7fd9-960d-40264ccd9f96  name='Custom SQL Query'        unsupported=True  chars=3269  has_TotalRevenue=False  upstream=[]
+
+--- Searching all custom SQL bodies for 'TotalRevenue' ---

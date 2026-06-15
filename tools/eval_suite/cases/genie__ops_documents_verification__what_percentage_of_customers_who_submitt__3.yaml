@@ -1,0 +1,48 @@
+id: genie__ops_documents_verification__what_percentage_of_customers_who_submitt__3
+question: What percentage of customers who submitted documents from the United Kingdom
+  between 01-01-2026 and 15-01-2026 were EV Verified?
+source: genie_benchmark:01f0f77496571e68a9f115149bcc48d9
+asof: '2026-06-08'
+ground_truth_sql: "SELECT\n  ev_match_status_name,\n  COUNT(DISTINCT cid) as unique_clients,\n\
+  \  COUNT(*) as total_documents,\n  ROUND(COUNT(DISTINCT cid) * 100.0 / SUM(COUNT(DISTINCT\
+  \ cid)) OVER (), 2) as pct_of_clients\nFROM\n  main.bi_output_stg.bi_output_operations_documentanalysis\n\
+  WHERE\n  country = 'United Kingdom'\n  AND upload_date >= '2026-01-01 00:00:00'\n\
+  \  AND upload_date < '2026-01-16 00:00:00'\nGROUP BY\n  ev_match_status_name\nORDER\
+  \ BY\n  unique_clients DESC"
+expected_value:
+  type: tabular
+  value:
+  - - Verified
+    - 18418
+    - 23765
+    - 87.78
+  - - NotVerified
+    - 1251
+    - 3088
+    - 5.96
+  - - PartiallyVerified
+    - 781
+    - 2052
+    - 3.72
+  - - None
+    - 531
+    - 1230
+    - 2.53
+  columns:
+  - ev_match_status_name
+  - unique_clients
+  - total_documents
+  - pct_of_clients
+  tolerance_pct: 0.5
+expected_skill_hub: domain-ops-and-onboarding
+skill_coverage_status: covered
+canonical_tables:
+- main.bi_output_stg.bi_output_operations_documentanalysis
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'OPS  - Documents & Verification' (01f0f77496571e68a9f115149bcc48d9)
+  benchmark question.
+tags:
+- genie_benchmark
+- ops_documents_verification
+max_replicas: 3

@@ -1,0 +1,22 @@
+id: ddr__ddr_revenue_v__total_revenue_by_category
+question: Break down eToro's total revenue on 2026-06-08 by RevenueMetricCategory.
+source: ddr
+asof: '2026-06-08'
+ground_truth_sql: "SELECT RevenueMetricCategory, SUM(RevenueAmount) AS revenue\nFROM\
+  \ main.etoro_kpi.ddr_revenue_v\nWHERE Date = DATE'2026-06-08'\n  AND IncludedInTotalRevenue\
+  \ = 1\nGROUP BY RevenueMetricCategory ORDER BY revenue DESC"
+expected_value:
+  type: tabular
+  tolerance_pct: 0.5
+expected_skill_hub: domain-revenue-and-fees
+skill_coverage_status: covered
+canonical_tables:
+- main.etoro_kpi.ddr_revenue_v
+anti_sources: []
+expected_filters:
+- IncludedInTotalRevenue = 1
+notes: ''
+tags:
+- ddr
+- ddr_revenue_v
+max_replicas: 3

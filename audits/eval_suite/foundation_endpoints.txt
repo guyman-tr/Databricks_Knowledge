@@ -1,0 +1,225 @@
+﻿python : Traceback (most recent call last):
+At C:\Users\guyman\AppData\Local\Temp\2\ps-script-17356f15-9a25-44f9-84ff-3fe2b2061899.ps1:81 char:59
++ ... _Knowledge; python -u tools/eval_suite/loop_authoring/_diag_list_endp ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\Python311\Lib\site-packages\databricks\sdk\credentials_provider.py", line 678, in _exec_cli_command
+
+    
+out = _run_subprocess(cmd, capture_output=True, check=True)
+
+ 
+       
+ 
+ 
+^
+^
+^
+^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+
+  File "C:\Python311\Lib\site-packages\databricks\sdk\credentials_provider.py", line 722, in _run_subprocess
+
+    
+return subprocess.run(
+     
+ 
+     ^^^^^^^^^^^^^^^
+
+  File "C:\Python311\Lib\subprocess.py", line 571, in run
+
+    
+raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError
+: Command '['C:\\Users\\guyman\\AppData\\Local\\DatabricksCLI\\databricks.exe', 'auth', 'token', '--profile', 
+'guyman']' returned non-zero exit status 1.
+
+
+The above exception was the direct cause of the following exception:
+
+
+Traceback (most recent call last):
+
+  File "C:\Python311\Lib\site-packages\databricks\sdk\credentials_provider.py", line 1269, in __call__
+
+    
+header_factory = provider(cfg)
+
+ 
+     
+ 
+             
+ ^^^^^^^^
+^
+^^^^
+
+  File "C:\Python311\Lib\site-packages\databricks\sdk\credentials_provider.py", line 78, in __call__
+
+    
+return self._headers_provider(cfg)
+
+ 
+        
+ 
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\databricks\sdk\credentials_provider.py", line 123, in wrapper
+
+    
+return func(cfg)
+
+ 
+     
+ 
+    ^^^^^^^^^
+
+
+  File "C:\Python311\Lib\site-packages\databricks\sdk\credentials_provider.py", line 1024, in databricks_cli
+
+    
+raise e
+
+  File "C:\Python311\Lib\site-packages\databricks\sdk\credentials_provider.py", line 1019, in databricks_cli
+
+    
+token_source.token()
+
+  File "C:\Python311\Lib\site-packages\databricks\sdk\oauth.py", line 311, in token
+
+    
+return self._async_token()
+
+ 
+          ^^^^^^^^^^^^^^^^^^
+^
+
+  File "C:\Python311\Lib\site-packages\databricks\sdk\oauth.py", line 327, in _async_token
+
+    
+return self._blocking_token()
+
+ 
+      
+    ^
+^
+^^^^^^^^^^
+^
+^^^^^^^^^
+
+  File "C:\Python311\Lib\site-packages\databricks\sdk\oauth.py", line 357, in _blocking_token
+
+    
+self._update_token(self.refresh())
+
+ 
+                    
+ 
+ ^^^^^^^^^^^
+^
+^^
+  File "C:\Python311\Lib\site-packages\databricks\sdk\credentials_provider.py", line 926, in refresh
+
+    
+token = super().refresh()
+
+ 
+      
+ 
+    ^^
+^
+^^^^^^^^^^^
+^
+^^
+
+  File "C:\Python311\Lib\site-packages\databricks\sdk\credentials_provider.py", line 696, in refresh
+
+    
+return self._exec_cli_command(self._cmd)
+
+ 
+      
+ 
+   ^^^^^^^^^^^^^
+^
+^^^^^^^^^^
+^
+^^^^^^^^
+
+  File "C:\Python311\Lib\site-packages\databricks\sdk\credentials_provider.py", line 692, in _exec_cli_command
+
+    
+raise IOError(f"cannot get access token: {message}") from e
+
+OSError
+: cannot get access token: Error: A new access token could not be retrieved because the refresh token is invalid. To 
+reauthenticate, run the following command:
+  $ databricks auth login --profile guyman
+
+The above exception was the direct cause of the following exception:
+
+
+
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\databricks\sdk\config.py", line 767, in init_auth
+
+    
+self._header_factory = self._credentials_strategy(self)
+
+ 
+      
+ 
+               
+ 
+   ^^^^^^^^^^^^^^^^^^
+^
+^^^^^^^^^^^
+^
+^
+  File "C:\Python311\Lib\site-packages\databricks\sdk\credentials_provider.py", line 1276, in __call__
+
+    
+raise ValueError(f"{auth_type}: {e}") from e
+
+ValueError
+: databricks-cli: cannot get access token: Error: A new access token could not be retrieved because the refresh token 
+is invalid. To reauthenticate, run the following command:
+  $ databricks auth login --profile guyman
+
+
+The above exception was the direct cause of the following exception:
+
+
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\databricks\sdk\config.py", line 300, in __init__
+
+    
+self.init_auth()
+
+  File "C:\Python311\Lib\site-packages\databricks\sdk\config.py", line 772, in init_auth
+
+    
+raise ValueError(f"{self._credentials_strategy.auth_type()} auth: {e}") from e
+ValueError: default auth: databricks-cli: cannot get access token: Error: A new access token could not be retrieved 
+because the refresh token is invalid. To reauthenticate, run the following command:
+  $ databricks auth login --profile guyman
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File 
+"C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\eval_suite\loop_authoring\_diag_list_endpoints_b.py", 
+line 3, in <module>
+    w = WorkspaceClient(profile="guyman")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\databricks\sdk\__init__.py", line 238, in __init__
+    config = client.Config(
+             ^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\databricks\sdk\config.py", line 304, in __init__
+    raise ValueError(message) from e
+ValueError: default auth: databricks-cli: cannot get access token: Error: A new access token could not be retrieved 
+because the refresh token is invalid. To reauthenticate, run the following command:
+  $ databricks auth login --profile guyman. Config: host=https://adb-5142916747090026.6.azuredatabricks.net, 
+profile=guyman, auth_type=databricks-cli. Env: DATABRICKS_CONFIG_PROFILE
+

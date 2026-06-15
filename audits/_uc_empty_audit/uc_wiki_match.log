@@ -1,0 +1,33 @@
+﻿Input: 283 UC tables with empty cols
+
+Matched (have wiki):      94 objects,   370 empty cols
+Unmatched (no wiki):     189 objects,  2689 empty cols
+
+Top 25 matched (by empty-col count):
+    55 empty  |  ┬º4 has   0 cols  |  main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_snapshotcustomer
+    51 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_reimbursementfollowup
+    31 empty  |  ┬º4 has   0 cols  |  main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl_userapi
+    10 empty  |  ┬º4 has   0 cols  |  main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus
+    10 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report
+     9 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new
+     9 empty  |  ┬º4 has   0 cols  |  main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation
+     8 empty  |  ┬º4 has   0 cols  |  main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionhedgeserverchangelog_snapshot
+     6 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailyzeropnl_stocks
+     6 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailyzero_treesize_new
+     6 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports
+     5 empty  |  ┬º4 has  27 cols  |  main.etoro_kpi_prep.v_trading_volume_and_amount
+     4 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport
+     4 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_copydailydata
+     4 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_dividends
+     4 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_daily_aggregated
+     4 empty  |  ┬º4 has   0 cols  |  main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl
+     4 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl
+     3 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_new_compensationbreakdown
+     3 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cross_selling_monthly
+     3 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop
+     3 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop_cid
+     3 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody_resolver
+     3 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody
+     3 empty  |  ┬º4 has   0 cols  |  main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_spreadedpricecandle60minsplitted
+
+Wrote: audits\_uc_empty_audit\uc_wiki_match.csv

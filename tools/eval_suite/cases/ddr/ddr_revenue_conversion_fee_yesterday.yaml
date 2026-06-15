@@ -1,0 +1,78 @@
+id: ddr_revenue_conversion_fee_yesterday
+status: live
+source_kind: tableau
+provenance:
+  workbook_luid: b5d58e4d-3644-402e-aaa2-274c0a51221a
+  workbook_name: "eToro's Daily Data Report (New DDR 2025) - LIVE QUERY"
+  dashboard: "Revenue: Overview & Breakdowns"
+  sheet: "Revenue: Commission & Other Fees"
+  field_on_canvas: "ConversionFee"
+  datasource_id: "58f7e2fa-396a-dcc8-464f-ba7003850d07"
+  datasource_name: "Main DDR Query"
+
+asof: '2026-06-08'
+
+natural_language_question: |
+ What was the total Conversion Fee revenue on 2026-06-08? Conversion fees are charged when customer trade currency differs from their wallet currency.
+
+# ----- Ground truth (Synapse PROD, faithful TVF) -----
+ground_truth:
+  source_db: synapse_prod
+  routine: BI_DB_dbo.Function_DDR_Aggregation_Yesterday
+  sql: |
+    SELECT SUM(ConversionFee) AS value
+    FROM BI_DB_dbo.Function_DDR_Aggregation_Yesterday('20260608', 0)
+    WHERE IsCreditReportValidCB = 1
+  value: 414246.3192
+  pinned_at: '2026-06-11T06:59:42Z'
+
+# ----- UC equivalent (canonical valid-users-filter Pattern 2) -----
+uc_equivalent:
+  status: live
+  sql: |
+    SELECT SUM(d.Amount) AS ConversionFee
+    FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions d
+    JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+        ON snap.RealCID = d.RealCID
+       AND snap.IsCreditReportValidCB = 1
+       AND d.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+    WHERE d.DateID = 20260608
+      AND d.Metric = 'ConversionFee'
+      AND d.IncludedInTotalRevenue = 1
+  value: 414246.3192
+  pinned_at: '2026-06-11T06:59:42Z'
+
+# ----- Synapse-vs-UC parity -----
+parity:
+  diff_abs: 0.0
+  diff_pct: 0.0
+  threshold_pct: 0.05
+  passed: true
+  finding: |
+    UC and Synapse agree to within +0.0000% on asof=2026-06-08.
+    Treated as parity for the eval harness (threshold 0.05%).
+
+# ----- Skill coverage cross-reference -----
+skill_coverage:
+  matched_skills:
+    - dwh-domain/cross-cutting/valid-users-filter-contract
+    - dwh-domain/domain-revenue-and-fees
+  contract_used: "valid-users-filter-contract Rule 2 (CB regulatory variant)"
+  fqns_referenced:
+    - bi_db_dbo.function_ddr_aggregation_yesterday
+    - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions
+    - main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked
+  expected_coverage_assertion: |
+    A correctly-skilled agent SHOULD answer this question by joining the
+    relevant DDR fact mirror to the SCD-2 snapshot view with IsCreditReportValidCB=1
+    (per dwh-domain/cross-cutting/valid-users-filter-contract Pattern 2 — CB regulatory variant).
+    Failures to apply the SCD-2 walk OR to use IsCreditReportValidCB
+    (vs IsValidCustomer or no filter at all) are skill-coverage gaps.
+
+# ----- Scoring config for the eval harness -----
+scoring:
+  numeric_tolerance_pct: 0.5
+  parity_diff_pct_threshold: 0.05
+  judge_signal_secondary: llm
+
+tags: ["ddr", "revenue", "yesterday", "valid-users-cb", "conversion-fee"]

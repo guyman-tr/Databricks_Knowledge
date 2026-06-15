@@ -1,0 +1,26 @@
+id: genie__prod_compliance_genie__give_me_a_count_of_all_current_cysec_cli__3
+question: give me a count of all current CySEC Clients (RegulationID = 1) that Became
+  VerificationLevel3 during Q4-2025 and openned a CFD Position after Q4-2025
+source: genie_benchmark:01f137f76a75126fb15b03341732911f
+asof: '2026-06-08'
+ground_truth_sql: "SELECT COUNT(DISTINCT c.CID) AS cysec_clients_count\nFROM `main`.`etoro_kpi`.`cidfirstdates_v`\
+  \ c\nJOIN `main`.`etoro_kpi`.`positions_for_compliance_v` p\n  ON c.CID = p.cid\n\
+  WHERE c.RegulationID = 1\n  AND c.VerificationLevel3Date >= '2025-10-01' AND c.VerificationLevel3Date\
+  \ < '2026-01-01'\n  AND p.issettled = 0\n  AND p.opendateid > 20251231"
+expected_value:
+  type: numeric
+  value: 10538
+  tolerance_pct: 0.5
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: covered
+canonical_tables:
+- main.etoro_kpi.cidfirstdates_v
+- main.etoro_kpi.positions_for_compliance_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'PROD - Compliance Genie' (01f137f76a75126fb15b03341732911f)
+  benchmark question.
+tags:
+- genie_benchmark
+- prod_compliance_genie
+max_replicas: 3

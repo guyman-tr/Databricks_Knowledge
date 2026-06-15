@@ -1,0 +1,27 @@
+id: genie__prod_compliance_genie__give_me_a_count_of_clients_that_were_in___5
+question: Give me a count of clients that were in FCA for the entire of Jan-2026,
+source: genie_benchmark:01f137f76a75126fb15b03341732911f
+asof: '2026-06-08'
+ground_truth_sql: "WITH fca_jan_clients AS (\n  SELECT `RealCID`\n  FROM `main`.`etoro_kpi`.`customer_snapshot_v`\n\
+  \  WHERE `Regulation` = 'FCA'\n    AND `Date` >= '2026-01-01' AND `Date` < '2026-02-01'\n\
+  \  GROUP BY `RealCID`\n  HAVING COUNT(DISTINCT `Date`) = 31\n)\nSELECT COUNT(DISTINCT\
+  \ cs.`RealCID`) AS client_count\nFROM `main`.`etoro_kpi`.`customer_snapshot_v` cs\n\
+  JOIN fca_jan_clients fca ON cs.`RealCID` = fca.`RealCID`\nWHERE cs.`IsLastDayMonth`\
+  \ = 1\n  AND cs.`CalendarYearMonth` = '2026-01'\n  AND cs.`VerificationLevelID`\
+  \ = 3\n  AND cs.`ClubTier` = 'Platinum'"
+expected_value:
+  type: numeric
+  value: 33376
+  tolerance_pct: 0.5
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: covered
+canonical_tables:
+- main.etoro_kpi.customer_snapshot_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'PROD - Compliance Genie' (01f137f76a75126fb15b03341732911f)
+  benchmark question.
+tags:
+- genie_benchmark
+- prod_compliance_genie
+max_replicas: 3

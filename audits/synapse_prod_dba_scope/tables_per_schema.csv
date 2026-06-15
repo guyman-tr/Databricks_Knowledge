@@ -1,0 +1,43 @@
+schema_name,table_count,pct_of_total,category
+BI_DB_dbo,1643,41.7,BI domain (fact tables - DDR family)
+Dealing_staging,646,16.4,Dealing LP recon staging - many short-lived per-LP tables
+DWH_dbo,367,9.3,DWH dimensions and facts
+Dealing_dbo,235,6.0,Dealing live tables (BestExec, Hedge, recons)
+DWH_staging,135,3.4,DWH staging area
+eMoney_dbo,107,2.7,eMoney IBAN/card platform
+CopyFromLake,95,2.4,Lake copy staging
+dbo,76,1.9,Default schema - miscellaneous
+EXW_dbo,63,1.6,EXW crypto wallet
+DE_dbo,54,1.4,Data Engineering pipeline orchestration
+GCP_DataSet_Copy_Discovery,49,1.2,GCP source copy discovery
+EXW_Wallet,42,1.1,EXW Wallet detail
+EXW_Wallet_tmp,37,0.9,EXW Wallet staging
+BI_DB_python,34,0.9,Python-driven BI tables
+GCP_DataSet_RecoSys,32,0.8,Recommendation system from GCP
+DWH_tracking,26,0.7,Page view / clickstream
+eMoney_Tribe,23,0.6,Tribe Treezor audit envelopes
+eMoney_Tribe_tmp,22,0.6,Tribe staging
+eMoney_dbo_tmp,20,0.5,eMoney staging
+BI_DB_Migration,17,0.4,Migration artifacts
+EXE,17,0.4,Execution metadata
+EXW_Dictionary,17,0.4,EXW dictionaries
+EXW_Dictionary_tmp,17,0.4,EXW dictionary staging
+DWH_pagetracking,15,0.4,Page tracking
+general_tmp,14,0.4,General staging
+eMoney_Dictionary,13,0.3,eMoney dictionaries
+eMoney_Dictionary_tmp,13,0.3,eMoney dictionary staging
+BI_DB_staging,13,0.3,BI staging
+DWH_watchlists,12,0.3,Watchlists
+ProdData_dbo,10,0.3,Production data
+general,10,0.3,Misc
+EXW_Settings,7,0.2,EXW settings
+EXW_Settings_tmp,7,0.2,EXW settings staging
+EXW_Currency,6,0.2,EXW currency dim
+EXW_Currency_tmp,6,0.2,EXW currency staging
+EXW_Staking,5,0.1,EXW staking
+EXW_Staking_tmp,5,0.1,EXW staking staging
+GCP_DataSet_Experiments,5,0.1,GCP experiments
+GCP_DataSet_BQ_Status,4,0.1,GCP BQ status
+Fivetran_google_sheets,3,0.1,Fivetran google sheets
+DWH_Migration,3,0.1,DWH migration artifacts
+others,28,0.7,(ML_General_DataSet MoneyTransfe_* SHA SalesForce_dbo etc)

@@ -22,8 +22,12 @@ SQL authentication (no Azure AD / MFA):
     SQL Server authentication only — no interactive or device-code flows.
 
 Azure AD (only if SQL env vars are not set):
-    1. ActiveDirectoryInteractive (cached WAM token)
-    2. If that hangs, device code to warm cache, then retry
+    1. ActiveDirectoryIntegrated (Windows SSO via the logged-in user) —
+       silent, no popup. Works whenever the machine is signed into the
+       AD tenant that owns the Synapse pool. This is the preferred path.
+    2. ActiveDirectoryInteractive (cached WAM token) — fallback for
+       environments where Integrated can't be used.
+    3. If both hang, device code to warm cache, then retry Interactive.
 """
 import os
 import sys
@@ -87,11 +91,26 @@ def _ensure_line_buffering():
         pass
 
 
-def _conn_str():
+def _conn_str_integrated():
+    """ActiveDirectoryIntegrated — Windows SSO, silent, no popup."""
+    srv, db = _effective_server_database()
     return (
         "Driver={ODBC Driver 18 for SQL Server};"
-        f"Server={SERVER};"
-        f"Database={DATABASE};"
+        f"Server={srv};"
+        f"Database={db};"
+        "Authentication=ActiveDirectoryIntegrated;"
+        "Encrypt=yes;TrustServerCertificate=no;"
+        f"Connection Timeout={CONNECT_TIMEOUT};"
+    )
+
+
+def _conn_str():
+    """ActiveDirectoryInteractive (WAM) — popup on first call, cached after."""
+    srv, db = _effective_server_database()
+    return (
+        "Driver={ODBC Driver 18 for SQL Server};"
+        f"Server={srv};"
+        f"Database={db};"
         f"UID={UID};"
         "Authentication=ActiveDirectoryInteractive;"
         "Encrypt=yes;TrustServerCertificate=no;"
@@ -105,6 +124,24 @@ class _Timeout(Exception):
 
 def _timeout_handler(signum, frame):
     raise _Timeout()
+
+
+def _try_integrated(timeout_sec=CONNECT_TIMEOUT):
+    """Try ActiveDirectoryIntegrated (Windows SSO). Returns conn or raises on
+    timeout/error. Silent — no popup. Works whenever the machine is signed
+    into the AD tenant that owns the Synapse pool."""
+    if sys.platform != "win32":
+        old_handler = signal.signal(signal.SIGALRM, _timeout_handler)
+        signal.alarm(timeout_sec)
+    try:
+        conn = pyodbc.connect(_conn_str_integrated(), timeout=timeout_sec)
+        return conn
+    except _Timeout:
+        raise _Timeout("ActiveDirectoryIntegrated timed out")
+    finally:
+        if sys.platform != "win32":
+            signal.alarm(0)
+            signal.signal(signal.SIGALRM, old_handler)
 
 
 def _try_interactive(timeout_sec=CONNECT_TIMEOUT):
@@ -177,15 +214,30 @@ def connect(verbose=True):
             print("Connected (SQL authentication).\n", flush=True)
         return conn
 
+    srv, _ = _effective_server_database()
     if verbose:
-        print(f"Connecting to Synapse ({SERVER})...", flush=True)
+        print(f"Connecting to Synapse ({srv})...", flush=True)
 
-    # Attempt 1: try with cached credentials
+    # Attempt 1: ActiveDirectoryIntegrated (Windows SSO — silent, no popup)
+    try:
+        conn = _try_integrated()
+        conn.timeout = QUERY_TIMEOUT
+        if verbose:
+            print("Connected (ActiveDirectoryIntegrated / Windows SSO).\n", flush=True)
+        return conn
+    except _Timeout:
+        if verbose:
+            print("Integrated auth timed out — trying Interactive.", flush=True)
+    except pyodbc.Error as e:
+        if verbose:
+            print(f"Integrated auth failed: {e} — trying Interactive.", flush=True)
+
+    # Attempt 2: ActiveDirectoryInteractive with cached WAM token
     try:
         conn = _try_interactive()
         conn.timeout = QUERY_TIMEOUT
         if verbose:
-            print("Connected (cached credentials).\n", flush=True)
+            print("Connected (ActiveDirectoryInteractive, cached credentials).\n", flush=True)
         return conn
     except _Timeout:
         if verbose:
@@ -195,7 +247,7 @@ def connect(verbose=True):
             print(f"Connection attempt failed: {e}", flush=True)
             print("Trying device code fallback...", flush=True)
 
-    # Attempt 2: warm cache via device code, then retry
+    # Attempt 3: warm cache via device code, then retry Interactive
     _warm_cache_via_device_code()
 
     if verbose:

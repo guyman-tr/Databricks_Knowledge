@@ -1,0 +1,119 @@
+run_id,run_started_at,host,case_id,case_status,sut_name,asof,natural_language_question,expected_value,observed_value,diff_abs,diff_pct,tolerance_pct,passed,reason,sql_used,sut_text_answer,sut_error,elapsed_ms,tags,baseline_sut_name,baseline_value,baseline_diff_pct,baseline_passed,drift_verdict,judge_score,judge_label,judge_rationale,judge_model
+run-20260611T185517Z,2026-06-11T18:55:17Z,azr-we-bidev-3,ddr_aum_equity_global_yesterday,live,databricks_mcp,2026-06-08,What was the total Global Equity (sum of customer equity across TP + IBAN + Options + custodied assets) for valid customers as of 2026-06-08?,16683397467.773949,16682889930.123947,-507537.6500015259,-0.0030421720215075966,0.5,True,"expected=16,683,397,467.7739; observed=16,682,889,930.1239; diff=-0.0030% <= tol=0.5%","SELECT SUM(ddr_aum_v.EquityGlobal) AS TotalGlobalEquity
+FROM main.etoro_kpi.ddr_aum_v
+INNER JOIN main.etoro_kpi.ddr_customer_snapshot_scd_v s
+  ON ddr_aum_v.RealCID = s.RealCID
+  AND ddr_aum_v.DateID BETWEEN s.FromDateID AND s.ToDateID
+WHERE ddr_aum_v.DateID = 20260608
+  AND s.IsValidCustomer = 1
+  AND ddr_aum_v.EquityGlobal IS NOT NULL;","The total Global Equity (sum of customer equity across TP, IBAN, Options, and custodied assets) for valid customers as of 2026-06-08 was **16,682,889,930.12**.",,23482,"[""ddr"", ""aum"", ""yesterday"", ""valid-users-cb"", ""equity-global""]",,,,,PASS,,,,
+run-20260611T185517Z,2026-06-11T18:55:17Z,azr-we-bidev-3,ddr_aum_realized_equity_global_yesterday,live,databricks_mcp,2026-06-08,What was the total Global Realized Equity (excluding mark-to-market unrealized PnL on open positions) for valid customers as of 2026-06-08?,17243415676.84395,17242916216.893948,-499459.95000076294,-0.00289652560351766,0.5,True,"expected=17,243,415,676.8439; observed=17,242,916,216.8939; diff=-0.0029% <= tol=0.5%","SELECT SUM(ddr_aum_v.RealizedEquityGlobal) AS TotalGlobalRealizedEquity
+FROM main.etoro_kpi.ddr_aum_v
+INNER JOIN main.etoro_kpi.ddr_customer_snapshot_scd_v s
+  ON ddr_aum_v.RealCID = s.RealCID
+  AND ddr_aum_v.DateID BETWEEN s.FromDateID AND s.ToDateID
+WHERE ddr_aum_v.DateID = 20260608
+  AND s.IsValidCustomer = 1
+  AND ddr_aum_v.RealizedEquityGlobal IS NOT NULL;","The total Global Realized Equity (excluding mark-to-market unrealized PnL on open positions) for valid customers as of 2026-06-08 was **17,242,916,216.89**.",,21616,"[""ddr"", ""aum"", ""yesterday"", ""valid-users-cb"", ""realized-equity""]",,,,,PASS,,,,
+run-20260611T185517Z,2026-06-11T18:55:17Z,azr-we-bidev-3,ddr_mimo_external_deposits_tp_yesterday,live,databricks_mcp,2026-06-08,What was the total amount in USD of external (non-internal-transfer) deposits to the Trading Platform for valid customers yesterday (2026-06-08)? External deposits are payments made from outside the eToro ecosystem (e.g. card or wire from a customer's bank).,15471498.4,15471498.4,0.0,0.0,0.5,True,"expected=15,471,498.4000; observed=15,471,498.4000; diff=+0.0000% <= tol=0.5%","SELECT SUM(CASE WHEN ddr_mimo_v.IsInternalTransfer = 0 AND ddr_mimo_v.MIMOAction = 'Deposit' AND ddr_mimo_v.MIMOPlatform = 'TradingPlatform' THEN ddr_mimo_v.AmountUSD ELSE 0 END) AS ExternalDepositsTPAmount_USD
+FROM main.etoro_kpi.ddr_mimo_v
+INNER JOIN main.etoro_kpi.ddr_customer_snapshot_scd_v
+  ON ddr_customer_snapshot_scd_v.RealCID = ddr_mimo_v.RealCID
+  AND ddr_mimo_v.DateID BETWEEN ddr_customer_snapshot_scd_v.FromDateID AND ddr_customer_snapshot_scd_v.ToDateID
+WHERE ddr_mimo_v.DateID = 20260608
+  AND ddr_customer_snapshot_scd_v.IsValidCustomer = 1
+  AND ddr_mimo_v.AmountUSD IS NOT NULL;","The total amount in USD of external (non-internal-transfer) deposits to the Trading Platform for valid customers on 2026-06-08 was **$15,471,498.40**.",,19776,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""tp-deposits"", ""external""]",,,,,PASS,,,,
+run-20260611T185517Z,2026-06-11T18:55:17Z,azr-we-bidev-3,ddr_mimo_global_cashout_users_yesterday,live,databricks_mcp,2026-06-08,"How many distinct valid customers had a successful global cashout (any platform: TP, IBAN, Options, MoneyFarm) yesterday (2026-06-08)? GlobalCashedOut is a 0/1 per-customer flag on the daily-status table.",7748.0,124.0,-7624.0,-98.39958699019101,0.5,False,"expected=7,748.0000; observed=124.0000; diff=-98.3996% > tol=0.5%",SELECT COUNT(DISTINCT m.RealCID) AS DistinctGlobalCashedOutCustomers FROM `main`.`etoro_kpi`.`ddr_mimo_v` m INNER JOIN `main`.`etoro_kpi`.`ddr_customer_snapshot_scd_v` s ON m.RealCID = s.RealCID AND m.DateID BETWEEN s.FromDateID AND s.ToDateID WHERE m.DateID = 20260608 AND m.IsRedeem = 1 AND s.IsValidCustomer = 1;,"On 2026-06-08, there were **124 distinct valid customers** who had a successful global cashout across all platforms. This count is based on customers flagged as valid and with a successful cashout on that date.",,33983,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""cashout-users""]",direct_sql,7748.0,0.0,True,SKILL_GAP,,,,
+run-20260611T185517Z,2026-06-11T18:55:17Z,azr-we-bidev-3,ddr_mimo_global_deposits_amount_yesterday,live,databricks_mcp,2026-06-08,"What were the total external (non-internal-transfer) global deposits in USD for valid customers yesterday (2026-06-08)? Global means across all eToro platforms (TP, eMoney IBAN, Options, MoneyFarm).",29910573.3,29910573.3,0.0,0.0,0.5,True,"expected=29,910,573.3000; observed=29,910,573.3000; diff=+0.0000% <= tol=0.5%","SELECT
+  SUM(CASE WHEN ddr_mimo_v.IsInternalTransfer = 0 AND ddr_mimo_v.MIMOAction = 'Deposit' THEN ddr_mimo_v.AmountUSD ELSE 0 END) AS TotalExternalGlobalDepositsUSD
+FROM main.etoro_kpi.ddr_mimo_v
+INNER JOIN main.etoro_kpi.ddr_customer_snapshot_scd_v
+  ON ddr_customer_snapshot_scd_v.RealCID = ddr_mimo_v.RealCID
+  AND ddr_mimo_v.DateID BETWEEN ddr_customer_snapshot_scd_v.FromDateID AND ddr_customer_snapshot_scd_v.ToDateID
+WHERE ddr_customer_snapshot_scd_v.IsValidCustomer = 1
+  AND ddr_mimo_v.DateID = 20260608","The total external (non-internal-transfer) global deposits in USD for valid customers across all eToro platforms on 2026-06-08 was **$29,910,573.30**. This figure includes deposits from TP, eMoney IBAN, Options, and MoneyFarm platforms.",,21946,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""deposits""]",,,,,PASS,,,,
+run-20260611T185517Z,2026-06-11T18:55:17Z,azr-we-bidev-3,ddr_mimo_global_deposits_count_yesterday,live,databricks_mcp,2026-06-08,How many global deposit transactions did valid customers make yesterday (2026-06-08)? Excludes internal transfers and crypto-redeem reclassifications.,19769.0,19769.0,0.0,0.0,0.5,True,"expected=19,769.0000; observed=19,769.0000; diff=+0.0000% <= tol=0.5%","SELECT SUM(CASE WHEN m.IsInternalTransfer = 0 AND m.MIMOAction = 'Deposit' THEN 1 ELSE 0 END) AS GlobalDepositTransactions
+FROM main.etoro_kpi.ddr_mimo_v m
+INNER JOIN main.etoro_kpi.ddr_customer_snapshot_scd_v s
+  ON m.RealCID = s.RealCID
+  AND m.DateID BETWEEN s.FromDateID AND s.ToDateID
+WHERE s.IsValidCustomer = 1
+  AND m.DateID = 20260608;","On 2026-06-08, valid customers made a total of **19,769 global deposit transactions**, excluding internal transfers and crypto-redeem reclassifications.",,20004,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""deposit-count""]",,,,,PASS,,,,
+run-20260611T185517Z,2026-06-11T18:55:17Z,azr-we-bidev-3,ddr_mimo_tp_first_funded_yesterday,live,databricks_mcp,2026-06-08,How many valid customers made their first-ever Trading-Platform deposit yesterday (2026-06-08)? This is the TP-platform-specific FTD count (not Global FTD).,867.0,867.0,0.0,0.0,0.5,True,expected=867.0000; observed=867.0000; diff=+0.0000% <= tol=0.5%,"SELECT COUNT(DISTINCT v.RealCID) AS TP_FTD_Count
+FROM main.etoro_kpi.vg_customer_customer_first_dates v
+INNER JOIN main.etoro_kpi.ddr_customer_snapshot_scd_v s
+  ON CAST(v.RealCID AS STRING) = s.RealCID
+  AND 20260608 BETWEEN s.FromDateID AND s.ToDateID
+WHERE v.FirstDepositDate >= '2026-06-08'
+  AND v.FirstDepositDate < '2026-06-09'
+  AND v.FTDPlatformName = 'TradingPlatform'
+  AND s.IsValidCustomer = 1
+  AND v.FirstDepositDate IS NOT NULL;","On June 8, 2026, the number of valid customers who made their first-ever deposit specifically on the TradingPlatform was **867**. This count is based only on customers whose first deposit date was exactly on that day and who are marked as valid.",,37023,"[""ddr"", ""mimo"", ""yesterday"", ""valid-users-cb"", ""ftd""]",,,,,PASS,,,,
+run-20260611T185517Z,2026-06-11T18:55:17Z,azr-we-bidev-3,ddr_pnl_daily_total_pnl_yesterday,live,databricks_mcp,2026-06-08,What was the total Daily PnL (realized NetProfit + unrealized mark-to-market change) across all valid customers' positions on 2026-06-08?,104757898.38,104756908.79,-989.5899999886751,-0.0009446447621534226,0.5,True,"expected=104,757,898.3800; observed=104,756,908.7900; diff=-0.0009% <= tol=0.5%","SELECT
+  SUM(COALESCE(p.NetProfit,0) + COALESCE(p.UnrealizedPnLChange,0)) AS TotalDailyPnL
+FROM main.etoro_kpi.ddr_pnl_v p
+INNER JOIN main.etoro_kpi.ddr_customer_snapshot_scd_v s
+  ON p.RealCID = s.RealCID
+  AND p.DateID BETWEEN s.FromDateID AND s.ToDateID
+WHERE s.IsValidCustomer = 1
+  AND p.DateID = 20260608;","The total Daily PnL (realized NetProfit plus unrealized mark-to-market change) across all valid customers' positions on 2026-06-08 was **104,756,908.79**.",,21099,"[""ddr"", ""pnl"", ""yesterday"", ""valid-users-cb"", ""daily-total-pnl""]",,,,,PASS,,,,
+run-20260611T185517Z,2026-06-11T18:55:17Z,azr-we-bidev-3,ddr_pnl_total_position_pnl_yesterday,live,databricks_mcp,2026-06-08,What was the total mark-to-market unrealized PnL across all valid customers' open positions as of 2026-06-08? Negative means open positions are aggregately under water.,-564406548.55,105886993.11,670293541.66,-118.76076622109207,0.5,False,"expected=-564,406,548.5500; observed=105,886,993.1100; diff=-118.7608% > tol=0.5%","SELECT SUM(p.UnrealizedPnLChange) AS TotalUnrealizedPnL
+FROM main.etoro_kpi.ddr_pnl_v p
+INNER JOIN main.etoro_kpi.ddr_customer_snapshot_scd_v s
+  ON p.RealCID = s.RealCID
+  AND p.DateID BETWEEN s.FromDateID AND s.ToDateID
+WHERE p.DateID = 20260608
+  AND s.IsValidCustomer = 1
+  AND p.UnrealizedPnLChange IS NOT NULL;","The total mark-to-market unrealized PnL across all valid customers' open positions as of 2026-06-08 was **105,886,993.11**. This positive value indicates that, in aggregate, open positions were in profit on that date.",,20792,"[""ddr"", ""pnl"", ""yesterday"", ""valid-users-cb"", ""open-position-pnl""]",direct_sql,-564406548.55,-0.0,True,SKILL_GAP,,,,
+run-20260611T185517Z,2026-06-11T18:55:17Z,azr-we-bidev-3,ddr_revenue_admin_yesterday,live,databricks_mcp,2026-06-08,What was the total Admin Fee (dormancy/inactivity fee) revenue for valid customers yesterday (2026-06-08)?,10619.05,10619.05,0.0,0.0,0.5,True,"expected=10,619.0500; observed=10,619.0500; diff=+0.0000% <= tol=0.5%","SELECT SUM(r.RevenueAmount) AS TotalAdminFeeRevenue
+FROM main.etoro_kpi.ddr_revenue_v r
+INNER JOIN main.etoro_kpi.ddr_customer_snapshot_scd_v s
+  ON r.RealCID = s.RealCID
+  AND r.DateID BETWEEN s.FromDateID AND s.ToDateID
+WHERE r.DateID = 20260608
+  AND r.Metric = 'AdminFee'
+  AND r.IncludedInTotalRevenue = 1
+  AND s.IsValidCustomer = 1
+  AND r.RevenueAmount IS NOT NULL;","The total Admin Fee (dormancy/inactivity fee) revenue for valid customers on 2026-06-08 was **10,619.05**.",,19580,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""admin-fee""]",,,,,PASS,,,,
+run-20260611T185517Z,2026-06-11T18:55:17Z,azr-we-bidev-3,ddr_revenue_conversion_fee_yesterday,live,databricks_mcp,2026-06-08,What was the total Conversion Fee revenue for valid customers yesterday (2026-06-08)? Conversion fees are charged when customer trade currency differs from their wallet currency.,414246.3192,414246.3192,0.0,0.0,0.5,True,"expected=414,246.3192; observed=414,246.3192; diff=+0.0000% <= tol=0.5%","SELECT
+  SUM(r.RevenueAmount) AS TotalConversionFeeRevenue
+FROM main.etoro_kpi.ddr_revenue_v r
+INNER JOIN main.etoro_kpi.ddr_customer_snapshot_scd_v s
+  ON r.RealCID = s.RealCID
+  AND r.DateID BETWEEN s.FromDateID AND s.ToDateID
+WHERE
+  r.DateID = 20260608
+  AND r.Metric = 'ConversionFee'
+  AND r.IncludedInTotalRevenue = 1
+  AND s.IsValidCustomer = 1
+  AND r.RevenueAmount IS NOT NULL;","The total Conversion Fee revenue for valid customers on 2026-06-08 was **414,246.32**.",,16420,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""conversion-fee""]",,,,,PASS,,,,
+run-20260611T185517Z,2026-06-11T18:55:17Z,azr-we-bidev-3,ddr_revenue_full_commission_yesterday,live,databricks_mcp,2026-06-08,What was the total Full Commission revenue for valid customers yesterday (2026-06-08)? Full Commission combines retail trading commission with both fixed and percentage-based ticket fees.,1229189.3105,1229189.2305,-0.07999999984167516,-6.508354665819002e-06,0.5,True,"expected=1,229,189.3105; observed=1,229,189.2305; diff=-0.0000% <= tol=0.5%","SELECT SUM(ddr_revenue_v.RevenueAmount) AS TotalFullCommissionRevenue
+FROM main.etoro_kpi.ddr_revenue_v
+INNER JOIN main.etoro_kpi.ddr_customer_snapshot_scd_v
+  ON ddr_customer_snapshot_scd_v.RealCID = ddr_revenue_v.RealCID
+  AND ddr_revenue_v.DateID BETWEEN ddr_customer_snapshot_scd_v.FromDateID AND ddr_customer_snapshot_scd_v.ToDateID
+WHERE ddr_revenue_v.DateID = 20260608
+  AND ddr_revenue_v.Metric = 'FullCommission'
+  AND ddr_customer_snapshot_scd_v.IsValidCustomer = 1;","The total Full Commission revenue for valid customers on 2026-06-08 was **1,229,189.23**. This amount includes retail trading commission as well as both fixed and percentage-based ticket fees, as requested.",,19464,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""commission""]",,,,,PASS,,,,
+run-20260611T185517Z,2026-06-11T18:55:17Z,azr-we-bidev-3,ddr_revenue_rollover_yesterday,live,databricks_mcp,2026-06-08,What was the total Rollover Fee revenue for valid customers yesterday (2026-06-08)? Rollover fees are the financing charge for keeping leveraged CFD positions open overnight.,290343.4,290343.4,0.0,0.0,0.5,True,"expected=290,343.4000; observed=290,343.4000; diff=+0.0000% <= tol=0.5%","SELECT COALESCE(SUM(r.RevenueAmount), 0) AS TotalRolloverFeeRevenue FROM main.etoro_kpi.ddr_revenue_v r INNER JOIN main.etoro_kpi.ddr_customer_snapshot_scd_v s ON r.RealCID = s.RealCID AND r.DateID BETWEEN s.FromDateID AND s.ToDateID WHERE r.DateID = 20260608 AND LOWER(r.Metric) LIKE '%rollover%' AND s.IsValidCustomer = 1","The total Rollover Fee revenue for valid customers on 2026-06-08 was **290,343.40**.",,26829,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""rollover""]",,,,,PASS,,,,
+run-20260611T185517Z,2026-06-11T18:55:17Z,azr-we-bidev-3,ddr_revenue_spot_adjust_yesterday,live,databricks_mcp,2026-06-08,What was the total Spot Price Adjustment fee revenue for valid customers yesterday (2026-06-08)? Spot price adjustments reflect the spread mark-up applied to bid/ask quotes.,1888.16,1888.16,0.0,0.0,0.5,True,"expected=1,888.1600; observed=1,888.1600; diff=+0.0000% <= tol=0.5%","SELECT
+  SUM(r.RevenueAmount) AS TotalSpotPriceAdjustmentFeeRevenue
+FROM
+  main.etoro_kpi.ddr_revenue_v r
+  INNER JOIN main.etoro_kpi.ddr_customer_snapshot_scd_v s
+    ON r.RealCID = s.RealCID
+    AND r.DateID BETWEEN s.FromDateID AND s.ToDateID
+WHERE
+  r.DateID = 20260608
+  AND r.Metric = 'SpotPriceAdjustment'
+  AND r.IncludedInTotalRevenue = 1
+  AND s.IsValidCustomer = 1","The total Spot Price Adjustment fee revenue for valid customers on 2026-06-08 was **1,888.16**.",,21053,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""spot-adjust""]",,,,,PASS,,,,
+run-20260611T185517Z,2026-06-11T18:55:17Z,azr-we-bidev-3,ddr_revenue_totals_yesterday,live,databricks_mcp,2026-06-08,"What was eToro's Total Revenue (per the DDR) for valid customers
+yesterday — i.e. on 2026-06-08?",2879105.291063,2880439.782463,1334.4914000001736,0.04635090644800501,0.5,True,"expected=2,879,105.2911; observed=2,880,439.7825; diff=+0.0464% <= tol=0.5%","SELECT SUM(ddr_revenue_v.RevenueAmount) AS TotalRevenue
+FROM main.etoro_kpi.ddr_revenue_v
+INNER JOIN main.etoro_kpi.ddr_customer_snapshot_scd_v
+  ON ddr_customer_snapshot_scd_v.RealCID = ddr_revenue_v.RealCID
+  AND ddr_revenue_v.DateID BETWEEN ddr_customer_snapshot_scd_v.FromDateID AND ddr_customer_snapshot_scd_v.ToDateID
+WHERE ddr_revenue_v.DateID = 20260608
+  AND ddr_revenue_v.IncludedInTotalRevenue = 1
+  AND ddr_customer_snapshot_scd_v.IsValidCustomer = 1","eToro's **Total Revenue** for valid customers on **2026-06-08** was **2,880,439.78** (per the DDR). This value includes only revenue marked as IncludedInTotalRevenue and for customers flagged as valid on that date.",,21311,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""single-tile-poc""]",,,,,PASS,,,,

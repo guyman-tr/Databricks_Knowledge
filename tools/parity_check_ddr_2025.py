@@ -36,8 +36,7 @@ def syn_prod_connect():
         "Driver={ODBC Driver 18 for SQL Server};"
         f"Server={SYN_PROD_SERVER};"
         f"Database={SYN_PROD_DB};"
-        f"UID={SYN_UID};"
-        "Authentication=ActiveDirectoryInteractive;"
+        "Authentication=ActiveDirectoryIntegrated;"
         "Encrypt=yes;TrustServerCertificate=no;"
         "Connection Timeout=60;"
     )

@@ -1,0 +1,65 @@
+---
+description: "Eval-harness override — MCP is the ONLY allowed Databricks SQL path. Forbids dbx_query.py / databricks.sql / shell SQL fallbacks. SUPERSEDES mcp-latency-signal.mdc and the databricks-connection skill for the duration of an eval run."
+alwaysApply: true
+---
+
+# ⛔ Eval Harness — MCP-Only SQL Path (NON-NEGOTIABLE)
+
+This rule is active **only when the eval harness writes it into `.cursor/rules/`**.
+The harness creates this file at run start and deletes it at run end. Do not
+edit by hand. Do not commit.
+
+## Why this exists
+
+The `cursor_agent` SUT in our eval suite measures how the user's **custom Databricks MCP**
+(`user-databricks-stg`) handles natural-language questions end-to-end. The agent
+must therefore exercise the MCP — its skills router, its SQL execution tool, its
+prompts — for every SQL it runs. Falling back to `python tools/dbx_query.py`
+silently bypasses the MCP and renders the eval result meaningless.
+
+## Rules (HARD)
+
+1. **Every SQL statement MUST be executed via `mcp_user-databricks-stg_databricks_sql_*`
+   tools.** Specifically:
+   - `mcp_user-databricks-stg_databricks_sql_execute_sql_read_only` for SELECT / SHOW / DESCRIBE / EXPLAIN
+   - `mcp_user-databricks-stg_databricks_sql_execute_sql` for DDL / DML (eval cases never need this)
+   - `mcp_user-databricks-stg_skills_find_skills` and `_skills_get_skill` for skill lookup
+   - Any other `user-databricks-stg` MCP tool the agent decides is appropriate
+
+2. **The following are FORBIDDEN for the duration of the eval run:**
+   - `python tools/dbx_query.py "..."` via Shell tool
+   - `python -c "import databricks.sql; ..."` via Shell tool
+   - Any `databricks` CLI invocation that runs SQL
+   - Any `python` script that imports `databricks.sql.connect` or `databricks.sdk.WorkspaceClient`
+     for the purpose of executing SQL
+   - Any other shell route to a Databricks SQL warehouse
+
+3. **If the MCP fails or returns a missing-tool error, DO NOT fall back to the
+   shell path.** Instead:
+   - Tell the user the MCP failed (matches the latency-signal rule's spirit)
+   - Stop and return whatever partial answer you have, with an explicit note
+     that the MCP is unavailable
+   - The harness will record this as an MCP availability issue, not a model
+     accuracy issue
+
+4. **`mcp-latency-signal.mdc` rule 4 ("after one MCP failure, run dbx_query.py")
+   is SUSPENDED for this run.** This rule supersedes it.
+
+5. **The `databricks-connection` skill's "Prefer dbx_query.py over MCP"
+   guidance is SUSPENDED for this run.** When that skill loads, ignore the
+   "three ways to run SQL" table and the recommendation to prefer the SDK
+   statement API. MCP is the only allowed path.
+
+## What this does NOT change
+
+- All other workspace rules and skills remain active.
+- The skill router (`skills_find_skills` / `skills_get_skill`) is still the
+  expected entry point for any organisational / business-data question.
+- Latency-signal user-facing messages are still required before the first
+  MCP batch.
+
+## Why no escape hatch
+
+Allowing a fallback would defeat the entire point of the eval. If the MCP is
+red, the run should fail loudly (`MCP_BYPASS_VIOLATION` or `MCP_UNAVAILABLE`),
+not silently produce numbers via a different SQL path.

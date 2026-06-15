@@ -1,0 +1,36 @@
+id: genie__ops_documents_verification__what_percentage_of_documents_were_proces__6
+question: What percentage of documents were processed automatically vs manually?
+source: genie_benchmark:01f0f77496571e68a9f115149bcc48d9
+asof: '2026-06-08'
+ground_truth_sql: "SELECT\n  CASE\n    WHEN managerid = 0 THEN 'Automatic'\n    WHEN\
+  \ managerid != 0 THEN 'Manual'\n    ELSE 'Unknown'\n  END AS processing_mode,\n\
+  \  COUNT(*) AS document_count,\n  ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (),\
+  \ 2) AS percentage\nFROM\n  main.bi_output_stg.bi_output_operations_documentanalysis\n\
+  WHERE\n  managerid IS NOT NULL\nGROUP BY\n  processing_mode\nORDER BY\n  document_count\
+  \ DESC"
+expected_value:
+  type: tabular
+  value:
+  - - Automatic
+    - 4113543
+    - 78.02
+  - - Manual
+    - 1158631
+    - 21.98
+  columns:
+  - processing_mode
+  - document_count
+  - percentage
+  tolerance_pct: 0.5
+expected_skill_hub: domain-ops-and-onboarding
+skill_coverage_status: covered
+canonical_tables:
+- main.bi_output_stg.bi_output_operations_documentanalysis
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'OPS  - Documents & Verification' (01f0f77496571e68a9f115149bcc48d9)
+  benchmark question.
+tags:
+- genie_benchmark
+- ops_documents_verification
+max_replicas: 3

@@ -92,7 +92,24 @@ def _db_info(db: str) -> dict | None:
 _VIA_RE = re.compile(r"\s+via\s+", re.IGNORECASE)
 _PAREN_TRAIL_RE = re.compile(r"\s*\([^()]*\)\s*$")
 _SCHEMA_TABLE_RE = re.compile(r"^([A-Za-z][A-Za-z0-9_]*)\.([A-Za-z][A-Za-z0-9_]*)$")
+_THREE_PART_NAME_RE = re.compile(
+    r"^([A-Za-z][A-Za-z0-9_]*)\.([A-Za-z][A-Za-z0-9_]*)\.([A-Za-z][A-Za-z0-9_]*)$"
+)
 _TVF_PREFIXES = ("function_", "fn_")
+# Decoration that follows a name and should be stripped, e.g.
+#   "DWH_dbo.V_Liabilities at @DateID"   -> "DWH_dbo.V_Liabilities"
+#   "Fact_SnapshotEquity as of TODAY"    -> "Fact_SnapshotEquity"
+#   "V_Liabilities on join key X"        -> "V_Liabilities"
+_DECORATION_TRAIL_RE = re.compile(
+    r"\s+(?:at|as\s+of|on|in|for|using|filtered\s+by|where|when|if)\b.*$",
+    re.IGNORECASE,
+)
+# Leading "via X" (no primary before) — normalize to bare X.
+_LEADING_VIA_RE = re.compile(r"^via\s+", re.IGNORECASE)
+# Names of synapse "DB folders" that look like Schema.Table tokens but are
+# actually <synapse_db_folder>.<Table>. These take precedence over upstream
+# Schema.Table lookups since the upstream routing JSON does not include them.
+_SYNAPSE_DB_FOLDER_TOKENS = {db.lower() for db in SYNAPSE_DBS}
 
 # Prose patterns observed across DWH_dbo wikis. Order matters: we strip the
 # wrapper text and re-feed the inner symbol back through _resolve_single_token.
@@ -125,8 +142,106 @@ def _split_via(raw: str) -> tuple[str, str | None]:
 
 
 def _clean_token(tok: str) -> str:
-    """Strip trailing parenthetical annotations like '(CID = RealCID)'."""
-    return _PAREN_TRAIL_RE.sub("", tok).strip()
+    """Strip surrounding clutter: backticks, quotes, trailing parens,
+    trailing temporal/filter decoration, leading "via ", trailing
+    punctuation (commas / dots / semicolons)."""
+    s = tok.strip()
+    # Strip surrounding backticks / single quotes / double quotes
+    s = s.strip("`'\"")
+    s = _PAREN_TRAIL_RE.sub("", s).strip()
+    s = _DECORATION_TRAIL_RE.sub("", s).strip()
+    s = _LEADING_VIA_RE.sub("", s).strip()
+    # If wrapped in backticks again after first strip (e.g. `X` -> X then
+    # trailing decoration leaves "X` at Y"), strip backticks once more
+    s = s.strip("`'\"")
+    # Strip dangling punctuation left by `via` splitting (e.g. "X, via Y" -> primary="X,")
+    s = s.rstrip(",;.")
+    return s.strip()
+
+
+def _resolve_synapse_dbo(folder: str, table: str) -> list[Path]:
+    """`DWH_dbo.V_Liabilities` style — `folder` is a synapse DB folder name."""
+    base = SYNAPSE_WIKI / folder
+    if not base.is_dir():
+        # Try matching case-insensitively
+        for cand in SYNAPSE_WIKI.iterdir() if SYNAPSE_WIKI.is_dir() else []:
+            if cand.is_dir() and cand.name.lower() == folder.lower():
+                base = cand
+                break
+        else:
+            return []
+    out: list[Path] = []
+    for sub in ("Tables", "Views"):
+        p = base / sub / f"{table}.md"
+        if p.exists():
+            out.append(p)
+    return out
+
+
+_GOLD_PREFIX_RE = re.compile(
+    r"^gold_sql_dp_prod_we_([a-z][a-z0-9]*(?:_[a-z][a-z0-9]*)*)_dbo_(.+)$",
+    re.IGNORECASE,
+)
+
+
+def _resolve_uc_three_part(catalog: str, schema: str, table: str) -> list[Path]:
+    """`main.<schema>.<table>` UC-style FQN → UC_generated wiki, with a
+    fallback that maps the `gold_sql_dp_prod_we_<db>_dbo_<rest>` Synapse-mirror
+    naming convention back to the synapse wiki."""
+    if catalog.lower() not in ("main", "hive_metastore"):
+        return []
+    out: list[Path] = []
+    base = UC_GENERATED / schema.lower()
+    if not base.is_dir():
+        for cand in UC_GENERATED.iterdir() if UC_GENERATED.is_dir() else []:
+            if cand.is_dir() and cand.name.lower() == schema.lower():
+                base = cand
+                break
+        else:
+            base = None  # type: ignore[assignment]
+    if base is not None:
+        for sub in ("Tables", "Views"):
+            p = base / sub / f"{table.lower()}.md"
+            if p.exists():
+                out.append(p)
+            p2 = base / sub / f"{table}.md"
+            if p2.exists() and p2 not in out:
+                out.append(p2)
+    if out:
+        return out
+    # Fallback: synapse-mirror naming `gold_sql_dp_prod_we_<db>_dbo_<rest>`
+    # (with optional `_masked` / `_v` suffix) → synapse wiki <db>_dbo/<rest>.md
+    m = _GOLD_PREFIX_RE.match(table)
+    if not m:
+        return []
+    db_part, rest = m.group(1), m.group(2)
+    # Drop any trailing UC-specific suffixes the synapse wiki doesn't use.
+    rest_normalised = rest
+    for suf in ("_masked", "_v", "_view"):
+        if rest_normalised.lower().endswith(suf):
+            rest_normalised = rest_normalised[: -len(suf)]
+    folder_name = f"{db_part}_dbo"  # e.g. bi_db_dbo
+    syn_base: Path | None = None
+    for cand in SYNAPSE_WIKI.iterdir() if SYNAPSE_WIKI.is_dir() else []:
+        if cand.is_dir() and cand.name.lower() == folder_name.lower():
+            syn_base = cand
+            break
+    if syn_base is None:
+        return []
+    # Case-insensitive sibling search inside the synapse folder
+    candidates = []
+    for sub in ("Tables", "Views"):
+        d = syn_base / sub
+        if not d.is_dir():
+            continue
+        for p in d.glob("*.md"):
+            if p.name.endswith((".lineage.md", ".review-needed.md",
+                                 ".deploy-report.md")):
+                continue
+            stem = p.stem
+            if stem.lower() == rest_normalised.lower():
+                candidates.append(p)
+    return candidates
 
 
 def _unwrap_prose(tok: str) -> str | None:
@@ -203,6 +318,10 @@ def _tvf_search(name: str) -> list[Path]:
     etoro_kpi_prep / Views (since most TVFs were materialised as views) and
     sometimes under db_schema/etoro/Wiki/.../Functions/."""
     out: list[Path] = []
+    # Reject tokens with glob metacharacters or path separators — they're not
+    # valid object names and would corrupt the glob pattern.
+    if not name or any(c in name for c in '*?[]/\\\n\r\t'):
+        return out
     name_lower = name.lower()
     # UC_generated/etoro_kpi_prep/Views/{name}.md (may be lower-cased)
     cand1 = UC_GENERATED / "etoro_kpi_prep" / "Views" / f"{name_lower}.md"
@@ -214,7 +333,9 @@ def _tvf_search(name: str) -> list[Path]:
     # db_schema functions
     fn_root = PROD_SCHEMAS / "DB_Schema" / "etoro" / "Wiki"
     if fn_root.is_dir():
-        for cand in fn_root.glob(f"**/*{name}*.md"):
+        # Use rglob — pathlib's glob() rejects '**' mixed with other chars in
+        # the same path component on Python < 3.13.
+        for cand in fn_root.rglob(f"*{name}*.md"):
             if "function" in cand.parent.name.lower() and cand not in out:
                 out.append(cand)
     return out
@@ -234,22 +355,56 @@ def _resolve_single_token(tok: str) -> tuple[list[Path], list[str]]:
     if inner is not None and inner != tok:
         paths, sub_notes = _resolve_single_token(inner)
         return paths, [f"unwrapped prose {tok!r} -> {inner!r}: {n}" for n in sub_notes]
-    # Schema.Table OLTP
+    # 3-part name `A.B.C` — try several interpretations:
+    #   * UC FQN  `main.schema.table`  →  UC_generated/<schema>/[Tables|Views]/<table>.md
+    #   * Synapse `DWH_dbo.Schema.Table` (rare; routes via folder)
+    #   * Schema.Table.<Column>  → drop trailing column segment and retry as A.B
+    m3 = _THREE_PART_NAME_RE.match(tok)
+    if m3:
+        a, b, c = m3.group(1), m3.group(2), m3.group(3)
+        uc_paths = _resolve_uc_three_part(a, b, c)
+        if uc_paths:
+            return uc_paths, [f"matched UC 3-part {a}.{b}.{c} → {len(uc_paths)} candidate(s)"]
+        # Synapse folder.Schema.Table — folder is in known list
+        if a.lower() in _SYNAPSE_DB_FOLDER_TOKENS:
+            sp = _resolve_synapse_dbo(a, b)  # b is the table name, c is likely column
+            if sp:
+                return sp, [f"matched synapse {a}.{b} (dropped .{c} suffix) → {len(sp)} candidate(s)"]
+        # Drop the trailing segment (likely a column name) and recurse as A.B
+        paths_2, notes_2 = _resolve_single_token(f"{a}.{b}")
+        if paths_2:
+            return paths_2, [f"3-part {a}.{b}.{c}: dropped trailing .{c} → "] + notes_2
+        notes.append(f"3-part name {a}.{b}.{c} unresolved")
+
+    # Schema.Table OLTP / synapse-dbo / sibling
     m = _SCHEMA_TABLE_RE.match(tok)
     if m:
         schema, table = m.group(1), m.group(2)
+        # First: is this a synapse DB folder (DWH_dbo, BI_DB_dbo, Dealing_dbo,
+        # etc.)? If so, route directly to that folder.
+        if schema.lower() in _SYNAPSE_DB_FOLDER_TOKENS:
+            sp = _resolve_synapse_dbo(schema, table)
+            if sp:
+                return sp, [f"matched synapse-dbo {schema}.{table} → {len(sp)} candidate(s)"]
+            notes.append(f"synapse folder {schema} known but {table}.md not found")
+        # Upstream Schema.Table OLTP
         paths = _resolve_schema_table(schema, table)
         if paths:
             return paths, [f"matched Schema.Table → {len(paths)} candidate(s)"]
-        # Schema.Table might also be a DWH synapse object like DWH_dbo.Fact_X
-        # (already covered by sibling search if folder name matches), or
-        # might be an unknown schema. Note and fall through.
-        notes.append(f"Schema.Table {schema}.{table} not in upstream routing")
-        # Allow sibling search by bare table name as a last resort
+        # Sibling search by table name as a last resort
         sib = _sibling_synapse_search(table)
         if sib:
             return sib, notes + [f"fallback sibling-search hit by table name → {len(sib)}"]
-        return [], notes + ["no candidate wikis found"]
+        # Fallback: the FIRST segment may itself be a sibling table/view name,
+        # and the SECOND segment is a column qualifier. Try `schema` as a
+        # bare name (e.g. `Fact_SnapshotEquity.Credit` → Fact_SnapshotEquity).
+        sib2 = _sibling_synapse_search(schema)
+        if sib2:
+            return sib2, notes + [
+                f"fallback: treated {schema}.{table} as table.column, "
+                f"matched {schema} → {len(sib2)} candidate(s)"
+            ]
+        return [], notes + [f"Schema.Table {schema}.{table} unresolved"]
     # TVF
     if tok.lower().startswith(_TVF_PREFIXES):
         paths = _tvf_search(tok)

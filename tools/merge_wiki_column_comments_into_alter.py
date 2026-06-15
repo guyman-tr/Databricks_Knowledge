@@ -19,6 +19,14 @@ if str(WIKI_ROOT) not in sys.path:
     sys.path.insert(0, str(WIKI_ROOT))
 
 from _uc_comment_sanitize import sanitize_uc_sql_comment_text
+
+# Regression guard against the 2026-05-03 tier/header drift bug
+# (BI_DB_KYC_Panel, eMoneyClientBalance). See tools/uc_comment_validator.py.
+_validator_path = Path(__file__).resolve().parent / "uc_comment_validator.py"
+if str(_validator_path.parent) not in sys.path:
+    sys.path.insert(0, str(_validator_path.parent))
+from uc_comment_validator import assert_comment_safe, BadCommentError
+
 SCHEMAS = ["DWH_dbo", "BI_DB_dbo", "Dealing_dbo"]
 
 # Only skip tokens that appear as *header* labels in element tables, not real SQL columns.
@@ -233,9 +241,21 @@ def parse_wiki_column_catalog(text: str) -> list[tuple[str, str]]:
             # nullability flags ("NULL"/"NOT NULL"/"YES"/"NO"/"0"/"1") and short
             # tags ("Tier 1"). Fallback: last non-empty cell.
             _SKIP = {"", "NULL", "NOT NULL", "YES", "NO", "0", "1", "TRUE", "FALSE", "---", "------"}
+            # Regression guard: never grab a separate "Tier N" column (or
+            # leaked analyst notes like ETL_METADATA / CODE-BACKED) as the
+            # description. The First5Actions / IFRS15 leak (2026-05-03) came
+            # from exactly this — a Tier cell with a space passed the
+            # "substantial" check and got picked as the comment.
+            _SKIP_TAG_RE = re.compile(
+                r"^(tier\s*[0-4]\.?|t[0-4]|etl[_\-\s]?metadata|code[\-\s]?backed|"
+                r"name[\-\s]?inferred|inferred|verbatim|unverified|unknown)$",
+                re.IGNORECASE,
+            )
             for k in range(type_idx + 1, len(cells)):
                 v = cells[k].strip()
                 if v.upper() in _SKIP:
+                    continue
+                if _SKIP_TAG_RE.match(v):
                     continue
                 # Substantial: contains a space (likely a sentence) OR length >= 25.
                 if " " in v or len(v) >= 25:
@@ -245,9 +265,12 @@ def parse_wiki_column_catalog(text: str) -> list[tuple[str, str]]:
                 # No "substantial" candidate — fall back to last non-empty cell
                 for k in range(len(cells) - 1, type_idx, -1):
                     v = cells[k].strip()
-                    if v and v.upper() not in _SKIP:
-                        desc = v
-                        break
+                    if not v or v.upper() in _SKIP:
+                        continue
+                    if _SKIP_TAG_RE.match(v):
+                        continue
+                    desc = v
+                    break
         else:
             # Fallback: ordinal-anchored shape with no Type column, e.g.
             #   | # | Column | Description | Source | Tier |
@@ -294,6 +317,7 @@ def quote_column_name(col: str) -> str:
 
 
 def format_comment_line(table: str, col: str, description: str) -> str:
+    assert_comment_safe(col, description, context=f"{table}.{col}")
     esc = sql_string_for_comment(description)
     qcol = quote_column_name(col)
     return f"ALTER TABLE {table} ALTER COLUMN {qcol} COMMENT '{esc}';"

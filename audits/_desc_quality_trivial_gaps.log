@@ -1,0 +1,24 @@
+﻿Scanning 3407 wikis for trivial-equivalent patterns...
+
+Total non-trivial rows: 22,658
+
+=== Pattern counts ===
+  DIRECT_FROM_CTE          : 2
+  DIRECT_FROM_BRANCH       : 2
+  TOTAL_NEW_TRIVIAL        : 4  (0.0% of non-trivial)
+
+=== Top wikis by new-trivial count ===
+     1  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_DDR_Aggregation_MoM.md
+     1  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_DDR_Aggregation_YoY.md
+     1  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_Population_Active_Traders.md
+     1  knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_Trading_Volume_PositionLevel.md
+
+=== Samples per pattern ===
+
+[DIRECT_FROM_CTE]  (2 total)
+  Function_DDR_Aggregation_MoM.md  ::  'RealCID'  ->  'Direct from PERIODIC CTE'
+  Function_DDR_Aggregation_YoY.md  ::  'RealCID'  ->  'Direct from PERIODIC CTE'
+
+[DIRECT_FROM_BRANCH]  (2 total)
+  Function_Population_Active_Traders.md  ::  'GCID'  ->  'Direct from union branches'
+  Function_Trading_Volume_PositionLevel.md  ::  'CID'  ->  'Direct from union row'

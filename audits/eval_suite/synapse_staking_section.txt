@@ -1,0 +1,135 @@
+﻿=== Synapse SP Γאפ staking build into #revenue (around L1340-1400) ===
+L1336:   , NULL AS IsLeveraged
+L1337:   , NULL AS IsFuture
+L1338:   , NULL as IsCopyFund
+L1339:   , NULL as IsOpenedFromIBAN
+L1340:   , NULL as IsClosedToIBAN
+L1341:   , NULL as IsRecurring
+L1342:   , NULL AS IsAirDrop
+L1343:   , NULL AS IsSQF
+L1344:   , NULL AS IsMarginTrade
+L1345:   , NULL AS IsC2P
+L1346: FROM BI_DB_dbo.Function_Revenue_CryptoToFiat_C2F (@dateID, @dateID, 0) frcf
+L1347: GROUP BY 
+L1348: 	frcf.LastModificationDateID
+L1349:   , frcf.RealCID
+L1350: 
+L1351: PRINT ' #revenue Done ' + (CONVERT( VARCHAR(24), GETDATE(), 121))
+L1352: 
+L1353: /*****************************************************************
+L1354: special case of Staking
+L1355: ****************************************************************/
+L1356: 
+L1357: --DECLARE @date DATE = '20260110'
+L1358: --DECLARE @dateID int = CAST(CONVERT(VARCHAR(8), @date, 112) AS INT)
+L1359: 
+L1360: IF OBJECT_ID('tempdb..#staking') IS NOT NULL DROP TABLE #staking
+L1361: CREATE TABLE #staking
+L1362:     WITH (HEAP,DISTRIBUTION = ROUND_ROBIN)
+L1363: as
+L1364: SELECT
+L1365:   CAST(FORMAT(CAST(DATEADD(MONTH,1,frcf.Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+L1366:   , frcf.CID AS RealCID
+L1367:   , NULL AS ActionTypeID
+L1368:   , 'Staking' AS ActionType
+L1369:   , 10 AS InstrumentTypeID
+L1370:   , 1 AS IsSettled
+L1371:   , NULL AS IsCopy
+L1372:   , 'StakingLagOneMonth' AS Metric
+L1373:   , sum(frcf.TotalUSDDistributed) AS Amount
+L1374:   , NULL AS CountTransactions
+L1375:   , 1 AS IncludedInTotalRevenue
+L1376:   , 0 as CountAsActiveTrade
+L1377:   , 1 AS IsBuy
+L1378:   , 0 AS IsLeveraged
+L1379:   , 0 AS IsFuture
+L1380:   , 0 as IsCopyFund
+L1381:   , NULL as IsOpenedFromIBAN
+L1382:   , NULL as IsClosedToIBAN
+L1383:   , NULL as IsRecurring
+L1384:   , NULL AS IsAirDrop
+L1385:   , NULL AS IsSQF
+L1386:   , 12 AS RevenueMetricID
+L1387:   , 4 AS RevenueMetricCategoryID
+L1388:   , NULL AS IsMarginTrade
+L1389:   , NULL AS IsC2P
+L1390: FROM BI_DB_dbo.Function_Revenue_StakingFee 
+L1391: 	(CAST(FORMAT(DATEFROMPARTS(YEAR(DATEADD(MONTH, -1, CONVERT(DATE, CONVERT(VARCHAR(8), @dateID), 112))), MONTH(DATEADD(MONTH, -1, CONVERT(DATE, CONVERT(VARCHAR(8), @dateID), 112))), 1), 'yyyyMMdd') AS INT)
+L1392: 	, CAST(FORMAT(CAST(dateadd(MONTH, -1, CONVERT(DATE, CONVERT(VARCHAR(8), @dateID), 112)) AS DATE),'yyyyMMdd') as INT)
+L1393: 	) frcf
+L1394: GROUP BY 
+L1395: 	frcf.CID, CAST(FORMAT(CAST(DATEADD(MONTH,1,frcf.Date) AS DATE),'yyyyMMdd') as INT)
+L1396: 
+L1397: 
+L1398: 
+L1399: IF OBJECT_ID('tempdb..#optionsalltime') IS NOT NULL DROP TABLE #optionsalltime
+L1400: CREATE TABLE #optionsalltime
+
+=== Synapse SP Γאפ final staking delete + insert (L1635 onwards) ===
+L1636: 
+L1637: DELETE FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions
+L1638: WHERE Date BETWEEN  DATEADD(month, DATEDIFF(month, 0, @date), 0) AND @date 
+L1639: AND RevenueMetricID = 12
+L1640: 
+L1641: INSERT INTO BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions (
+L1642: 	   DateID
+L1643: 	 , [Date]
+L1644: 	 , RealCID
+L1645: 	 , ActionTypeID
+L1646: 	 , ActionType
+L1647: 	 , InstrumentTypeID
+L1648: 	 , IsSettled
+L1649: 	 , IsCopy
+L1650: 	 , Metric
+L1651: 	 , Amount
+L1652: 	 , CountTransactions
+L1653: 	 , IncludedInTotalRevenue
+L1654: 	 , CountAsActiveTrade
+L1655: 	 , UpdateDate
+L1656: 	 , IsBuy
+L1657: 	 , IsLeveraged
+L1658: 	 , IsFuture
+L1659: 	 , IsCopyFund
+L1660: 	 , IsOpenedFromIBAN
+L1661: 	 , IsClosedToIBAN
+L1662: 	 , IsRecurring
+L1663: 	 , IsAirDrop
+L1664: 	 , IsSQF
+L1665: 	 , RevenueMetricID
+L1666: 	 , RevenueMetricCategoryID
+L1667: 	 , IsMarginTrade
+L1668: 	 , IsC2P
+L1669: )
+L1670: SELECT s.DateID
+L1671: 	 ,  CONVERT(DATE, CONVERT(VARCHAR(8), DateID), 112) AS Date
+L1672: 	 , s.RealCID
+L1673: 	 , s.ActionTypeID
+L1674: 	 , s.ActionType
+L1675: 	 , s.InstrumentTypeID
+L1676: 	 , s.IsSettled
+L1677: 	 , s.IsCopy
+L1678: 	 , s.Metric
+L1679: 	 , s.Amount
+L1680: 	 , s.CountTransactions
+L1681: 	 , s.IncludedInTotalRevenue
+L1682: 	 , s.CountAsActiveTrade
+L1683: 	 , GETDATE() AS UpdateDate
+L1684: 	 , s.IsBuy
+L1685: 	 , s.IsLeveraged
+L1686: 	 , s.IsFuture
+L1687: 	 , s.IsCopyFund
+L1688: 	 , s.IsOpenedFromIBAN
+L1689: 	 , s.IsClosedToIBAN
+L1690: 	 , s.IsRecurring
+L1691: 	 , s.IsAirDrop
+L1692: 	 , s.IsSQF
+L1693: 	 , s.RevenueMetricID
+L1694: 	 , s.RevenueMetricCategoryID
+L1695: 	 , s.IsMarginTrade
+L1696: 	 , s.IsC2P
+L1697: FROM #staking s
+L1698: 
+L1699: END
+L1700: 
+L1701: 
+L1702: 

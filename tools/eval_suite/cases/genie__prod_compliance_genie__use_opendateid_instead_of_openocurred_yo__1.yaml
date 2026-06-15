@@ -1,0 +1,30 @@
+id: genie__prod_compliance_genie__use_opendateid_instead_of_openocurred_yo__1
+question: Use OpenDateID instead of openocurred. you are still showing Q4-2025 positions
+  on 2025-12-31
+source: genie_benchmark:01f137f76a75126fb15b03341732911f
+asof: '2026-06-08'
+ground_truth_sql: "WITH cysec_v3_q4_2025 AS (\n  SELECT CID\n  FROM `main`.`etoro_kpi`.`cidfirstdates_v`\n\
+  \  WHERE RegulationID = 1\n    AND VerificationLevel3Date >= '2025-10-01'\n    AND\
+  \ VerificationLevel3Date <= '2025-12-31'\n),\nfirst_cfd_after_q4_2025 AS (\n  SELECT\
+  \ c.CID, MIN(p.opendateid) AS first_cfd_opendateid\n  FROM cysec_v3_q4_2025 c\n\
+  \  JOIN `main`.`etoro_kpi`.`positions_for_compliance_v` p\n    ON c.CID = p.cid\n\
+  \  WHERE p.issettled = 0\n    AND p.opendateid > 20251231\n    AND p.opendateid\
+  \ IS NOT NULL\n  GROUP BY c.CID\n)\nSELECT COUNT(*) AS cysec_clients_count\nFROM\
+  \ first_cfd_after_q4_2025;"
+expected_value:
+  type: numeric
+  value: 10538
+  tolerance_pct: 0.5
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: covered
+canonical_tables:
+- main.etoro_kpi.cidfirstdates_v
+- main.etoro_kpi.positions_for_compliance_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'PROD - Compliance Genie' (01f137f76a75126fb15b03341732911f)
+  benchmark question.
+tags:
+- genie_benchmark
+- prod_compliance_genie
+max_replicas: 3

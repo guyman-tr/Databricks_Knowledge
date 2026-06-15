@@ -1,0 +1,27 @@
+id: tableau__194f173d__us_stocks_operations_reports__0
+question: Open the 'US Stocks Operations Reports' dashboard. What does the headline
+  figure (row 1 of the primary view) for 2026-06-08 show?
+source: tableau:194f173d-c7df-4741-a087-7e86044808bf
+asof: '2026-06-08'
+ground_truth_sql: 'SELECT COUNT(*) AS row_count
+
+  FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked
+
+  -- workbook: US Stocks Operations Reports (luid 194f173d-c7df-4741-a087-7e86044808bf)
+  views=439'
+expected_value:
+  type: numeric
+  value: 48017773
+  tolerance_pct: 1.0
+expected_skill_hub: valid-users-filter-contract
+skill_coverage_status: covered
+canonical_tables:
+- main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked
+anti_sources: []
+expected_filters: []
+notes: Auto-generated Tableau probe. Rewrite the SQL to match the specific KPI the
+  dashboard renders before pinning. Workbook total_views=439.
+tags:
+- tableau
+- views_439
+max_replicas: 3

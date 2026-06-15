@@ -1,0 +1,201 @@
+﻿======================================================================
+WORKBOOK: eToro's Daily Data Report (DDR)  (luid 9d8e103d-c4c7-41ac-9c6f-8b72a81c4e25)
+  11 dashboards, 58 sheets, 7 custom-SQL, 7 datasources
+
+=== DASHBOARDS ===
+  Revenue: MiFID Category Breakdowns                      -> 4 sheets
+      - Revenue: MiFID & Regulation Breakdown $
+      - Revenue: MiFID Breakdown %
+      - Revenue: MiFID Breakdown $
+  Customers                                               -> 5 sheets
+      - Customers: FTDs by Marketing Region
+      - Customers: First Deposits & Registrations
+      - Customers: Active Numbers (Depositors Only)
+  EOD Club Redeposit by Marketing Region                  -> 1 sheets
+      - Global ReDeposits Amount per Marketing Region
+  Money Movement                                          -> 14 sheets
+      - MIMO: Global Withdraw Amount & "Global Withdraw / Deposit" Ratio by Marketing Region
+      - MIMO: Global Cashouts per Marketing Region
+      - MIMO: Transfer Coins Amount per Marketing Region
+  Revenue: Overview & Breakdowns                          -> 8 sheets
+      - Revenue: Marketing Region Chart
+      - Revenue: Admin Fees Breakdown
+      - Revenue: Transfer Coins & Fee
+  AUM & PnL                                               -> 4 sheets
+      - AUM & PnL: Yesterday's KPIs 1
+      - AUM & PnL: PnL Chart
+      - AUM & PnL: Yesterday's KPIs 2
+  Yesterday's: Short Summary Split View                   -> 6 sheets
+      - Yesterday's: Daily Profit & Loss
+      - Yesterday's: Trading Activity
+      - Yesterday's: Trading Platform KPIs
+  Spaceship AU (Beta)                                     -> 5 sheets
+      - AUM Spaceship
+      - MIMO Spaceship
+      - Fees Spaceship
+  Book                                                    -> 3 sheets
+      - Book: Full Commission by Asset Type
+      - Book: Trades (New, Closed, StopLoss)
+      - Book: Full Commission Breakdown
+  Open Book, Copy Book                                    -> 1 sheets
+      - Open Book - Copy Book
+  Yesterday's: Short Summary                              -> 7 sheets
+      - Yesterday's: Trades
+      - Yesterday's: Balances
+      - Yesterday's: Acquisition
+
+=== CUSTOM SQL HEADS ===
+
+--- 'Custom SQL Query' (id=1d719679-800, 1460 chars, unsupported=True, db=None) ---
+-- Spaceship Fees by time range Γאפ single YTD scan, reshaped for Tableau
+WITH max_date_val AS (
+  SELECT MAX(date) AS max_date FROM main.etoro_kpi.v_spaceship_fees
+),
+base AS (
+  SELECT f.date, f.product, f.total_fees_usd, m.max_date,
+    -- Week starts Sunday: on Monday, This Week = just Sunday = Yesterday
+    DATE_TRUNC('week', DATE_ADD(m.max_date, 1)) - INTERVAL 1 DAY AS week_start
+... [24 more lines]
+
+--- 'Custom SQL Query' (id=4b0f23b5-ebe, 12093 chars, unsupported=True, db=None) ---
+SELECT a.*
+	, dc.Name AS Country
+	, dmc.Name AS MifidCategory
+	, dpl.Name AS PlayerLevel
+	, dr.Name AS Regulation
+FROM 
+(
+SELECT a.DateID
+... [269 more lines]
+
+--- 'Custom SQL Query' (id=61b6b3d2-0fe, 1113 chars, unsupported=True, db=None) ---
+SELECT
+ddr.*
+,dcn.[Name] AS Country
+,dmc.[Name] AS MifidCategory
+,dpl.[Name] AS PlayerLevel
+,reg.[Name] AS Regulation
+FROM(
+SELECT 'Yesterday' AS TimeRange, *
+... [18 more lines]
+
+--- 'Custom SQL Query' (id=ab088fd7-c3f, 2997 chars, unsupported=False, db=None) ---
+-- Spaceship Funded Accounts Γאפ latest available, incl. Money
+-- Per-product carry-forward (7-day window) + Money running balance
+WITH aum_base AS (
+  SELECT user_id, date_id,
+    super_balance_aud, voyager_balance_aud, nova_balance_aud
+  FROM main.etoro_kpi.v_spaceship_aum
+  WHERE date_id BETWEEN
+    CAST(DATE_FORMAT(DATE_ADD(CURRENT_DATE(), -7), 'yyyyMMdd') AS INT)
+... [65 more lines]
+
+--- 'Custom SQL Query' (id=cfd45240-317, 3467 chars, unsupported=False, db=None) ---
+-- Spaceship AUM snapshot Γאפ latest available, incl. Money
+-- Per-product carry-forward (7-day window) + Money running balance
+WITH aum_base AS (
+  SELECT user_id, date_id,
+    super_balance_usd, voyager_balance_usd, nova_balance_usd
+  FROM main.etoro_kpi.v_spaceship_aum
+  WHERE date_id BETWEEN
+    CAST(DATE_FORMAT(DATE_ADD(CURRENT_DATE(), -7), 'yyyyMMdd') AS INT)
+... [87 more lines]
+
+--- 'Custom SQL Query' (id=d32206e2-414, 1193 chars, unsupported=True, db=None) ---
+-- Spaceship FTDs by time range Γאפ single YTD scan
+-- Fixed: no internal_transfer filter (FTDs can be internal, e.g. MoneyΓזעVoyager)
+-- Fixed: COUNT(DISTINCT user_id) not row count
+WITH max_date_val AS (
+  SELECT MAX(date) AS max_date FROM main.etoro_kpi.v_spaceship_mimo
+),
+base AS (
+  SELECT m.date, m.user_id, mv.max_date,
+... [15 more lines]
+
+--- 'Custom SQL Query' (id=f791c78d-d13, 3269 chars, unsupported=True, db=None) ---
+-- Spaceship MIMO by time range Γאפ single YTD scan, reshaped for Tableau
+-- max_date = "today" (may be partial), so we use max_date - 1 as yesterday
+WITH max_date_val AS (
+  SELECT MAX(date) AS max_date FROM main.etoro_kpi.v_spaceship_mimo
+),
+base AS (
+  SELECT
+    m.date, m.is_ftd, m.product,
+... [41 more lines]
+
+
+=== ONE REVENUE SHEET ===
+sheet name: 'Revenue: Marketing Region Chart'
+in dashboards: ['Revenue: Overview & Breakdowns']
+datasources : ['Main DDR Query']
+field_instances: 12, worksheet_fields: 0
+
+  -- field_instances --
+    [ColumnField] 'Country'                           agg=''
+        upstream cols: [('Country', None)]
+    [SetField] 'CountryAccessFilter'               agg=''
+        upstream cols: [('Country', None)]
+    [ColumnField] 'IsCreditReportValidCB'             agg='Sum'
+        upstream cols: [('IsCreditReportValidCB', None)]
+    [SetField] 'RegulationAccessFilter'            agg=''
+        upstream cols: [('Regulation', None)]
+    [ColumnField] 'MarketingRegion'                   agg=''
+        upstream cols: [('MarketingRegion', None)]
+    [ColumnField] 'IsValidCustomer'                   agg='Sum'
+        upstream cols: [('IsValidCustomer', None)]
+    [CalculatedField] 'MiFID Category'                    agg=''
+        formula: IF [MifidCategorizationID] = 2
+ OR [MifidCategorizationID] = 3
+ THEN "
+        upstream cols: [('MifidCategorizationID', None)]
+    [ColumnField] 'PlayerLevel'                       agg='Count'
+        upstream cols: [('PlayerLevel', None)]
+    [ColumnField] 'TimeRange'                         agg='Count'
+        upstream cols: [('TimeRange', None)]
+    [ColumnField] 'TotalRevenue'                      agg=''
+        upstream cols: [('TotalRevenue', None)]
+    [SetField] 'MarketingRegionAccessFilter'       agg=''
+        upstream cols: [('MarketingRegion', None)]
+    [ColumnField] 'Regulation'                        agg=''
+        upstream cols: [('Regulation', None)]
+
+
+=== CANDIDATE TILES FOR REVENUE / MIMO / PNL DASHBOARDS ===
+
+Dashboard: Revenue: Overview & Breakdowns
+  - 'Revenue: Marketing Region Chart'                       measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'Revenue: Admin Fees Breakdown'                         measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'Revenue: Transfer Coins & Fee'                         measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'Revenue: Spot Adjustment Fees Breakdown'               measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'Revenue: Rollover Fees Breakdown'                      measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'Revenue: Totals'                                       measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'Revenue: Commission & Other Fees'                      measures=['TicketFeeByPercent', 'IsCreditReportValidCB', 'StakingLagOneMonth', 'IsValidCustomer', 'PlayerLevel']
+  - 'Revenue: Dividends & Bonus'                            measures=['IsCreditReportValidCB', 'Bonus', 'IsValidCustomer', 'Dividends', 'PlayerLevel']
+
+Dashboard: Money Movement
+  - 'MIMO: Global Withdraw Amount & "Global Withdraw / Deposit" Ratio by Marketing Region' measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange', 'Global Withdraws / Deposits Ratio']
+  - 'MIMO: Global Cashouts per Marketing Region'            measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'MIMO: Transfer Coins Amount per Marketing Region'      measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'MIMO: External Withdraw from IBAN'                     measures=['IsCreditReportValidCB', 'IsValidCustomer', 'ExternalWithdrawFromIBANAmount', 'PlayerLevel', 'TimeRange']
+  - 'MIMO: External Withdraws from TP'                      measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - "MIMO: Trading Platform's Compensations"                measures=['Avg. Withdraw Amount from TP', 'Avg. Deposit Amount to TP', 'IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel']
+  - 'MIMO: External Deposits to TP'                         measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'MIMO: External Deposit to IBAN'                        measures=['IsCreditReportValidCB', 'ExternalDepositToIBANAmount', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'MIMO: Internal Withdraw from TP'                       measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'MIMO: Global Deposits & Withdraws'                     measures=['IsCreditReportValidCB', 'IsValidCustomer', 'Avg. Withdraw Amount (Global)', 'PlayerLevel', 'TimeRange']
+  - "MIMO: Trading Platform's Deposits & Withdraws"         measures=['Avg. Withdraw Amount from TP', 'Avg. Deposit Amount to TP', 'IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel']
+  - 'MIMO: Deposits to Trading Platform per Marketing Region' measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'MIMO: Cashout & Redeem Users Count'                    measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange', 'CountRedeems']
+  - 'MIMO: Internal Deposits to TP'                         measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+
+Dashboard: Revenue: MiFID Category Breakdowns
+  - 'Revenue: MiFID & Regulation Breakdown $'               measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'Revenue: MiFID Breakdown %'                            measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'Revenue: MiFID Breakdown $'                            measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'Revenue: MiFID & Fee Breakdown $'                      measures=['TicketFeeByPercent', 'IsCreditReportValidCB', 'StakingLagOneMonth', 'IsValidCustomer', 'PlayerLevel']
+
+Dashboard: AUM & PnL
+  - "AUM & PnL: Yesterday's KPIs 1"                         measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'AUM & PnL: PnL Chart'                                  measures=['% of Traders with Profit', 'IsCreditReportValidCB', '% of Traders with Profit Copy', 'IsValidCustomer', 'PlayerLevel']
+  - "AUM & PnL: Yesterday's KPIs 2"                         measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']
+  - 'AUM & PnL: PnL KPIs'                                   measures=['IsCreditReportValidCB', 'IsValidCustomer', 'PlayerLevel', 'TimeRange']

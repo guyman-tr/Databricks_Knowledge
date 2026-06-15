@@ -1,0 +1,23 @@
+id: ddr__ddr_customer_dailystatus__active_traders
+question: How many customers were Active Traders on 2026-06-08?
+source: ddr
+asof: '2026-06-08'
+ground_truth_sql: "SELECT COUNT(DISTINCT RealCID) AS active_traders\nFROM main.etoro_kpi.ddr_customer_dailystatus\n\
+  WHERE FromDateID <= CAST(REPLACE('2026-06-08','-','') AS INT)\n  AND ToDateID >=\
+  \ CAST(REPLACE('2026-06-08','-','') AS INT)\n  AND IsActiveTrade = 1"
+expected_value:
+  type: numeric
+  value: 85717
+  tolerance_pct: 0.5
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: missing
+canonical_tables:
+- main.etoro_kpi.ddr_customer_dailystatus
+anti_sources: []
+expected_filters: []
+notes: ddr_customer_dailystatus is SCD-style with FromDateID/ToDateID. Column is IsActiveTrade
+  (no 'r'), not IsActiveTrader.
+tags:
+- ddr
+- ddr_customer_dailystatus
+max_replicas: 3

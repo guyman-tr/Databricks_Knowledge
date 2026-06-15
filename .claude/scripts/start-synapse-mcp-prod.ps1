@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Starts a SECOND Synapse MCP server (PROD pool) in SSE mode.
     Does not change the default STG server (port 8766).
@@ -9,7 +9,8 @@
 
     Add to .mcp.json (see repo): "synapse_prod_sql" -> http://127.0.0.1:8767/sse
 
-    One WAM/MFA popup may appear on first connect (or reuses cache from STG).
+    Silent Windows SSO via ActiveDirectoryIntegrated — no popup expected
+    (falls back to WAM/Interactive only if SSO fails).
 #>
 
 $serverScript = "C:\Users\guyman\.cursor\synapse-mcp-server.py"

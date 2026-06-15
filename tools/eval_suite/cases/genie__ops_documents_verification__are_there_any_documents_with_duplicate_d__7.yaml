@@ -1,0 +1,24 @@
+id: genie__ops_documents_verification__are_there_any_documents_with_duplicate_d__7
+question: Are there any documents with duplicate document_id values in the bi_output_operations_documentanalysis
+  table?
+source: genie_benchmark:01f0f77496571e68a9f115149bcc48d9
+asof: '2026-06-08'
+ground_truth_sql: "SELECT\n  document_id,\n  COUNT(document_id)\nFROM\n  main.bi_output_stg.bi_output_operations_documentanalysis\n\
+  GROUP BY\n  document_id\nHAVING\n  COUNT(document_id) > 1"
+expected_value:
+  type: numeric
+  value: null
+  tolerance_pct: 0.5
+  _meta: empty result
+expected_skill_hub: domain-ops-and-onboarding
+skill_coverage_status: covered
+canonical_tables:
+- main.bi_output_stg.bi_output_operations_documentanalysis
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'OPS  - Documents & Verification' (01f0f77496571e68a9f115149bcc48d9)
+  benchmark question.
+tags:
+- genie_benchmark
+- ops_documents_verification
+max_replicas: 3

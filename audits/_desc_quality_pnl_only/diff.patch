@@ -1,0 +1,37 @@
+--- a/knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_PnL_Single_Day.md
++++ b/knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_PnL_Single_Day.md
+@@ -38,21 +38,21 @@
+ |---|--------|--------|----------------|------|
+ | 1 | DateID |  | @dateID | T2 |
+-| 2 | CID |  | Direct | T1 |
+-| 3 | PositionID |  | Direct | T1 |
++| 2 | CID |  | Customer ID. References Customer.Customer. (Tier 1 — Trade.PositionTbl) (via Dim_Position) | T1 |
++| 3 | PositionID |  | Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position. (Tier 1 — Trade.PositionTbl) (via Dim_Position) | T1 |
+ | 4 | UnrealizedPnLStart |  | SUM(UnrealizedPnLStart) | T2 |
+ | 5 | UnrealizedPnLEnd |  | SUM(UnrealizedPnLEnd) | T2 |
+ | 6 | UnrealizedPnLChange |  | SUM(UnrealizedPnLChange) | T2 |
+ | 7 | NetProfit |  | SUM(NetProfit) | T2 |
+-| 8 | InstrumentID |  | Direct | T1 |
+-| 9 | MirrorID |  | Direct | T1 |
+-| 10 | Leverage |  | Direct | T1 |
+-| 11 | IsBuy |  | Direct | T1 |
+-| 12 | IsSettled |  | Direct | T1 |
+-| 13 | HedgeServerID |  | Direct | T1 |
+-| 14 | SettlementTypeID |  | Direct | T1 |
+-| 15 | ClosedOnDate |  | Direct | T1 |
+-| 16 | IsFuture |  | Direct | T1 |
+-| 17 | IsCopyFund |  | Direct | T1 |
+-| 18 | IsMarginTrade |  | Direct | T1 |
++| 8 | InstrumentID |  | FK to Trade.Instrument. Financial instrument being traded. (Tier 1 — Trade.PositionTbl) (via Dim_Position) | T1 |
++| 9 | MirrorID |  | FK to Trade.Mirror. 0/NULL = manual. Positive = copy-trade position. (Tier 1 — Trade.PositionTbl) (via Dim_Position) | T1 |
++| 10 | Leverage |  | Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type. (Tier 1 — Trade.PositionTbl) (via Dim_Position) | T1 |
++| 11 | IsBuy |  | 1 = Long/Buy (profit when price rises), 0 = Short/Sell. (Tier 1 — Trade.PositionTbl) (via Dim_Position) | T1 |
++| 12 | IsSettled |  | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) (via Dim_Position) | T1 |
++| 13 | HedgeServerID |  | FK to Trade.HedgeServer. Hedge server managing this position. (Tier 1 — Trade.PositionTbl) (via Dim_Position) | T1 |
++| 14 | SettlementTypeID |  | Modern settlement classification. Dictionary.SettlementTypes: 0=CFD, 1=REAL, 2=TRS, 3=CMT, 4=REAL_FUTURES, 5=MARGIN_TRADE. Replaces IsSettled. (Tier 1 — Trade.PositionTbl) (via Dim_Position) | T1 |
++| 15 | ClosedOnDate |  | ISNULL(dp.ClosedOnDate, 0) (sql-derived [coalesce, DIVERGENT] from Function_PnL_Single_Day); branches: 1 when (dp.CloseDateID = @dateID) || 0 (fallback); where dp = DWH_dbo.Dim_Position | T1 |
++| 16 | IsFuture |  | 1=futures contract (instrument in Trade.InstrumentGroups WHERE GroupID=25), 0=not futures. 243 flagged as futures. (Tier 2 — SP_Dim_Instrument) (via Dim_Instrument) | T1 |
++| 17 | IsCopyFund |  | CASE WHEN NOT cpt.PositionID IS NULL THEN 1 ELSE 0 END (sql-derived [case] from Function_PnL_Single_Day); where cpt = BI_DB_dbo.BI_DB_CopyFund_Positions | T1 |
++| 18 | IsMarginTrade |  | COALESCE(dp.IsMarginTrade, upl.IsMarginTrade) (sql-derived [coalesce, DIVERGENT] from Function_PnL_Single_Day); branches: CASE WHEN dp.SettlementTypeID = 5 THEN 1 ELSE 0 END || CASE WHEN bdppl.SettlementTypeID = 5 THEN 1 ELSE 0 END; where dp = DWH_dbo.Dim_Position, bdppl = BI_DB_dbo.BI_DB_PositionPnL | T1 |
+ | 19 | IsSQF |  | case when InstrumentID is not null then 1 else 0 end | T2 |
+ 

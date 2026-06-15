@@ -1,0 +1,44 @@
+﻿Total events: 272
+
+  thinking/delta                 254
+  thinking/completed             5
+  tool_call/started              4
+  tool_call/completed            4
+  assistant/None                 2
+  system/init                    1
+  user/None                      1
+  result/success                 1
+
+
+[started] kind=shellToolCall
+  command: cursor mcp list-tools user-databricks-stg
+
+[started] kind=listMcpResourcesToolCall
+  args (first 300): {"server": "user-databricks-stg"}
+
+[started] kind=listMcpResourcesToolCall
+  args (first 300): {}
+
+[started] kind=shellToolCall
+  command: cursor mcp list-servers
+
+
+=== Final assistant text ===
+Running a live query via Databricks MCP (user-databricks-stg) ╬ף╫נ╫ñ if nothing follows in ~10-15 seconds, check **Settings ╬ף╫צ╫ó MCP** (server may be disconnected).**Result**: The **user-databricks-stg** MCP server is not currently running or not configured.
+
+I attempted to:
+1. List tools from `user-databricks-stg` ╬ף╫צ╫ó empty result
+2. List MCP resources from that server ╬ף╫צ╫ó server not found
+3. List all configured MCP servers ╬ף╫צ╫ó empty result
+
+**The MCP server is either:**
+- Not started (check **Settings ╬ף╫צ╫ó MCP** in Cursor to see server status)
+- Not configured in your MCP settings
+- Running under a different name
+
+I cannot execute `SELECT 1 AS probe` via MCP as requested because the server isn't available. 
+
+Would you like me to:
+1. Check your MCP configuration files to see what's actually configured?
+2. Use the Python `dbx_query.py` fallback instead (though you said not to)?
+3. Help you start/configure the Databricks MCP server?

@@ -219,11 +219,47 @@ def fix(text: str) -> str:
     body = re.sub(r"\bCOLLATE\s+\w+", "", body, flags=re.IGNORECASE)
 
     # ------------------------------------------------------------------------
-    # 10) Strip stray standalone `end` tokens (lower-case, no `;`) that
-    #     BladeBridge emits for unconverted T-SQL block terminators. The
-    #     legitimate procedure terminator is `END;` (with semicolon).
+    # 10) Strip stray standalone `end` tokens (lower-case, no `;`) ONLY
+    #     when the surrounding context makes them clearly orphaned (the
+    #     next non-blank line is a top-level statement keyword). Be VERY
+    #     careful: `end\\n)` is the closing of a CASE...END expression
+    #     and must be preserved.
     # ------------------------------------------------------------------------
-    body = re.sub(r"(?m)^\s*end\s*$\n?", "", body)
+    def _strip_orphan_end_blocks(s: str) -> str:
+        lines = s.splitlines(keepends=True)
+        out = []
+        for i, ln in enumerate(lines):
+            if re.match(r"^\s*end\s*$", ln, re.IGNORECASE):
+                # Find next non-blank, non-comment line.
+                nxt = ""
+                for j in range(i + 1, len(lines)):
+                    cand = lines[j].strip()
+                    if not cand:
+                        continue
+                    if cand.startswith("--") or cand.startswith("/*"):
+                        continue
+                    nxt = cand
+                    break
+                # If the next thing starts with `)`, `,`, `AS`, `WHEN`, `ELSE`,
+                # `END`, an arithmetic operator (`*`, `+`, `-`, `/`, `||`),
+                # or a comparison glyph (e.g. `=`, `<`, `>`), the `end` is
+                # part of a CASE/EXPR -- keep it.
+                if re.match(
+                    r"(?i)^(\)|,|\*|\+|-|/|\|\||=|<|>|"
+                    r"AS\b|WHEN\b|ELSE\b|END\b|THEN\b|"
+                    r"AND\b|OR\b|GROUP\b|ORDER\b|HAVING\b|FROM\b|WHERE\b|"
+                    r"JOIN\b|LEFT\b|RIGHT\b|INNER\b|OUTER\b|ON\b|UNION\b)",
+                    nxt,
+                ):
+                    out.append(ln)
+                else:
+                    # Drop the orphan `end` line.
+                    continue
+            else:
+                out.append(ln)
+        return "".join(out)
+
+    body = _strip_orphan_end_blocks(body)
 
     # ------------------------------------------------------------------------
     # 9) Strip MySQL-style exception handlers that BladeBridge emits for
@@ -248,7 +284,63 @@ def fix(text: str) -> str:
     # ------------------------------------------------------------------------
     body = _strip_with_clauses(body)
 
+    # 9) Inject TEMP_TABLE_* cleanup block before procedure END;.
+    body = _inject_temp_cleanup(body)
+
     return body
+
+
+def _inject_temp_cleanup(text: str) -> str:
+    """Mirror of bulk_fix_deploy_sps.fix_inject_temp_cleanup. Drops all
+    TEMP_TABLE_* views/tables created in the SP at procedure end so the
+    SQL session is left clean. Idempotent (cleanup block is uniquely
+    marked)."""
+    temp_views: set[str] = set()
+    temp_tables: set[str] = set()
+    for m in re.finditer(
+        r"(?im)^\s*CREATE\s+(?:OR\s+REPLACE\s+)?TEMPORARY\s+VIEW\s+([\w`]+)",
+        text,
+    ):
+        name = m.group(1).strip("`")
+        if "." not in name:
+            temp_views.add(name)
+    for m in re.finditer(
+        r"(?im)^\s*CREATE\s+(?:OR\s+REPLACE\s+)?TABLE\s+([\w`]+)",
+        text,
+    ):
+        name = m.group(1).strip("`")
+        if "." in name:
+            continue
+        if name.upper().startswith("TEMP_TABLE_") or name.startswith("#"):
+            temp_tables.add(name)
+    if not temp_views and not temp_tables:
+        return text
+    for name in temp_tables:
+        text = re.sub(
+            r"(?im)^(\s*)DROP\s+VIEW\s+IF\s+EXISTS\s+" + re.escape(name)
+            + r"\s*;",
+            r"\1DROP TABLE IF EXISTS " + name + ";",
+            text,
+        )
+    marker = "-- [cleanup] drop session-scoped temp objects so the SP leaves no residue"
+    if marker in text:
+        return text
+    cleanup_lines = [marker]
+    for name in sorted(temp_views):
+        if name in temp_tables:
+            continue
+        cleanup_lines.append(f"DROP VIEW IF EXISTS {name};")
+    for name in sorted(temp_tables):
+        cleanup_lines.append(f"DROP TABLE IF EXISTS {name};")
+    cleanup_block = "\n".join(cleanup_lines) + "\n"
+    end_pat = re.compile(
+        r"(?ims)\n([ \t]*END\s*;\s*)"
+        r"(?:/\*[^*]*\*/|--[^\n]*\n|\s)*\Z",
+    )
+    em = end_pat.search(text)
+    if em:
+        return text[:em.start(1)] + cleanup_block + text[em.start(1):]
+    return text.rstrip() + "\n" + cleanup_block + "END;\n"
 
 
 # ---------------------------------------------------------------------------
@@ -577,6 +669,13 @@ def _cast_bool_to_int_columns(text: str) -> str:
             out.append(text[i:m.end()])
             i = m.end()
             continue
+        # Following the close of a CAST expression -- this is the
+        # alias (e.g. `Cast(IsSettled as int) IsSettled,`). Don't wrap
+        # the alias in another CAST.
+        if re.search(r"\)\s*$", prev_text_short):
+            out.append(text[i:m.end()])
+            i = m.end()
+            continue
         nxt = text[m.end():m.end() + 8]
         # LHS of an `=` assignment.
         if re.match(r"\s*=\s*[^=]", nxt):
@@ -662,7 +761,16 @@ def fetch_token(profile: str) -> str:
 def main() -> int:
     # Discover column types from UC up-front so fix() can do type-aware
     # rewrites.
-    token = fetch_token("name-of-profile")
+    token = None
+    for prof in ("name-of-profile", "guyman", "DEFAULT"):
+        try:
+            token = fetch_token(prof)
+            print(f"Auth: using profile '{prof}'")
+            break
+        except Exception:
+            continue
+    if not token:
+        raise SystemExit("No working Databricks profile found.")
     from databricks import sql as dbsql
     conn = dbsql.connect(
         server_hostname="adb-5142916747090026.6.azuredatabricks.net",

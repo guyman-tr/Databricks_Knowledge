@@ -49,7 +49,7 @@ BRONZE_TIER1_SCHEMAS = ["general", "bi_db", "wallet", "emoney", "trading",
                          "billing", "finance", "dealing", "compliance",
                          "experience", "pii_data", "config"]
 WAVE_2_SCHEMAS = {"etoro_kpi"}
-PHASE_LIST_DEFAULT = "-1,0,1,2,3,4,5,6,7"
+PHASE_LIST_DEFAULT = "-1,0,1,2,3,4,4.5,4.6,5,6,7"
 
 
 def _ts_safe(ts: dt.datetime) -> str:
@@ -159,8 +159,10 @@ def phase_0_build_wiki_index(force: bool) -> int:
     return rc
 
 
-def _phase_cmd(phase: int, schema: str, catalog: str) -> list[str] | None:
+def _phase_cmd(phase, schema: str, catalog: str) -> list[str] | None:
     base = [sys.executable]
+    # Accept both ints and floats (4.5, 4.6 are sub-phases added in the
+    # Grounded Synthesis Contract port from DWH Phase 6 + Phase 9).
     if phase == 1:
         return base + [str(REPO / "tools" / "uc_pipelines" / "discover_schema.py"),
                        "--schema", schema, "--catalog", catalog, "--phase", "both",
@@ -173,6 +175,12 @@ def _phase_cmd(phase: int, schema: str, catalog: str) -> list[str] | None:
                        "--schema", schema, "--catalog", catalog]
     if phase == 4:
         return base + [str(REPO / "tools" / "uc_pipelines" / "build_lineage.py"),
+                       "--schema", schema]
+    if phase == 4.5:
+        return base + [str(REPO / "tools" / "uc_pipelines" / "discover_concepts.py"),
+                       "--schema", schema]
+    if phase == 4.6:
+        return base + [str(REPO / "tools" / "uc_pipelines" / "extract_formulas.py"),
                        "--schema", schema]
     if phase == 5:
         return base + [str(REPO / "tools" / "uc_pipelines" / "generate_wiki.py"),
@@ -503,15 +511,24 @@ def _validate_pilot_scope(schemas: list[str]) -> list[str]:
     return bad
 
 
-def _validate_phases(phases_str: str) -> tuple[list[int], str | None]:
+def _validate_phases(phases_str: str) -> tuple[list, str | None]:
+    """Phases may be ints (-1..7) or the floats 4.5 / 4.6 (Phases added in
+    the Grounded Synthesis Contract port — concept discovery and formula
+    extraction)."""
     try:
-        phases = [int(s.strip()) for s in phases_str.split(",") if s.strip()]
+        raw = [s.strip() for s in phases_str.split(",") if s.strip()]
+        phases: list = []
+        for s in raw:
+            if "." in s:
+                phases.append(float(s))
+            else:
+                phases.append(int(s))
     except ValueError as e:
         return ([], f"malformed --phases {phases_str!r}: {e}")
-    valid = {-1, 0, 1, 2, 3, 4, 5, 6, 7}
+    valid = {-1, 0, 1, 2, 3, 4, 4.5, 4.6, 5, 6, 7}
     bad = [p for p in phases if p not in valid]
     if bad:
-        return ([], f"unknown phase(s): {bad}; valid: {sorted(valid)}")
+        return ([], f"unknown phase(s): {bad}; valid: {sorted(valid, key=float)}")
     return (phases, None)
 
 

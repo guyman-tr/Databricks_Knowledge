@@ -1,0 +1,1012 @@
+referring_schema,referring_name,referring_type,referenced_table_bare,sample_match
+EXW_dbo,SP_EXW_DimUser_Enriched,SQL_STORED_PROCEDURE,BI_DB_KYC_Questions_Answers_Row_Data,_Desc'      FROM [BI_DB_dbo].[BI_DB_KYC_Questions_Answers_Row_Data] sub WITH(NOLOCK)      WHERE 
+BI_DB_dbo,SP_DDR_Customer_Periodic_Status,SQL_STORED_PROCEDURE,BI_DB_DDR_Customer_Periodic_Status,S INT)  DELETE FROM BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status  WHERE DateID = @dateID  ; WI
+BI_DB_dbo,SP_DDR_Customer_Periodic_Status,SQL_STORED_PROCEDURE,BI_DB_DDR_Customer_Daily_Status,ID DESC) AS rn FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds WHERE bddcds.DateID be
+BI_DB_dbo,SP_EndOfDayReport_Redeems,SQL_STORED_PROCEDURE,BI_DB_EndOfDayReport_Redeems, TRUNCATE TABLE  [BI_DB_dbo].[BI_DB_EndOfDayReport_Redeems]  INSERT INTO  [BI_DB_dbo].[B
+BI_DB_dbo,SP_OPS_VerificationLevel2Stuck,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,stomer dc left join BI_DB_dbo.BI_DB_CIDFirstDates fd on fd.CID=dc.RealCID JOIN 
+BI_DB_dbo,SP_OPS_VerificationLevel2Stuck,SQL_STORED_PROCEDURE,BI_DB_RiskAlertManagementTool,distinct a.CID FROM BI_DB_dbo.BI_DB_RiskAlertManagementTool a  JOIN #population1 p ON a.C
+BI_DB_dbo,SP_OPS_VerificationLevel2Stuck,SQL_STORED_PROCEDURE,BI_DB_OPS_VerificationLevel2Stuck,   Truncate table  BI_DB_dbo.[BI_DB_OPS_VerificationLevel2Stuck]  INSERT INTO   BI_DB_dbo.[BI
+BI_DB_dbo,SP_InterestDaily,SQL_STORED_PROCEDURE,BI_DB_InterestDaily,ists DELETE FROM [BI_DB_dbo].[BI_DB_InterestDaily]  WHERE [DayOfInterest]=@date
+BI_DB_dbo,Function_Revenue_SDRT,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_Fact_Customer_Action_Position_Distribution,a.AffiliateID  FROM BI_DB_dbo.BI_DB_Fact_Customer_Action_Position_Distribution fca WHERE fca.DateID BETWEEN 
+BI_DB_dbo,SP_H_EndOfDayReport_Redeems,SQL_STORED_PROCEDURE,BI_DB_EndOfDayReport_Redeems, TRUNCATE TABLE  [BI_DB_dbo].[BI_DB_EndOfDayReport_Redeems]  INSERT INTO  [BI_DB_dbo].[B
+BI_DB_dbo,Function_Revenue_ConversionFee_WithPositionData,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_Positions_Opened_From_IBAN,thdraw' 		LEFT JOIN BI_DB_dbo.BI_DB_Positions_Opened_From_IBAN bdpofi 			ON fca.DepositID = 
+BI_DB_dbo,Function_Revenue_ConversionFee_WithPositionData,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_Positions_Closed_To_IBAN,positID 		LEFT JOIN BI_DB_dbo.BI_DB_Positions_Closed_To_IBAN bdpcti 			ON fca.WithdrawPaym
+BI_DB_dbo,SP_Finance_ASIC_MP,SQL_STORED_PROCEDURE,BI_DB_Finance_ASIC_MP,*****/ 	DELETE FROM BI_DB_dbo.BI_DB_Finance_ASIC_MP 	WHERE DateID = @DateID  	INS
+BI_DB_dbo,SP_OPS_KYC_Verification,SQL_STORED_PROCEDURE,BI_DB_OPS_KYC_Verification,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_OPS_KYC_Verification]  INSERT INTO [BI_DB_dbo].[BI
+BI_DB_dbo,SP_AM_Portfolio_Summary,SQL_STORED_PROCEDURE,BI_DB_AM_Portfolio_Summary,ata into Table [BI_DB].[dbo].[BI_DB_AM_Portfolio_Summary] - Used in tableau Reports fo
+BI_DB_dbo,SP_AM_Portfolio_Summary,SQL_STORED_PROCEDURE,BI_DB_NewBonusReport,)      LEFT JOIN [BI_DB_dbo].[BI_DB_NewBonusReport] br WITH(NOLOCK)      ON     
+BI_DB_dbo,SP_AM_Portfolio_Summary,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,)      LEFT JOIN [BI_DB_dbo].[BI_DB_UsageTracking_SF] sf WITH(NOLOCK)      ON     
+BI_DB_dbo,SP_Reg_UK_Compliance_VolumeByInstrument,SQL_STORED_PROCEDURE,BI_DB_Reg_UK_Compliance_VolumeByInstrument, 	TRUNCATE TABLE [BI_DB_dbo].[BI_DB_Reg_UK_Compliance_VolumeByInstrument] 	INSERT INTO [BI_DB_dbo].[BI
+BI_DB_dbo,SP_Capital_Guarantee,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,Position AS dp JOIN BI_DB_dbo.BI_DB_CIDFirstDates AS fd ON fd.CID = dp.CID join
+BI_DB_dbo,SP_IFR_KFactors_Automation_KDTF_Real,SQL_STORED_PROCEDURE,Dealing_ClientsCapitalAdequacy, Date) AS RN FROM Dealing_dbo.Dealing_ClientsCapitalAdequacy WHERE 1=1  AND Regulation IN 
+BI_DB_dbo,SP_H_Money_Out_STPAnalysis_OPS_Dashboard,SQL_STORED_PROCEDURE,BI_DB_Money_Out_STPAnalysis_OPS_Dashboard,"e, dr.Name   DELETE BI_DB_dbo.BI_DB_Money_Out_STPAnalysis_OPS_Dashboard FROM BI_DB_dbo.BI_DB_Money_Ou"
+Dealing_dbo,V_Dealing_DealingDashboard_Clients,VIEW,Dealing_DealingDashboard_Clients,select * from  [Dealing_dbo].[Dealing_DealingDashboard_Clients] with (nolock) 	where DateID 
+BI_DB_dbo,SP_RBSF,SQL_STORED_PROCEDURE,BI_DB_Compliance_Restriction_Lists_CIDs,_id WHERE m.definition LIKE '%BI_DB_Compliance_Restriction_Lists_CIDs%'; */    IF OBJECT_ID('tempdb
+BI_DB_dbo,SP_RBSF,SQL_STORED_PROCEDURE,BI_DB_Compliance_Restriction_Lists_Countries,AS SELECT *    FROM BI_DB_dbo.BI_DB_Compliance_Restriction_Lists_Countries bdcrlc WITH (NOLOCK)     WHER
+BI_DB_dbo,SP_RBSF,SQL_STORED_PROCEDURE,BI_DB_Scored_Appropriateness_Negative_Market,aseBlockDateID FROM BI_DB_dbo.BI_DB_Scored_Appropriateness_Negative_Market bdsanm WHERE bdsanm.BlockReas
+BI_DB_dbo,SP_RBSF,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,5_AnswerID     FROM BI_DB_dbo.BI_DB_KYC_Panel b     --WHERE b.RealCID = @ci
+BI_DB_dbo,SP_H_AssignmentToolVolumes,SQL_STORED_PROCEDURE,BI_DB_AssignmentToolVolumes,ED THIS PART (DELETE FROM dbo.BI_DB_AssignmentToolVolumes WHERE [BeginTimeID] = @dateID
+BI_DB_dbo,SP_M_EOMExposures,SQL_STORED_PROCEDURE,BI_DB_EOMExposures,        delete from BI_DB_dbo.BI_DB_EOMExposures where Date = @EndofMonth     
+Dealing_dbo,SP_Market_Manipulation_OutstandingsharesHigherthan005,SQL_STORED_PROCEDURE,Dealing_Market_Manipulation_OutstandingsharesHigherthan005, into DELETE FROM Dealing_dbo.Dealing_Market_Manipulation_OutstandingsharesHigherthan005  WHERE Date = @Date    INSERT
+Dealing_dbo,SP_Market_Manipulation_OutstandingsharesHigherthan005,SQL_STORED_PROCEDURE,Dealing_Market_Manipulation_OutstandingsharesHigherthan005_Email,rt TRUNCATE TABLE Dealing_dbo.Dealing_Market_Manipulation_OutstandingsharesHigherthan005_Email  INSERT INTO Dealing_dbo.Deal
+EXW_dbo,SP_EXW_WalletUsers_30_Days,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates, AS LastLogin 	FROM BI_DB_dbo.BI_DB_CIDFirstDates fca with (NOLOCK) 	WHERE fca.
+BI_DB_dbo,SP_Compliance_Forbidden_Trades,SQL_STORED_PROCEDURE,BI_DB_Compliance_Illegal_Trades_Alerts,"ullName and Phone cloumn from BI_DB_Compliance_Illegal_Trades_Alerts table (as part of ""Move PII c"
+BI_DB_dbo,SP_Compliance_Forbidden_Trades,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,ReasonID 	LEFT JOIN BI_DB_dbo.BI_DB_CIDFirstDates bdcd 		ON bdcd.CID = dc.RealC
+BI_DB_dbo,SP_Compliance_Forbidden_Trades,SQL_STORED_PROCEDURE,BI_DB_Compliance_Restriction_Lists_Forbidden_Trading,dYesterday = 1 JOIN BI_DB_dbo.BI_DB_Compliance_Restriction_Lists_Forbidden_Trading cl 	ON p.CountryID = cl.Count
+BI_DB_dbo,SP_US_Apex_Transactions_Trading_Activity,SQL_STORED_PROCEDURE,BI_DB_US_Apex_Transactions_Trading_Activity,c)*/  DELETE FROM  BI_DB_dbo.[BI_DB_US_Apex_Transactions_Trading_Activity]  WHERE DateId=@DateID   /*in
+BI_DB_dbo,SP_BI_DB_PLTV,SQL_STORED_PROCEDURE,BI_DB_KYC_Score_CID_Level, AS updateDate FROM BI_DB_dbo.BI_DB_KYC_Score_CID_Level a JOIN BI_DB_dbo.BI_DB_KYC_Pa
+BI_DB_dbo,SP_BI_DB_PLTV,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,re_CID_Level a JOIN BI_DB_dbo.BI_DB_KYC_Panel b ON a.RealCID = b.RealCID AN
+BI_DB_dbo,SP_BI_DB_PLTV,SQL_STORED_PROCEDURE,BI_DB_LTV_BI_Actual,tionLevelID>=2 JOIN BI_DB_dbo.BI_DB_LTV_BI_Actual bdl ON a.RealCID = bdl.CID JO
+BI_DB_dbo,Function_DDR_Aggregation_MoM,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_DDR_Customer_Periodic_Status,IBAN_ThisMonth FROM BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status ps WHERE ps.DateID >= @StartY
+BI_DB_dbo,SP_M_LTV_Multipliers,SQL_STORED_PROCEDURE,BI_DB_CID_MonthlyPanel_FullData,eportDate  	FROM [BI_DB_dbo].[BI_DB_CID_MonthlyPanel_FullData] mp WITH (NOLOCK) 	WHERE mp.F
+BI_DB_dbo,SP_M_LTV_Multipliers,SQL_STORED_PROCEDURE,BI_DB_LTV_Revenue_Multipliers,le  	DELETE FROM [BI_DB_dbo].[BI_DB_LTV_Revenue_Multipliers] 	WHERE @date = Date;   	INSE
+BI_DB_dbo,SP_Tax_Compliance_W8_AND_TIN,SQL_STORED_PROCEDURE,BI_DB_Tax_Compliance_TIN,nd delete:  --MERGE BI_DB_dbo.BI_DB_Tax_Compliance_TIN trgt  --USING #usertaxdata sr
+BI_DB_dbo,SP_Tax_Compliance_W8_AND_TIN,SQL_STORED_PROCEDURE,BI_DB_Tax_Compliance_Trade_CFD_US_Stocks,nd insert: --MERGE BI_DB_dbo.[BI_DB_Tax_Compliance_Trade_CFD_US_Stocks] trgt --USING #users src ON t
+Dealing_dbo,SP_W_Sat_WeeklyClientData,SQL_STORED_PROCEDURE,Dealing_ClientDataFinal,"sert Data into Tables  [dbo].[Dealing_ClientDataFinal] ,  [dbo].[Dealing_ClientData"
+Dealing_dbo,SP_W_Sat_WeeklyClientData,SQL_STORED_PROCEDURE,Dealing_ClientDataRecurring,"ng_ClientDataFinal] ,  [dbo].[Dealing_ClientDataRecurring] and [dbo].[Dealing_ClientDat"
+Dealing_dbo,SP_W_Sat_WeeklyClientData,SQL_STORED_PROCEDURE,Dealing_ClientDataTop50,ientDataRecurring] and [dbo].[Dealing_ClientDataTop50] - Used in tableau Reports fo
+Dealing_dbo,SP_W_Sat_WeeklyClientData,SQL_STORED_PROCEDURE,Dealing_ClientsDataChange_6Months,a  DELETE FROM [Dealing_dbo].[Dealing_ClientsDataChange_6Months] WHERE [Date] = @Date  INSERT
+Dealing_dbo,SP_W_Sat_WeeklyClientData,SQL_STORED_PROCEDURE,Dealing_ClientsDataChange_3Months,   DELETE FROM [Dealing_dbo].[Dealing_ClientsDataChange_3Months] WHERE [Date] = @Date  INSERT
+BI_DB_dbo,SP_M_PR_MonthlyData,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,   dp.Amount   FROM BI_DB_dbo.BI_DB_CIDFirstDates CIDFirstDates WITH(NOLOCK)   
+BI_DB_dbo,SP_M_PR_MonthlyData,SQL_STORED_PROCEDURE,BI_DB_PR_MonthlyData,T      DELETE FROM BI_DB_dbo.[BI_DB_PR_MonthlyData] WHERE Date = @Startofmonth  
+BI_DB_dbo,SP_Crypto_Top_1000_List,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport,rom_20230801 --FROM BI_DB_dbo.BI_DB_DailyCommisionReport bddcr --INNER JOIN DWH_dbo.Di
+BI_DB_dbo,SP_Crypto_Top_1000_List,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,S Last_contact FROM BI_DB_dbo.BI_DB_UsageTracking_SF bduts WITH (NOLOCK) INNER JOI
+BI_DB_dbo,SP_Crypto_Top_1000_List,SQL_STORED_PROCEDURE,BI_DB_CID_MonthlyPanel_FullData,AS UpdateDate FROM  BI_DB_dbo.BI_DB_CID_MonthlyPanel_FullData bdcmpfd  INNER JOIN #Pop p ON
+BI_DB_dbo,SP_Crypto_Top_1000_List,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates, = lc.CID LEFT JOIN BI_DB_dbo.BI_DB_CIDFirstDates bdcd ON bdcmpfd.CID = bdcd.CI
+Dealing_dbo,SP_DailySpread_ModeFrequency,SQL_STORED_PROCEDURE,Dealing_DailySpread_ModeFrequency,----  DELETE FROM Dealing_dbo.Dealing_DailySpread_ModeFrequency WHERE Date=@Date INSERT INTO 
+BI_DB_dbo,SP_IFR_KFactors_Automation_KCMH_Daily,SQL_STORED_PROCEDURE,BI_DB_Capital_Adequacy_Daily_Equity,BY Date) AS RN FROM BI_DB_dbo.BI_DB_Capital_Adequacy_Daily_Equity WHERE 1=1  --AND Real_CFD = '
+BI_DB_dbo,SP_Client_Balance_Breakdown_Quick,SQL_STORED_PROCEDURE,Client_Balance_Breakdown_Instrument_Level,352289  delete from BI_DB_dbo.Client_Balance_Breakdown_Instrument_Level where DateID = @DateID  inser
+BI_DB_dbo,SP_Client_Balance_Breakdown_Quick,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport,missionChange) from BI_DB_dbo.BI_DB_DailyCommisionReport where DateID = 20230315   dro
+BI_DB_dbo,SP_Blocked_Customers,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,LoggedIn_Group FROM BI_DB_dbo.BI_DB_CIDFirstDates fd WITH(NOLOCK)    /*********
+BI_DB_dbo,SP_Blocked_Customers,SQL_STORED_PROCEDURE,BI_DB_Blocked_Customers,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_Blocked_Customers  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_H_VerificationStatus30Days,SQL_STORED_PROCEDURE,BI_DB_AllDeposits,yID       left join BI_DB_dbo.BI_DB_AllDeposits a on dc.CID = a.CID      and 
+BI_DB_dbo,SP_H_VerificationStatus30Days,SQL_STORED_PROCEDURE,BI_DB_VerificationStatus30Days,   TRUNCATE table  BI_DB_dbo.[BI_DB_VerificationStatus30Days]          INSERT INTO BI_DB_d
+BI_DB_dbo,SP_VAT_Transaction,SQL_STORED_PROCEDURE,BI_DB_VAT_Transactions,Name    DELETE FROM BI_DB_dbo.BI_DB_VAT_Transactions WHERE [Month] = @EndMonth  IN
+BI_DB_dbo,SP_Payoneer_Revenue_Report,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport,			            FROM BI_DB_dbo.BI_DB_DailyCommisionReport bddcr 		   INNER JOIN #ftds f
+BI_DB_dbo,SP_Payoneer_Revenue_Report,SQL_STORED_PROCEDURE,BI_DB_Payoneer_Revenue_Report,*****/	 DELETE FROM BI_DB_dbo.BI_DB_Payoneer_Revenue_Report WHERE EndofMonth = @EndOfMont
+BI_DB_dbo,SP_DCM_Dashboard,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,UNT(*) FTDs FROM [BI_DB_dbo].[BI_DB_CIDFirstDates] a LEFT JOIN #AffiliateIDs b 
+BI_DB_dbo,SP_DCM_Dashboard,SQL_STORED_PROCEDURE,BI_DB_First5Actions,tActionNULL FROM [BI_DB_dbo].[BI_DB_First5Actions] bdfa join #AffiliateIDs b on
+BI_DB_dbo,SP_DCM_Dashboard,SQL_STORED_PROCEDURE,BI_DB_DCM_Dashboard,**/  delete from [BI_DB_dbo].[BI_DB_DCM_Dashboard] where Date >=@last90days   I
+BI_DB_dbo,SP_BI_DB_CID_DailyPanel_FullData_CREATE_SWITCH_SINGLE,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_FullData,ECT TOP 0 * FROM [BI_DB_dbo].[BI_DB_CID_DailyPanel_FullData]'    EXEC (@sql)      	SET @s
+BI_DB_dbo,SP_CMR_Automation_EU_CheckTableUpdate,SQL_STORED_PROCEDURE,BI_DB_InterestDaily,"= @dateID  UNION ALL  SELECT 'BI_DB_InterestDaily' AS TableName 	,CAST(MAX(Upda"
+BI_DB_dbo,SP_ASIC_GAML_Invested_Amount,SQL_STORED_PROCEDURE,BI_DB_ASIC_GAML_Invested_Amount,SERT TRUNCATE TABLE BI_DB_dbo.BI_DB_ASIC_GAML_Invested_Amount  INSERT INTO BI_DB_dbo.BI_DB_
+Dealing_dbo,V_Dealing_Duco_EODRecon,VIEW,Dealing_Duco_EODRecon,BuyOrSell FROM [Dealing_dbo].[Dealing_Duco_EODRecon] with  (NOLOCK)  where Date>=
+Dealing_dbo,SP_ESMANetLoss,SQL_STORED_PROCEDURE,Dealing_ESMANetLoss,      DELETE FROM Dealing_dbo.Dealing_ESMANetLoss WHERE Date=@Date           IN
+BI_DB_dbo,Function_Revenue_Trading_Fees_Breakdown,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_Fact_Customer_Action_Position_Distribution,eeName         FROM BI_DB_dbo.BI_DB_Fact_Customer_Action_Position_Distribution fca         JOIN DWH_dbo.Dim_
+Dealing_dbo,SP_NOP_Report,SQL_STORED_PROCEDURE,Dealing_NOP_Report, into DELETE FROM Dealing_dbo.Dealing_NOP_Report WHERE Date = @Date  INSERT IN
+BI_DB_dbo,SP_W_Tue_Email_for_KYT,SQL_STORED_PROCEDURE,BI_DB_W_Tue_Email_for_KYT,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_W_Tue_Email_for_KYT  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_AML_BI_Alerts_MultipleAccountseMoney,SQL_STORED_PROCEDURE,BI_DB_OPS_MultipleAccounts,ientRiskDateID from BI_DB_dbo.BI_DB_OPS_MultipleAccounts ma left join #eMoneyactive ea
+BI_DB_dbo,SP_AML_BI_Alerts_MultipleAccountseMoney,SQL_STORED_PROCEDURE,BI_DB_AML_BI_Alerts_MultipleAccountseMoney, LastAlertDate FROM BI_DB_dbo.BI_DB_AML_BI_Alerts_MultipleAccountseMoney WHERE AlertType = 'IBAN004: T
+Dealing_dbo,SP_SpreadsMST,SQL_STORED_PROCEDURE,Dealing_SpreadsMST,ables DELETE FROM Dealing_dbo.Dealing_SpreadsMST WHERE Date = @Date      INSER
+BI_DB_dbo,SP_First5Actions,SQL_STORED_PROCEDURE,BI_DB_CustomerFirst5OpenPositions,08-2020    Dan          Using BI_DB_CustomerFirst5OpenPositions instead of Fact_CustomerActio
+BI_DB_dbo,SP_First5Actions,SQL_STORED_PROCEDURE,BI_DB_CID_BalanceDays,"Fact_CustomerAction and using BI_DB_CID_BalanceDays for Rev,Deposit and Equity Ba"
+BI_DB_dbo,SP_First5Actions,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,.SubChannel FROM [BI_DB_dbo].[BI_DB_CIDFirstDates] FD WITH (NOLOCK) WHERE FD.Fi
+BI_DB_dbo,SP_First5Actions,SQL_STORED_PROCEDURE,BI_DB_CustomerCross,d) rn       FROM [BI_DB_dbo].[BI_DB_CustomerCross] WITH (NOLOCK)) q0 PIVOT (MAX
+BI_DB_dbo,SP_First5Actions,SQL_STORED_PROCEDURE,BI_DB_CustomerCross_New,d) rn       FROM [BI_DB_dbo].[BI_DB_CustomerCross_New] WITH (NOLOCK)) q0 PIVOT (MAX
+BI_DB_dbo,SP_First5Actions,SQL_STORED_PROCEDURE,BI_DB_First5Actions,/ TRUNCATE TABLE [BI_DB_dbo].[BI_DB_First5Actions];  INSERT INTO [BI_DB_dbo].[B
+BI_DB_dbo,SP_H_EndOfDayReport_Cashouts,SQL_STORED_PROCEDURE,BI_DB_EndOfDayReport_Cashouts,   TRUNCATE TABLE  BI_DB_dbo.[BI_DB_EndOfDayReport_Cashouts]  INSERT INTO  BI_DB_dbo.[BI_
+BI_DB_dbo,SP_DDR_Fact_PnL,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_PnL,S INT)  DELETE FROM BI_DB_dbo.BI_DB_DDR_Fact_PnL WHERE DateID = @dateID  INSER
+BI_DB_dbo,SP_US_Customer_Acount_Reconcilation,SQL_STORED_PROCEDURE,BI_DB_US_Customer_Acount_Reconcilation,one'   DELETE FROM BI_DB_dbo.[BI_DB_US_Customer_Acount_Reconcilation] WHERE Date=@Date    /*******
+BI_DB_dbo,SP_BI_DB_DLT_Tangany_Trades_Netting,SQL_STORED_PROCEDURE,BI_DB_DLT_Tangany_Trades_Netting,final'  DELETE FROM BI_DB_dbo.BI_DB_DLT_Tangany_Trades_Netting WHERE DateID = @dateID  INSER
+BI_DB_dbo,SP_AML_KYC_SOF,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel, #pop pp INNER JOIN BI_DB_dbo.BI_DB_KYC_Panel bdkp WITH(NOLOCK) ON bdkp.Rea
+BI_DB_dbo,SP_AML_KYC_SOF,SQL_STORED_PROCEDURE,BI_DB_AML_KYC_SOF,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_KYC_SOF   INSERT INTO BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_PI_Affiliate,SQL_STORED_PROCEDURE,BI_DB_PI_Affiliate,"me and BirthDate cloumns from BI_DB_PI_Affiliate table (as part of ""Move PII c"
+BI_DB_dbo,SP_PI_Affiliate,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,a.AffiliateID  FROM BI_DB_dbo.BI_DB_CIDFirstDates bdcd WITH (NOLOCK) JOIN #Guru
+BI_DB_dbo,SP_AcquisitionFunnel_AGG,SQL_STORED_PROCEDURE,BI_DB_DepositUsersFirstTouchPoints,MIN(Date) from [BI_DB].[dbo].[BI_DB_DepositUsersFirstTouchPoints])     DECLARE @DateID int   =
+BI_DB_dbo,SP_AcquisitionFunnel_AGG,SQL_STORED_PROCEDURE,BI_DB_AcquisitionFunnel_AGG,     DELETE FROM [BI_DB_dbo].[BI_DB_AcquisitionFunnel_AGG]     WHERE DateID >= @DateID 
+BI_DB_dbo,SP_H_AssignmentToolTasks,SQL_STORED_PROCEDURE,BI_DB_AssignmentToolTasks,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_AssignmentToolTasks]  INSERT INTO [BI_DB_dbo].[BI
+BI_DB_dbo,SP_Users_Bio,SQL_STORED_PROCEDURE,BI_DB_Publications,_live pl LEFT JOIN  BI_DB_dbo.BI_DB_Publications pu   ON pu.CID = pl.CID   WHE
+BI_DB_dbo,SP_Finance_Non_US_Settlement_2025,SQL_STORED_PROCEDURE,BI_DB_Finance_Non_US_Settlement_New_2025,)) AS SELECT * FROM BI_DB_dbo.BI_DB_Finance_Non_US_Settlement_New_2025 WHERE DateID =20251029 --- CR
+BI_DB_dbo,SP_Finance_Non_US_Settlement_2025,SQL_STORED_PROCEDURE,BI_DB_Finance_eToro_vs_Positions,)) AS SELECT * FROM BI_DB_dbo.BI_DB_Finance_eToro_vs_Positions bdftvp WHERE DateID =20251029
+BI_DB_dbo,SP_Finance_Non_US_Settlement_2025,SQL_STORED_PROCEDURE,Dealing_Duco_EODRecon,"Units, dde.  FROM Dealing_dbo.Dealing_Duco_EODRecon dde  WHERE dde.Date ='2025-10"
+BI_DB_dbo,Function_Trading_Volume,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_CopyFund_Positions,"""final"" f LEFT JOIN BI_DB_dbo.BI_DB_CopyFund_Positions bdcfp 	ON f.PositionID = bdcf"
+BI_DB_dbo,Function_Trading_Volume,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_RecurringInvestment_Positions,ositionID LEFT JOIN BI_DB_dbo.BI_DB_RecurringInvestment_Positions bdrip 	ON f.PositionID = bdri
+BI_DB_dbo,Function_Trading_Volume,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_Positions_Opened_From_IBAN,ositionID LEFT JOIN BI_DB_dbo.BI_DB_Positions_Opened_From_IBAN bdpofi 	ON f.PositionID = bdp
+BI_DB_dbo,Function_Trading_Volume,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_Positions_Closed_To_IBAN,ositionID LEFT JOIN BI_DB_dbo.BI_DB_Positions_Closed_To_IBAN bdpcti 	ON f.PositionID = bdp
+BI_DB_dbo,SP_rsk_RiskCorelation_PIs,SQL_STORED_PROCEDURE,BI_DB_rsk_Portfolio,uity as Weight from BI_DB_dbo.BI_DB_rsk_Portfolio a with(nolock) join #pistd pi
+BI_DB_dbo,SP_rsk_RiskCorelation_PIs,SQL_STORED_PROCEDURE,BI_DB_rsk_Risk_PI_Correl,pe2     delete from BI_DB_dbo.BI_DB_rsk_Risk_PI_Correl where Date=@Date Or Date <= D
+BI_DB_dbo,SP_rsk_RiskCorelation_PIs,SQL_STORED_PROCEDURE,BI_DB_rsk_Risk_PI_Stats,onPnl   delete from BI_DB_dbo.BI_DB_rsk_Risk_PI_Stats where Date=@Date Or Date <= D
+BI_DB_dbo,SP_M_Affiliates_FraudMonitoring,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,egisteredID FROM [BI_DB_dbo].[BI_DB_CIDFirstDates] cf JOIN [DWH_dbo].[Dim_Affil
+BI_DB_dbo,SP_M_Affiliates_FraudMonitoring,SQL_STORED_PROCEDURE,BI_DB_Affiliates_FraudMonitoring,N)  DELETE FROM  [BI_DB_dbo].[BI_DB_Affiliates_FraudMonitoring] WHERE [RegisteredID]=@StartD
+BI_DB_dbo,SP_TicketsForOPSNEW,SQL_STORED_PROCEDURE,BI_DB_HourlyReport_Withdraws,WithdrawID] FROM [BI_DB_dbo].[BI_DB_HourlyReport_Withdraws] W LEFT JOIN [BI_DB_dbo].[Ext
+BI_DB_dbo,SP_Y_RBSF,SQL_STORED_PROCEDURE,BI_DB_Compliance_Restriction_Lists_Countries,ryRestricted   FROM BI_DB_dbo.BI_DB_Compliance_Restriction_Lists_Countries WITH (nolock)-- select * from
+BI_DB_dbo,SP_Y_RBSF,SQL_STORED_PROCEDURE,BI_DB_Compliance_Restriction_Lists_CIDs,S CIDInList    FROM BI_DB_dbo.BI_DB_Compliance_Restriction_Lists_CIDs   WHERE @date BETWEEN FromDat
+BI_DB_dbo,SP_Y_RBSF,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,ories a   LEFT JOIN BI_DB_dbo.BI_DB_KYC_Panel b    ON a.CID = b.RealCID    
+BI_DB_dbo,SP_ClubChangeLog,SQL_STORED_PROCEDURE,BI_DB_ClubChangeLog,GIN 	delete FROM [BI_DB_dbo].[BI_DB_ClubChangeLog] 	WHERE [CreateDate] >= @dd		
+BI_DB_dbo,SP_Finance_Non_US_Settlement_2023,SQL_STORED_PROCEDURE,BI_DB_Finance_Non_US_Settlement_New_2023,-----   DELETE FROM BI_DB_dbo.BI_DB_Finance_Non_US_Settlement_New_2023 WHERE DateID = @dateID  INSER
+BI_DB_dbo,SP_BI_DB_ApproperiatenessTest_FTP_CID_Level,SQL_STORED_PROCEDURE,BI_DB_Scored_Appropriateness_Negative_Market,actionId INNER JOIN BI_DB_dbo.BI_DB_Scored_Appropriateness_Negative_Market atnm ON ci.GCID = atnm.GCID I
+BI_DB_dbo,SP_BI_DB_ApproperiatenessTest_FTP_CID_Level,SQL_STORED_PROCEDURE,BI_DB_ApproperiatenessTest_FTP_CID_Level,te   TRUNCATE TABLE BI_DB_dbo.BI_DB_ApproperiatenessTest_FTP_CID_Level  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,Function_DDR_Aggregation_ThisYear,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_DDR_Customer_Periodic_Status,as Global_FTDA FROM BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status ps WHERE ps.Date = @edate 			
+BI_DB_dbo,Function_DDR_Aggregation_ThisYear,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_DDR_Customer_Daily_Status,Global_FTDA			 FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status ds WHERE ds.Date BETWEEN DATE
+BI_DB_dbo,SP_CMR_Automation_Zero_By_Instrument_New,SQL_STORED_PROCEDURE,Client_Balance_Breakdown_Instrument_Level,d Stock Margin FROM BI_DB_dbo.Client_Balance_Breakdown_Instrument_Level cbbil 	JOIN DWH_dbo.Dim_Instr
+BI_DB_dbo,SP_KYC_Score_CID_Level,SQL_STORED_PROCEDURE,BI_DB_KYC_Score_CID_Level,AX(a.Reg_Date) FROM BI_DB_dbo.BI_DB_KYC_Score_CID_Level  a);       --## For the first
+BI_DB_dbo,SP_KYC_Score_CID_Level,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,"ys, 		Reg_Date FROM BI_DB_dbo.BI_DB_KYC_Panel WHERE 1=1 --AND Reg_Date > @D"
+BI_DB_dbo,SP_CID_WeeklyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_FullData,eeByPercent    FROM BI_DB_dbo.BI_DB_CID_DailyPanel_FullData bdcdpfd WITH (NOLOCK) WHERE b
+BI_DB_dbo,SP_CID_WeeklyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_CID_WeeklyPanel_FullData,rYear   DELETE FROM BI_DB_dbo.BI_DB_CID_WeeklyPanel_FullData WHERE FirstDayOfWeek = @First
+Dealing_dbo,SP_W_CEPWeeklyAudit,SQL_STORED_PROCEDURE,Dealing_CEPWeeklyAudit_Rules,ules  DELETE FROM Dealing_dbo.Dealing_CEPWeeklyAudit_Rules WHERE FromDate=@weekStart AND
+Dealing_dbo,SP_W_CEPWeeklyAudit,SQL_STORED_PROCEDURE,Dealing_CEPWeeklyAudit_CP,erty  DELETE FROM Dealing_dbo.Dealing_CEPWeeklyAudit_CP WHERE FromDate=@weekStart AND
+Dealing_dbo,SP_W_CEPWeeklyAudit,SQL_STORED_PROCEDURE,Dealing_CEPWeeklyAudit_Conditions,ions  DELETE FROM Dealing_dbo.Dealing_CEPWeeklyAudit_Conditions WHERE FromDate=@weekStart AND
+Dealing_dbo,SP_W_CEPWeeklyAudit,SQL_STORED_PROCEDURE,Dealing_CEPWeeklyAudit_ConditionToCP,o cp  DELETE FROM Dealing_dbo.Dealing_CEPWeeklyAudit_ConditionToCP WHERE FromDate=@weekStart AND
+Dealing_dbo,SP_W_CEPWeeklyAudit,SQL_STORED_PROCEDURE,Dealing_CEPWeeklyAudit_CPToRule,rule  DELETE FROM Dealing_dbo.Dealing_CEPWeeklyAudit_CPToRule WHERE FromDate=@weekStart AND
+Dealing_dbo,SP_W_CEPWeeklyAudit,SQL_STORED_PROCEDURE,Dealing_CEPWeeklyAudit_NameLists,ists  DELETE FROM Dealing_dbo.Dealing_CEPWeeklyAudit_NameLists WHERE FromDate=@weekStart AND
+Dealing_dbo,SP_W_CEPWeeklyAudit,SQL_STORED_PROCEDURE,Dealing_CEPWeeklyAudit_ListCIDMapping,ping  DELETE FROM Dealing_dbo.Dealing_CEPWeeklyAudit_ListCIDMapping WHERE FromDate=@weekStart AND
+BI_DB_dbo,SP_Daily_Open_Closed_Position,SQL_STORED_PROCEDURE,BI_DB_Daily_Open_Closed_Position,------- DELETE FROM BI_DB_dbo.BI_DB_Daily_Open_Closed_Position WHERE [Date]=@date  INSERT IN
+BI_DB_dbo,Function_Revenue_Dividend,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_Fact_Customer_Action_Position_Distribution,a.AffiliateID  FROM BI_DB_dbo.BI_DB_Fact_Customer_Action_Position_Distribution fca WHERE fca.DateID BETWEEN 
+BI_DB_dbo,SP_W_Mon_Compliance_CDIM_Report,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,zationID LEFT JOIN BI_DB_dbo.[BI_DB_CIDFirstDates] fd WITH (NOLOCK) ON dc.RealC
+BI_DB_dbo,SP_W_Mon_Compliance_CDIM_Report,SQL_STORED_PROCEDURE,BI_DB_First5Actions,rstActionDate FROM BI_DB_dbo.[BI_DB_First5Actions] fa JOIN #pop pp ON fa.CID = 
+BI_DB_dbo,SP_W_Mon_Compliance_CDIM_Report,SQL_STORED_PROCEDURE,BI_DB_Demo_CID_Panel,reLivePlatform FROM BI_DB_dbo.BI_DB_Demo_CID_Panel demo JOIN #pop pp ON demo.CID
+BI_DB_dbo,SP_W_Mon_Compliance_CDIM_Report,SQL_STORED_PROCEDURE,BI_DB_Scored_Appropriateness_Negative_Market,ssScore_Status FROM BI_DB_dbo.BI_DB_Scored_Appropriateness_Negative_Market neg2 JOIN #pop pp	ON pp.CID =
+BI_DB_dbo,SP_W_Mon_Compliance_CDIM_Report,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,M #pop pp LEFT JOIN BI_DB_dbo.BI_DB_KYC_Panel bdkp ON pp.CID = bdkp.RealCID
+BI_DB_dbo,SP_W_Mon_Compliance_CDIM_Report,SQL_STORED_PROCEDURE,BI_DB_KYC_Knowledge_Assessment,sessment_Score FROM BI_DB_dbo.BI_DB_KYC_Knowledge_Assessment bdkka JOIN DWH_dbo.Dim_Custom
+BI_DB_dbo,SP_W_Mon_Compliance_CDIM_Report,SQL_STORED_PROCEDURE,BI_DB_W_Mon_Compliance_CDIM_Report,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_W_Mon_Compliance_CDIM_Report   INSERT INTO BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_Money_Out_New_Management_Dashboard,SQL_STORED_PROCEDURE,BI_DB_Money_Out_New_Management_Dashboard, and Insert DELETE  BI_DB_dbo.BI_DB_Money_Out_New_Management_Dashboard FROM BI_DB_dbo.BI_DB_Money_Ou
+BI_DB_dbo,SP_CIDFunnelFlow,SQL_STORED_PROCEDURE,BI_DB_CIDFunnelFlow,    TRUNCATE TABLE  BI_DB_dbo.BI_DB_CIDFunnelFlow   insert into BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_CIDFunnelFlow,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF, = DR2.ID LEFT JOIN BI_DB_dbo.BI_DB_UsageTracking_SF sf WITH(NOLOCK) ON sf.CID = D
+BI_DB_dbo,SP_RevenueForum,SQL_STORED_PROCEDURE,BI_DB_DDR_Customer_Daily_Status,"D 	  ,IsFunded FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds WHERE bddcds.Date = @E"
+BI_DB_dbo,SP_RevenueForum,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_Revenue_Generating_Actions,talRevenue  FROM [BI_DB_dbo].[BI_DB_DDR_Fact_Revenue_Generating_Actions] ddr WHERE ddr.DateID >= @sta
+BI_DB_dbo,SP_RevenueForum,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_MIMO_AllPlatforms,) Amount   from  [BI_DB_dbo].[BI_DB_DDR_Fact_MIMO_AllPlatforms] bddfmap    WHERE  bddfmap.Da
+BI_DB_dbo,SP_RevenueForum,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_AUM,ityGlobal) AUA FROM BI_DB_dbo.BI_DB_DDR_Fact_AUM bddfa WHERE bddfa.Date= @date
+BI_DB_dbo,SP_RevenueForum,SQL_STORED_PROCEDURE,BI_DB_RevenueForum,ion     DELETE FROM BI_DB_dbo.BI_DB_RevenueForum WHERE FirstDayOfMonth = @Begi
+BI_DB_dbo,SP_OperationsMonthlyAffiliateKPIsFullData,SQL_STORED_PROCEDURE,BI_DB_Operations_Monthly_KPIs_Affiliates,	 Truncate Table [BI_DB_dbo].[BI_DB_Operations_Monthly_KPIs_Affiliates]  insert into [BI_DB_dbo].[BI
+Dealing_dbo,SP_SuspiciousActivityTrading_24H,SQL_STORED_PROCEDURE,Dealing_SuspiciousActivityTrading_24H, into DELETE FROM Dealing_dbo.Dealing_SuspiciousActivityTrading_24H   WHERE Date= @Date    INSERT
+BI_DB_dbo,SP_W_Mon_Staking_Email_for_Marcin,SQL_STORED_PROCEDURE,BI_DB_Staking_Email_For_Marcin,     TRUNCATE TABLE BI_DB_dbo.BI_DB_Staking_Email_For_Marcin  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_AML_German_Video_Ident,SQL_STORED_PROCEDURE,AML_German_Video_Ident,***/ TRUNCATE TABLE BI_DB_dbo.AML_German_Video_Ident  INSERT INTO BI_DB_dbo.AML_Ge
+Dealing_dbo,SP_Apex_Recon,SQL_STORED_PROCEDURE,Dealing_Duco_EODRecon,entID  						FROM Dealing_dbo.Dealing_Duco_EODRecon dde  						WHERE dde.Date = @
+Dealing_dbo,SP_Apex_Recon,SQL_STORED_PROCEDURE,Dealing_Duco_ActivityRecon,entID  						FROM Dealing_dbo.Dealing_Duco_ActivityRecon dde  						WHERE dde.Date = @
+Dealing_dbo,SP_Apex_Recon,SQL_STORED_PROCEDURE,Dealing_ApexRecon_Holdings,mPreviousDay FROM Dealing_dbo.Dealing_ApexRecon_Holdings h LEFT JOIN #Fivetran f ON h.
+Dealing_dbo,SP_Apex_Recon,SQL_STORED_PROCEDURE,Dealing_ApexRecon_TradeActivity,====  DELETE FROM Dealing_dbo.Dealing_ApexRecon_TradeActivity WHERE Date = @Date  INSERT IN
+Dealing_dbo,SP_Apex_Recon,SQL_STORED_PROCEDURE,Dealing_ApexRecon_Hedging,04'   DELETE FROM Dealing_dbo.Dealing_ApexRecon_Hedging WHERE Date = @Date  INSERT IN
+BI_DB_dbo,SP_W_Wed_BI_DB_FSRA_Weekly_Report,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,izationID LEFT JOIN BI_DB_dbo.BI_DB_CIDFirstDates bdcd ON fsc.GCID = bdcd.GCID 
+BI_DB_dbo,SP_W_Wed_BI_DB_FSRA_Weekly_Report,SQL_STORED_PROCEDURE,BI_DB_FSRA_Weekly_Report,---  TRUNCATE TABLE BI_DB_dbo.BI_DB_FSRA_Weekly_Report  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_RejectedDocuments,SQL_STORED_PROCEDURE,BI_DB_RejectedDocuments,ate  select * from BI_DB_dbo.[BI_DB_RejectedDocuments]  DELETE FROM  BI_DB_dbo.[BI_
+Dealing_dbo,SP_Vision_Recon,SQL_STORED_PROCEDURE,Dealing_Duco_EODRecon,AS eToroRate FROM Dealing_dbo.Dealing_Duco_EODRecon dde JOIN #Fivetran f ON dde.H
+Dealing_dbo,SP_Vision_Recon,SQL_STORED_PROCEDURE,Dealing_Duco_ActivityRecon,ntAmountUSD  FROM Dealing_dbo.Dealing_Duco_ActivityRecon ddar JOIN #Fivetran f ON ddar
+Dealing_dbo,SP_Vision_Recon,SQL_STORED_PROCEDURE,Dealing_VisionRecon_EODHoldings,ble   DELETE FROM Dealing_dbo.Dealing_VisionRecon_EODHoldings WHERE Date=@Date  INSERT INTO
+Dealing_dbo,SP_Vision_Recon,SQL_STORED_PROCEDURE,Dealing_VisionRecon_Trades,ed    DELETE FROM Dealing_dbo.Dealing_VisionRecon_Trades WHERE Date=@Date  INSERT INTO
+BI_DB_dbo,SP_ChargebackReport,SQL_STORED_PROCEDURE,BI_DB_ChargebackReport,	--select * FROM [BI_DB_dbo].[BI_DB_ChargebackReport] DELETE FROM  [BI_DB_dbo].[BI
+BI_DB_dbo,SP_Bing_PBI,SQL_STORED_PROCEDURE,BI_DB_Bing_PBI_Group_Dict,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_Bing_PBI_Group_Dict]  INSERT INTO [BI_DB_dbo].[BI
+BI_DB_dbo,SP_Bing_PBI,SQL_STORED_PROCEDURE,BI_DB_Bing_PBI_Campaign_Dict,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_Bing_PBI_Campaign_Dict]  INSERT INTO [BI_DB_dbo].[BI
+BI_DB_dbo,SP_M_Snapshot_CID_LifeStageDefinition,SQL_STORED_PROCEDURE,BI_DB_Snapshot_CID_LifeStageDefinition,112)   DELETE FROM  BI_DB_dbo.BI_DB_Snapshot_CID_LifeStageDefinition WHERE DateID = @endofmonthINT
+BI_DB_dbo,SP_M_Snapshot_CID_LifeStageDefinition,SQL_STORED_PROCEDURE,BI_DB_CID_LifeStageDefinition,	INTO #temp1  	from BI_DB_dbo.BI_DB_CID_LifeStageDefinition clsd WITH (NOLOCK) 	WHERE @en
+BI_DB_dbo,SP_M_Snapshot_CID_LifeStageDefinition,SQL_STORED_PROCEDURE,BI_DB_CID_DailyCluster,	INTO #class 	FROM  BI_DB_dbo.BI_DB_CID_DailyCluster bdcs WITH (NOLOCK) 	WHERE @en
+BI_DB_dbo,SP_Instruments_BidAndAsk,SQL_STORED_PROCEDURE,BI_DB_Instruments_BidAndAsk,    TRUNCATE TABLE  BI_DB_dbo.BI_DB_Instruments_BidAndAsk INSERT INTO BI_DB_dbo.BI_DB_I
+BI_DB_dbo,V_AUM_Dashboard,VIEW,BI_DB_DailyPanel_Copy,) Date       FROM [BI_DB_dbo].BI_DB_DailyPanel_Copy bddpc       ) a JOIN [BI_DB_d
+Dealing_dbo,SP_Clicks_OpenClose_Breakdown,SQL_STORED_PROCEDURE,BI_DB_Positions_Opened_From_IBAN,nct PositionID from BI_DB_dbo.BI_DB_Positions_Opened_From_IBAN) oi ON p.PositionID = oi.Posi
+Dealing_dbo,SP_Clicks_OpenClose_Breakdown,SQL_STORED_PROCEDURE,BI_DB_Positions_Closed_To_IBAN,nct PositionID from BI_DB_dbo.BI_DB_Positions_Closed_To_IBAN) ci ON p.PositionID = ci.Posi
+Dealing_dbo,SP_Clicks_OpenClose_Breakdown,SQL_STORED_PROCEDURE,Dealing_Clicks_OpenClose_Breakdown,h  DELETE FROM [Dealing_dbo].[Dealing_Clicks_OpenClose_Breakdown] WHERE Date=@Date  INSERT INT
+BI_DB_dbo,SP_EY_Audit_Auditor_Unrealized_Calculations,SQL_STORED_PROCEDURE,Client_Balance_Breakdown_Instrument_Level,zedPnLChangeCB FROM BI_DB_dbo.Client_Balance_Breakdown_Instrument_Level cbbil WHERE cbbil.DateID = 20
+Dealing_dbo,SP_IntraHourIndexReport,SQL_STORED_PROCEDURE,Dealing_IndiciesIntraHour_Clients,   DELETE FROM [Dealing_dbo].[Dealing_IndiciesIntraHour_Clients] WHERE Date=@Date    INSERT I
+Dealing_dbo,SP_IntraHourIndexReport,SQL_STORED_PROCEDURE,Dealing_IndiciesIntraHour_Etoro,   DELETE FROM [Dealing_dbo].[Dealing_IndiciesIntraHour_Etoro] WHERE Date=@Date    INSERT I
+BI_DB_dbo,SP_EY_Audit_Opened_Positions,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport_Instrument_Agg,missionChange) FROM BI_DB_dbo.BI_DB_DailyCommisionReport_Instrument_Agg bddcria WHERE DateID BETWEEN 
+BI_DB_dbo,SP_Tax_Compensation_for_1099,SQL_STORED_PROCEDURE,BI_DB_BO_Generated_Compensations,"ber 	  ,dc.Zip FROM BI_DB_dbo.BI_DB_BO_Generated_Compensations bdbgc JOIN DWH_dbo.Dim_Custom"
+BI_DB_dbo,SP_Tax_Compensation_for_1099,SQL_STORED_PROCEDURE,BI_DB_USA_FinanceReport_forTax,"CID 	  ,cc.SSN FROM BI_DB_dbo.BI_DB_USA_FinanceReport_forTax cc JOIN #pop_comp pp ON cc.Re"
+BI_DB_dbo,SP_Tax_Compensation_for_1099,SQL_STORED_PROCEDURE,BI_DB_Tax_Compensation_for_1099,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_Tax_Compensation_for_1099     INSERT INTO BI_DB_dbo.BI_
+BI_DB_dbo,SP_CID_DailyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_First5Actions, Ariel    remove from  BI_DB..BI_DB_First5Actions   10-02-2021           Eti   
+BI_DB_dbo,SP_CID_DailyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_CID_DailyCluster,B_ActivitySegment_Snapshot to BI_DB_CID_DailyCluster   07-04-2021			 Maor				cut l
+BI_DB_dbo,SP_CID_DailyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_NewBonusReport,            FROM [BI_DB_dbo].[BI_DB_NewBonusReport]         WHERE [DateID] >=@st
+BI_DB_dbo,SP_CID_DailyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_ClubChangeLogProduct,n       --FROM [BI_DB].[dbo].[BI_DB_ClubChangeLogProduct] ccl WITH (NOLOCK)       --IN
+BI_DB_dbo,SP_CID_DailyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,K)       INNER JOIN BI_DB_dbo.BI_DB_CIDFirstDates fd WITH(NOLOCK)        ON fd.
+BI_DB_dbo,SP_CID_DailyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport, Revenue_Other FROM BI_DB_dbo.BI_DB_DailyCommisionReport bddcr WHERE bddcr.DateID = @s
+BI_DB_dbo,SP_CID_DailyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_FullData,",ACC_ChurnDays FROM BI_DB_dbo.BI_DB_CID_DailyPanel_FullData WHERE DateID = @EndPreviousDI"
+BI_DB_dbo,SP_CID_DailyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_CID_LifeStageDefinition,s EOD_LSD  FROM  [BI_DB_dbo].[BI_DB_CID_LifeStageDefinition] as lf WHERE @startDateINT >=
+BI_DB_dbo,SP_Positions_Opened_From_IBAN,SQL_STORED_PROCEDURE,BI_DB_Positions_Opened_From_IBAN,fbw  TRUNCATE TABLE BI_DB_dbo.BI_DB_Positions_Opened_From_IBAN  INSERT INTO BI_DB_dbo.BI_DB_
+Dealing_dbo,SP_Employee_Zero_StocksETFs,SQL_STORED_PROCEDURE,Dealing_Employee_Zero_StocksETFs,--  DELETE FROM [Dealing_dbo].Dealing_Employee_Zero_StocksETFs WHERE Date = @Date  INSERT IN
+Dealing_dbo,SP_CommissionsAndFails_PerCID,SQL_STORED_PROCEDURE,Dealing_CIDs_CommissionsAndFails,y PIs DELETE FROM Dealing_dbo.Dealing_CIDs_CommissionsAndFails WHERE Date = @Date  INSERT IN
+Dealing_dbo,SP_CommissionsAndFails_PerCID,SQL_STORED_PROCEDURE,Dealing_FailReasons,ata   DELETE FROM Dealing_dbo.Dealing_FailReasons WHERE Date = @Date  INSERT IN
+Dealing_dbo,SP_CommissionsAndFails_PerCID,SQL_STORED_PROCEDURE,Dealing_PlayerLevel_Data,ata   DELETE FROM Dealing_dbo.Dealing_PlayerLevel_Data WHERE Date = @Date  INSERT IN
+Dealing_dbo,SP_CommissionsAndFails_PerCID,SQL_STORED_PROCEDURE,Dealing_PlayerLevel_Fails,ata   DELETE FROM Dealing_dbo.Dealing_PlayerLevel_Fails WHERE Date = @Date  INSERT IN
+Dealing_dbo,SP_CommissionsAndFails_PerCID,SQL_STORED_PROCEDURE,Dealing_FailReasons_Top20,ils   DELETE FROM Dealing_dbo.Dealing_FailReasons_Top20 WHERE Date = @Date  INSERT IN
+Dealing_dbo,SP_CommissionsAndFails_PerCID,SQL_STORED_PROCEDURE,Dealing_CIDs_CommissionsAndFails_PIs,y PIs DELETE FROM Dealing_dbo.Dealing_CIDs_CommissionsAndFails_PIs WHERE Date = @Date  INSERT IN
+Dealing_dbo,SP_CommissionsAndFails_PerCID,SQL_STORED_PROCEDURE,Dealing_FailReasons_PIs,PIs   DELETE FROM Dealing_dbo.Dealing_FailReasons_PIs WHERE Date = @Date  INSERT IN
+Dealing_dbo,SP_CommissionsAndFails_PerCID,SQL_STORED_PROCEDURE,Dealing_PlayerLevel_Data_PIs,Is    DELETE FROM Dealing_dbo.Dealing_PlayerLevel_Data_PIs WHERE Date = @Date  INSERT IN
+Dealing_dbo,SP_CommissionsAndFails_PerCID,SQL_STORED_PROCEDURE,Dealing_PlayerLevel_Fails_PIs,PIs   DELETE FROM Dealing_dbo.Dealing_PlayerLevel_Fails_PIs WHERE Date = @Date  INSERT IN
+Dealing_dbo,SP_CommissionsAndFails_PerCID,SQL_STORED_PROCEDURE,Dealing_FailReasons_Top20_PIs,PIs   DELETE FROM Dealing_dbo.Dealing_FailReasons_Top20_PIs WHERE Date = @Date  INSERT IN
+Dealing_dbo,V_Dealing_CEPDailyAudit_CP_Last180Days,VIEW,Dealing_CEPDailyAudit_CP, AS SELECT * FROM Dealing_dbo.Dealing_CEPDailyAudit_CP WHERE Date >= getdate()-180;
+BI_DB_dbo,SP_CMR_Automation_FSRA_ClientInterestReport,SQL_STORED_PROCEDURE,BI_DB_InterestDaily,ly Interest]   FROM BI_DB_dbo.BI_DB_InterestDaily d with (nolock)   JOIN DWH_db
+BI_DB_dbo,SP_CID_DailyPanel_UpdateCluster,SQL_STORED_PROCEDURE,BI_DB_InvestorsKPI,"ore update statements for dbo.BI_DB_InvestorsKPI,dbo.BI_DB_CID_DailyPanel_Club"
+BI_DB_dbo,SP_CID_DailyPanel_UpdateCluster,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_Club,"or dbo.BI_DB_InvestorsKPI,dbo.BI_DB_CID_DailyPanel_Club 2023-07-02			Tom Boksenbojm		"
+BI_DB_dbo,SP_CID_DailyPanel_UpdateCluster,SQL_STORED_PROCEDURE,BI_DB_CID_DailyCluster,egmentDetail   FROM BI_DB_dbo.BI_DB_CID_DailyCluster s  WITH(NOLOCK)     WHERE @da
+BI_DB_dbo,SP_CID_DailyPanel_UpdateCluster,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_FullData,on = f.Segment FROM BI_DB_dbo.BI_DB_CID_DailyPanel_FullData a WITH(NOLOCK)    JOIN #segme
+BI_DB_dbo,Function_Revenue_StakingFee,SQL_INLINE_TABLE_VALUED_FUNCTION,Dealing_Staking_Results,akingMonthID FROM Dealing_dbo.Dealing_Staking_Results dsr WHERE LEN(dsr.StakingMont
+BI_DB_dbo,BI_DB_V_DDR_MIMO,VIEW,BI_DB_DDR_Fact_MIMO_AllPlatforms,09 CashedOutTP FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms map  -- select  * from BI_DB_
+BI_DB_dbo,BI_DB_V_DDR_MIMO,VIEW,BI_DB_DDR_Fact_Non_Revenue_Generating_Actions,outAdjustment  FROM BI_DB_dbo.BI_DB_DDR_Fact_Non_Revenue_Generating_Actions map GROUP BY  	   map.DateID	
+BI_DB_dbo,SP_Compliance_VP_Monthly_MI,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,uageID LEFT JOIN [BI_DB_dbo].[BI_DB_CIDFirstDates] fd  	ON fd.CID = dc.RealCID 
+BI_DB_dbo,SP_Compliance_VP_Monthly_MI,SQL_STORED_PROCEDURE,BI_DB_Compliance_VP_Monthly_MI,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_Compliance_VP_Monthly_MI  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_NewBonusReport,SQL_STORED_PROCEDURE,BI_DB_NewBonusReport,***/   DELETE FROM  BI_DB_dbo.BI_DB_NewBonusReport     WHERE DateID=@dateID     
+BI_DB_dbo,SP_NewBonusReport,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,e_SF DESC) rn 	FROM BI_DB_dbo.BI_DB_UsageTracking_SF sf WITH (NOLOCK) 	INNER JOIN 
+BI_DB_dbo,SP_NewBonusReport,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,final f 	INNER JOIN BI_DB_dbo.BI_DB_CIDFirstDates fd WITH (NOLOCK) 		ON fd.CID 
+BI_DB_dbo,SP_Stocks_Opportunities,SQL_STORED_PROCEDURE,BI_DB_Daily_TradeData,irstActions FROM [BI_DB_dbo].[BI_DB_Daily_TradeData] bddtd JOIN [DWH_dbo].[Dim_In
+BI_DB_dbo,SP_Stocks_Opportunities,SQL_STORED_PROCEDURE,BI_DB_First5Actions,DateID LEFT JOIN [BI_DB_dbo].[BI_DB_First5Actions] fa ON bddtd.Date = CAST(fa.F
+BI_DB_dbo,SP_Stocks_Opportunities,SQL_STORED_PROCEDURE,BI_DB_Stocks_Opportunities,**/  DELETE FROM [BI_DB_dbo].[BI_DB_Stocks_Opportunities] WHERE Date = @dd OR Date < D
+BI_DB_dbo,SP_M_AML_Report,SQL_STORED_PROCEDURE,BI_DB_AML_SubEntity_Categorization,c.RealCID LEFT JOIN BI_DB_dbo.BI_DB_AML_SubEntity_Categorization bdasec ON fsc.RealCID = bdase
+BI_DB_dbo,SP_M_AML_Report,SQL_STORED_PROCEDURE,BI_DB_M_AML_Report,******/ DELETE FROM BI_DB_dbo.BI_DB_M_AML_Report WHERE EOM = @EndOfMonth  INSE
+BI_DB_dbo,SP_M_AML_Report,SQL_STORED_PROCEDURE,BI_DB_M_AML_Report_AGG,******/ DELETE FROM BI_DB_dbo.BI_DB_M_AML_Report_AGG WHERE EOM = @EndOfMonth  INSE
+BI_DB_dbo,SP_SuspiciousActivityTrading_Investing,SQL_STORED_PROCEDURE,BI_DB_SuspiciousActivityTrading_Investing,SELECT RootCID FROM BI_DB_dbo.BI_DB_SuspiciousActivityTrading_Investing WHERE CAST(UpdateDate AS DATE
+BI_DB_dbo,SP_RAF_InviteeAbuser,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,PosOpenDate FROM [BI_DB_dbo].[BI_DB_CIDFirstDates] a with (NOLOCK) WHERE Serial
+BI_DB_dbo,SP_RAF_InviteeAbuser,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_FullData,FROM #pop p JOIN [BI_DB_dbo].[BI_DB_CID_DailyPanel_FullData] b ON b.CID=p.Invitee  AND b.
+BI_DB_dbo,SP_RAF_InviteeAbuser,SQL_STORED_PROCEDURE,BI_DB_RAF_Invitees_KPIs,e    DELETE FROM [BI_DB_dbo].[BI_DB_RAF_Invitees_KPIs] WHERE registered >= @Last2mo
+BI_DB_dbo,SP_IFR_KFactors_Automation_EOMExposure,SQL_STORED_PROCEDURE,BI_DB_EOMExposures,ered Exposure] FROM BI_DB_dbo.BI_DB_EOMExposures bde LEFT JOIN BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_CorporatesSummaryReport,SQL_STORED_PROCEDURE,BI_DB_AllDeposits,EndDateID LEFT JOIN BI_DB_dbo.BI_DB_AllDeposits bdad ON bdad.CID=c.RealCID AN
+BI_DB_dbo,SP_CorporatesSummaryReport,SQL_STORED_PROCEDURE,BI_DB_Corporates_SummaryReport,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_Corporates_SummaryReport]  INSERT INTO [BI_DB_dbo].[BI
+BI_DB_dbo,SP_CMR_Automation_Zero_By_Instrument,SQL_STORED_PROCEDURE,Client_Balance_Breakdown_Instrument_Level,talZero							 FROM BI_DB_dbo.Client_Balance_Breakdown_Instrument_Level cbbil WHERE cbbil.DateID BETW
+BI_DB_dbo,V_BI_DB_W_Vulnerability,VIEW,BI_DB_W_Wed_Compliance_Vulnerability_ALL,y] AS select * from BI_DB_dbo.BI_DB_W_Wed_Compliance_Vulnerability_ALL;
+BI_DB_dbo,SP_CID_LifeStageDefinition,SQL_STORED_PROCEDURE,BI_DB_CID_LifeStageDefinition,EGIN  DELETE FROM [BI_DB_dbo].BI_DB_CID_LifeStageDefinition    WHERE DateID=@date_INT    
+BI_DB_dbo,SP_CID_LifeStageDefinition,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,stFundedDate FROM [BI_DB_dbo].BI_DB_CIDFirstDates bdcd WITH (NOLOCK)   CREATE C
+BI_DB_dbo,SP_AML_Documents_Request,SQL_STORED_PROCEDURE,BI_DB_AML_Documents_Request,**/  TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_Documents_Request  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_AML_PI_Abuse,SQL_STORED_PROCEDURE,BI_DB_First5Actions,c.RealCID LEFT JOIN BI_DB_dbo.BI_DB_First5Actions bdfa ON bdfa.CID = dc.RealCID
+BI_DB_dbo,SP_AML_PI_Abuse,SQL_STORED_PROCEDURE,BI_DB_AML_PI_Abuse_SameIP,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_PI_Abuse_SameIP;  INSERT INTO BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_AML_PI_Abuse,SQL_STORED_PROCEDURE,BI_DB_AML_PI_Abuse_DeviceID_PI_Side,e ID TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_PI_Abuse_DeviceID_PI_Side;  INSERT INTO BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_AML_PI_Abuse,SQL_STORED_PROCEDURE,BI_DB_AML_PI_Abuse_DeviceID_Copy_Side,e ID TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_PI_Abuse_DeviceID_Copy_Side;  INSERT INTO BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_AML_PI_Abuse,SQL_STORED_PROCEDURE,BI_DB_AML_PI_Abuse_DeviceID_AS_PI,s PI TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_PI_Abuse_DeviceID_AS_PI;  INSERT INTO BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_AML_PI_Abuse,SQL_STORED_PROCEDURE,BI_DB_AML_PI_Abuse_DeviceID_Copiers,iers TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_PI_Abuse_DeviceID_Copiers;  INSERT INTO BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_AML_PI_Abuse,SQL_STORED_PROCEDURE,BI_DB_AML_PI_Abuse_FID_PI_Side,- PI TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_PI_Abuse_FID_PI_Side;  INSERT INTO BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_AML_PI_Abuse,SQL_STORED_PROCEDURE,BI_DB_AML_PI_Abuse_FID_Copy_Side,Copy TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_PI_Abuse_FID_Copy_Side;  INSERT INTO BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_AML_PI_Abuse,SQL_STORED_PROCEDURE,BI_DB_AML_PI_Abuse_FID_Same_as_pi,s PI TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_PI_Abuse_FID_Same_as_pi;  INSERT INTO BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_AML_PI_Abuse,SQL_STORED_PROCEDURE,BI_DB_AML_PI_Abuse_FID_Same_Copy,pier TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_PI_Abuse_FID_Same_Copy;  INSERT INTO BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_AML_PI_Abuse,SQL_STORED_PROCEDURE,BI_DB_AML_PI_Abuse,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_PI_Abuse;  INSERT INTO BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_AML_PI_Abuse,SQL_STORED_PROCEDURE,BI_DB_AML_PI_Abuse_CopierTable,******/ DELETE FROM BI_DB_dbo.BI_DB_AML_PI_Abuse_CopierTable WHERE @DateID > @Past6MonthsI
+BI_DB_dbo,SP_Client_Balance_New,SQL_STORED_PROCEDURE,BI_DB_Fact_Customer_Action_Position_Distribution,ttlementTypeID FROM BI_DB_dbo.BI_DB_Fact_Customer_Action_Position_Distribution bdfcapd 	JOIN DWH_dbo.Dim_Ins
+BI_DB_dbo,SP_WeeklyCopyBlock,SQL_STORED_PROCEDURE,DWH_CIDs7DaysDeviation,ION u 	LEFT JOIN  		BI_DB_dbo.DWH_CIDs7DaysDeviation rstart WITH (NOLOCK) 		ON u.C
+BI_DB_dbo,SP_WeeklyCopyBlock,SQL_STORED_PROCEDURE,BI_DB_WeeklyCopyBlock,N 		TRUNCATE TABLE BI_DB_dbo.[BI_DB_WeeklyCopyBlock] 			INSERT INTO BI_DB_dbo.[BI
+BI_DB_dbo,SP_QTFN_Report,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,untTypeID LEFT JOIN BI_DB_dbo.BI_DB_CIDFirstDates bdcd ON bdcd.CID = dc.RealCID
+BI_DB_dbo,SP_QTFN_Report,SQL_STORED_PROCEDURE,BI_DB_QTFN_Report,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_QTFN_Report     INSERT INTO BI_DB_dbo.BI_
+BI_DB_dbo,SP_CIDFirstDates_HistoricalRun,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,a.CID       FROM [BI_DB_dbo].[BI_DB_CIDFirstDates] a with(NOLOCK)     JOIN #int
+BI_DB_dbo,SP_BI_DB_BODailyCompensations,SQL_STORED_PROCEDURE,BI_DB_BODailyCompensations,ionID  DELETE FROM  BI_DB_dbo.BI_DB_BODailyCompensations WHERE Occurred>= @Date and Oc
+BI_DB_dbo,SP_IFR_KFactors_Automation_KAUM_Monthly,SQL_STORED_PROCEDURE,BI_DB_Capital_Adequacy_Monthly_NOP,OM_Date) AS RN FROM BI_DB_dbo.BI_DB_Capital_Adequacy_Monthly_NOP WHERE Real_CFD = 'Real' -- AN
+BI_DB_dbo,V_BI_DB_KYC_Score_CID_Level,VIEW,BI_DB_KYC_Score_CID_Level,dateDate]   FROM [BI_DB_dbo].[BI_DB_KYC_Score_CID_Level];
+BI_DB_dbo,SP_CID_DailyCopyRevenue,SQL_STORED_PROCEDURE,BI_DB_DailyCopyRevenue,tCID)   DELETE FROM BI_DB_dbo.BI_DB_DailyCopyRevenue WHERE  DateID = @startDateINT
+BI_DB_dbo,SP_CMR_Phase2_EU_Outliers,SQL_STORED_PROCEDURE,BI_DB_CMR_Phase2_EU_Outliers,r]      DELETE FROM BI_DB_dbo.BI_DB_CMR_Phase2_EU_Outliers WHERE Date = @date      INSER
+Dealing_dbo,SP_PriceLocks,SQL_STORED_PROCEDURE,Dealing_PriceLocks,s  DELETE FROM [Dealing_dbo].[Dealing_PriceLocks] WHERE Date = @date  INSERT I
+Dealing_dbo,V_Dealing_CEPDailyAudit_Conditions_Last180Days,VIEW,Dealing_CEPDailyAudit_Conditions, AS SELECT * FROM Dealing_dbo.Dealing_CEPDailyAudit_Conditions WHERE Date >= getdate()-180;
+Dealing_dbo,SP_Staking_US,SQL_STORED_PROCEDURE,Dealing_Staking_Results_US,elect top 1* from Dealing_dbo.Dealing_Staking_Results_US where StakingMonthID = @Staki
+Dealing_dbo,SP_Staking_US,SQL_STORED_PROCEDURE,Dealing_Staking_Results,ct top 100 * from Dealing_dbo.Dealing_Staking_Results  WHERE StakingMonthID = 20250
+Dealing_dbo,SP_Staking_US,SQL_STORED_PROCEDURE,Dealing_Staking_Club_US,---   DELETE FROM Dealing_dbo.Dealing_Staking_Club_US WHERE StakingMonthID = @Staki
+Dealing_dbo,SP_Staking_US,SQL_STORED_PROCEDURE,Dealing_Staking_Summary_US,----  DELETE FROM Dealing_dbo.Dealing_Staking_Summary_US WHERE StakingMonthID = @Staki
+Dealing_dbo,SP_Staking_US,SQL_STORED_PROCEDURE,Dealing_Staking_Summary,S --select * from Dealing_dbo.Dealing_Staking_Summary WHERE StakingMonthID = 202506
+Dealing_dbo,SP_Staking_US,SQL_STORED_PROCEDURE,Dealing_Staking_Position_US,----  DELETE FROM Dealing_dbo.Dealing_Staking_Position_US WHERE StakingMonthID = @Staki
+BI_DB_dbo,SP_AffiliateFTDsAndURLS,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,m_Affiliate da JOIN BI_DB_dbo.BI_DB_CIDFirstDates fd ON fd.SerialID = da.Affili
+BI_DB_dbo,SP_AffiliateFTDsAndURLS,SQL_STORED_PROCEDURE,BI_DB_AffiliateFTDsAndURLS,   DELETE FROM   [BI_DB_dbo].[BI_DB_AffiliateFTDsAndURLS] WHERE (FirstDepositDate=@Dat
+BI_DB_dbo,BI_DB_V_DDR_AUM,VIEW,BI_DB_DDR_Fact_AUM,onsTotalEquity FROM BI_DB_dbo.BI_DB_DDR_Fact_AUM bddfe;
+BI_DB_dbo,SP_BI_DB_Suitability_KYC,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,Above_200K' 	  FROM BI_DB_dbo.BI_DB_KYC_Panel a)kyc ON p.GCID=kyc.GCID   --
+BI_DB_dbo,SP_BI_DB_Suitability_KYC,SQL_STORED_PROCEDURE,BI_DB_KYC_Knowledge_Assessment,M #pop p INNER JOIN BI_DB_dbo.BI_DB_KYC_Knowledge_Assessment bdkka ON p.GCID = bdkka.GCID 
+BI_DB_dbo,SP_BI_DB_Suitability_KYC,SQL_STORED_PROCEDURE,BI_DB_KYC_Questions_Answers_Row_Data,rId            FROM BI_DB_dbo.BI_DB_KYC_Questions_Answers_Row_Data bdkqard             WHERE bdk
+BI_DB_dbo,SP_Affiliate_Guidlines_Report,SQL_STORED_PROCEDURE,BI_DB_Affiliate_Guidlines_Report,       IF OBJECT_ID('tempdb..#BI_DB_Affiliate_Guidlines_Report') IS NOT NULL DROP TABLE #BI_
+BI_DB_dbo,SP_AML_SAR_Report,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,StatusID  LEFT JOIN BI_DB_dbo.BI_DB_KYC_Panel bdkp ON dc.RealCID = bdkp.Rea
+BI_DB_dbo,SP_AML_SAR_Report,SQL_STORED_PROCEDURE,BI_DB_AML_SAR_Report_FCA,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_SAR_Report_FCA  INSERT INTO BI_DB_dbo.BI_DB_
+Dealing_dbo,SP_JP_Credit_Risk,SQL_STORED_PROCEDURE,Dealing_JP_Credit_Risk,able  DELETE FROM Dealing_dbo.Dealing_JP_Credit_Risk WHERE Date=@Date   INSERT INT
+BI_DB_dbo,SP_ReverseCO_Report,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,easonID INNER JOIN BI_DB_dbo.[BI_DB_CIDFirstDates] fd WITH(NOLOCK) ON  fd.CID =
+BI_DB_dbo,SP_ReverseCO_Report,SQL_STORED_PROCEDURE,BI_DB_ReverseCoReport,/ DELETE FROM    [BI_DB_dbo].[BI_DB_ReverseCoReport]     WHERE CAST(CoCanceledDat
+BI_DB_dbo,SP_ReverseCO_Report,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,M #temp t LEFT JOIN BI_DB_dbo.BI_DB_UsageTracking_SF  sf WITH(NOLOCK) ON sf.CID = 
+BI_DB_dbo,SP_W_Tue_Reg_UK_Compliance_KYC_Weekly_Export,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,ionID 	LEFT JOIN [BI_DB_dbo].[BI_DB_CIDFirstDates] fd (NOLOCK) ON dc.RealCID = 
+BI_DB_dbo,SP_W_Tue_Reg_UK_Compliance_KYC_Weekly_Export,SQL_STORED_PROCEDURE,BI_DB_Reg_UK_Compliance_KYC_Weekly_Export,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_Reg_UK_Compliance_KYC_Weekly_Export] INSERT INTO [BI_DB_dbo].[BI_
+BI_DB_dbo,SP_Marketing_Cube,SQL_STORED_PROCEDURE,BI_DB_LTV_BI_Actual,date GLTV from the new table [BI_DB_LTV_BI_Actual] (replaced previous BI_DB_Rea
+BI_DB_dbo,SP_Marketing_Cube,SQL_STORED_PROCEDURE,BI_DB_CID_VerificationLevel,tionLevelID3   from BI_DB_dbo.BI_DB_CID_VerificationLevel a    join #funnel b   on a.Re
+BI_DB_dbo,SP_Marketing_Cube,SQL_STORED_PROCEDURE,BI_DB_FB_Report,_FB_Insight_Ext]*/  BI_DB_dbo.BI_DB_FB_Report a    -- left JOIN DWH_dbo.Dim
+BI_DB_dbo,SP_Marketing_Cube,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport, #funnel b 	JOIN [BI_DB_dbo].[BI_DB_DailyCommisionReport] dcr with (NOLOCK)  	ON dcr.R
+BI_DB_dbo,SP_Marketing_Cube,SQL_STORED_PROCEDURE,BI_DB_MarketingDailyRawData,**   delete from [BI_DB_dbo].[BI_DB_MarketingDailyRawData]  where DateID >= @StartOfLas
+BI_DB_dbo,SP_Marketing_Cube,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,ned') Funnel   from BI_DB_dbo.BI_DB_CIDFirstDates a    join #funnel b    on a.C
+BI_DB_dbo,SP_Marketing_Cube,SQL_STORED_PROCEDURE,BI_DB_FirstTimeRev10,th a   left join [BI_DB_dbo].[BI_DB_FirstTimeRev10] rev10  on a.CID = rev10.CID 
+BI_DB_dbo,SP_Marketing_Cube,SQL_STORED_PROCEDURE,BI_DB_MarketingMonthlyRawData,**   delete from [BI_DB_dbo].[BI_DB_MarketingMonthlyRawData] where YearMonthID >= @StartO
+BI_DB_dbo,SP_AML_PlayerStatus_Changes,SQL_STORED_PROCEDURE,BI_DB_AML_PlayerStatus_Changes,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_PlayerStatus_Changes  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_CryptoDashboard,SQL_STORED_PROCEDURE,BI_DB_Crypto_Dashboard,y]   DELETE FROM [BI_DB_dbo].[BI_DB_Crypto_Dashboard] WHERE DateID = @dateID   INS
+BI_DB_dbo,SP_QMMF_Report,SQL_STORED_PROCEDURE,BI_DB_QMMF_Report,------- DELETE FROM BI_DB_dbo.BI_DB_QMMF_Report WHERE LastInteractionDate=@Da
+BI_DB_dbo,SP_QMMF_Report,SQL_STORED_PROCEDURE,BI_DB_QMMF_Report_Finance,------  DELETE FROM BI_DB_dbo.BI_DB_QMMF_Report_Finance WHERE DateID=@DateID  INSERT 
+BI_DB_dbo,SP_Affiliates_VerificationSLA,SQL_STORED_PROCEDURE,BI_DB_Affiliates_VerificationSLA,   Truncate table  BI_DB_dbo.[BI_DB_Affiliates_VerificationSLA] INSERT INTO   BI_DB_dbo.[BI_
+BI_DB_dbo,SP_Publications,SQL_STORED_PROCEDURE,BI_DB_Publications,_live pl LEFT JOIN  BI_DB_dbo.BI_DB_Publications pu   ON pu.CID = pl.CID   WHE
+BI_DB_dbo,SP_BI_DB_AMLPeriodicReview_PostReview,SQL_STORED_PROCEDURE,BI_DB_AMLPeriodicReview, AS rn         FROM BI_DB_dbo.BI_DB_AMLPeriodicReview     ) x     WHERE rn = 1     
+BI_DB_dbo,SP_BI_DB_AMLPeriodicReview_PostReview,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,ewPending'     FROM BI_DB_dbo.BI_DB_CIDFirstDates v         join #populationfin
+BI_DB_dbo,SP_BI_DB_AMLPeriodicReview_PostReview,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,entAmount      FROM BI_DB_dbo.BI_DB_KYC_Panel bdkp         JOIN #population
+BI_DB_dbo,SP_BI_DB_AMLPeriodicReview_PostReview,SQL_STORED_PROCEDURE,BI_DB_RiskAlertManagementTool,atePerType     FROM BI_DB_dbo.BI_DB_RiskAlertManagementTool amt         join #populationf
+BI_DB_dbo,SP_BI_DB_AMLPeriodicReview_PostReview,SQL_STORED_PROCEDURE,BI_DB_AML_BI_Alerts_New,IAlertDate     FROM BI_DB_dbo.BI_DB_AML_BI_Alerts_New amt         join #populationf
+BI_DB_dbo,SP_BI_DB_AMLPeriodicReview_PostReview,SQL_STORED_PROCEDURE,BI_DB_AMLPeriodicReview_PostReview,ta      DELETE FROM BI_DB_dbo.BI_DB_AMLPeriodicReview_PostReview WHERE RealCID IN (SELECT Real
+BI_DB_dbo,SP_Regulation_Change_Abuse,SQL_STORED_PROCEDURE,BI_DB_Regulation_Change_Abuse_Categories,s:  truncate table  BI_DB_dbo.BI_DB_Regulation_Change_Abuse_Categories  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_Regulation_Change_Abuse,SQL_STORED_PROCEDURE,BI_DB_Regulation_Change_Abuse_CIDs,e statement: MERGE BI_DB_dbo.[BI_DB_Regulation_Change_Abuse_CIDs] trgt USING #finalcid src ON 
+Dealing_dbo,SP_Staking,SQL_STORED_PROCEDURE,Dealing_Staking_Results,elect top 1* from Dealing_dbo.Dealing_Staking_Results where StakingMonthID = @Staki
+Dealing_dbo,SP_Staking,SQL_STORED_PROCEDURE,Dealing_Staking_Summary,---   DELETE FROM Dealing_dbo.Dealing_Staking_Summary WHERE StakingMonthID = @Staki
+Dealing_dbo,SP_Staking,SQL_STORED_PROCEDURE,Dealing_Staking_Position,----  DELETE FROM Dealing_dbo.Dealing_Staking_Position WHERE StakingMonthID = @Staki
+BI_DB_dbo,SP_Wires_PIP_Calculation_Report,SQL_STORED_PROCEDURE,BI_DB_Wire_PIP_Report,orporate')   DELETE BI_DB_dbo.BI_DB_Wire_PIP_Report WHERE PaymentDate=@Date   INS
+BI_DB_dbo,SP_DailyPanel_Copy,SQL_STORED_PROCEDURE,DWH_CIDsDailyRisk,AS RiskScore  	FROM BI_DB_dbo.DWH_CIDsDailyRisk cdr WITH (NOLOCK) 	LEFT JOIN 
+BI_DB_dbo,SP_DailyPanel_Copy,SQL_STORED_PROCEDURE,DWH_GainDaily,S Gain_MTD    	FROM BI_DB_dbo.DWH_GainDaily a with (NOLOCK)     	JOIN #Co
+BI_DB_dbo,SP_DailyPanel_Copy,SQL_STORED_PROCEDURE,BI_DB_DailyPanel_Copy,CID    	DELETE FROM BI_DB_dbo.BI_DB_DailyPanel_Copy 	WHERE DateID = @date_int   	
+BI_DB_dbo,SP_OPS_MastersAndSubAccounts_AlignmentMonitoringReport,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel, = td.CID left join BI_DB_dbo.BI_DB_KYC_Panel kycp on kycp.RealCID=mf.CID l
+BI_DB_dbo,SP_OPS_MastersAndSubAccounts_AlignmentMonitoringReport,SQL_STORED_PROCEDURE,BI_DB_OPS_MastersAndSubAccounts_AlignmentMonitoringReport,able TRUNCATE TABLE BI_DB_dbo.BI_DB_OPS_MastersAndSubAccounts_AlignmentMonitoringReport  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_H_HourlyReport_Redeems,SQL_STORED_PROCEDURE,BI_DB_HourlyReport_Redeems,    truncate table BI_DB_dbo.[BI_DB_HourlyReport_Redeems]     INSERT INTO BI_DB_dbo.[B
+BI_DB_dbo,SP_ClubChangeLogProduct,SQL_STORED_PROCEDURE,BI_DB_ClubChangeLogProduct,NT)  DELETE FROM [BI_DB_dbo].[BI_DB_ClubChangeLogProduct] WHERE  Date >= @Date	  IF OB
+BI_DB_dbo,SP_Index_Divident_TaxReport,SQL_STORED_PROCEDURE,BI_DB_Index_Dividend_TaxReport,)	    DELETE FROM  BI_DB_dbo.[BI_DB_Index_Dividend_TaxReport] WHERE DateID = @DateID   INS
+Dealing_dbo,SP_Islamic_Administrative_Fee,SQL_STORED_PROCEDURE,Dealing_Islamic_Daily_Administrative_Fee,   DELETE FROM [Dealing_dbo].[Dealing_Islamic_Daily_Administrative_Fee] WHERE Date = @Date  INSERT I
+BI_DB_dbo,SP_LimitedAccountsWithReasonsNEW,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,CID AS RealCID FROM BI_DB_dbo.BI_DB_CIDFirstDates bdcd  JOIN DWH_dbo.Dim_Custom
+BI_DB_dbo,SP_LimitedAccountsWithReasonsNEW,SQL_STORED_PROCEDURE,BI_DB_LimitedAccountsWithReasonsNEW,  truncate TABLE [BI_DB_dbo].[BI_DB_LimitedAccountsWithReasonsNEW] INSERT INTO [BI_DB_dbo].[BI_
+BI_DB_dbo,SP_OPS_VerificationPipeline_Level2,SQL_STORED_PROCEDURE,BI_DB_RiskAlertManagementTool,distinct a.CID FROM BI_DB_dbo.BI_DB_RiskAlertManagementTool a WHERE  AlertType like ('%Re
+BI_DB_dbo,SP_OPS_VerificationPipeline_Level2,SQL_STORED_PROCEDURE,BI_DB_OPS_VerificationPipeline_OverLevel2,    Truncate table  BI_DB_dbo.BI_DB_OPS_VerificationPipeline_OverLevel2 INSERT INTO     BI_DB_dbo.BI_
+BI_DB_dbo,SP_AML_Terror_Monitor_Dashboard,SQL_STORED_PROCEDURE,BI_DB_AML_SubEntity_Categorization, bdrc.CID LEFT JOIN BI_DB_dbo.BI_DB_AML_SubEntity_Categorization bdasec ON bdasec.CID = dc.Rea
+BI_DB_dbo,SP_USA_FinanceReport_forTax,SQL_STORED_PROCEDURE,BI_DB_USA_FinanceReport_forTax,ct a.RealCID  	from BI_DB_dbo.BI_DB_USA_FinanceReport_forTax a with (NOLOCK) 	JOIN #US b 	
+BI_DB_dbo,SP_USA_FinanceReport_forTax,SQL_STORED_PROCEDURE,BI_DB_USA_FinanceReport_forTax_CreditID,***************/ -- NOTES  -- BI_DB_USA_FinanceReport_forTax_CreditID   --declare @Date date --set 
+Dealing_dbo,SP_CEP_ExecutionMonitoring,SQL_STORED_PROCEDURE,Dealing_CEP_ExecutionMonitoring,*/ Delete from [Dealing_dbo].[Dealing_CEP_ExecutionMonitoring] where DateID< CAST(CONVERT(V
+BI_DB_dbo,SP_Local_Currencies_MIMO,SQL_STORED_PROCEDURE,BI_DB_Local_Currencies_MIMO,cdu     DELETE FROM BI_DB_dbo.BI_DB_Local_Currencies_MIMO WHERE DateID=@DateID   INSERT
+BI_DB_dbo,SP_Failed_Verification_MA,SQL_STORED_PROCEDURE,BI_DB_Failed_Verification_MA,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_Failed_Verification_MA]   INSERT INTO [BI_DB_dbo].[B
+BI_DB_dbo,SP_Failed_Verification_MA,SQL_STORED_PROCEDURE,BI_DB_Operations_Onboarding_Flow_UserKPIs,E() UpdateDate FROM BI_DB_dbo.BI_DB_Operations_Onboarding_Flow_UserKPIs bdoofuk		 LEFT JOIN #TempReje
+BI_DB_dbo,SP_Finance_Staking_Report,SQL_STORED_PROCEDURE,BI_DB_Finance_Staking_Report,BY 2;  --;  delete  BI_DB_dbo.BI_DB_Finance_Staking_Report                              
+Dealing_dbo,SP_ClientCountry,SQL_STORED_PROCEDURE,Dealing_ClientCountry,----  DELETE FROM Dealing_dbo.Dealing_ClientCountry WHERE Date = @Date  INSERT IN
+Dealing_dbo,SP_ClientCountry,SQL_STORED_PROCEDURE,Dealing_ClientCountry_Reg,1 f   DELETE FROM Dealing_dbo.Dealing_ClientCountry_Reg WHERE Date = @Date  INSERT IN
+Dealing_dbo,SP_Marex_Recon,SQL_STORED_PROCEDURE,Dealing_Marex_Recon_EODHoldings,----- DELETE FROM Dealing_dbo.Dealing_Marex_Recon_EODHoldings WHERE Date=@Date  INSERT INTO
+Dealing_dbo,SP_Marex_Recon,SQL_STORED_PROCEDURE,Dealing_Marex_Recon_EODHoldings_Futures,tures DELETE FROM Dealing_dbo.Dealing_Marex_Recon_EODHoldings_Futures WHERE Date=@Date  INSERT INTO
+BI_DB_dbo,SP_AML_Affiliate_Abuse,SQL_STORED_PROCEDURE,BI_DB_MarketingMonthlyRawData,AS NetRevenues FROM BI_DB_dbo.BI_DB_MarketingMonthlyRawData bdmmrd  JOIN DWH_dbo.Dim_Affi
+BI_DB_dbo,SP_AML_Affiliate_Abuse,SQL_STORED_PROCEDURE,BI_DB_First5Actions,erLevelID LEFT JOIN BI_DB_dbo.BI_DB_First5Actions bdfa ON bdfa.CID = dc.RealCID
+BI_DB_dbo,SP_CID_Compliance_CID_And_Country_Risk_Lists,SQL_STORED_PROCEDURE,BI_DB_Compliance_Restriction_Lists_Countries,s    TRUNCATE TABLE BI_DB_dbo.BI_DB_Compliance_Restriction_Lists_Countries   TRUNCATE TABLE BI_DB_dbo.BI
+BI_DB_dbo,SP_CID_Compliance_CID_And_Country_Risk_Lists,SQL_STORED_PROCEDURE,BI_DB_Compliance_Restriction_Lists_CIDs,es   TRUNCATE TABLE BI_DB_dbo.BI_DB_Compliance_Restriction_Lists_CIDs    -- TRUNCATE TABLE BI_DB_db
+BI_DB_dbo,SP_CID_Compliance_CID_And_Country_Risk_Lists,SQL_STORED_PROCEDURE,BI_DB_Compliance_Restriction_Lists_Forbidden_Trading,  -- TRUNCATE TABLE BI_DB_dbo.BI_DB_Compliance_Restriction_Lists_Forbidden_Trading      INSERT INTO BI_DB_dbo.BI
+BI_DB_dbo,SP_US_Stocks_Apex_PFOF_20221027,SQL_STORED_PROCEDURE,BI_DB_US_Stocks_Apex_PFOF,ert DELETE FROM  [BI_DB_dbo].[BI_DB_US_Stocks_Apex_PFOF] WHERE @Date=TradeDate   INSE
+BI_DB_dbo,SP_DWH_GainDaily,SQL_STORED_PROCEDURE,DWH_GainDaily,     DELETE FROM [BI_DB_dbo].[DWH_GainDaily] where [Date] = @gain_dt     
+BI_DB_dbo,SP_BI_DB_CryptoDashboardNew,SQL_STORED_PROCEDURE,BI_DB_CryptoDashboardNew,y]   DELETE FROM [BI_DB_dbo].[BI_DB_CryptoDashboardNew] WHERE DateID = @dateID   INS
+BI_DB_dbo,SP_InvestorReportDetails,SQL_STORED_PROCEDURE,BI_DB_InvestorsDetail,***/  --DELETE from BI_DB_dbo.BI_DB_InvestorsDetail  --WHERE DateID < @StartddINT
+BI_DB_dbo,SP_InvestorReportDetails,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,",sf.ActionName FROM BI_DB_dbo.BI_DB_UsageTracking_SF sf WHERE ActionName IN ('Phon"
+BI_DB_dbo,SP_IFRS_15_DateRange_Balance,SQL_STORED_PROCEDURE,BI_DB_IFRS15_Daily_Balance,FD_Real_Filter FROM BI_DB_dbo.BI_DB_IFRS15_Daily_Balance bdidb WHERE bdidb.Date = @sda
+BI_DB_dbo,SP_CMR_Phase2_USA_CustomerBalance_ApexAdjusted,SQL_STORED_PROCEDURE,BI_DB_CMR_Phase2_USA_CustomerBalance_ApexAdjusted,te      DELETE FROM BI_DB_dbo.BI_DB_CMR_Phase2_USA_CustomerBalance_ApexAdjusted WHERE [Date] = @date      INS
+eMoney_dbo,SP_eMoney_AM_Target,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,ontact_dates --FROM BI_DB.dbo.BI_DB_UsageTracking_SF bduts WITH (NOLOCK) --JOIN #p
+Dealing_dbo,SP_DailyVariableSpread,SQL_STORED_PROCEDURE,Dealing_DailyVariableSpread,   DELETE FROM [Dealing_dbo].[Dealing_DailyVariableSpread] WHERE DateID = @DateID  INSE
+BI_DB_dbo,SP_DDR_Fact_MIMO_Options_Platform,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_MIMO_Options_Platform,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_DDR_Fact_MIMO_Options_Platform] INSERT INTO [BI_DB_dbo].[BI_
+BI_DB_dbo,SP_US_Stocks_Transactions_Per_Time_Unit,SQL_STORED_PROCEDURE,BI_DB_US_Stocks_Transactions_Per_Time_Unit,nsert  DELETE FROM  BI_DB_dbo.BI_DB_US_Stocks_Transactions_Per_Time_Unit  WHERE Date=@Date    INSERT I
+BI_DB_dbo,SP_PositionHoldingTime,SQL_STORED_PROCEDURE,BI_DB_PositionHoldingTime,S INT)  DELETE FROM BI_DB_dbo.BI_DB_PositionHoldingTime WHERE CloseDate = @Date  INSE
+BI_DB_dbo,SP_DDR_Fact_AUM,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_AUM,lect count( *) from BI_DB_dbo.BI_DB_DDR_Fact_AUM where DateID = 20251010 -- se
+BI_DB_dbo,SP_Cross_Selling_Daily,SQL_STORED_PROCEDURE,BI_DB_CID_MonthlyPanel_FullData,"il ,EOM_Equity FROM BI_DB_dbo.BI_DB_CID_MonthlyPanel_FullData bdcmpfd where bdcmpfd.ActiveD"
+BI_DB_dbo,SP_Cross_Selling_Daily,SQL_STORED_PROCEDURE,BI_DB_Cross_Selling_Daily,CID     DELETE FROM BI_DB_dbo.BI_DB_Cross_Selling_Daily WHERE DateKey = @date_int  IN
+BI_DB_dbo,SP_CID_NPS_Panel,SQL_STORED_PROCEDURE,BI_DB_First5Actions,alCID  LEFT JOIN [BI_DB_dbo].[BI_DB_First5Actions] f5a WITH (NOLOCK)  ON pp.Rea
+BI_DB_dbo,SP_OPS_Fraud_Alert_Analysis,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_FullData,istrations sr JOIN  BI_DB_dbo.BI_DB_CID_DailyPanel_FullData bd on bd.CID=sr.RealCID group
+BI_DB_dbo,SP_OPS_Fraud_Alert_Analysis,SQL_STORED_PROCEDURE,BI_DB_OPS_Fraud_Alert_Analysis,  truncate table [BI_DB_dbo].[BI_DB_OPS_Fraud_Alert_Analysis]    INSERT INTO  [BI_DB_dbo].
+BI_DB_dbo,SP_Finance_Real_Futures_Custody_And_Transfers,SQL_STORED_PROCEDURE,BI_DB_Finance_Real_Futures_Custody_And_Transfers,        DELETE FROM BI_DB_dbo.BI_DB_Finance_Real_Futures_Custody_And_Transfers WHERE ReportDateID = @dateID 
+BI_DB_dbo,SP_WatchListsByFunnel,SQL_STORED_PROCEDURE,BI_DB_WatchListsByFunnel, Watchlists into [BI_DB_dbo].[BI_DB_WatchListsByFunnel]  */  -----------------------
+BI_DB_dbo,SP_WatchListsByFunnel,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,im_Position a 	JOIN BI_DB_dbo.BI_DB_CIDFirstDates b ON a.CID = b.CID  	JOIN DWH
+Dealing_dbo,SP_NOPDistribution,SQL_STORED_PROCEDURE,Dealing_NOPDistribution,    DELETE FROM [Dealing_dbo].Dealing_NOPDistribution WHERE DateID = @DateINT      
+BI_DB_dbo,SP_KYC_Panel,SQL_STORED_PROCEDURE,BI_DB_Scored_Appropriateness_Negative_Market,of Appropriateness field to : BI_DB_Scored_Appropriateness_Negative_Market 03/08/2023            Yarden 
+BI_DB_dbo,SP_KYC_Panel,SQL_STORED_PROCEDURE,BI_DB_KYC_Questions_Answers_Row_Data, add question 46 to BI_DB_dbo.BI_DB_KYC_Questions_Answers_Row_Data 2024-01-30            Yarden 
+BI_DB_dbo,SP_KYC_Panel,SQL_STORED_PROCEDURE,BI_DB_KYC_Knowledge_Assessment,le */ DELETE a FROM BI_DB_dbo.BI_DB_KYC_Knowledge_Assessment a INNER JOIN #KYC_Knowledge_A
+BI_DB_dbo,SP_KYC_Panel,SQL_STORED_PROCEDURE,BI_DB_First5Actions,ys'            FROM BI_DB_dbo.BI_DB_First5Actions bdfa 		   GROUP BY bdfa.CID 	
+BI_DB_dbo,SP_KYC_Panel,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_KYC_Panel INSERT INTO BI_DB_dbo.BI_DB_K
+BI_DB_dbo,SP_DDR_Customer_Daily_Status,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_MIMO_Options_Platform,TDPlatformName FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Options_Platform bddfmop 	JOIN DWH_dbo.Dim_Cus
+BI_DB_dbo,SP_DDR_Customer_Daily_Status,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_MIMO_AllPlatforms,NQuickTransfer FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms bddfmap UNION ALL  SELECT  	 
+BI_DB_dbo,SP_DDR_Customer_Daily_Status,SQL_STORED_PROCEDURE,BI_DB_DDR_Customer_Daily_Status,dateID  DELETE FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status  WHERE DateID = @dateID -- se
+BI_DB_dbo,SP_PI_Gain,SQL_STORED_PROCEDURE,BI_DB_PI_Gain,    	TRUNCATE Table BI_DB_dbo.BI_DB_PI_Gain 	INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_CMR_Automation_EU_ClientInterestReport,SQL_STORED_PROCEDURE,BI_DB_InterestDaily,ly Interest]   FROM BI_DB_dbo.BI_DB_InterestDaily d with (nolock)   JOIN DWH_db
+BI_DB_dbo,SP_CMR_Automation_ASIC_ASICG_ClientInterestReport,SQL_STORED_PROCEDURE,BI_DB_InterestDaily,ly Interest]   FROM BI_DB_dbo.BI_DB_InterestDaily d with (nolock)   JOIN DWH_db
+BI_DB_dbo,SP_LTV_FromDB_ToBigQuery,SQL_STORED_PROCEDURE,LTV_FromDB_ToBigQuery,  TRUNCATE TABLE [BI_DB_dbo].[LTV_FromDB_ToBigQuery]  INSERT INTO [BI_DB_dbo].[LT
+BI_DB_dbo,SP_LTV_FromDB_ToBigQuery,SQL_STORED_PROCEDURE,BI_DB_LTV_BI_Actual, UpdateDate FROM [BI_DB_dbo].[BI_DB_LTV_BI_Actual] b WHERE b.FirstDepositDate>=
+BI_DB_dbo,SP_UsageTracking_SF_bckp,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_UsageTracking_SF]  INSERT INTO [BI_DB_dbo].[BI
+BI_DB_dbo,SP_BI_DB_Scored_Appropriateness_Negative_Market,SQL_STORED_PROCEDURE,BI_DB_Scored_Appropriateness_Negative_Market,"e), @DateTime) FROM BI_DB_dbo.BI_DB_Scored_Appropriateness_Negative_Market)   --step 01 /**** Population"
+BI_DB_dbo,SP_BI_DB_Scored_Appropriateness_Negative_Market,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,OM #pop_AT p LEFT JOIN BI_DB..BI_DB_KYC_Panel a ON p.GCID = a.GCID --WHERE 
+BI_DB_dbo,SP_BI_DB_Scored_Appropriateness_Negative_Market,SQL_STORED_PROCEDURE,BI_DB_KYC_Questions_Answers_Row_Data,d.AnswerId 				   FROM BI_DB..BI_DB_KYC_Questions_Answers_Row_Data bdkqard 				   WHERE bdkqard.
+BI_DB_dbo,SP_eTorian_PnL_NetProfit,SQL_STORED_PROCEDURE,BI_DB_eTorian_NetProfit,      /********************** BI_DB_eTorian_NetProfit Delete and Insert ***********
+BI_DB_dbo,BI_DB_V_DDR_PnL,VIEW,BI_DB_DDR_Fact_PnL,"S YearStartInt FROM BI_DB_dbo.BI_DB_DDR_Fact_PnL GROUP BY RealCID, DateID, [Da"
+BI_DB_dbo,SP_BI_DB_German_Crypto_Transition_To_Tangany,SQL_STORED_PROCEDURE,BI_DB_German_Crypto_Transition_To_Tangany,sert TRUNCATE TABLE BI_DB_dbo.BI_DB_German_Crypto_Transition_To_Tangany  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_NonPI_HighAUM,SQL_STORED_PROCEDURE,BI_DB_NonPI_HighAUM,N    Truncate Table BI_DB_dbo.BI_DB_NonPI_HighAUM   IF OBJECT_ID('tempdb..#Cust
+Dealing_dbo,SP_IntraHourCommodityReport,SQL_STORED_PROCEDURE,Dealing_CommoditiesIntraHour_Clients,s  DELETE FROM [Dealing_dbo].[Dealing_CommoditiesIntraHour_Clients] WHERE Date = @Date  INSERT I
+Dealing_dbo,SP_IntraHourCommodityReport,SQL_STORED_PROCEDURE,Dealing_CommoditiesIntraHour_Etoro,-- DELETE FROM [Dealing_dbo].[Dealing_CommoditiesIntraHour_Etoro]  WHERE Date=@Date   INSERT I
+BI_DB_dbo,SP_CMR_Automation_Tangany_Volume,SQL_STORED_PROCEDURE,BI_DB_IFRS15_Daily_Balance,"ingbalanceCFD  FROM BI_DB_dbo.BI_DB_IFRS15_Daily_Balance bdidb WHERE CONVERT(INT, CONV"
+BI_DB_dbo,SP_DWH_CIDsDailyRisk,SQL_STORED_PROCEDURE,DWH_CIDsDailyRisk,D WHILE   DELETE [BI_DB_dbo].[DWH_CIDsDailyRisk]   WHERE [FullDate] = @date  
+BI_DB_dbo,SP_CopyFund_Positions,SQL_STORED_PROCEDURE,BI_DB_CopyFund_Positions,ID = 4  DELETE FROM BI_DB_dbo.BI_DB_CopyFund_Positions WHERE OpenDateID = @dateID OR
+Dealing_dbo,SP_GS_Credit_Risk,SQL_STORED_PROCEDURE,Dealing_GS_Credit_Risk,able  DELETE FROM Dealing_dbo.Dealing_GS_Credit_Risk WHERE Date=@Date   INSERT INT
+Dealing_dbo,SP_DataForDuco,SQL_STORED_PROCEDURE,Dealing_Duco_ActivityRecon,          Add @StartTrade for Dealing_Duco_ActivityRecon 2022-07-27          Adva     
+Dealing_dbo,SP_DataForDuco,SQL_STORED_PROCEDURE,Dealing_Duco_EODRecon, into DELETE FROM Dealing_dbo.Dealing_Duco_EODRecon WHERE Date=@Date INSERT INTO 
+Dealing_dbo,SP_Holdings_RealStocks,SQL_STORED_PROCEDURE,Dealing_Holdings_RealStocks,----  DELETE FROM Dealing_dbo.Dealing_Holdings_RealStocks WHERE Date = @Date INSERT INT
+BI_DB_dbo,SP_W_AML_PEP_Customers,SQL_STORED_PROCEDURE,BI_DB_W_AML_PEP_Customers_Trun,ELECT TOP 10 * FROM BI_DB_dbo.BI_DB_W_AML_PEP_Customers_Trun where eMoney_BalanceStatus IS
+BI_DB_dbo,SP_W_AML_PEP_Customers,SQL_STORED_PROCEDURE,BI_DB_AML_Documents_Request,CountryID LEFT JOIN BI_DB_dbo.BI_DB_AML_Documents_Request bdadr ON bdadr.CID = dc.RealC
+BI_DB_dbo,SP_W_AML_PEP_Customers,SQL_STORED_PROCEDURE,BI_DB_W_AML_PEP_Customers,******/ DELETE FROM BI_DB_dbo.BI_DB_W_AML_PEP_Customers WHERE ReportDate = @WeekEndDa
+Dealing_dbo,SP_IB_Recon,SQL_STORED_PROCEDURE,Dealing_Duco_EODRecon,.FXratetoUSD FROM Dealing_dbo.Dealing_Duco_EODRecon dde  WHERE dde.Date= @Date AN
+Dealing_dbo,SP_IB_Recon,SQL_STORED_PROCEDURE,Dealing_Duco_ActivityRecon,edgeServerID FROM Dealing_dbo.Dealing_Duco_ActivityRecon ddar WHERE ddar.Date= @Date A
+Dealing_dbo,SP_IB_Recon,SQL_STORED_PROCEDURE,Dealing_IBRecon_EODHoldings, Real DELETE FROM Dealing_dbo.Dealing_IBRecon_EODHoldings WHERE Date = @Date  INSERT IN
+BI_DB_dbo,P_M_LTV_Multipliers,SQL_STORED_PROCEDURE,BI_DB_CID_MonthlyPanel_FullData,ReportDate 	FROM [BI_DB_dbo].[BI_DB_CID_MonthlyPanel_FullData] mp WITH (NOLOCK) 	WHERE mp.F
+BI_DB_dbo,P_M_LTV_Multipliers,SQL_STORED_PROCEDURE,BI_DB_LTV_Revenue_Multipliers,"ible   	/*CREATE TABLE [dbo].[BI_DB_LTV_Revenue_Multipliers] 	( 	Date DATE, 	Seniority IN"
+Dealing_dbo,SP_Rev_Assurance,SQL_STORED_PROCEDURE,Dealing_Commission_Assurance,-  DELETE FROM [Dealing_dbo].[Dealing_Commission_Assurance] WHERE [Month] = convert(varc
+Dealing_dbo,SP_Rev_Assurance,SQL_STORED_PROCEDURE,Dealing_Commission_Assurance_By_Position,-- DELETE FROM [Dealing_dbo].[Dealing_Commission_Assurance_By_Position] WHERE [Date] = cast(@date as
+Dealing_dbo,SP_Rev_Assurance,SQL_STORED_PROCEDURE,Dealing_Rollover_Assurance,-  DELETE FROM [Dealing_dbo].[Dealing_Rollover_Assurance]  WHERE [Date] = cast(@date a
+eMoney_dbo,SP_eMoney_Risk_Portfolio,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,Q18_AnswerText FROM BI_DB_dbo.BI_DB_KYC_Panel bdkp JOIN #pop pp ON bdkp.Rea
+BI_DB_dbo,SP_AML_High_Risk_Wallet,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,r FROM #pop pp JOIN BI_DB_dbo.BI_DB_KYC_Panel bdkp ON bdkp.RealCID = pp.CID
+BI_DB_dbo,SP_AML_High_Risk_Wallet,SQL_STORED_PROCEDURE,BI_DB_AML_High_Risk_Wallet,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_High_Risk_Wallet  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_CMR_Automation_US_ClientInterestReport,SQL_STORED_PROCEDURE,BI_DB_InterestDaily,ly Interest]   FROM BI_DB_dbo.BI_DB_InterestDaily d with (nolock)   JOIN DWH_db
+BI_DB_dbo,SP_ASIC_CreditLine_At_transfer,SQL_STORED_PROCEDURE,BI_DB_ASIC_CreditLine_At_transfer, insert DELETE FROM	BI_DB_dbo.BI_DB_ASIC_CreditLine_At_transfer WHERE @DateID=DateID  INSERT 
+Dealing_dbo,SP_FactSet_NewPIs_History,SQL_STORED_PROCEDURE,DWH_GainDaily,Date 	LEFT JOIN  [BI_DB_dbo].[DWH_GainDaily] gd  WITH (NOLOCK)  	ON dc.Re
+BI_DB_dbo,SP_AffiliatesPaidAndCashout,SQL_STORED_PROCEDURE,BI_DB_MarketingMonthlyRawData,	mm.YearMonth FROM BI_DB_dbo.[BI_DB_MarketingMonthlyRawData] mm LEFT JOIN DWH_dbo.Dim_Aff
+BI_DB_dbo,SP_AffiliatesPaidAndCashout,SQL_STORED_PROCEDURE,BI_DB_Daily_AffiliatesPaidAndCashout,     DELETE FROM   BI_DB_dbo.[BI_DB_Daily_AffiliatesPaidAndCashout] WHERE YearMonth=@SDateID    
+BI_DB_dbo,SP_US_Compliance_Apex_Clients,SQL_STORED_PROCEDURE,BI_DB_KYC_Questions_Answers_Row_Data,stUpdateDate   FROM BI_DB_dbo.BI_DB_KYC_Questions_Answers_Row_Data q INNER JOIN DWH_dbo.Dim_Cust
+BI_DB_dbo,SP_US_Compliance_Apex_Clients,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,untryID 	 LEFT JOIN BI_DB_dbo.BI_DB_CIDFirstDates bdcd WITH(NOLOCK) ON bdcd.CID
+BI_DB_dbo,SP_US_Compliance_Apex_Clients,SQL_STORED_PROCEDURE,BI_DB_US_Compliance_Apex_Clients,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_US_Compliance_Apex_Clients  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_US_Compliance_Apex_Clients,SQL_STORED_PROCEDURE,BI_DB_US_Compliance_Apex_Clients_Crypto_Stocks,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_US_Compliance_Apex_Clients_Crypto_Stocks  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_BI_DB_ASIC_Monitoring_CFD,SQL_STORED_PROCEDURE,BI_DB_Scored_Appropriateness_Negative_Market,ManagerID LEFT JOIN BI_DB_dbo.BI_DB_Scored_Appropriateness_Negative_Market bdsanm ON fsc.RealCID = bdsan
+BI_DB_dbo,SP_Flare_Eligibility,SQL_STORED_PROCEDURE,BI_DB_Flare_Eligibility,--  truncate table  BI_DB_dbo.BI_DB_Flare_Eligibility  INSERT INTO  BI_DB_dbo.BI_DB
+Dealing_dbo,SP_DataForDucoT,SQL_STORED_PROCEDURE,Dealing_Duco_ActivityRecon,          Add @StartTrade for Dealing_Duco_ActivityRecon 2022-07-27          Adva     
+Dealing_dbo,SP_DataForDucoT,SQL_STORED_PROCEDURE,Dealing_Duco_EODRecon,nto --DELETE FROM Dealing_dbo.Dealing_Duco_EODRecon WHERE Date=@Date --INSERT INT
+Dealing_dbo,SP_Staking_Emails_US,SQL_STORED_PROCEDURE,Dealing_Staking_Results_US,ription: - Update Dealing_dbo.Dealing_Staking_Results_US with the actual results of Ai
+Dealing_dbo,SP_Staking_Emails_US,SQL_STORED_PROCEDURE,Dealing_Staking_Compensation_US, results of Airdrop 			- Fill Dealing_Staking_Compensation_US and Dealing_Staking_Emails_US
+Dealing_dbo,SP_Staking_Emails_US,SQL_STORED_PROCEDURE,Dealing_Staking_Emails_US,g_Staking_Compensation_US and Dealing_Staking_Emails_US   #SR-325680 ****************
+Dealing_dbo,SP_Staking_Emails_US,SQL_STORED_PROCEDURE,Dealing_Staking_Summary_US,LevelID LEFT JOIN Dealing_dbo.Dealing_Staking_Summary_US s  ON s.StakingMonthID = r.St
+BI_DB_dbo,SP_M_Active_Affiliate_Monthly,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,FTD         FROM [BI_DB_dbo].[BI_DB_CIDFirstDates] bdcd WITH(NOLOCK)     JOIN [
+BI_DB_dbo,SP_M_Active_Affiliate_Monthly,SQL_STORED_PROCEDURE,BI_DB_ActiveAffiliatesPlanned_Actual,     DELETE FROM [BI_DB_dbo].[BI_DB_ActiveAffiliatesPlanned_Actual]      WHERE Date = @StartDate
+BI_DB_dbo,SP_LTV_BI_Actual,SQL_STORED_PROCEDURE,BI_DB_LTV_Predictions,sed on the logic in BI_DB_dbo.BI_DB_LTV_Predictions   ************************** 
+BI_DB_dbo,SP_LTV_BI_Actual,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,CountryID LEFT JOIN BI_DB_dbo.BI_DB_CIDFirstDates bdcd WITH (NOLOCK) ON dc.GCID
+BI_DB_dbo,SP_LTV_BI_Actual,SQL_STORED_PROCEDURE,BI_DB_CID_MonthlyPanel_FullData,bdcd.GCID LEFT JOIN BI_DB_dbo.BI_DB_CID_MonthlyPanel_FullData bdcmpfd WITH (NOLOCK) ON bdlp
+BI_DB_dbo,SP_LTV_BI_Actual,SQL_STORED_PROCEDURE,BI_DB_LTV_BI_Actual,er   TRUNCATE TABLE BI_DB_dbo.BI_DB_LTV_BI_Actual INSERT INTO BI_DB_dbo.BI_DB_L
+BI_DB_dbo,SP_US_Apex_Corporate_Cash_Actions_Recon,SQL_STORED_PROCEDURE,BI_DB_US_Apex_Corporate_CA_etoro,etoro DELETE FROM  BI_DB_dbo.[BI_DB_US_Apex_Corporate_CA_etoro] WHERE Date=@Date  INSERT INT
+BI_DB_dbo,SP_US_Apex_Corporate_Cash_Actions_Recon,SQL_STORED_PROCEDURE,BI_DB_US_Apex_Corporate_CA_Apex, Apex DELETE FROM  BI_DB_dbo.[BI_DB_US_Apex_Corporate_CA_Apex] WHERE ProcessDate=@Date  INS
+BI_DB_dbo,Function_Revenue_RolloverFee,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_Fact_Customer_Action_Position_Distribution, IsMarginTrade FROM BI_DB_dbo.BI_DB_Fact_Customer_Action_Position_Distribution fca WHERE fca.DateID BETWEEN 
+BI_DB_dbo,SP_US_Apex_Rejected_Accounts,SQL_STORED_PROCEDURE,BI_DB_US_Apex_Rejected_Accounts,ata TRUNCATE TABLE 	BI_DB_dbo.BI_DB_US_Apex_Rejected_Accounts --step 04  -- insert updated 
+BI_DB_dbo,SP_Twitter,SQL_STORED_PROCEDURE,BI_DB_Twitter,rsions DELETE FROM BI_DB_dbo.[BI_DB_Twitter] WHERE Date >= @30_days_back 
+BI_DB_dbo,SP_Twitter,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,ND) AS AW_FTD FROM BI_DB_dbo.[BI_DB_CIDFirstDates] fd with (NOLOCK) 	LEFT JOIN 
+Dealing_dbo,SP_BNY_VIRTU_Recon,SQL_STORED_PROCEDURE,Dealing_Duco_EODRecon,.activity FROM [Dealing_dbo].[Dealing_Duco_EODRecon] dde WITH (NOLOCK) JOIN #Five
+Dealing_dbo,SP_BNY_VIRTU_Recon,SQL_STORED_PROCEDURE,Dealing_Duco_ActivityRecon,_provider FROM [Dealing_dbo].[Dealing_Duco_ActivityRecon] ddar JOIN #Fivetran_eToro f 
+Dealing_dbo,SP_BNY_VIRTU_Recon,SQL_STORED_PROCEDURE,Dealing_BNY_VIRTU_ReconEODHolding,s  DELETE FROM [Dealing_dbo].[Dealing_BNY_VIRTU_ReconEODHolding] WHERE Date = @TotalDate  INS
+Dealing_dbo,SP_BNY_VIRTU_Recon,SQL_STORED_PROCEDURE,Dealing_BNY_VIRTU_ReconTrades,   DELETE FROM [Dealing_dbo].[Dealing_BNY_VIRTU_ReconTrades] WHERE Date = @TotalDate  INS
+BI_DB_dbo,SP_M_Finance_Audit_Auxillary_Datapoints,SQL_STORED_PROCEDURE,Client_Balance_Breakdown_Instrument_Level, IsRealFutures FROM BI_DB_dbo.Client_Balance_Breakdown_Instrument_Level f WITH (NOLOCK) 	JOIN DWH_dbo
+BI_DB_dbo,SP_M_Finance_Audit_Auxillary_Datapoints,SQL_STORED_PROCEDURE,BI_DB_Fact_Customer_Action_Position_Distribution,IsRealFutures  FROM BI_DB_dbo.BI_DB_Fact_Customer_Action_Position_Distribution x JOIN DWH_dbo.Dim_PlayerLeve
+BI_DB_dbo,SP_M_Finance_Audit_Auxillary_Datapoints,SQL_STORED_PROCEDURE,BI_DB_Finance_Audit_Auxillary_Datapoints,S INT)  DELETE FROM BI_DB_dbo.BI_DB_Finance_Audit_Auxillary_Datapoints WHERE YearMonth = @yearMonth 
+BI_DB_dbo,SP_AssignmentToolBacklog,SQL_STORED_PROCEDURE,BI_DB_AllDeposits,s.TeamID left join BI_DB_dbo.[BI_DB_AllDeposits] ad on ad.CID=v.CID and IsFTD
+BI_DB_dbo,SP_AssignmentToolBacklog,SQL_STORED_PROCEDURE,BI_DB_AssignmentToolBacklog,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_AssignmentToolBacklog]  INSERT INTO [BI_DB_dbo].[BI
+Dealing_dbo,SP_Staking_DailyPool,SQL_STORED_PROCEDURE,Dealing_Staking_DailyPool,able  DELETE FROM Dealing_dbo.Dealing_Staking_DailyPool WHERE Date = @Date  INSERT IN
+BI_DB_dbo,SP_OPS_MultipleAccounts,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,eStatusID left join BI_DB_dbo.BI_DB_CIDFirstDates CFD ON CFD.CID=cc.RealCID  le
+BI_DB_dbo,SP_OPS_MultipleAccounts,SQL_STORED_PROCEDURE,BI_DB_OPS_MultipleAccounts,     TRUNCATE TABLE BI_DB_dbo.BI_DB_OPS_MultipleAccounts  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,Function_DDR_Aggregation_YoY,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_DDR_Customer_Periodic_Status,"dIBAN_ThisYear FROM BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status ps WHERE YEAR(CONVERT(DATE, C"
+BI_DB_dbo,SP_DDR_Fact_MIMO_Trading_Platform,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_MIMO_Trading_Platform, = 1    DELETE FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform WHERE DateID = @dateID  INSER
+BI_DB_dbo,SP_AllDeposits,SQL_STORED_PROCEDURE,BI_DB_AllDeposits,   DELETE ald FROM  BI_DB_dbo.BI_DB_AllDeposits  ald JOIN #final_insert_delet
+Dealing_dbo,SP_Employees_Report,SQL_STORED_PROCEDURE,DWH_GainDaily,"tionPnL,--adding [BI_DB_dbo].[DWH_GainDaily] 06-14-2024         Gil Chole"
+Dealing_dbo,SP_Employees_Report,SQL_STORED_PROCEDURE,Dealing_Employees_Report,*/ DELETE FROM [Dealing_dbo].[Dealing_Employees_Report] WHERE [Date] = @date OR [Dat
+BI_DB_dbo,SP_LimitedAccountsWithReasons,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,layerStatusID FROM BI_DB_dbo.[BI_DB_CIDFirstDates] fd JOIN  DWH_dbo.Dim_Custome
+BI_DB_dbo,SP_LimitedAccountsWithReasons,SQL_STORED_PROCEDURE,BI_DB_LimitedAccountsWithReasons,  truncate TABLE [BI_DB_dbo].[BI_DB_LimitedAccountsWithReasons] INSERT INTO [BI_DB_dbo].[BI_
+BI_DB_dbo,SP_IFR_KFactors_Automation_KTCD,SQL_STORED_PROCEDURE,BI_DB_Finance_IFRS_Automation_KTCD_eToro_Side,) AS YearMonth FROM BI_DB_dbo.BI_DB_Finance_IFRS_Automation_KTCD_eToro_Side bdfiakts WHERE 1=1    END    
+BI_DB_dbo,SP_Taboola,SQL_STORED_PROCEDURE,BI_DB_DepositUsersFirstTouchPoints,rification2 FROM [BI_DB_dbo].[BI_DB_DepositUsersFirstTouchPoints] dc JOIN [DWH_dbo].[Dim_Count
+BI_DB_dbo,SP_Taboola,SQL_STORED_PROCEDURE,BI_DB_DailyTaboolaCombineAffwiz,**/  DELETE FROM [BI_DB_dbo].[BI_DB_DailyTaboolaCombineAffwiz] WHERE Date>=@last10days  INS
+BI_DB_dbo,SP_DailyCommisionReport,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport,**/     DELETE FROM BI_DB_dbo.BI_DB_DailyCommisionReport    WHERE DateID = @DateID    
+BI_DB_dbo,SP_DailyCommisionReport,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport_Instrument_Agg,621242  DELETE FROM BI_DB_dbo.BI_DB_DailyCommisionReport_Instrument_Agg    WHERE DateID = @DateID    
+BI_DB_dbo,SP_DailyCommisionReport,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport_Yesterday,242  TRUNCATE TABLE BI_DB_dbo.BI_DB_DailyCommisionReport_Yesterday   INSERT INTO BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_DailyCommisionReport,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport_Last2weeks,     TRUNCATE TABLE BI_DB_dbo.BI_DB_DailyCommisionReport_Last2weeks   INSERT INTO BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_DailyCommisionReport,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport_ThisMonth,     TRUNCATE TABLE BI_DB_dbo.BI_DB_DailyCommisionReport_ThisMonth   DECLARE @DateMonth DATE = (
+BI_DB_dbo,SP_DailyCommisionReport,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport_ThisYear,/    TRUNCATE TABLE BI_DB_dbo.BI_DB_DailyCommisionReport_ThisYear   DECLARE @Dateyear DATE = (S
+BI_DB_dbo,SP_DailyCommisionReport,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport_LastYear,242  TRUNCATE TABLE BI_DB_dbo.BI_DB_DailyCommisionReport_LastYear   INSERT INTO BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_DailyCommisionReport,SQL_STORED_PROCEDURE,BI_DB_RollOverFee_ByInstrument,*/      DELETE FROM BI_DB_dbo.BI_DB_RollOverFee_ByInstrument    WHERE DateID = @DateID    
+BI_DB_dbo,SP_DailyCommisionReport,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport_MonthlyData,T)      DELETE FROM BI_DB_dbo.BI_DB_DailyCommisionReport_MonthlyData  -- select top 10 * from BI_D
+BI_DB_dbo,SP_CID_Daily_AcquisitionFunnel_VBT,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,ateRangeID 	JOIN [BI_DB_dbo].[BI_DB_CIDFirstDates] fd WITH(NOLOCK) 		ON fd.CID 
+BI_DB_dbo,SP_CID_Daily_AcquisitionFunnel_VBT,SQL_STORED_PROCEDURE,BI_DB_CID_Daily_AcquisitionFunnel_VBT,**/  DELETE FROM [BI_DB_dbo].[BI_DB_CID_Daily_AcquisitionFunnel_VBT] WHERE [Date] = @date  INSERT
+BI_DB_dbo,SP_Demo_CID_Panel,SQL_STORED_PROCEDURE,BI_DB_Demo_CID_Panel,/    DELETE FROM [BI_DB_dbo].[BI_DB_Demo_CID_Panel]        WHERE Reg_YearMonth >
+DE_dbo,SP_UsageTracking_SF,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,' )  TRUNCATE TABLE [DE_dbo].[BI_DB_UsageTracking_SF]  INSERT INTO [DE_dbo].[BI_DB
+BI_DB_dbo,SP_CopycatsOfCopyfunds,SQL_STORED_PROCEDURE,BI_DB_CopycatsOfCopyfunds,ate) Truncate Table BI_DB_dbo.BI_DB_CopycatsOfCopyfunds   IF OBJECT_ID('tempdb..#Cust
+BI_DB_dbo,SP_UsersEngagement,SQL_STORED_PROCEDURE,BI_DB_UsersEngagement,        DELETE FROM BI_DB_dbo.BI_DB_UsersEngagement WHERE ActionDateID = @Yesterd
+BI_DB_dbo,SP_UsersEngagement,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,untryID   left JOIN BI_DB_dbo.BI_DB_CIDFirstDates fd WITH (NOLOCK) ON dc.RealCI
+BI_DB_dbo,SP_UsersEngagement,SQL_STORED_PROCEDURE,BI_DB_CID_MonthlyPanel_FullData,DB_CIDMonthlyData*/ BI_DB_dbo.BI_DB_CID_MonthlyPanel_FullData  cmd with(NOLOCK)  on dd.Cale
+BI_DB_dbo,SP_CID_VerificationLevel,SQL_STORED_PROCEDURE,BI_DB_CID_VerificationLevel,n=1  DELETE FROM [BI_DB_dbo].[BI_DB_CID_VerificationLevel]  WHERE FromDateID = @dateID 
+BI_DB_dbo,SP_Daily_TradeData,SQL_STORED_PROCEDURE,BI_DB_Daily_TradeData,------- DELETE FROM BI_DB_dbo.BI_DB_Daily_TradeData WHERE DateID = @ddINT  INSERT
+BI_DB_dbo,Function_MIMO_First_Deposit_All_Platforms,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_DDR_Fact_MIMO_AllPlatforms,ap.RealCID 				FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms map 				WHERE map.MIMOAction 
+BI_DB_dbo,SP_M_Compliance_CDIM_Report,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,zationID LEFT JOIN BI_DB_dbo.[BI_DB_CIDFirstDates] fd WITH (NOLOCK) ON dc.RealC
+BI_DB_dbo,SP_M_Compliance_CDIM_Report,SQL_STORED_PROCEDURE,BI_DB_First5Actions,rstActionDate FROM BI_DB_dbo.[BI_DB_First5Actions] fa JOIN #pop pp ON fa.CID = 
+BI_DB_dbo,SP_M_Compliance_CDIM_Report,SQL_STORED_PROCEDURE,BI_DB_Demo_CID_Panel,reLivePlatform FROM BI_DB_dbo.BI_DB_Demo_CID_Panel demo JOIN #pop pp ON demo.CID
+BI_DB_dbo,SP_M_Compliance_CDIM_Report,SQL_STORED_PROCEDURE,BI_DB_Scored_Appropriateness_Negative_Market,ssScore_Status FROM BI_DB_dbo.BI_DB_Scored_Appropriateness_Negative_Market neg2 JOIN #pop pp	ON pp.CID =
+BI_DB_dbo,SP_KYC_DOBover85,SQL_STORED_PROCEDURE,BI_DB_KYC_DOBover85,D   TRUNCATE TABLE BI_DB_dbo.[BI_DB_KYC_DOBover85]  INSERT INTO BI_DB_dbo.[BI_D
+Dealing_dbo,SP_PDT,SQL_STORED_PROCEDURE,Dealing_PDT,----  DELETE FROM Dealing_dbo.Dealing_PDT WHERE Date = @Date  INSERT IN
+DE_dbo,Admin_PostRestore_Staging_SanitizePermissions,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates, GRANT UNMASK ON [BI_DB_dbo].[BI_DB_CIDFirstDates](Email) TO DataplatformPII;  
+BI_DB_dbo,SP_H_Ops_HourlyReport_Withdraws,SQL_STORED_PROCEDURE,BI_DB_HourlyReport_Withdraws,    TRUNCATE TABLE BI_DB_dbo.[BI_DB_HourlyReport_Withdraws]     INSERT INTO BI_DB_dbo.[B
+BI_DB_dbo,SP_CustomerFirst5OpenPositions,SQL_STORED_PROCEDURE,BI_DB_CustomerFirst5OpenPositions,rs with 5 positions in BI_DB..BI_DB_CustomerFirst5OpenPositions table IF OBJECT_ID('tempdb..#
+BI_DB_dbo,SP_CustomerFirst5OpenPositions,SQL_STORED_PROCEDURE,BI_DB_CustomerCross,ed   DELETE FROM [BI_DB_dbo].[BI_DB_CustomerCross] WHERE RealCID IN (SELECT DIS
+BI_DB_dbo,SP_CustomerFirst5OpenPositions,SQL_STORED_PROCEDURE,BI_DB_CustomerCross_New,New  DELETE FROM [BI_DB_dbo].[BI_DB_CustomerCross_New] WHERE RealCID IN (SELECT DIS
+BI_DB_dbo,SP_UsageTracking_SF,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_UsageTracking_SF]  INSERT INTO [BI_DB_dbo].[BI
+BI_DB_dbo,SP_KYC_Questions_Answers_Row_Data_46,SQL_STORED_PROCEDURE,BI_DB_Scored_Appropriateness_Negative_Market,of Appropriateness field to : BI_DB_Scored_Appropriateness_Negative_Market 03/08/2023             Yarden
+BI_DB_dbo,SP_KYC_Questions_Answers_Row_Data_46,SQL_STORED_PROCEDURE,BI_DB_KYC_Questions_Answers_Row_Data, add question 46 to BI_DB_dbo.BI_DB_KYC_Questions_Answers_Row_Data  ****************************
+BI_DB_dbo,SP_KYC_Questions_Answers_Row_Data_46,SQL_STORED_PROCEDURE,BI_DB_KYC_Knowledge_Assessment,le */ DELETE a FROM BI_DB_dbo.BI_DB_KYC_Knowledge_Assessment a INNER JOIN #KYC_Knowledge_A
+BI_DB_dbo,SP_KYC_Questions_Answers_Row_Data_46,SQL_STORED_PROCEDURE,BI_DB_First5Actions,ys'            FROM BI_DB_dbo.BI_DB_First5Actions bdfa 		   GROUP BY bdfa.CID 	
+BI_DB_dbo,SP_KYC_Questions_Answers_Row_Data_46,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_KYC_Panel INSERT INTO BI_DB_dbo.BI_DB_K
+BI_DB_dbo,SP_IFR_KFactors_Automation_KDTF_LP_ShortLong,SQL_STORED_PROCEDURE,Dealing_LP_StocksNOP,LP Short OP] FROM Dealing_dbo.Dealing_LP_StocksNOP dlsn WHERE 1=1  -- AND Instru
+BI_DB_dbo,SP_IFR_KFactors_Automation_KDTF_LP_ShortLong,SQL_STORED_PROCEDURE,Dealing_ClientsCapitalAdequacy,ate) AS RN --FROM Dealing.dbo.Dealing_ClientsCapitalAdequacy --WHERE 1=1  --AND Regulation
+BI_DB_dbo,SP_CorpDevDashboard,SQL_STORED_PROCEDURE,BI_DB_CID_MonthlyPanel_FullData,ITH(NOLOCK) JOIN [BI_DB_dbo].[BI_DB_CID_MonthlyPanel_FullData] bdcmpfd WITH(NOLOCK) ON a.Re
+BI_DB_dbo,SP_CorpDevDashboard,SQL_STORED_PROCEDURE,BI_DB_First5Actions,"	  ,0 	  ,0 FROM [BI_DB_dbo].[BI_DB_First5Actions]  fd  WITH(NOLOCK) WHERE YEAR"
+BI_DB_dbo,SP_CorpDevDashboard,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,"0 	 ,0 	 ,0 FROM [BI_DB_dbo].[BI_DB_CIDFirstDates] fd  WITH(NOLOCK) WHERE YEAR("
+BI_DB_dbo,SP_BI_DB_CO_Cluster_Daily,SQL_STORED_PROCEDURE,BI_DB_CO_Cluster_Daily,'2024-01-01')  FROM BI_DB_dbo.BI_DB_CO_Cluster_Daily)  WHILE @Date <= CAST(GETDATE
+BI_DB_dbo,SP_CMR_ClientBalance_Report_DLT_Trades_Netting,SQL_STORED_PROCEDURE,BI_DB_DLT_Tangany_Trades_Netting,S MetricAmount FROM BI_DB_dbo.BI_DB_DLT_Tangany_Trades_Netting WHERE DateID between @FromDat
+BI_DB_dbo,BI_DB_V_DDR_Non_Revenue_Actions,VIEW,BI_DB_DDR_Fact_Non_Revenue_Generating_Actions,AS NewCopyUser FROM BI_DB_dbo.BI_DB_DDR_Fact_Non_Revenue_Generating_Actions rga group by  	   rga.DateID 
+BI_DB_dbo,SP_FirstTimeRev5,SQL_STORED_PROCEDURE,BI_DB_FirstTimeRev5,ECT CID  				FROM [BI_DB_dbo].BI_DB_FirstTimeRev5  with (NOLOCK) where [DateID]
+BI_DB_dbo,SP_Fact_Customer_Action_Position_Distribution,SQL_STORED_PROCEDURE,BI_DB_Fact_Customer_Action_Position_Distribution, (30))  DELETE FROM BI_DB_dbo.BI_DB_Fact_Customer_Action_Position_Distribution WHERE DateID = @dateID  INSER
+Dealing_dbo,SP_Capital_Adequacy_IFR_KPMG,SQL_STORED_PROCEDURE,Dealing_LP_StocksNOP,nto   DELETE FROM Dealing_dbo.Dealing_LP_StocksNOP WHERE Date=@Date  INSERT INTO
+Dealing_dbo,SP_Capital_Adequacy_IFR_KPMG,SQL_STORED_PROCEDURE,Dealing_ClientsCapitalAdequacy, l 	  DELETE FROM Dealing_dbo.Dealing_ClientsCapitalAdequacy WHERE Date=@Date  INSERT INTO
+BI_DB_dbo,SP_DailyNOP_ByInstrument,SQL_STORED_PROCEDURE,BI_DB_DailyNOP_ByInstrument,******/ DELETE FROM BI_DB_dbo.BI_DB_DailyNOP_ByInstrument  WHERE Date = @date          
+BI_DB_dbo,SP_CID_DailyPanel_FullData_ofir,SQL_STORED_PROCEDURE,BI_DB_First5Actions, Ariel    remove from  BI_DB..BI_DB_First5Actions   10-02-2021           Eti   
+BI_DB_dbo,SP_CID_DailyPanel_FullData_ofir,SQL_STORED_PROCEDURE,BI_DB_CID_DailyCluster,B_ActivitySegment_Snapshot to BI_DB_CID_DailyCluster   07-04-2021			 Maor				cut l
+BI_DB_dbo,SP_CID_DailyPanel_FullData_ofir,SQL_STORED_PROCEDURE,BI_DB_NewBonusReport,            FROM [BI_DB_dbo].[BI_DB_NewBonusReport]         WHERE [DateID] >=@st
+BI_DB_dbo,SP_CID_DailyPanel_FullData_ofir,SQL_STORED_PROCEDURE,BI_DB_ClubChangeLogProduct,n       --FROM [BI_DB].[dbo].[BI_DB_ClubChangeLogProduct] ccl WITH (NOLOCK)       --IN
+BI_DB_dbo,SP_CID_DailyPanel_FullData_ofir,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,K)       INNER JOIN BI_DB_dbo.BI_DB_CIDFirstDates fd WITH(NOLOCK)        ON fd.
+BI_DB_dbo,SP_CID_DailyPanel_FullData_ofir,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport, Revenue_Other FROM BI_DB_dbo.BI_DB_DailyCommisionReport bddcr WHERE bddcr.DateID = @s
+BI_DB_dbo,SP_CID_DailyPanel_FullData_ofir,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_FullData,NTO #History       --FROM dbo.BI_DB_CID_DailyPanel_FullData       --WHERE ActiveDate = DA
+BI_DB_dbo,SP_CMR_Automation_FSA_ClientInterestReport,SQL_STORED_PROCEDURE,BI_DB_InterestDaily,ly Interest]   FROM BI_DB_dbo.BI_DB_InterestDaily d with (nolock)   JOIN DWH_db
+Dealing_dbo,SP_AbuseAPI,SQL_STORED_PROCEDURE,Dealing_AbuseAPI,-- DELETE FROM [Dealing_dbo].[Dealing_AbuseAPI] WHERE CloseDate = @Date  INS
+BI_DB_dbo,SP_AML_Periodic_Review,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,M #pop pp LEFT JOIN BI_DB_dbo.BI_DB_KYC_Panel bdkp ON pp.CID = bdkp.RealCID
+BI_DB_dbo,SP_AML_Periodic_Review,SQL_STORED_PROCEDURE,BI_DB_AML_KYC_SOF,SOFLast6Months FROM BI_DB_dbo.BI_DB_AML_KYC_SOF sof JOIN #pop pp ON sof.CID =
+BI_DB_dbo,SP_AML_Periodic_Review,SQL_STORED_PROCEDURE,BI_DB_AML_Periodic_Review_AR,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_Periodic_Review_AR  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_AML_Periodic_Review,SQL_STORED_PROCEDURE,BI_DB_AML_Periodic_Review_HR,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_Periodic_Review_HR  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_AML_Periodic_Review,SQL_STORED_PROCEDURE,BI_DB_AML_Periodic_Review_MR,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_Periodic_Review_MR  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_M_AML_Finance_Report,SQL_STORED_PROCEDURE,BI_DB_M_AML_Finance_Report,*****/ DELETE FROM  BI_DB_dbo.BI_DB_M_AML_Finance_Report WHERE EOM = @EndOfMonth  INSE
+Dealing_dbo,SP_DailyZeroPnL_Stocks,SQL_STORED_PROCEDURE,Dealing_DailyZeroPnL_Stocks, 	 DELETE FROM [Dealing_dbo].[Dealing_DailyZeroPnL_Stocks] WHERE [Date]=@dd INSERT INTO
+BI_DB_dbo,SP_DWH_CIDs7DaysDeviation,SQL_STORED_PROCEDURE,DWH_CIDs7DaysDeviation,TE] AS  DELETE FROM BI_DB_dbo.DWH_CIDs7DaysDeviation WHERE FullDate = @start  INSE
+BI_DB_dbo,Function_Population_First_Time_Funded,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_DDR_Fact_MIMO_AllPlatforms,ap.RealCID 				FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms map 				WHERE map.MIMOAction 
+BI_DB_dbo,SP_ClusteringDailyPrepData,SQL_STORED_PROCEDURE,DWH_CIDsDailyRisk,S RiskIndex FROM [BI_DB_dbo].[DWH_CIDsDailyRisk] dcdr with(nolock) JOIN #CIDs
+BI_DB_dbo,SP_ClusteringDailyPrepData,SQL_STORED_PROCEDURE,BI_DB_ClusteringDailyPrepData,);   DELETE FROM [BI_DB_dbo].[BI_DB_ClusteringDailyPrepData] WHERE CalculationDateID = @d
+BI_DB_dbo,SP_InvestorReportTop10,SQL_STORED_PROCEDURE,BI_DB_Investors_Top10,*****/  DELETE FROM BI_DB_dbo.BI_DB_Investors_Top10 WHERE DateID = @ddINT  	IF OB
+BI_DB_dbo,SP_InvestorReportTop10,SQL_STORED_PROCEDURE,BI_DB_CopyDailyData,"  ,TotalEquity FROM BI_DB_dbo.BI_DB_CopyDailyData WHERE DateID =@ddINT     	IF "
+BI_DB_dbo,SP_NonUS_Logins,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,with (NOLOCK) 	JOIN BI_DB_dbo.BI_DB_CIDFirstDates fd with (NOLOCK) 		ON dc.GCID
+BI_DB_dbo,SP_NonUS_Logins,SQL_STORED_PROCEDURE,BI_DB_NonUS_Logins,0   DELETE FROM  [BI_DB_dbo].[BI_DB_NonUS_Logins] WHERE DateID = @DateINT   IN
+BI_DB_dbo,SP_AML_IOB_Report,SQL_STORED_PROCEDURE,BI_DB_AML_Documents_Request, = op.CID LEFT JOIN BI_DB_dbo.BI_DB_AML_Documents_Request bdadr ON pp.CID = bdadr.CID L
+BI_DB_dbo,SP_AML_IOB_Report,SQL_STORED_PROCEDURE,BI_DB_AML_IOB_Report,able TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_IOB_Report  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_Daily_PI_Performance_COPYDATA_RuningSideBySide,SQL_STORED_PROCEDURE,BI_DB_CopyDailyData,evel_Previous  FROM BI_DB_dbo.BI_DB_CopyDailyData bdcdd WITH (NOLOCK) WHERE bdc
+BI_DB_dbo,SP_Diversification,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_FullData,dcdpfd.Country FROM BI_DB_dbo.BI_DB_CID_DailyPanel_FullData bdcdpfd WITH (NOLOCK)  JOIN D
+BI_DB_dbo,SP_Diversification,SQL_STORED_PROCEDURE,BI_DB_Diversification,fd.CID  DELETE FROM BI_DB_dbo.BI_DB_Diversification WHERE DateID  = @ddint   INSE
+BI_DB_dbo,SP_M_AffiliateScore,SQL_STORED_PROCEDURE,BI_DB_First5Actions,quity30days FROM [BI_DB_dbo].[BI_DB_First5Actions] bdfa JOIN #CID c1 ON bdfa.CI
+BI_DB_dbo,SP_M_AffiliateScore,SQL_STORED_PROCEDURE,BI_DB_LTV_BI_Actual, AS Rev_30d FROM [BI_DB_dbo].[BI_DB_LTV_BI_Actual] bdlba JOIN #CID c ON bdlba.C
+BI_DB_dbo,SP_M_AffiliateScore,SQL_STORED_PROCEDURE,BI_DB_CID_DailyCluster,sterDetail  FROM [BI_DB_dbo].[BI_DB_CID_DailyCluster] a JOIN #CID c ON c.CID=a.CID
+BI_DB_dbo,SP_M_AffiliateScore,SQL_STORED_PROCEDURE,BI_DB_MarketingMonthlyRawData,UM(FTD) CPA FROM [BI_DB_dbo].[BI_DB_MarketingMonthlyRawData] WHERE YearMonthID = @YearMon
+BI_DB_dbo,SP_M_AffiliateScore,SQL_STORED_PROCEDURE,BI_DB_AffiliateScore,***/ DELETE FROM [BI_DB_dbo].[BI_DB_AffiliateScore] WHERE YearMonth=@YearMonth  
+BI_DB_dbo,SP_InvestorKPI,SQL_STORED_PROCEDURE,BI_DB_InvestorsKPI,EGIN  DELETE FROM [BI_DB_dbo].BI_DB_InvestorsKPI WHERE  DateID >= @DateID AND 
+BI_DB_dbo,SP_InvestorKPI,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_Club,gerID INNER JOIN [BI_DB_dbo].[BI_DB_CID_DailyPanel_Club] cp WITH (NOLOCK) ON fsc.Real
+Dealing_dbo,SP_DealingDashboard_Clients,SQL_STORED_PROCEDURE,Dealing_DealingDashboard_Clients,*/ DELETE FROM [Dealing_dbo].[Dealing_DealingDashboard_Clients] WHERE DateID=@DateID  INSERT
+Dealing_dbo,SP_DealingDashboard_Clients,SQL_STORED_PROCEDURE,Dealing_NumberofPositionsOpened_Agg,   DELETE FROM [Dealing_dbo].[Dealing_NumberofPositionsOpened_Agg] WHERE DateID=@DateID insert 
+BI_DB_dbo,SP_Risk_PayPalDepositors,SQL_STORED_PROCEDURE,BI_DB_RiskPayPalDepositors,eID   DELETE FROM  BI_DB_dbo.[BI_DB_RiskPayPalDepositors] WHERE ModificationDateID=@St
+BI_DB_dbo,SP_DDR_Fact_MIMO_eMoney_Platform,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_MIMO_eMoney_Platform,RN = 1  DELETE FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform WHERE DateID = @dateID -- sel
+BI_DB_dbo,SP_H_Cashout_Performance_Monitoring,SQL_STORED_PROCEDURE,BI_DB_Cashout_Performance_Monitoring,   truncate table [BI_DB_dbo].BI_DB_Cashout_Performance_Monitoring       INSERT INTO [BI_DB_dbo]
+BI_DB_dbo,SP_US_Stocks_MAU_DAU_KPI,SQL_STORED_PROCEDURE,BI_DB_US_Stocks_MAU_DAU_KPI,sert  DELETE  from  BI_DB_dbo.BI_DB_US_Stocks_MAU_DAU_KPI   WHERE Date=@Date   INSERT I
+BI_DB_dbo,SP_RecurringInvestment_Positions,SQL_STORED_PROCEDURE,BI_DB_RecurringInvestment_Positions,ons  TRUNCATE TABLE BI_DB_dbo.BI_DB_RecurringInvestment_Positions  INSERT INTO BI_DB_dbo.BI_DB_
+Dealing_dbo,SP_Latency_SuspiciousCIDs,SQL_STORED_PROCEDURE,Dealing_Latency_SuspiciousCIDs,   DELETE FROM [Dealing_dbo].[Dealing_Latency_SuspiciousCIDs] WHERE Date = @Date  INSERT I
+BI_DB_dbo,SP_M_UK_CommissionReport_byLeverage,SQL_STORED_PROCEDURE,BI_DB_UK_CommissionReport_byLeverage,ON;  DELETE FROM [BI_DB_dbo].[BI_DB_UK_CommissionReport_byLeverage] WHERE MONTH(@dd) = CalendarM
+BI_DB_dbo,SP_CMR_Phase2_CycleGap,SQL_STORED_PROCEDURE,BI_DB_CMR_Phase2_CycleGap,T)      DELETE FROM BI_DB_dbo.BI_DB_CMR_Phase2_CycleGap WHERE [Date] = @date      INS
+BI_DB_dbo,SP_LTV_Multiplier_Model,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,tryID 	LEFT JOIN [BI_DB_dbo].[BI_DB_CIDFirstDates] fd WITH (NOLOCK) 		ON fd.CID
+BI_DB_dbo,SP_LTV_Multiplier_Model,SQL_STORED_PROCEDURE,BI_DB_CID_DailyCluster,ents c LEFT JOIN [BI_DB_dbo].[BI_DB_CID_DailyCluster] dcl WITH (NOLOCK) ON c.RealC
+BI_DB_dbo,SP_LTV_Multiplier_Model,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_FullData,ing monthly FROM [BI_DB_dbo].[BI_DB_CID_DailyPanel_FullData] p WITH (NOLOCK) JOIN #Client
+BI_DB_dbo,SP_LTV_Multiplier_Model,SQL_STORED_PROCEDURE,BI_DB_CID_MonthlyPanel_FullData,venue_Total FROM [BI_DB_dbo].[BI_DB_CID_MonthlyPanel_FullData] p WITH (NOLOCK) JOIN #LastPo
+BI_DB_dbo,SP_LTV_Multiplier_Model,SQL_STORED_PROCEDURE,BI_DB_LTV_Revenue_Multipliers,nue Multiplier Matrix ([dbo].[BI_DB_LTV_Revenue_Multipliers]) IF OBJECT_ID('tempdb..#Mult
+BI_DB_dbo,SP_LTV_Multiplier_Model,SQL_STORED_PROCEDURE,BI_DB_LTV_Predictions,rageLTV8Y_C FROM [BI_DB_dbo].[BI_DB_LTV_Predictions] p GROUP BY p.FirstFundedMont
+Dealing_dbo,SP_MarketMakerBoundaries,SQL_STORED_PROCEDURE,Dealing_MarketMakerBoundaries_Real, DB. Inserts into Dealing.dbo.Dealing_MarketMakerBoundaries_Real  and Dealing.dbo.Dealing_Mark
+Dealing_dbo,SP_AbusersCIDs,SQL_STORED_PROCEDURE,Dealing_AbusersCIDs,ables DELETE FROM Dealing_dbo.Dealing_AbusersCIDs WHERE Date = @Date      INSER
+BI_DB_dbo,SP_HighCOsAndRedeemsWithSF,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,M #all all1 JOIN [BI_DB_dbo].[BI_DB_UsageTracking_SF] ut WITH (NOLOCK) ON ut.CID=a
+BI_DB_dbo,SP_HighCOsAndRedeemsWithSF,SQL_STORED_PROCEDURE,BI_DB_HighCOsAndRedeemsWithSF, Truncate table  [BI_DB_dbo].[BI_DB_HighCOsAndRedeemsWithSF]   INSERT INTO [BI_DB_dbo].[B
+BI_DB_dbo,SP_BI_DB_ReturnCalculation,SQL_STORED_PROCEDURE,BI_DB_ReturnCalculation_Daily_Data,bdrcdd.DateID) FROM BI_DB_dbo.BI_DB_ReturnCalculation_Daily_Data bdrcdd)  /*************** Pop
+BI_DB_dbo,SP_BI_DB_ReturnCalculation,SQL_STORED_PROCEDURE,BI_DB_CID_DailyCluster,c.GCID LEFT JOIN [BI_DB_dbo].[BI_DB_CID_DailyCluster] dcl ON fsc.RealCID=dcl.CID 	
+BI_DB_dbo,SP_BI_DB_ReturnCalculation,SQL_STORED_PROCEDURE,BI_DB_LTV_Predictions,.ToDateID LEFT JOIN BI_DB_dbo.BI_DB_LTV_Predictions bdlp ON fsc.RealCID = bdlp.Re
+BI_DB_dbo,SP_BI_DB_ReturnCalculation,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport, #pop pop LEFT JOIN BI_DB_dbo.BI_DB_DailyCommisionReport bddcr ON pop.RealCID = bddcr.
+BI_DB_dbo,SP_BI_DB_ReturnCalculation,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,pop pop  INNER JOIN BI_DB_dbo.BI_DB_KYC_Panel bdkp ON bdkp.RealCID = pop.Re
+BI_DB_dbo,SP_BI_DB_ReturnCalculation,SQL_STORED_PROCEDURE,BI_DB_ReturnCalculation,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_ReturnCalculation]  INSERT INTO [BI_DB_dbo].[BI
+BI_DB_dbo,SP_Affiliate_Fraud_Loss,SQL_STORED_PROCEDURE,BI_DB_Affiliate_Fraud_Loss,ID   DELETE FROM  [BI_DB_dbo].BI_DB_Affiliate_Fraud_Loss WHERE YearMonthDay=@YearMonth
+BI_DB_dbo,SP_TaxReports,SQL_STORED_PROCEDURE,BI_DB_Tax_Reports_Status,------- DELETE FROM BI_DB_dbo.BI_DB_Tax_Reports_Status WHERE [Date]=@Date  INSERT IN
+BI_DB_dbo,SP_CMR_Average_NDA_DOT,SQL_STORED_PROCEDURE,BI_DB_Positions_Closed_To_IBAN,ransactionType FROM BI_DB_dbo.BI_DB_Positions_Closed_To_IBAN bdpcti -- select * from BI_DB
+BI_DB_dbo,SP_CMR_Average_NDA_DOT,SQL_STORED_PROCEDURE,BI_DB_Positions_Opened_From_IBAN,ransactionType from BI_DB_dbo.BI_DB_Positions_Opened_From_IBAN  bdpofi     JOIN DWH_dbo.Fact
+BI_DB_dbo,SP_DailyRiskAlert,SQL_STORED_PROCEDURE,DWH_CIDsDailyRisk,as RiskScore  	FROM BI_DB_dbo.DWH_CIDsDailyRisk cdr WITH (NOLOCK) 	LEFT JOIN 
+BI_DB_dbo,SP_DailyRiskAlert,SQL_STORED_PROCEDURE,BI_DB_DailyPanel_Copy,LOCK)     LEFT JOIN BI_DB_dbo.BI_DB_DailyPanel_Copy bdpd With(NOLOCK)     ON g.Pa
+BI_DB_dbo,SP_DailyRiskAlert,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,ealCID LEFT JOIN [BI_DB_dbo].[BI_DB_CIDFirstDates] bdcd ON pp.RealCID=bdcd.CID 
+BI_DB_dbo,SP_DailyRiskAlert,SQL_STORED_PROCEDURE,DWH_GainDaily," ,dgd.Gain_d FROM [BI_DB_dbo].DWH_GainDaily dgd WITH (NOLOCK) JOIN #PIpop"
+BI_DB_dbo,SP_DailyRiskAlert,SQL_STORED_PROCEDURE,BI_DB_DailyRiskAlert,00   TRUNCATE Table BI_DB_dbo.BI_DB_DailyRiskAlert   INSERT INTO  BI_DB_dbo.BI_D
+BI_DB_dbo,SP_US_Popular_Investor,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,WITH (NOLOCK)  JOIN BI_DB_dbo.BI_DB_CIDFirstDates bdcd WITH (NOLOCK)  	ON dc.Re
+BI_DB_dbo,SP_US_Popular_Investor,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_FullData,ve FROM #pop p JOIN BI_DB_dbo.BI_DB_CID_DailyPanel_FullData bdcdpfd WITH (NOLOCK)  	ON p.
+BI_DB_dbo,SP_US_Popular_Investor,SQL_STORED_PROCEDURE,BI_DB_First5Actions,acters_AboutMe FROM BI_DB_dbo.BI_DB_First5Actions f5 WITH (NOLOCK)  JOIN #pop p
+BI_DB_dbo,SP_US_Popular_Investor,SQL_STORED_PROCEDURE,BI_DB_CopyDailyData, SELECT * 		   FROM BI_DB_dbo.BI_DB_CopyDailyData bdcdd WITH (NOLOCK)  		   WHE
+BI_DB_dbo,SP_US_Popular_Investor,SQL_STORED_PROCEDURE,BI_DB_US_Popular_Investor,D    TRUNCATE TABLE BI_DB_dbo.BI_DB_US_Popular_Investor  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_M_Active_Aff_Monthly_Region_GroupAff,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,CID) FTD    FROM [BI_DB_dbo].[BI_DB_CIDFirstDates] bdcd WITH(NOLOCK)   JOIN [DW
+BI_DB_dbo,SP_M_Active_Aff_Monthly_Region_GroupAff,SQL_STORED_PROCEDURE,BI_DB_ActiveAffActualMonthly_Region_GroupAffName,*/   DELETE FROM [BI_DB_dbo].[BI_DB_ActiveAffActualMonthly_Region_GroupAffName]    WHERE Date = @StartDate  
+BI_DB_dbo,SP_US_Mailing_Address_Non_US_Regulation,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,CountryID LEFT JOIN BI_DB_dbo.BI_DB_CIDFirstDates bdcd ON bdcd.CID=dc.RealCID W
+BI_DB_dbo,SP_US_Mailing_Address_Non_US_Regulation,SQL_STORED_PROCEDURE,BI_DB_US_Mailing_Address_Non_US_Regulation, #final f LEFT JOIN BI_DB_dbo.BI_DB_US_Mailing_Address_Non_US_Regulation u ON f.RealCID = u.RealCID WH
+BI_DB_dbo,SP_US_Mailing_Address_Non_US_Regulation,SQL_STORED_PROCEDURE,BI_DB_US_Mailing_Address_Non_US_Regulation_Email,)  TRUNCATE TABLE 	BI_DB_dbo.[BI_DB_US_Mailing_Address_Non_US_Regulation_Email]			 INSERT INTO BI_DB_dbo.[BI
+Dealing_dbo,SP_Dealing_DSC_HedgeOnIndices,SQL_STORED_PROCEDURE,DSC_HedgeOnIndices_H,    	DELETE FROM  Dealing_dbo.DSC_HedgeOnIndices_H WHERE DateID >= @Dateint  	IN
+Dealing_dbo,SP_Dealing_DSC_HedgeOnIndices,SQL_STORED_PROCEDURE,DSC_HedgeOnIndices,INS  	DELETE FROM Dealing_dbo.DSC_HedgeOnIndices WHERE DateID >= @Dateint 	INS
+BI_DB_dbo,SP_Create_External_PositionPnL_UK_Custody,SQL_STORED_PROCEDURE,BI_DB_PositionPnL_UK_Custody,Gold/sql_dp_prod_we/BI_DB_dbo/BI_DB_PositionPnL_UK_Custody/etr_y='+@etr_y+'/etr_ym='+@et
+BI_DB_dbo,SP_rsk_AgregatedRisk,SQL_STORED_PROCEDURE,BI_DB_rsk_Portfolio, NOP  select * from BI_DB_dbo.BI_DB_rsk_Portfolio with(nolock) where Date=  @ee
+BI_DB_dbo,SP_rsk_AgregatedRisk,SQL_STORED_PROCEDURE,BI_DB_rsk_DailyRiskAgg,std 			 delete from BI_DB_dbo.BI_DB_rsk_DailyRiskAgg where Date =@eed --@sd Bugfix
+BI_DB_dbo,SP_rsk_AgregatedRisk,SQL_STORED_PROCEDURE,BI_DB_Mirror_Assets_Allocation,pe   TRUNCATE TABLE BI_DB_dbo.BI_DB_Mirror_Assets_Allocation  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_IFR_KFactors_Automation_KDTF_Client_ShortLong,SQL_STORED_PROCEDURE,Dealing_ClientsCapitalAdequacy,ts_Short_OP  FROM Dealing_dbo.Dealing_ClientsCapitalAdequacy WHERE 1=1  AND Regulation IN 
+BI_DB_dbo,SP_AccountClosure,SQL_STORED_PROCEDURE,BI_DB_AccountClosure, TRUNCATE TABLE  [BI_DB_dbo].[BI_DB_AccountClosure]  INSERT INTO [BI_DB_dbo].[BI
+BI_DB_dbo,SP_AccountClosure,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_FullData,losureStatusID JOIN BI_DB_dbo.BI_DB_CID_DailyPanel_FullData bdcdpfd ON pc.RealCID = bdcdp
+BI_DB_dbo,SP_Investment_Monthly_Data,SQL_STORED_PROCEDURE,BI_DB_Investment_Monthly_Data,------  DELETE FROM BI_DB_dbo.BI_DB_Investment_Monthly_Data  WHERE @LastDayOfMonth = [Mon
+BI_DB_dbo,SP_CID_DailyPanel_Club,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_Club,ert Data into Table BI_DB.dbo.BI_DB_CID_DailyPanel_Club  ************************** *
+BI_DB_dbo,SP_CID_DailyPanel_Club,SQL_STORED_PROCEDURE,BI_DB_ClubChangeLogProduct,untManagerID   FROM BI_DB_dbo.BI_DB_ClubChangeLogProduct ccl WITH (nolock)   INNER JOI
+BI_DB_dbo,SP_CID_DailyPanel_Club,SQL_STORED_PROCEDURE,BI_DB_InterestDaily,Daily --  FROM [BI_DB].[dbo].[BI_DB_InterestDaily] --  WHERE DateID = @ddINT --
+BI_DB_dbo,SP_CID_DailyPanel_Club,SQL_STORED_PROCEDURE,BI_DB_InterestMonthly,erest --  FROM [BI_DB].[dbo].[BI_DB_InterestMonthly] --  WHERE [MonthOfInterest] 
+BI_DB_dbo,SP_CID_DailyPanel_Club,SQL_STORED_PROCEDURE,BI_DB_CID_DailyCluster,ion --         FROM BI_DB.dbo.BI_DB_CID_DailyCluster cls WITH (NOLOCK) --		 INNER 
+BI_DB_dbo,SP_CID_DailyPanel_Club,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,M #funded f JOIN [BI_DB_dbo].[BI_DB_UsageTracking_SF] bduts ON f.CID = bduts.CID W
+BI_DB_dbo,SP_CID_DailyPanel_Club,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport,D) RevenueCopy FROM BI_DB_dbo.BI_DB_DailyCommisionReport bddcr WHERE bddcr.DateID = @d
+BI_DB_dbo,SP_CID_BalanceDays,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_FullData, data source for revenue from BI_DB_CID_DailyPanel_FullData to BI_DB_DailyCommisionReport
+BI_DB_dbo,SP_CID_BalanceDays,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport,DB_CID_DailyPanel_FullData to BI_DB_DailyCommisionReport *****************************
+BI_DB_dbo,SP_CID_BalanceDays,SQL_STORED_PROCEDURE,BI_DB_CID_BalanceDays,)   DELETE FROM  [BI_DB_dbo].[BI_DB_CID_BalanceDays] WHERE CID IN (SELECT CID FRO
+Dealing_dbo,SP_Regime_Flags,SQL_STORED_PROCEDURE,Dealing_DealingDashboard_Clients,tribution FROM [Dealing_dbo].[Dealing_DealingDashboard_Clients] WITH (NOLOCK)  WHERE DateID 
+BI_DB_dbo,SP_Index_Divident_TaxReport_CID_Level,SQL_STORED_PROCEDURE,BI_DB_Index_Dividend_TaxReport_CID_Level,)	    DELETE FROM  BI_DB_dbo.[BI_DB_Index_Dividend_TaxReport_CID_Level] WHERE DateID = @DateID   INS
+BI_DB_dbo,Function_DDR_Aggregation_ThisMonth,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_DDR_Customer_Periodic_Status,as Global_FTDA FROM BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status ps WHERE ps.Date = @edate 			
+BI_DB_dbo,Function_DDR_Aggregation_ThisMonth,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_DDR_Customer_Daily_Status,Global_FTDA			 FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status ds WHERE ds.Date BETWEEN DATE
+BI_DB_dbo,SP_AML_Documents_Dashboard,SQL_STORED_PROCEDURE,BI_DB_AML_Documents_Dashboard,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_Documents_Dashboard   INSERT INTO BI_DB_dbo.BI_DB
+Dealing_dbo,SP_Staking_DailyPool_US,SQL_STORED_PROCEDURE,Dealing_Staking_DailyPool_US,====  DELETE FROM Dealing_dbo.Dealing_Staking_DailyPool_US WHERE Date = @Date  INSERT IN
+BI_DB_dbo,SP_M_Subsidieries_Realized_Commissions_Adjustments,SQL_STORED_PROCEDURE,BI_DB_Subsidieries_Realized_Commissions_Adjustments,e      DELETE FROM BI_DB_dbo.[BI_DB_Subsidieries_Realized_Commissions_Adjustments] WHERE [EOMonth] = @Date INSE
+BI_DB_dbo,SP_BI_DB_German_Open_Real_Crypto_Positions_Daily,SQL_STORED_PROCEDURE,BI_DB_German_Open_Real_Crypto_Positions_Daily,ncy  DELETE FROM [BI_DB_dbo].[BI_DB_German_Open_Real_Crypto_Positions_Daily] WHERE DateID = @DateID  INSE
+Dealing_dbo,SP_PreviouslyIdentifiedAbusers,SQL_STORED_PROCEDURE,Dealing_PreviouslyIdentifiedAbusers, into DELETE FROM Dealing_dbo.Dealing_PreviouslyIdentifiedAbusers WHERE Date= @Date    INSERT i
+Dealing_dbo,SP_PreviouslyIdentifiedAbusers,SQL_STORED_PROCEDURE,Dealing_PreviouslyIdentifiedAbusers_Email,rt TRUNCATE TABLE Dealing_dbo.Dealing_PreviouslyIdentifiedAbusers_Email  INSERT INTO Dealing_dbo.Deal
+BI_DB_dbo,SP_W_Compliance_Vulnerability_Detection,SQL_STORED_PROCEDURE,BI_DB_CID_MonthlyPanel_FullData,te) AS MaxDate FROM BI_DB_dbo.BI_DB_CID_MonthlyPanel_FullData);  DECLARE @LookbackDaysRAT I
+BI_DB_dbo,SP_W_Compliance_Vulnerability_Detection,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,lationID LEFT JOIN BI_DB_dbo.[BI_DB_CIDFirstDates] fd 	ON fd.CID = dc.RealCID W
+BI_DB_dbo,SP_W_Compliance_Vulnerability_Detection,SQL_STORED_PROCEDURE,BI_DB_Vulnerability_Positions,;   TRUNCATE TABLE BI_DB_dbo.[BI_DB_Vulnerability_Positions];  INSERT INTO BI_DB_dbo.[BI_
+BI_DB_dbo,SP_W_Compliance_Vulnerability_Detection,SQL_STORED_PROCEDURE,BI_DB_Vulnerability_CanceledWithdrawals,    TRUNCATE TABLE BI_DB_dbo.[BI_DB_Vulnerability_CanceledWithdrawals];  INSERT INTO BI_DB_dbo.[BI_
+BI_DB_dbo,SP_W_Compliance_Vulnerability_Detection,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,eclaredSavings FROM BI_DB_dbo.BI_DB_KYC_Panel kyc WITH (NOLOCK) JOIN #Clien
+BI_DB_dbo,SP_W_Compliance_Vulnerability_Detection,SQL_STORED_PROCEDURE,BI_DB_Scored_Appropriateness_Negative_Market,ssScore_Status FROM BI_DB_dbo.BI_DB_Scored_Appropriateness_Negative_Market neg JOIN #ClientsBothAlerts c
+BI_DB_dbo,SP_W_Compliance_Vulnerability_Detection,SQL_STORED_PROCEDURE,BI_DB_Vulnerability_LifetimeMetrics,    TRUNCATE TABLE BI_DB_dbo.[BI_DB_Vulnerability_LifetimeMetrics];  INSERT INTO BI_DB_dbo.[BI_
+Dealing_dbo,SP_Fails_PI,SQL_STORED_PROCEDURE,Dealing_Fails_PI,ble   DELETE FROM Dealing_dbo.Dealing_Fails_PI WHERE Date = @Date  INSERT IN
+BI_DB_dbo,SP_Equity_Real_Crypto_Stocks_Total_Cash_by_Regulation,SQL_STORED_PROCEDURE,BI_DB_Equity_Real_Crypto_Stocks_Total_Cash_by_Regulation,******/ DELETE FROM BI_DB_dbo.BI_DB_Equity_Real_Crypto_Stocks_Total_Cash_by_Regulation WHERE DateID = @DateID  INSER
+Dealing_dbo,SP_Staking_Emails,SQL_STORED_PROCEDURE,Dealing_Staking_Results,ription: - Update Dealing_dbo.Dealing_Staking_Results with the actual results of Ai
+Dealing_dbo,SP_Staking_Emails,SQL_STORED_PROCEDURE,Dealing_Staking_Compensation, results of Airdrop 			- Fill Dealing_Staking_Compensation and Dealing_Staking_Emails   
+Dealing_dbo,SP_Staking_Emails,SQL_STORED_PROCEDURE,Dealing_Staking_Summary,LevelID LEFT JOIN Dealing_dbo.Dealing_Staking_Summary s ON s.StakingMonthID = r.Sta
+BI_DB_dbo,SP_MarketingCloudDaily,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,onLevel3Date 		FROM BI_DB_dbo.BI_DB_CIDFirstDates bdcd 		WHERE bdcd.Verificatio
+BI_DB_dbo,SP_MarketingCloudDaily,SQL_STORED_PROCEDURE,BI_DB_MarketingCloudDaily,e = GETDATE() 	FROM BI_DB_dbo.BI_DB_MarketingCloudDaily a 	JOIN #verification b 		ON 
+BI_DB_dbo,SP_MarketingCloudDaily,SQL_STORED_PROCEDURE,BI_DB_CID_DailyCluster,ID AS DateID  	FROM BI_DB_dbo.BI_DB_CID_DailyCluster bdcdc WITH (NOLOCK) 	WHERE  b
+BI_DB_dbo,SP_MarketingCloudDaily,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,tment_Answers] FROM BI_DB_dbo.BI_DB_KYC_Panel bdkp WITH (NOLOCK) WHERE KYC_
+BI_DB_dbo,SP_MarketingCloudDaily,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_Club,tToClubUpgrade FROM BI_DB_dbo.BI_DB_CID_DailyPanel_Club bdcdpc WITH (NOLOCK) WHERE bd
+BI_DB_dbo,SP_MarketingCloudDaily,SQL_STORED_PROCEDURE,BI_DB_Demo_CID_Panel, ATU.CID)     /* Not migrated BI_DB_Demo_CID_Panel  /***************** Demo  ***
+BI_DB_dbo,SP_MarketingCloudDaily,SQL_STORED_PROCEDURE,BI_DB_CID_LifeStageDefinition, [RealCID]    FROM BI_DB_dbo.[BI_DB_CID_LifeStageDefinition] a WITH (NOLOCK)    WHERE   a
+BI_DB_dbo,SP_MarketingCloudDaily,SQL_STORED_PROCEDURE,DWH_GainDaily,ainExecutionID FROM BI_DB_dbo.DWH_GainDaily  gd WITH (NOLOCK) WHERE CAST(
+BI_DB_dbo,SP_MarketingCloudDaily,SQL_STORED_PROCEDURE,BI_DB_KYC_Score_CID_Level,ter LeadScore  FROM BI_DB_dbo.BI_DB_KYC_Score_CID_Level WHERE UpdateDate >= @date   C
+BI_DB_dbo,SP_MarketingCloudDaily,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_MIMO_AllPlatforms,ap.RealCID CID FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms bddfmap WHERE MIMOAction = 'D
+BI_DB_dbo,SP_MarketingCloudDaily,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_AUM,l EquityGlobal FROM BI_DB_dbo.BI_DB_DDR_Fact_AUM bddfa WHERE bddfa.DateID = @d
+BI_DB_dbo,SP_MarketingCloudDaily,SQL_STORED_PROCEDURE,BI_DB_RAF_Invitees_KPIs,RAF_Inviter    FROM BI_DB_dbo.BI_DB_RAF_Invitees_KPIs raf JOIN DWH_dbo.Dim_Customer
+BI_DB_dbo,SP_MarketingCloudDaily,SQL_STORED_PROCEDURE,BI_DB_KYC_Questions_Answers_Row_Data,And_Shares_ISA FROM BI_DB_dbo.BI_DB_KYC_Questions_Answers_Row_Data kycqa JOIN DWH_dbo.Dim_Custom
+BI_DB_dbo,SP_CMR_Automation_ASIC_CheckTableUpdate,SQL_STORED_PROCEDURE,BI_DB_InterestDaily,"= @dateID  UNION ALL  SELECT 'BI_DB_InterestDaily' AS TableName 	,CAST(MAX(Upda"
+BI_DB_dbo,SP_W_Wed_Compliance_Vulnerability,SQL_STORED_PROCEDURE,BI_DB_W_Wed_Compliance_Vulnerability_ALL,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_W_Wed_Compliance_Vulnerability_ALL  INSERT INTO  BI_DB_dbo.BI_DB
+BI_DB_dbo,SP_AML_Gatsby_Alerts,SQL_STORED_PROCEDURE,BI_DB_AML_Gatsby_Alerts,  -- TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_Gatsby_Alerts  -- EXEC BI_DB_dbo.SP_AML_Gat
+Dealing_dbo,SP_FactSet_Dependency_Status,SQL_STORED_PROCEDURE,Dealing_FactSet_Dependency_Status, = OBJECT_ID('Dealing_staging.Dealing_FactSet_Dependency_Status') )     DROP EXTERNAL TABLE D
+Dealing_dbo,SP_M_CME_Reporting,SQL_STORED_PROCEDURE,Dealing_CME_Reporting,bles  DELETE from Dealing_dbo.Dealing_CME_Reporting where Date = @EndOfMonth  INS
+BI_DB_dbo,SP_LiveAcquisitionDashboard_Daily,SQL_STORED_PROCEDURE,BI_DB_LiveAcquisitionDashboard_Daily,*/   DELETE FROM [BI_DB_dbo].[BI_DB_LiveAcquisitionDashboard_Daily] WHERE Date <= @date   INSERT
+BI_DB_dbo,SP_D_Compliance_Surveillance_ShortTermTrades,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,MirrorID LEFT JOIN BI_DB_dbo.[BI_DB_CIDFirstDates] fd WITH (NOLOCK) ON ac.CID =
+BI_DB_dbo,SP_D_Compliance_Surveillance_ShortTermTrades,SQL_STORED_PROCEDURE,BI_DB_Compliance_Surveillance_ShortTermTrades,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_Compliance_Surveillance_ShortTermTrades];  INSERT INTO [BI_DB_dbo].[B
+BI_DB_dbo,SP_Revenue14DaysToBigQuery,SQL_STORED_PROCEDURE,BI_DB_Revenue14DaysToBigQuery,te)  DELETE FROM [BI_DB_dbo].[BI_DB_Revenue14DaysToBigQuery] WHERE CAST(FirstDepositeDate
+BI_DB_dbo,SP_Revenue14DaysToBigQuery,SQL_STORED_PROCEDURE,BI_DB_CID_BalanceDays,ustomer] dc JOIN [BI_DB_dbo].[BI_DB_CID_BalanceDays] b ON dc.RealCID=b.CID WHERE 
+BI_DB_dbo,SP_Daily_HighCashoutEmailsForManagement,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,houts1 all1 JOIN [BI_DB_dbo].[BI_DB_UsageTracking_SF] ut WITH (NOLOCK) ON ut.CID=a
+BI_DB_dbo,SP_Daily_HighCashoutEmailsForManagement,SQL_STORED_PROCEDURE,BI_DB_Daily_HighCashoutEmailsForManagement, Truncate table  [BI_DB_dbo].[BI_DB_Daily_HighCashoutEmailsForManagement]  INSERT INTO [BI_DB_dbo].[BI
+BI_DB_dbo,SP_CopyBlockedAUM,SQL_STORED_PROCEDURE,BI_DB_CopyBlockedAUM,ame and LastName cloumns from BI_DB_CopyBlockedAUM and BI_DB_CopyBlockedAUMHisto
+BI_DB_dbo,SP_CopyBlockedAUM,SQL_STORED_PROCEDURE,BI_DB_CopyBlockedAUMHistory,"from BI_DB_CopyBlockedAUM and BI_DB_CopyBlockedAUMHistory tables (as part of ""Move PII "
+BI_DB_dbo,SP_CopyBlockedAUM,SQL_STORED_PROCEDURE,DWH_CIDsDailyRisk,"	,ri.RiskScore FROM BI_DB_dbo.DWH_CIDsDailyRisk cdr WITH (NOLOCK) JOIN #block"
+BI_DB_dbo,SP_AML_BI_Alerts_New,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,UpperLevel     FROM BI_DB_dbo.BI_DB_KYC_Panel bdkp     JOIN #pop pp ON pp.C
+BI_DB_dbo,SP_AML_BI_Alerts_New,SQL_STORED_PROCEDURE,BI_DB_AML_BI_Alerts_New,ISTS (SELECT 1 FROM BI_DB_dbo.BI_DB_AML_BI_Alerts_New a WHERE a.CID = pp.CID AND a.
+BI_DB_dbo,SP_H_AssignmentToolBacklog,SQL_STORED_PROCEDURE,BI_DB_AllDeposits,s.TeamID left join BI_DB_dbo.[BI_DB_AllDeposits] ad on ad.CID=v.CID and IsFTD
+BI_DB_dbo,SP_H_AssignmentToolBacklog,SQL_STORED_PROCEDURE,BI_DB_AssignmentToolBacklog,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_AssignmentToolBacklog]  INSERT INTO [BI_DB_dbo].[BI
+Dealing_dbo,SP_DailyAvgSpread,SQL_STORED_PROCEDURE,Dealing_DailyAvgSpread,   DELETE FROM [Dealing_dbo].[Dealing_DailyAvgSpread] WHERE Date=@Date INSERT INTO
+BI_DB_dbo,SP_US_Citizens_Under_Non_US_Regulation,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,ulationID LEFT JOIN BI_DB_dbo.BI_DB_CIDFirstDates bdcd ON bdcd.CID=dc.RealCID W
+BI_DB_dbo,SP_US_Citizens_Under_Non_US_Regulation,SQL_STORED_PROCEDURE,BI_DB_Tax_Compliance_TIN,AS KYC_Country FROM BI_DB_dbo.BI_DB_Tax_Compliance_TIN JOIN DWH_dbo.Dim_Customer dc 
+BI_DB_dbo,SP_US_Citizens_Under_Non_US_Regulation,SQL_STORED_PROCEDURE,BI_DB_US_Citizens_Under_Non_US_Regulation, #final f LEFT JOIN BI_DB_dbo.BI_DB_US_Citizens_Under_Non_US_Regulation u ON f.CID = u.CID WHERE u.CI
+BI_DB_dbo,SP_Instrument_Overview,SQL_STORED_PROCEDURE,BI_DB_First5Actions,uments i INNER JOIN BI_DB_dbo.BI_DB_First5Actions bdfa ON bdfa.FirstInstrument=
+BI_DB_dbo,SP_Instrument_Overview,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport, AS 'Revenue'  FROM BI_DB_dbo.BI_DB_DailyCommisionReport bddcr INNER JOIN #instruments
+BI_DB_dbo,SP_Instrument_Overview,SQL_STORED_PROCEDURE,BI_DB_Instrument_Overview,nt date DELETE FROM BI_DB_dbo.BI_DB_Instrument_Overview WHERE @Date=Date DELETE FROM 
+BI_DB_dbo,SP_US_Apex_Stocks_Activity_Recon,SQL_STORED_PROCEDURE,BI_DB_US_Apex_Stocks_Activity_eToroDB,o DB   DELETE FROM BI_DB_dbo.[BI_DB_US_Apex_Stocks_Activity_eToroDB]  WHERE Date=@Date   INSERT I
+BI_DB_dbo,SP_US_Apex_Stocks_Activity_Recon,SQL_STORED_PROCEDURE,BI_DB_US_Apex_Stocks_Activity_Apex, 	     DELETE FROM BI_DB_dbo.[BI_DB_US_Apex_Stocks_Activity_Apex]  WHERE EntryDate=@Date  INSE
+BI_DB_dbo,SP_AML_BI_Alerts_New_Singapore,SQL_STORED_PROCEDURE,BI_DB_AML_BI_Alerts_New_Singapore, = ll.CID LEFT JOIN BI_DB_dbo.BI_DB_AML_BI_Alerts_New_Singapore prev_alerts     ON pp.CID = p
+BI_DB_dbo,SP_DDR_Process_Monitor,SQL_STORED_PROCEDURE,BI_DB_DDR_Customer_Daily_Status,(*) AS CountDS FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status  bdvddp WHERE bdvddp.DateID =
+BI_DB_dbo,SP_DDR_Process_Monitor,SQL_STORED_PROCEDURE,BI_DB_DDR_Customer_Periodic_Status,(*) AS CountPS FROM BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status  bdvddp WHERE bdvddp.DateID =
+BI_DB_dbo,SP_DDR_Process_Monitor,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_MIMO_Trading_Platform, SumDepFactDDR FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform  bdvddp WHERE bdvddp.DateID =
+BI_DB_dbo,SP_DDR_Process_Monitor,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_MIMO_eMoney_Platform,DepFactDDRFact FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform  bdvddp WHERE bdvddp.DateID =
+Dealing_dbo,SP_SAXO_Recon,SQL_STORED_PROCEDURE,Dealing_Duco_EODRecon,ratetoUSD FROM [Dealing_dbo].[Dealing_Duco_EODRecon] dde WITH (NOLOCK) JOIN #Five
+Dealing_dbo,SP_SAXO_Recon,SQL_STORED_PROCEDURE,Dealing_Duco_ActivityRecon,Toro_FX_Rate FROM Dealing_dbo.Dealing_Duco_ActivityRecon ddar JOIN #Fivetran f ON ddar
+Dealing_dbo,SP_SAXO_Recon,SQL_STORED_PROCEDURE,Dealing_SAXORecon_EODHoldings,----  DELETE FROM Dealing_dbo.Dealing_SAXORecon_EODHoldings WHERE Date = @Date  INSERT IN
+Dealing_dbo,SP_SAXO_Recon,SQL_STORED_PROCEDURE,Dealing_SAXORecon_Trades, fe   DELETE FROM Dealing_dbo.Dealing_SAXORecon_Trades WHERE Date = @Date INSERT INT
+BI_DB_dbo,SP_Compensation_Activity_Data,SQL_STORED_PROCEDURE,BI_DB_Compensation_Activity_Data_CompensationReason,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_Compensation_Activity_Data_CompensationReason  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_Compensation_Activity_Data,SQL_STORED_PROCEDURE,BI_DB_Compensation_Activity_Data_Regulation,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_Compensation_Activity_Data_Regulation  INSERT INTO BI_DB_dbo.BI_DB_
+Dealing_dbo,SP_Market_Manipulation_Report,SQL_STORED_PROCEDURE,BI_DB_CopyDailyData,"ND),0) WTD_PnL FROM BI_DB_dbo.BI_DB_CopyDailyData bdcdd JOIN BI_DB_dbo.BI_DB_CI"
+Dealing_dbo,SP_Market_Manipulation_Report,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,ailyData bdcdd JOIN BI_DB_dbo.BI_DB_CIDFirstDates bdcd ON bdcdd.CID = bdcd.CID 
+Dealing_dbo,SP_Market_Manipulation_Report,SQL_STORED_PROCEDURE,Dealing_Market_Manipulation_Report,***/  DELETE FROM Dealing_dbo.Dealing_Market_Manipulation_Report WHERE Date = @Yesterday  INSE
+Dealing_dbo,SP_MCS_Model_Report,SQL_STORED_PROCEDURE,Dealing_MCS_Model_Report,   DELETE FROM [Dealing_dbo].[Dealing_MCS_Model_Report] WHERE Date = @Date  INSERT I
+BI_DB_dbo,SP_Capital_Guarantee_Panel,SQL_STORED_PROCEDURE,BI_DB_CapitalGuarantee_Panel,       --DROP TABLE BI_DB_dbo.BI_DB_CapitalGuarantee_Panel  --SET QUOTED_IDENTIFIER ON -
+BI_DB_dbo,SP_CMR_Key_Measures_Nested,SQL_STORED_PROCEDURE,BI_DB_Finance_Real_Futures_Custody_And_Transfers," ,x.ActionType FROM BI_DB_dbo.BI_DB_Finance_Real_Futures_Custody_And_Transfers x LEFT JOIN ( /************ C"
+BI_DB_dbo,SP_Inactivity_Fees,SQL_STORED_PROCEDURE,BI_DB_InactivityFees,     TRUNCATE TABLE BI_DB_dbo.BI_DB_InactivityFees   INSERT INTO BI_DB_dbo.BI_DB
+Dealing_dbo,SP_StocksOverrideRateLog,SQL_STORED_PROCEDURE,StocksOverrideRateLog,table DELETE FROM Dealing_dbo.StocksOverrideRateLog WHERE Date = @Date  INSERT IN
+BI_DB_dbo,SP_HighRedeemsApprovalForManagement,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,edeems all1 JOIN [BI_DB_dbo].[BI_DB_UsageTracking_SF] ut ON ut.CID=all1.CID JOIN [
+BI_DB_dbo,SP_HighRedeemsApprovalForManagement,SQL_STORED_PROCEDURE,BI_DB_D_HighRedeemsApprovalForManagement, Truncate table  [BI_DB_dbo].[BI_DB_D_HighRedeemsApprovalForManagement]  INSERT INTO [BI_DB_dbo].[BI
+Dealing_dbo,SP_NOP_LPandClients,SQL_STORED_PROCEDURE,Dealing_NOP_LPandClients,/ Delete  from [Dealing_dbo].[Dealing_NOP_LPandClients] where DateID< CAST(CONVERT(V
+Dealing_dbo,SP_Marex_Recon_only_for_rerun,SQL_STORED_PROCEDURE,Dealing_Marex_Recon_EODHoldings,----- DELETE FROM Dealing_dbo.Dealing_Marex_Recon_EODHoldings WHERE Date=@Date  INSERT INTO
+Dealing_dbo,SP_Marex_Recon_only_for_rerun,SQL_STORED_PROCEDURE,Dealing_Marex_Recon_EODHoldings_Futures,tures DELETE FROM Dealing_dbo.Dealing_Marex_Recon_EODHoldings_Futures WHERE Date=@Date  INSERT INTO
+BI_DB_dbo,SP_Vulnerable_Customers,SQL_STORED_PROCEDURE,BI_DB_KYC_Questions_Answers_Row_Data,ame 'Country'  FROM BI_DB_dbo.BI_DB_KYC_Questions_Answers_Row_Data bdkqard INNER JOIN DWH_dbo.Di
+BI_DB_dbo,SP_Vulnerable_Customers,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,ountryID INNER JOIN BI_DB_dbo.BI_DB_CIDFirstDates bdcd ON bdcd.CID=dc.RealCID I
+BI_DB_dbo,SP_Vulnerable_Customers,SQL_STORED_PROCEDURE,BI_DB_Vulnerable_Customers,sert TRUNCATE TABLE BI_DB_dbo.BI_DB_Vulnerable_Customers 				     INSERT INTO BI_DB_db
+Dealing_dbo,SP_OfferedInstruments,SQL_STORED_PROCEDURE,Dealing_OfferedInstruments,   DELETE FROM [Dealing_dbo].[Dealing_OfferedInstruments]  WHERE Date=@Date INSERT INT
+BI_DB_dbo,SP_W_Mon_AML_FCA_Crypto_Threshold,SQL_STORED_PROCEDURE,BI_DB_AML_FCA_Crypto_Threshold,******/ DELETE FROM BI_DB_dbo.BI_DB_AML_FCA_Crypto_Threshold WHERE DateID = @DateID  INSER
+BI_DB_dbo,SP_AML_KYC_Process,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,bReasonID LEFT JOIN BI_DB_dbo.BI_DB_CIDFirstDates bdcd ON bdcd.CID = dc.RealCID
+BI_DB_dbo,SP_AML_KYC_Process,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport,verFee) AS Rev FROM BI_DB_dbo.BI_DB_DailyCommisionReport bddcr WHERE bddcr.DateID <=  
+BI_DB_dbo,SP_AML_KYC_Process,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_AUM, AS Equiy_IBAN FROM BI_DB_dbo.BI_DB_DDR_Fact_AUM a JOIN #pop_Final pp ON pp.CI
+BI_DB_dbo,SP_AML_KYC_Process,SQL_STORED_PROCEDURE,BI_DB_AML_KYC_Process,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_KYC_Process  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,V_BI_DB_AllDeposits,VIEW,BI_DB_AllDeposits,[DepotID]   FROM [BI_DB_dbo].[BI_DB_AllDeposits];
+BI_DB_dbo,SP_CMR_Automation_Phase2_FinraGap,SQL_STORED_PROCEDURE,BI_DB_CMR_Phase2_FinraGap,3       DELETE FROM BI_DB_dbo.BI_DB_CMR_Phase2_FinraGap WHERE Date = @date      INSER
+BI_DB_dbo,SP_CMR_Phase2_Finra_NonCash_Comps,SQL_STORED_PROCEDURE,BI_DB_CMR_Phase2_Finra_NonCash_Comps,T)      DELETE FROM BI_DB_dbo.BI_DB_CMR_Phase2_Finra_NonCash_Comps WHERE Date = @date      INSER
+BI_DB_dbo,SP_M_EmployeesProgram,SQL_STORED_PROCEDURE,BI_DB_Employees_Program,/  -- SELECT * FROM BI_DB_dbo.BI_DB_Employees_Program  --DECLARE @Date AS DATE = GE
+Dealing_dbo,SP_Islamic_Spot_Price_Adjustment_Backup,SQL_STORED_PROCEDURE,Dealing_Islamic_Daily_Spot_Price_Adjustment,e  DELETE FROM [Dealing_dbo].[Dealing_Islamic_Daily_Spot_Price_Adjustment] WHERE Date = @Date  INSERT I
+BI_DB_dbo,SP_DDR_Fact_Revenue_Generating_Actions,SQL_STORED_PROCEDURE,BI_DB_CopyFund_Positions,lovers o 	LEFT JOIN BI_DB_dbo.BI_DB_CopyFund_Positions bdcfp 		ON o.PositionID = bdc
+BI_DB_dbo,SP_DDR_Fact_Revenue_Generating_Actions,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_Revenue_Generating_Actions,016 --SELECT * FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions WHERE DateID = 20251016 AND M
+BI_DB_dbo,SP_Retention_Panel,SQL_STORED_PROCEDURE,BI_DB_CID_DailyCluster,B_ActivitySegment_Snapshot to BI_DB_CID_DailyCluster *****************************
+BI_DB_dbo,SP_Retention_Panel,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,dr.ToDateID JOIN [BI_DB_dbo].[BI_DB_CIDFirstDates] bdcd1 with (NOLOCK) ON vl.CI
+Dealing_dbo,SP_US_Stocks_SmartPortfolio,SQL_STORED_PROCEDURE,Dealing_US_Stocks_SmartPortfolio,   DELETE FROM [Dealing_dbo].[Dealing_US_Stocks_SmartPortfolio] WHERE Date = @Date  INSERT I
+BI_DB_dbo,SP_US_Daily_Crypto,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_FullData,#DailyPanel     --FROM BI_DB..BI_DB_CID_DailyPanel_FullData fd     --WHERE fd.ActiveDate 
+BI_DB_dbo,Function_DDR_Aggregation_ThisQuarter,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_DDR_Customer_Periodic_Status,as Global_FTDA FROM BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status ps WHERE ps.Date = @edate 			
+BI_DB_dbo,Function_DDR_Aggregation_ThisQuarter,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_DDR_Customer_Daily_Status,Global_FTDA			 FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status ds WHERE ds.Date BETWEEN DATE
+BI_DB_dbo,SP_CryptoMarketingList,SQL_STORED_PROCEDURE,BI_DB_First5Actions,stomer dc LEFT JOIN BI_DB_dbo.BI_DB_First5Actions fa on dc.RealCID=fa.CID WHERE
+BI_DB_dbo,SP_CryptoMarketingList,SQL_STORED_PROCEDURE,BI_DB_CryptoMarketingList,     TRUNCATE TABLE BI_DB_dbo.BI_DB_CryptoMarketingList   INSERT INTO BI_DB_dbo.BI_DB
+eMoney_dbo,SP_eMoney_Customer_Risk_Assessment,SQL_STORED_PROCEDURE,BI_DB_KYC_Questions_Answers_Row_Data,_Desc'      FROM [BI_DB_dbo].[BI_DB_KYC_Questions_Answers_Row_Data] sub WITH(NOLOCK)      WHERE 
+BI_DB_dbo,SP_Watchlist_Tracking,SQL_STORED_PROCEDURE,BI_DB_WatchListsByFunnel,	wl.Ranking  FROM [BI_DB_dbo].BI_DB_WatchListsByFunnel wl WITH (NOLOCK)   IF OBJECT_
+BI_DB_dbo,SP_Watchlist_Tracking,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,sitionsOpened  FROM BI_DB_dbo.BI_DB_CIDFirstDates a WITH (NOLOCK) 	JOIN DWH_dbo
+BI_DB_dbo,SP_Watchlist_Tracking,SQL_STORED_PROCEDURE,BI_DB_First5Actions,.InstrumentID 	JOIN BI_DB_dbo.BI_DB_First5Actions fa WITH (NOLOCK) 	ON a.CID = 
+BI_DB_dbo,SP_Watchlist_Tracking,SQL_STORED_PROCEDURE,BI_DB_Watchlist_Tracking_Item_Level,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_Watchlist_Tracking_Item_Level]  INSERT INTO [BI_DB_dbo].[BI
+BI_DB_dbo,SP_Watchlist_Tracking,SQL_STORED_PROCEDURE,BI_DB_LTV_BI_Actual, = d.CID 	LEFT JOIN BI_DB_dbo.BI_DB_LTV_BI_Actual e WITH (NOLOCK) 	ON a.CID = e
+BI_DB_dbo,SP_Watchlist_Tracking,SQL_STORED_PROCEDURE,BI_DB_Watchlist_Tracking_High_Level,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_Watchlist_Tracking_High_Level]  INSERT INTO [BI_DB_dbo].[BI
+BI_DB_dbo,SP_US_Apex_Address_Change,SQL_STORED_PROCEDURE,BI_DB_US_Apex_Address_Change,ts*/ DELETE a FROM BI_DB_dbo.[BI_DB_US_Apex_Address_Change] a INNER JOIN #final f ON a.C
+Dealing_dbo,SP_CapitalGuarantee,SQL_STORED_PROCEDURE,Dealing_CapitalGuarantee,AS PrevRatio FROM Dealing_dbo.Dealing_CapitalGuarantee cg WHERE cg.Date = DATEADD(DA
+BI_DB_dbo,SP_D_Compliance_Surveillance_KYC_PnL_Monitoring,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,nguageID LEFT JOIN BI_DB_dbo.[BI_DB_CIDFirstDates] fd  	ON fd.CID = dc.RealCID 
+BI_DB_dbo,SP_D_Compliance_Surveillance_KYC_PnL_Monitoring,SQL_STORED_PROCEDURE,BI_DB_KYC_Questions_Answers_Row_Data,t DESC) AS rn FROM BI_DB_dbo.[BI_DB_KYC_Questions_Answers_Row_Data] kyc JOIN DWH_dbo.Dim_Custome
+BI_DB_dbo,SP_D_Compliance_Surveillance_KYC_PnL_Monitoring,SQL_STORED_PROCEDURE,BI_DB_CID_MonthlyPanel_FullData,--INTO #Panel FROM BI_DB_dbo.[BI_DB_CID_MonthlyPanel_FullData] mp JOIN #Clients cl ON cl.Re
+BI_DB_dbo,SP_D_Compliance_Surveillance_KYC_PnL_Monitoring,SQL_STORED_PROCEDURE,BI_DB_Compliance_Surveillance_KYC_PnL_Monitoring,/ TRUNCATE TABLE [BI_DB_dbo].[BI_DB_Compliance_Surveillance_KYC_PnL_Monitoring];  INSERT INTO [BI_DB_dbo].[B
+Dealing_dbo,SP_MIMO_Zero,SQL_STORED_PROCEDURE,Dealing_MIMO_Zero,select * FROM  [Dealing_dbo].[Dealing_MIMO_Zero]  WHERE [Date]=@DateBefore   
+BI_DB_dbo,SP_Risk_Capital_Adequacy,SQL_STORED_PROCEDURE,BI_DB_Capital_Adequacy_Monthly_NOP, DELETE trg    FROM BI_DB_dbo.BI_DB_Capital_Adequacy_Monthly_NOP trg   WHERE trg.YearMonthID =
+BI_DB_dbo,SP_Risk_Capital_Adequacy,SQL_STORED_PROCEDURE,BI_DB_Capital_Adequacy_Daily_Equity, DELETE trg    FROM BI_DB_dbo.BI_DB_Capital_Adequacy_Daily_Equity trg   WHERE trg.Date = @Date 
+BI_DB_dbo,SP_Risk_Capital_Adequacy,SQL_STORED_PROCEDURE,BI_DB_Capital_Adequacy_Daily_NOP_KASA, DELETE trg    FROM BI_DB_dbo.BI_DB_Capital_Adequacy_Daily_NOP_KASA trg   WHERE trg.Date = @Date 
+Dealing_dbo,SP_SAXO_Recon_FXnCommed,SQL_STORED_PROCEDURE,Dealing_Duco_EODRecon,ro_FXRate FROM [Dealing_dbo].[Dealing_Duco_EODRecon] dde WITH (NOLOCK) JOIN #Five
+Dealing_dbo,SP_SAXO_Recon_FXnCommed,SQL_STORED_PROCEDURE,Dealing_SaxoRecon_FXnCommed_EODHoldings,l  DELETE FROM [Dealing_dbo].[Dealing_SaxoRecon_FXnCommed_EODHoldings] WHERE [Date] = @Date  INSERT
+BI_DB_dbo,SP_USA_Equity_Deposits,SQL_STORED_PROCEDURE,BI_DB_USA_Equity_Deposits,***/ DELETE a  FROM BI_DB_dbo.BI_DB_USA_Equity_Deposits a WHERE a.DateID = @DateID  I
+BI_DB_dbo,Function_Revenue_AdminFee,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_Fact_Customer_Action_Position_Distribution,ttlementTypeID FROM BI_DB_dbo.BI_DB_Fact_Customer_Action_Position_Distribution fca WHERE fca.DateID BETWEEN 
+BI_DB_dbo,V_BI_DB_LimitedAccountsWithReasons_COPY_BI_DB,VIEW,BI_DB_LimitedAccountsWithReasons, [AccountType] FROM BI_DB_dbo.BI_DB_LimitedAccountsWithReasons;
+BI_DB_dbo,SP_D_Compliance_Surveillance_Snapshot,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,MirrorID LEFT JOIN BI_DB_dbo.[BI_DB_CIDFirstDates] fd WITH (NOLOCK) ON dp.CID =
+BI_DB_dbo,SP_D_Compliance_Surveillance_Snapshot,SQL_STORED_PROCEDURE,BI_DB_Compliance_Surveillance_Snapshot,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_Compliance_Surveillance_Snapshot];  INSERT INTO [BI_DB_dbo].[B
+Dealing_dbo,SP_Monitoring_ADV,SQL_STORED_PROCEDURE,Dealing_Monitoring_ADV,able  DELETE FROM Dealing_dbo.Dealing_Monitoring_ADV WHERE Date=@Date   INSERT INT
+Dealing_dbo,SP_Monitoring_ADV,SQL_STORED_PROCEDURE,Dealing_Monitoring_ADV_MoreThanPercent, a    delete from Dealing_dbo.Dealing_Monitoring_ADV_MoreThanPercent where Date = @Date  insert in
+BI_DB_dbo,SP_Copyfunds_SignificantAllocation,SQL_STORED_PROCEDURE,BI_DB_Copyfunds_SignificantAllocation,**/  TRUNCATE TABLE BI_DB_dbo.BI_DB_Copyfunds_SignificantAllocation      Declare @Date Date = dat
+BI_DB_dbo,SP_Copyfunds_SignificantAllocation,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,ntactedDate    FROM BI_DB_dbo.BI_DB_UsageTracking_SF  with (nolock)   WHERE Action
+Dealing_dbo,SP_HedgeCost,SQL_STORED_PROCEDURE,Dealing_DailyZeroPnL_Stocks,erverID LEFT JOIN Dealing_dbo.Dealing_DailyZeroPnL_Stocks z  ON z.Date = @Date AND c.In
+Dealing_dbo,SP_HedgeCost,SQL_STORED_PROCEDURE,Dealing_HedgeCost,   DELETE FROM [Dealing_dbo].[Dealing_HedgeCost] WHERE Date = @Date  INSERT I
+BI_DB_dbo,SP_IFRS_15_DateRange_Balance_boris,SQL_STORED_PROCEDURE,BI_DB_IFRS15_Daily_Balance,FD_Real_Filter FROM BI_DB_dbo.BI_DB_IFRS15_Daily_Balance bdidb WHERE bdidb.Date = @sda
+BI_DB_dbo,SP_Q_AML_EDD_US_Report,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,t FROM #pop pp JOIN BI_DB_dbo.BI_DB_KYC_Panel bdkp ON	pp.CID =bdkp.RealCID 
+BI_DB_dbo,SP_Q_AML_EDD_US_Report,SQL_STORED_PROCEDURE,BI_DB_AML_Documents_Request,ype_VideoIdent FROM BI_DB_dbo.BI_DB_AML_Documents_Request bdadr JOIN #pop pp ON bdadr.C
+BI_DB_dbo,SP_Q_AML_EDD_US_Report,SQL_STORED_PROCEDURE,BI_DB_AML_PlayerStatus_Changes,N FROM #pop pp JOIN BI_DB_dbo.BI_DB_AML_PlayerStatus_Changes bdapsc ON pp.CID = bdapsc.CID
+BI_DB_dbo,SP_Q_AML_EDD_US_Report,SQL_STORED_PROCEDURE,BI_DB_Q_AML_EDD_US_Report,******/ DELETE FROM BI_DB_dbo.BI_DB_Q_AML_EDD_US_Report WHERE Report_Date = @EndDateI
+BI_DB_dbo,SP_Document_Vendors,SQL_STORED_PROCEDURE,BI_DB_Document_Vendors,)  Truncate table   BI_DB_dbo.BI_DB_Document_Vendors   INSERT INTO  BI_DB_dbo.BI_D
+BI_DB_dbo,SP_Finance_IFRS_Automation_KTCD_eToro_Side,SQL_STORED_PROCEDURE,BI_DB_Finance_IFRS_Automation_KTCD_eToro_Side,gin     DELETE FROM BI_DB_dbo.BI_DB_Finance_IFRS_Automation_KTCD_eToro_Side WHERE Date = @Date  INSERT IN
+BI_DB_dbo,SP_Finance_Net_MIMO,SQL_STORED_PROCEDURE,BI_DB_Finance_Net_MIMO,*****/ DELETE FROM BI_DB_dbo.[BI_DB_Finance_Net_MIMO] WHERE ModificationDateID = @
+BI_DB_dbo,SP_IndexDividend_Alert,SQL_STORED_PROCEDURE,BI_DB_Index_Dividend_TaxReport,"ECT bdidtr.DateID, 'BI_DB_dbo.BI_DB_Index_Dividend_TaxReport' AS 'TableName', MAX(CASE WHE"
+BI_DB_dbo,SP_IndexDividend_Alert,SQL_STORED_PROCEDURE,BI_DB_Index_Dividend_TaxReport_CID_Level,"ECT bdidtr.DateID, 'BI_DB_dbo.BI_DB_Index_Dividend_TaxReport_CID_Level' AS 'TableName', MAX(CASE WHE"
+BI_DB_dbo,SP_CID_DailyCluster,SQL_STORED_PROCEDURE,BI_DB_CID_DailyCluster, SELECT CID FROM [BI_DB_dbo].[BI_DB_CID_DailyCluster] WHERE FromDateID >=CAST(CONV
+BI_DB_dbo,SP_CID_DailyCluster,SQL_STORED_PROCEDURE,BI_DB_ClusteringDailyPrepData,pd.CryptoRatio FROM BI_DB_dbo.BI_DB_ClusteringDailyPrepData bdcdpd WITH (NOLOCK) WHERE bd
+BI_DB_dbo,SP_BO_Generated_Compensations,SQL_STORED_PROCEDURE,BI_DB_BO_Generated_Compensations,250    DELETE FROM BI_DB_dbo.[BI_DB_BO_Generated_Compensations] WHERE [Time] >= @Date AND [T
+BI_DB_dbo,SP_CID_MonthlyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_NewBonusReport,Contacted   FROM [BI_DB_dbo].[BI_DB_NewBonusReport]   WHERE [DateID] >=@startDat
+BI_DB_dbo,SP_CID_MonthlyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_ClubChangeLogProduct,ate DESC) rn --FROM BI_DB_dbo.BI_DB_ClubChangeLogProduct ccl WITH (NOLOCK) --INNER JOI
+BI_DB_dbo,SP_CID_MonthlyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_CID_DailyCluster,te DESC) RN from [BI_DB_dbo].[BI_DB_CID_DailyCluster] 																 where @endd
+BI_DB_dbo,SP_CID_MonthlyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,(NOLOCK) INNER JOIN BI_DB_dbo.BI_DB_CIDFirstDates fd WITH(NOLOCK)  ON fd.CID = 
+BI_DB_dbo,SP_CID_MonthlyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_First5Actions,ulationID LEFT JOIN BI_DB_dbo.BI_DB_First5Actions fa   WITH(NOLOCK)  ON fa.CID 
+BI_DB_dbo,SP_CID_MonthlyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport, Revenue_Other FROM BI_DB_dbo.BI_DB_DailyCommisionReport bddcr WHERE bddcr.DateID >=@s
+BI_DB_dbo,SP_CID_MonthlyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_CID_MonthlyPanel_FullData, INTO #History FROM BI_DB_dbo.BI_DB_CID_MonthlyPanel_FullData WHERE ActiveDate = DATEADD(MO
+BI_DB_dbo,SP_CID_MonthlyPanel_FullData,SQL_STORED_PROCEDURE,BI_DB_CID_LifeStageDefinition,s EOM_LSD  FROM  [BI_DB_dbo].[BI_DB_CID_LifeStageDefinition] as lf WHERE @endDateINT > lf
+Dealing_dbo,SP_Apex_PnL,SQL_STORED_PROCEDURE,Dealing_DailyZeroPnL_Stocks,ZeroPnL_Stocks to Dealing_dbo.Dealing_DailyZeroPnL_Stocks *****************************
+BI_DB_dbo,SP_AffiliateCOAbuse,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,stomer c    JOIN [BI_DB_dbo].[BI_DB_CIDFirstDates] F  WITH (NOLOCK) ON F.CID=c.
+BI_DB_dbo,SP_AffiliateCOAbuse,SQL_STORED_PROCEDURE,BI_DB_FirstTimeRev10,lCID   left join [BI_DB_dbo].[BI_DB_FirstTimeRev10] Rev10  WITH (NOLOCK) on Rev1
+BI_DB_dbo,SP_StocksETFs_SignificantAllocation,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_Club,ert Data into Table BI_DB.dbo.BI_DB_CID_DailyPanel_Club       ***********************
+BI_DB_dbo,SP_StocksETFs_SignificantAllocation,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,edDate         FROM BI_DB_dbo.BI_DB_UsageTracking_SF  with (nolock)     JOIN #Stri
+BI_DB_dbo,SP_AffiliatePaymentsReport,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,oData   --FROM [BI_DB].[dbo].[BI_DB_CIDFirstDates] CFD WITH(NOLOCK)   -- JOIN D
+BI_DB_dbo,SP_AffiliatePaymentsReport,SQL_STORED_PROCEDURE,BI_DB_FirstTimeRev10,--  full outer JOIN BI_DB.dbo.BI_DB_FirstTimeRev10 FTR WITH(NOLOCK)   --  ON CFD
+BI_DB_dbo,SP_AffiliatePaymentsReport,SQL_STORED_PROCEDURE,BI_DB_CID_MonthlyPanel_FullData,.[BI_DB_CIDMonthlyData]*/ dbo.BI_DB_CID_MonthlyPanel_FullData  MD  with(nolock)   -- ON MD.
+BI_DB_dbo,SP_AffiliatePaymentsReport,SQL_STORED_PROCEDURE,BI_DB_AffiliatePayment,--   delete from [BI_DB_dbo].[BI_DB_AffiliatePayment]     where MonthPeriod = @Mon
+BI_DB_dbo,SP_DDR_Fact_Fact_MIMO_AllPlatforms,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_MIMO_Trading_Platform, FTDPlatformID FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform bddfmtp WHERE bddfmtp.DateID 
+BI_DB_dbo,SP_DDR_Fact_Fact_MIMO_AllPlatforms,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_MIMO_eMoney_Platform,FTDPlatformID  FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform bddfmi  WHERE bddfmi.DateID =
+BI_DB_dbo,SP_DDR_Fact_Fact_MIMO_AllPlatforms,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_MIMO_AllPlatforms,DATE()  DELETE FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms WHERE DateID = @dateID   INSE
+BI_DB_dbo,SP_DDR_Fact_Fact_MIMO_AllPlatforms,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_MIMO_Options_Platform,"0 	 , 0  	 , 0 FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Options_Platform bddfmop  /*------------------"
+Dealing_dbo,SP_MarketMakerAllTrade,SQL_STORED_PROCEDURE,Dealing_MarketMakerAllTrade,    added column DIFF to  dbo.Dealing_MarketMakerAllTrade 2022-08-01     Adva          
+BI_DB_dbo,SP_Trading_Failures_Risk,SQL_STORED_PROCEDURE,BI_DB_Trading_Failures_Risk,hat day DELETE FROM BI_DB_dbo.BI_DB_Trading_Failures_Risk WHERE Date = @Date;   INSERT 
+BI_DB_dbo,SP_FCA_Liabilities,SQL_STORED_PROCEDURE,BI_DB_FCA_Liabilities,"***/ DELETE a  FROM BI_DB_dbo.BI_DB_FCA_Liabilities a WHERE EOMONTH(Date, 0) = EO"
+BI_DB_dbo,SP_InvestorReport_Cluster,SQL_STORED_PROCEDURE,BI_DB_CID_DailyCluster, (NOLOCK) LEFT JOIN BI_DB_dbo.BI_DB_CID_DailyCluster cdc WITH (NOLOCK)  	    ON st
+BI_DB_dbo,SP_InvestorReport_Cluster,SQL_STORED_PROCEDURE,BI_DB_Investors,terSF  	DELETE FROM BI_DB_dbo.BI_DB_Investors 	WHERE DateID = @ddINT  	INSE
+Dealing_dbo,SP_EquityFees,SQL_STORED_PROCEDURE,Dealing_EquityFees,able  DELETE FROM Dealing_dbo.Dealing_EquityFees  WHERE DateID = @DateID  INSE
+BI_DB_dbo,SP_User_Segment_Snapshot,SQL_STORED_PROCEDURE,BI_DB_EquitySnapshots,***/ DELETE FROM [BI_DB_dbo].[BI_DB_EquitySnapshots]  WHERE [Date] = @Date  INSER
+BI_DB_dbo,SP_User_Segment_Snapshot,SQL_STORED_PROCEDURE,BI_DB_STDSnapshots,***/ DELETE FROM [BI_DB_dbo].[BI_DB_STDSnapshots] WHERE DateKey = @Date  INSER
+BI_DB_dbo,SP_User_Segment_Snapshot,SQL_STORED_PROCEDURE,BI_DB_User_Segment_Snapshot,***/ DELETE FROM [BI_DB_dbo].[BI_DB_User_Segment_Snapshot]  WHERE [Date] = @Date  INSER
+BI_DB_dbo,SP_User_Segment_Snapshot,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport,LOCK)  LEFT JOIN [BI_DB_dbo].[BI_DB_DailyCommisionReport] c WITH(NOLOCK) ON c.RealCID 
+BI_DB_dbo,SP_rsk_Portfolio,SQL_STORED_PROCEDURE,BI_DB_rsk_Portfolio,rorID   delete from BI_DB_dbo.BI_DB_rsk_Portfolio where Date=@date  insert INTO
+BI_DB_dbo,SP_BI_DB_Crypto_Airdrop,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,'UpdateDate' FROM [BI_DB_dbo].BI_DB_CIDFirstDates bdcd  INNER JOIN DWH_dbo.Fact
+BI_DB_dbo,SP_BI_DB_Crypto_Airdrop,SQL_STORED_PROCEDURE,BI_DB_Crypto_Airdrop,ca   TRUNCATE TABLE BI_DB_dbo.BI_DB_Crypto_Airdrop INSERT INTO BI_DB_dbo.BI_DB_C
+BI_DB_dbo,SP_Q_AML_FSA_Report,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,M #pop_end pop JOIN BI_DB_dbo.BI_DB_KYC_Panel bdkp ON pop.CID=bdkp.RealCID 
+BI_DB_dbo,SP_Q_AML_FSA_Report,SQL_STORED_PROCEDURE,BI_DB_Q_AML_FSA_Report_start,******/ DELETE FROM BI_DB_dbo.BI_DB_Q_AML_FSA_Report_start WHERE Report_Start_Date = @St
+BI_DB_dbo,SP_Q_AML_FSA_Report,SQL_STORED_PROCEDURE,BI_DB_Q_AML_FSA_Report_end,******/ DELETE FROM BI_DB_dbo.BI_DB_Q_AML_FSA_Report_end WHERE Report_End_Date = @EndD
+BI_DB_dbo,SP_Q_AML_FSA_Report,SQL_STORED_PROCEDURE,BI_DB_Q_AML_FSA_Report_end_Market_Value,******/ DELETE FROM BI_DB_dbo.BI_DB_Q_AML_FSA_Report_end_Market_Value WHERE End_DateID = @EndDateID
+BI_DB_dbo,SP_Q_AML_FSA_Report,SQL_STORED_PROCEDURE,BI_DB_Q_AML_FSA_Report_end_Positions,******/ DELETE FROM BI_DB_dbo.BI_DB_Q_AML_FSA_Report_end_Positions WHERE Report_End_Date = @EndD
+BI_DB_dbo,SP_AML_SubEntity_Categorization,SQL_STORED_PROCEDURE,BI_DB_AML_SubEntity_Categorization,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_SubEntity_Categorization  /********** Step 14 ********
+BI_DB_dbo,SP_OPS_HighCompensationsVsDeposits,SQL_STORED_PROCEDURE,BI_DB_OPS_HighCompensationsVsDeposits,  Truncate TABLE [BI_DB_dbo].[BI_DB_OPS_HighCompensationsVsDeposits]  insert into [BI_DB_dbo].[BI
+BI_DB_dbo,SP_Tax_PTM_Levy_Report,SQL_STORED_PROCEDURE,BI_DB_PTM_Levy_Report,------- DELETE FROM BI_DB_dbo.BI_DB_PTM_Levy_Report WHERE [Date]=@Date  INSERT IN
+BI_DB_dbo,SP_InstrumentsAlerts,SQL_STORED_PROCEDURE,BI_DB_First5Actions,"ountry, 	FROM  		[BI_DB_dbo].[BI_DB_First5Actions] bdfa 	LEFT JOIN  		[DWH_dbo]"
+BI_DB_dbo,SP_InstrumentsAlerts,SQL_STORED_PROCEDURE,BI_DB_InstrumentsAlerts,/   delete from  [BI_DB_dbo].[BI_DB_InstrumentsAlerts] where FullDate=@Date  insert
+BI_DB_dbo,BI_DB_V_DDR_Daily_Panel,VIEW,BI_DB_DDR_Customer_Daily_Status,S YearStartInt FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status ds LEFT JOIN BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_InterestDaily_DL_To_Synapse,SQL_STORED_PROCEDURE,BI_DB_InterestDaily,ayOfInterest)) FROM BI_DB_dbo.BI_DB_InterestDaily)  SELECT GETDATE()  -- /*****
+BI_DB_dbo,SP_InterestDaily_DL_To_Synapse,SQL_STORED_PROCEDURE,BI_DB_InterestMonthly,***********/   /*   BI_DB_dbo.BI_DB_InterestMonthly   */   /*********************
+EXW_dbo,SP_EXW_UserSettingsWalletAllowance,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,.Q18_AnswerID  FROM BI_DB_dbo.BI_DB_KYC_Panel   b      --AND b.RealCID =322
+BI_DB_dbo,BI_DB_V_DDR_Revenue_Breakdown,VIEW,BI_DB_DDR_Fact_Revenue_Generating_Actions,tAsActiveTrade FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions rga 	JOIN DWH_dbo.Dim_Date dd
+BI_DB_dbo,BI_DB_V_DDR_Revenue_Breakdown,VIEW,BI_DB_DDR_Customer_Daily_Status,ountInActive --FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status dus -- select top 10 * from B
+Dealing_dbo,SP_MaxNOPLimitSettings,SQL_STORED_PROCEDURE,Dealing_MaxNOPLimitSettings,D  DELETE FROM [Dealing_dbo].[Dealing_MaxNOPLimitSettings] WHERE Date=@Date INSERT INTO
+BI_DB_dbo,SP_IFR_KFactors_Automation_KCOH,SQL_STORED_PROCEDURE,Dealing_ClientsCapitalAdequacy, Date) AS RN FROM Dealing_dbo.Dealing_ClientsCapitalAdequacy WHERE 1=1  AND Regulation IN 
+Dealing_dbo,SP_CopyPortfolio_Allocation,SQL_STORED_PROCEDURE,BI_DB_CopyDailyData, bdcdd.CID  FROM [BI_DB_dbo].[BI_DB_CopyDailyData] bdcdd  WHERE bdcdd.CopyType 
+Dealing_dbo,SP_CopyPortfolio_Allocation,SQL_STORED_PROCEDURE,Dealing_CopyPortfolio_Allocation,--  DELETE FROM [Dealing_dbo].Dealing_CopyPortfolio_Allocation WHERE Date = @Date  INSERT IN
+BI_DB_dbo,SP_H_AssignmentToolSLAs,SQL_STORED_PROCEDURE,BI_DB_AssignmentToolSLAs,5211)  DELETE FROM BI_DB_dbo.[BI_DB_AssignmentToolSLAs]    WHERE OutcomeDateID = @St
+BI_DB_dbo,SP_DDR_Fact_Trading_Volumes_And_Amounts,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_Trading_Volumes_And_Amounts, ftvpl  DELETE FROM BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts WHERE DateID = @dateID  INSER
+BI_DB_dbo,SP_Client_Balance_Breakdown,SQL_STORED_PROCEDURE,Client_Balance_Breakdown_Instrument_Level,ata  /* alter table BI_DB_dbo.Client_Balance_Breakdown_Instrument_Level add CommissionVersion Int nul
+BI_DB_dbo,SP_Group_LTV_Table,SQL_STORED_PROCEDURE,BI_DB_LTV_BI_Actual,_Month_Cluster FROM BI_DB_dbo.BI_DB_LTV_BI_Actual bdlp WITH (NOLOCK) INNER JOIN
+BI_DB_dbo,SP_Group_LTV_Table,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,CountryID LEFT JOIN BI_DB_dbo.BI_DB_CIDFirstDates bdcd WITH (NOLOCK) ON dc.GCID
+BI_DB_dbo,SP_Group_LTV_Table,SQL_STORED_PROCEDURE,BI_DB_CID_MonthlyPanel_FullData,bdcd.GCID LEFT JOIN BI_DB_dbo.BI_DB_CID_MonthlyPanel_FullData bdcmpfd WITH (NOLOCK) ON bdlp
+BI_DB_dbo,SP_NOP_Distribution_Crypto,SQL_STORED_PROCEDURE,BI_DB_NOP_Distribution_Crypto,sert DELETE FROM   BI_DB_dbo.[BI_DB_NOP_Distribution_Crypto] WHERE (RelevanceDate<= DATEA
+BI_DB_dbo,SP_InterestMonthly,SQL_STORED_PROCEDURE,BI_DB_InterestMonthly,ists DELETE FROM [BI_DB_dbo].[BI_DB_InterestMonthly] WHERE MonthOfInterest=@Start
+BI_DB_dbo,SP_IR_Dashboard_Monitor_Checks,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_MIMO_Trading_Platform,nsferCoins     FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform b     INNER JOIN DWH_dbo.Fact
+BI_DB_dbo,SP_IR_Dashboard_Monitor_Checks,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_AUM, AS Stocks_ETF FROM BI_DB_dbo.BI_DB_DDR_Fact_AUM bddfa INNER JOIN DWH_dbo.Fact
+BI_DB_dbo,SP_Money_In_New_Management_Dashboard,SQL_STORED_PROCEDURE,BI_DB_Money_In_New_Management_Dashboard,ent running DELETE  BI_DB_dbo.BI_DB_Money_In_New_Management_Dashboard FROM BI_DB_dbo.BI_DB_Money_In
+BI_DB_dbo,Function_Revenue_Trading_Instrument_Level,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_CopyFund_Positions,PREP pr  	LEFT JOIN BI_DB_dbo.BI_DB_CopyFund_Positions cf 		ON pr.PositionID = cf.Po
+BI_DB_dbo,Function_Revenue_Trading_Instrument_Level,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_Positions_Opened_From_IBAN,sitionID 	LEFT JOIN BI_DB_dbo.BI_DB_Positions_Opened_From_IBAN ofi 		ON pr.PositionID = ofi.
+BI_DB_dbo,Function_Revenue_Trading_Instrument_Level,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_Positions_Closed_To_IBAN,sitionID 	LEFT JOIN BI_DB_dbo.BI_DB_Positions_Closed_To_IBAN cti 		ON pr.PositionID = cti.
+BI_DB_dbo,Function_Revenue_Trading_Instrument_Level,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_RecurringInvestment_Positions,sitionID 	LEFT JOIN BI_DB_dbo.BI_DB_RecurringInvestment_Positions rec 		ON pr.PositionID = rec.
+BI_DB_dbo,SP_Client_Balance_Breakdown_bkp_2023_09_26,SQL_STORED_PROCEDURE,Client_Balance_Breakdown_Instrument_Level,352289  delete from BI_DB_dbo.Client_Balance_Breakdown_Instrument_Level where DateID = @DateID  inser
+BI_DB_dbo,SP_Client_Balance_Breakdown_bkp_2023_09_26,SQL_STORED_PROCEDURE,BI_DB_DailyCommisionReport,missionChange) from BI_DB_dbo.BI_DB_DailyCommisionReport where DateID = 20230315   dro
+BI_DB_dbo,SP_BI_DB_W8_Users_Status,SQL_STORED_PROCEDURE,BI_DB_AML_PlayerStatus_Changes,bReasonID LEFT JOIN BI_DB_dbo.BI_DB_AML_PlayerStatus_Changes bdapsc ON pp.CID = bdapsc.CID
+BI_DB_dbo,SP_BI_DB_W8_Users_Status,SQL_STORED_PROCEDURE,BI_DB_W8_Users_Status, W8 table   --MERGE BI_DB_dbo.BI_DB_W8_Users_Status trg --			USING #Final_w8_Pop 
+BI_DB_dbo,SP_D_LTV_BI_Actual_Snapshot,SQL_STORED_PROCEDURE,BI_DB_LTV_BI_Actual,a daily snapshot of BI_DB_dbo.BI_DB_LTV_BI_Actual   ************************** 
+BI_DB_dbo,SP_D_LTV_BI_Actual_Snapshot,SQL_STORED_PROCEDURE,BI_DB_LTV_BI_Actual_Daily_Snapshot,GIN  DELETE FROM [BI_DB_dbo].[BI_DB_LTV_BI_Actual_Daily_Snapshot] WHERE @date = SnapshotDate; 
+BI_DB_dbo,SP_D_LTV_BI_Actual_Snapshot,SQL_STORED_PROCEDURE,BI_DB_First5Actions,al bdlba  LEFT JOIN BI_DB_dbo.BI_DB_First5Actions bdfa  ON bdlba.CID = bdfa.CID
+BI_DB_dbo,SP_IFR_KFactors_Automation_KASA_DailyNOP,SQL_STORED_PROCEDURE,BI_DB_Capital_Adequacy_Daily_NOP_KASA,BY Date) AS RN FROM BI_DB_dbo.BI_DB_Capital_Adequacy_Daily_NOP_KASA  WHERE 1=1  --AND Real_CFD = 
+BI_DB_dbo,SP_US_Apex_Instrument_Holders,SQL_STORED_PROCEDURE,BI_DB_US_Apex_Instrument_Holders,insert DELETE FROM  BI_DB_dbo.BI_DB_US_Apex_Instrument_Holders WHERE DateID=@DateID   INSERT
+Dealing_dbo,SP_ManipulationReport_RealStocks,SQL_STORED_PROCEDURE,Dealing_ManipulationReport_RealStocks_CID,**/ DELETE FROM   Dealing_dbo.Dealing_ManipulationReport_RealStocks_CID         WHERE Date = @Yesterd
+BI_DB_dbo,SP_BI_AMLPeriodicReview,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,estmentAmount  FROM BI_DB_dbo.BI_DB_KYC_Panel bdkp JOIN #populationfinal pp
+BI_DB_dbo,SP_BI_AMLPeriodicReview,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,ReviewPending' FROM BI_DB_dbo.BI_DB_CIDFirstDates v JOIN #populationfinalwithal
+BI_DB_dbo,SP_BI_AMLPeriodicReview,SQL_STORED_PROCEDURE,BI_DB_RiskAlertManagementTool,ModDatePerType FROM BI_DB_dbo.BI_DB_RiskAlertManagementTool amt JOIN #populationfinalwith
+BI_DB_dbo,SP_BI_AMLPeriodicReview,SQL_STORED_PROCEDURE,BI_DB_AML_BI_Alerts_New,estBIAlertDate FROM BI_DB_dbo.BI_DB_AML_BI_Alerts_New amt JOIN #populationfinalwith
+BI_DB_dbo,SP_BI_AMLPeriodicReview,SQL_STORED_PROCEDURE,BI_DB_AMLPeriodicReview,"stReviewDateID FROM BI_DB_dbo.BI_DB_AMLPeriodicReview GROUP BY RealCID, AlertCatego"
+BI_DB_dbo,SP_US_Apex_Recon_Cash_To_Clients_Accounts,SQL_STORED_PROCEDURE,BI_DB_US_Apex_Recon_Cash_To_Clients_Accounts,rt **/ DELETE FROM BI_DB_dbo.[BI_DB_US_Apex_Recon_Cash_To_Clients_Accounts] WHERE ProcessDate = @Date  I
+BI_DB_dbo,SP_AvgHoldingTime,SQL_STORED_PROCEDURE,BI_DB_AvgHoldingTime,	 	 	DELETE from [BI_DB_dbo].[BI_DB_AvgHoldingTime] WHERE CloseDateID=  CAST(CON
+BI_DB_dbo,SP_Create_External_PositionPnL_EU_Custody,SQL_STORED_PROCEDURE,BI_DB_PositionPnL_EU_Custody,Gold/sql_dp_prod_we/BI_DB_dbo/BI_DB_PositionPnL_EU_Custody/etr_y='+@etr_y+'/etr_ym='+@et
+BI_DB_dbo,Function_PnL_Single_Day,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_CopyFund_Positions,tID 						LEFT JOIN BI_DB_dbo.BI_DB_CopyFund_Positions cpt 							ON bdppl.PositionI
+BI_DB_dbo,SP_Stocks_HS125,SQL_STORED_PROCEDURE,BI_DB_Stocks_HS125,ata into Table [BI_DB].[dbo].[BI_DB_Stocks_HS125] - Used in tableau Reports fo
+BI_DB_dbo,SP_Stocks_HS125,SQL_STORED_PROCEDURE,BI_DB_Stocks_HS121_CIDs,or CID Data -  [BI_DB].[dbo].[BI_DB_Stocks_HS121_CIDs] 10.07.19   Amir          Add
+BI_DB_dbo,SP_ASIC_Monitoring_CFD_W_Sun,SQL_STORED_PROCEDURE,BI_DB_Scored_Appropriateness_Negative_Market,ManagerID LEFT JOIN BI_DB_dbo.BI_DB_Scored_Appropriateness_Negative_Market bdsanm ON fsc.RealCID = bdsan
+BI_DB_dbo,SP_BI_DB_M_ESMA_ProfitableClients_CFD_Last12Months,SQL_STORED_PROCEDURE,BI_DB_M_ESMA_ProfitableClients_CFD_Last12Months,tType   DELETE FROM BI_DB_dbo.BI_DB_M_ESMA_ProfitableClients_CFD_Last12Months WHERE StartDateID=@startDateI
+BI_DB_dbo,SP_BI_DB_M_ESMA_ProfitableClients_CFD_Last12Months,SQL_STORED_PROCEDURE,BI_DB_M_ESMA_ProfitableClients_CFD_Last12Months_Instrument,ble ft  DELETE FROM BI_DB_dbo.BI_DB_M_ESMA_ProfitableClients_CFD_Last12Months_Instrument WHERE StartDateID=@startDateI
+BI_DB_dbo,SP_W_Tue_Reg_UK_Compliance_Professional_OptUp,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,tryID 	LEFT JOIN [BI_DB_dbo].[BI_DB_CIDFirstDates] fd WITH (NOLOCK) ON dc.RealC
+BI_DB_dbo,SP_W_Tue_Reg_UK_Compliance_Professional_OptUp,SQL_STORED_PROCEDURE,BI_DB_Reg_UK_Compliance_Professional_OptUp,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_Reg_UK_Compliance_Professional_OptUp] INSERT INTO [BI_DB_dbo].[BI_
+BI_DB_dbo,SP_LargeCashOutReport,SQL_STORED_PROCEDURE,BI_DB_LargeCashoutReport,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_LargeCashoutReport]  INSERT INTO [BI_DB_dbo].[BI
+Dealing_dbo,SP_RolloverCommissionSplit,SQL_STORED_PROCEDURE,Dealing_RolloverCommissionSplit,1     DELETE FROM Dealing_dbo.Dealing_RolloverCommissionSplit WHERE [Date] = @Date  INSERT 
+BI_DB_dbo,SP_Finance_Panel_Reports_New,SQL_STORED_PROCEDURE,BI_DB_Finance_Panel_Reports_New,teID) RN       FROM BI_DB_dbo.BI_DB_Finance_Panel_Reports_New pr       WHERE pr.Position_Ph
+Dealing_dbo,SP_CFDs_Stocks_Credit_Risk,SQL_STORED_PROCEDURE,Dealing_DailyZeroPnL_Stocks,ssions30Days FROM Dealing_dbo.Dealing_DailyZeroPnL_Stocks ds JOIN #Scenarios2 t ON ds.I
+Dealing_dbo,SP_CFDs_Stocks_Credit_Risk,SQL_STORED_PROCEDURE,Dealing_CFDs_Stocks_Credit_Risk,able  DELETE FROM Dealing_dbo.Dealing_CFDs_Stocks_Credit_Risk WHERE Date=@Date   INSERT INT
+BI_DB_dbo,Function_DDR_Aggregation_ThisWeek,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_DDR_Customer_Periodic_Status,as Global_FTDA FROM BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status ps WHERE ps.Date = @edate 			
+BI_DB_dbo,Function_DDR_Aggregation_ThisWeek,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_DDR_Customer_Daily_Status,Global_FTDA			 FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status ds WHERE ds.Date BETWEEN DATE
+Dealing_dbo,SP_JPMRecon,SQL_STORED_PROCEDURE,Dealing_Duco_EODRecon,ratetoUSD FROM [Dealing_dbo].[Dealing_Duco_EODRecon] dde WITH (NOLOCK) WHERE dde.
+Dealing_dbo,SP_JPMRecon,SQL_STORED_PROCEDURE,Dealing_Duco_ActivityRecon,eServerID FROM [Dealing_dbo].[Dealing_Duco_ActivityRecon] ddar WHERE ddar.Date= @Date 
+BI_DB_dbo,SP_Client_Balance_CID_Level_New_Blocked,SQL_STORED_PROCEDURE,BI_DB_Client_Balance_CID_Level_New_Blocked,   truncate TABLE  BI_DB_dbo.[BI_DB_Client_Balance_CID_Level_New_Blocked]     INSERT INTO BI_DB_dbo.[B
+BI_DB_dbo,SP_CySEC_Submission_ICF,SQL_STORED_PROCEDURE,BI_DB_CySEC_Submission_ICF,velID   DELETE FROM BI_DB_dbo.BI_DB_CySEC_Submission_ICF WHERE EndOfMonth = @Month  IN
+BI_DB_dbo,Function_Revenue_TicketFee,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_Fact_Customer_Action_Position_Distribution,IsMarginTrade 	FROM BI_DB_dbo.BI_DB_Fact_Customer_Action_Position_Distribution fca 	WHERE fca.DateID BETWEEN
+BI_DB_dbo,SP_PI_Dashboard_COPYDATA_RuningSideBySide,SQL_STORED_PROCEDURE,DWH_GainDaily,.Gain_QTD      FROM BI_DB_dbo.DWH_GainDaily a with (NOLOCK)     JOIN #new
+BI_DB_dbo,SP_PI_Dashboard_COPYDATA_RuningSideBySide,SQL_STORED_PROCEDURE,BI_DB_CID_WeeklyPanel_FullData,"tal ,GETDATE() FROM BI_DB_dbo.BI_DB_CID_WeeklyPanel_FullData bdcwpfd with(NOLOCK) JOIN #ne"
+BI_DB_dbo,SP_PI_Dashboard_COPYDATA_RuningSideBySide,SQL_STORED_PROCEDURE,BI_DB_CopyDailyData,dd.CopyAUM     FROM BI_DB_dbo.BI_DB_CopyDailyData bdcdd with(NOLOCK)     JOIN #
+BI_DB_dbo,SP_PI_Dashboard_COPYDATA_RuningSideBySide,SQL_STORED_PROCEDURE,BI_DB_DailyCopyRevenue,.Revenue_Copy  FROM BI_DB_dbo.BI_DB_DailyCopyRevenue bddcr with(NOLOCK)  JOIN #pop
+BI_DB_dbo,SP_PI_Dashboard_COPYDATA_RuningSideBySide,SQL_STORED_PROCEDURE,DWH_CIDsDailyRisk,iskScore    FROM [BI_DB_dbo].[DWH_CIDsDailyRisk] CD with (NOLOCK)   JOIN #pop
+BI_DB_dbo,SP_BI_DB_High_Cashout_Emails_For_Management_Analysis,SQL_STORED_PROCEDURE,BI_DB_Daily_HighCashoutEmailsForManagement,ves history from [BI_DB_dbo].[BI_DB_Daily_HighCashoutEmailsForManagement]               and adds addit
+BI_DB_dbo,SP_BI_DB_High_Cashout_Emails_For_Management_Analysis,SQL_STORED_PROCEDURE,BI_DB_High_Cashout_Emails_For_Management_Analysis,ly dash based on [BI_DB_dbo].[BI_DB_High_Cashout_Emails_For_Management_Analysis] :  =========================
+BI_DB_dbo,SP_BI_DB_High_Cashout_Emails_For_Management_Analysis,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,nd_Email__c FROM [BI_DB_dbo].[BI_DB_UsageTracking_SF] ut WITH (NOLOCK)  INNER JOIN
+BI_DB_dbo,SP_BI_DB_PositionPnL_EU_Custody,SQL_STORED_PROCEDURE,BI_DB_PositionPnL_EU_Custody,  TRUNCATE table [BI_DB_dbo].[BI_DB_PositionPnL_EU_Custody]  INSERT INTO [BI_DB_dbo].[BI
+BI_DB_dbo,SP_BI_DB_PositionPnL_EU_Custody,SQL_STORED_PROCEDURE,BI_DB_PositionPnL_UK_Custody,  TRUNCATE table [BI_DB_dbo].[BI_DB_PositionPnL_UK_Custody]  INSERT INTO [BI_DB_dbo].[BI
+BI_DB_dbo,SP_BI_DB_PositionPnL_EU_Custody,SQL_STORED_PROCEDURE,BI_DB_PositionPnL_EU_Custody_Instrument_Agg,NT)  DELETE FROM [BI_DB_dbo].[BI_DB_PositionPnL_EU_Custody_Instrument_Agg] WHERE DateID = @dateID INSER
+BI_DB_dbo,SP_BI_DB_PositionPnL_EU_Custody,SQL_STORED_PROCEDURE,BI_DB_PositionPnL_UK_Instrument_Agg,ID   DELETE FROM [BI_DB_dbo].[BI_DB_PositionPnL_UK_Instrument_Agg] WHERE DateID = @dateID INSER
+BI_DB_dbo,SP_BI_DB_PositionPnL_EU_Custody,SQL_STORED_PROCEDURE,BI_DB_PositionPnL_UK_Custody_Resolver,  TRUNCATE table [BI_DB_dbo].[BI_DB_PositionPnL_UK_Custody_Resolver]  INSERT INTO [BI_DB_dbo].[BI
+BI_DB_dbo,SP_M_Affiliates_FraudMonitoring_Relations,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,cationLevelID FROM BI_DB_dbo.[BI_DB_CIDFirstDates] cf JOIN DWH_dbo.Dim_Affiliat
+BI_DB_dbo,SP_M_Affiliates_FraudMonitoring_Relations,SQL_STORED_PROCEDURE,BI_DB_M_Affiliates_FraudMonitoring_Relations,inal  DELETE FROM  BI_DB_dbo.[BI_DB_M_Affiliates_FraudMonitoring_Relations] WHERE RegisteredID=@StartDat
+BI_DB_dbo,SP_BI_DB_CID_DailyPanel_FullData_SWITCH,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_FullData,ject_id =object_id('BI_DB_dbo.BI_DB_CID_DailyPanel_FullData')              IF @CurrentDay
+BI_DB_dbo,SP_M_LifeStage_Matrix,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,LECT bdcd1.CID FROM BI_DB_dbo.BI_DB_CIDFirstDates bdcd1  WHERE  bdcd1.registere
+BI_DB_dbo,SP_M_LifeStage_Matrix,SQL_STORED_PROCEDURE,BI_DB_CID_LifeStageDefinition, [UpdateDate]  FROM BI_DB_dbo.BI_DB_CID_LifeStageDefinition a WITH (NOLOCK) JOIN BI_DB_db
+BI_DB_dbo,SP_M_LifeStage_Matrix,SQL_STORED_PROCEDURE,BI_DB_M_LifeStage_Matrix,s    DELETE FROM [BI_DB_dbo].[BI_DB_M_LifeStage_Matrix] WHERE [ToMonthFull]>=@ToMont
+BI_DB_dbo,V_BI_DB_BO_Generated_Compensations,VIEW,BI_DB_BO_Generated_Compensations,UpdateDate] FROM [BI_DB_dbo].[BI_DB_BO_Generated_Compensations];
+Dealing_dbo,SP_MaxPositionUnits,SQL_STORED_PROCEDURE,Dealing_MaxPositionUnits,--*/  DELETE FROM Dealing_dbo.Dealing_MaxPositionUnits WHERE Date=@Date INSERT INTO 
+BI_DB_dbo,SP_ASIC_Monthly_Positions,SQL_STORED_PROCEDURE,BI_DB_ASIC_Monthly_Positions,****/  DELETE FROM  BI_DB_dbo.BI_DB_ASIC_Monthly_Positions WHERE YearMonth = @YearMonth 
+BI_DB_dbo,SP_TIN_Gap,SQL_STORED_PROCEDURE,BI_DB_TIN_Gap,Freeze6 a LEFT JOIN BI_DB_dbo.BI_DB_TIN_Gap bdtg ON a.CID = bdtg.CID --AN
+BI_DB_dbo,SP_TIN_Gap,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,tryID]    LEFT JOIN BI_DB_dbo.BI_DB_KYC_Panel bdkp ON dc.RealCID = bdkp.Rea
+Dealing_dbo,SP_Manual_Exec_Trade,SQL_STORED_PROCEDURE,Dealing_DailyZeroPnL_Stocks,ZeroPnL_Stocks to Dealing_dbo.Dealing_DailyZeroPnL_Stocks *****************************
+Dealing_dbo,SP_Manual_Exec_Trade,SQL_STORED_PROCEDURE,Dealing_Manual_Exec_Trade,----  DELETE FROM Dealing_dbo.Dealing_Manual_Exec_Trade WHERE Date = @Date  INSERT IN
+Dealing_dbo,SP_Manual_Exec_Trade,SQL_STORED_PROCEDURE,Dealing_Manual_Exec_Trade_Summary,ID    DELETE FROM Dealing_dbo.Dealing_Manual_Exec_Trade_Summary WHERE Date = @Date  INSERT IN
+Dealing_dbo,SP_IGRecon,SQL_STORED_PROCEDURE,Dealing_Duco_EODRecon,ccountID  FROM [Dealing_dbo].[Dealing_Duco_EODRecon] dde WITH (NOLOCK) JOIN #Five
+Dealing_dbo,SP_IGRecon,SQL_STORED_PROCEDURE,Dealing_Duco_ActivityRecon,ccountID  FROM [Dealing_dbo].[Dealing_Duco_ActivityRecon] ddar JOIN #Fivetran f ON dda
+Dealing_dbo,SP_IGRecon,SQL_STORED_PROCEDURE,Dealing_IGReconEODHolding,s  DELETE FROM [Dealing_dbo].[Dealing_IGReconEODHolding] WHERE Date = @TotalDate  INS
+Dealing_dbo,SP_IGRecon,SQL_STORED_PROCEDURE,Dealing_IGReconTrades,0  DELETE FROM [Dealing_dbo].[Dealing_IGReconTrades] WHERE Date = @TotalDate  INS
+Dealing_dbo,V_Dealing_CEPDailyAudit_Rules_Last180Days,VIEW,Dealing_CEPDailyAudit_Rules, AS SELECT * FROM Dealing_dbo.Dealing_CEPDailyAudit_Rules WHERE Date >= getdate()-180;
+Dealing_dbo,SP_MAXLeverageByNOP,SQL_STORED_PROCEDURE,Dealing_MAXLeverageByNOP,   DELETE FROM [Dealing_dbo].[Dealing_MAXLeverageByNOP] WHERE Date=@Today INSERT INT
+BI_DB_dbo,SP_CMR_Phase2_LiabilityDecomp,SQL_STORED_PROCEDURE,BI_DB_CMR_Phase2_LiabilityDecomp,        DELETE FROM BI_DB_dbo.BI_DB_CMR_Phase2_LiabilityDecomp WHERE [Date] = @date      INS
+BI_DB_dbo,SP_Cross_Selling_Monthly,SQL_STORED_PROCEDURE,BI_DB_CID_MonthlyPanel_FullData,"il ,EOM_Equity FROM BI_DB_dbo.BI_DB_CID_MonthlyPanel_FullData bdcmpfd where bdcmpfd.ActiveD"
+BI_DB_dbo,SP_Positions_Closed_To_IBAN,SQL_STORED_PROCEDURE,BI_DB_Positions_Closed_To_IBAN,bw   TRUNCATE TABLE BI_DB_dbo.BI_DB_Positions_Closed_To_IBAN  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_AML_ASIC_Dashboard,SQL_STORED_PROCEDURE,BI_DB_AML_ASIC_Dashboard,***/ TRUNCATE TABLE BI_DB_dbo.BI_DB_AML_ASIC_Dashboard   INSERT INTO BI_DB_dbo.BI_DB
+Dealing_dbo,SP_GSRecon,SQL_STORED_PROCEDURE,Dealing_Duco_EODRecon,ratetoUSD FROM [Dealing_dbo].[Dealing_Duco_EODRecon] dde WITH (NOLOCK) JOIN #Five
+Dealing_dbo,SP_GSRecon,SQL_STORED_PROCEDURE,Dealing_Duco_ActivityRecon,eServerID FROM [Dealing_dbo].[Dealing_Duco_ActivityRecon] ddar JOIN #Fivetran f ON dda
+Dealing_dbo,SP_GSRecon,SQL_STORED_PROCEDURE,Dealing_GSReconEODHolding,s  DELETE FROM [Dealing_dbo].[Dealing_GSReconEODHolding] WHERE Date = @Date  INSERT I
+Dealing_dbo,SP_GSRecon,SQL_STORED_PROCEDURE,Dealing_GSReconTrades,   DELETE FROM [Dealing_dbo].[Dealing_GSReconTrades] WHERE Date = @Date  INSERT I
+BI_DB_dbo,SP_EOD_USD_cr,SQL_STORED_PROCEDURE,BI_DB_EOD_USD_cr,------- DELETE FROM BI_DB_dbo.BI_DB_EOD_USD_cr WHERE DateID = @ddINT  INSERT
+BI_DB_dbo,SP_AM_Contacted,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,king_SF1 		FROM  [BI_DB_dbo].[BI_DB_UsageTracking_SF] with (NOLOCK) 		WHERE [Actio
+BI_DB_dbo,SP_AM_Contacted,SQL_STORED_PROCEDURE,BI_DB_AM_Contacted,  	 	DELETE FROM [BI_DB_dbo].[BI_DB_AM_Contacted] WHERE CAST(UpdateDate as dat
+BI_DB_dbo,SP_DDR_Fact_Non_Revenue_Generating_Actions,SQL_STORED_PROCEDURE,BI_DB_DDR_Fact_Non_Revenue_Generating_Actions,nct ActionType from BI_DB_dbo.BI_DB_DDR_Fact_Non_Revenue_Generating_Actions order by 1 			WHEN ActionType
+Dealing_dbo,SP_Islamic_Spot_Price_Adjustment,SQL_STORED_PROCEDURE,Dealing_Islamic_Daily_Spot_Price_Adjustment,e  DELETE FROM [Dealing_dbo].[Dealing_Islamic_Daily_Spot_Price_Adjustment] WHERE Date = @Date  INSERT I
+BI_DB_dbo,SP_InvestorReport,SQL_STORED_PROCEDURE,BI_DB_CID_DailyCluster,angeID 	--LEFT JOIN BI_DB_dbo.BI_DB_CID_DailyCluster cdc 	--    ON m.CID = cdc.CID
+BI_DB_dbo,SP_InvestorReport,SQL_STORED_PROCEDURE,BI_DB_Investors_Unclustered,ype]   	DELETE FROM BI_DB_dbo.BI_DB_Investors_Unclustered 	WHERE DateID = @ddINT  	INSE
+BI_DB_dbo,Function_Trading_Volume_PositionLevel,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_CopyFund_Positions,D         LEFT JOIN BI_DB_dbo.BI_DB_CopyFund_Positions bdcfp ON v.PositionID = bdcfp
+BI_DB_dbo,Function_Trading_Volume_PositionLevel,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_RecurringInvestment_Positions,D         LEFT JOIN BI_DB_dbo.BI_DB_RecurringInvestment_Positions bdrip ON v.PositionID = bdrip
+BI_DB_dbo,Function_Trading_Volume_PositionLevel,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_Positions_Opened_From_IBAN,D         LEFT JOIN BI_DB_dbo.BI_DB_Positions_Opened_From_IBAN bdpofi ON v.PositionID = bdpo
+BI_DB_dbo,Function_Trading_Volume_PositionLevel,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_Positions_Closed_To_IBAN,D         LEFT JOIN BI_DB_dbo.BI_DB_Positions_Closed_To_IBAN bdpcti ON v.PositionID = bdpc
+BI_DB_dbo,SP_Monthly_InterestPayment_Dashboard,SQL_STORED_PROCEDURE,BI_DB_InterestMonthly,lidFrom]    FROM [BI_DB_dbo].[BI_DB_InterestMonthly]    WHERE MonthOfInterest=@St
+BI_DB_dbo,SP_Monthly_InterestPayment_Dashboard,SQL_STORED_PROCEDURE,BI_DB_InterestDaily,ypeID]      FROM [BI_DB_dbo].[BI_DB_InterestDaily] id 	 WHERE DATEFROMPARTS(YEA
+BI_DB_dbo,SP_Monthly_InterestPayment_Dashboard,SQL_STORED_PROCEDURE,BI_DB_Monthly_InterestPayment_Dashboard,hOfInterest FROM [BI_DB_dbo].[BI_DB_Monthly_InterestPayment_Dashboard] ORDER BY 1 DESC  -------dele
+BI_DB_dbo,SP_AML_Singapore_Risk_Classification,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,gStatusID LEFT JOIN BI_DB_dbo.BI_DB_CIDFirstDates bdcd ON fsc.RealCID = bdcd.CI
+BI_DB_dbo,SP_AML_Singapore_Risk_Classification,SQL_STORED_PROCEDURE,BI_DB_AML_Singapore_Risk_Classification ,1  -- SELECT * FROM BI_DB_dbo.BI_DB_AML_Singapore_Risk_Classification  where CID = 44962191    -- TI
+BI_DB_dbo,SP_AML_Singapore_Risk_Classification,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,D AS Score     FROM BI_DB_dbo.BI_DB_KYC_Panel bdkp     JOIN #pop pp ON pp.C
+BI_DB_dbo,SP_AML_Singapore_Risk_Classification,SQL_STORED_PROCEDURE,BI_DB_KYC_Questions_Answers_Row_Data,us_Final_Score FROM BI_DB_dbo.BI_DB_KYC_Questions_Answers_Row_Data bdkqard JOIN #pop pp ON pp.GC
+BI_DB_dbo,SP_Create_External_Price_History_LastPriceBeforeClose_Range,SQL_STORED_PROCEDURE,External_Price_History_LastPriceBeforeClose_Range,ble varchar(max)='[BI_DB_dbo].External_Price_History_LastPriceBeforeClose_Range'     declare @path varchar(50
+BI_DB_dbo,SP_TIN_Gap_Temp_pop,SQL_STORED_PROCEDURE,BI_DB_TIN_Gap_Temp_pop,p_pop] a  LEFT JOIN BI_DB_dbo.BI_DB_TIN_Gap_Temp_pop bdtg ON a.cid = bdtg.CID --AN
+BI_DB_dbo,SP_TIN_Gap_Temp_pop,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,tryID]    LEFT JOIN BI_DB_dbo.BI_DB_KYC_Panel bdkp ON dc.RealCID = bdkp.Rea
+BI_DB_dbo,SP_TIN_Gap_Temp_pop,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,rLevelID LEFT JOIN  BI_DB_dbo.BI_DB_CIDFirstDates bdcd ON a.CID = bdcd.CID LEFT
+BI_DB_dbo,SP_TIN_Gap_Temp_pop,SQL_STORED_PROCEDURE,BI_DB_TIN_Gap,eeze6 a --LEFT JOIN BI_DB_dbo.BI_DB_TIN_Gap  ON a.CID = BI_DB_TIN_Gap.CID
+BI_DB_dbo,SP_DepositUsersFirstTouchPoints,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates, SubChannel and Channel from [BI_DB_CIDFirstDates]   2021-05-26  Luda Garces   
+BI_DB_dbo,SP_DepositUsersFirstTouchPoints,SQL_STORED_PROCEDURE,BI_DB_First5Actions,ionID   LEFT JOIN [BI_DB_dbo].BI_DB_First5Actions bdfa  ON fd.CID = bdfa.CID   
+BI_DB_dbo,SP_DepositUsersFirstTouchPoints,SQL_STORED_PROCEDURE,BI_DB_Demo_CID_Panel,bdfa.CID   --LEFT JOIN BI_DB..BI_DB_Demo_CID_Panel bddcp  ON fd.CID = bddcp.CID 
+BI_DB_dbo,SP_DepositUsersFirstTouchPoints,SQL_STORED_PROCEDURE,BI_DB_DepositUsersFirstTouchPoints,   TRUNCATE TABLE [BI_DB_dbo].BI_DB_DepositUsersFirstTouchPoints  insert into [BI_DB_dbo].BI_D
+BI_DB_dbo,SP_DepositUsersFirstTouchPoints,SQL_STORED_PROCEDURE,BI_DB_MarketingDailyRawData,      PRINT 'insert #ltv into BI_DB_MarketingDailyRawData Done'    PRINT (CONVERT( VARC
+Dealing_dbo,SP_FactSet_Daily,SQL_STORED_PROCEDURE,BI_DB_CopyDailyData,CIDs c LEFT JOIN  [BI_DB_dbo].BI_DB_CopyDailyData cd  WITH (NOLOCK)  ON c.CID =
+Dealing_dbo,SP_FactSet_Daily,SQL_STORED_PROCEDURE,DWH_GainDaily,c.CID LEFT JOIN  [BI_DB_dbo].[DWH_GainDaily] gd  WITH (NOLOCK)  ON c.CID=
+BI_DB_dbo,SP_BI_DB_LTV_Conversions_Multipliers_Table,SQL_STORED_PROCEDURE,BI_DB_CID_MonthlyPanel_FullData,evenue fr LEFT JOIN BI_DB_dbo.BI_DB_CID_MonthlyPanel_FullData bdcmpfd WITH (NOLOCK) ON fr.C
+BI_DB_dbo,SP_Daily_CID_Dividend_TaxReport,SQL_STORED_PROCEDURE,BI_DB_Daily_CID_Dividend_TaxReport,*****/ DELETE FROM BI_DB_dbo.[BI_DB_Daily_CID_Dividend_TaxReport] WHERE [PaymentDate]= @Date  
+BI_DB_dbo,SP_VerificationStatus,SQL_STORED_PROCEDURE,BI_DB_VerificationStatus,  TRUNCATE TABLE [BI_DB_dbo].[BI_DB_VerificationStatus] INSERT INTO [BI_DB_dbo].[BI_
+BI_DB_dbo,Function_Revenue_TicketFeeByPercent,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_Fact_Customer_Action_Position_Distribution,ory_Cost fhc 		JOIN BI_DB_dbo.BI_DB_Fact_Customer_Action_Position_Distribution fcapd  			ON fhc.DateID = fca
+BI_DB_dbo,BI_DB_User_Segment,VIEW,BI_DB_User_Segment_Snapshot,dateDate]   FROM [BI_DB_dbo].[BI_DB_User_Segment_Snapshot]   where [Date] = (select max
+BI_DB_dbo,SP_EY_Audit_IFRS_Control,SQL_STORED_PROCEDURE,BI_DB_IFRS15_Daily_Balance,TotalUnits     FROM BI_DB_dbo.BI_DB_IFRS15_Daily_Balance bdidb      WHERE Date = @date
+BI_DB_dbo,Function_DDR_Aggregation_Yesterday,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_DDR_Customer_Daily_Status,as Global_FTDA FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status ps WHERE ps.Date = @edate 			
+BI_DB_dbo,SP_PI_StatusPanel,SQL_STORED_PROCEDURE,BI_DB_PI_StatusPanel,= GETDATE() FROM [BI_DB_dbo].[BI_DB_PI_StatusPanel] a JOIN #pi b 	ON a.CID = b.C
+BI_DB_dbo,SP_IFRS_15_Balance,SQL_STORED_PROCEDURE,Client_Balance_Breakdown_Instrument_Level, #finalZeroAgg FROM BI_DB_dbo.Client_Balance_Breakdown_Instrument_Level cbbil  	JOIN DWH_dbo.Dim_Inst
+BI_DB_dbo,SP_IFRS_15_Balance,SQL_STORED_PROCEDURE,BI_DB_IFRS_15_Daily_Positions,    /* ALTER TABLE BI_DB_dbo.[BI_DB_IFRS_15_Daily_Positions] ADD IntoDLT INT NULL  ALTER 
+BI_DB_dbo,SP_IFRS_15_Balance,SQL_STORED_PROCEDURE,BI_DB_IFRS15_Daily_Balance, null  ALTER TABLE BI_DB_dbo.[BI_DB_IFRS15_Daily_Balance] add  TicketFeeVolume  decima
+BI_DB_dbo,SP_ClubUsersDataRemarketingGoogle,SQL_STORED_PROCEDURE,BI_DB_CID_MonthlyPanel_FullData,.ClusterDetail FROM BI_DB_dbo.BI_DB_CID_MonthlyPanel_FullData b JOIN DWH_dbo.Dim_Customer d
+BI_DB_dbo,SP_ClubUsersDataRemarketingGoogle,SQL_STORED_PROCEDURE,BI_DB_AllDeposits,ositsLastYear  FROM BI_DB_dbo.BI_DB_AllDeposits bdad JOIN #MainTable c ON bda
+BI_DB_dbo,SP_ClubUsersDataRemarketingGoogle,SQL_STORED_PROCEDURE,BI_DB_LTV_BI_Actual,8Y_LTV_New LTV FROM BI_DB_dbo.BI_DB_LTV_BI_Actual b JOIN #MainTable mt ON b.CID
+BI_DB_dbo,SP_ClubUsersDataRemarketingGoogle,SQL_STORED_PROCEDURE,BI_DB_ClubUsersDataRemarketingGoogle,**/  TRUNCATE TABLE BI_DB_dbo.BI_DB_ClubUsersDataRemarketingGoogle  INSERT INTO BI_DB_dbo.BI_DB_
+BI_DB_dbo,SP_Transactions_Per_Time_Unit,SQL_STORED_PROCEDURE,BI_DB_Transactions_Per_Time_Unit,nsert  DELETE FROM  BI_DB_dbo.BI_DB_Transactions_Per_Time_Unit  WHERE Date=@Date    INSERT I
+BI_DB_dbo,SP_NewContactActivityPerRep,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,OLOCK)    LEFT JOIN BI_DB_dbo.BI_DB_UsageTracking_SF sf WITH (NOLOCK)   ON sf.Crea
+BI_DB_dbo,SP_NewContactActivityPerRep,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,d.Verified    FROM  BI_DB_dbo.BI_DB_CIDFirstDates fd  WITH (NOLOCK)     LEFT JO
+BI_DB_dbo,SP_NewContactActivityPerRep,SQL_STORED_PROCEDURE,BI_DB_NewBonusReport,s m    INNER JOIN   BI_DB_dbo.BI_DB_NewBonusReport br WITH (NOLOCK)   ON m.Manag
+BI_DB_dbo,SP_NewContactActivityPerRep,SQL_STORED_PROCEDURE,BI_DB_NewContactsActivityPerRep,   DELETE FROM   [BI_DB_dbo].[BI_DB_NewContactsActivityPerRep] WHERE Date = @dd  --Delete R
+Dealing_dbo,SP_CEPDailyAudit,SQL_STORED_PROCEDURE,Dealing_CEPDailyAudit_Rules,ules  DELETE FROM Dealing_dbo.Dealing_CEPDailyAudit_Rules WHERE Date=@Date INSERT INTO 
+Dealing_dbo,SP_CEPDailyAudit,SQL_STORED_PROCEDURE,Dealing_CEPDailyAudit_CP,perty DELETE FROM Dealing_dbo.Dealing_CEPDailyAudit_CP WHERE Date=@Date INSERT INTO 
+Dealing_dbo,SP_CEPDailyAudit,SQL_STORED_PROCEDURE,Dealing_CEPDailyAudit_Conditions,tions DELETE FROM Dealing_dbo.Dealing_CEPDailyAudit_Conditions WHERE Date=@Date INSERT INTO 
+Dealing_dbo,SP_CEPDailyAudit,SQL_STORED_PROCEDURE,Dealing_CEPDailyAudit_ConditionToCP,to cp DELETE FROM Dealing_dbo.Dealing_CEPDailyAudit_ConditionToCP WHERE Date=@Date INSERT INTO 
+Dealing_dbo,SP_CEPDailyAudit,SQL_STORED_PROCEDURE,Dealing_CEPDailyAudit_CPToRule, rule DELETE FROM Dealing_dbo.Dealing_CEPDailyAudit_CPToRule WHERE Date=@Date INSERT INTO 
+Dealing_dbo,SP_CEPDailyAudit,SQL_STORED_PROCEDURE,Dealing_CEPDailyAudit_NameLists,lists DELETE FROM Dealing_dbo.Dealing_CEPDailyAudit_NameLists WHERE Date=@Date INSERT INTO 
+Dealing_dbo,SP_CEPDailyAudit,SQL_STORED_PROCEDURE,Dealing_CEPDailyAudit_ListCIDMapping,pping DELETE FROM Dealing_dbo.Dealing_CEPDailyAudit_ListCIDMapping WHERE Date=@Date INSERT INTO 
+BI_DB_dbo,SP_MifidAccountType_Count,SQL_STORED_PROCEDURE,BI_DB_MifidAccountType_Count,"Name]   DELETE FROM BI_DB_dbo.BI_DB_MifidAccountType_Count WHERE [Date] = DATEADD(DAY,-3"
+BI_DB_dbo,SP_Copyfunds_Watched_Not_Invested,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,@ddID 	LEFT JOIN [BI_DB_dbo].[BI_DB_KYC_Panel] rl 		ON t.RealCID = rl.RealC
+BI_DB_dbo,SP_H_LiveAcquisitionDashboard,SQL_STORED_PROCEDURE,BI_DB_LiveAcquisitionDashboard_Daily,e AS DATE)) FROM [BI_DB_dbo].[BI_DB_LiveAcquisitionDashboard_Daily]) DECLARE @Today AS DATE = ca
+BI_DB_dbo,SP_H_LiveAcquisitionDashboard,SQL_STORED_PROCEDURE,BI_DB_LiveAcquisitionDashboard,     TRUNCATE TABLE BI_DB_dbo.BI_DB_LiveAcquisitionDashboard     INSERT INTO BI_DB_dbo.BI_
+Dealing_dbo,SP_CopierAnalysis,SQL_STORED_PROCEDURE,BI_DB_DailyPanel_Copy,      Change the PIs table to BI_DB_DailyPanel_Copy (instead of BI_DB_Daily_PI_Pe
+Dealing_dbo,SP_CopierAnalysis,SQL_STORED_PROCEDURE,DWH_CIDsDailyRisk,FROM #tmp1 t   JOIN BI_DB_dbo.DWH_CIDsDailyRisk cdr with (NOLOCK)   ON t.CID 
+Dealing_dbo,SP_CopierAnalysis,SQL_STORED_PROCEDURE,Dealing_CopierAnalysis,--    DELETE FROM Dealing_dbo.Dealing_CopierAnalysis WHERE Date = @date          I
+BI_DB_dbo,SP_CIDFirstDates,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,"    changed all direct update BI_DB_CIDFirstDates inference to alias, and all t"
+BI_DB_dbo,SP_CIDFirstDates,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,yPhone      FROM [BI_DB_dbo].[BI_DB_UsageTracking_SF] ut WITH (NOLOCK)   WHERE Act
+BI_DB_dbo,SP_CIDFirstDates,SQL_STORED_PROCEDURE,BI_DB_DDR_Customer_Daily_Status,LastFundedDate FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds WHERE bddcds.IsFunded 
+BI_DB_dbo,SP_US_Apex_Fees_Charge,SQL_STORED_PROCEDURE,BI_DB_US_Apex_Fees_Charge,sert   DELETE FROM BI_DB_dbo.[BI_DB_US_Apex_Fees_Charge]    WHERE ProcessDate=@Date  
+BI_DB_dbo,SP_H_BI_DB_STP_Redeems,SQL_STORED_PROCEDURE,BI_DB_STP_Redeems,ager   DELETE FROM  BI_DB_dbo.BI_DB_STP_Redeems WHERE LastModificationDate>= 
+BI_DB_dbo,SP_US_Stocks_Apex_PFOF,SQL_STORED_PROCEDURE,BI_DB_US_Stocks_Apex_PFOF,t 		DELETE FROM  [BI_DB_dbo].[BI_DB_US_Stocks_Apex_PFOF] 		WHERE @Date=TradeDate 		 	
+BI_DB_dbo,SP_FB_Report,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,ID) AS DB_FTD FROM BI_DB_dbo.[BI_DB_CIDFirstDates] fd with (NOLOCK) WHERE fd.Su
+BI_DB_dbo,SP_FB_Report,SQL_STORED_PROCEDURE,BI_DB_FB_Report,****/  DELETE FROM BI_DB_dbo.[BI_DB_FB_Report] WHERE Date >= @last7days    
+BI_DB_dbo,SP_CopyDailyData,SQL_STORED_PROCEDURE,BI_DB_CIDFirstDates,nagerID --left join BI_DB.dbo.BI_DB_CIDFirstDates v with(nolock) --on dc.RealCI
+BI_DB_dbo,SP_CopyDailyData,SQL_STORED_PROCEDURE,BI_DB_User_Segment_Snapshot,@date_int left join BI_DB_dbo.BI_DB_User_Segment_Snapshot us with(nolock) on us.RealCID
+BI_DB_dbo,SP_CopyDailyData,SQL_STORED_PROCEDURE,BI_DB_UsageTracking_SF,e_SF DESC ) rn FROM BI_DB_dbo.BI_DB_UsageTracking_SF ut WITH (NOLOCK) INNER JOIN #
+BI_DB_dbo,SP_CopyDailyData,SQL_STORED_PROCEDURE,BI_DB_CopyDailyData,*****/  DELETE FROM BI_DB_dbo.BI_DB_CopyDailyData   WHERE @date = Date    ---- 
+BI_DB_dbo,SP_CMR_Automation_Crypto_To_Position,SQL_STORED_PROCEDURE,BI_DB_IFRS15_Daily_Balance,"ingbalanceCFD  FROM BI_DB_dbo.BI_DB_IFRS15_Daily_Balance bdidb WHERE CONVERT(varchar, "
+BI_DB_dbo,SP_KYC_eToroMoney_UpgradedClubMembers,SQL_STORED_PROCEDURE,BI_DB_CID_DailyPanel_Club,c.CountryID   join BI_DB_dbo.[BI_DB_CID_DailyPanel_Club] cp WITH (NOLOCK) on c.RealCI
+BI_DB_dbo,SP_KYC_eToroMoney_UpgradedClubMembers,SQL_STORED_PROCEDURE,BI_DB_KYC_eToroMoney_UpgradedClubMembers,   DELETE FROM   [BI_DB_dbo].[BI_DB_KYC_eToroMoney_UpgradedClubMembers] WHERE DateID=@DateID  INSERT
+Dealing_dbo,SP_CloseOnly_Recon,SQL_STORED_PROCEDURE,Dealing_Duco_EODRecon,losePosition FROM Dealing_dbo.Dealing_Duco_EODRecon dde JOIN ( SELECT pti.Instrum
+Dealing_dbo,SP_CloseOnly_Recon,SQL_STORED_PROCEDURE,Dealing_CloseOnly_Recon,e  DELETE FROM [Dealing_dbo].[Dealing_CloseOnly_Recon] WHERE [Current_Date] = @Date
+BI_DB_dbo,SP_LTV_By_FTD_MOP,SQL_STORED_PROCEDURE,BI_DB_First5Actions,d.DepotID LEFT JOIN BI_DB_dbo.BI_DB_First5Actions bdfa ON fbd.CID = bdfa.CID   
+BI_DB_dbo,SP_LTV_By_FTD_MOP,SQL_STORED_PROCEDURE,BI_DB_LTV_BI_Actual,od adwfm LEFT JOIN  BI_DB_dbo.BI_DB_LTV_BI_Actual bdlba ON adwfm.RealCID=bdlba.
+BI_DB_dbo,SP_LTV_By_FTD_MOP,SQL_STORED_PROCEDURE,BI_DB_LTV_By_FTD_MOP,---  TRUNCATE TABLE BI_DB_dbo.BI_DB_LTV_By_FTD_MOP ---------insert and delete---
+BI_DB_dbo,SP_Operations_Monthly_KPIs_FullData,SQL_STORED_PROCEDURE,BI_DB_Operations_Monthly_KPIs_Cashouts,D   DELETE FROM  [BI_DB_dbo].[BI_DB_Operations_Monthly_KPIs_Cashouts] WHERE CAST(ModificationDate 
+BI_DB_dbo,SP_Operations_Monthly_KPIs_FullData,SQL_STORED_PROCEDURE,BI_DB_Operations_Monthly_KPIs_Wires,0;  DELETE FROM  [BI_DB_dbo].[BI_DB_Operations_Monthly_KPIs_Wires] WHERE CAST(ModificationDate 
+Dealing_dbo,SP_ManualPositionClose,SQL_STORED_PROCEDURE,Dealing_ManualPositionClose,----  DELETE FROM Dealing_dbo.Dealing_ManualPositionClose WHERE DateID = @DateID  INSER
+BI_DB_dbo,SP_RiskAlertManagementTool,SQL_STORED_PROCEDURE,BI_DB_RiskAlertManagementTool, --select * from [BI_DB_dbo].[BI_DB_RiskAlertManagementTool]  WHERE cast(ModificationDate
+BI_DB_dbo,SP_CopyMilestone,SQL_STORED_PROCEDURE,BI_DB_CopyDailyData, 	AS SELECT *  FROM BI_DB_dbo.BI_DB_CopyDailyData With (NOLOCK) where Date = @d
+BI_DB_dbo,SP_CopyMilestone,SQL_STORED_PROCEDURE,DWH_GainDaily, #CopiedPop cp JOIN BI_DB_dbo.DWH_GainDaily gd WITH (NOLOCK) ON gd.CID = 
+BI_DB_dbo,SP_CopyMilestone,SQL_STORED_PROCEDURE,BI_DB_CopyMilestone,****/  DELETE FROM  BI_DB_dbo.BI_DB_CopyMilestone  WHERE @date = Date    ---- D
+BI_DB_dbo,SP_Crypto_Active_Open_Churn_Winback,SQL_STORED_PROCEDURE,BI_DB_Crypto_Active_Open_Churn_Winback,th */   DELETE FROM BI_DB_dbo.BI_DB_Crypto_Active_Open_Churn_Winback WHERE Active_Month = @BeginOf
+BI_DB_dbo,SP_AML_BI_Alerts_New_Master_SubAccount,SQL_STORED_PROCEDURE,BI_DB_AML_BI_Alerts_New_Master_SubAccount,11' --Select * from BI_DB_dbo.BI_DB_AML_BI_Alerts_New_Master_SubAccount order by AlertDate --Truncate
+BI_DB_dbo,SP_AML_BI_Alerts_New_Master_SubAccount,SQL_STORED_PROCEDURE,BI_DB_KYC_Panel,5_Category     FROM BI_DB_dbo.BI_DB_KYC_Panel bdkp     JOIN #pop pp ON pp.C
+BI_DB_dbo,SP_ProfessionalCustomersDocuments,SQL_STORED_PROCEDURE,BI_DB_ProfessionalCustomersDocuments,     DELETE FROM [BI_DB_dbo].[BI_DB_ProfessionalCustomersDocuments]   WHERE DateID = @DateID    
+BI_DB_dbo,SP_ProfessionalCustomers,SQL_STORED_PROCEDURE,BI_DB_ProfessionalCustomers,e -- DELETE FROM [BI_DB_dbo].[BI_DB_ProfessionalCustomers] WHERE DateID = @StartOfMonth
+BI_DB_dbo,SP_ProfessionalCustomers,SQL_STORED_PROCEDURE,BI_DB_ProfessionalCustomersPending,s -- DELETE FROM [BI_DB_dbo].[BI_DB_ProfessionalCustomersPending] WHERE DateID = @StartOfMonth
+BI_DB_dbo,Function_Revenue_Total,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_DDR_Fact_Revenue_Generating_Actions,unt) AS Amount FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions ga LEFT JOIN BI_DB_dbo.Dim_Re
+BI_DB_dbo,SP_CMR_Phase2_ClientBalance,SQL_STORED_PROCEDURE,BI_DB_CMR_Phase2_ClientBalance,        DELETE FROM BI_DB_dbo.BI_DB_CMR_Phase2_ClientBalance WHERE [Date] = @date      INS
+BI_DB_dbo,SP_FirstTimeRev10,SQL_STORED_PROCEDURE,BI_DB_FirstTimeRev10,ELECT CID  				FROM BI_DB_dbo.BI_DB_FirstTimeRev10  with (NOLOCK) where [DateID]
+BI_DB_dbo,SP_Unsettled_Trades_Risk,SQL_STORED_PROCEDURE,BI_DB_Unsettled_Trades_Risk,f rerun DELETE FROM BI_DB_dbo.BI_DB_Unsettled_Trades_Risk WHERE Report_Run_Date=@Date -
+BI_DB_dbo,SP_Operations_Onboarding_Flow_UserKPIs,SQL_STORED_PROCEDURE,BI_DB_First5Actions,erifiedID LEFT JOIN BI_DB_dbo.BI_DB_First5Actions bdfa ON bdfa.CID=dc.RealCID L
+BI_DB_dbo,SP_Operations_Onboarding_Flow_UserKPIs,SQL_STORED_PROCEDURE,BI_DB_LTV_BI_Actual,= da.CID  LEFT JOIN BI_DB_dbo.BI_DB_LTV_BI_Actual bdlba ON bpl.CID = bdlba.CID 
+BI_DB_dbo,SP_Operations_Onboarding_Flow_UserKPIs,SQL_STORED_PROCEDURE,BI_DB_Operations_Onboarding_Flow_UserKPIs,**/ TRUNCATE TABLE BI_DB_dbo.[BI_DB_Operations_Onboarding_Flow_UserKPIs]   /********** Step 14 ******
+BI_DB_dbo,Function_Revenue_SpotAdjustFee,SQL_INLINE_TABLE_VALUED_FUNCTION,BI_DB_Fact_Customer_Action_Position_Distribution, IsMarginTrade FROM BI_DB_dbo.BI_DB_Fact_Customer_Action_Position_Distribution fca WHERE fca.DateID BETWEEN 

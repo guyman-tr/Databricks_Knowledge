@@ -2,12 +2,15 @@
 .SYNOPSIS
     Starts the Synapse MCP server in persistent SSE mode.
     Run this ONCE before launching the batch loop.
-    One WAM auth popup, then the server stays alive for all iterations.
+    Silent Windows SSO via ActiveDirectoryIntegrated — no popup expected.
 
 .DESCRIPTION
     The server listens on http://127.0.0.1:8766/sse.
     Claude Code connects to it via HTTP — no subprocess spawning,
     no re-authentication between iterations.
+
+    Auth chain (server-side): SQL auth → Integrated (silent SSO) →
+    Interactive (WAM popup, last resort only).
 
     Press Ctrl+C to stop the server when done.
 #>
@@ -21,9 +24,8 @@ Write-Host "  Port: 8766" -ForegroundColor Cyan
 Write-Host "  URL:  http://127.0.0.1:8766/sse" -ForegroundColor Cyan
 Write-Host "=============================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "Starting server... a browser auth popup will appear ONCE." -ForegroundColor Yellow
-Write-Host "After authenticating, leave this window open and" -ForegroundColor Yellow
-Write-Host "run the batch loop in a SECOND PowerShell window." -ForegroundColor Yellow
+Write-Host "Starting server... uses Windows SSO (Integrated) — no popup expected." -ForegroundColor Yellow
+Write-Host "Leave this window open and run the batch loop in a SECOND PowerShell window." -ForegroundColor Yellow
 Write-Host ""
 Write-Host "Press Ctrl+C to stop the server." -ForegroundColor Yellow
 Write-Host ""

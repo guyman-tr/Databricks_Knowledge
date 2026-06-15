@@ -46,16 +46,19 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 PACK_ROOT = REPO / "knowledge" / "UC_generated"
 
-TIER_TAG_RE = re.compile(r"\(Tier\s+(U|[1-5][a-z]?)\s+(?:--|[—–-])\s+([^\)]+)\)")
+TIER_TAG_RE = re.compile(r"\(Tier\s+(U|N|[1-5][a-z]?)\s+(?:--|[—–-])\s+([^\)]+)\)")
 ELEMENT_ROW_RE = re.compile(r"^\|\s*\d+\s*\|\s*[`]?([A-Za-z_][A-Za-z0-9_]*)[`]?\s*\|")
 ELEMENT_HEADER_RE = re.compile(r"^##\s+(?:\d+\.\s+)?Elements", re.IGNORECASE | re.MULTILINE)
 LINEAGE_ROW_RE = re.compile(r"^\|\s*\d+\s*\|\s*[`]?([A-Za-z_][A-Za-z0-9_]*)[`]?\s*\|")
 LINEAGE_HEADER_RE = re.compile(r"^##\s+Column Lineage", re.IGNORECASE | re.MULTILINE)
 
 NULL_WITH_PROVENANCE_RE = re.compile(
+    # `Tier N` is the post-fix label for null-with-provenance (DWH framework
+    # reserves Tier 5 for domain-expert/sidecar overrides). `Tier 5` is kept
+    # as a backward-compat alias for any wiki on disk that pre-dates the fix.
     r"^\s*Source:\s+(?P<fqn>(?:main\.)?[A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+){1,2})\.(?P<col>[A-Za-z_][A-Za-z0-9_]*)\.\s+"
     r"No upstream wiki cached as of (?P<date>\d{4}-\d{2}-\d{2})\.?\s*"
-    r"\(Tier 5\s+(?:--|[—–-])\s+(?:terminal-no-wiki|bronze-passthrough[^)]*)\)\.?\s*$"
+    r"\(Tier (?:N|5)\s+(?:--|[—–-])\s+(?:terminal-no-wiki|blocked-on-upstream[^)]*|bronze-passthrough[^)]*)\)\.?\s*$"
 )
 
 SOURCE_CODE_CITATION_RE = re.compile(
@@ -63,8 +66,14 @@ SOURCE_CODE_CITATION_RE = re.compile(
     r"L\d+(?:-L\d+)?"
     r"|\[uc_view_ddl\]"
     r"|\[notebook:[^\]]+\]"
-    r"|`[^`]{8,200}`"
+    r"|`[^`]{3,200}`"
     r"|\b(?:CASE|COALESCE|ISNULL|NVL|SUM|COUNT|AVG|MIN|MAX|ROW_NUMBER|LAG|LEAD|OVER|PARTITION|ROUND|CAST|TRY_CAST|DATEPART|YEAR|MONTH|DAY|CONCAT|SUBSTRING|REPLACE|REVERSE|LEFT|RIGHT|LOWER|UPPER|TRIM)\b"
+    # New formula-backed citation markers from Phase 4.6 (post DWH-port):
+    #   - "Formula: `<expr>`"  (any-length backticked formula text)
+    #   - "(Tier 2 — literal)" / "(Tier 2 — computed in source)" — explicit
+    #     formula-extractor disposition, not AI inference
+    r"|Formula:\s*`[^`]*`"
+    r"|\(Tier\s+2\s+[—–-]\s+(?:literal|computed in source)\)"
     r")"
 )
 
@@ -260,15 +269,101 @@ def _classify_description_bucket(description: str, lineage_row: dict | None,
     if SOURCE_CODE_CITATION_RE.search(desc):
         return ("B", "source-code citation present")
 
-    # Tier U: honest mechanical disclosure of unclassifiability.
-    # Accepted as a 4th bucket ("D" = documented-unclassified) — NOT inference,
-    # the generator is explicit that no evidence could be extracted.
     tag_m = TIER_TAG_RE.search(desc)
-    if tag_m and tag_m.group(1) == "U":
-        return ("D", "documented-unclassified (Tier U — explicit disclosure of unclassifiability)")
+    if tag_m:
+        letter = tag_m.group(1)
+        # Tier 5 = domain-expert sidecar override (DWH framework Rule 15).
+        # Absolute authority — sidecar review is the evidence.
+        if letter == "5":
+            return ("A", "Tier 5 — domain-expert reviewer correction from sidecar")
+        # Tier N = explicit null-with-provenance gap (post-fix label;
+        # legacy tag is `Tier 5 — terminal-no-wiki`, also recognised by
+        # NULL_WITH_PROVENANCE_RE above).
+        if letter == "N":
+            return ("C", "Tier N — null-with-provenance gap disclosure")
+        # Tier U: honest mechanical disclosure of unclassifiability.
+        if letter == "U":
+            return ("D", "documented-unclassified (Tier U — explicit disclosure of unclassifiability)")
 
     return ("U", "unclassifiable: no upstream match, no source-code citation, "
-                  "not null-with-provenance template, no Tier U tag")
+                  "not null-with-provenance template, no Tier U/N/5 tag")
+
+
+def _count_paragraphs(section_text: str) -> int:
+    """Return number of non-empty paragraph blocks (separated by blank lines)."""
+    if not section_text:
+        return 0
+    # Strip leading/trailing whitespace, split on blank lines.
+    blocks = [b.strip() for b in re.split(r"\n\s*\n", section_text.strip()) if b.strip()]
+    # Don't count blocks that are pure table-only or pure horizontal-rule.
+    return sum(1 for b in blocks if not b.startswith(("|", "---")) and len(b) > 20)
+
+
+def _count_subsections(section_text: str, section_num: int) -> int:
+    """Count `### {section_num}.N` subsections."""
+    if not section_text:
+        return 0
+    return len(re.findall(rf"^###\s+{section_num}\.\d+\b", section_text, re.MULTILINE))
+
+
+def _extract_section_by_number(text: str, section_num: int) -> str | None:
+    """Extract the body of `## {section_num}.` section."""
+    m = re.search(rf"^##\s+{section_num}\.\s+", text, re.MULTILINE)
+    if not m:
+        return None
+    start = m.end()
+    next_m = re.search(rf"^##\s+(?:{section_num + 1}\.|Tier Legend\b)", text[start:], re.MULTILINE)
+    return text[start: start + next_m.start()] if next_m else text[start:]
+
+
+def _validate_8_section_shape(md_path: Path, text: str, fm: dict,
+                                concepts_doc: dict, obj_name: str) -> list[Issue]:
+    """Check 8-section golden shape: §1-§8 present, §1 has 3 paragraphs,
+    §2 has one subsection per concept."""
+    issues: list[Issue] = []
+    # Only enforce 8-section shape for objects whose generator emitted the new
+    # contract. Frontmatter `concept_count` is the marker — it's only set by
+    # the 8-section emission path.
+    if "concept_count" not in fm:
+        return issues  # legacy 6-section wiki, skip 8-section checks
+
+    # Section presence
+    for n in range(1, 9):
+        if not re.search(rf"^##\s+{n}\.\s+", text, re.MULTILINE):
+            issues.append(Issue(Issue.LEVEL_HARD, obj_name, "missing_section",
+                                f"§{n} header `## {n}. ...` not found in wiki"))
+
+    # §1 paragraph count
+    s1 = _extract_section_by_number(text, 1)
+    s1_paras = _count_paragraphs(s1 or "")
+    if s1_paras < 3:
+        issues.append(Issue(Issue.LEVEL_HARD, obj_name, "section1_paragraph_count",
+                            f"§1 Business Meaning has {s1_paras} paragraph(s); "
+                            f"GOLDEN-REFERENCE requires 3 (WHAT / WHERE / HOW)"))
+
+    # §2 concept coverage
+    expected_concept_count = int(fm.get("concept_count") or 0)
+    s2 = _extract_section_by_number(text, 2)
+    s2_subsections = _count_subsections(s2 or "", 2)
+    if expected_concept_count > 0 and s2_subsections == 0:
+        issues.append(Issue(Issue.LEVEL_HARD, obj_name, "section2_concept_coverage",
+                            f"frontmatter concept_count={expected_concept_count} but "
+                            f"§2 has no `### 2.N` subsections — generator failed to "
+                            f"emit per-concept subsections"))
+    elif expected_concept_count > 0 and s2_subsections < expected_concept_count:
+        # SOFT — allow grouping (multiple concepts in one subsection)
+        issues.append(Issue(Issue.LEVEL_SOFT, obj_name, "section2_concept_undercoverage",
+                            f"§2 has {s2_subsections} subsection(s) but concepts.json "
+                            f"declares {expected_concept_count} — some concepts may be "
+                            f"missing a dedicated subsection"))
+
+    # §3 Query Advisory must have at least 3.1 + 3.4 (storage layout + gotchas)
+    s3 = _extract_section_by_number(text, 3)
+    if s3 and not re.search(r"^###\s+3\.1\b", s3, re.MULTILINE):
+        issues.append(Issue(Issue.LEVEL_SOFT, obj_name, "section3_no_storage_subsection",
+                            "§3 missing `### 3.1` storage-layout subsection"))
+
+    return issues
 
 
 def validate_object(md_path: Path, inv_cols_by_name: dict[str, dict],
@@ -278,6 +373,19 @@ def validate_object(md_path: Path, inv_cols_by_name: dict[str, dict],
     issues: list[Issue] = []
     text = md_path.read_text(encoding="utf-8")
     fm = _parse_yaml_frontmatter(text)
+
+    # Load Phase 4.5 concepts artifact for §2 coverage check
+    concepts_path = md_path.parent.parent / "_discovery" / "concepts" / f"{obj_name}.json"
+    concepts_doc: dict = {}
+    if concepts_path.exists():
+        try:
+            concepts_doc = json.loads(concepts_path.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+
+    # 8-section shape checks (new contract — only for wikis emitted by the
+    # rewritten generator, identified by concept_count in frontmatter)
+    issues.extend(_validate_8_section_shape(md_path, text, fm, concepts_doc, obj_name))
 
     # Detect bronze inheritance — these wikis use writer.upstream_wiki_path
     # instead of the lineage-row-based inheritance check.

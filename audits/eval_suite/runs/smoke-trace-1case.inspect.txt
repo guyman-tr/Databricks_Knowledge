@@ -1,0 +1,69 @@
+﻿Rows: 1
+
+=== ROW 0: ddr_revenue_totals_yesterday ===
+--- Core scoring ---
+  sut_name             cursor_agent
+  expected_value       2880439.782463
+  observed_value       2898606.12
+  diff_pct             0.6306793027787696
+  tolerance_pct        0.5
+  passed               False
+  reason               expected=2,880,439.7825; observed=2,898,606.1200; diff=+0.6307% > tol=0.5%
+  drift_verdict        SKILL_GAP
+--- Baseline ---
+  baseline_sut_name    direct_sql
+  baseline_value       2880439.782463
+  baseline_diff_pct    0.0
+  baseline_passed      True
+--- Trace summary ---
+  trace_session_id                 1a33bcc4-511e-494c-b504-b8e284276f5c
+  trace_model                      Sonnet 4.5 Thinking
+  trace_tool_call_count            7
+  trace_sql_executed_count         6
+  trace_sql_succeeded_count        4
+  trace_input_tokens               63
+  trace_output_tokens              2573
+  trace_cache_read_tokens          360970
+  trace_cache_write_tokens         77778
+--- Skills loaded ---
+  [file_read] dwh-domain/domain-revenue-and-fees
+--- Tool kinds ---
+  {"readToolCall": 1, "shellToolCall": 6}
+--- MCP tools ---
+  {}
+--- sql_used (last successful) ---
+  SELECT SUM(total_fees_usd) as SpaceshipRevenue, SUM(CASE WHEN product LIKE 'Super%' THEN total_fees_usd ELSE 0 END) as SuperRevenue, SUM(CASE WHEN product LIKE 'Voyager%' THEN total_fees_usd ELSE 0 END) as VoyagerRevenue, SUM(CASE WHEN product LIKE 'Nova%' THEN total_fees_usd ELSE 0 END) as NovaRevenue, SUM(CASE WHEN product LIKE 'Money%' THEN total_fees_usd ELSE 0 END) as MoneyRevenue FROM main.etoro_kpi.v_spaceship_fees WHERE date = '2026-06-08'
+--- Thinking excerpt (tail) ---
+v_revenue_*` view family
+
+For a "Total Revenue per DDR" question on a specific date, I should use `BI_DB_DDR_Fact_Revenue_Generating_Actions` with the `IncludedInTotalRevenue` logic mentioned.
+
+Let me load that skill first, then query the data.The table path was wrong. The skill says the table is in `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`, not `main.dwh.`. Let me correct that and query again.Great! Now I have the eToro core revenue figure. According to the skill's "TOTAL REVENUE Γאפ MANDATORY CROSS-PLATFORM ROLLUP CONTRACT", I need to provide:
+
+1. eToro core (canonical, computed) - which I just got
+2. Spaceship family (AU) - need to query v_spaceship_fees
+3. MoneyFarm (UK) - the skill says this is a PLACEHOLDER view, report as TBD
+4. WealthFrance - TBD
+5. Zengo - TBD
+6. Bit2C - TBD
+7. Subscription - TBD
+8. Other future platforms - TBD
+
+Let me now query Spaceship fees for that date.I need to check the actual columns in the v_spaceship_fees view. Let me describe it first.Perfect! The column is `total_fees_usd`, not `revenue_usd`. And the product types are described as "Super", "Voyager (account)", "Voyager (mgmt)", "Nova (platform)", "Nova (
+--- Final answer text (first 1200 chars) ---
+I'll help you find eToro's Total Revenue from the DDR for 2026-06-08. Let me load the revenue domain skill and query the data.Let me correct the table path and query again.Now let me get the Spaceship revenue contribution for the same date.Let me check the structure of the Spaceship fees view.Now let me query Spaceship fees correctly.Based on the DDR (Daily Data Report), here's **eToro's Total Revenue for 2026-06-08**:
+
+## Cross-Platform Revenue Breakdown
+
+| Platform | Revenue (USD) | Notes |
+|----------|---------------|-------|
+| **eToro Core** | **$2,896,785.88** | Trading platform + MIMO + RevShare + Other (333,597 customers, 907,946 revenue events) |
+| **Spaceship (AU)** | **$1,820.24** | Australia acquisition Γאפ breakdown below |
+| **MoneyFarm (UK)** | **TBD** | Placeholder view in place, fee data not yet flowing |
+| **WealthFrance (FR)** | **TBD** | eToro-native FR product, revenue surface to confirm |
+| **Zengo** | **TBD** | Acquired, ingestion pending |
+| **Bit2C** | **TBD** | Acquired, ingestion pending |
+| **Subscription** | **TBD** | Work in progress, canonical surface not yet onboarded |
+| | | |
+| **Total (quantifiable)** | **$2,898,606.12** | eToro core + Spaceship only
+

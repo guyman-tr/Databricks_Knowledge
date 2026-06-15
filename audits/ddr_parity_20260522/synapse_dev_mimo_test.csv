@@ -1,0 +1,7 @@
+test,dateid,rows,IsPlatformFTD,IsGlobalFTD,tp_ftd,iban_ftd,opt_rows,mf_rows,notes
+baseline_4_20_buggy,20260420,184733,1340,1340,,55782,267,121,pre-patch (no change expected)
+after_4_20_patched,20260420,184733,1340,1340,37708,55782,267,121,benign — no change as 4/20 has no bad-cohort dates
+baseline_5_22_buggy,20260522,159320,18209,18209,17893,305,,,17K bad FTDs from $1 synthetic cohort
+after_5_22_patched_v1,20260522,159320,18209,18209,17893,305,,,recovery-UPDATE-only patch failed (dev TVF not patched too)
+after_5_22_patched_v2,20260522,159320,1007,1007,691,305,,,demotion UPDATE patch works — 17202 cohort removed from FTD flags
+dbx_5_22_aligned,20260522,,,,692,305,,,DBX target for cross-validation

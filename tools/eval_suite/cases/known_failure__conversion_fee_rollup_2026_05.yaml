@@ -1,0 +1,28 @@
+id: known_failure__conversion_fee_rollup_2026_05
+question: How much conversion fee revenue did eToro book yesterday?
+source: known_failure
+ground_truth_sql: "SELECT SUM(Amount) AS conversion_fee\nFROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions\n\
+  WHERE DateID = CAST(REPLACE('2026-06-08','-','') AS INT)\n  AND IncludedInTotalRevenue\
+  \ = 1\n  AND Metric = 'ConversionFee'"
+expected_skill_hub: valid-users-filter-contract
+canonical_tables:
+- main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions
+anti_sources:
+- main.etoro_kpi_prep.v_revenue_conversionfee
+- main.etoro_kpi_prep.v_revenue_
+expected_filters:
+- IncludedInTotalRevenue = 1
+- Metric = 'ConversionFee'
+notes: 2026-06-08 routing-failure case. MCP previously routed to v_revenue_* instead
+  of the DDR fact for rollups. See decisions.md 2026-06-08 'Sub-skill primary anchor
+  contradicts hub fast-path rule'.
+tags:
+- known_failure
+- routing_2026_06
+asof: '2026-06-08'
+expected_value:
+  type: numeric
+  value: 414246.3292
+  tolerance_pct: 0.5
+skill_coverage_status: covered
+max_replicas: 3

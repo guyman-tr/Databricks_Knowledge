@@ -1,0 +1,185 @@
+super_concept,concept,primary_owner,pattern,drop_from,claiming_hubs,variants,notes
+customer_identity_columns,accounttypeid,domain-customer-and-identity,primary_only,domain-staking,domain-customer-and-identity; domain-staking,AccountTypeID,
+trading_concepts,actiontypeid,domain-trading,primary_only,domain-customer-and-identity; domain-revenue-and-fees,domain-customer-and-identity; domain-revenue-and-fees; domain-trading,ActionTypeID,ActionTypeID is the trade-action enum on Fact_CustomerAction. Customer-and-identity has the lookup table but routing goes to trading.
+customer_lifecycle_populations,active traders,domain-customer-and-identity,primary_only,domain-payments,domain-customer-and-identity; domain-payments,active traders,
+marketing,airdrop,domain-marketing-and-acquisition,primary_only,domain-staking; domain-trading,domain-marketing-and-acquisition; domain-staking; domain-trading,Airdrop; airdrop,Airdrop = promo crypto distribution (marketing channel). Staking/trading drop bare.
+compliance_aml,alertid,domain-compliance-and-aml,primary_only,domain-ops-and-onboarding,domain-compliance-and-aml; domain-ops-and-onboarding,AlertID,
+wallet_infrastructure,aml wallet,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,AML wallet,
+wallet_infrastructure,amlvalidations,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,AmlValidations,
+broker_provider_identity,apex,domain-cross,primary_only,domain-options; domain-payments; domain-revenue-and-fees,domain-options; domain-payments; domain-revenue-and-fees,Apex; apex,Apex = US broker. Canonical recon in domain-cross. Trading-via-Apex stays in domain-options via 'apex options' qualified form.
+broker_provider_identity,apex buyingpower,domain-cross,primary_only,domain-payments,domain-cross; domain-payments,Apex BuyingPower,
+broker_provider_identity,apex sod,domain-cross,primary_only,domain-options; domain-payments,domain-cross; domain-options; domain-payments,Apex SOD; apex sod,Apex Start-of-Day reconciliation. Lives in domain-cross/provider-reconciliation.md.
+trading_concepts,apexrecon_holdings,domain-trading,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-trading,ApexRecon_Holdings; apexrecon_holdings,
+trading_concepts,apexrecon_tradeactivity,domain-trading,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-trading,ApexRecon_TradeActivity; apexrecon_tradeactivity,
+compliance_aml,appropriateness test,domain-customer-and-identity,primary_only,domain-options,domain-customer-and-identity; domain-options,Appropriateness Test; appropriateness test,Appropriateness test = pre-trade KYC quiz; customer-and-identity primary. Options keeps 'options appropriateness' qualified.
+aum_aua,assets under management,domain-aum-and-aua,primary_only,domain-trading,domain-aum-and-aua; domain-trading,assets under management,
+customer_lifecycle_populations,audit trail,domain-cross,context_dispatch,,domain-cross; domain-customer-and-identity,audit trail,Two legitimate angles: (a) tribe-emoney-audit (cross-domain audit trail) -> domain-cross; (b) Fact_CustomerAction history (per-customer activity audit) -> domain-customer-and-identity. CONTRACT: 'audit trail for [transaction|emoney|broker recon]' -> cross; 'audit trail for [customer|accountid|history]' -> customer-and-identity.
+aum_aua,aum,domain-aum-and-aua,qualified_wins,domain-payments; domain-trading,domain-aum-and-aua; domain-payments; domain-trading,AUM; aum,"Dedicated hub for AUM/AUA. Niche platforms keep qualified forms ('moneyfarm AUM', 'spaceship AUM')."
+niche_platform_spaceship,australian investment,domain-spaceship,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-spaceship,Australian investment; australian investment,
+niche_platform_moneyfarm,ben thompson,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,ben thompson,
+niche_platform_moneyfarm,benth,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,benth,
+fees_revenue,bi_db_depositwithdrawfee,domain-revenue-and-fees,primary_only,domain-payments,domain-payments; domain-revenue-and-fees,BI_DB_DepositWithdrawFee; bi_db_depositwithdrawfee,
+trading_concepts,bi_db_first5actions,domain-customer-and-identity,primary_only,domain-cross,domain-cross; domain-customer-and-identity,BI_DB_First5Actions,First-5-actions = early lifecycle table; customer-and-identity owns.
+niche_platform_moneyfarm,bi_output_moneyfarm_customers,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,bi_output_moneyfarm_customers,
+niche_platform_moneyfarm,bi_output_moneyfarm_fact_portfolio_snapshot,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,bi_output_moneyfarm_fact_portfolio_snapshot,
+niche_platform_moneyfarm,bi_output_moneyfarm_fact_transactions,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,bi_output_moneyfarm_fact_transactions,
+money_flow_fiat,bincountry,domain-payments,primary_only,domain-revenue-and-fees,domain-payments; domain-revenue-and-fees,BinCountry,
+money_flow_crypto,blockchaincryptoid,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,BlockchainCryptoId,
+money_flow_crypto,blockchaintransactionid,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,BlockchainTransactionId,
+niche_platform_moneyfarm,bronze_moneyfarm_users,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,bronze_moneyfarm_users,
+niche_platform_spaceship,bronze_spaceship_metabase,domain-spaceship,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-spaceship,bronze_spaceship_metabase,
+wallet_infrastructure,bronze_walletdb_wallet,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,bronze_walletdb_wallet,
+money_flow_crypto,c2f,domain-cross,primary_only,domain-exw-wallet; domain-payments; domain-revenue-and-fees,domain-cross; domain-exw-wallet; domain-payments; domain-revenue-and-fees,C2F,"C2F end-to-end story lives in domain-cross/crypto-to-fiat.md. Secondaries keep qualified forms ('C2F revenue', 'C2F leg')."
+money_flow_crypto,c2p,domain-payments,primary_only,domain-exw-wallet; domain-trading,domain-exw-wallet; domain-payments; domain-trading,C2P,Crypto-to-Platform = trading deposit via crypto. Payments primary.
+money_flow_fiat,card lifecycle,domain-cross,primary_only,domain-payments,domain-cross; domain-payments,card lifecycle,
+money_flow_fiat,cardtype,domain-payments,primary_only,domain-revenue-and-fees,domain-payments; domain-revenue-and-fees,CardType,
+money_flow_fiat,chargeback,domain-cross,primary_only,domain-payments; domain-revenue-and-fees,domain-cross; domain-payments; domain-revenue-and-fees,chargeback,Refund-chargeback chain lives in domain-cross/refund-chargeback-chain.md.
+customer_identity_columns,citizenshipcountryid,domain-customer-and-identity,primary_only,domain-compliance-and-aml,domain-compliance-and-aml; domain-customer-and-identity,CitizenshipCountryID,
+fees_revenue,commission,domain-revenue-and-fees,qualified_wins,domain-marketing-and-acquisition,domain-marketing-and-acquisition; domain-revenue-and-fees,Commission; commission,"Bare 'commission' = trading commission. Marketing must qualify ('affiliate commission', 'partner commission')."
+customer_identity_columns,compensationreasonid,domain-customer-and-identity,primary_only,domain-revenue-and-fees,domain-customer-and-identity; domain-revenue-and-fees,CompensationReasonID,
+fees_revenue,conversion fee,domain-revenue-and-fees,primary_only,domain-payments,domain-payments; domain-revenue-and-fees,conversion fee,
+trading_concepts,copypositionopen,domain-trading,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-trading,CopyPositionOpen,
+wallet_infrastructure,correlationid,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,CorrelationId,CorrelationId is the EXW chain-stitch column; only meaningful in wallet context.
+customer_identity_columns,countryid,domain-customer-and-identity,primary_only,domain-staking,domain-customer-and-identity; domain-staking,CountryID,
+trading_concepts,crypto,domain-trading,qualified_wins,domain-payments,domain-payments; domain-trading,crypto,"Bare 'crypto' = instrument category. Payments uses qualified forms ('crypto deposit', 'crypto wallet')."
+money_flow_crypto,crypto to fiat,domain-cross,primary_only,domain-exw-wallet; domain-revenue-and-fees,domain-cross; domain-exw-wallet; domain-revenue-and-fees,crypto to fiat,
+wallet_infrastructure,crypto wallet,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,crypto wallet,
+money_flow_crypto,crypto-to-fiat,domain-cross,primary_only,domain-exw-wallet; domain-payments,domain-cross; domain-exw-wallet; domain-payments,crypto-to-fiat,
+customer_lifecycle_populations,customer_daily_status,domain-customer-and-identity,primary_only,domain-payments,domain-customer-and-identity; domain-payments,Customer_Daily_Status; customer_daily_status,
+customer_lifecycle_populations,customer_periodic_status,domain-customer-and-identity,primary_only,domain-payments,domain-customer-and-identity; domain-payments,Customer_Periodic_Status; customer_periodic_status,
+wallet_infrastructure,customerwalletsview,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,CustomerWalletsView,
+fees_revenue,depositwithdrawfee,domain-revenue-and-fees,primary_only,domain-payments,domain-payments; domain-revenue-and-fees,DepositWithdrawFee; depositwithdrawfee,
+fees_revenue,depositwithdrawfee_reversals,domain-revenue-and-fees,primary_only,domain-payments,domain-payments; domain-revenue-and-fees,DepositWithdrawFee_Reversals; depositwithdrawfee_reversals,
+fees_revenue,depot,domain-revenue-and-fees,primary_only,domain-payments,domain-payments; domain-revenue-and-fees,Depot; depot,
+trading_concepts,dim_position,domain-trading,primary_only,domain-staking,domain-staking; domain-trading,Dim_Position,
+marketing,dma,domain-marketing-and-acquisition,primary_only,domain-trading,domain-marketing-and-acquisition; domain-trading,DMA,DMA = direct mail attribution channel; marketing primary.
+aum_aua,equityglobal,domain-aum-and-aua,primary_only,domain-trading,domain-aum-and-aua; domain-trading,EquityGlobal,EquityGlobal = TP-side AUM column.
+trading_concepts,eth,domain-trading,qualified_wins,domain-staking,domain-staking; domain-trading,ETH,ETH as instrument. Staking keeps 'ETH staking' qualified form.
+wallet_infrastructure,etoro wallet,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,eToro Wallet; eToro wallet; etoro wallet,
+customer_identity_columns,externaluserid,domain-customer-and-identity,primary_only,domain-moneyfarm,domain-customer-and-identity; domain-moneyfarm,externalUserId,
+wallet_infrastructure,exw,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,EXW,
+money_flow_crypto,exw_c2f_e2e,domain-cross,primary_only,domain-exw-wallet; domain-payments,domain-cross; domain-exw-wallet; domain-payments,EXW_C2F_E2E,EXW_C2F_E2E table is the canonical C2F join; lives in domain-cross.
+money_flow_crypto,exw_c2p_e2e,domain-payments,primary_only,domain-exw-wallet,domain-exw-wallet; domain-payments,EXW_C2P_E2E,
+wallet_infrastructure,exw_dimuser,domain-exw-wallet,primary_only,domain-customer-and-identity; domain-payments,domain-customer-and-identity; domain-exw-wallet; domain-payments,EXW_DimUser,EXW_DimUser = wallet user dimension; lives in domain-exw-wallet.
+wallet_infrastructure,exw_dimuser_enriched,domain-exw-wallet,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-exw-wallet,EXW_DimUser_Enriched,
+wallet_infrastructure,exw_ethfeesent_blockchain,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,EXW_EthFeeSent_Blockchain,
+wallet_infrastructure,exw_facttransactions,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,EXW_FactTransactions,
+wallet_infrastructure,exw_financereportsbalancesnew,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,EXW_FinanceReportsBalancesNew,
+wallet_infrastructure,exw_walletinventory,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,EXW_WalletInventory,
+niche_platform_spaceship,f30dd,domain-spaceship,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-spaceship,F30DD,
+trading_concepts,fact_currencypricewithsplit,domain-trading,primary_only,domain-moneyfarm; domain-spaceship,domain-moneyfarm; domain-spaceship; domain-trading,Fact_CurrencyPriceWithSplit; fact_currencypricewithsplit,Fact_CurrencyPriceWithSplit is the global FX-price table; trading owns. Niche platforms reference it as input but drop as trigger.
+trading_concepts,fact_customeraction,domain-trading,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-trading,Fact_CustomerAction; fact_customeraction,Fact_CustomerAction is the trade fact. Customer-and-identity uses it for lifecycle - drops as trigger.
+trading_concepts,fact_customeraction_w_metrics,domain-trading,primary_only,domain-cross; domain-revenue-and-fees,domain-cross; domain-revenue-and-fees; domain-trading,fact_customeraction_w_metrics,
+trading_concepts,fact_trading_volumes_and_amounts,domain-trading,primary_only,domain-payments,domain-payments; domain-trading,Fact_Trading_Volumes_And_Amounts,
+money_flow_fiat,ftd,domain-customer-and-identity,qualified_wins,domain-payments; domain-revenue-and-fees,domain-customer-and-identity; domain-payments; domain-revenue-and-fees,FTD,"FTD = first time deposit = customer lifecycle event. Payments has the deposit event; rev has the FTD-revenue marker. Both keep qualified forms ('FTD revenue', 'FTD deposit table'). Bare FTD goes to lifecycle owner."
+niche_platform_spaceship,fum,domain-spaceship,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-spaceship,FUM,
+customer_lifecycle_populations,funded accounts,domain-customer-and-identity,qualified_wins,domain-revenue-and-fees; domain-spaceship,domain-revenue-and-fees; domain-spaceship,Funded Accounts,PHASE 5 ADDITION: 'funded accounts' is currently NOT a trigger on customer-populations-and-lifecycle.md. Must be ADDED. Spaceship keeps 'spaceship funded accounts' qualified form.
+money_flow_crypto,gas fee,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,gas fee,
+broker_provider_identity,gatsby,domain-cross,primary_only,domain-options; domain-payments; domain-revenue-and-fees,domain-options; domain-payments; domain-revenue-and-fees,Gatsby; gatsby,Gatsby = same US broker (legacy name). Same as Apex.
+aum_aua,ibanbalance,domain-aum-and-aua,primary_only,domain-trading,domain-aum-and-aua; domain-trading,IBANBalance,
+trading_concepts,instrumentid,domain-trading,primary_only,domain-staking,domain-staking; domain-trading,InstrumentID,
+fees_revenue,interest on balance,domain-revenue-and-fees,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-revenue-and-fees,Interest On Balance; Interest on Balance; interest on balance,
+fees_revenue,iob,domain-revenue-and-fees,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-revenue-and-fees,IOB,
+niche_platform_spaceship,is_ftd,domain-spaceship,context_dispatch,,domain-moneyfarm; domain-spaceship,is_ftd,Niche-platform flag column. Spaceship uses for SPS FTD detection; moneyfarm uses same column name on MF tables. CONTRACT: 'is_ftd spaceship/SPS' -> spaceship; 'is_ftd moneyfarm/MF' -> moneyfarm; bare 'is_ftd' is too generic - re-rank by platform mention or required_tables.
+niche_platform_spaceship,is_funded,domain-spaceship,context_dispatch,,domain-moneyfarm; domain-spaceship,is_funded,Same shape as is_ftd; routing depends on platform mention.
+niche_platform_spaceship,is_internal_transfer,domain-options,context_dispatch,,domain-options; domain-spaceship,is_internal_transfer,Options + spaceship both have this flag. Context: 'is_internal_transfer options' -> options; bare or 'is_internal_transfer spaceship' -> spaceship via 'spaceship' qualifier.
+niche_platform_moneyfarm,isa,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,isa,
+trading_concepts,isactivetrade,domain-trading,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-trading,IsActiveTrade,
+trading_concepts,isbuy,domain-trading,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-trading,IsBuy,
+cross_cutting_utilities,iscreditreportvalidcb,cross-cutting,primary_only,domain-customer-and-identity; domain-options; domain-staking,cross-cutting; domain-customer-and-identity; domain-options; domain-staking,IsCreditReportValidCB,IsCreditReportValidCB = global valid-customer-fingerprint filter; lives in cross-cutting.
+money_flow_crypto,iscryptotofiat,domain-cross,primary_only,domain-payments,domain-cross; domain-payments,IsCryptoToFiat,IsCryptoToFiat flag on Fact_MIMO_AllPlatforms - C2F marker.
+customer_lifecycle_populations,isdepositor,domain-customer-and-identity,primary_only,domain-ops-and-onboarding,domain-customer-and-identity; domain-ops-and-onboarding,IsDepositor,
+trading_concepts,isfeedividend,domain-revenue-and-fees,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-revenue-and-fees,IsFeeDividend,
+money_flow_fiat,isftd,domain-customer-and-identity,primary_only,domain-options,domain-customer-and-identity; domain-options,IsFTD,
+money_flow_fiat,isglobalftd,domain-customer-and-identity,primary_only,domain-cross; domain-options; domain-payments,domain-cross; domain-options; domain-payments,IsGlobalFTD,IsGlobalFTD = lifecycle FTD across all platforms; lives in customer-populations-and-lifecycle.md.
+niche_platform_spaceship,isinternaltransfer,domain-options,primary_only,domain-payments,domain-options; domain-payments,IsInternalTransfer,CamelCase form of is_internal_transfer; options + payments both claim. Payments drops bare - keeps qualified ('IsInternalTransfer payment').
+trading_concepts,isleveraged,domain-trading,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-trading,IsLeveraged,
+trading_concepts,ispartialclosechild,domain-trading,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-trading,IsPartialCloseChild,
+trading_concepts,ispartialcloseparent,domain-trading,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-trading,IsPartialCloseParent,
+money_flow_fiat,isrecurring,domain-cross,primary_only,domain-payments,domain-cross; domain-payments,IsRecurring,Recurring deposit flag - lives in recurring-deposit-to-trade story.
+trading_concepts,issettled,domain-trading,primary_only,domain-customer-and-identity; domain-revenue-and-fees,domain-customer-and-identity; domain-revenue-and-fees; domain-trading,IsSettled,
+trading_concepts,issqf,domain-trading,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-trading,IsSQF,
+cross_cutting_utilities,isvalidcustomer,cross-cutting,primary_only,domain-customer-and-identity; domain-options,cross-cutting; domain-customer-and-identity; domain-options,IsValidCustomer,Global valid-customer macro.
+cross_cutting_utilities,latency,cross-cutting,primary_only,domain-trading,cross-cutting; domain-trading,latency,MCP latency signal lives in cross-cutting (mcp-latency-signal rule).
+trading_concepts,manualpositionopen,domain-trading,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-trading,ManualPositionOpen,
+broker_provider_identity,mid,domain-payments,primary_only,domain-cross; domain-revenue-and-fees,domain-cross; domain-payments; domain-revenue-and-fees,MID,Payment-processor Merchant Identifier.
+broker_provider_identity,midname,domain-payments,primary_only,domain-cross; domain-revenue-and-fees,domain-cross; domain-payments; domain-revenue-and-fees,MIDName,
+broker_provider_identity,midvalue,domain-payments,primary_only,domain-cross; domain-revenue-and-fees,domain-cross; domain-payments; domain-revenue-and-fees,MIDValue,
+trading_concepts,mirrorid,domain-trading,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-trading,MirrorID,MirrorID = copy-trading mirror identifier.
+niche_platform_moneyfarm,money farm,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,money farm,
+niche_platform_moneyfarm,moneyfarm,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,MoneyFarm; Moneyfarm; moneyfarm,
+aum_aua,moneyfarm aum,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,moneyfarm aum,
+fees_revenue,moneyfarm cohort,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,moneyfarm cohort,
+fees_revenue,moneyfarm fees,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,moneyfarm fees,
+money_flow_fiat,moneyfarm ftd,domain-moneyfarm,primary_only,domain-payments,domain-moneyfarm; domain-payments,MoneyFarm FTD; moneyfarm ftd,
+fees_revenue,moneyfarm mimo,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,moneyfarm mimo,
+customer_identity_columns,moneyfarmuserid,domain-moneyfarm,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-moneyfarm,moneyfarmUserId,moneyfarmUserId is the MF-side identifier; MF hub owns.
+customer_identity_columns,movemoneyreasonid,domain-customer-and-identity,primary_only,domain-payments,domain-customer-and-identity; domain-payments,MoveMoneyReasonID,
+compliance_aml,multipleaccounts,domain-compliance-and-aml,primary_only,domain-ops-and-onboarding,domain-compliance-and-aml; domain-ops-and-onboarding,MultipleAccounts,
+money_flow_fiat,net deposits,domain-payments,qualified_wins,domain-revenue-and-fees; domain-spaceship,domain-payments; domain-revenue-and-fees; domain-spaceship,Net Deposits; net deposits,Bare 'net deposits' = global NTD on the trading platform. Niche platforms must use qualified form ('spaceship net deposits'). revenue-and-fees has NTD as input to revenue calc - drops bare.
+money_flow_crypto,off-ramp,domain-cross,primary_only,domain-exw-wallet; domain-payments,domain-cross; domain-exw-wallet; domain-payments,off-ramp,
+money_flow_crypto,on-chain,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,on-chain,
+customer_lifecycle_populations,onboarding funnel,domain-ops-and-onboarding,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-ops-and-onboarding,onboarding funnel,Funnel = ops/onboarding KPI; customer-and-identity has populations but drops the funnel term.
+niche_platform_options,options,domain-options,primary_only,domain-revenue-and-fees,domain-options; domain-revenue-and-fees,Options; options,
+niche_platform_options,options eligibility,domain-options,primary_only,domain-revenue-and-fees,domain-options; domain-revenue-and-fees,options eligibility,
+money_flow_fiat,options ftd,domain-options,primary_only,domain-payments,domain-options; domain-payments,Options FTD; options ftd,Niche-platform-scoped FTD - belongs to the niche hub by definition.
+fees_revenue,options revenue,domain-options,primary_only,domain-revenue-and-fees,domain-options; domain-revenue-and-fees,options revenue,Niche-platform-scoped revenue belongs to the niche hub.
+aum_aua,optionstotalequity,domain-aum-and-aua,primary_only,domain-trading,domain-aum-and-aua; domain-trading,OptionsTotalEquity,
+fees_revenue,overnight fee,domain-revenue-and-fees,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-revenue-and-fees,overnight fee,
+fees_revenue,payment for order flow,domain-options,primary_only,domain-revenue-and-fees,domain-options; domain-revenue-and-fees,payment for order flow,
+fees_revenue,pfof,domain-options,primary_only,domain-revenue-and-fees,domain-options; domain-revenue-and-fees,PFOF,
+fees_revenue,pipscalculation,domain-revenue-and-fees,primary_only,domain-payments,domain-payments; domain-revenue-and-fees,PIPsCalculation,
+customer_identity_columns,playerlevelid,domain-customer-and-identity,primary_only,domain-compliance-and-aml; domain-staking,domain-compliance-and-aml; domain-customer-and-identity; domain-staking,PlayerLevelID,
+customer_identity_columns,playerstatus,domain-customer-and-identity,primary_only,domain-compliance-and-aml; domain-ops-and-onboarding; domain-staking,domain-compliance-and-aml; domain-ops-and-onboarding; domain-staking,PlayerStatus,"PlayerStatus = lifecycle enum on Dim_Customer. Compliance has KYC-flow scope, ops has onboarding scope - both keep 'PlayerStatus KYC' / 'PlayerStatus onboarding' qualified."
+customer_identity_columns,playerstatusid,domain-customer-and-identity,primary_only,domain-staking,domain-customer-and-identity; domain-staking,PlayerStatusID,
+trading_concepts,popular investor,domain-trading,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-trading,Popular Investor; popular investor,Popular Investor program lives in trading. Customer-and-identity has profile fields - drops as trigger.
+money_flow_crypto,public address,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,public address,
+cross_cutting_utilities,reconciliation,domain-cross,qualified_wins,domain-staking; domain-trading,domain-cross; domain-staking; domain-trading,reconciliation,"Bare 'reconciliation' = broker/SOD recon (domain-cross). Trading drops bare, keeps 'trade reconciliation' qualified. Staking drops bare."
+money_flow_fiat,recurring investment,domain-cross,primary_only,domain-trading,domain-cross; domain-trading,recurring investment,
+money_flow_crypto,redemption,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,Redemption; redemption,
+money_flow_fiat,refund,domain-cross,primary_only,domain-payments; domain-revenue-and-fees,domain-cross; domain-payments; domain-revenue-and-fees,refund,
+compliance_aml,regulation,domain-compliance-and-aml,primary_only,domain-customer-and-identity,domain-compliance-and-aml; domain-customer-and-identity,Regulation; regulation,
+customer_identity_columns,regulationid,domain-customer-and-identity,primary_only,domain-compliance-and-aml; domain-staking,domain-compliance-and-aml; domain-customer-and-identity; domain-staking,RegulationID,
+money_flow_fiat,reversal,domain-cross,primary_only,domain-payments; domain-revenue-and-fees,domain-cross; domain-payments; domain-revenue-and-fees,reversal,
+niche_platform_staking,revshare,domain-staking,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-staking,RevShare,
+niche_platform_staking,rewards distribution,domain-staking,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-staking,rewards distribution,
+customer_identity_columns,screeningstatus,domain-compliance-and-aml,primary_only,domain-customer-and-identity; domain-ops-and-onboarding,domain-compliance-and-aml; domain-customer-and-identity; domain-ops-and-onboarding,ScreeningStatus,"ScreeningStatus = AML/KYC outcome - compliance is primary, NOT customer-and-identity."
+fees_revenue,sdrt,domain-revenue-and-fees,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-revenue-and-fees,SDRT,
+wallet_infrastructure,sendrequestcorrelationid,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,SendRequestCorrelationId,
+customer_identity_columns,sessionid,domain-customer-and-identity,primary_only,domain-ops-and-onboarding,domain-customer-and-identity; domain-ops-and-onboarding,SessionID,
+trading_concepts,settlementtypeid,domain-trading,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-trading,SettlementTypeID,
+fees_revenue,share lending,domain-revenue-and-fees,primary_only,domain-payments,domain-payments; domain-revenue-and-fees,share lending,
+fees_revenue,silver_moneyfarm_etoro_mf_aum,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,silver_moneyfarm_etoro_mf_aum,
+broker_provider_identity,simplex,domain-payments,primary_only,domain-exw-wallet,domain-exw-wallet; domain-payments,Simplex,Simplex = card-purchase-of-crypto provider; payment-flow primary.
+trading_concepts,smart portfolio,domain-trading,primary_only,domain-staking,domain-staking; domain-trading,Smart Portfolio; smart portfolio,CopyPortfolio product (called Smart Portfolio in UI). Trading-side product.
+broker_provider_identity,sodreconciliation,domain-cross,primary_only,domain-revenue-and-fees,domain-cross; domain-revenue-and-fees,sodreconciliation,SOD recon table family - cross-broker scope.
+niche_platform_spaceship,spaceship,domain-spaceship,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-spaceship,Spaceship; spaceship,
+niche_platform_staking,staking,domain-staking,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-staking,staking,
+niche_platform_staking,staking rewards,domain-staking,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-staking,staking rewards,
+broker_provider_identity,tangany,domain-exw-wallet,primary_only,domain-payments; domain-staking,domain-exw-wallet; domain-payments; domain-staking,Tangany,Tangany = custodian for crypto wallet.
+fees_revenue,ticket fee,domain-revenue-and-fees,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-revenue-and-fees,ticket fee,
+aum_aua,totalequitytp,domain-aum-and-aua,primary_only,domain-trading,domain-aum-and-aua; domain-trading,TotalEquityTP,
+broker_provider_identity,treezor,domain-payments,primary_only,domain-cross,domain-cross; domain-payments,Treezor,Treezor = eMoney IBAN provider.
+niche_platform_moneyfarm,uk isa,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,uk isa,
+fees_revenue,us options,domain-options,primary_only,domain-revenue-and-fees,domain-options; domain-revenue-and-fees,US options; us options,
+broker_provider_identity,usabroker,domain-cross,primary_only,domain-options; domain-payments; domain-revenue-and-fees,domain-cross; domain-options; domain-payments; domain-revenue-and-fees,USABroker; usabroker,USABroker = same US broker (alt name).
+fees_revenue,v_mimo_options_platform,domain-options,primary_only,domain-payments; domain-revenue-and-fees,domain-options; domain-payments; domain-revenue-and-fees,v_mimo_options_platform,
+fees_revenue,v_mimo_optionsplatform,domain-options,primary_only,domain-revenue-and-fees,domain-options; domain-revenue-and-fees,v_mimo_optionsplatform,
+aum_aua,v_moneyfarm_aum,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,v_moneyfarm_aum,
+fees_revenue,v_moneyfarm_fees,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,v_moneyfarm_fees,
+fees_revenue,v_moneyfarm_mimo,domain-moneyfarm,primary_only,domain-revenue-and-fees,domain-moneyfarm; domain-revenue-and-fees,v_moneyfarm_mimo,
+aum_aua,v_options_aum,domain-options,primary_only,domain-payments; domain-revenue-and-fees,domain-options; domain-payments; domain-revenue-and-fees,v_options_aum,
+customer_lifecycle_populations,v_population_active_traders,domain-customer-and-identity,primary_only,domain-payments,domain-customer-and-identity; domain-payments,v_population_active_traders,
+customer_lifecycle_populations,v_population_first_time_funded,domain-customer-and-identity,primary_only,domain-payments,domain-customer-and-identity; domain-payments,v_population_first_time_funded,
+fees_revenue,v_revenue_optionsplatform,domain-options,primary_only,domain-revenue-and-fees,domain-options; domain-revenue-and-fees,v_revenue_optionsplatform,
+aum_aua,v_spaceship_aum,domain-spaceship,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-spaceship,v_spaceship_aum,
+fees_revenue,v_spaceship_fees,domain-spaceship,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-spaceship,v_spaceship_fees,
+fees_revenue,v_spaceship_mimo,domain-spaceship,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-spaceship,v_spaceship_mimo,
+customer_identity_columns,verificationlevelid,domain-compliance-and-aml,primary_only,domain-customer-and-identity; domain-ops-and-onboarding,domain-compliance-and-aml; domain-customer-and-identity; domain-ops-and-onboarding,VerificationLevelID,VerificationLevelID = KYC level - compliance primary.
+trading_concepts,volumeonclose,domain-trading,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-trading,VolumeOnClose,
+trading_concepts,volumeonopen,domain-trading,primary_only,domain-customer-and-identity,domain-customer-and-identity; domain-trading,VolumeOnOpen,
+trading_concepts,w_metrics,domain-trading,primary_only,domain-cross,domain-cross; domain-trading,w_metrics,
+wallet_infrastructure,walletbalances,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,WalletBalances,
+wallet_infrastructure,walletid,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,WalletId,
+wallet_infrastructure,walletpool,domain-exw-wallet,primary_only,domain-payments,domain-exw-wallet; domain-payments,WalletPool,
+niche_platform_spaceship,weekend fill-forward,domain-spaceship,primary_only,domain-revenue-and-fees,domain-revenue-and-fees; domain-spaceship,weekend fill-forward,

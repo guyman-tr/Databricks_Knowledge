@@ -1,0 +1,93 @@
+[2026-06-01 04:00:02] === START tag='0400' target='' cwd='C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\sp_crypto_nop_audit' ===
+[2026-06-01 04:00:02] Running: python C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\sp_crypto_nop_audit\poll_sources.py --tag 0400
+[2026-06-01 04:00:02] === SP_Crypto_NOP source audit poll ===
+[2026-06-01 04:00:02] target_date    = 2026-05-31  (DateID=20260531)
+[2026-06-01 04:00:02] poll_at_utc    = 2026-06-01T04:00:02Z  (local: 2026-06-01T04:00:02)
+[2026-06-01 04:00:02] tag            = 0400
+[2026-06-01 04:00:02] sources        = 24
+[2026-06-01 04:00:02] output         = C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\sp_crypto_nop_audit\snapshots\2026-05-31_0400.csv
+[2026-06-01 04:00:02] 
+[2026-06-01 04:00:02] Connecting to Synapse (prod-synapse-dataplatform-we.sql.azuresynapse.net / sql_dp_prod_we) using SQL login ssisuser [SQL-only, no AAD fallback]...
+[2026-06-01 04:00:02] Connected (SQL authentication).
+[2026-06-01 04:00:02] 
+[2026-06-01 04:00:10]   [OK ] BI_DB_PositionPnL                             rows=138000124      elapsed= 7434ms
+[2026-06-01 04:00:13]   [OK ] BI_DB_PositionPnL_crypto_only                 rows=24764344       elapsed= 2947ms
+[2026-06-01 04:00:19]   [OK ] Dim_Position_matched_to_crypto_PnL            rows=24764344       elapsed= 6158ms
+[2026-06-01 04:00:19]   [OK ] Dim_Instrument_crypto                         rows=823            elapsed=   62ms
+[2026-06-01 04:00:19]   [OK ] Fact_CurrencyPriceWithSplit                   rows=16013          elapsed=  220ms
+[2026-06-01 04:00:19]   [OK ] Fact_CurrencyPriceWithSplit_crypto            rows=795            elapsed=  291ms
+[2026-06-01 04:00:21]   [OK ] Fact_SnapshotCustomer                         rows=47938840       elapsed= 2025ms
+[2026-06-01 04:00:23]   [OK ] Dim_Customer                                  rows=47938840       elapsed= 1630ms
+[2026-06-01 04:00:27]   [OK ] V_GermanBaFin                                 rows=152303         elapsed= 3785ms
+[2026-06-01 04:00:29]   [OK ] External_TanganyStatus_dict                   rows=6              elapsed= 2564ms
+[2026-06-01 04:00:46]   [OK ] Apex_Enrolment_optout_general                 rows=1520549        elapsed=16747ms
+[2026-06-01 04:01:04]   [OK ] Apex_Enrolment_optin_ETH                      rows=362886         elapsed=17868ms
+[2026-06-01 04:01:05]   [OK ] BI_DB_Client_Balance_CID_Level_New            rows=6857188        elapsed=  574ms
+[2026-06-01 04:01:05]   [OK ] Dim_Range                                     rows=1327416        elapsed=  501ms
+[2026-06-01 04:01:05]   [OK ] Dim_Regulation                                rows=15             elapsed=   41ms
+[2026-06-01 04:01:05]   [OK ] Dim_Label                                     rows=26             elapsed=  146ms
+[2026-06-01 04:01:05]   [OK ] Dim_MifidCategorization                       rows=6              elapsed=   38ms
+[2026-06-01 04:01:05]   [OK ] Dim_AccountType                               rows=19             elapsed=   36ms
+[2026-06-01 04:01:05]   [OK ] Dim_PlayerLevel                               rows=8              elapsed=   39ms
+[2026-06-01 04:01:05]   [OK ] Dim_PlayerStatus                              rows=16             elapsed=   37ms
+[2026-06-01 04:01:06]   [OK ] Dim_Country                                   rows=251            elapsed=   40ms
+[2026-06-01 04:01:06]   [OK ] TARGET_BI_DB_Crypto_NOP                       rows=204749         elapsed=  238ms
+[2026-06-01 04:01:06]   [OK ] TARGET_BI_DB_Crypto_NOP_CID                   rows=5152142        elapsed=  424ms
+[2026-06-01 04:01:06]   [OK ] SP_Crypto_NOP_run_history                     rows=2              elapsed=  184ms
+[2026-06-01 04:01:10] 
+[2026-06-01 04:01:10] Wrote C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\sp_crypto_nop_audit\snapshots\2026-05-31_0400.csv  (24 rows, 0 errors)
+[2026-06-01 04:01:10] poll_sources.py exit=0
+[2026-06-01 04:01:10] Running: python C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\sp_crypto_nop_audit\make_report.py
+[2026-06-01 04:01:10] Only one snapshot for 2026-05-31 so far ?аф skipping diff.
+[2026-06-01 04:01:10]   found: ['2026-05-31_0400.csv']
+[2026-06-01 04:01:10] make_report.py exit=0
+[2026-06-01 04:01:10] === END  pollExit=0 reportExit=0 ===
+[2026-06-01 09:00:02] === START tag='0900' target='' cwd='C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\sp_crypto_nop_audit' ===
+[2026-06-01 09:00:02] Running: python C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\sp_crypto_nop_audit\poll_sources.py --tag 0900
+[2026-06-01 09:00:02] === SP_Crypto_NOP source audit poll ===
+[2026-06-01 09:00:02] target_date    = 2026-05-31  (DateID=20260531)
+[2026-06-01 09:00:02] poll_at_utc    = 2026-06-01T09:00:02Z  (local: 2026-06-01T09:00:02)
+[2026-06-01 09:00:02] tag            = 0900
+[2026-06-01 09:00:02] sources        = 24
+[2026-06-01 09:00:02] output         = C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\sp_crypto_nop_audit\snapshots\2026-05-31_0900.csv
+[2026-06-01 09:00:02] 
+[2026-06-01 09:00:02] Connecting to Synapse (prod-synapse-dataplatform-we.sql.azuresynapse.net / sql_dp_prod_we) using SQL login ssisuser [SQL-only, no AAD fallback]...
+[2026-06-01 09:00:02] Connected (SQL authentication).
+[2026-06-01 09:00:02] 
+[2026-06-01 09:00:17]   [OK ] BI_DB_PositionPnL                             rows=138000124      elapsed=14658ms
+[2026-06-01 09:00:20]   [OK ] BI_DB_PositionPnL_crypto_only                 rows=24764344       elapsed= 2905ms
+[2026-06-01 09:01:41]   [OK ] Dim_Position_matched_to_crypto_PnL            rows=24764344       elapsed=80994ms
+[2026-06-01 09:01:41]   [OK ] Dim_Instrument_crypto                         rows=823            elapsed=   83ms
+[2026-06-01 09:01:41]   [OK ] Fact_CurrencyPriceWithSplit                   rows=16013          elapsed=  276ms
+[2026-06-01 09:01:42]   [OK ] Fact_CurrencyPriceWithSplit_crypto            rows=795            elapsed=  442ms
+[2026-06-01 09:01:45]   [OK ] Fact_SnapshotCustomer                         rows=47938840       elapsed= 2996ms
+[2026-06-01 09:01:46]   [OK ] Dim_Customer                                  rows=47938840       elapsed= 1680ms
+[2026-06-01 09:01:57]   [OK ] V_GermanBaFin                                 rows=152303         elapsed=10062ms
+[2026-06-01 09:01:59]   [OK ] External_TanganyStatus_dict                   rows=6              elapsed= 2512ms
+[2026-06-01 09:02:24]   [OK ] Apex_Enrolment_optout_general                 rows=1520549        elapsed=25442ms
+[2026-06-01 09:02:49]   [OK ] Apex_Enrolment_optin_ETH                      rows=362886         elapsed=24975ms
+[2026-06-01 09:02:50]   [OK ] BI_DB_Client_Balance_CID_Level_New            rows=6857188        elapsed=  988ms
+[2026-06-01 09:02:51]   [OK ] Dim_Range                                     rows=1327416        elapsed=  611ms
+[2026-06-01 09:02:51]   [OK ] Dim_Regulation                                rows=15             elapsed=   49ms
+[2026-06-01 09:02:51]   [OK ] Dim_Label                                     rows=26             elapsed=  309ms
+[2026-06-01 09:02:52]   [OK ] Dim_MifidCategorization                       rows=6              elapsed=  223ms
+[2026-06-01 09:02:52]   [OK ] Dim_AccountType                               rows=19             elapsed=  211ms
+[2026-06-01 09:02:52]   [OK ] Dim_PlayerLevel                               rows=8              elapsed=   42ms
+[2026-06-01 09:02:52]   [OK ] Dim_PlayerStatus                              rows=16             elapsed=   40ms
+[2026-06-01 09:02:52]   [OK ] Dim_Country                                   rows=251            elapsed=   49ms
+[2026-06-01 09:02:53]   [OK ] TARGET_BI_DB_Crypto_NOP                       rows=204749         elapsed= 1405ms
+[2026-06-01 09:02:56]   [OK ] TARGET_BI_DB_Crypto_NOP_CID                   rows=5152142        elapsed= 2305ms
+[2026-06-01 09:02:56]   [OK ] SP_Crypto_NOP_run_history                     rows=2              elapsed=  324ms
+[2026-06-01 09:02:59] 
+[2026-06-01 09:02:59] Wrote C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\sp_crypto_nop_audit\snapshots\2026-05-31_0900.csv  (24 rows, 0 errors)
+[2026-06-01 09:02:59] poll_sources.py exit=0
+[2026-06-01 09:02:59] Running: python C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\sp_crypto_nop_audit\make_report.py
+[2026-06-01 09:03:00] Comparing:
+[2026-06-01 09:03:00]   EARLY = 2026-05-31_0400.csv
+[2026-06-01 09:03:00]   LATE  = 2026-05-31_0900.csv
+[2026-06-01 09:03:00] 
+[2026-06-01 09:03:00] Wrote C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\sp_crypto_nop_audit\reports\2026-05-31.md
+[2026-06-01 09:03:00] Status: 2026-05-31  verdict=OK     changed= 0/24  early=2026-06-01T04:00:02  late=2026-06-01T09:00:02  report=2026-05-31.md
+[2026-06-01 09:03:00] No drift ?аф skipping Downloads copy (in-repo report still at C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\sp_crypto_nop_audit\reports\2026-05-31.md).
+[2026-06-01 09:03:00] make_report.py exit=0
+[2026-06-01 09:03:00] === END  pollExit=0 reportExit=0 ===

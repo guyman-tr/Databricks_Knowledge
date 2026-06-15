@@ -1,0 +1,118 @@
+-- =============================================================================
+-- Databricks ALTER Script: BI_DB_dbo.BI_DB_Finance_Non_US_Settlement_New_2025
+-- Generated: 2026-05-03 | scaffold_missing_uc_alter_files.py
+-- Target: Unity Catalog table comment + column comments (1024 char limit)
+-- UC Target: main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025
+-- Resolved via: _generic_pipeline_mapping.json (sql_dp_prod_we)
+-- =============================================================================
+
+-- ---- Table Comment ----
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 SET TBLPROPERTIES (
+    'comment' = 'BI_DB_dbo.BI_DB_Finance_Non_US_Settlement_New_2025 > 49.3M-row daily stock/ETF settlement report - the 2025 replacement for BI_DB_Finance_Non_US_Settlement_New_2023 - tracking end-of-day positions aggregated by instrument, regulation, hedge server, and close-price metrics across 32 exchanges, from Dec 2024 to present (~146K rows/day). Loaded by SP_Finance_Non_US_Settlement_2025 via daily DELETE+INSERT. Extends the 2023 version with 15 new columns: IsValidCustomer, LiquidityAccount details (ID/Name/ProviderName), close-price P&L/rates (Close_PnLInDollars, Close/Current CalculationRate/ConversionRate/NOP), TotalEquityClosePrice, and TotalStockMarginLoan. Provider mapping upgraded from hardcoded temp table to dynamic sources (Karen''s Dealing mapping + etoro GetHedgeServerAccountMapping). | Property | Value | |----------|-------| | **Schema** | BI_DB_dbo | | **Object Type** | Table | | **Pro'
+);
+
+-- ---- Table Tags ----
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 SET TAGS (
+    'source_schema' = 'BI_DB_dbo',
+    'source_system' = 'Synapse',
+    'pipeline' = 'dwh-semantic-doc',
+    'pipeline_version' = 'scaffold-uc-alter'
+);
+
+-- ---- Column Comments ----
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN DateID COMMENT 'Snapshot date as YYYYMMDD integer. Clustered index key. Computed via DateToDateID(@date). Always filter on this column. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Date COMMENT 'Calendar date corresponding to DateID. Input parameter @dt. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN InstrumentID COMMENT 'Primary key identifying the tradeable instrument pair. Allocated by Trade.InstrumentAdd during instrument creation. Ranges from 0 (system placeholder) to ~21 million IDs allocated. Referenced by virtually every trading fact table and the Dim_Currency / Dim_HistorySplitRatio dimension tables. (Tier 1 - Trade.Instrument)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN InstrumentName COMMENT 'Instrument name as defined in Trade.Instrument. For forex: pair notation (e.g., EUR/USD). For stocks: company name (e.g., Apple, Alphabet). For crypto: token name. This is the internal instrument name, not necessarily the display name shown to users (see InstrumentDisplayName). Rename: Dim_Instrument.Name -> InstrumentName. (Tier 1 - Trade.Instrument)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN InstrumentDisplayName COMMENT 'User-facing instrument display name from Trade.InstrumentMetaData. More descriptive than Name (e.g., ''Apple Inc.'' vs ''Apple''). NULL for instruments without metadata entries. (Tier 2 - SP_Dim_Instrument, etoro_Trade_InstrumentMetaData)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN ISINCode COMMENT 'International Securities Identification Number - 12-character alphanumeric code standardized by ISO 6166 (e.g., US0378331005 for Apple). NULL for forex, commodities, and instruments without ISIN. Country prefix + national code + check digit. HASH distribution key. (Tier 2 - SP_Dim_Instrument, etoro_Trade_InstrumentMetaData)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN CUSIP COMMENT 'Committee on Uniform Securities Identification Procedures number - 9-character code for US/Canadian securities. Used for clearing, settlement, and regulatory reporting. NULL for non-US instruments and instruments without CUSIP. (Tier 2 - SP_Dim_Instrument, etoro_Trade_InstrumentCusip)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Regulation COMMENT 'Regulation name from Dim_Regulation via Fact_SnapshotCustomer.RegulationID. Text values: CySEC, FCA, FSA Seychelles, ASIC & GAML, FSRA, FinCEN+FINRA, etc. NULL for No_Client_Holdings rows. (Tier 2 - SP_Finance_Non_US_Settlement_2025 via Dim_Regulation.Name)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN EOD_Units COMMENT 'Total end-of-day units/shares held for this grouping. SUM(AmountInUnitsDecimal) from BI_DB_PositionPnL. NULL for No_Client_Holdings rows. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN EOD_Equity_USD COMMENT 'Total end-of-day equity in USD. SUM(Amount + PositionPnL). Includes invested amount plus unrealized P&L at current prices. NULL for No_Client_Holdings rows. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN EOD_NOP_USD COMMENT 'Total net open position in USD. SUM(NOP). Represents directional exposure at current prices. NULL for No_Client_Holdings rows. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN EOD_PriceUSD_Spreaded COMMENT 'End-of-day instrument price in USD including spread. MAX(BidSpreaded × USD_ConversionRate). (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN EOD_PriceUSD_Unspreaded COMMENT 'End-of-day instrument price in USD without spread. MAX(Bid × USD_ConversionRate). (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN EOD_OrigCurr_BidSpreaded COMMENT 'End-of-day bid price in original instrument currency including spread. MAX(BidSpreaded). (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN EOD_OrigCurr_BidUnspreaded COMMENT 'End-of-day bid price in original instrument currency without spread. MAX(Bid). (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN USD_ConversionRate COMMENT 'USD conversion rate for the instrument''s sell currency. From Dim_GetSpreadedPriceUSDConversionRate, most recent rate as of day before @date. 1.0 for USD-denominated instruments. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN HedgeServerID COMMENT 'FK to Trade.HedgeServer. Hedge server managing this position. Grouping key. NULL for No_Client_Holdings rows. Passthrough from Dim_Position. (Tier 1 - Trade.PositionTbl)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Provider COMMENT 'Liquidity provider name resolved via 3-tier COALESCE: (1) Tribe, (2) one-LA-per-hedge fallback, (3) one-Provider-per-hedge fallback. Values: Apex, JPM, BNYMellon, Saxo, IB, IG, VisionTraffix, UBS, Marex, Gdax, GS, DLT, COINBASE, eToroX, JP, NA. Blank when no mapping found. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN IsDiscounted COMMENT '1=position received a discounted rate. DWH note: CAST from bit to int. From Dim_Position via BI_DB_PositionPnL. NULL for No_Client_Holdings rows. (Tier 1 - Trade.PositionTbl)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN ClientHoldings COMMENT 'Derived flag: ''Client_Holdings'' when EOD_Units IS NOT NULL, ''No_Client_Holdings'' when NULL. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN ISINCountryParsed COMMENT 'ISO 3166-1 alpha-2 country code from first 2 characters of ISINCode. LEFT(ISINCode, 2). NULL when ISINCode is NULL. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN IsTradableAtQueryDate COMMENT 'Flag indicating if the instrument is currently tradable: 1=tradable, 0=not tradable. CAST from production bit. NULL for ID=0 placeholder. An instrument may exist but be non-tradable due to regulatory, market, or operational reasons. Rename: Dim_Instrument.Tradable -> IsTradableAtQueryDate. (Tier 2 - SP_Dim_Instrument, etoro.Trade.GetInstrument)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN IsCreditReportValidCB COMMENT '1 if customer is eligible for CreditBureau credit report validation. ETL-computed in Fact_SnapshotCustomer. Passthrough via SCD snapshot. NULL for No_Client_Holdings rows. (Tier 2 - SP_Fact_SnapshotCustomer)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN IsSettled COMMENT '1 = real asset, 0 = CFD asset. From Dim_Position. NULL for No_Client_Holdings rows. (Tier 5 - Expert Review)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Exchange COMMENT 'Stock exchange name from Trade.InstrumentMetaData (e.g., Nasdaq, NYSE, LSE). Determines T+1 vs T+2 settlement logic. NULL for instruments without metadata. (Tier 3 - live data, etoro_Trade_InstrumentMetaData)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN SettlementDate COMMENT 'Projected settlement date. T+1 for NYSE/Nasdaq/Toronto Stock Exchange, T+2 for all other exchanges. Derived via CROSS APPLY against exchange calendar. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN SettleCloseTime COMMENT 'Close time of the settlement date trading session from exchange calendar. Real timestamps in 2025 version (unlike 2023''s 9999-12-31 sentinel). (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN SettleCloseTimeUTC COMMENT 'UTC-normalized close time of the settlement date trading session from exchange calendar. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN UpdateDate COMMENT 'ETL metadata: timestamp when this row was inserted. Set to GETDATE() at INSERT time. NOT NULL constraint. (Tier 5 - ETL metadata)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN IsValidCustomer COMMENT '1 if the customer passes validity checks (not demo, not invalid). From Fact_SnapshotCustomer. Added for Duco/omnibus comparison alignment (Duco uses IsValidCustomer=1). NULL for No_Client_Holdings rows. (Tier 2 - SP_Finance_Non_US_Settlement_2025 via Fact_SnapshotCustomer)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN LiquidityAccountID COMMENT 'Liquidity account identifier resolved from Karen''s Fivetran mapping (External_Fivetran_dealing_active_hs_mappings) or etoro_Hedge_GetHedgeServerAccountMapping. 2-tier ISNULL. NULL/empty for ~11% of rows where no mapping exists. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN LiquidityAccountName COMMENT 'Human-readable name for the liquidity account. Resolved from mapping or etoro_Trade_LiquidityAccounts. Examples: ''EMSX JPM Execution (CBH)'', ''EMSX JPM Execution (OMS Pricing Project)''. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN LiquidityProviderName COMMENT 'Name of the liquidity provider from the etoro mapping. More specific than Provider (which is a normalized CASE-based classification). NULL when only Karen''s mapping is available. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Close_PnLInDollars COMMENT 'Profit/loss in USD valued at the close price. SUM aggregation from BI_DB_PositionPnL.Close_PnLInDollars. Compare with Current_PnLInDollars for close-vs-current reconciliation. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Close_CalculationRate COMMENT 'The instrument calculation rate used for close-price P&L computation. Grouping key - not aggregated. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Close_ConversionRate COMMENT 'The currency conversion rate used for close-price P&L computation. Grouping key. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Close_PriceType COMMENT 'Type of price used for close valuation. 1=EOD close, 2=current price (83% of rows), 3=other. NULL for No_Client_Holdings rows. Grouping key. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN CurrentCalculationRate COMMENT 'The instrument calculation rate for current-price valuation. Grouping key. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN CurrentConversionRate COMMENT 'The currency conversion rate for current-price valuation. Grouping key. Also used in TotalStockMarginLoan computation. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Close_NOP COMMENT 'Net open position in USD valued at the close price. SUM aggregation. Compare with Current_NOP. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Current_NOP COMMENT 'Net open position in USD valued at the current price. SUM aggregation. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN TotalEquityClosePrice COMMENT 'Total equity valued at the close price. SUM(Amount + Close_PnLInDollars). Compare with EOD_Equity_USD (current-price equity). (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Current_PnLInDollars COMMENT 'Profit/loss in USD at the current price. SUM of BI_DB_PositionPnL.PositionPnL (aliased as Current_PnLInDollars in the SP). Compare with Close_PnLInDollars. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN TotalStockMarginLoan COMMENT 'Margin loan amount for leveraged settled positions. CASE WHEN SettlementTypeID=5 AND Leverage<>1 THEN InitForexRate × AmountInUnitsDecimal × CurrentConversionRate - Amount END. SUM aggregated, ISNULL defaulted to 0. Nonzero for ~0.25% of rows. Added 2026-02-11 by Markos Chris. (Tier 2 - SP_Finance_Non_US_Settlement_2025)';
+
+-- ---- Column PII Tags ----
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN DateID SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Date SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN InstrumentID SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN InstrumentName SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN InstrumentDisplayName SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN ISINCode SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN CUSIP SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Regulation SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN EOD_Units SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN EOD_Equity_USD SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN EOD_NOP_USD SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN EOD_PriceUSD_Spreaded SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN EOD_PriceUSD_Unspreaded SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN EOD_OrigCurr_BidSpreaded SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN EOD_OrigCurr_BidUnspreaded SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN USD_ConversionRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN HedgeServerID SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Provider SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN IsDiscounted SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN ClientHoldings SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN ISINCountryParsed SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN IsTradableAtQueryDate SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN IsCreditReportValidCB SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN IsSettled SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Exchange SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN SettlementDate SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN SettleCloseTime SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN SettleCloseTimeUTC SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN IsValidCustomer SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN LiquidityAccountID SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN LiquidityAccountName SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN LiquidityProviderName SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Close_PnLInDollars SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Close_CalculationRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Close_ConversionRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Close_PriceType SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN CurrentCalculationRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN CurrentConversionRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Close_NOP SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Current_NOP SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN TotalEquityClosePrice SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN Current_PnLInDollars SET TAGS ('pii' = 'none');
+ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025 ALTER COLUMN TotalStockMarginLoan SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 12:52:48 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 9
+-- Statements: 90/90 succeeded
+-- ====================

@@ -1,0 +1,73 @@
+id: genie__feed_analytics_genie__which_5_posts_among_the_top_200_most_rea__5
+question: Which 5 posts among the top 200 most read posts in the last week had the
+  highest conversion rate to trades, including their post owner names?
+source: genie_benchmark:01f105b421e7187baa5e81595599f7f3
+asof: '2026-06-08'
+ground_truth_sql: "WITH top_posts AS (\n  SELECT\n    post_id_1_2,\n    post_owner,\n\
+  \    COUNT(DISTINCT mp_user_id) AS users_read\n  FROM\n    `main`.`mixpanel`.`silver`\n\
+  \  WHERE\n    mp_event_name = 'Feed - Post Read'\n    AND etr_ymd >= CAST(date_add(CURRENT_DATE,\
+  \ -7) AS STRING)\n    AND etr_ymd <= CAST(CURRENT_DATE AS STRING)\n    AND post_id_1_2\
+  \ IS NOT NULL\n    AND post_owner IS NOT NULL\n  GROUP BY\n    post_id_1_2,\n  \
+  \  post_owner\n  ORDER BY\n    users_read DESC\n  LIMIT 200\n),\nreads AS (\n  SELECT\n\
+  \    post_id_1_2,\n    post_owner,\n    mp_user_id\n  FROM\n    `main`.`mixpanel`.`silver`\n\
+  \  WHERE\n    mp_event_name = 'Feed - Post Read'\n    AND etr_ymd >= CAST(date_add(CURRENT_DATE,\
+  \ -7) AS STRING)\n    AND etr_ymd <= CAST(CURRENT_DATE AS STRING)\n    AND post_id_1_2\
+  \ IS NOT NULL\n    AND post_owner IS NOT NULL\n),\ntrades AS (\n  SELECT\n    mp_user_id\n\
+  \  FROM\n    `main`.`mixpanel`.`silver`\n  WHERE\n    mp_event_name = 'Open Order\
+  \ - Success'\n    AND etr_ymd >= CAST(date_add(CURRENT_DATE, -7) AS STRING)\n  \
+  \  AND etr_ymd <= CAST(CURRENT_DATE AS STRING)\n    AND category_1 = 'Success'\n\
+  \    AND portfolio = 'Real'\n    AND mp_user_id IS NOT NULL\n)\nSELECT\n  t.post_id_1_2,\n\
+  \  t.post_owner,\n  t.users_read,\n  COUNT(DISTINCT r.mp_user_id) AS users_traded,\n\
+  \  (try_divide(COUNT(DISTINCT r.mp_user_id) * 1.0, t.users_read)) AS conversion_rate\n\
+  FROM\n  top_posts t\n    JOIN reads r\n      ON t.post_id_1_2 = r.post_id_1_2\n\
+  \      AND t.post_owner = r.post_owner\nWHERE\n  EXISTS (\n    SELECT\n      1\n\
+  \    FROM\n      trades tr\n    WHERE\n      tr.mp_user_id = r.mp_user_id\n  )\n\
+  GROUP BY\n  t.post_id_1_2,\n  t.post_owner,\n  t.users_read\nORDER BY\n  conversion_rate\
+  \ DESC,\n  t.users_read DESC\nLIMIT 5"
+expected_value:
+  type: tabular
+  value:
+  - - 3bdab0b0-603f-11f1-8080-800120ad4585
+    - Suriyasinbox
+    - 3331
+    - 1965
+    - 0.5899129390573401
+  - - 3a039400-5e00-11f1-8080-80001c9b3715
+    - Siswfc8101
+    - 2619
+    - 1537
+    - 0.5868652157311951
+  - - 4e691260-60d7-11f1-8080-80011c29d673
+    - enriqueih
+    - 2815
+    - 1648
+    - 0.5854351687388988
+  - - 074b2b40-5ebe-11f1-8080-800176643b61
+    - anonimus1burn
+    - 2741
+    - 1599
+    - 0.5833637358628238
+  - - 59b431f0-6324-11f1-8080-800062e6088a
+    - Kevin_Pando
+    - 2630
+    - 1532
+    - 0.5825095057034221
+  columns:
+  - post_id_1_2
+  - post_owner
+  - users_read
+  - users_traded
+  - conversion_rate
+  tolerance_pct: 0.5
+expected_skill_hub: domain-product-analytics
+skill_coverage_status: covered
+canonical_tables:
+- main.mixpanel.silver
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'Feed Analytics Genie' (01f105b421e7187baa5e81595599f7f3)
+  benchmark question.
+tags:
+- genie_benchmark
+- feed_analytics_genie
+max_replicas: 3

@@ -1,0 +1,60 @@
+id: genie__dev_mimo__net_flow_by_region_last_quarter__3
+question: Net flow by Region, last quarter
+source: genie_benchmark:01f15e792ce1140bbf6af2f8f7c6b54c
+asof: '2026-06-08'
+ground_truth_sql: "WITH mimo AS (\n    SELECT MIMOAction, AmountUSD, Region, TransactionDate,\
+  \ IsInternalTransfer\n    FROM main.etoro_kpi.mimo_tp_deposits_v\n    UNION ALL\n\
+  \    SELECT MIMOAction, AmountUSD, Region, TransactionDate, IsInternalTransfer\n\
+  \    FROM main.etoro_kpi.mimo_tp_withdraws_v\n    UNION ALL\n    SELECT MIMOAction,\
+  \ AmountUSD, Region, TransactionDate, IsInternalTransfer\n    FROM main.etoro_kpi.mimo_emoney_transactions_v\n\
+  )\nSELECT\n    Region,\n    SUM(CASE WHEN MIMOAction = 'Deposit' THEN AmountUSD\
+  \ ELSE -AmountUSD END) AS net_flow_usd\nFROM mimo\nWHERE TransactionDate >= ADD_MONTHS(DATE_TRUNC('QUARTER',\
+  \ CURRENT_DATE()), -3)\n  AND TransactionDate <  DATE_TRUNC('QUARTER', CURRENT_DATE())\n\
+  \  AND COALESCE(IsInternalTransfer, 0) = 0\nGROUP BY Region\nORDER BY net_flow_usd\
+  \ DESC NULLS LAST;"
+expected_value:
+  type: numeric_series
+  value:
+  - - UK
+    - 710547639.1
+  - - Arabic
+    - 513955018.5
+  - - German
+    - 427718004.93
+  - - CEE
+    - 325870071.93
+  - - French
+    - 261454046.2
+  - - Latam
+    - 237729073.21
+  - - Nordics
+    - 225621370.34
+  - - Italian
+    - 207965549.34
+  - - Spain
+    - 188324640.58
+  - - Australia
+    - 147468542.44
+  - - SEA
+    - 110913446.16
+  - - USA
+    - 91712903.18
+  - - ROW
+    - 18145436.9
+  - - Unknown
+    - 554218.92
+  tolerance_pct: 0.5
+expected_skill_hub: _none_
+skill_coverage_status: missing
+canonical_tables:
+- main.etoro_kpi.mimo_emoney_transactions_v
+- main.etoro_kpi.mimo_tp_deposits_v
+- main.etoro_kpi.mimo_tp_withdraws_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'DEV - MIMO' (01f15e792ce1140bbf6af2f8f7c6b54c) benchmark
+  question.
+tags:
+- genie_benchmark
+- dev_mimo
+max_replicas: 3

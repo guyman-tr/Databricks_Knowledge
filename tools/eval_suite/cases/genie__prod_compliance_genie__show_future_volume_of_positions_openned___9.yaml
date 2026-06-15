@@ -1,0 +1,28 @@
+id: genie__prod_compliance_genie__show_future_volume_of_positions_openned___9
+question: Show Future volume of positions openned on february 2026 and the volume
+  of position closed on february 2026
+source: genie_benchmark:01f137f76a75126fb15b03341732911f
+asof: '2026-06-08'
+ground_truth_sql: "SELECT\n  SUM(CASE WHEN `isfuture` = 1 AND `opendateid` BETWEEN\
+  \ 20260201 AND 20260229 AND `volume` IS NOT NULL THEN `volume` ELSE 0 END) AS future_volume_opened_feb_2026,\n\
+  \  SUM(CASE WHEN `isfuture` = 1 AND `closedateid` BETWEEN 20260201 AND 20260229\
+  \ AND `volumeonclose` IS NOT NULL THEN `volumeonclose` ELSE 0 END) AS future_volume_closed_feb_2026\n\
+  FROM `main`.`etoro_kpi`.`positions_for_compliance_v`"
+expected_value:
+  type: numeric_series
+  value:
+  - - 187717646
+    - 188167555
+  tolerance_pct: 0.5
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: covered
+canonical_tables:
+- main.etoro_kpi.positions_for_compliance_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'PROD - Compliance Genie' (01f137f76a75126fb15b03341732911f)
+  benchmark question.
+tags:
+- genie_benchmark
+- prod_compliance_genie
+max_replicas: 3

@@ -1,0 +1,18 @@
+object_type,count,notes
+schemas,78,Many _tmp staging schemas - real domain count is roughly half
+user_tables,3940,Includes backup and _tmp staging tables
+views,121,
+stored_procedures,1283,Procedural code to port
+scalar_functions,17,Synapse Dedicated Pool restrictions - need rewrite
+inline_tvfs,80,Map to Databricks views (most case) or UDFs
+multi_stmt_tvfs,0,Not supported on Synapse Dedicated
+external_tables,913,Lake-mounted source surfaces (Bronze parquet)
+external_data_sources,110,Storage account / container references
+external_file_formats,95,Parquet/Delta/CSV format definitions
+tables_with_clustered_rowstore_index,1427,Rowstore primary index
+tables_with_NONCLUSTERED_indexes,254,254 tables with 357 NCIs
+tables_with_clustered_columnstore_index,267,CCI tables - biggest analytical fact tables
+tables_HEAP_or_no_index,~2246,Default for staging/temp - largest count
+distribution_ROUND_ROBIN,2422,
+distribution_HASH,413,Critical to preserve hash key in Delta clustering
+distribution_REPLICATE,192,Small dimension tables - become broadcast joins

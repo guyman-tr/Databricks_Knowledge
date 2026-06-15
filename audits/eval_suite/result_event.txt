@@ -1,0 +1,16 @@
+﻿{
+  "type": "result",
+  "subtype": "success",
+  "duration_ms": 93019,
+  "duration_api_ms": 93019,
+  "is_error": false,
+  "result": "I'll help you find eToro's Total Revenue for 2026-06-08. Let me start by loading the revenue domain skill to understand the correct data sources.Now I'll query the revenue data for 2026-06-08. Let me run a live query via Databricks MCP to get the eToro core revenue and Spaceship fees.\n\n*Running live queries via Databricks MCP \u0393\u05d0\u05e4 if nothing follows in ~10\u0393\u05d0\u05e315 seconds, check **Settings \u0393\u05d6\u05e2 MCP** (server may be disconnected).*## eToro Total Revenue \u0393\u05d0\u05e4 2026-06-08\n\nPer the cross-platform rollup contract:\n\n| Platform | Product | Revenue (USD) | Status |\n|----------|---------|---------------|---------|\n| **eToro Core** | Trading + MIMO + RevShare + Other | **$2,896,785.88** | \u0393\u00a3\u05d5 Live |\n| **Spaceship (AU)** | All products | **$1,820.24** | \u0393\u00a3\u05d5 Live |\n| \u0393\u05d6\u2502 | Nova (FX) | $1,322.85 | |\n| \u0393\u05d6\u2502 | Nova (platform) | $368.85 | |\n| \u0393\u05d6\u2502 | Super | $128.54 | |\n| \u0393\u05d6\u2502 | Voyager | $0.00 | (No fees this date) |\n| **MoneyFarm (UK)** | Managed investing | **TBD** | \u0393\u05ea\u00e1\u2229\u2555\u05df Placeholder view \u0393\u05d0\u05e4 fees not yet flowing |\n| **WealthFrance (FR)** | ISA-equivalent | **TBD** | \u0393\u05ea\u00e1\u2229\u2555\u05df Revenue surface to confirm |\n| **Zengo** | Crypto platform | **TBD** | \u0393\u05ea\u00e1\u2229\u2555\u05df Acquired, ingestion pending |\n| **Bit2C** | Crypto platform | **TBD** | \u0393\u05ea\u00e1\u2229\u2555\u05df Acquired, ingestion pending |\n| **Subscription** | Cross-product | **TBD** | \u0393\u05ea\u00e1\u2229\u2555\u05df Work in progress |\n\n### Summary\n- **Total quantifiable revenue (eToro + Spaceship):** **$2,898,606.12**\n- **Additional platforms (not yet in data):** MoneyFarm, WealthFrance, Zengo, Bit2C, Subscription\n\n---\n\n**Scope:** IsValidCustomer = 1 filter applied by default to DDR fact. eToro Core includes all 18 metrics where `IncludedInTotalRevenue = 1` (excludes Commission subset, Dividends paid out, and SDRT tax collected).",
+  "session_id": "4193fadf-f619-4c4f-9281-d5b681855e7f",
+  "request_id": "7ffa10a1-18f0-484e-81dc-76d2bffc64d2",
+  "usage": {
+    "inputTokens": 64,
+    "outputTokens": 2379,
+    "cacheReadTokens": 360556,
+    "cacheWriteTokens": 77314
+  }
+}

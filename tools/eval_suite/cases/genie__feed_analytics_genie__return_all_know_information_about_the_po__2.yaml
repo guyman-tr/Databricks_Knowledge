@@ -1,0 +1,54 @@
+id: genie__feed_analytics_genie__return_all_know_information_about_the_po__2
+question: return all know information about the post 298e5b70-05de-11f1-8080-8000188ddd3b,
+  when was created, how many likes, comments and share it have, who is the post Author,
+  how many read have post?
+source: genie_benchmark:01f105b421e7187baa5e81595599f7f3
+asof: '2026-06-08'
+ground_truth_sql: "WITH post_info AS (\n  SELECT\n    EventPayloadRowData_Entity_Id\
+  \ AS post_id,\n    EventPayloadRowData_Entity_Created AS created_at,\n    EventPayloadRowData_Entity_Owner_Username\
+  \ AS author\n  FROM\n    `main`.`experience`.`bronze_event_hub_prod_event_streaming_we_streams_post`\n\
+  \  WHERE\n    EventPayloadRowData_Entity_Id = '298e5b70-05de-11f1-8080-8000188ddd3b'\n\
+  \  LIMIT 1\n),\nengagement AS (\n  SELECT\n    post_id_1_2 AS post_id,\n    MAX(item_number_of_likes)\
+  \ AS likes,\n    MAX(item_number_of_comments) AS comments,\n    MAX(item_number_of_shares)\
+  \ AS shares\n  FROM\n    `main`.`mixpanel`.`silver`\n  WHERE\n    post_id_1_2 =\
+  \ '298e5b70-05de-11f1-8080-8000188ddd3b'\n    AND to_date(etr_ymd) >= date_add(DAY,\
+  \ -365, CURRENT_DATE)\n  GROUP BY\n    post_id_1_2\n),\nreads AS (\n  SELECT\n \
+  \   post_id_1_2 AS post_id,\n    COUNT(*) AS read_count\n  FROM\n    `main`.`mixpanel`.`silver`\n\
+  \  WHERE\n    post_id_1_2 = '298e5b70-05de-11f1-8080-8000188ddd3b'\n    AND mp_event_name\
+  \ = 'Feed - Post Read'\n    AND to_date(etr_ymd) >= date_add(DAY, -365, CURRENT_DATE)\n\
+  \  GROUP BY\n    post_id_1_2\n)\nSELECT\n  p.post_id,\n  p.created_at,\n  p.author,\n\
+  \  e.likes,\n  e.comments,\n  e.shares,\n  r.read_count\nFROM\n  post_info p\n \
+  \   LEFT JOIN engagement e\n      ON p.post_id = e.post_id\n    LEFT JOIN reads\
+  \ r\n      ON p.post_id = r.post_id"
+expected_value:
+  type: tabular
+  value:
+  - - 298e5b70-05de-11f1-8080-8000188ddd3b
+    - '2026-02-09T17:38:36.327Z'
+    - KubasterG
+    - null
+    - null
+    - null
+    - 14
+  columns:
+  - post_id
+  - created_at
+  - author
+  - likes
+  - comments
+  - shares
+  - read_count
+  tolerance_pct: 0.5
+expected_skill_hub: domain-product-analytics
+skill_coverage_status: covered
+canonical_tables:
+- main.experience.bronze_event_hub_prod_event_streaming_we_streams_post
+- main.mixpanel.silver
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'Feed Analytics Genie' (01f105b421e7187baa5e81595599f7f3)
+  benchmark question.
+tags:
+- genie_benchmark
+- feed_analytics_genie
+max_replicas: 3

@@ -78,6 +78,18 @@ query tables($tableName: String!) {
         id
         name
         query
+        downstreamWorkbooks {
+          id
+          luid
+          name
+          projectName
+          updatedAt
+          owner { username name }
+        }
+        downstreamDatasources {
+          __typename
+          name
+        }
       }
       downstreamWorkbooks {
         __typename
@@ -191,28 +203,244 @@ def collect_custom_sql(nodes: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     return rows
 
 
+# ---------------------------------------------------------------------------
+# Server-wide custom-SQL index (built ONCE per run, reused per table)
+# ---------------------------------------------------------------------------
+CUSTOM_SQL_PAGE_Q = """
+query allCSQL($after: String) {
+  customSQLTablesConnection(first: 200, after: $after) {
+    pageInfo { hasNextPage endCursor }
+    totalCount
+    nodes {
+      id
+      name
+      query
+      database { name connectionType }
+      downstreamWorkbooks {
+        id
+        luid
+        name
+        projectName
+        updatedAt
+        owner { username name }
+      }
+    }
+  }
+}
+"""
+
+
+def build_custom_sql_index(
+    server: tsc.Server,
+    table_names: List[str],
+) -> Dict[str, List[Dict[str, Any]]]:
+    """Paginate the server's full customSQLTablesConnection and, for each
+    target table, return every custom SQL node whose query body matches the
+    table name as a whole word. This is the only reliable way to find table
+    references that live exclusively inside hand-typed custom SQL — those
+    tables never appear as DatabaseTable nodes in `databaseTablesConnection`.
+
+    Compiled patterns guard against substring collisions (e.g.
+    BI_DB_DDR_CID_Level vs BI_DB_DDR_CID_Level_Auxiliary_Metrics).
+
+    Note: We deliberately do NOT filter by connection type here. Tableau often
+    leaves `database.connectionType` empty on custom SQL nodes (the customSQL
+    is opaque to the connection-type classifier), so filtering would drop
+    almost all real hits.
+    """
+    print(f"Building server-wide custom-SQL index (one-time scan)...")
+    patterns: Dict[str, re.Pattern[str]] = {}
+    for t in table_names:
+        patterns[t] = re.compile(rf"\b{re.escape(t)}(?![A-Za-z0-9_])", re.IGNORECASE)
+
+    hits: Dict[str, List[Dict[str, Any]]] = {t: [] for t in table_names}
+    after: Optional[str] = None
+    scanned = 0
+    page = 0
+    while True:
+        page += 1
+        try:
+            resp = server.metadata.query(CUSTOM_SQL_PAGE_Q, variables={"after": after})
+        except Exception as exc:  # noqa: BLE001
+            print(f"  custom-SQL scan ABORTED on page {page}: {exc}")
+            break
+        errs = resp.get("errors") or []
+        for e in errs:
+            print(f"  GraphQL error: {e.get('message')}")
+        conn = (resp.get("data") or {}).get("customSQLTablesConnection") or {}
+        nodes = conn.get("nodes") or []
+        scanned += len(nodes)
+        if page == 1:
+            print(f"  server has {conn.get('totalCount')} custom-SQL nodes total")
+        for n in nodes:
+            sql = n.get("query") or ""
+            if not sql:
+                continue
+            for t, pat in patterns.items():
+                if pat.search(sql):
+                    hits[t].append(n)
+        pi = conn.get("pageInfo") or {}
+        if not pi.get("hasNextPage"):
+            break
+        after = pi.get("endCursor")
+    print(f"  scanned {scanned} nodes across {page} page(s).")
+    for t, lst in hits.items():
+        print(f"    {t}: {len(lst)} custom-SQL hit(s)")
+    return hits
+
+
+def merge_custom_sql_index(
+    table_name: str,
+    base_custom_sql: List[Dict[str, Any]],
+    base_workbooks: List[Dict[str, Any]],
+    csql_index_hits: List[Dict[str, Any]],
+) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    """Merge the table-side (referencedByQueries) and server-side
+    (customSQLTablesConnection grep) results, deduping by query id and
+    workbook id. Returns (custom_sql_rows, workbook_rows) with workbook 'via'
+    expanded to include 'custom_sql' for any merged-in hit."""
+    sql_by_id = {q["id"]: q for q in base_custom_sql}
+    wb_by_id = {w["id"]: w for w in base_workbooks}
+
+    def upsert_wb(wb: Dict[str, Any], via: str, custom_sql_name: str = "") -> None:
+        wid = str(wb.get("id") or wb.get("luid") or "")
+        if not wid:
+            return
+        row = wb_by_id.get(wid)
+        if row is None:
+            owner = wb.get("owner") or {}
+            row = {
+                "id": wid,
+                "luid": wb.get("luid") or "",
+                "name": wb.get("name") or "",
+                "projectName": wb.get("projectName") or "",
+                "owner": owner.get("name") or owner.get("username") or "",
+                "updatedAt": wb.get("updatedAt") or "",
+                "via": set(),
+                "custom_sql_names": set(),
+            }
+            wb_by_id[wid] = row
+        # `via` may already be a string at this point; normalize back to set
+        if isinstance(row["via"], str):
+            row["via"] = set(filter(None, row["via"].split(",")))
+        if isinstance(row["custom_sql_names"], str):
+            existing = [x.strip() for x in row["custom_sql_names"].split("|") if x.strip()]
+            row["custom_sql_names"] = set(existing)
+        row["via"].add(via)
+        if custom_sql_name:
+            row["custom_sql_names"].add(custom_sql_name)
+
+    for n in csql_index_hits:
+        qid = str(n.get("id") or "")
+        qname = n.get("name") or "<unnamed custom SQL>"
+        qtext = n.get("query") or ""
+        if qid and qid not in sql_by_id:
+            sql_by_id[qid] = {"id": qid, "name": qname, "query": qtext}
+        for wb in n.get("downstreamWorkbooks") or []:
+            upsert_wb(wb, "custom_sql", qname)
+
+    workbooks = list(wb_by_id.values())
+    workbooks.sort(key=lambda r: ((r.get("projectName") or "").lower(),
+                                   (r.get("name") or "").lower()))
+    for r in workbooks:
+        if isinstance(r["via"], set):
+            r["via"] = ",".join(sorted(r["via"]))
+        if isinstance(r["custom_sql_names"], set):
+            r["custom_sql_names"] = " | ".join(sorted(r["custom_sql_names"]))
+    return list(sql_by_id.values()), workbooks
+
+
 def collect_workbooks(nodes: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    rows: List[Dict[str, Any]] = []
-    seen: Set[str] = set()
+    """Merge two attribution paths:
+      1. Direct: table dragged onto canvas
+         (DatabaseTable.downstreamWorkbooks)
+      2. Custom-SQL: table mentioned inside a CustomSQLTable.query
+         (DatabaseTable.referencedByQueries[*].downstreamWorkbooks)
+    Tableau's metadata index normally only surfaces #1 from the table side; #2
+    is invisible to a `databaseTablesConnection -> downstreamWorkbooks` walk,
+    which used to undercount workbooks for any table referenced only via custom
+    SQL (a very common pattern for DDR-style facts).
+    """
+    by_id: Dict[str, Dict[str, Any]] = {}
+
+    def upsert(wb: Dict[str, Any], via: str, custom_sql_name: str = "") -> None:
+        wid = str(wb.get("id") or wb.get("luid") or "")
+        if not wid:
+            return
+        row = by_id.get(wid)
+        if row is None:
+            owner = wb.get("owner") or {}
+            row = {
+                "id": wid,
+                "luid": wb.get("luid") or "",
+                "name": wb.get("name") or "",
+                "projectName": wb.get("projectName") or "",
+                "owner": owner.get("name") or owner.get("username") or "",
+                "updatedAt": wb.get("updatedAt") or "",
+                "via": set(),
+                "custom_sql_names": set(),
+            }
+            by_id[wid] = row
+        row["via"].add(via)
+        if custom_sql_name:
+            row["custom_sql_names"].add(custom_sql_name)
+
     for node in nodes:
         for wb in node.get("downstreamWorkbooks") or []:
-            wid = str(wb.get("id") or "")
-            if wid in seen:
+            upsert(wb, "direct")
+        for q in node.get("referencedByQueries") or []:
+            qname = q.get("name") or "<unnamed custom SQL>"
+            for wb in q.get("downstreamWorkbooks") or []:
+                upsert(wb, "custom_sql", qname)
+
+    rows = list(by_id.values())
+    # Stable-sort: project, then name
+    rows.sort(key=lambda r: (r["projectName"].lower(), r["name"].lower()))
+    # Materialize the sets into deterministic strings for downstream serializers
+    for r in rows:
+        r["via"] = ",".join(sorted(r["via"]))
+        r["custom_sql_names"] = " | ".join(sorted(r["custom_sql_names"]))
+    return rows
+
+
+# ---------------------------------------------------------------------------
+# URL resolution (REST + Metadata API to build clickable Tableau URLs)
+# ---------------------------------------------------------------------------
+def resolve_workbook_urls(server: tsc.Server, workbooks: List[Dict[str, Any]]) -> None:
+    """Mutates `workbooks` in place, adding 'workbook_url' and 'view_urls'
+    (list of {name, url}) for each entry that has a luid. Failures are logged
+    but do not abort the run."""
+    if not workbooks:
+        return
+    server_url = _env("TABLEAU_SERVER").rstrip("/")
+    site_name = os.getenv("TABLEAU_SITE_NAME", "") or ""
+    site_seg = f"/site/{site_name}" if site_name else ""
+
+    for wb in workbooks:
+        wb["workbook_url"] = ""
+        wb["view_urls"] = []
+        luid = wb.get("luid") or ""
+        if not luid:
+            continue
+        try:
+            wb_obj = server.workbooks.get_by_id(luid)
+            server.workbooks.populate_views(wb_obj)
+        except Exception as exc:  # noqa: BLE001
+            wb["url_error"] = f"{type(exc).__name__}: {exc}"
+            continue
+        content_url = wb_obj.content_url or ""
+        if content_url:
+            wb["workbook_url"] = f"{server_url}/#{site_seg}/workbooks/{content_url}"
+        for v in (wb_obj.views or []):
+            view_slug = (v.content_url or "").rsplit("/sheets/", 1)[-1]
+            if not view_slug or not content_url:
                 continue
-            seen.add(wid)
-            owner = wb.get("owner") or {}
-            rows.append(
+            wb["view_urls"].append(
                 {
-                    "id": wid,
-                    "luid": wb.get("luid") or "",
-                    "name": wb.get("name") or "",
-                    "projectName": wb.get("projectName") or "",
-                    "owner": owner.get("name") or owner.get("username") or "",
-                    "updatedAt": wb.get("updatedAt") or "",
+                    "name": v.name or view_slug,
+                    "url": f"{server_url}/#{site_seg}/views/{content_url}/{view_slug}",
                 }
             )
-    rows.sort(key=lambda r: (r["projectName"].lower(), r["name"].lower()))
-    return rows
 
 
 def collect_calc_fields(nodes: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
@@ -313,13 +541,37 @@ def write_table_markdown(
     if not workbooks:
         lines.append("_None._")
     else:
-        lines.append("| # | Workbook | Project | Owner | Last updated | Tableau id |")
-        lines.append("|---|---|---|---|---|---|")
+        n_direct = sum(1 for w in workbooks if "direct" in (w.get("via") or ""))
+        n_csql = sum(1 for w in workbooks if "custom_sql" in (w.get("via") or ""))
+        lines.append(
+            f"_Attribution: {n_direct} via direct table-drag, {n_csql} via custom SQL "
+            f"(workbooks can use both paths)._"
+        )
+        lines.append("")
+        lines.append("| # | Workbook | Project | Owner | Via | Last updated | URL |")
+        lines.append("|---|---|---|---|---|---|---|")
         for i, wb in enumerate(workbooks, start=1):
+            name_cell = wb["name"].replace("|", "\\|")
+            via = wb.get("via") or ""
+            url = wb.get("workbook_url") or ""
+            url_cell = f"[open]({url})" if url else "_url unavailable_"
             lines.append(
-                f"| {i} | {wb['name']} | {wb['projectName']} | {wb['owner']} | "
-                f"{wb['updatedAt']} | `{wb['id']}` |"
+                f"| {i} | {name_cell} | {wb['projectName']} | {wb['owner']} | "
+                f"{via} | {wb['updatedAt']} | {url_cell} |"
             )
+        # Per-workbook view URL list — handy for sharing specific report tabs
+        any_views = any(wb.get("view_urls") for wb in workbooks)
+        if any_views:
+            lines.append("")
+            lines.append("### View URLs (per workbook)")
+            lines.append("")
+            for wb in workbooks:
+                views = wb.get("view_urls") or []
+                if not views:
+                    continue
+                lines.append(f"- **{wb['name']}** ({wb['projectName']})")
+                for v in views:
+                    lines.append(f"  - [{v['name']}]({v['url']})")
     lines.append("")
 
     lines.append("## Downstream calculated fields (in embedded datasources)")
@@ -372,14 +624,27 @@ class IndexWriters:
         )
         self._init_csv(
             self.workbooks_path,
-            ["table", "table_full_name", "workbook_id", "workbook_name", "project", "owner", "updated_at"],
+            ["table", "table_full_name", "workbook_id", "workbook_luid", "workbook_name",
+             "project", "owner", "via", "updated_at", "workbook_url", "view_urls",
+             "custom_sql_names"],
         )
 
     @staticmethod
     def _init_csv(path: Path, headers: List[str]) -> None:
-        if not path.exists():
-            with path.open("w", encoding="utf-8", newline="") as fh:
-                csv.writer(fh).writerow(headers)
+        if path.exists():
+            try:
+                with path.open("r", encoding="utf-8", newline="") as fh:
+                    existing = next(csv.reader(fh), [])
+            except Exception:
+                existing = []
+            if existing != headers:
+                rotated = path.with_suffix(path.suffix + ".old")
+                path.replace(rotated)
+                print(f"  (header changed: archived old CSV -> {rotated.name})")
+            else:
+                return
+        with path.open("w", encoding="utf-8", newline="") as fh:
+            csv.writer(fh).writerow(headers)
 
     def write(
         self,
@@ -396,15 +661,21 @@ class IndexWriters:
         with self.workbooks_path.open("a", encoding="utf-8", newline="") as fh:
             w = csv.writer(fh)
             for wb in workbooks:
+                view_urls = "\n".join(v["url"] for v in (wb.get("view_urls") or []))
                 w.writerow(
                     [
                         table,
                         table_full_name,
                         wb["id"],
+                        wb.get("luid") or "",
                         wb["name"],
                         wb["projectName"],
                         wb["owner"],
+                        wb.get("via") or "",
                         wb["updatedAt"],
+                        wb.get("workbook_url") or "",
+                        view_urls,
+                        wb.get("custom_sql_names") or "",
                     ]
                 )
         with self.calc_fields_path.open("a", encoding="utf-8", newline="") as fh:
@@ -472,6 +743,17 @@ def main() -> int:
         default=str(KNOWLEDGE_ROOT),
         help="Output root directory for markdown + indices",
     )
+    parser.add_argument(
+        "--no-urls",
+        action="store_true",
+        help="Skip per-workbook REST lookups for clickable URLs (faster).",
+    )
+    parser.add_argument(
+        "--no-custom-sql-sweep",
+        action="store_true",
+        help="Skip the server-wide custom-SQL scan. Without this, tables only "
+             "referenced via hand-typed custom SQL will appear as unused.",
+    )
     args = parser.parse_args()
 
     tables = parse_tables_arg(args)
@@ -487,6 +769,11 @@ def main() -> int:
     print()
 
     writers = IndexWriters(out_root / "_index")
+
+    csql_index: Dict[str, List[Dict[str, Any]]] = {}
+    if not args.no_custom_sql_sweep:
+        csql_index = build_custom_sql_index(server, tables)
+        print()
 
     overall_ok = 0
     overall_skipped = 0
@@ -515,8 +802,10 @@ def main() -> int:
                 if code == "PERMISSIONS_MODE_SWITCHED":
                     continue  # informational only
                 print(f"  GraphQL error: [{code}] {msg}")
-            if not nodes:
-                print(f"  No nodes returned. Skipping.")
+            csql_hits = csql_index.get(table, [])
+
+            if not nodes and not csql_hits:
+                print(f"  No nodes returned and no custom-SQL hits. Skipping.")
                 overall_skipped += 1
                 writers.log_run(
                     {"started_at": started_at, "table": table, "status": "no_nodes"}
@@ -524,9 +813,10 @@ def main() -> int:
                 continue
 
             matching = filter_nodes(nodes, table, allowed)
-            if not matching:
+            if not matching and not csql_hits:
                 cts = sorted({(n.get("connectionType") or "?") for n in nodes if n.get("name") == table})
-                print(f"  No matching connection type. Returned: {cts}. Skipping.")
+                print(f"  No matching connection type and no custom-SQL hits. "
+                      f"Returned cts: {cts}. Skipping.")
                 overall_skipped += 1
                 writers.log_run(
                     {
@@ -538,11 +828,37 @@ def main() -> int:
                 )
                 continue
 
-            primary = matching[0]
-            other = matching[1:]
+            # If no DatabaseTable node passed the filter but custom SQL hits
+            # exist, synthesize a primary node so downstream writers have
+            # somewhere to anchor identity. Use the first custom-SQL hit's
+            # database for connection metadata.
+            if matching:
+                primary = matching[0]
+                other = matching[1:]
+            else:
+                first_csql_db = (csql_hits[0].get("database") or {}) if csql_hits else {}
+                primary = {
+                    "id": "",
+                    "name": table,
+                    "fullName": "",
+                    "schema": "",
+                    "connectionType": first_csql_db.get("connectionType") or "",
+                    "database": first_csql_db,
+                }
+                other = []
+
             custom_sql = collect_custom_sql(matching)
             workbooks = collect_workbooks(matching)
             calc_fields = collect_calc_fields(matching)
+            if csql_hits:
+                custom_sql, workbooks = merge_custom_sql_index(
+                    table_name=table,
+                    base_custom_sql=custom_sql,
+                    base_workbooks=workbooks,
+                    csql_index_hits=csql_hits,
+                )
+            if workbooks and not args.no_urls:
+                resolve_workbook_urls(server, workbooks)
 
             db = (primary.get("database") or {}).get("name") or "unknown_db"
             schema = primary.get("schema") or "unknown_schema"

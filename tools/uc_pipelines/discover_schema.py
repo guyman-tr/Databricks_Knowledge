@@ -560,14 +560,20 @@ def main() -> int:
                   file=sys.stderr, flush=True)
 
             vdef = view_defs.get(name) if "VIEW" in ttype.upper() else None
+            fqn = f"{args.catalog}.{args.schema}.{name}".lower()
+            uwi_hit = upstream_wiki_index.get(fqn)
             lineage_rows: list[dict] = []
-            if "VIEW" not in ttype.upper():
+            # Bronze tables never have a discoverable UC writer (they're
+            # populated by the generic bronze ingest pipeline owned upstream).
+            # The expensive system.access.table_lineage query is pure overhead
+            # for them — skip it. classify_writer handles the bronze branch
+            # purely from upstream_wiki_hit + name prefix.
+            is_bronze = name.startswith("bronze_") or name.startswith(GOLD_MIRROR_PREFIX)
+            if "VIEW" not in ttype.upper() and not is_bronze:
                 fq = fully_qualified(args.catalog, args.schema, name)
                 lineage_rows = fetch_table_lineage_writers(
                     cur, f"{args.catalog}.{args.schema}.{name}", args.lineage_lookback_days
                 )
-            fqn = f"{args.catalog}.{args.schema}.{name}".lower()
-            uwi_hit = upstream_wiki_index.get(fqn)
             writer = classify_writer(name, ttype, vdef, lineage_rows, upstream_wiki_hit=uwi_hit)
 
             obj_entry = {**obj, "writer": writer}
@@ -590,6 +596,21 @@ def main() -> int:
     if not do_phase1:
         cur.close(); conn.close()
         return 0
+    # Reconnect for Phase 1 — the databricks-sql connector sometimes invalidates
+    # session state after a long Phase 0 burst of table_lineage queries, and a
+    # fresh connection avoids the
+    #   AttributeError: 'Connection' object has no attribute 'session'
+    # crash in client.py:Connection.open().
+    try:
+        cur.close()
+    except Exception:
+        pass
+    try:
+        conn.close()
+    except Exception:
+        pass
+    conn = connect()
+    cur = conn.cursor()
     card_path = schema_root / "_schema_card.md"
     if not card_path.exists():
         print(f"[discover-schema] phase=1 requires {card_path} (run phase=0 first)",

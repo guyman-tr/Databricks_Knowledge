@@ -1,0 +1,43 @@
+﻿======================================================================
+Cohort: March 2026 staking, paid out 2026-04-07
+======================================================================
+
+=== Synapse: Function_Revenue_StakingFee(20260301, 20260331, 0) ===
+python : Traceback (most recent call last):
+At C:\Users\guyman\AppData\Local\Temp\2\ps-script-e0b4b65b-ed1c-4aa9-8c07-980a65ee58eb.ps1:78 char:69
++ ... _Knowledge; python tools\eval_suite\loop_authoring\_diag_staking_sour ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\eval_suite\loop_authoring\synapse.py", line 79, in 
+run
+
+    cur.execute(sql)
+
+pyodbc.ProgrammingError: ('42000', '[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Procedure or 
+function BI_DB_dbo.Function_Revenue_StakingFee has too many arguments specified. (8144) (SQLExecDirectW)')
+
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File 
+"C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\eval_suite\loop_authoring\_diag_staking_sources.py", line 
+23, in <module>
+
+    r = synapse.run("""
+
+        ^^^^^^^^^^^^^^^
+
+  File "C:\Users\guyman\Documents\github\Databricks_Knowledge\tools\eval_suite\loop_authoring\synapse.py", line 90, in 
+run
+
+    cur.execute(sql)
+
+pyodbc.ProgrammingError: ('42000', '[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Procedure or 
+function BI_DB_dbo.Function_Revenue_StakingFee has too many arguments specified. (8144) (SQLExecDirectW)')
+

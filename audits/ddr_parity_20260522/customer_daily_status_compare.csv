@@ -1,0 +1,16 @@
+metric,dbx_aligned,synapse_current,diff_dbx_minus_syn,notes
+rows_total,6865726,6865689,37,DBX has more rows from SCD freshness
+distinct_cids,6865726,6865689,37,DBX dedup works (rows_total == distinct_cids)
+IsDepositorGlobal,5945772,5945997,-225,minor SCD drift
+GlobalFirstDeposited,1007,18209,-17202,DBX correctly excludes bad $1 FTDs from MIMO
+TPFirstDeposited,692,17893,-17201,bad cohort had FTDPlatformID=1 (TP) — filtered in DBX
+IBANFirstDeposited,305,305,0,parity
+OptionsFirstDeposited,1,1,0,parity
+MoneyFarmFirstDeposited,10,10,0,parity
+GlobalDeposited,30155,30139,16,minor drift
+ActiveTraded,62055,61855,200,small uplift — likely Options trader inclusion (gap 4 fix)
+AccountActive,2101268,2100575,693,
+AccountInActive,2395624,2399113,-3489,
+BalanceOnlyAccount,2368834,2366001,2833,
+Portfolio_Only (>0),2039213,2038720,493,
+IsFunded,3905933,3904198,1735,

@@ -1,0 +1,40 @@
+bundle:
+  name: monitoring-genie-logs
+
+include:
+  - resources/*.yml
+
+variables:
+  notification_email:
+    description: Email to notify on failure (and start, if you want).
+    default: guyman@etoro.com
+  env:
+    description: Target environment label (stg|prod); also drives schema selection in the notebook.
+    default: stg
+  schedule_cron:
+    description: Quartz cron expression for the daily run.
+    default: "0 0 6 * * ?"
+
+targets:
+  stg:
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-5142916747090026.6.azuredatabricks.net
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/monitoring-genie-logs/stg
+    run_as:
+      user_name: ${workspace.current_user.userName}
+    variables:
+      env: stg
+      schedule_cron: "0 0 6 * * ?"   # 06:00 UTC daily — stg
+
+  prod:
+    mode: production
+    workspace:
+      host: https://adb-5142916747090026.6.azuredatabricks.net
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/monitoring-genie-logs/prod
+    run_as:
+      user_name: ${workspace.current_user.userName}
+    variables:
+      env: prod
+      schedule_cron: "0 30 6 * * ?"   # 06:30 UTC daily — prod (runs after stg)

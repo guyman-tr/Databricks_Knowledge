@@ -1,0 +1,94 @@
+id: genie__ops_documents_verification__what_are_the_acceptance_rates_per_docume__1
+question: What are the acceptance rates per document type from clients in the United
+  Kingdom between 01-01-2026 and 15-01-2026?
+source: genie_benchmark:01f0f77496571e68a9f115149bcc48d9
+asof: '2026-06-08'
+ground_truth_sql: "SELECT\n  suggested_document_type,\n  COUNT(*) AS total_documents,\n\
+  \  SUM(\n    CASE\n      WHEN is_rejected = 0 THEN 1\n      ELSE 0\n    END\n  )\
+  \ AS accepted_documents,\n  try_divide(\n    1.0\n    * SUM(\n      CASE\n     \
+  \   WHEN is_rejected = 0 THEN 1\n        ELSE 0\n      END\n    ),\n    COUNT(*)\n\
+  \  ) AS acceptance_rate\nFROM\n  main.bi_output_stg.bi_output_operations_documentanalysis\n\
+  WHERE\n  country = 'United Kingdom'\n  AND upload_date >= '2026-01-01'\n  AND upload_date\
+  \ < '2026-01-16'\n  AND suggested_document_type IS NOT NULL\nGROUP BY\n  suggested_document_type\n\
+  ORDER BY\n  acceptance_rate DESC"
+expected_value:
+  type: tabular
+  value:
+  - - TaxReport
+    - 1249
+    - 1249
+    - 1.0
+  - - Client Forms
+    - 9
+    - 9
+    - 1.0
+  - - Proof of Relation
+    - 8
+    - 8
+    - 1.0
+  - - Professional Customer Document
+    - 3
+    - 3
+    - 1.0
+  - - W-8BEN Form
+    - 18052
+    - 18050
+    - 0.9998892089519167
+  - - Selfie Motion
+    - 749
+    - 718
+    - 0.958611481975968
+  - - SelfieLiveliness
+    - 403
+    - 382
+    - 0.9478908188585607
+  - - Proof of Income
+    - 239
+    - 216
+    - 0.903765690376569
+  - - Selfie
+    - 41
+    - 37
+    - 0.9024390243902439
+  - - Proof of MOP
+    - 67
+    - 56
+    - 0.8358208955223881
+  - - Credit Card
+    - 14
+    - 11
+    - 0.7857142857142857
+  - - Proof of Identity
+    - 5339
+    - 4175
+    - 0.7819816445027159
+  - - Financial Reference Letter
+    - 4
+    - 3
+    - 0.75
+  - - Proof of address
+    - 3100
+    - 1858
+    - 0.5993548387096774
+  - - Corporate doc
+    - 4
+    - 1
+    - 0.25
+  columns:
+  - suggested_document_type
+  - total_documents
+  - accepted_documents
+  - acceptance_rate
+  tolerance_pct: 0.5
+expected_skill_hub: domain-ops-and-onboarding
+skill_coverage_status: covered
+canonical_tables:
+- main.bi_output_stg.bi_output_operations_documentanalysis
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'OPS  - Documents & Verification' (01f0f77496571e68a9f115149bcc48d9)
+  benchmark question.
+tags:
+- genie_benchmark
+- ops_documents_verification
+max_replicas: 3

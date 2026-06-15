@@ -1,0 +1,94 @@
+﻿workbook: "eToro's Daily Data Report (New DDR 2025) - LIVE QUERY"  luid=b5d58e4d-3644-402e-aaa2-274c0a51221a
+
+=== embedded datasources (2) ===
+  - 1abb0439-096b-4462-a1f7-b33e0f87bb5b  'Registrations'                extracts=False  fields=20  calc_fields=1  has_TotalRevenue=False  upstream=[]
+  - 58f7e2fa-396a-dcc8-464f-ba7003850d07  'Main DDR Query'               extracts=False  fields=284  calc_fields=36  has_TotalRevenue=True  upstream=[]
+
+=== custom SQL bodies (2) ===
+  - 494de38c-bccf-711b-ec12-2a7e3815afbb  name='Custom SQL Query'  unsupported=True  chars=1128  has_TotalRevenue=False  upstream_tables=[]
+  - 6aa412ca-3cb2-1e59-1837-7238c7dc16e0  name='Custom SQL Query'  unsupported=True  chars=12823  has_TotalRevenue=False  upstream_tables=[]
+
+=== dashboards ===
+  - Customers  (5 sheets)
+       - Customers: FTDs by Marketing Region
+       - Customers: FTD Amount by Marketing Region
+       - Customers: Active Numbers (Depositors Only)
+       - Customers: First Deposits & Avg FTDA By First Action
+       - Customers: First Deposits & Registrations
+  - Revenue: Overview & Breakdowns  (8 sheets)
+       - Revenue: Spot Adjustment Fees Breakdown
+       - Revenue: Rollover Fees Breakdown
+       - Revenue: Totals
+       - Revenue: Marketing Region Chart
+       - Revenue: Transfer Coins & Fee
+       - Revenue: Admin Fees Breakdown
+       - Revenue: Dividends & Bonus
+       - Revenue: Commission & Other Fees
+  - Book  (3 sheets)
+       - Book: Trades (New, Closed, StopLoss)
+       - Book: Full Commission by Asset Type
+       - Book: Full Commission Breakdown
+  - Open Book, Copy Book  (1 sheets)
+       - Open Book - Copy Book
+  - Yesterday's: Short Summary  (7 sheets)
+       - Yesterday's: Acquisition
+       - Yesterday's: Financial KPIs
+       - Yesterday's: Trades
+       - Yesterday's: Users (Depositors only)
+       - Yesterday's: Balances
+       - Yesterday's: Acquisition FTDs
+       - Yesterday's: PnL
+  - Revenue: MiFID Category Breakdowns  (4 sheets)
+       - Revenue: MiFID Breakdown %
+       - Revenue: MiFID & Regulation Breakdown $
+       - Revenue: MiFID & Fee Breakdown $
+       - Revenue: MiFID Breakdown $
+  - AUM & PnL  (4 sheets)
+       - AUM & PnL: PnL Chart
+       - AUM & PnL: Yesterday's KPIs 2
+       - AUM & PnL: PnL KPIs
+       - AUM & PnL: Yesterday's KPIs 1
+  - Money Movement  (14 sheets)
+       - MIMO: Cashout & Redeem Users Count
+       - MIMO: Trading Platform's Deposits & Withdraws
+       - MIMO: External Deposit to IBAN
+       - MIMO: Global Cashouts per Marketing Region
+       - MIMO: Internal Deposits to TP
+       - MIMO: Global Withdraw Amount & "Global Withdraw / Deposit" Ratio by Marketing Region
+       - MIMO: External Deposits to TP
+       - MIMO: Transfer Coins Amount per Marketing Region
+       - MIMO: Global Deposits & Withdraws
+       - MIMO: Internal Withdraw from TP
+       - MIMO: External Withdraw from IBAN
+       - MIMO: External Withdraws from TP
+       - MIMO: Deposits to Trading Platform per Marketing Region
+       - MIMO: Trading Platform's Compensations
+  - Yesterday's: Short Summary Split View  (6 sheets)
+       - Yesterday's: Funded
+       - Yesterday's: Global Ecosystem KPIs
+       - Yesterday's: Users
+       - Yesterday's: Trading Platform KPIs
+       - Yesterday's: Trading Activity
+       - Yesterday's: Daily Profit & Loss
+  - EOD Club Redeposit by Marketing Region  (1 sheets)
+       - Global ReDeposits Amount per Marketing Region
+
+=== Searching for Revenue tiles ===
+  SHEET: 'Revenue: Spot Adjustment Fees Breakdown'  in dashboards=['Revenue: Overview & Breakdowns']  ds=['Main DDR Query']
+     [ColumnField] 'Total Spot Adjust Fee (TP, $)' agg=-  upcols=['SpotPriceAdjustment']
+  SHEET: 'Revenue: MiFID Breakdown %'  in dashboards=['Revenue: MiFID Category Breakdowns']  ds=['Main DDR Query']
+     [ColumnField] 'TotalRevenue'                 agg=-  upcols=['TotalRevenue']
+  SHEET: 'Revenue: Rollover Fees Breakdown'  in dashboards=['Revenue: Overview & Breakdowns']  ds=['Main DDR Query']
+  SHEET: 'Revenue: Totals'  in dashboards=['Revenue: Overview & Breakdowns']  ds=['Main DDR Query']
+     [ColumnField] 'TotalRevenue'                 agg=-  upcols=['TotalRevenue']
+  SHEET: 'Revenue: Marketing Region Chart'  in dashboards=['Revenue: Overview & Breakdowns']  ds=['Main DDR Query']
+     [ColumnField] 'TotalRevenue'                 agg=-  upcols=['TotalRevenue']
+  SHEET: 'Revenue: MiFID & Regulation Breakdown $'  in dashboards=['Revenue: MiFID Category Breakdowns']  ds=['Main DDR Query']
+     [ColumnField] 'TotalRevenue'                 agg=-  upcols=['TotalRevenue']
+  SHEET: 'Revenue: MiFID & Fee Breakdown $'  in dashboards=['Revenue: MiFID Category Breakdowns']  ds=['Main DDR Query']
+  SHEET: 'Revenue: Transfer Coins & Fee'  in dashboards=['Revenue: Overview & Breakdowns']  ds=['Main DDR Query']
+  SHEET: 'Revenue: MiFID Breakdown $'  in dashboards=['Revenue: MiFID Category Breakdowns']  ds=['Main DDR Query']
+     [ColumnField] 'TotalRevenue'                 agg=-  upcols=['TotalRevenue']
+  SHEET: 'Revenue: Admin Fees Breakdown'  in dashboards=['Revenue: Overview & Breakdowns']  ds=['Main DDR Query']
+  SHEET: 'Revenue: Dividends & Bonus'  in dashboards=['Revenue: Overview & Breakdowns']  ds=['Main DDR Query']
+  SHEET: 'Revenue: Commission & Other Fees'  in dashboards=['Revenue: Overview & Breakdowns']  ds=['Main DDR Query']

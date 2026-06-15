@@ -1,0 +1,8 @@
+run_id,run_started_at,host,case_id,case_status,sut_name,asof,natural_language_question,expected_value,observed_value,diff_abs,diff_pct,tolerance_pct,passed,reason,sql_used,sut_text_answer,sut_error,elapsed_ms,tags,baseline_sut_name,baseline_value,baseline_diff_pct,baseline_passed,drift_verdict,judge_score,judge_label,judge_rationale,judge_model,trace_skills_loaded,trace_sql_executed_count,trace_sql_succeeded_count,trace_tool_call_count,trace_tool_call_by_kind,trace_mcp_tool_call_by_name,trace_input_tokens,trace_output_tokens,trace_cache_read_tokens,trace_cache_write_tokens,trace_thinking_excerpt,trace_session_id,trace_model
+run-20260614T125006Z,2026-06-14T12:50:06Z,azr-we-bidev-3,ddr_aum_realized_equity_global_yesterday,live,direct_mcp,2026-06-08,What was the total Global Realized Equity (excluding mark-to-market unrealized PnL on open positions) as of 2026-06-08?,17243415676.84395,17242916216.893948,-499459.95000076294,-0.00289652560351766,0.5,True,"expected=17,243,415,676.8439; observed=17,242,916,216.8939; diff=-0.0029% <= tol=0.5%","SELECT SUM(aum.RealizedEquityGlobal) AS TotalRealizedEquityGlobal
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum aum
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+    ON snap.RealCID = aum.RealCID
+   AND snap.IsValidCustomer = 1
+   AND aum.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+WHERE aum.DateID = 20260608","databricks/databricks-claude-sonnet-4-6 grounded on 'domain-trading'; 2 describes, 2 rounds; row[0]=['17242916216.893949']; scalar=17242916216.893948.",,33469,"[""ddr"", ""aum"", ""yesterday"", ""valid-users-cb"", ""realized-equity""]",,,,,PASS,,,,,,,,,,,,,,,,,

@@ -1,0 +1,30 @@
+id: genie__prod_compliance_genie__whats_the_number_of_cysec_client_that_pr__0
+question: whats the number of cysec client that previously answer to Q9 answer '5%
+  / -3%' and than changed the answer to a diffrent one
+source: genie_benchmark:01f137f76a75126fb15b03341732911f
+asof: '2026-06-08'
+ground_truth_sql: "WITH cysec_clients AS (\n  SELECT CID\n  FROM `main`.`etoro_kpi`.`cidfirstdates_v`\n\
+  \  WHERE RegulationName = 'CySEC'\n),\nprev_answered AS (\n  SELECT DISTINCT k.CID\n\
+  \  FROM `main`.`etoro_kpi`.`kyc_for_compliance_v` k\n  INNER JOIN cysec_clients\
+  \ c ON k.CID = c.CID\n  WHERE k.QuestionId = 9 AND k.AnswerText = '5% / -3%'\n),\n\
+  changed_answer AS (\n  SELECT k.CID\n  FROM `main`.`etoro_kpi`.`kyc_for_compliance_v`\
+  \ k\n  INNER JOIN prev_answered p ON k.CID = p.CID\n  WHERE k.QuestionId = 9 AND\
+  \ k.Is_Current = 1 AND k.AnswerText != '5% / -3%'\n)\nSELECT COUNT(DISTINCT CID)\
+  \ AS num_cysec_clients_changed_answer\nFROM changed_answer;"
+expected_value:
+  type: numeric
+  value: 103750
+  tolerance_pct: 0.5
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: covered
+canonical_tables:
+- main.etoro_kpi.cidfirstdates_v
+- main.etoro_kpi.kyc_for_compliance_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'PROD - Compliance Genie' (01f137f76a75126fb15b03341732911f)
+  benchmark question.
+tags:
+- genie_benchmark
+- prod_compliance_genie
+max_replicas: 3

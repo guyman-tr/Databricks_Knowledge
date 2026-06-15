@@ -1,0 +1,21 @@
+﻿=== UC: TicketFee + TicketFeeByPercent presence per affected day ===
+
+  --- DateID = 20260427 ---
+    TicketFee              rows=100256  sum=   695177.0700  min_upd=2026-04-28T14:09:43.419Z  max_upd=2026-04-28T14:09:43.419Z
+
+  --- DateID = 20260428 ---
+    TicketFee              rows= 83128  sum=   547061.2900  min_upd=2026-05-01T06:06:14.193Z  max_upd=2026-05-01T06:06:14.193Z
+
+  --- DateID = 20260526 ---
+    TicketFee              rows=116739  sum=   909907.6400  min_upd=2026-05-28T06:29:49.821Z  max_upd=2026-05-28T06:29:49.821Z
+
+=== UC: v_ddr_revenues source view emits both labels for those days ===
+
+  --- DateID = 20260427 ---
+    TicketFee              rows=100475  sum=   695177.0700
+
+  --- DateID = 20260428 ---
+    TicketFee              rows= 83288  sum=   547061.2900
+
+  --- DateID = 20260526 ---
+    TicketFee              rows=116835  sum=   909907.6400

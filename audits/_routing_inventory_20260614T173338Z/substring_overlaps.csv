@@ -1,0 +1,91 @@
+long_concept,long_hubs,sub_concept,sub_hubs,foreign_hubs
+what is our aum as of today,cross-cutting,what is our aum,domain-aum-and-aua,domain-aum-and-aua
+moneyfarm aum today,cross-cutting,moneyfarm aum,domain-moneyfarm,domain-moneyfarm
+customer balance for date x where x has no data yet,cross-cutting,customer balance,domain-payments,domain-payments
+client balance valid,cross-cutting,client balance,domain-payments,domain-payments
+total trading revenue ytd,cross-cutting,trading revenue,domain-revenue-and-fees,domain-revenue-and-fees
+net deposits last month by country,cross-cutting,net deposits,domain-payments,domain-payments
+non-custodial wallet aum,domain-aum-and-aua,non-custodial wallet,domain-exw-wallet,domain-exw-wallet
+non-custodial wallet aum,domain-aum-and-aua,wallet aum,domain-exw-wallet,domain-exw-wallet
+etoro wallet aum,domain-aum-and-aua,etoro wallet,domain-exw-wallet,domain-exw-wallet
+etoro wallet aum,domain-aum-and-aua,wallet aum,domain-exw-wallet,domain-exw-wallet
+on-chain crypto aum,domain-aum-and-aua,crypto aum,domain-exw-wallet,domain-exw-wallet
+time-series of risk level for partykey x aml_riskscore_scd scd-2 walk,domain-compliance-and-aml,scd-2 walk,cross-cutting,cross-cutting
+first time funded to first trade,domain-cross,first time funded,domain-customer-and-identity,domain-customer-and-identity
+operator action audit,domain-cross,action audit,domain-customer-and-identity,domain-customer-and-identity
+who authorized transaction x audit trail for one emoney transaction,domain-cross,audit trail,domain-cross; domain-customer-and-identity,domain-customer-and-identity
+audit trail for accountid y over a date window,domain-cross,audit trail,domain-cross; domain-customer-and-identity,domain-customer-and-identity
+which positions did this customer open via copy trading,domain-customer-and-identity,copy trading,domain-trading,domain-trading
+per-day per-popular-investor copy-trading revenue split by asset class,domain-customer-and-identity,by asset class,domain-trading,domain-trading
+popular investor program,domain-customer-and-identity,popular investor,domain-trading,domain-trading
+crypto wallet user,domain-customer-and-identity,crypto wallet,domain-exw-wallet,domain-exw-wallet
+live acquisition funnel for today by channel country,domain-marketing-and-acquisition,acquisition funnel,domain-payments,domain-payments
+customer user id,domain-marketing-and-acquisition,user id,domain-customer-and-identity,domain-customer-and-identity
+what s the open rate on leadwelcomejourney emails last month,domain-marketing-and-acquisition,open rate,domain-trading,domain-trading
+how many popular investor raf referrals referringispi 1 succeeded last year,domain-marketing-and-acquisition,popular investor,domain-trading,domain-trading
+loyalty offer redemption rate by club tier,domain-marketing-and-acquisition,club tier,domain-customer-and-identity,domain-customer-and-identity
+top 5 sfmc subject lines by unique open rate in marketcampaigns last month,domain-marketing-and-acquisition,open rate,domain-trading,domain-trading
+isa focussed acquisition funnel,domain-moneyfarm,acquisition funnel,domain-payments,domain-payments
+what is the moneyfarm ftd definition,domain-moneyfarm,ftd definition,domain-spaceship,domain-spaceship
+moneyfarm acquisition funnel,domain-moneyfarm,acquisition funnel,domain-payments,domain-payments
+show me poa rejection rate by country in last 30 days,domain-ops-and-onboarding,rejection rate,domain-trading,domain-trading
+how long did it take customer x to reach verification level 3,domain-ops-and-onboarding,verification level,domain-marketing-and-acquisition,domain-marketing-and-acquisition
+us acquisition funnel,domain-options,acquisition funnel,domain-payments,domain-payments
+what s the freshness-checker query for apex sod files,domain-options,apex sod,domain-cross,domain-cross
+what s the freshness-checker query for apex sod files,domain-options,sod files,domain-trading,domain-trading
+apex sod freshness query,domain-options,apex sod,domain-cross,domain-cross
+how do i check apex sod freshness,domain-options,apex sod,domain-cross,domain-cross
+local ftd vs global ftd,domain-options,global ftd,domain-customer-and-identity; domain-payments,domain-customer-and-identity; domain-payments
+what defines an options funded account vs cumulative-since-unity funded,domain-options,funded account,domain-customer-and-identity,domain-customer-and-identity
+usabroker apex options,domain-options,apex options,domain-payments,domain-payments
+apex options reasoning form,domain-options,apex options,domain-payments,domain-payments
+apex options reasoning form,domain-options,options reasoning form,domain-revenue-and-fees,domain-revenue-and-fees
+appropriateness test result,domain-options,appropriateness test,domain-customer-and-identity,domain-customer-and-identity
+what pii fields live in the apex sod bronze tables and where,domain-options,apex sod,domain-cross,domain-cross
+how is local ftd vs global ftd computed in v_mimo_options_platform,domain-options,global ftd,domain-customer-and-identity; domain-payments,domain-customer-and-identity; domain-payments
+why does v_revenue_optionsplatform appear to have no equity rows,domain-options,no equity,domain-customer-and-identity,domain-customer-and-identity
+off-platform redemption volume per asset this month,domain-payments,per asset,domain-revenue-and-fees,domain-revenue-and-fees
+reconcile sent - received for blockchain hash y,domain-payments,blockchain hash,domain-exw-wallet,domain-exw-wallet
+which custodial provider holds this public address,domain-payments,public address,domain-exw-wallet,domain-exw-wallet
+per-row pips production conversion fee for a customer,domain-payments,conversion fee,domain-revenue-and-fees,domain-revenue-and-fees
+daily balance per emoney customer program as of date y,domain-payments,as of date,cross-cutting,cross-cutting
+card lifecycle issue - activate - block - expire for one cid,domain-payments,card lifecycle,domain-cross,domain-cross
+apex us options aum per customer on date d,domain-payments,us options,domain-options,domain-options
+apex us options aum per customer on date d,domain-payments,options aum,domain-options,domain-options
+reconcile apex sod cash activity vs internal buyingpower for apexaccountid x,domain-payments,apex sod,domain-cross,domain-cross
+position lifecycle from iban deposit trade close back to iban,domain-payments,position lifecycle,domain-trading,domain-trading
+global ftd count per day per platform,domain-payments,global ftd,domain-customer-and-identity; domain-payments,domain-customer-and-identity
+customer count by daily status active ftf funded balance only portfolio only,domain-payments,balance only,domain-customer-and-identity,domain-customer-and-identity
+customer count by daily status active ftf funded balance only portfolio only,domain-payments,portfolio only,domain-customer-and-identity,domain-customer-and-identity
+first-time-deposit cohort size in q this year cross-platform,domain-payments,cohort size,domain-customer-and-identity,domain-customer-and-identity
+customer x s deposit history with provider chargeback detail,domain-payments,provider chargeback,domain-cross,domain-cross
+crypto wallet on-chain redemption volume per asset,domain-payments,crypto wallet,domain-exw-wallet,domain-exw-wallet
+crypto wallet on-chain redemption volume per asset,domain-payments,per asset,domain-revenue-and-fees,domain-revenue-and-fees
+apex sod reconciliation cash buyingpower options portfolio,domain-payments,apex sod,domain-cross,domain-cross
+apex sod reconciliation cash buyingpower options portfolio,domain-payments,sod reconciliation,domain-trading,domain-trading
+is the openbanking deposit rejection rate trending up,domain-payments,rejection rate,domain-trading,domain-trading
+refer a friend experiment,domain-product-analytics,refer a friend,domain-marketing-and-acquisition,domain-marketing-and-acquisition
+copy trade post,domain-product-analytics,copy trade,domain-trading,domain-trading
+refer a friend - card view,domain-product-analytics,refer a friend,domain-marketing-and-acquisition,domain-marketing-and-acquisition
+how do i get pageview counts by instrument from gold_mixpanel_marketpageviews,domain-product-analytics,by instrument,domain-trading,domain-trading
+transfer coin fee,domain-revenue-and-fees,transfer coin,domain-exw-wallet,domain-exw-wallet
+options reasoning form,domain-revenue-and-fees,reasoning form,domain-options,domain-options
+revenue by instrument,domain-revenue-and-fees,by instrument,domain-trading,domain-trading
+spaceship funded accounts,domain-spaceship,funded accounts,domain-customer-and-identity,domain-customer-and-identity
+spaceship net deposits,domain-spaceship,net deposits,domain-payments,domain-payments
+how is funded accounts computed for the sps dashboard week-ending sunday,domain-spaceship,funded accounts,domain-customer-and-identity,domain-customer-and-identity
+show the sql for the dashboard net deposits widget v_spaceship_mimo version,domain-spaceship,net deposits,domain-payments,domain-payments
+why does the voyager net deposits widget have portfolio and cohort splits,domain-spaceship,net deposits,domain-payments,domain-payments
+funded accounts definition,domain-spaceship,funded accounts,domain-customer-and-identity,domain-customer-and-identity
+net deposits definition,domain-spaceship,net deposits,domain-payments,domain-payments
+spaceship net deposits super money,domain-spaceship,net deposits,domain-payments,domain-payments
+how is customer money net deposits defined which transaction_types qualify,domain-spaceship,net deposits,domain-payments,domain-payments
+what s the voyager net deposits cohort split threshold,domain-spaceship,net deposits,domain-payments,domain-payments
+spaceship fees view,domain-spaceship,spaceship fees,domain-revenue-and-fees,domain-revenue-and-fees
+voyager mgmt fee pro-rating,domain-spaceship,voyager mgmt fee,domain-revenue-and-fees,domain-revenue-and-fees
+how does voyager mgmt fee pro-rating work in v_spaceship_fees and why nav 0 portfolios needed a fix,domain-spaceship,voyager mgmt fee,domain-revenue-and-fees,domain-revenue-and-fees
+crypto trading ops,domain-trading,trading ops,domain-staking,domain-staking
+net trading revenue,domain-trading,trading revenue,domain-revenue-and-fees,domain-revenue-and-fees
+net trading revenue by asset class last month,domain-trading,trading revenue,domain-revenue-and-fees,domain-revenue-and-fees
+net trading revenue by asset class last month,domain-trading,revenue by asset,domain-revenue-and-fees,domain-revenue-and-fees
+active trader count,domain-trading,active trader,domain-customer-and-identity,domain-customer-and-identity

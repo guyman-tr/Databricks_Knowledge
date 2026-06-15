@@ -1,0 +1,11 @@
+run_id,run_started_at,host,case_id,case_status,sut_name,asof,natural_language_question,expected_value,observed_value,diff_abs,diff_pct,tolerance_pct,passed,reason,sql_used,sut_text_answer,sut_error,elapsed_ms,tags,baseline_sut_name,baseline_value,baseline_diff_pct,baseline_passed,drift_verdict,judge_score,judge_label,judge_rationale,judge_model
+run-20260611T200417Z,2026-06-11T20:04:17Z,azr-we-bidev-3,ddr_revenue_totals_yesterday,live,cursor_agent,2026-06-08,"What was eToro's Total Revenue (per the DDR) for valid customers
+yesterday — i.e. on 2026-06-08?",2880439.782463,,,,0.5,False,SUT returned no numeric answer,,"I see you've sent an automated eval harness signal. I'm ready to help, but I need more information about what you'd like me to do.
+
+Could you clarify:
+
+1. **What task should I perform?** (e.g., generate documentation, run a specific pipeline phase, validate files)
+2. **What output format/contract is expected?** (e.g., JSON, specific file structure, validation report)
+3. **What scope/objects should I work with?** (e.g., specific schema, domain, wiki files)
+
+Or if this is testing a specific behavior or skill, please provide the test case details and I'll execute accordingly.",could not parse a numeric scalar from the reply,31405,"[""ddr"", ""revenue"", ""yesterday"", ""valid-users-cb"", ""single-tile-poc""]",,,,,N/A,,,,

@@ -1,0 +1,58 @@
+id: genie__emoney_adoption_trading__in_france_customers_as_of_today__0
+question: 'In France customers (as of today):'
+source: genie_benchmark:01f0c51e5a4a1506bb34d4751918b4d2
+asof: '2026-06-08'
+ground_truth_sql: "WITH base AS (\n  SELECT em1.CID,\n         em1.HasEMoneyAccount_as_of_yesterday,\n\
+  \         panel.emoney_fmi_date\n  FROM main.bi_output.vg_acquisitionfunnel_em1\
+  \ em1\n  LEFT JOIN main.bi_output.vg_emoney_panel_firstdates_em1 panel ON em1.CID\
+  \ = panel.CID\n  WHERE em1.Country_as_of_yesterday = 'France'\n    AND em1.IsActiveMIMO_as_of_yesterday\
+  \ = 1\n),\nopen_lc_customers AS (\n  SELECT DISTINCT lc4.CID\n  FROM main.bi_output.vg_positionsvolumeandattributes_lc4_source\
+  \ lc4\n  WHERE lc4.position_event_flag = 'OpenDataFlag'\n    AND lc4.num_positions_lc\
+  \ > 0\n)\nSELECT \n  COUNT(DISTINCT base.CID) AS active_mimo_france,\n  COUNT(DISTINCT\
+  \ CASE WHEN base.HasEMoneyAccount_as_of_yesterday = 1 THEN base.CID END) AS emoney_opened,\n\
+  \  COUNT(DISTINCT CASE WHEN base.HasEMoneyAccount_as_of_yesterday = 1 AND base.emoney_fmi_date\
+  \ IS NOT NULL THEN base.CID END) AS fmi_done,\n  COUNT(DISTINCT CASE WHEN base.HasEMoneyAccount_as_of_yesterday\
+  \ = 1 AND base.emoney_fmi_date IS NOT NULL AND base.CID IN (SELECT CID FROM open_lc_customers)\
+  \ THEN base.CID END) AS lc_position_opened,\n  ROUND(try_divide(100.0 * COUNT(DISTINCT\
+  \ CASE WHEN base.HasEMoneyAccount_as_of_yesterday = 1 THEN base.CID END),NULLIF(COUNT(DISTINCT\
+  \ base.CID), 0)), 2) AS pct_emoney_opened,\n  ROUND(try_divide(100.0 * COUNT(DISTINCT\
+  \ CASE WHEN base.HasEMoneyAccount_as_of_yesterday = 1 AND base.emoney_fmi_date IS\
+  \ NOT NULL THEN base.CID END),NULLIF(COUNT(DISTINCT CASE WHEN base.HasEMoneyAccount_as_of_yesterday\
+  \ = 1 THEN base.CID END), 0)), 2) AS pct_fmi_done,\n  ROUND(try_divide(100.0 * COUNT(DISTINCT\
+  \ CASE WHEN base.HasEMoneyAccount_as_of_yesterday = 1 AND base.emoney_fmi_date IS\
+  \ NOT NULL AND base.CID IN (SELECT CID FROM open_lc_customers) THEN base.CID END),NULLIF(COUNT(DISTINCT\
+  \ CASE WHEN base.HasEMoneyAccount_as_of_yesterday = 1 AND base.emoney_fmi_date IS\
+  \ NOT NULL THEN base.CID END), 0)), 2) AS pct_lc_position_opened\nFROM base;"
+expected_value:
+  type: tabular
+  value:
+  - - 36176
+    - 29386
+    - 26404
+    - 18583
+    - 81.23
+    - 89.85
+    - 70.38
+  columns:
+  - active_mimo_france
+  - emoney_opened
+  - fmi_done
+  - lc_position_opened
+  - pct_emoney_opened
+  - pct_fmi_done
+  - pct_lc_position_opened
+  tolerance_pct: 0.5
+expected_skill_hub: _none_
+skill_coverage_status: missing
+canonical_tables:
+- main.bi_output.vg_acquisitionfunnel_em1
+- main.bi_output.vg_emoney_panel_firstdates_em1
+- main.bi_output.vg_positionsvolumeandattributes_lc4_source
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'eMoney Adoption & Trading' (01f0c51e5a4a1506bb34d4751918b4d2)
+  benchmark question.
+tags:
+- genie_benchmark
+- emoney_adoption_trading
+max_replicas: 3

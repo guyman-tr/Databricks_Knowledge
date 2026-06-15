@@ -26,6 +26,11 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 
+# Regression guard against the 2026-05-03 tier/header drift bug
+# (BI_DB_KYC_Panel + eMoneyClientBalance). See tools/uc_comment_validator.py.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from uc_comment_validator import validate_alter_sql
+
 
 def reset_deployed_batch_to_generated(
     text: str, batch_num: int, schema: str
@@ -272,6 +277,15 @@ def main() -> None:
             results.append((name, folder, True, "skipped stub", 0, 0))
             if args.verbose:
                 print(f"    -> skip stub", flush=True)
+            continue
+        drift_problems = validate_alter_sql(raw, source=str(alter_path.relative_to(REPO)))
+        if drift_problems:
+            joined = "; ".join(drift_problems[:3])
+            if len(drift_problems) > 3:
+                joined += f" (+{len(drift_problems) - 3} more)"
+            results.append((name, folder, False, f"DRIFT GUARD: {sanitize_one_line(joined, 460)}", 0, 0))
+            if args.verbose:
+                print(f"    -> REFUSED (drift guard): {joined}", flush=True)
             continue
         uc = extract_uc_table(raw)
         stmts = parse_statements(raw)

@@ -25,14 +25,16 @@ The pack output goes to `knowledge/UC_generated/{schema}/{Tables|Views}/{Object}
 ## Pipeline (standard path)
 
 ```
- #   Phase                  Do what                                          Rule file                     Gate    Checkpoint
- 0a  Schema Card            Enumerate schema, classify writer, set scope     00-schema-card                HARD    PHASE 0 CHECKPOINT: PASS
- 1   UC Discovery           info_schema columns + DESCRIBE EXTENDED + sample 01-uc-discovery               HARD    PHASE 1 CHECKPOINT: PASS
- 2   Source Code Fetch      view_definition OR writer notebook body          02-source-code-fetch          HARD    PHASE 2 CHECKPOINT: PASS
- 3   Upstream Wiki Bridge   Route each upstream UC object to its wiki        03-upstream-wiki-bridge       HARD    PHASE 3 CHECKPOINT: PASS
- 4   Column Lineage         Write {Object}.lineage.md from DDL / notebook    04-column-lineage             HARD    PHASE 4 CHECKPOINT: PASS  ← feeds tier assignment
- 5   Generate Doc           Write {Object}.md + .review-needed.md            05-generate-doc               HARD    (shape check)
- 6   Deploy                 Generate .alter.sql then apply ALTER COMMENT     06-deploy                     SOFT    (deploy index updated)
+ #     Phase                    Do what                                            Rule file                        Gate    Checkpoint
+ 0a    Schema Card              Enumerate schema, classify writer, set scope       00-schema-card                   HARD    PHASE 0 CHECKPOINT: PASS
+ 1     UC Discovery             info_schema columns + DESCRIBE EXTENDED + sample   01-uc-discovery                  HARD    PHASE 1 CHECKPOINT: PASS
+ 2     Source Code Fetch        view_definition OR writer notebook body            02-source-code-fetch             HARD    PHASE 2 CHECKPOINT: PASS
+ 3     Upstream Wiki Bridge     Route each upstream UC object to its wiki          03-upstream-wiki-bridge          HARD    PHASE 3 CHECKPOINT: PASS
+ 4     Column Lineage           Write {Object}.lineage.md from DDL / notebook      04-column-lineage                HARD    PHASE 4 CHECKPOINT: PASS  ← feeds tier assignment
+ 4.5   Concept Discovery        Mine view DDL / notebook → concepts.json           04.5-concept-discovery           HARD    PHASE 4.5 CHECKPOINT: PASS  ← feeds §2 subsections
+ 4.6   Formula Extraction       Per-column formula lookup → formulas.json          04.6-formula-extraction          HARD    PHASE 4.6 CHECKPOINT: PASS  ← feeds §4 Tier-2 descriptions
+ 5     Generate Doc             Write {Object}.md (8 sections) + .review-needed.md 05-generate-doc                  HARD    (shape check)
+ 6     Deploy                   Generate .alter.sql then apply ALTER COMMENT       06-deploy                        SOFT    (deploy index updated)
 ```
 
 ## Phase Gate Checklist (emit before Phase 5)
@@ -40,10 +42,13 @@ The pack output goes to `knowledge/UC_generated/{schema}/{Tables|Views}/{Object}
 ```
 PHASE GATE CHECK — {Object} ({schema}):
   [x] P0 SchemaCard  [x] P1 Discovery  [x] P2 SourceCode  [x] P3 UpstreamBridge  [x] P4 Lineage
+  [x] P4.5 ConceptDiscovery  [x] P4.6 FormulaExtraction
   → Ready for P5
 OUTPUT CHECK — {Object}:
   [x] _discovery/source_code/{name}.{sql|py}   [x] _discovery/upstream_wikis/* cached
-  [x] {Object}.lineage.md exists   [x] {Object}.md exists   [x] {Object}.review-needed.md exists
+  [x] {Object}.lineage.md exists   [x] _discovery/concepts/{name}.json exists
+  [x] _discovery/formulas/{name}.json exists
+  [x] {Object}.md exists (8 sections)   [x] {Object}.review-needed.md exists
   [-] {Object}.alter.sql — deferred to P6
 ```
 
@@ -64,7 +69,7 @@ OUTPUT CHECK — {Object}:
 - **⛔ TIER TRANSITIVITY**: Passthroughs inherit the **origin tier tag** from the upstream wiki — they do NOT introduce a new `(Tier 1 — {upstream_uc_object})` tag if the upstream column already says `(Tier 1 — Trade.PositionTbl)`. See §"Tier transitivity" in `GATE-lineage-contract.mdc`. UC view aliases are RELAYS, not origins.
 - **⛔ SHARED COLUMN = SAME DESCRIPTION**: When this view passes through `HistoryID` from `Fact_CustomerAction`, the description here MUST equal the description in `knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_CustomerAction.md`. Do NOT paraphrase. Do NOT rewrite. Do NOT change the tier.
 - **⛔ UTF-8 FILE ENCODING ON ALL WRITES**: Every file write (`.md`, `.review-needed.md`, `.lineage.md`, `.alter.sql`) MUST use explicit `encoding="utf-8"`. Python: `open(path, "w", encoding="utf-8")`.
-- **⛔ GOLDEN REFERENCE**: Read `GOLDEN-REFERENCE.mdc` once per session. Your output must match the simplified 6-section skeleton (UC pipeline objects do not need the full 8-section DWH treatment — no Synapse distribution / index sections).
+- **⛔ GOLDEN REFERENCE**: Read `GOLDEN-REFERENCE.mdc` once per session. Your output must match the **8-section** skeleton (§1 Business Meaning, §2 Business Logic, §3 Query Advisory, §4 Elements, §5 Lineage, §6 Relationships, §7 Sample Queries, §8 Atlassian). Earlier 6-section format is deprecated as of the Phase-6+9-port — the synthesis sections (§1/§2/§3) anchor on `concepts.json` and `formulas.json` produced by Phases 4.5/4.6.
 
 ## Out of scope (this pack)
 

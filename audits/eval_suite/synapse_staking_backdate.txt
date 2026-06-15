@@ -1,0 +1,444 @@
+﻿======================================================================
+SYNAPSE SP Γאפ search for backdating / 2nd-pass / comp / airdrop / staking-month logic
+======================================================================
+  65 matching lines. Printing in windowed clusters...
+
+  --- L26..L30 ---
+      L  26: 2025-12-10		Guy M			replace nulls also for count transactions
+      L  27: 2025-12-13		Guy M			added C2P + specific null handling cases for lake merge keys to make sense
+  >>> L  28: 2026-01-13		Guy M			mechanism to deal with Staking reruns on the source (data changes retroactively). this change should be working both in synapse and
+      L  29: 								auto-update the lake via SB.
+      L  30: ----------    ----------   ------------------------------------*/
+
+  --- L119..L123 ---
+      L 119: 	, NULL AS IsClosedToIBAN
+      L 120: 	, NULL AS IsRecurring
+  >>> L 121: 	, frrf.IsAirDrop
+      L 122: 	, frrf.IsSQF
+      L 123: 	, frrf.IsMarginTrade
+
+  --- L152..L156 ---
+      L 152: 	, NULL AS IsClosedToIBAN
+      L 153: 	, NULL AS IsRecurring
+  >>> L 154: 	, frrf.IsAirDrop
+      L 155: 	, fise.IsSQF
+      L 156: 	, IsMarginTrade
+
+  --- L185..L189 ---
+      L 185: 	, NULL AS IsClosedToIBAN
+      L 186: 	, NULL AS IsRecurring
+  >>> L 187: 	, frrf.IsAirDrop
+      L 188: 	, 0 AS IsSQF
+      L 189: 	, IsMarginTrade
+
+  --- L217..L221 ---
+      L 217: 	, NULL AS IsClosedToIBAN
+      L 218: 	, NULL AS IsRecurring
+  >>> L 219: 	, frrf.IsAirDrop
+      L 220: 	, frrf.IsSQF
+      L 221: 	, frrf.IsMarginTrade
+
+  --- L250..L254 ---
+      L 250: 	, NULL AS IsClosedToIBAN
+      L 251: 	, NULL AS IsRecurring
+  >>> L 252: 	, frrf.IsAirDrop
+      L 253: 	, frrf.IsSQF
+      L 254: 	, frrf.IsMarginTrade
+
+  --- L383..L387 ---
+      L 383:   , o.IsClosedToIBAN
+      L 384:   , o.IsRecurring
+  >>> L 385:   , o.IsAirDrop
+      L 386:   , o.IsSQF
+      L 387:   , o.IsMarginTrade
+
+  --- L392..L396 ---
+      L 392: GROUP BY o.DateID, o.RealCID, o.ActionTypeID, ActionType, o.InstrumentTypeID, o.IsSettled
+      L 393: , o.IsCopy, o.ActionType, o.IncludedInTotalRevenue, o.IsBuy, o.IsLeveraged, o.IsFuture
+  >>> L 394: , CASE WHEN bdcfp.PositionID IS NOT NULL THEN 1 ELSE 0 END  , o.IsOpenedFromIBAN  , o.IsClosedToIBAN, o.IsRecurring, o.IsAirDrop, o.IsSQF, o.IsMarginTrade  , o.IsC2P
+      L 395: 
+      L 396: UNION ALL
+
+  --- L416..L420 ---
+      L 416:   , o.IsClosedToIBAN
+      L 417:   , o.IsRecurring
+  >>> L 418:   , o.IsAirDrop
+      L 419:   , NULL AS IsSQF
+      L 420:   , o.IsMarginTrade
+
+  --- L425..L429 ---
+      L 425: GROUP BY o.DateID, o.RealCID, o.ActionTypeID, ActionType, o.InstrumentTypeID, o.IsSettled
+      L 426: , o.IsCopy, o.ActionType, o.IncludedInTotalRevenue, o.IsBuy, o.IsLeveraged, o.IsFuture
+  >>> L 427:   , CASE WHEN bdcfp.PositionID IS NOT NULL THEN 1 ELSE 0 END   , o.IsOpenedFromIBAN  , o.IsClosedToIBAN, o.IsRecurring, o.IsAirDrop, o.IsMarginTrade  , o.IsC2P
+      L 428: 
+      L 429: UNION ALL
+
+  --- L449..L453 ---
+      L 449:   , o.IsClosedToIBAN
+      L 450:   , o.IsRecurring
+  >>> L 451:   , o.IsAirDrop
+      L 452:   , NULL AS IsSQF
+      L 453:   , o.IsMarginTrade
+
+  --- L458..L462 ---
+      L 458: GROUP BY o.DateID, o.RealCID, o.ActionTypeID, ActionType, o.InstrumentTypeID, o.IsSettled
+      L 459: , o.IsCopy, o.ActionType, o.IncludedInTotalRevenue, o.IsBuy, o.IsLeveraged, o.IsFuture
+  >>> L 460: , CASE WHEN bdcfp.PositionID IS NOT NULL THEN 1 ELSE 0 END   , o.IsOpenedFromIBAN  , o.IsClosedToIBAN, o.IsRecurring, o.IsAirDrop, o.IsMarginTrade  , o.IsC2P
+      L 461: 
+      L 462: UNION ALL
+
+  --- L482..L486 ---
+      L 482:   , o.IsClosedToIBAN
+      L 483:   , o.IsRecurring
+  >>> L 484:   , o.IsAirDrop
+      L 485:   , o.IsSQF
+      L 486:   , o.IsMarginTrade
+
+  --- L493..L497 ---
+      L 493: GROUP BY o.DateID, o.RealCID, o.ActionTypeID, ActionType, o.InstrumentTypeID, o.IsSettled
+      L 494: , o.IsCopy, o.ActionType, o.IncludedInTotalRevenue, o.IsBuy, o.IsLeveraged, o.IsFuture
+  >>> L 495: , CASE WHEN bdcfp.PositionID IS NOT NULL THEN 1 ELSE 0 END   , o.IsOpenedFromIBAN  , o.IsClosedToIBAN, o.IsRecurring, o.IsAirDrop, o.IsSQF, o.IsMarginTrade  , o.IsC2P
+      L 496: 
+      L 497: 
+
+  --- L518..L522 ---
+      L 518:   , o.IsClosedToIBAN
+      L 519:   , o.IsRecurring
+  >>> L 520:   , o.IsAirDrop
+      L 521:   , o.IsSQF
+      L 522:   , o.IsMarginTrade
+
+  --- L527..L531 ---
+      L 527: GROUP BY o.DateID, o.RealCID, o.ActionTypeID, ActionType, o.InstrumentTypeID, o.IsSettled
+      L 528: , o.IsCopy, o.ActionType, o.IncludedInTotalRevenue, o.IsBuy, o.IsLeveraged, o.IsFuture
+  >>> L 529: , CASE WHEN bdcfp.PositionID IS NOT NULL THEN 1 ELSE 0 END   , o.IsOpenedFromIBAN  , o.IsClosedToIBAN, o.IsRecurring, o.IsAirDrop, o.IsSQF, o.IsMarginTrade  , o.IsC2P
+      L 530: 
+      L 531: PRINT ' #overnights Done ' + (CONVERT( VARCHAR(24), GETDATE(), 121))
+
+  --- L717..L729 ---
+      L 717:   , count(RealCID) AS CountTransactions
+      L 718:   , 1 AS IncludedInTotalRevenue
+  >>> L 719:   , case when frfc.ActionTypeID in (1,39) and isnull(IsAirDrop,0) = 0 then 1 else 0 end as CountAsActiveTrade
+      L 720:   , frfc.IsBuy
+      L 721:   , CASE WHEN frfc.Leverage > 1 THEN 1 ELSE 0 END AS IsLeveraged
+      L 722:   , ISNULL(frfc.IsFuture,0) AS IsFuture
+      L 723:   , ISNULL(frfc.IsCopyFund,0	) AS IsCopyFund
+      L 724:   , isnull(frfc.IsOpenedFromIBAN,0) as IsOpenedFromIBAN
+      L 725:   , isnull(frfc.IsClosedToIBAN,0) as IsClosedToIBAN
+      L 726:   , isnull(frfc.IsRecurring,0) as IsRecurring
+  >>> L 727:   , frfc.IsAirDrop
+      L 728:   , frfc.IsSQF
+      L 729:   , frfc.IsMarginTrade
+
+  --- L740..L752 ---
+      L 740:   , frfc.IsSettled
+      L 741:   , frfc.IsCopy
+  >>> L 742:   , case when frfc.ActionTypeID in (1,39) and isnull(IsAirDrop,0) = 0 then 1 else 0 end
+      L 743:   , frfc.IsBuy
+      L 744:   , CASE WHEN frfc.Leverage > 1 THEN 1 ELSE 0 END
+      L 745:   , ISNULL(frfc.IsFuture,0)
+      L 746:   , ISNULL(frfc.IsCopyFund,0	)
+      L 747:   , isnull(frfc.IsOpenedFromIBAN,0)
+      L 748:   , isnull(frfc.IsClosedToIBAN,0)
+      L 749:   , isnull(frfc.IsRecurring,0)
+  >>> L 750:   , frfc.IsAirDrop
+      L 751:   , frfc.IsSQF
+      L 752:   , frfc.IsMarginTrade
+
+  --- L767..L779 ---
+      L 767:   , count(RealCID) AS CountTransactions
+      L 768:   , 0 AS IncludedInTotalRevenue
+  >>> L 769:   , case when frfc.ActionTypeID in (1,39) and isnull(IsAirDrop,0) = 0 then 1 else 0 end as CountAsActiveTrade
+      L 770:   , frfc.IsBuy
+      L 771:   , CASE WHEN frfc.Leverage > 1 THEN 1 ELSE 0 END AS IsLeveraged
+      L 772:   , ISNULL(frfc.IsFuture,0) AS IsFuture
+      L 773:   , ISNULL(frfc.IsCopyFund,0	) AS IsCopyFund
+      L 774:   , isnull(frfc.IsOpenedFromIBAN,0) as IsOpenedFromIBAN
+      L 775:   , isnull(frfc.IsClosedToIBAN,0) as IsClosedToIBAN
+      L 776:   , isnull(frfc.IsRecurring,0) as IsRecurring
+  >>> L 777:   , frfc.IsAirDrop
+      L 778:   , frfc.IsSQF
+      L 779:   , frfc.IsMarginTrade
+
+  --- L790..L802 ---
+      L 790:   , frfc.IsSettled
+      L 791:   , frfc.IsCopy
+  >>> L 792:   , case when frfc.ActionTypeID in (1,39) and isnull(IsAirDrop,0) = 0 then 1 else 0 END
+      L 793:   , frfc.IsBuy
+      L 794:   , CASE WHEN frfc.Leverage > 1 THEN 1 ELSE 0 END
+      L 795:   , ISNULL(frfc.IsFuture,0)
+      L 796:   , ISNULL(frfc.IsCopyFund,0	)
+      L 797:   , isnull(frfc.IsOpenedFromIBAN,0)
+      L 798:   , isnull(frfc.IsClosedToIBAN,0)
+      L 799:   , isnull(frfc.IsRecurring,0)
+  >>> L 800:   , frfc.IsAirDrop
+      L 801:   , frfc.IsSQF
+      L 802:   , frfc.IsMarginTrade
+
+  --- L825..L829 ---
+      L 825:   , isnull(frrf.IsClosedToIBAN,0) as IsClosedToIBAN
+      L 826:   , isnull(frrf.IsRecurring,0) as IsRecurring
+  >>> L 827:   , frrf.IsAirDrop
+      L 828:   , frrf.IsSQF
+      L 829:   , frrf.IsMarginTrade
+
+  --- L844..L848 ---
+      L 844:   , isnull(frrf.IsClosedToIBAN,0)
+      L 845:   , isnull(frrf.IsRecurring,0)
+  >>> L 846:   , frrf.IsAirDrop
+      L 847:   , frrf.IsSQF
+      L 848:   , frrf.IsMarginTrade
+
+  --- L871..L875 ---
+      L 871:   , NULL AS IsClosedToIBAN
+      L 872:   , NULL AS IsRecurring
+  >>> L 873:   , NULL AS IsAirDrop
+      L 874:   , NULL AS IsSQF
+      L 875:   , NULL AS IsMarginTrade
+
+  --- L902..L906 ---
+      L 902:   , NULL AS IsClosedToIBAN
+      L 903:   , ISNULL(frcf.IsRecurring,0) AS IsRecurring
+  >>> L 904:   , NULL AS IsAirDrop
+      L 905:   , NULL AS IsSQF
+      L 906:   , NULL AS IsMarginTrade
+
+  --- L935..L939 ---
+      L 935:   , NULL AS IsClosedToIBAN
+      L 936:   , NULL AS IsRecurring
+  >>> L 937:   , 0 AS IsAirDrop
+      L 938:   , NULL AS IsSQF
+      L 939:   , NULL AS IsMarginTrade
+
+  --- L966..L970 ---
+      L 966:   , NULL AS IsClosedToIBAN
+      L 967:   , NULL AS IsRecurring
+  >>> L 968:   , 0 AS IsAirDrop
+      L 969:   , NULL AS IsSQF
+      L 970:   , NULL AS IsMarginTrade
+
+  --- L998..L1002 ---
+      L 998:   , isnull(frcf.IsClosedToIBAN,0) as IsClosedToIBAN
+      L 999:   , isnull(frcf.IsRecurring,0) as IsRecurring
+  >>> L1000:   , frcf.IsAirDrop
+      L1001:   , NULL AS IsSQF
+      L1002:   , NULL AS IsMarginTrade
+
+  --- L1017..L1021 ---
+      L1017:   , isnull(frcf.IsClosedToIBAN,0)
+      L1018:   , isnull(frcf.IsRecurring,0)
+  >>> L1019:   , frcf.IsAirDrop
+      L1020:   , frcf.IsC2P
+      L1021: 
+
+  --- L1042..L1046 ---
+      L1042:   , NULL AS IsClosedToIBAN
+      L1043:   , NULL AS IsRecurring
+  >>> L1044:   , NULL AS IsAirDrop
+      L1045:   , NULL AS IsSQF
+      L1046:   , NULL AS IsMarginTrade
+
+  --- L1073..L1077 ---
+      L1073:   , isnull(frcf.IsClosedToIBAN,0) as IsClosedToIBAN
+      L1074:   , isnull(frcf.IsRecurring,0) as IsRecurring
+  >>> L1075:   , frcf.IsAirDrop
+      L1076:   , frcf.IsSQF
+      L1077:   , frcf.IsMarginTrade
+
+  --- L1093..L1097 ---
+      L1093:   , isnull(frcf.IsClosedToIBAN,0)
+      L1094:   , isnull(frcf.IsRecurring,0)
+  >>> L1095:   , frcf.IsAirDrop
+      L1096:   , frcf.IsSQF
+      L1097:   , frcf.IsMarginTrade
+
+  --- L1120..L1124 ---
+      L1120:   , isnull(frcf.IsClosedToIBAN,0) as IsClosedToIBAN
+      L1121:   , isnull(frcf.IsRecurring,0) as IsRecurring
+  >>> L1122:   , frcf.IsAirDrop
+      L1123:   , frcf.IsSQF
+      L1124:   , frcf.IsMarginTrade
+
+  --- L1140..L1144 ---
+      L1140:   , isnull(frcf.IsClosedToIBAN,0)
+      L1141:   , isnull(frcf.IsRecurring,0)
+  >>> L1142:   , frcf.IsAirDrop
+      L1143:   , frcf.IsSQF
+      L1144:   , frcf.IsMarginTrade
+
+  --- L1169..L1173 ---
+      L1169:   , isnull(frcf.IsClosedToIBAN,0) as IsClosedToIBAN
+      L1170:   , isnull(frcf.IsRecurring,0) as IsRecurring
+  >>> L1171:   , frcf.IsAirDrop
+      L1172:   , frcf.IsSQF
+      L1173:   , frcf.IsMarginTrade
+
+  --- L1189..L1193 ---
+      L1189:   , isnull(frcf.IsClosedToIBAN,0)
+      L1190:   , isnull(frcf.IsRecurring,0)
+  >>> L1191:   , frcf.IsAirDrop
+      L1192:   , frcf.IsSQF
+      L1193:   , frcf.IsMarginTrade
+
+  --- L1216..L1220 ---
+      L1216:   , isnull(frcf.IsClosedToIBAN,0) as IsClosedToIBAN
+      L1217:   , isnull(frcf.IsRecurring,0) as IsRecurring
+  >>> L1218:   , frcf.IsAirDrop
+      L1219:   , frcf.IsSQF
+      L1220:   , frcf.IsMarginTrade
+
+  --- L1236..L1240 ---
+      L1236:   , isnull(frcf.IsClosedToIBAN,0)
+      L1237:   , isnull(frcf.IsRecurring,0)
+  >>> L1238:   , frcf.IsAirDrop
+      L1239:   , frcf.IsSQF
+      L1240:   , frcf.IsMarginTrade
+
+  --- L1263..L1267 ---
+      L1263:   , isnull(frcf.IsClosedToIBAN,0) as IsClosedToIBAN
+      L1264:   , isnull(frcf.IsRecurring,0) as IsRecurring
+  >>> L1265:   , frcf.IsAirDrop
+      L1266:   , NULL AS IsSQF
+      L1267:   , frcf.IsMarginTrade
+
+  --- L1283..L1287 ---
+      L1283:   , isnull(frcf.IsClosedToIBAN,0)
+      L1284:   , isnull(frcf.IsRecurring,0)
+  >>> L1285:   , frcf.IsAirDrop
+      L1286:   , frcf.IsMarginTrade
+      L1287:   , frcf.IsC2P
+
+  --- L1309..L1313 ---
+      L1309:   , NULL as IsClosedToIBAN
+      L1310:   , NULL as IsRecurring
+  >>> L1311:   , NULL AS IsAirDrop
+      L1312:   , NULL AS IsSQF
+      L1313:   , NULL AS IsMarginTrade
+
+  --- L1340..L1344 ---
+      L1340:   , NULL as IsClosedToIBAN
+      L1341:   , NULL as IsRecurring
+  >>> L1342:   , NULL AS IsAirDrop
+      L1343:   , NULL AS IsSQF
+      L1344:   , NULL AS IsMarginTrade
+
+  --- L1352..L1374 ---
+      L1352: 
+      L1353: /*****************************************************************
+  >>> L1354: special case of Staking
+      L1355: ****************************************************************/
+      L1356: 
+      L1357: --DECLARE @date DATE = '20260110'
+      L1358: --DECLARE @dateID int = CAST(CONVERT(VARCHAR(8), @date, 112) AS INT)
+      L1359: 
+  >>> L1360: IF OBJECT_ID('tempdb..#staking') IS NOT NULL DROP TABLE #staking
+  >>> L1361: CREATE TABLE #staking
+      L1362:     WITH (HEAP,DISTRIBUTION = ROUND_ROBIN)
+      L1363: as
+      L1364: SELECT
+      L1365:   CAST(FORMAT(CAST(DATEADD(MONTH,1,frcf.Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+      L1366:   , frcf.CID AS RealCID
+      L1367:   , NULL AS ActionTypeID
+  >>> L1368:   , 'Staking' AS ActionType
+      L1369:   , 10 AS InstrumentTypeID
+      L1370:   , 1 AS IsSettled
+      L1371:   , NULL AS IsCopy
+  >>> L1372:   , 'StakingLagOneMonth' AS Metric
+      L1373:   , sum(frcf.TotalUSDDistributed) AS Amount
+      L1374:   , NULL AS CountTransactions
+
+  --- L1382..L1392 ---
+      L1382:   , NULL as IsClosedToIBAN
+      L1383:   , NULL as IsRecurring
+  >>> L1384:   , NULL AS IsAirDrop
+      L1385:   , NULL AS IsSQF
+      L1386:   , 12 AS RevenueMetricID
+      L1387:   , 4 AS RevenueMetricCategoryID
+      L1388:   , NULL AS IsMarginTrade
+      L1389:   , NULL AS IsC2P
+  >>> L1390: FROM BI_DB_dbo.Function_Revenue_StakingFee
+      L1391: 	(CAST(FORMAT(DATEFROMPARTS(YEAR(DATEADD(MONTH, -1, CONVERT(DATE, CONVERT(VARCHAR(8), @dateID), 112))), MONTH(DATEADD(MONTH, -1, CONVERT(DATE, CONVERT(VARCHAR(8), @dateID), 112))), 1), 'yyyyMMdd') AS INT)
+      L1392: 	, CAST(FORMAT(CAST(dateadd(MONTH, -1, CONVERT(DATE, CONVERT(VARCHAR(8), @dateID), 112)) AS DATE),'yyyyMMdd') as INT)
+
+  --- L1422..L1426 ---
+      L1422: 	 , frop.IsClosedToIBAN
+      L1423: 	 , frop.IsRucurring
+  >>> L1424: 	 , frop.IsAirDrop
+      L1425: 	 , 0 AS IsSQF
+      L1426: 	 , 18 AS RevenueMetricID
+
+  --- L1456..L1462 ---
+      L1456: 
+      L1457: UPDATE #revenue
+  >>> L1458: SET IsAirDrop = -1
+      L1459: WHERE Metric = 'CryptoToFiatFee'
+  >>> L1460: AND IsAirDrop = 0
+      L1461: 
+      L1462: -- dividend changes
+
+  --- L1492..L1500 ---
+      L1492: 
+      L1493: UPDATE #revenue
+  >>> L1494: SET IsAirDrop = -1
+      L1495: WHERE Metric = 'CashoutFeeExclRedeem'
+      L1496: 
+      L1497: UPDATE #revenue
+  >>> L1498: SET IsAirDrop = -1
+      L1499: WHERE Metric = 'ConversionFee'
+      L1500: 
+
+  --- L1532..L1536 ---
+      L1532: 	 , IsClosedToIBAN
+      L1533: 	 , IsRecurring
+  >>> L1534: 	 , IsAirDrop
+      L1535: 	 , IsSQF
+      L1536: 	 , RevenueMetricID
+
+  --- L1560..L1564 ---
+      L1560: 	 , ISNULL(IsClosedToIBAN,-1)
+      L1561: 	 , ISNULL(r.IsRecurring,-1)
+  >>> L1562: 	 , ISNULL(r.IsAirDrop,-1)
+      L1563: 	 , ISNULL(IsSQF,-1)
+      L1564: 	 , drm.RevenueMetricID
+
+  --- L1596..L1600 ---
+      L1596: 	 , IsClosedToIBAN
+      L1597: 	 , IsRecurring
+  >>> L1598: 	 , IsAirDrop
+      L1599: 	 , IsSQF
+      L1600: 	 , RevenueMetricID
+
+  --- L1624..L1636 ---
+      L1624: 	 , ISNULL(frop.IsClosedToIBAN,-1)
+      L1625: 	 , ISNULL(frop.IsRucurring,-1)
+  >>> L1626: 	 , ISNULL(frop.IsAirDrop,-1)
+      L1627: 	 , ISNULL(IsSQF,-1)
+      L1628: 	 , RevenueMetricID
+      L1629: 	 , RevenueMetricCategoryID
+      L1630: 	 , ISNULL(IsMarginTrade,-1)
+      L1631: 	 , ISNULL(IsC2P,-1)
+      L1632: FROM #optionsalltime frop
+      L1633: 
+  >>> L1634: --- staking handling
+      L1635: 
+      L1636: 
+
+  --- L1661..L1665 ---
+      L1661: 	 , IsClosedToIBAN
+      L1662: 	 , IsRecurring
+  >>> L1663: 	 , IsAirDrop
+      L1664: 	 , IsSQF
+      L1665: 	 , RevenueMetricID
+
+  --- L1689..L1699 ---
+      L1689: 	 , s.IsClosedToIBAN
+      L1690: 	 , s.IsRecurring
+  >>> L1691: 	 , s.IsAirDrop
+      L1692: 	 , s.IsSQF
+      L1693: 	 , s.RevenueMetricID
+      L1694: 	 , s.RevenueMetricCategoryID
+      L1695: 	 , s.IsMarginTrade
+      L1696: 	 , s.IsC2P
+  >>> L1697: FROM #staking s
+      L1698: 
+      L1699: END

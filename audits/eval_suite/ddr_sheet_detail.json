@@ -1,0 +1,378 @@
+{
+  "id": "01bbdafd-3147-c373-c80e-5a9a11e14b36",
+  "name": "Revenue: Marketing Region Chart",
+  "luid": "",
+  "containedInDashboards": [
+    {
+      "id": "69497b9e-6106-aa8d-4bc2-51ff8d47a65f",
+      "name": "Revenue: Overview & Breakdowns"
+    }
+  ],
+  "upstreamTables": [
+    {
+      "__typename": "CustomSQLTable",
+      "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+      "name": "Custom SQL Query"
+    }
+  ],
+  "sheetFieldInstances": [
+    {
+      "__typename": "ColumnField",
+      "id": "1d5237bf-6ac3-96bf-81c5-1e54cd2b56d5",
+      "name": "Country",
+      "fullyQualifiedName": "[Country]",
+      "aggregation": null,
+      "columns": [
+        {
+          "name": "Country",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamColumns": [
+        {
+          "name": "Country",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamFields": []
+    },
+    {
+      "__typename": "SetField",
+      "id": "323bf4c5-67c4-a75b-b9fa-a375503da65b",
+      "name": "CountryAccessFilter",
+      "fullyQualifiedName": "[CountryAccessFilter]",
+      "upstreamColumns": [
+        {
+          "name": "Country",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamFields": [
+        {
+          "__typename": "ColumnField",
+          "name": "Country",
+          "aggregation": null,
+          "columns": [
+            {
+              "name": "Country",
+              "table": {
+                "__typename": "CustomSQLTable",
+                "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+                "name": "Custom SQL Query"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "__typename": "ColumnField",
+      "id": "39998aca-5f94-ce15-5b2d-14afc89dd1ed",
+      "name": "IsCreditReportValidCB",
+      "fullyQualifiedName": "[IsCreditReportValidCB]",
+      "aggregation": "Sum",
+      "columns": [
+        {
+          "name": "IsCreditReportValidCB",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamColumns": [
+        {
+          "name": "IsCreditReportValidCB",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamFields": []
+    },
+    {
+      "__typename": "SetField",
+      "id": "42b1493b-7f69-1304-015d-d6ade5544195",
+      "name": "RegulationAccessFilter",
+      "fullyQualifiedName": "[RegulationAccessFilter]",
+      "upstreamColumns": [
+        {
+          "name": "Regulation",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamFields": [
+        {
+          "__typename": "ColumnField",
+          "name": "Regulation",
+          "aggregation": null,
+          "columns": [
+            {
+              "name": "Regulation",
+              "table": {
+                "__typename": "CustomSQLTable",
+                "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+                "name": "Custom SQL Query"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "__typename": "ColumnField",
+      "id": "5663c382-0db0-c036-a9f7-3b0152fe3de5",
+      "name": "MarketingRegion",
+      "fullyQualifiedName": "[MarketingRegion]",
+      "aggregation": null,
+      "columns": [
+        {
+          "name": "MarketingRegion",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamColumns": [
+        {
+          "name": "MarketingRegion",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamFields": []
+    },
+    {
+      "__typename": "ColumnField",
+      "id": "5a3ce4a2-ea4a-3bd3-d0c8-20e113e5d347",
+      "name": "IsValidCustomer",
+      "fullyQualifiedName": "[IsValidCustomer]",
+      "aggregation": "Sum",
+      "columns": [
+        {
+          "name": "IsValidCustomer",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamColumns": [
+        {
+          "name": "IsValidCustomer",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamFields": []
+    },
+    {
+      "__typename": "CalculatedField",
+      "id": "5b584a02-7aad-2117-ebb6-adb94a3b65b6",
+      "name": "MiFID Category",
+      "fullyQualifiedName": "[Calculation_1597089071572258816]",
+      "formula": "IF [MifidCategorizationID] = 2\r\nOR [MifidCategorizationID] = 3\r\nTHEN \"Professional\" ELSE \"Retail\" END",
+      "upstreamColumns": [
+        {
+          "name": "MifidCategorizationID",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamFields": [
+        {
+          "__typename": "ColumnField",
+          "name": "MifidCategorizationID",
+          "aggregation": "Sum",
+          "columns": [
+            {
+              "name": "MifidCategorizationID",
+              "table": {
+                "__typename": "CustomSQLTable",
+                "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+                "name": "Custom SQL Query"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "__typename": "ColumnField",
+      "id": "823bbb31-bd5c-1f95-e3e5-f84fc5c4151e",
+      "name": "PlayerLevel",
+      "fullyQualifiedName": "[PlayerLevel]",
+      "aggregation": "Count",
+      "columns": [
+        {
+          "name": "PlayerLevel",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamColumns": [
+        {
+          "name": "PlayerLevel",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamFields": []
+    },
+    {
+      "__typename": "ColumnField",
+      "id": "9d1a3bf2-0cb3-5225-f94a-30e55c2d7bf3",
+      "name": "TimeRange",
+      "fullyQualifiedName": "[TimeRange]",
+      "aggregation": "Count",
+      "columns": [
+        {
+          "name": "TimeRange",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamColumns": [
+        {
+          "name": "TimeRange",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamFields": []
+    },
+    {
+      "__typename": "ColumnField",
+      "id": "9f6e76b5-dec4-69c8-4398-a4f060ef3fd6",
+      "name": "TotalRevenue",
+      "fullyQualifiedName": "[TotalRevenue]",
+      "aggregation": null,
+      "columns": [
+        {
+          "name": "TotalRevenue",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamColumns": [
+        {
+          "name": "TotalRevenue",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamFields": []
+    },
+    {
+      "__typename": "SetField",
+      "id": "b805a31b-3f77-1ac7-ec5b-0f9001cabe29",
+      "name": "MarketingRegionAccessFilter",
+      "fullyQualifiedName": "[MarketingRegionAccessFilter]",
+      "upstreamColumns": [
+        {
+          "name": "MarketingRegion",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamFields": [
+        {
+          "__typename": "ColumnField",
+          "name": "MarketingRegion",
+          "aggregation": null,
+          "columns": [
+            {
+              "name": "MarketingRegion",
+              "table": {
+                "__typename": "CustomSQLTable",
+                "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+                "name": "Custom SQL Query"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "__typename": "ColumnField",
+      "id": "d194928b-9120-4407-59b3-ccd63380ba21",
+      "name": "Regulation",
+      "fullyQualifiedName": "[Regulation]",
+      "aggregation": null,
+      "columns": [
+        {
+          "name": "Regulation",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamColumns": [
+        {
+          "name": "Regulation",
+          "table": {
+            "__typename": "CustomSQLTable",
+            "id": "61b6b3d2-0fef-8b28-8233-45fafeccf7a2",
+            "name": "Custom SQL Query"
+          }
+        }
+      ],
+      "upstreamFields": []
+    }
+  ],
+  "worksheetFields": []
+}

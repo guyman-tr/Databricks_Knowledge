@@ -1,0 +1,15 @@
+﻿=== UC SP STEP 3 simulation: what would it produce TODAY if it ran ===
+    (replicating: SELECT (DATEADD MONTH 1) AS DateID, SUM(TotalUSDDistributed)
+     FROM v_revenue_stakingfee WHERE DateID BETWEEN 20260301 AND 20260331
+     GROUP BY CID, DateID)
+  paid=20260407 cid=460055 src_rows=771982 sum=191834.24
+  paid=20260409 cid=92004 src_rows=131669 sum=1413877.39
+
+=== Compare to what's currently IN UC fact ===
+  fact DateID=20260407 cid=500142 sum=1605711.62 upd=2026-04-08T07:53:14.907Z
+  fact DateID=20260409 cid=92004 sum=1413877.39 upd=2026-04-10T07:46:12.970Z
+
+=== Conclusion ===
+If the simulated values match Synapse fact ($191k Apr-7 / $1.4M Apr-9),
+then the UC SP logic is correct and just needs to be re-run to pick up
+the post-comp corrections that already exist in v_revenue_stakingfee.

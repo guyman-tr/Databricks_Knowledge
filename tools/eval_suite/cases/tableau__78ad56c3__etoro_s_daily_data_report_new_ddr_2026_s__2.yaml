@@ -1,0 +1,28 @@
+id: tableau__78ad56c3__etoro_s_daily_data_report_new_ddr_2026_s__2
+question: Open the "eToro's Daily Data Report (New DDR 2026) - Spaceship (Guy Changes)"
+  dashboard. What does the headline figure (row 1 of the primary view) for 2026-06-08
+  show?
+source: tableau:78ad56c3-ac46-4475-a98c-e867b87479fc
+asof: '2026-06-08'
+ground_truth_sql: 'SELECT COUNT(*) AS row_count
+
+  FROM main.spaceship.bronze_spaceship_analytics_fct_money_transactions
+
+  -- workbook: eToro''s Daily Data Report (New DDR 2026) - Spaceship (Guy Changes)
+  (luid 78ad56c3-ac46-4475-a98c-e867b87479fc) views=7'
+expected_value:
+  type: numeric
+  value: 7458133
+  tolerance_pct: 1.0
+expected_skill_hub: domain-aum-and-aua
+skill_coverage_status: covered
+canonical_tables:
+- main.spaceship.bronze_spaceship_analytics_fct_money_transactions
+anti_sources: []
+expected_filters: []
+notes: Auto-generated Tableau probe. Rewrite the SQL to match the specific KPI the
+  dashboard renders before pinning. Workbook total_views=7.
+tags:
+- tableau
+- views_7
+max_replicas: 3

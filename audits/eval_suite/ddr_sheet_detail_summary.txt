@@ -1,0 +1,40 @@
+﻿probing sheet: 'Revenue: Marketing Region Chart'  dashboard: 'Revenue: Overview & Breakdowns'
+
+wrote audits\eval_suite\ddr_sheet_detail.json
+
+--- sheet: Revenue: Marketing Region Chart ---
+upstream tables: 1
+  - None
+
+sheetFieldInstances (12):
+  - [ColumnField] 'Country'  agg=None
+      -> upstream cols: ['Country (?)']
+  - [SetField] 'CountryAccessFilter'  agg=None
+      -> upstream cols: ['Country (?)']
+  - [ColumnField] 'IsCreditReportValidCB'  agg=Sum
+      -> upstream cols: ['IsCreditReportValidCB (?)']
+  - [SetField] 'RegulationAccessFilter'  agg=None
+      -> upstream cols: ['Regulation (?)']
+  - [ColumnField] 'MarketingRegion'  agg=None
+      -> upstream cols: ['MarketingRegion (?)']
+  - [ColumnField] 'IsValidCustomer'  agg=Sum
+      -> upstream cols: ['IsValidCustomer (?)']
+  - [CalculatedField] 'MiFID Category'  agg=None
+      formula: IF [MifidCategorizationID] = 2
+
+OR [MifidCategorizationID] = 3
+
+THEN "Profession
+      -> upstream cols: ['MifidCategorizationID (?)']
+  - [ColumnField] 'PlayerLevel'  agg=Count
+      -> upstream cols: ['PlayerLevel (?)']
+  - [ColumnField] 'TimeRange'  agg=Count
+      -> upstream cols: ['TimeRange (?)']
+  - [ColumnField] 'TotalRevenue'  agg=None
+      -> upstream cols: ['TotalRevenue (?)']
+  - [SetField] 'MarketingRegionAccessFilter'  agg=None
+      -> upstream cols: ['MarketingRegion (?)']
+  - [ColumnField] 'Regulation'  agg=None
+      -> upstream cols: ['Regulation (?)']
+
+worksheetFields (0):

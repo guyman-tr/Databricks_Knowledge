@@ -1,0 +1,143 @@
+﻿=== TILE: 'Revenue: Overview & Breakdowns' / 'Revenue: Totals' (asof=2026-06-08) ===
+datasource: Main DDR Query  (id=08243498-da02-edbc-3320-7ab148047558)
+
+upstream Synapse tables in custom SQL: 6
+  - BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status
+  - DWH_dbo.Dim_Country
+  - DWH_dbo.Dim_Customer
+  - DWH_dbo.Dim_MifidCategorization
+  - DWH_dbo.Dim_PlayerLevel
+  - DWH_dbo.Dim_Regulation
+
+datasource calc fields: 36
+
+tile field instances (12):
+  - [ColumnField] 'Country'                           agg=-      upstream_cols=['Country']
+  - [SetField] 'CountryAccessFilter'               agg=-      upstream_cols=['Country']
+  - [ColumnField] 'IsCreditReportValidCB'             agg=Sum    upstream_cols=['IsCreditReportValidCB']
+  - [SetField] 'RegulationAccessFilter'            agg=-      upstream_cols=['Regulation']
+  - [ColumnField] 'MarketingRegion'                   agg=-      upstream_cols=['MarketingRegion']
+  - [ColumnField] 'IsValidCustomer'                   agg=Sum    upstream_cols=['IsValidCustomer']
+  - [CalculatedField] 'MiFID Category'                    agg=-      upstream_cols=['MifidCategorizationID']
+      formula: IF [MifidCategorizationID] = 2
+ OR [MifidCategorizationID] = 3
+ THEN "Profession
+  - [ColumnField] 'PlayerLevel'                       agg=Count  upstream_cols=['PlayerLevel']
+  - [ColumnField] 'TimeRange'                         agg=Count  upstream_cols=['TimeRange']
+  - [ColumnField] 'TotalRevenue'                      agg=-      upstream_cols=['TotalRevenue']
+  - [SetField] 'MarketingRegionAccessFilter'       agg=-      upstream_cols=['MarketingRegion']
+  - [ColumnField] 'Regulation'                        agg=-      upstream_cols=['Regulation']
+
+tile worksheet calc fields: 0
+
+--- custom SQL body (12093 chars, id=4b0f23b5-ebee-5657-15ee-4db61ba04425) ---
+SELECT a.*
+
+	, dc.Name AS Country
+
+	, dmc.Name AS MifidCategory
+
+	, dpl.Name AS PlayerLevel
+
+	, dr.Name AS Regulation
+
+FROM 
+
+(
+
+SELECT a.DateID
+
+	 , a.Date
+
+	 , a.TimeRange
+
+	 , a.FirstActionType
+
+	 , a.RegulationID
+
+	 , a.IsCreditReportValidCB
+
+	 , a.IsValidCustomer
+
+	 , a.MifidCategorizationID
+
+	 , a.PlayerLevelID
+
+	 , a.CountryID
+
+	 , a.MarketingRegion
+
+	 , sum(a.Registered) AS Registered
+
+	 , sum(a.ConvertedRegistrationFTD) AS ConvertedRegistrationFTD
+
+FROM 
+
+(
+
+SELECT 
+
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+
+		, dc.RealCID
+
+		, cast(getdate()-1 as Date) AS [Date]
+
+		, 'Yesterday' AS TimeRange
+
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+
+        , dc.DesignatedRegulationID AS RegulationID
+
+        , IsCreditReportValidCB
+
+        , IsValidCustomer
+
+        , MifidCategorizationID
+
+        , PlayerLevelID
+
+        , dc.CountryID
+
+        , dc1.MarketingRegionManualName as MarketingRegion
+
+		, count(CASE WHEN RegisteredReal  BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+
+FROM DWH_dbo.Dim_Customer dc
+
+	JOIN DWH_dbo.Dim_Country dc1
+
+		ON dc.CountryID = dc1.CountryID
+
+	LEFT JOIN 
+
+		(
+
+			SELECT a.RealCID, a.FirstActionType
+
+			FROM 
+
+			(
+
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+
+			) a
+
+			WHERE RN = 1
+
+		) fa
+
+		ON dc.RealCID = fa.RealCID
+
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+
+GROUP BY 
+
+		dc.DesignatedR
+...

@@ -1,0 +1,27 @@
+id: tableau__9d8e103d__etoro_s_daily_data_report_ddr__2
+question: Open the "eToro's Daily Data Report (DDR)" dashboard. What does the headline
+  figure (row 1 of the primary view) for 2026-06-08 show?
+source: tableau:9d8e103d-c4c7-41ac-9c6f-8b72a81c4e25
+asof: '2026-06-08'
+ground_truth_sql: 'SELECT COUNT(*) AS row_count
+
+  FROM main.spaceship.bronze_spaceship_analytics_fct_money_transactions
+
+  -- workbook: eToro''s Daily Data Report (DDR) (luid 9d8e103d-c4c7-41ac-9c6f-8b72a81c4e25)
+  views=962'
+expected_value:
+  type: numeric
+  value: 7458133
+  tolerance_pct: 1.0
+expected_skill_hub: domain-aum-and-aua
+skill_coverage_status: covered
+canonical_tables:
+- main.spaceship.bronze_spaceship_analytics_fct_money_transactions
+anti_sources: []
+expected_filters: []
+notes: Auto-generated Tableau probe. Rewrite the SQL to match the specific KPI the
+  dashboard renders before pinning. Workbook total_views=962.
+tags:
+- tableau
+- views_962
+max_replicas: 3

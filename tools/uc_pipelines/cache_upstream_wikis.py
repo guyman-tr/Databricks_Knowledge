@@ -162,7 +162,15 @@ def upstreams_from_column_lineage(path: Path) -> list[str]:
 
 
 def upstreams_from_kpi_index(target: str, kpi_index: list) -> list[str]:
-    """Pull `refs[]` from `_kpi_views_index.json` for a `{schema}.{name}` ref."""
+    """Pull `refs[]` from `_kpi_views_index.json` for a `{schema}.{name}` ref.
+
+    `_kpi_views_index.json` mixes real UC FQNs (`bi_db.gold_..._fact_xxx`) with
+    bare CTE names from the source SQL (`ftd_iban`, `deposits_iban`, etc.).
+    Only the dotted refs are real UC objects — bare 1-part names are local
+    CTEs and MUST NOT be promoted to `main.<cte_name>` (which used to flood
+    the upstream-wiki cache with phantom `_NO_WIKI__main.basedata.md`-style
+    placeholders).
+    """
     if not kpi_index:
         return []
     parts = target.split(".")
@@ -172,8 +180,18 @@ def upstreams_from_kpi_index(target: str, kpi_index: list) -> list[str]:
     for entry in kpi_index:
         if entry.get("schema") == schema and entry.get("name") == name:
             refs = entry.get("refs") or []
-            return [r.lower() if r.count(".") == 2 else f"main.{r.lower()}"
-                    for r in refs]
+            out: list[str] = []
+            for r in refs:
+                rl = r.lower()
+                n_dots = rl.count(".")
+                if n_dots == 2:
+                    out.append(rl)
+                elif n_dots == 1:
+                    out.append(f"main.{rl}")
+                else:
+                    # 0-dot: bare CTE name — drop, it is not a UC object.
+                    continue
+            return out
     return []
 
 

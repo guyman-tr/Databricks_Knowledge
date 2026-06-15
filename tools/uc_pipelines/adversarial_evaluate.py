@@ -436,10 +436,11 @@ def _score_lineage_coherence(md_rows: list[dict], lineage_rows: list[dict],
         if not tag:
             continue
         tier_letter = tag.group(1).strip()
-        # Tier U is the explicit "we couldn't classify this" disclosure. It makes
-        # no tier-origin claim, so there's nothing to verify against the lineage
-        # source — skip it for the coherence check.
-        if tier_letter == "U":
+        # Tier U is the explicit "we couldn't classify this" disclosure. Tier N
+        # is the explicit "upstream wiki not yet cached" gap. Tier 5 is the
+        # explicit domain-expert sidecar override. None of these make a claim
+        # about lineage parents, so they're not checkable here.
+        if tier_letter in ("U", "N", "5"):
             continue
         origin = tag.group(2).strip()
         lin = lin_by_name.get(name)
@@ -453,8 +454,37 @@ def _score_lineage_coherence(md_rows: list[dict], lineage_rows: list[dict],
         src_token = src.split(".")[-1].lower()
         if src_token in origin.lower() or src.lower() in origin.lower():
             continue
-        # Allow producer-narration markers (notebook / view / SP / blocked-on-upstream / source-line citation)
-        if re.search(r"(notebook|view|SP|source:|L\d+|blocked-on-upstream)", origin, re.IGNORECASE):
+        # Allow producer-narration markers that intentionally make no specific
+        # upstream claim — these are honest "I can't anchor this to a single
+        # named upstream" disclosures, not coherence violations:
+        #   - `literal`              — pure literal projection (e.g. `'X' AS col`)
+        #   - `computed in source`   — bare unqualified column ref the narrator
+        #                              couldn't resolve through aliases (e.g. an
+        #                              outer SELECT's `COALESCE(col, -1) AS col`
+        #                              where `col` is a CTE projection forwarded
+        #                              upward).
+        #   - `notebook`/`view`/`SP` — legacy producer-kind labels
+        #   - `source:`/`L\d+`        — line-number citations
+        #   - `blocked-on-upstream`  — Tier-5 honest gap disclosure
+        # When origin uses `from <fqn>`, the FQN string itself contains the
+        # source object, which gets matched by the `src_token in origin` check
+        # further down — so we deliberately do NOT short-circuit `from ...`
+        # here, to keep verification of the explicit-FQN case.
+        if re.search(
+            r"(?:notebook|view|\bSP\b|source:|L\d+|blocked-on-upstream|"
+            r"\bliteral\b|computed in source|\bcomputed\b)",
+            origin,
+            re.IGNORECASE,
+        ):
+            continue
+        # `from `<fqn>`[, `<fqn>`...]` origins are produced by the source-code
+        # alias resolver: the FQN(s) listed are always genuine FROM/JOIN sources
+        # of the enclosing SELECT/CTE. The lineage parser may walk a deeper
+        # chain (e.g. dim_Position → dim_instrument), so a "mismatch" between
+        # narrator-FQN and lineage-parser-FQN is NOT a coherence violation —
+        # both are correct attributions at different layers. Skip the strict
+        # equality check in this case.
+        if re.match(r"\s*from\s+`", origin, re.IGNORECASE):
             continue
         # Inherited origin check: read the cached upstream wiki and see if the
         # downstream's tier origin matches the upstream's own tier origin for
@@ -484,13 +514,105 @@ def _score_lineage_coherence(md_rows: list[dict], lineage_rows: list[dict],
 
 
 WEIGHTS = {
-    "inheritance_fidelity": 0.35,
-    "source_code_narration_accuracy": 0.25,
-    "null_with_provenance_correctness": 0.15,
+    "inheritance_fidelity": 0.30,
+    "source_code_narration_accuracy": 0.20,
+    "null_with_provenance_correctness": 0.10,
     "completeness": 0.10,
     "shape_fidelity": 0.10,
     "lineage_coherence": 0.05,
+    # New dimension (Phase 4.5/4.6 port): rewards wikis that emit one §2
+    # subsection per discovered concept AND ground every Tier-2 Elements row
+    # in a formulas.json entry.
+    "concept_coverage": 0.15,
 }
+
+
+def _score_concept_coverage(md_text: str, md_rows: list[dict],
+                              schema_root: Path, obj_name: str) -> tuple[float, str]:
+    """Dimension 7: 15%. Reward for §2 having one subsection per concepts.json
+    entry AND for §4 Tier-2 descriptions citing the formulas.json formula.
+
+    Score breakdown:
+      - +5 base if concepts.json exists AND §2 has at least one `### 2.N` subsection
+      - +1 per concept covered (capped at +5)
+      - -2 if formulas.json exists but §4 has zero `Formula:` citations
+    """
+    concepts_path = schema_root / "_discovery" / "concepts" / f"{obj_name}.json"
+    formulas_path = schema_root / "_discovery" / "formulas" / f"{obj_name}.json"
+
+    concepts_doc: dict = {}
+    formulas_doc: dict = {}
+    if concepts_path.exists():
+        try:
+            concepts_doc = json.loads(concepts_path.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    if formulas_path.exists():
+        try:
+            formulas_doc = json.loads(formulas_path.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+
+    if not concepts_doc and not formulas_doc:
+        # Legacy wiki path — no Phase 4.5/4.6 artifacts on disk yet. Skip
+        # this dimension by returning the midpoint so it doesn't punish
+        # legacy objects.
+        return (7.5, "no concepts.json or formulas.json — Phase 4.5/4.6 not run")
+
+    expected_concepts = len(concepts_doc.get("concepts") or [])
+    s2_subsection_count = len(re.findall(r"^###\s+2\.\d+\b", md_text, re.MULTILINE))
+
+    score = 0.0
+    notes: list[str] = []
+
+    if expected_concepts == 0:
+        # No concepts to cover. Don't punish absence of §2 subsections.
+        score += 7.0
+        notes.append("no concepts to cover (concepts.json empty)")
+    else:
+        if s2_subsection_count > 0:
+            score += 5.0
+            coverage_ratio = min(1.0, s2_subsection_count / max(expected_concepts, 1))
+            score += coverage_ratio * 5.0
+            notes.append(f"§2 has {s2_subsection_count} subsection(s) for {expected_concepts} concept(s) "
+                          f"({coverage_ratio:.0%} coverage)")
+        else:
+            notes.append(f"§2 has 0 subsections but concepts.json declares {expected_concepts} — "
+                          "concepts not surfaced in prose")
+
+    # Formula consistency: every Tier-2 column should cite its formula
+    formulas_with_text = {
+        (f.get("column") or "").lower(): (f.get("formula") or "")
+        for f in formulas_doc.get("formulas", [])
+        if f.get("formula")
+    }
+    tier2_rows = [r for r in md_rows
+                  if (m := TIER_TAG_RE.search(r["description"]))
+                  and m.group(1).startswith("2")]
+    if formulas_with_text and tier2_rows:
+        cited = 0
+        missing: list[str] = []
+        for r in tier2_rows:
+            col = r["name"].lower()
+            formula = formulas_with_text.get(col, "")
+            if not formula:
+                continue
+            # Match formula text (or its first 30 chars) inside the description.
+            needle = formula[:30].strip()
+            if needle and needle in r["description"]:
+                cited += 1
+            else:
+                missing.append(r["name"])
+        ratio = cited / max(len(tier2_rows), 1)
+        if ratio < 0.5:
+            score = max(0.0, score - 3.0)
+            notes.append(f"only {cited}/{len(tier2_rows)} Tier-2 rows cite their formula "
+                          f"(missing: {missing[:3]})")
+        else:
+            notes.append(f"{cited}/{len(tier2_rows)} Tier-2 rows cite their formula")
+
+    score = max(0.0, min(10.0, score))
+    return (score, "; ".join(notes) if notes else "concept coverage OK")
 
 
 def _load_global_wiki_index() -> dict:
@@ -571,6 +693,7 @@ def evaluate_object(md_path: Path, attempt: int = 1,
     )
     shape_score, shape_just = _score_shape_fidelity(md_text, fm)
     coherence_score, coherence_just = _score_lineage_coherence(md_rows, lineage_rows, md_path)
+    concept_score, concept_just = _score_concept_coverage(md_text, md_rows, schema_root, obj_name)
 
     scores = {
         "inheritance_fidelity": fidelity_score,
@@ -579,6 +702,7 @@ def evaluate_object(md_path: Path, attempt: int = 1,
         "completeness": completeness_score,
         "shape_fidelity": shape_score,
         "lineage_coherence": coherence_score,
+        "concept_coverage": concept_score,
     }
     weighted = sum(scores[k] * WEIGHTS[k] for k in WEIGHTS)
 
@@ -631,6 +755,12 @@ def evaluate_object(md_path: Path, attempt: int = 1,
             regen.append(f"Shape fidelity {shape_score}/10: {shape_just}.")
         if coherence_score < 7:
             regen.append(f"Lineage coherence {coherence_score}/10: {coherence_just}.")
+        if concept_score < 7:
+            regen.append(f"Concept coverage {concept_score}/10: {concept_just}. "
+                          f"Re-run Phase 4.5 (discover_concepts.py) and/or Phase 4.6 "
+                          f"(extract_formulas.py) and regenerate the wiki — §2 must "
+                          f"emit one subsection per concept and §4 Tier-2 rows must "
+                          f"cite their formula text.")
 
     record = {
         "object_fqn": (fm.get("object_fqn") or f"main.{schema}.{obj_name}"),
@@ -654,6 +784,7 @@ def evaluate_object(md_path: Path, attempt: int = 1,
             "completeness": completeness_just,
             "shape_fidelity": shape_just,
             "lineage_coherence": coherence_just,
+            "concept_coverage": concept_just,
         },
     }
     return record
@@ -674,21 +805,24 @@ def _emit_markdown_report(record: dict) -> str:
     lines.append("═" * 60)
     lines.append("")
     lines.append("DIMENSION SCORES:")
-    weight_pct = {"inheritance_fidelity": "(35%)",
-                   "source_code_narration_accuracy": "(25%)",
-                   "null_with_provenance_correctness": "(15%)",
+    weight_pct = {"inheritance_fidelity": "(30%)",
+                   "source_code_narration_accuracy": "(20%)",
+                   "null_with_provenance_correctness": "(10%)",
                    "completeness": "(10%)",
                    "shape_fidelity": "(10%)",
-                   "lineage_coherence": " (5%)"}
+                   "lineage_coherence": " (5%)",
+                   "concept_coverage": "(15%)"}
     label = {"inheritance_fidelity": "Inheritance Fidelity            ",
               "source_code_narration_accuracy": "Source-Code Narration Accuracy  ",
               "null_with_provenance_correctness": "Null-with-Provenance Correctness",
               "completeness": "Completeness                    ",
               "shape_fidelity": "Shape Fidelity                  ",
-              "lineage_coherence": "Lineage Coherence               "}
+              "lineage_coherence": "Lineage Coherence               ",
+              "concept_coverage": "Concept Coverage                "}
     for dim in WEIGHTS:
         note = record["dimension_notes"].get(dim, "")
-        lines.append(f"  {label[dim]} {weight_pct[dim]}:  {record['scores'][dim]}/10  {note}")
+        score = record["scores"].get(dim, "n/a")
+        lines.append(f"  {label[dim]} {weight_pct[dim]}:  {score}/10  {note}")
     lines.append("")
     lines.append(f"WEIGHTED SCORE: {record['weighted_score']}/10")
     lines.append("")

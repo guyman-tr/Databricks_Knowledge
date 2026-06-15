@@ -1,0 +1,92 @@
+﻿=== Locate the Synapse SP ===
+  BI_DB_dbo.SP_DDR_Fact_Revenue_Generating_Actions  type=SQL_STORED_PROCEDURE
+
+=== Pull the SP body ===
+  body chars: 44372
+
+=== Options-related blocks in Synapse SP ===
+
+  --- L1427-L1442 ---
+      L1427: 	 , 5 AS RevenueMetricCategoryID
+      L1428: 	 , NULL AS IsMarginTrade
+      L1429: 	 , NULL AS IsC2P
+  >>> L1430: FROM BI_DB_dbo.Function_Revenue_OptionsPlatform (20000101, CAST(FORMAT(CAST(GETDATE() AS DATE),'yyyyMMdd') as INT), 0) frop
+      L1431: 
+      L1432: -- item specific updates for more sensible null handling
+      L1433: 
+      L1434: -- c2f updates
+      L1435: 
+      L1436: UPDATE #revenue
+      L1437: SET IsCopy = -1
+      L1438: WHERE Metric = 'CryptoToFiatFee'
+      L1439: 
+      L1440: UPDATE #revenue
+      L1441: SET IsBuy = -1
+      L1442: WHERE Metric = 'CryptoToFiatFee'
+
+  --- L1500-L1515 ---
+      L1500: 
+      L1501: UPDATE #optionsalltime
+      L1502: SET IsMarginTrade = 0
+  >>> L1503: WHERE Metric = 'Options_PFOF'
+      L1504: 
+      L1505: 
+      L1506: --SELECT * FROM #optionsalltime o WHERE o.DateID = 20251016
+      L1507: --SELECT * FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions WHERE DateID = 20251016 AND Metric LIKE '%PFOF%'
+      L1508: 
+      L1509: 
+      L1510: DELETE FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions WHERE DateID = @dateID
+      L1511: 
+      L1512: INSERT INTO BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions (
+      L1513: 	   DateID
+      L1514: 	 , [Date]
+      L1515: 	 , RealCID
+
+  --- L1572-L1587 ---
+      L1572: PRINT ' #deleteinsert Done ' + (CONVERT( VARCHAR(24), GETDATE(), 121))
+      L1573: 
+      L1574: 
+  >>> L1575: DELETE FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions WHERE RevenueMetricID = 18 -- remove and rewrite all options data, usually will not be ready in time for daily collection
+      L1576: INSERT INTO BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions (
+      L1577: 	   DateID
+      L1578: 	 , [Date]
+      L1579: 	 , RealCID
+      L1580: 	 , ActionTypeID
+      L1581: 	 , ActionType
+      L1582: 	 , InstrumentTypeID
+      L1583: 	 , IsSettled
+      L1584: 	 , IsCopy
+      L1585: 	 , Metric
+      L1586: 	 , Amount
+      L1587: 	 , CountTransactions
+
+=== All 'FROM <object>' clauses to map data sources ===
+  BI_DB_dbo.BI_DB_CopyFund_Positions
+  BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions
+  BI_DB_dbo.Dim_Revenue_Metrics
+  BI_DB_dbo.External_bi_db_recurringinvestment_positions_parquet
+  BI_DB_dbo.External_bi_output_finance_bi_db_positions_closed_to_iban_parquet
+  BI_DB_dbo.External_bi_output_finance_bi_db_positions_opened_from_iban_parquet
+  BI_DB_dbo.Function_Instrument_Snapshot_Enriched
+  BI_DB_dbo.Function_Revenue_AdminFee
+  BI_DB_dbo.Function_Revenue_CashoutFee_ExcludeRedeem
+  BI_DB_dbo.Function_Revenue_Commissions
+  BI_DB_dbo.Function_Revenue_ConversionFee
+  BI_DB_dbo.Function_Revenue_CryptoToFiat_C2F
+  BI_DB_dbo.Function_Revenue_Dividend
+  BI_DB_dbo.Function_Revenue_DormantFee
+  BI_DB_dbo.Function_Revenue_FullCommissions
+  BI_DB_dbo.Function_Revenue_InterestFee
+  BI_DB_dbo.Function_Revenue_OptionsPlatform
+  BI_DB_dbo.Function_Revenue_RolloverFee
+  BI_DB_dbo.Function_Revenue_SDRT
+  BI_DB_dbo.Function_Revenue_Share_Lending
+  BI_DB_dbo.Function_Revenue_SpotAdjustFee
+  BI_DB_dbo.Function_Revenue_StakingFee
+  BI_DB_dbo.Function_Revenue_TicketFee
+  BI_DB_dbo.Function_Revenue_TicketFeeByPercent
+  BI_DB_dbo.Function_Revenue_TransferCoinFee
+  DWH_dbo.Dim_ActionType
+  DWH_dbo.Dim_Instrument
+  DWH_dbo.Dim_Position
+  [BI_DB_dbo].[V_C2P_Positions]

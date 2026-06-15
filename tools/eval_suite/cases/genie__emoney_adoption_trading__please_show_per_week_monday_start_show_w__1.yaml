@@ -1,0 +1,221 @@
+id: genie__emoney_adoption_trading__please_show_per_week_monday_start_show_w__1
+question: 'Please show, per week (Monday start, show week start date):'
+source: genie_benchmark:01f0c51e5a4a1506bb34d4751918b4d2
+asof: '2026-06-08'
+ground_truth_sql: WITH fmi_fr_customers AS ( SELECT fmi.CID, date_trunc('WEEK', fmi.emoney_fmi_date)
+  AS cohort_week, fmi.emoney_fmi_date FROM main.bi_output.vg_emoney_panel_firstdates_em1
+  AS fmi INNER JOIN main.bi_output.vg_fact_snapshotcustomer_for_emoney_genie AS snap
+  ON fmi.CID = snap.CID AND CAST(date_format(fmi.emoney_fmi_date, 'yyyyMMdd') AS INT)
+  BETWEEN snap.FromDateID AND snap.ToDateID WHERE snap.Country_FromDate_ToDate = 'France'
+  AND fmi.emoney_fmi_date >= '2025-08-04' AND fmi.emoney_fmi_date IS NOT NULL ), open_positions_7d_after_fmi
+  AS ( SELECT fmi.CID, fmi.cohort_week, SUM(COALESCE(lc4.num_positions_total,0)) AS
+  open_positions_7d FROM fmi_fr_customers AS fmi LEFT JOIN main.bi_output.vg_positionsvolumeandattributes_lc4_source
+  AS lc4 ON fmi.CID = lc4.CID AND lc4.position_event_date BETWEEN CAST(fmi.emoney_fmi_date
+  AS DATE) AND date_add(CAST(fmi.emoney_fmi_date AS DATE), 6) AND lc4.position_event_flag
+  = 'OpenDataFlag' GROUP BY fmi.CID, fmi.cohort_week ) SELECT cohort_week, COUNT(DISTINCT
+  CID) AS num_new_fmi_customers, SUM(open_positions_7d) AS total_open_positions_7d_after_fmi,
+  TRY_DIVIDE(SUM(open_positions_7d), COUNT(DISTINCT CID)) AS avg_open_positions_per_fmi_customer_7d
+  FROM open_positions_7d_after_fmi GROUP BY cohort_week ORDER BY cohort_week ASC
+expected_value:
+  type: tabular
+  value:
+  - - '2025-08-04T00:00:00.000Z'
+    - 995
+    - 2932
+    - 2.9467336683417087
+  - - '2025-08-11T00:00:00.000Z'
+    - 1140
+    - 3314
+    - 2.907017543859649
+  - - '2025-08-18T00:00:00.000Z'
+    - 995
+    - 2517
+    - 2.52964824120603
+  - - '2025-08-25T00:00:00.000Z'
+    - 1032
+    - 2833
+    - 2.74515503875969
+  - - '2025-09-01T00:00:00.000Z'
+    - 933
+    - 2529
+    - 2.710610932475884
+  - - '2025-09-08T00:00:00.000Z'
+    - 1040
+    - 2910
+    - 2.798076923076923
+  - - '2025-09-15T00:00:00.000Z'
+    - 963
+    - 2498
+    - 2.5939771547248185
+  - - '2025-09-22T00:00:00.000Z'
+    - 894
+    - 2099
+    - 2.3478747203579418
+  - - '2025-09-29T00:00:00.000Z'
+    - 1096
+    - 2999
+    - 2.7363138686131387
+  - - '2025-10-06T00:00:00.000Z'
+    - 1180
+    - 4207
+    - 3.5652542372881357
+  - - '2025-10-13T00:00:00.000Z'
+    - 2314
+    - 14052
+    - 6.072601555747623
+  - - '2025-10-20T00:00:00.000Z'
+    - 1789
+    - 6026
+    - 3.36836221352711
+  - - '2025-10-27T00:00:00.000Z'
+    - 1774
+    - 4711
+    - 2.6555806087936866
+  - - '2025-11-03T00:00:00.000Z'
+    - 1649
+    - 4095
+    - 2.4833232261976956
+  - - '2025-11-10T00:00:00.000Z'
+    - 1306
+    - 3142
+    - 2.405819295558959
+  - - '2025-11-17T00:00:00.000Z'
+    - 1224
+    - 2865
+    - 2.340686274509804
+  - - '2025-11-24T00:00:00.000Z'
+    - 977
+    - 2283
+    - 2.336745138178096
+  - - '2025-12-01T00:00:00.000Z'
+    - 1078
+    - 2809
+    - 2.6057513914656774
+  - - '2025-12-08T00:00:00.000Z'
+    - 832
+    - 2125
+    - 2.5540865384615383
+  - - '2025-12-15T00:00:00.000Z'
+    - 784
+    - 2068
+    - 2.6377551020408165
+  - - '2025-12-22T00:00:00.000Z'
+    - 675
+    - 1590
+    - 2.3555555555555556
+  - - '2025-12-29T00:00:00.000Z'
+    - 913
+    - 2567
+    - 2.8116100766703176
+  - - '2026-01-05T00:00:00.000Z'
+    - 1105
+    - 3443
+    - 3.1158371040723982
+  - - '2026-01-12T00:00:00.000Z'
+    - 1033
+    - 2876
+    - 2.784123910939013
+  - - '2026-01-19T00:00:00.000Z'
+    - 1093
+    - 4753
+    - 4.348581884720952
+  - - '2026-01-26T00:00:00.000Z'
+    - 1466
+    - 7428
+    - 5.066848567530696
+  - - '2026-02-02T00:00:00.000Z'
+    - 1463
+    - 5679
+    - 3.88174982911825
+  - - '2026-02-09T00:00:00.000Z'
+    - 951
+    - 2689
+    - 2.8275499474237646
+  - - '2026-02-16T00:00:00.000Z'
+    - 687
+    - 1974
+    - 2.873362445414847
+  - - '2026-02-23T00:00:00.000Z'
+    - 904
+    - 3226
+    - 3.5685840707964602
+  - - '2026-03-02T00:00:00.000Z'
+    - 1441
+    - 8577
+    - 5.952116585704372
+  - - '2026-03-09T00:00:00.000Z'
+    - 1017
+    - 4184
+    - 4.114060963618486
+  - - '2026-03-16T00:00:00.000Z'
+    - 716
+    - 2509
+    - 3.5041899441340782
+  - - '2026-03-23T00:00:00.000Z'
+    - 694
+    - 2394
+    - 3.4495677233429394
+  - - '2026-03-30T00:00:00.000Z'
+    - 705
+    - 2515
+    - 3.5673758865248226
+  - - '2026-04-06T00:00:00.000Z'
+    - 742
+    - 1982
+    - 2.6711590296495955
+  - - '2026-04-13T00:00:00.000Z'
+    - 776
+    - 2059
+    - 2.6533505154639174
+  - - '2026-04-20T00:00:00.000Z'
+    - 641
+    - 1485
+    - 2.3166926677067083
+  - - '2026-04-27T00:00:00.000Z'
+    - 640
+    - 1605
+    - 2.5078125
+  - - '2026-05-04T00:00:00.000Z'
+    - 761
+    - 2072
+    - 2.7227332457293034
+  - - '2026-05-11T00:00:00.000Z'
+    - 782
+    - 2444
+    - 3.125319693094629
+  - - '2026-05-18T00:00:00.000Z'
+    - 639
+    - 1377
+    - 2.1549295774647885
+  - - '2026-05-25T00:00:00.000Z'
+    - 643
+    - 1736
+    - 2.699844479004666
+  - - '2026-06-01T00:00:00.000Z'
+    - 772
+    - 1895
+    - 2.454663212435233
+  - - '2026-06-08T00:00:00.000Z'
+    - 133
+    - 142
+    - 1.0676691729323309
+  columns:
+  - cohort_week
+  - num_new_fmi_customers
+  - total_open_positions_7d_after_fmi
+  - avg_open_positions_per_fmi_customer_7d
+  tolerance_pct: 0.5
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: covered
+canonical_tables:
+- main.bi_output.vg_emoney_panel_firstdates_em1
+- main.bi_output.vg_fact_snapshotcustomer_for_emoney_genie
+- main.bi_output.vg_positionsvolumeandattributes_lc4_source
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'eMoney Adoption & Trading' (01f0c51e5a4a1506bb34d4751918b4d2)
+  benchmark question.
+tags:
+- genie_benchmark
+- emoney_adoption_trading
+max_replicas: 3

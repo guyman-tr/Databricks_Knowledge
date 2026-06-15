@@ -1,0 +1,3 @@
+state,rowgroup_count,total_rows,avg_rows_per_rowgroup,under_100k_rgs,deleted_rows,under_100k_pct,interpretation
+COMPRESSED,352258,157277014781,446482,110494,155954080,31.4,Healthy compressed rowgroups - 31% are below 100K which is fragmented. Target is ~1M rows per RG.
+OPEN,14148,51169434,3616,14148,0,100.0,Tiny uncompressed RGs from small recent inserts - normal during ETL.

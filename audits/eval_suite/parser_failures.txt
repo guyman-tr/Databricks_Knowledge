@@ -1,0 +1,83 @@
+﻿
+==============================================================================
+CASE: ddr_mimo_global_deposits_count_yesterday
+  expected=19769.0  observed=29900000.0  diff_pct=151146.901714806
+==============================================================================
+I'll query the cross-platform MIMO deposit data for that date. Let me check the payments domain structure first.Running a live query via Databricks MCP Γאפ if nothing follows in ~10Γאף15 seconds, check **Settings Γזע MCP** (server may be disconnected).Let me check the schema structure first.Now I can query correctly with the proper column names.Let me also get a platform breakdown for context.On **2026-06-08**, there were **19,880 global deposit transactions** from **16,942 unique customers** (excluding internal transfers and crypto-redeem reclassifications).
+
+### Platform Breakdown
+
+| Platform | Deposit Count | Unique Customers | Total USD |
+|----------|--------------|------------------|-----------|
+| TradingPlatform | 10,785 (54%) | 9,466 | $15.5M |
+| eMoney | 9,070 (46%) | 7,558 | $14.3M |
+| Options | 15 (<1%) | 15 | $12K |
+| MoneyFarm | 10 (<1%) | 10 | $123K |
+
+**Query details:**
+- Source: `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms`
+- Filters applied: `MIMOAction = 'Deposit'`, `IsInternalTransfer = 0`, `IsRedeem = 0`
+- Combined deposit value: ~$29.9M USD
+
+==============================================================================
+CASE: ddr_pnl_daily_total_pnl_yesterday
+  expected=104757898.38  observed=142321671.0  diff_pct=35.85769970655649
+==============================================================================
+I'll help you find the total daily PnL for 2026-06-08. Let me start by reading the trading domain skill to identify the right tables for P&L data.Let me read the specific sub-skill for P&L to understand the exact query pattern.I'll query the daily PnL fact for 2026-06-08. Let me run this via Databricks MCP.
+
+*Running a live query via Databricks MCP Γאפ if nothing follows in ~10Γאף15 seconds, check **Settings Γזע MCP** (server may be disconnected).*## Total Daily PnL on 2026-06-08
+
+**Total Daily PnL: $105,436,786.57**
+
+This breaks down into:
+
+- **Unrealized PnL Change** (mark-to-market): **+$106,583,275.53**
+  - Day-over-day change in unrealized gains/losses on open positions
+  
+- **Realized Profit** (closed positions): **-$1,146,488.96**
+  - Net profit/loss from positions closed on this date
+
+- **Total positions involved**: 142,321,671 position-instances across all dimension slices
+
+---
+
+**Context**: This is the aggregate across all customers on the Trading Platform, summed across all instrument types (FX, stocks, crypto, commodities, etc.) and all position characteristics (copy/manual, leveraged/non-leveraged, long/short, real/CFD). 
+
+The unrealized component dominates on this date Γאפ customers saw significant mark-to-market gains on their open positions (+$106.6M), which more than offset the small net loss from closed positions (-$1.1M).
+
+**Data source**: `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl` filtered to `etr_ymd = '2026-06-08'`.
+
+==============================================================================
+CASE: ddr_pnl_total_position_pnl_yesterday
+  expected=-564406548.55  observed=550938140.86  diff_pct=-197.61370456728375
+==============================================================================
+I'll help you find the total unrealized P&L for all open positions as of 2026-06-08. Let me load the trading domain skill first to understand the best data source for this.Running a live query via Databricks MCP to fetch the total unrealized P&L as of 2026-06-08 Γאפ if nothing follows in ~10Γאף15 seconds, check **Settings Γזע MCP** (server may be disconnected).## Total Unrealized P&L as of 2026-06-08
+
+**Total mark-to-market unrealized P&L: -$550,938,140.86** (approximately **-$551 million**)
+
+Γ£ף Confirmed: Open positions are aggregately **under water** (negative P&L).
+
+### Context
+- **Customers with open positions:** 4,556,913
+- **Total Trading Platform equity:** $16.8 billion
+- **Net Open Position (NOP):** $15.1 billion
+- **Unrealized P&L as % of TP equity:** -3.3%
+
+This represents the **cumulative unrealized P&L** across all open positions at end-of-day on June 8, 2026 Γאפ the mark-to-market value showing how much customers' open positions would gain or lose if closed at that day's prices.
+
+**Source:** `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum.TotalPositionPNL` for `DateID = 20260608`
+
+==============================================================================
+CASE: ddr_revenue_full_commission_yesterday
+  expected=1229189.3105  observed=3916909.0  diff_pct=218.65791270237384
+==============================================================================
+I'll help you find the total Full Commission revenue for 2026-06-08. Let me load the revenue domain skill and query the data.The total **Full Commission revenue** on 2026-06-08 was **$3,356,779.56 USD**.
+
+This represents:
+- **3,916,909** customer actions (position opens/closes)
+- **206,789** unique customers
+
+Full Commission includes the retail trading spread markup plus both fixed and percentage-based ticket fees, with the partner/affiliate share included. This is the primary revenue driver for the trading platform, typically accounting for ~60% of total revenue.
+
+---
+*Scope: Trading-platform positions only. Data source: `de_output.de_output_etoro_kpi_fact_customeraction_w_metrics` at native position-action grain.*

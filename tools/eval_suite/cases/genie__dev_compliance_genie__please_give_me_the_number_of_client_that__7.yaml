@@ -1,0 +1,28 @@
+id: genie__dev_compliance_genie__please_give_me_the_number_of_client_that__7
+question: please give me the number of client that are allowed for CFD but didn't
+  trade CFD
+source: genie_benchmark:01f158ec1e0e1bb0852910e06d28c582
+asof: '2026-06-08'
+ground_truth_sql: "WITH cfd_allowed_clients AS (\n  SELECT DISTINCT\n    RealCID\n\
+  \  FROM\n    `main`.`etoro_kpi`.`cfd_statusinfo_v`\n  WHERE\n    CFD_Status IN ('CFD_Allowed')\n\
+  ),\nopen_cfd_traders AS (\n  SELECT DISTINCT\n    cid\n  FROM\n    `main`.`etoro_kpi`.`positions_for_compliance_v`\n\
+  \  WHERE\n    issettled = 0\n)\nSELECT\n  COUNT(*) AS num_clients_allowed_no_trade\n\
+  FROM\n  cfd_allowed_clients cac\n    LEFT JOIN open_cfd_traders oct\n      ON cac.RealCID\
+  \ = oct.cid\nWHERE\n  oct.cid IS NULL"
+expected_value:
+  type: numeric
+  value: 11226822
+  tolerance_pct: 0.5
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: covered
+canonical_tables:
+- main.etoro_kpi.cfd_statusinfo_v
+- main.etoro_kpi.positions_for_compliance_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'DEV - Compliance Genie' (01f158ec1e0e1bb0852910e06d28c582)
+  benchmark question.
+tags:
+- genie_benchmark
+- dev_compliance_genie
+max_replicas: 3

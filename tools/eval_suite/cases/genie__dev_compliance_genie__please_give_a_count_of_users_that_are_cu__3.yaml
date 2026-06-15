@@ -1,0 +1,32 @@
+id: genie__dev_compliance_genie__please_give_a_count_of_users_that_are_cu__3
+question: please give a count of users that are currently blocked for CFD and answered
+  q9 = '5% / -3%' and didn't answer q10 = 'Up to $10K'
+source: genie_benchmark:01f158ec1e0e1bb0852910e06d28c582
+asof: '2026-06-08'
+ground_truth_sql: "WITH blocked_cfd_users AS (\n  SELECT DISTINCT `RealCID`\n  FROM\
+  \ `main`.`etoro_kpi`.`cfd_statusinfo_v`\n  WHERE `CFD_Status` != 'CFD_Allowed'\n\
+  ),\nq9_users AS (\n  SELECT DISTINCT `CID`\n  FROM `main`.`etoro_kpi`.`kyc_for_compliance_v`\n\
+  \  WHERE `QuestionId` = 9 AND `AnswerText` = '5% / -3%' AND `Is_Current` = 1\n),\n\
+  q10_users AS (\n  SELECT DISTINCT `CID`\n  FROM `main`.`etoro_kpi`.`kyc_for_compliance_v`\n\
+  \  WHERE `QuestionId` = 10 AND `AnswerText` = 'Up to $10K' AND `Is_Current` = 1\n\
+  )\nSELECT COUNT(DISTINCT bcu.RealCID) AS blocked_cfd_q9_no_q10_count\nFROM blocked_cfd_users\
+  \ bcu\nJOIN q9_users q9u ON CAST(bcu.RealCID AS STRING) = CAST(q9u.CID AS STRING)\n\
+  LEFT JOIN q10_users q10u ON CAST(bcu.RealCID AS STRING) = CAST(q10u.CID AS STRING)\n\
+  WHERE q10u.CID IS NULL"
+expected_value:
+  type: numeric
+  value: 702669
+  tolerance_pct: 0.5
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: covered
+canonical_tables:
+- main.etoro_kpi.cfd_statusinfo_v
+- main.etoro_kpi.kyc_for_compliance_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'DEV - Compliance Genie' (01f158ec1e0e1bb0852910e06d28c582)
+  benchmark question.
+tags:
+- genie_benchmark
+- dev_compliance_genie
+max_replicas: 3

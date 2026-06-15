@@ -1,0 +1,47 @@
+id: genie__ops_documents_verification__what_is_the_processing_sla_bucket_distri__4
+question: What is the processing SLA bucket distribution for documents in the last
+  30 days?
+source: genie_benchmark:01f0f77496571e68a9f115149bcc48d9
+asof: '2026-06-08'
+ground_truth_sql: "SELECT\n  definition_sla_bucket,\n  COUNT(*) as document_count,\n\
+  \  ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (), 2) as percentage\nFROM\n  main.bi_output_stg.bi_output_operations_documentanalysis\n\
+  WHERE\n  upload_date >= CURRENT_DATE - INTERVAL 30 DAY\nGROUP BY\n  definition_sla_bucket\n\
+  ORDER BY\n  document_count DESC"
+expected_value:
+  type: tabular
+  value:
+  - - ≤ 1 hour
+    - 316596
+    - 93.24
+  - - 1–4 hours
+    - 9384
+    - 2.76
+  - - 4–24 hours
+    - 9014
+    - 2.65
+  - - 1–3 days
+    - 2483
+    - 0.73
+  - - 4–7 days
+    - 1440
+    - 0.42
+  - - 8+ days
+    - 622
+    - 0.18
+  columns:
+  - definition_sla_bucket
+  - document_count
+  - percentage
+  tolerance_pct: 0.5
+expected_skill_hub: domain-ops-and-onboarding
+skill_coverage_status: covered
+canonical_tables:
+- main.bi_output_stg.bi_output_operations_documentanalysis
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'OPS  - Documents & Verification' (01f0f77496571e68a9f115149bcc48d9)
+  benchmark question.
+tags:
+- genie_benchmark
+- ops_documents_verification
+max_replicas: 3

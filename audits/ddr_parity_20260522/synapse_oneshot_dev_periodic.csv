@@ -1,0 +1,20 @@
+phase,metric,value,notes
+cohort_build,total_cids,30986,
+periodic_pre,GlobalFirstDeposited_ThisWeek_sum,34921,
+periodic_pre,GlobalFirstDeposited_ThisMonth_sum,140935,plateau (all cohort users had FTD this month/quarter/year in some window)
+periodic_pre,GlobalFirstDeposited_ThisQuarter_sum,140935,
+periodic_pre,GlobalFirstDeposited_ThisYear_sum,140935,
+periodic_pre,GlobalDeposited_ThisWeek_sum,34921,
+periodic_pre,GlobalDeposited_ThisMonth_sum,140935,
+periodic_pre,IsFunded_ThisWeek_sum,1116,smaller leak (most cohort users had $1 < funded threshold)
+periodic_pre,IsFunded_ThisYear_sum,1116,
+periodic_pre,FirstTimeFunded_ThisMonth_sum,592,
+periodic_pre,DepositedTP_ThisWeek_sum,34921,
+periodic_pre,ReDepositedTP_ThisYear_sum,0,validates: cohort has no multi-deposits as designed
+periodic_pre,periodic_rows_for_cohort,4879461,
+periodic_update,rows_touched,4879461,UPDATE ran in 1302s on dev pool (56 columns per row)
+periodic_post,all_11_metrics,0,every flag verified zero after update
+spot_20250831,bad_cohort_rows,13495,gftd_y=0 gdep_y=0 isfund_y=0
+spot_20251231,bad_cohort_rows,13497,gftd_y=0 gdep_y=0 isfund_y=0
+spot_20260331,bad_cohort_rows,13497,gftd_y=0 gdep_y=0 isfund_y=0
+spot_20260529,bad_cohort_rows,30986,gftd_y=0 gdep_y=0 isfund_y=0

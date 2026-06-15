@@ -1,0 +1,32 @@
+id: genie__feed_analytics_genie__what_is_the_feed_mau_in_the_last_three_m__0
+question: What is the Feed MAU in the last three months?
+source: genie_benchmark:01f105b421e7187baa5e81595599f7f3
+asof: '2026-06-08'
+ground_truth_sql: "SELECT\r\n  date_trunc('MONTH', to_date(`etr_ymd`)) AS month,\r\
+  \n  COUNT(DISTINCT `mp_user_id`) AS feed_mau\r\nFROM\r\n  `main`.`mixpanel`.`silver`\r\
+  \nWHERE\r\n  `mp_event_name` = 'Feed - View Default Feed'\r\n  AND to_date(`etr_ymd`)\
+  \ >= date_trunc('MONTH', date_add(MONTH, -2, CURRENT_DATE))\r\n  AND to_date(`etr_ymd`)\
+  \ <= CURRENT_DATE\r\nGROUP BY\r\n  date_trunc('MONTH', to_date(`etr_ymd`))\r\nORDER\
+  \ BY\r\n  month DESC"
+expected_value:
+  type: numeric_series
+  value:
+  - - '2026-06-01T00:00:00.000Z'
+    - 438956
+  - - '2026-05-01T00:00:00.000Z'
+    - 820536
+  - - '2026-04-01T00:00:00.000Z'
+    - 854884
+  tolerance_pct: 0.5
+expected_skill_hub: domain-product-analytics
+skill_coverage_status: covered
+canonical_tables:
+- main.mixpanel.silver
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'Feed Analytics Genie' (01f105b421e7187baa5e81595599f7f3)
+  benchmark question.
+tags:
+- genie_benchmark
+- feed_analytics_genie
+max_replicas: 3

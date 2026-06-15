@@ -1,0 +1,31 @@
+phase,metric,value,notes
+cohort_build,total_cids,30986,Aug 2025 (13307) + May 2026 (17679); dev Dim_Customer happened to have both
+cohort_build,aug_2025_19,10383,
+cohort_build,aug_2025_20,2924,
+cohort_build,may_2026_22,17202,
+cohort_build,may_2026_23,467,
+cohort_build,may_2026_25,10,
+pre_update,IsDepositor_1_rows,2558914,sum across all DateIDs for cohort CIDs
+pre_update,IsDepositorGlobal_1_rows,2559104,
+pre_update,Global_FTDA_nonzero_rows,2559104,
+pre_update,TP_FTD_DateID_notnull_rows,2559104,
+update,rows_touched,4929491,UPDATE ran in 762.3s on dev pool
+post_update,IsDepositor_1_rows,0,
+post_update,IsDepositorGlobal_1_rows,0,
+post_update,Global_FTDA_nonzero_rows,0,
+post_update,any_FTD_anchor_set_rows,0,
+post_update,first_deposited_flag_set_rows,0,
+spot_20250818,bad_cohort_rows,601,Day-zero cohort rows in daily_status; some cohort users registered later
+spot_20250818,isdep_global_1,0,
+spot_20250901,bad_cohort_rows,13495,
+spot_20250901,isdep_global_1,0,
+spot_20260101,bad_cohort_rows,13497,steady-state Aug 2025 cohort tracking
+spot_20260101,isdep_global_1,0,
+spot_20260420,bad_cohort_rows,13497,
+spot_20260420,isdep_global_1,0,
+spot_20260522,bad_cohort_rows,30512,May 2026 cohort joins
+spot_20260522,isdep_global_1,0,
+spot_20260525,bad_cohort_rows,30986,
+spot_20260525,isdep_global_1,0,
+spot_20260529,bad_cohort_rows,30986,
+spot_20260529,isdep_global_1,0,

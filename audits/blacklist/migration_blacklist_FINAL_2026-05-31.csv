@@ -1,0 +1,386 @@
+ProcedureName,TableName,FrequencySP,ProcessName,Priority,blacklist_reason,source_phase,source_verdict,max_update,modify_date,days_stale
+BI_DB_dbo.SP_AB_Test,BI_DB_dbo.BI_DB_AB_Test,Daily,Daily,0,A0_DISABLED,A0,A0_DISABLED,,,
+BI_DB_dbo.SP_Daily_PI_Performance,BI_DB_dbo.BI_DB_Daily_PI_Performance,Daily,COPY DATA,1,A0_DISABLED,A0,A0_DISABLED,,,
+BI_DB_dbo.SP_DailyCommoditiesReport,BI_DB_dbo.BI_DB_DailyCommoditiesReport_Clients,Daily,COPY DATA,1,A0_DISABLED,A0,A0_DISABLED,,,
+BI_DB_dbo.SP_DailyZeroPnL_Stocks,BI_DB_dbo.BI_DB_DailyZeroPnL_Stocks,Daily,COPY DATA,0,A0_DISABLED,A0,A0_DISABLED,,,
+BI_DB_dbo.SP_MergedDailySchedules,BI_DB_dbo.BI_DB_MergedDailySchedules,Daily,COPY DATA,1,A0_DISABLED,A0,A0_DISABLED,,,
+BI_DB_dbo.SP_MonthlyGain,BI_DB_dbo.BI_DB_MonthlyGain,Monthly,Daily,0,A0_DISABLED,A0,A0_DISABLED,,,
+BI_DB_dbo.SP_MonthlyRiskScore,BI_DB_dbo.BI_DB_MonthlyRiskScore,Monthly,Daily,0,A0_DISABLED,A0,A0_DISABLED,,,
+BI_DB_dbo.SP_PI_Dashboard,BI_DB_dbo.BI_DB_PI_Dashboard,Daily,COPY DATA,1,A0_DISABLED,A0,A0_DISABLED,,,
+BI_DB_dbo.SP_VolatilityEvents,BI_DB_dbo.BI_DB_VolatilityEvents,Daily,Daily,0,A0_DISABLED,A0,A0_DISABLED,,,
+Dealing_dbo.SP_Boundary_Cost,Dealing_dbo.Dealing_Boundary_Cost,Daily,COPY DATA,0,A0_DISABLED,A0,A0_DISABLED,,,
+DWH_pagetracking.Fact_MarketPageViews,DWH_pagetracking.Fact_MarketPageViews,Daily,COPY DATA,0,A0_DISABLED,A0,A0_DISABLED,,,
+DWH_pagetracking.Fact_UserPageViews,DWH_pagetracking.Fact_UserPageViews,,COPY DATA,0,A0_DISABLED,A0,A0_DISABLED,,,
+BI_DataBricks-etoro_customer_customer_deceased,BI_OUTPUT/Finance/Tables/customer_customer_deceased,Daily,Daily,0,A4_DAILY_30D,A0,A4_DAILY_30D,,,
+DataBricks-export_table_to_file-SFMC_etoroDailyData,Gold/MC/SFMC_test/etoroDailyData,Daily,Daily,0,A4_DAILY_30D,A0,A4_DAILY_30D,,,
+Dealing_dbo.SP_GSRecon,Dealing_dbo.Dealing_GSReconTrades,Daily,SB_Daily,0,A4_DAILY_30D,A0,A4_DAILY_30D,,,
+[Dealing_dbo].[SP_CopyPortfolio_Allocation],[Dealing_dbo].Dealing_CopyPortfolio_Allocation,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DataBricks-Dealing_Latency_Report,analysis/BI_OUTPUT/Dealing/latency_compensation,Daily,Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DataBricks-PTP_Automation,analysis/BI_OUTPUT/Finance/Tables/Tax_PTP_Monitoring,Daily,Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.[SP_EY_Audit_RollOverFee],BI_DB_dbo.BI_DB_EY_Audit_RollOverFees,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.Client_Balance_Breakdown,BI_DB_dbo.Client_Balance_Breakdown_Instrument_Level,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_AffiliateFraudLoss,BI_DB_dbo.BI_DB_Affiliate_Fraud_Loss,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_AML_Affiliate_Abuse,BI_DB_dbo.BI_DB_AML_Affiliate_Abuse_Users,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_AML_Multiple_Accounts,BI_DB_dbo.BI_DB_AML_Multiple_Accounts_Withdrawfulldata,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_AML_Terror_Monitor_Dashboard,BI_DB_dbo.BI_DB_AML_Terror_Monitor_Dashboard,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_ASIC_ClientBalanceFinance,BI_DB_dbo.BI_DB_ASIC_ClientBalanceFinance,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_AssignmentToolBacklog,BI_DB_dbo.BI_DB_AssignmentToolBacklog,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_AssignmentToolSLAs,BI_DB_dbo.BI_DB_AssignmentToolSLAs,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_AssignmentToolTasks,BI_DB_dbo.BI_DB_AssignmentToolTasks,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_AssignmentToolVolumes,BI_DB_dbo.BI_DB_AssignmentToolVolumes,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_BI_DB_ASIC_Monitoring_CFD,BI_DB_dbo.BI_DB_ASIC_Monitoring_CFD,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_BI_DB_ASIC_Monitoring_CFD_W_Sun,BI_DB_dbo.BI_DB_ASIC_Monitoring_CFD_W_Sun,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_BI_DB_Compliance_BI_Clients_Dashboard,BI_DB_dbo.BI_DB_Compliance_Clients_Dashboard_EOM_Pos,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_CB_Gap_Categorization,BI_DB_dbo.BI_DB_CB_CycleGap_Categorization,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_CID_Daily_NWA,BI_DB_dbo.BI_DB_CID_Daily_NWA,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Client_Balance_New,BI_DB_dbo.BI_DB_Client_New_CompensationBreakdown,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Copyfunds_Watched_Not_Invested,BI_DB_dbo.BI_DB_Copyfunds_Watched_Not_Invested,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Crypto_NOP,BI_DB_dbo.BI_DB_Crypto_NOP_CID,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_CycleGap,BI_DB_dbo.BI_DB_CycleGap,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_D_Email_for_KYT,BI_DB_dbo.Email_for_KYT,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Daily_CB_Gaps_All,BI_DB_dbo.BI_DB_Daily_CB_Gaps_All,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Daily_CreditLine,BI_DB_dbo.BI_DB_Daily_CreditLine,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Daily_Dividends,BI_DB_dbo.BI_DB_Daily_Dividends,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Daily_PI_Performance_COPYDATA_RuningSideBySide,BI_DB_dbo.BI_DB_Daily_PI_Performance_COPYDATA_RuningSideBySide,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_DailyDividendsByPosition,BI_DB_dbo.BI_DB_DailyDividendsByPosition,Daily,SB_Daily,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_DailyZero_TreeSize_NEW,BI_DB_dbo.BI_DB_DailyZero_TreeSize_NEW,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_DepositWithdrawFee,BI_DB_dbo.BI_DB_DepositWithdrawFee,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_DWH_GainDaily_COPYDATA_RuningSideBySide,BI_DB_dbo.DWH_GainDaily_COPYDATA_RuningSideBySide,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_ECB_ExchangeRateAPI_Update_Columns,BI_DB_dbo.BI_DB_ECB_RateExtractFromAPI,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_EndOfDayReport_Cashouts,BI_DB_dbo.BI_DB_EndOfDayReport_Cashouts,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_EndOfDayReport_Redeems,BI_DB_dbo.BI_DB_EndOfDayReport_Redeems,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_EY_Audit_Auditor_Unrealized_Calculations,BI_DB_dbo.BI_DB_EY_Audit_Automation_UnrealizedCommissions_Results,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_EY_Audit_Opened_Positions,BI_DB_dbo.EY_Audit_Automation_Position_Open_Configs,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_EY_Audit_Position_LastOpPriceRate,BI_DB_dbo.EY_Audit_Position_LastOpRate,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Finance_Non_US_Settlement_Report,BI_DB_dbo.BI_DB_GAML_Real_Positions_Report_Opened_2022,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Finance_Panel_Reports,BI_DB_dbo.BI_DB_Finance_Panel_Reports,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_FirstTimeFunded,BI_DB_dbo.BI_DB_FirstTimeFunded,Daily,SB_Daily,90,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_FirstTimeRev30,BI_DB_dbo.BI_DB_FirstTimeRev30,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Guru_Ratio_Populate,BI_DB_dbo.BI_DB_GuruRatios,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_GuruRatio,BI_DB_dbo.BI_DB_GuruRatios,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Instrument_Details_During_Call,BI_DB_dbo.BI_DB_Instrument_Details_During_Call,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_KYC_Report,BI_DB_dbo.BI_DB_KYCUserRawDataLeveled,Daily,SB_Daily,1,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_MarketingCloudUserBehavior,BI_DB_dbo.BI_DB_MarketingCloudUserBehaviorPI,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_NOP_TradingActivity_Risk_Daily,BI_DB_dbo.BI_DB_TradingActivity_Risk_Daily,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Outliers_New,BI_DB_dbo.BI_DB_Outliers_New,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_PI_Dashboard_COPYDATA_RuningSideBySide,BI_DB_dbo.BI_DB_PI_WeeklyTrades,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_PositionPnL,BI_DB_dbo.BI_DB_PositionPnL,Daily,SB_Daily,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_PositionPnL_UnrealizedPnL_Close_Adjustment,BI_DB_dbo.BI_DB_PositionPnL_UnrealizedPnL_Close_Adjustment,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Professional_List,SalesForce_dbo.Professional_List,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Real_Crypto_Loans,BI_DB_dbo.BI_DB_Real_Crypto_Loan,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_RealCrypto_Lev2,BI_DB_dbo.BI_DB_RealCrypto_Lev2,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Risk_RiskStatusChange,BI_DB_dbo.BI_DB_Risk_RiskStatusChanges,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_RiskClassification,BI_DB_dbo.BI_DB_RiskClassification,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_RollOverFee_Dividends,BI_DB_dbo.BI_DB_RollOverFee_Dividends,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_SCD_Staking_Position,BI_DB_dbo.SCD_Staking_Position_Log,Daily,COPY DATA,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_SF_Cases,BI_DB_dbo.BI_DB_SF_Cases_Panel,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_SF_Cases_Panel,BI_DB_dbo.BI_DB_SF_Cases_Panel,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Social_Activity_COPYDATA_RuningSideBySide,BI_DB_dbo.BI_DB_Social_Activity_COPYDATA_RuningSideBySide,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Social_Activity_Updates_COPYDATA_RuningSideBySide,BI_DB_dbo.BI_DB_Social_Activity_Updates_COPYDATA_RuningSideBySide,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_SpreadedPriceCandle60MinSplitted,BI_DB_dbo.BI_DB_SpreadedPriceCandle60MinSplitted,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Staking_Daily_Email_for_labs,BI_DB_dbo.BI_DB_Staking_Daily_Email_for_labs,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_TicketsForOPSNEW,BI_DB_dbo.BI_DB_TicketsForOPS_NEW,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_Users_Bio,BI_DB_dbo.BI_DB_Publications,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DB_dbo.SP_VarCommission,BI_DB_dbo.BI_DB_VarCommission,Daily,FinanceReportSPS,99,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BigQueryGADataUploadData_Ltv,RawData.pLTV_30d,Daily,Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DataBricks-Sedric_IsMajor,internal-sources/Gold/Sedric/IsMajor,Daily,Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_CopyLakeToSynapse-CopyFromLake.Bronze_Fivetran_google_sheets_marex_mapping_table,CopyFromLake.Bronze_Fivetran_google_sheets_marex_mapping_table,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_CopyLakeToSynapse-CopyFromLake.DB_Logs_History_OrderForClose,CopyFromLake.DB_Logs_History_OrderForClose,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_CopyLakeToSynapse-CopyFromLake.DB_Logs_History_OrderForOpen,CopyFromLake.DB_Logs_History_OrderForOpen,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_CopyLakeToSynapse-CopyFromLake.etoro_DWH_HistoryOrderForClose,CopyFromLake.etoro_DWH_HistoryOrderForClose,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_CopyLakeToSynapse-CopyFromLake.etoro_Hedge_HBCExecutionLog,CopyFromLake.etoro_Hedge_HBCExecutionLog,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_CopyLakeToSynapse-CopyFromLake.etoro_History_OrdersMarketFail,CopyFromLake.etoro_History_OrdersMarketFail,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_CopyLakeToSynapse-CopyFromLake.etoro_Trade_OrdersEntryTbl,CopyFromLake.etoro_Trade_OrdersEntryTbl,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_CopyLakeToSynapse-CopyFromLake.eToroLogs_Real_Hedge_EMSOrders,CopyFromLake.eToroLogs_Real_Hedge_EMSOrders,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_CopyLakeToSynapse-CopyFromLake.eToroLogs_Real_Hedge_RequestExecutionLog,CopyFromLake.eToroLogs_Real_Hedge_RequestExecutionLog,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_CopyLakeToSynapse-CopyFromLake.eToroLogs_Real_Hedge_RequestLimitExecutionLog,CopyFromLake.eToroLogs_Real_Hedge_RequestLimitExecutionLog,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_CopyLakeToSynapse-CopyFromLake.WalletBalancesReportDB_Wallet_FinanceReportsBalances,CopyFromLake.WalletBalancesReportDB_Wallet_FinanceReportsBalances,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_CopyLakeToSynapse-DE_dbo.FiatCurrencyBalancesStatuses,DE_dbo.FiatCurrencyBalancesStatuses,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_CopyLakeToSynapse-general.KycAnalyzer_ClientRiskProfile,general.KycAnalyzer_ClientRiskProfile,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_CopyLakeToSynapse-general.SolarisBankIdentDb_SolarisBankIdent,general.SolarisBankIdentDb_SolarisBankIdent,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_CopyLakeToSynapse-general.VideoIdentDb_VideoIdent,general.VideoIdentDb_VideoIdent,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_DWH_CIDsDailyRisk,DE_dbo.DWH_CIDsRisk,Daily,SB_Daily,90,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_SourcesFromDataLakeToSynapse,general.VideoIdentDb_VideoIdent,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DE_dbo.SP_UsageTracking_SF,DE_dbo.BI_DB_UsageTracking_SF,Daily,SB_Daily,70,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_dbo.SP_Apex_PnL,Dealing_dbo.Dealing_Apex_PnL_EE_Daily,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_dbo.SP_Best_Execution,Dealing_dbo.Dealing_Best_Execution_Compensation_HBC,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_dbo.SP_DailySpreadsAggregated,Dealing_dbo.Dealing_DailySpreadsAggregated,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_dbo.SP_DailySpreadsAggregatedFX,Dealing_dbo.Dealing_DailySpreadsAggregatedFX,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_dbo.SP_Execution_Slippage,Dealing_dbo.Dealing_Execution_Slippage_RequestTime,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_dbo.SP_Failures,Dealing_dbo.Dealing_Failures_Rate,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_dbo.SP_Latency_Report,Dealing_dbo.Dealing_Daily_Latency_Compensation,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_dbo.SP_Manual_Exec,Dealing_dbo.Dealing_Manual_Exec,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_dbo.SP_NewHedgeDash_Email_CSV_0230AM,,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_dbo.SP_NewHedgeDash_Email_CSV_1130PM,,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_dbo.SP_OccurredAtProvider_Latency,Dealing_dbo.Dealing_OccurredAtProvider_Latency_PCSID,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_dbo.SP_Positions_OpenClose_Breakdown,Dealing_dbo.Dealing_Positions_OpenClose_Breakdown,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_dbo.SP_Regime_Flags,Dealing_dbo.Dealing_Regime_Flags,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_dbo.SP_SelfCopyingPI,Dealing_dbo.Dealing_SelfCopyingPI,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_dbo.SP_Slippage_Report,Dealing_dbo.Dealing_Daily_Slippage_Totals,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_dbo.SP_USTradeReports,Dealing_dbo.Dealing_US_OriginalEntryTradeTicket,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Copy_Etoro_Hedge_HBCExecutionLog,Dealing_staging.Etoro_Hedge_HBCExecutionLog,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Copy_Etoro_Hedge_HBCOrderLog,Dealing_staging.Etoro_Hedge_HBCOrderLog,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Copy_eToroLogs_Real_Hedge_EMSOrders,Dealing_staging.External_eToroLogs_Real_Hedge_EMSOrders,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Copy_eToroLogs_Real_Hedge_RequestExecutionLog,Dealing_staging.External_eToroLogs_Hedge_RequestExecutionLog,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Copy_eToroLogs_Real_Hedge_RequestLimitExecutionLog,Dealing_staging.External_eToroLogs_Real_Hedge_RequestLimitExecutionLog,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Copy_ExternalSources_LP_APEX_EXT869_3EU,Dealing_staging.LP_APEX_EXT869_3EU,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Copy_ExternalSources_LP_APEX_EXT872_3EU_217314,Dealing_staging.LP_APEX_EXT872_3EU_217314,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Copy_ExternalSources_LP_APEX_EXT981_3EU,Dealing_staging.LP_APEX_EXT981_3EU,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Copy_ExternalSources_LP_APEX_EXT982_3EU,Dealing_staging.LP_APEX_EXT982_3EU,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Copy_PositionFailReal_History_PositionFail_DWH,Dealing_staging.PositionFailReal_History_PositionFail_DWH,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Copy_PriceLog_History_CurrencyPrice,Dealing_staging.PriceLog_History_CurrencyPrice,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Copy_PricesFromProvider_MarketCurrencyPrice,Dealing_staging.PricesFromProvider_MarketCurrencyPrice,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Create_External_DB_Logs_History_OrderForClose,Dealing_staging.External_DB_Logs_History_OrderForClose,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Create_External_DB_Logs_History_OrderForOpen,Dealing_staging.External_DB_Logs_History_OrderForOpen,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Create_External_Etoro_History_CEPListCIDMappings,Dealing_staging.External_Etoro_History_CEPListCIDMappings,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Create_External_etoro_History_Mirror,Dealing_staging.External_etoro_History_Mirror,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Create_External_Etoro_History_OrdersEntryTbl,Dealing_staging.External_Etoro_History_OrdersEntryTbl,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Create_External_Etoro_History_OrdersExitTbl,Dealing_staging.External_Etoro_History_OrdersExitTbl,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Create_External_Etoro_Trade_OrdersEntryTbl,Dealing_staging.External_Etoro_Trade_OrdersEntryTbl,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Create_External_Etoro_Trade_OrdersExitTbl,Dealing_staging.External_Etoro_Trade_OrdersExitTbl,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Create_External_etoroGeneral_History_GuruCopiers,Dealing_staging.External_etoroGeneral_History_GuruCopiers,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Create_External_eToroLogs_Real_Hedge_ExecutionStrategyOrderLog,Dealing_staging.External_eToroLogs_Real_Hedge_ExecutionStrategyOrderLog,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Create_External_eToroLogs_Real_Hedge_OrderLog,Dealing_staging.External_eToroLogs_Real_Hedge_OrderLog,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Create_External_Sodreconciliation_apex_EXT869_CashActivity,Dealing_staging.External_Sodreconciliation_apex_EXT869_CashActivity,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+Dealing_staging.SP_Create_Rankings_StockInfo_DailyInstrumentInfo,Dealing_staging.External_Rankings_StockInfo_DailyInstrumentInfo,Daily,SB_Daily,20,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DWH_watchlists.Fact_Watchlists,DWH_watchlists.Fact_Watchlists,Daily,COPY DATA,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+DWH_watchlists.Fact_WatchlistsItems,DWH_watchlists.Fact_WatchlistsItems,Daily,COPY DATA,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+eMoney_dbo.SP_eMoney_Yearly_Volume_Target_2023,eMoney_dbo.eMoney_Yearly_Volume_Target_2023,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+EXW_dbo.SP_EXW_EthFee_Blockchain,EXW_dbo.EXW_EthFeeSent_Blockchain,Daily,SB_Daily,0,A4_DAILY_365D,A0,A4_DAILY_365D,,,
+BI_DataBricks-Compliance_MAS_Daily_Client_Metrics,main.bi_output.bi_output_customer_compliance_mas_daily_client_metrics,Daily,Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DataBricks-Compliance_MAS_Population,main.bi_output_stg.bi_output_customer_compliance_mas_population,Daily,Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DataBricks-operations_ops_mimo_data,analysis/BI_OUTPUT/Operations/ops/mimo_data,Daily,Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DataBricks-SP_Customer_Customer_Support_AML_Handling_Days_Main,bi_output_customer_customer_support_aml_handling_days,Daily,Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DataBricks-SP_Customer_Customer_Support_Case,analysis/BI_OUTPUT/Customer/Customer_Support/Case,Daily,Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DataBricks-SP_Customer_Customer_Support_Cases_Update_Main,analysis/BI_OUTPUT/Customer/Customer_Support/Case,Daily,Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DataBricks-SP_Customer_Customer_Support_CSAT_Main,analysis/BI_OUTPUT/Customer/Customer_Support/CSAT,Daily,Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DataBricks-SP_Customer_Customer_Support_Live_Chat_Transcript_Main,bi_output_customer_customer_support_live_chat_transcript,Daily,Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DataBricks-SP_Customer_Customer_Support_Salesforce_Reply_Main,bi_output_customer_customer_support_salesforce_reply,Daily,Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DataBricks-SP_External_ISA,bi_output_customer_external_table_isa,Daily,Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DataBricks-SP_Marketing_Acquisition_Anomalies_Daily_Main,bi_output_marketing_acquisition,Daily,Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_CashRiskMatrix,BI_DB_dbo.BI_DB_CashRiskMatrix,Daily,SB_Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_CID_NPS_Panel,BI_DB_dbo.BI_DB_CID_NPS_Panel,Daily,SB_Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_Deposit_Reversals_PIPs,BI_DB_dbo.BI_DB_Deposit_Reversals_PIPs,Daily,SB_Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_DepositWithdrawFee_2025,BI_DB_dbo.BI_DB_DepositWithdrawFee_2025_Reversals,Daily,SB_Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_DLT_Report,,Daily,SB_Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_Automation_CashoutReason,BI_DB_dbo.BI_DB_EY_Audit_CashoutReason,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_Automation_Configuration,BI_DB_dbo.BI_DB_EY_Audit_Configurations_Thresholds,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_Automation_LastOpRate_OnOpen_Daily,BI_DB_dbo.EY_Audit_Automation_LastOpRate,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_Automation_Opened_Positions_Config_Daily,BI_DB_dbo.EY_Audit_Automation_Position_Open_Configs,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_BO_Deposits_With_PIPs,BI_DB_dbo.BI_DB_EY_Audit_BO_Deposits_With_PIPs,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_CashoutFees,BI_DB_dbo.BI_DB_EY_Audit_CashoutFees,Daily,SB_Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_ChangeLog,BI_DB_dbo.BI_DB_EY_Audit_ChangeLog,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_Client_Balance,BI_DB_dbo.BI_DB_EY_Audit_Client_Balance,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_Closed_Positions,BI_DB_dbo.BI_DB_EY_Audit_Closed_Positions,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_Compensation,BI_DB_dbo.BI_DB_EY_Audit_Compensation,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_Conversions,BI_DB_dbo.BI_DB_EY_Audit_Conversions,Daily,SB_Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_Deposit_Cashouts,BI_DB_dbo.BI_DB_EY_Audit_Deposits,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_IBAN_Trades_MIMO,BI_DB_dbo.BI_DB_EY_Audit_IBAN_Trades_MIMO,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_IFRS_Control,BI_DB_dbo.BI_DB_EY_Audit_Automation_IFRSControl_Results,Daily,SB_Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_Negative_Refill,BI_DB_dbo.BI_DB_EY_Audit_Negative_Refill,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_Ran_Prices,BI_DB_dbo.BI_DB_EY_Audit_Ran_Prices,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_Redeem,BI_DB_dbo.BI_DB_EY_Audit_Redeem,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_Redeem_Per_CID,BI_DB_dbo.BI_DB_EY_Audit_Redeem_per_CID,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_RedeemsFee,BI_DB_dbo.BI_DB_EY_Audit_RedeemsFee,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_Reopen_Positions,BI_DB_dbo.BI_DB_EY_Audit_Closed_Positions_IsReopen1,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_RollOverFee,BI_DB_dbo.BI_DB_EY_Audit_RollOverFees,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_EY_Audit_Withdraws_With_PIPs,BI_DB_dbo.EY_Audit_Automation_BO_Withdraws_With_PIPs,Daily,SB_Daily,10,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_PIPs_Report_MID_Settings,BI_DB_dbo.BI_DB_PIPs_Report_MID_Settings,Daily,SB_Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_Reg_UK_Compliance_SocialActivity,BI_DB_dbo.BI_DB_Reg_UK_Compliance_SocialActivity,Daily,SB_Daily,20,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_Reg_UK_Compliance_SocialActivityM,BI_DB_dbo.BI_DB_Reg_UK_Compliance_SocialActivityM,Daily,SB_Daily,20,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_Social_Activity,BI_DB_dbo.BI_DB_Social_Activity,Daily,SB_Daily,1,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_Social_Activity_GDRP,BI_DB_dbo.BI_DB_Social_Activity_GDRP_PostsComments,Daily,SB_Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_Social_Activity_Updates,BI_DB_dbo.BI_DB_Social_Activity_Updates,Daily,SB_Daily,1,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DB_dbo.SP_Withdraw_Rollback_PIPs,BI_DB_dbo.BI_DB_Withdraw_Rollback_PIPs,Daily,SB_Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+DataBricks-DLT_Recon,internal-sources/Gold/DE/DLT/Reconciliation_Report,Daily,Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+DE_dbo.SP_CopyLakeToSynapse-CopyFromLake.customerfinancedb_customer_firsttimedeposits,CopyFromLake.customerfinancedb_customer_firsttimedeposits,Daily,SB_Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+Dealing_dbo.SP_Market_Manipulation_Report_FCA,Dealing_dbo.Dealing_Market_Manipulation_Report_FCA,Daily,SB_Daily,0,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+eMoney_dbo.SP_eMoney_Calculated_Balance,eMoney_dbo.eMoney_Calculated_Balance,Daily,SB_Daily,60,A4_DAILY_90D,A0,A4_DAILY_90D,,,
+BI_DataBricks_H_Dealing_Production_Diffusion_Analysis,analysis/BI_OUTPUT/Dealing/Nixar/Delta/DiffusionAnalysis,Hourly,Daily,0,A4_HOURLY,A0,A4_HOURLY,,,
+BI_DB_dbo.SP_H_Deposits,BI_DB_dbo.BI_DB_Deposits,Hourly,SB_Daily,0,A4_HOURLY,A0,A4_HOURLY,,,
+BI_DB_dbo.SP_H_Deposits_Wires_From_Googlesheet,BI_DB_dbo.BI_DB_Deposits_WiresFromGooglesheets,Hourly,SB_Hourly,0,A4_HOURLY,A0,A4_HOURLY,,,
+BI_DB_dbo.SP_H_PaymentSent_Results,BI_DB_dbo.BI_DB_PaymentSent_Results,Hourly,SB_Hourly,0,A4_HOURLY,A0,A4_HOURLY,,,
+DataBricks-export_table_to_file-SFMC_etoroAffiliateDailyData,Gold/MC/SFMC_test/etoroAffiliateDailyData,Hourly,Daily,0,A4_HOURLY,A0,A4_HOURLY,,,
+DE_dbo.SP_CopyLakeToSynapse-CopyFromLake.Streams_dbo_Entries,CopyFromLake.Streams_dbo_Entries,Hourly,SB_Hourly,20,A4_HOURLY,A0,A4_HOURLY,,,
+BI_DataBricks-Dealing_volatility_bucket,BI_OUTPUT/Dealing/volatility_bucket,Monthly,Daily,0,A4_MONTHLY,A0,A4_MONTHLY,,,
+BI_DB_dbo.SP_M_Crypto_RECON,BI_DB_dbo.BI_DB_Crypto_Zero,Monthly,FinanceReportSPS,99,A4_MONTHLY,A0,A4_MONTHLY,,,
+BI_DB_dbo.SP_M_LTV_BI_Actual_Snapshot,BI_DB_dbo.BI_DB_LTV_BI_Actual_Monthly_Snapshot,Monthly,SB_Daily,20,A4_MONTHLY,A0,A4_MONTHLY,,,
+Dealing_dbo.SP_M_CryptoRebateDiamond,Dealing_dbo.Dealing_Unrealized_CryptoRebate,Monthly,SB_Daily,20,A4_MONTHLY,A0,A4_MONTHLY,,,
+BI_DataBrick-dealing_premier_clinet_report,analysis/BI_OUTPUT/Dealing/Premier_Clinet_report,Daily,SB_Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+BI_DataBricks-DDR_Fact_Revenue_Generating_Actions,Gold/sql_dp_prod_we/BI_DB_dbo/BI_DB_DDR_Fact_Revenue_Generating_Actions,Daily,Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+BI_DataBricks-Dealing_Bloomberg_holdings_pct_of_mktcap,analysis/BI_OUTPUT/Dealing/bloomberg_holdings_pct_of_mktcap_cids,Daily,Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+BI_DataBricks-Dealing_premier_customer,analysis/BI_OUTPUT/Dealing/Premier_Customer,Monthly,Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+BI_DataBricks-Dealing-Premier_Clients_positions_monthly_report_M,analysis/BI_OUTPUT/Dealing/premier_customer_2026,Monthly,SB_Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+BI_DataBricks-SP_External_Club_Service_Balance_Main,bi_output_customer_external_table_club_equity,Daily,Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+BI_DataBricks-SP_PI_Diversification,BI_OUTPUT/Complaince/PI_Diversification,Daily,Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+BI_DataBricks-Voice-Of-The-Customer-Messages,main.de_output.de_output_voice_of_the_customer_messagingsession,Daily,Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+BI_DB_dbo.SP_AML_Email_for_KYT,BI_DB_dbo.BI_DB_AML_Email_for_KYT,Daily,SB_Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+BI_DB_dbo.SP_BI_AMLPeriodicReview_PostReview,BI_DB_dbo.BI_DB_AMLPeriodicReview_PostReview,Daily,SB_Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+BI_DB_dbo.SP_Create_External_customerfinancedb_customer_globalftds,CopyFromLake.customerfinancedb_customer_globalftds,Daily,SB_Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+BI_Dealing_JP_to_BNY_settlement,analysis@stgdpdlwe/BI_OUTPUT/Dealing/etoro_bnym_acc_settlement,Daily,SB_Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+DataBricks-CorporateActions,2677338,Daily,Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+DataBricks-Dealing_OMS_Daily,analysis/BI_OUTPUT/Dealing/OMS/execution_per_type,Daily,Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+DataBricks-Dealing_Trading_LimitationsPIsClickSize,analysis/BI_OUTPUT/Dealing/PI_TradingLimitations_ClickSize,Daily,Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+DataBricks-DealingRND_BestExecution,analysis/RND_OUTPUT/Dealing/BestExecution/Report,Daily,Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+DataBricks-SP_Regime_Flags,analysis/BI_OUTPUT/Dealing/dealing_regime_flags,Daily,Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+DE_dbo.SP_CopyLakeToSynapse-EXW_Wallet.FinanceReportsBalances,EXW_Wallet.FinanceReportsBalances,Daily,SB_Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+Dealing_dbo.SP_Test_4_Alerts_Dealing,[DE_dbo].[ObjectsStatus],Daily,SB_Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+DWH-DAYLY,DWH_dbo.Fact_History_Costs,Daily,SB_Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+Gold/sql_dp_prod_we/Dealing_dbo/Dealing_Staking_Summary,1720,Daily,SB_Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+Gold/sql_dp_prod_we/Dealing_dbo/Dealing_Staking_Summary_US,1721,Daily,SB_Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+Share_Lending_Collateral_Main,bi_output.bi_output_finance_tables_bi_db_sharelending_loansandcollateraluk,Daily,SB_Daily,80,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+Share_Lending_Custody_Reconciliation_Main,main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation,Daily,SB_Daily,80,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+"Share_Lending_Custody_Reconciliation_Main,BI_DataBricks-Share_Lending_Custody_Reconciliation",bi_output.bi_output_finance_tables_bi_db_share_lending_custody_reconciliation,Daily,SB_Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+SP_BI_DB_CO_Cluster_Daily,BI_DB_dbo.BI_DB_CO_Cluster_Daily,Daily,SB_Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+SP_dl_to_db_ADF_compliance,BI_COMPLIANCE/bi_compliance_bui_tables_CDIM_Report,Daily,SB_Daily,0,A4_NEVER_SUCCEEDED,A0,A4_NEVER_SUCCEEDED,,,
+BI_DB_dbo.SP_1099_part_A,BI_DB_dbo.BI_DB_Tax_1099_PartA,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,9/29/2024,9/18/2024 14:02,609.5
+BI_DB_dbo.SP_AffiliateCOAbuse,BI_DB_dbo.BI_DB_AffiliateCOAbuse,Daily,SB_Daily,0,A3_DAILY_90D,A3,A3_DAILY_90D,2/2/2026 5:04,4/29/2021 15:45,118.3
+BI_DB_dbo.SP_AML_Sanctions_Trade_InstrumentMetaData_For_Email,BI_DB_dbo.AML_InstrumentMetaData_Daily_Email,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,2/25/2025 7:24,460.2
+BI_DB_dbo.SP_AML_Sanctions_Trade_InstrumentMetaData_For_Email_DayToDay_Changes,BI_DB_dbo.AML_InstrumentMetaData_Daily_Email_DayToDay_Changes,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,4/27/2025 15:58,398.8
+BI_DB_dbo.SP_AppFlyer_Geo,BI_DB_dbo.BI_DB_AppFlyer_Geo,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,7/15/2023 15:32,1050.8
+BI_DB_dbo.SP_AppFlyer_Reports,BI_DB_dbo.BI_DB_AppFlyer_Reports,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,7/23/2023 13:37,1042.9
+BI_DB_dbo.SP_ASIC_Monitoring_CFD_W_Sun,BI_DB_dbo.BI_DB_ASIC_Monitoring_CFD_W_Sun,Weekly Sunday,SB_Daily,0,A3_WEEKLY_STALE,A3,A3_WEEKLY_STALE,,1/24/2024 12:55,858
+BI_DB_dbo.SP_BI_DB_Compliance_BI_Leverage_Dashboard,BI_DB_dbo.Compliance_BI_Leverage_Dashboard,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,9/19/2023 7:28,985.2
+BI_DB_dbo.SP_BI_DB_PLTV,BI_DB_dbo.BI_DB_PLTV,Monthly,SB_Daily,0,A3_MONTHLY_STALE,A3,A3_MONTHLY_STALE,,6/6/2024 13:02,724
+BI_DB_dbo.SP_BuyTax_Fix,BI_DB_dbo.BI_DB_BuyTax_Fix,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,1/3/2024 8:27,879.1
+BI_DB_dbo.SP_CID_Investment_PIMeetup,BI_DB_dbo.BI_DB_Investment_PIMeetup,Daily,SB_Daily,0,A3_DAILY_90D,A3,A3_DAILY_90D,,9/14/2025 8:54,259.1
+BI_DB_dbo.SP_Client_Balance_and_DailyZero_TreeSize_Alert,BI_DB_dbo.BI_DB_CBZero_TreesizeZero_Alert,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,11/6/2023 14:55,936.9
+BI_DB_dbo.SP_ClientBalance_DDR_Data_Integrity_Alert,BI_DB_dbo.BI_DB_ClientBalance_DDR_Data_Integrity_Alert,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,11/7/2023 15:00,935.9
+BI_DB_dbo.SP_Compliance_BI_Clients_Dashboard,BI_DB_dbo.BI_DB_Compliance_Clients_Dashboard_EOM_Pos,Daily,SB_Daily,0,A3_DAILY_30D,A3,A3_DAILY_30D,5/1/2026 4:45,11/28/2023 12:37,30.3
+BI_DB_dbo.SP_Cross_Selling_Monthly,BI_DB_dbo.BI_DB_Cross_Selling_Monthly,Daily,SB_Daily,0,A3_DAILY_30D,A3,A3_DAILY_30D,5/1/2026 7:29,2/19/2025 5:10,30.2
+BI_DB_dbo.SP_Crypto_Top_1000_List,BI_DB_dbo.Crypto_Top_1000_List,Daily,SB_Daily,0,A3_TABLE_MISSING,A3,A3_TABLE_MISSING,,,
+BI_DB_dbo.SP_DailyGain_History,BI_DB_dbo.BI_DB_DailyGain_History,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,3/19/2024 14:30,802.9
+BI_DB_dbo.SP_DDR_Process_Monitor,BI_DB_dbo.BI_DB_DDR_Process_Monitor,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,11/12/2024 17:21,564.8
+BI_DB_dbo.SP_Dummy,BI_DB_dbo.BI_DB_Dummy,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,3/13/2024 19:05,808.7
+BI_DB_dbo.SP_Employee_Crypto_NWA,BI_DB_dbo.BI_DB_Employee_Crypto_NWA,Daily,SB_Daily,0,A3_DAILY_30D,A3,A3_DAILY_30D,5/1/2026 4:52,5/13/2024 6:36,30.3
+BI_DB_dbo.SP_H_Dummy,BI_DB_dbo.BI_DB_Dummy,Hourly,,0,A3_HOURLY_STALE,A3,A3_HOURLY_STALE,,3/13/2024 19:05,808.7
+BI_DB_dbo.SP_H_SEA_CashoutsEstimation,BI_DB_dbo.BI_DB_H_SEA_CashoutsEstimation,Hourly,SB_Hourly,0,A3_HOURLY_STALE,A3,A3_HOURLY_STALE,,11/17/2024 8:36,560.1
+BI_DB_dbo.SP_ICF_Report,BI_DB_dbo.BI_DB_ICF_Report,Daily,SB_Daily,0,A3_DAILY_30D,A3,A3_DAILY_30D,5/1/2026 4:56,10/29/2025 10:04,30.3
+BI_DB_dbo.SP_IndexDividend_Alert,BI_DB_dbo.BI_DB_IndexDividends_Alert,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,11/26/2023 15:16,916.9
+BI_DB_dbo.SP_IR_Dashboard_Monitor_Checks,BI_DB_dbo.IR_Dashboard_Monitor_Checks,Daily,SB_Daily,0,A3_TABLE_MISSING,A3,A3_TABLE_MISSING,,,
+BI_DB_dbo.SP_M_AML_Account_Closed,BI_DB_dbo.BI_DB_M_AML_Account_Closed,Monthly,SB_Daily,0,A3_MONTHLY_STALE,A3,A3_MONTHLY_STALE,5/1/2024 12:36,8/22/2023 4:29,760
+BI_DB_dbo.SP_M_Notifications_by_LifeStage,BI_DB_dbo.BI_DB_M_SB_Fiktive_Table,Monthly,SB_Daily,0,A3_MONTHLY_STALE,A3,A3_MONTHLY_STALE,,2/21/2024 13:29,829.9
+BI_DB_dbo.SP_M_YearlyGain,BI_DB_dbo.BI_DB_YearlyGain,Monthly,,0,A3_MONTHLY_STALE,A3,A3_MONTHLY_STALE,1/8/2024 19:24,12/16/2024 9:56,873.7
+BI_DB_dbo.SP_Negative_Balance_Monitor_Risk,BI_DB_dbo.BI_DB_Negative_Balance_Monitor_Risk,Daily,SB_Daily,0,A3_DAILY_30D,A3,A3_DAILY_30D,5/1/2026 5:23,2/10/2025 12:22,30.3
+BI_DB_dbo.SP_NewBonusReport,BI_DB_dbo.BI_DB_Depositors_By_Managers,Daily,SB_Daily,0,A3_DAILY_30D,A3,A3_DAILY_30D,5/1/2026 6:43,4/29/2021 15:54,30.2
+BI_DB_dbo.SP_Operations_Monthly_KPIs_FullData,BI_DB_dbo.BI_DB_Operations_Monthly_KPIs_Verifications,Daily,SB_Daily,0,A3_DAILY_90D,A3,A3_DAILY_90D,7/28/2025 7:15,11/17/2024 8:38,307.2
+BI_DB_dbo.SP_Post_Clsutering_Python,BI_DB_dbo.BI_DB_Post_Clsutering_Python,Daily,SB_Daily,0,A3_TABLE_MISSING,A3,A3_TABLE_MISSING,,,
+BI_DB_dbo.SP_Staking_Platform_Compensations,BI_DB_dbo.BI_DB_Staking_Platform_Compensations,Daily,SB_Daily,0,A3_DAILY_90D,A3,A3_DAILY_90D,6/6/2025 6:16,4/27/2023 6:27,359.2
+BI_DB_dbo.SP_StocksETFs_SignificantAllocation,BI_DB_dbo.BI_DB_StocksETFs_SignificantAllocation,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,6/28/2023 15:23,1067.9
+BI_DB_dbo.SP_Tax_1099_PartB,BI_DB_dbo.BI_DB_Tax_1099_PartB,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,10/7/2024 12:04,601
+BI_DB_dbo.SP_Technical_Issues_Compensation_Risk,BI_DB_dbo.BI_DB_Technical_Issues_Compensation_Risk,Daily,SB_Daily,0,A3_DAILY_90D,A3,A3_DAILY_90D,7/5/2025 7:07,7/28/2024 6:56,330.2
+Dealing_dbo.SP_CryptoVolume_ByDirection,Dealing_dbo.Dealing_CryptoVolume_ByDirection,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,3/7/2024 14:28,814.9
+Dealing_dbo.SP_Extented_Hours_NewCID,Dealing_dbo.Dealing_Extented_Hours_NewCID,Daily,SB_Daily,0,A3_DAILY_90D,A3,A3_DAILY_90D,8/30/2025 5:52,5/2/2024 5:57,274.3
+Dealing_dbo.SP_Extented_Hours_Volume,Dealing_dbo.Dealing_Extented_Hours_Volume,Daily,SB_Daily,0,A3_DAILY_90D,A3,A3_DAILY_90D,9/1/2025 6:04,5/2/2024 5:51,272.2
+Dealing_dbo.SP_IB_Recon,Dealing_dbo.Dealing_IBRecon_Trades,Daily,SB_Daily,0,A3_DAILY_90D,A3,A3_DAILY_90D,8/25/2025 9:30,11/21/2023 11:56,279.1
+Dealing_dbo.SP_M_CryptoRebateOpenUnrealized,Dealing_dbo.Dealing_Unrealized_Open_CryptoRebate,Monthly,SB_Daily,0,A3_MONTHLY_STALE,A3,A3_MONTHLY_STALE,,3/17/2024 12:45,805
+Dealing_dbo.SP_ManipulationReport_RealStocks,Dealing_dbo.Dealing_ManipulationReport_RealStocks,Daily,SB_Daily,0,A3_DAILY_90D,A3,A3_DAILY_90D,12/31/2025 6:07,3/27/2024 8:40,151.2
+Dealing_dbo.SP_MarketMakerAllTrade,Dealing_dbo.Dealing_MarketMakerAllTradeEtoroX,Daily,SB_Daily,0,A3_TABLE_MISSING,A3,A3_TABLE_MISSING,,,
+Dealing_dbo.SP_Staking_Emails,Dealing_dbo.Dealing_Staking_Emails,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,3/5/2025 6:26,2/5/2025 9:30,452.2
+Dealing_dbo.SP_Staking_WelcomeEmail,Dealing_dbo.Dealing_Staking_WelcomeEmail_Temp,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,6/5/2024 9:58,725.1
+Dealing_dbo.SP_SuspiciousActivityTrading_24H,Dealing_dbo.Dealing_SuspiciousActivityTrading_24H_Email,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,3/26/2024 11:37,796
+Dealing_staging.SP_Copy_etoro_Customer_CustomerStatic,Dealing_staging.etoro_Customer_CustomerStatic,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:18,0.2
+Dealing_staging.SP_Copy_Etoro_Trade_AdminPositionLog,Dealing_staging.etoro_Trade_AdminPositionLog,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:17,0.2
+Dealing_staging.SP_Copy_Etoro_Trade_InstrumentMetaData,Dealing_staging.etoro_Trade_InstrumentMetaData,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:17,0.2
+Dealing_staging.SP_Copy_eToroLogs_Real_Hedge_OrderLog,Dealing_staging.eToroLogs_Real_Hedge_OrderLog,Daily,SB_Daily,0,A3_DAILY_365D,A3,A3_DAILY_365D,,8/6/2024 8:21,663.1
+Dealing_staging.SP_Copy_Fivetran_google_sheets_platform_rewards,Dealing_staging.Fivetran_google_sheets_platform_rewards,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:17,0.2
+Dealing_staging.SP_Copy_MarketMaker_dbo_HedgeTrades,Dealing_staging.MarketMaker_dbo_HedgeTrades,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:17,0.2
+Dealing_staging.SP_Copy_MarketMaker_ExchangesData_Trades,Dealing_staging.MarketMaker_ExchangesData_Trades,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:42,0.2
+Dealing_staging.SP_Copy_MarketMaker_HBCHedgeTrades,Dealing_staging.MarketMaker_HBCHedgeTrades,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:22,0.2
+Dealing_staging.SP_Copy_MarketMaker_Instruments,Dealing_staging.MarketMaker_Instruments,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:30,0.2
+Dealing_staging.SP_Create_External_Etoro_CEP_CompoundProperties,Dealing_staging.External_Etoro_CEP_CompoundProperties,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:37,0.2
+Dealing_staging.SP_Create_External_Etoro_CEP_CompoundPropertyToRule,Dealing_staging.External_Etoro_CEP_CompoundPropertyToRule,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:21,0.2
+Dealing_staging.SP_Create_External_Etoro_CEP_Conditions,Dealing_staging.External_Etoro_CEP_Conditions,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:21,0.2
+Dealing_staging.SP_Create_External_Etoro_CEP_ConditionToCompoundProperty,Dealing_staging.External_Etoro_CEP_ConditionToCompoundProperty,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:21,0.2
+Dealing_staging.SP_Create_External_Etoro_CEP_ListCIDMappings,Dealing_staging.External_Etoro_CEP_ListCIDMappings,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:21,0.2
+Dealing_staging.SP_Create_External_Etoro_CEP_NamedLists,Dealing_staging.External_Etoro_CEP_NamedLists,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:21,0.2
+Dealing_staging.SP_Create_External_Etoro_CEP_Rules,Dealing_staging.External_Etoro_CEP_Rules,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:21,0.2
+Dealing_staging.SP_Create_External_Etoro_CryptoLiquidity_CryptoTrade,Dealing_staging.External_Etoro_CryptoLiquidity_CryptoTrade,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:21,0.2
+Dealing_staging.SP_Create_External_Etoro_CryptoLiquidity_CryptoWallets,Dealing_staging.External_Etoro_CryptoLiquidity_CryptoWallets,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:21,0.2
+Dealing_staging.SP_Create_External_Etoro_Dictionary_ConditionOperators,Dealing_staging.External_Etoro_Dictionary_ConditionOperators,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:21,0.2
+Dealing_staging.SP_Create_External_Etoro_Dictionary_ConditionProperties,Dealing_staging.External_Etoro_Dictionary_ConditionProperties,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:26,0.2
+Dealing_staging.SP_Create_External_Etoro_Dictionary_InterestRateOverride,Dealing_staging.External_Etoro_Dictionary_InterestRateOverride,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:26,0.2
+Dealing_staging.SP_Create_External_Etoro_Hedge_InstrumentBoundaries,Dealing_staging.External_Etoro_Hedge_InstrumentBoundaries,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:26,0.2
+Dealing_staging.SP_Create_External_Etoro_Hedge_PortfolioConversionConfigurations,Dealing_staging.External_Etoro_Hedge_PortfolioConversionConfigurations,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:26,0.2
+Dealing_staging.SP_Create_External_Etoro_History_CEP_LOG_CompoundProperties,Dealing_staging.External_Etoro_History_CEP_LOG_CompoundProperties,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:26,0.2
+Dealing_staging.SP_Create_External_Etoro_History_CEP_LOG_CompoundPropertyToRule,Dealing_staging.External_Etoro_History_CEP_LOG_CompoundPropertyToRule,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:26,0.2
+Dealing_staging.SP_Create_External_Etoro_History_CEP_LOG_ConditionToCompoundProperty,Dealing_staging.External_Etoro_History_CEP_LOG_ConditionToCompoundProperty,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:26,0.2
+Dealing_staging.SP_Create_External_Etoro_History_CEP_LOG_NamedLists,Dealing_staging.External_Etoro_History_CEP_LOG_NamedLists,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:26,0.2
+Dealing_staging.SP_Create_External_Etoro_History_CEP_LOG_Rules,Dealing_staging.External_Etoro_History_CEP_LOG_Rules,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:26,0.2
+Dealing_staging.SP_Create_External_Etoro_History_CompoundProperties,Dealing_staging.External_Etoro_History_CompoundProperties,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:26,0.2
+Dealing_staging.SP_Create_External_Etoro_History_CompoundPropertyToRule,Dealing_staging.External_Etoro_History_CompoundPropertyToRule,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:26,0.2
+Dealing_staging.SP_Create_External_Etoro_History_Conditions,Dealing_staging.External_Etoro_History_Conditions,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:26,0.2
+Dealing_staging.SP_Create_External_Etoro_History_ConditionToCompoundProperty,Dealing_staging.External_Etoro_History_ConditionToCompoundProperty,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:26,0.2
+Dealing_staging.SP_Create_External_Etoro_History_InterestRateOverride,Dealing_staging.External_Etoro_History_InterestRateOverride,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:26,0.2
+Dealing_staging.SP_Create_External_Etoro_History_ListCIDMappings,Dealing_staging.External_Etoro_History_ListCIDMappings,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:26,0.2
+Dealing_staging.SP_Create_External_Etoro_History_NamedLists,Dealing_staging.External_Etoro_History_NamedLists,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:31,0.2
+Dealing_staging.SP_Create_External_Etoro_History_PortfolioConversionConfigurations,Dealing_staging.External_Etoro_History_PortfolioConversionConfigurations,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:31,0.2
+Dealing_staging.SP_Create_External_Etoro_History_Rules,Dealing_staging.External_Etoro_History_Rules,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:31,0.2
+Dealing_staging.SP_Create_External_Etoro_Trade_LiquidityProviderContracts,Dealing_staging.External_Etoro_Trade_LiquidityProviderContracts,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:37,0.2
+Dealing_staging.SP_Create_External_MarketMaker_dbo_Exchanges,Dealing_staging.External_MarketMaker_dbo_Exchanges,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:37,0.2
+Dealing_staging.SP_Create_External_MarketMaker_dbo_Instruments,Dealing_staging.External_MarketMaker_dbo_Instruments,Daily,SB_Daily,0,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 6:37,0.2
+Dealing_dbo.SP_W_Sun_Staking_WelcomeEmail,Dealing_dbo.Dealing_Staking_WelcomeEmail_Temp,Weekly Sunday,SB_Daily,1,A3_WEEKLY_STALE,A3,A3_WEEKLY_STALE,,6/5/2024 9:58,725.1
+Dealing_dbo.SP_W_Wed_Staking_WelcomeEmail,Dealing_dbo.Dealing_Staking_WelcomeEmail_Temp,Weekly Wednesday,SB_Daily,1,A3_WEEKLY_STALE,A3,A3_WEEKLY_STALE,,6/5/2024 9:58,725.1
+BI_DB_dbo.SP_BI_DB_Scored_Appropriateness_Negative_Market,BI_DB_dbo.BI_DB_Negative_Market_Monthly_Aggregated,Daily,SB_Daily,20,A3_DAILY_30D,A3,A3_DAILY_30D,5/1/2026 5:27,2/10/2025 12:12,30.3
+BI_DB_dbo.SP_Bing_PBI,BI_DB_dbo.BI_DB_Bing_PBI_Daily_Perf,Daily,SB_Daily,20,A3_DAILY_90D,A3,A3_DAILY_90D,10/17/2025 5:21,5/9/2023 12:50,226.3
+BI_DB_dbo.SP_Bing_PBI,BI_DB_dbo.BI_DB_Bing_PBI_Goals_Funnels,Daily,SB_Daily,20,A3_DAILY_90D,A3,A3_DAILY_90D,10/17/2025 5:34,5/9/2023 12:51,226.3
+BI_DB_dbo.SP_Capital_Guarantee,BI_DB_dbo.BI_DB_Capital_Guarantee,Daily,SB_Daily,20,A3_DAILY_365D,A3,A3_DAILY_365D,3/12/2023 16:51,4/29/2021 15:50,1175.8
+BI_DB_dbo.SP_eTorian_PnL_NetProfit,BI_DB_dbo.BI_DB_eTorian_PnL,Daily,SB_Daily,20,A3_DAILY_30D,A3,A3_DAILY_30D,5/1/2026 4:03,2/26/2023 6:59,30.3
+BI_DB_dbo.SP_FB_Perf_Conv,BI_DB_dbo.BI_DB_FB_Performance,Daily,SB_Daily,20,A3_DAILY_90D,A3,A3_DAILY_90D,1/15/2026 5:21,5/10/2023 8:09,136.3
+BI_DB_dbo.SP_FB_Perf_Conv,BI_DB_dbo.BI_DB_FB_Conversion,Daily,SB_Daily,20,A3_DAILY_90D,A3,A3_DAILY_90D,1/15/2026 5:22,5/10/2023 8:09,136.3
+BI_DB_dbo.SP_Finance_Cashout_RollbackDetails,BI_DB_dbo.BI_DB_Finance_Cashout_RollbackDetails,Daily,SB_Daily,20,A3_DAILY_30D,A3,A3_DAILY_30D,3/25/2026 6:37,11/17/2024 8:35,67.2
+BI_DB_dbo.SP_M_CryptoRebateDiamond,BI_DB_dbo.Dealing_CryptoRebate,Monthly,SB_Daily,20,A3_MONTHLY_STALE,A3,A3_MONTHLY_STALE,,10/19/2025 7:39,224.2
+BI_DB_dbo.SP_M_CryptoRebateDiamond,BI_DB_dbo.Dealing_Unrealized_CryptoRebate,Monthly,SB_Daily,20,A3_MONTHLY_STALE,A3,A3_MONTHLY_STALE,,10/19/2025 7:52,224.2
+Dealing_dbo.SP_Max_NOP,Dealing_dbo.Dealing_Max_NOP,Daily,SB_Daily,20,A3_DAILY_365D,A3,A3_DAILY_365D,6/3/2024 5:59,6/14/2023 14:10,727.2
+Dealing_staging.SP_Copy_Etoro_Hedge_ExecutionLog,Dealing_staging.Etoro_Hedge_ExecutionLog,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:16,0.3
+Dealing_staging.SP_Copy_etoro_Hedge_Netting,Dealing_staging.etoro_Hedge_Netting,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:16,0.3
+Dealing_staging.SP_Copy_etoro_History_Credit,Dealing_staging.etoro_History_Credit,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:16,0.3
+Dealing_staging.SP_Copy_etoro_History_InstrumentToFeeConfig,Dealing_staging.etoro_History_InstrumentToFeeConfig,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:21,0.3
+Dealing_staging.SP_Copy_Etoro_History_Netting_History,Dealing_staging.etoro_History_Netting_History,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:21,0.3
+Dealing_staging.SP_Copy_etoro_Trade_InstrumentToFeeConfig,Dealing_staging.etoro_Trade_InstrumentToFeeConfig,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:21,0.3
+Dealing_staging.SP_Copy_etoro_Trade_LiquidityAccounts,Dealing_staging.etoro_Trade_LiquidityAccounts,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:21,0.3
+Dealing_staging.SP_Copy_Etoro_Trading_IndexDividends,Dealing_staging.etoro_Trading_IndexDividends,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:21,0.3
+Dealing_staging.SP_Copy_etoroGeneral_History_GuruCopiers,Dealing_staging.etoroGeneral_History_GuruCopiers,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:26,0.3
+Dealing_staging.SP_Create_External_CalendarDB_Market_MergedDailySchedules,Dealing_staging.External_CalendarDB_Market_MergedDailySchedules,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_CalendarDB_Market_ProvidersExchangeDailySchedules,Dealing_staging.External_CalendarDB_Market_ProvidersExchangeDailySchedules,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_DB_Logs_History_CloseExecutionPlan,Dealing_staging.External_DB_Logs_History_CloseExecutionPlan,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:36,0.3
+Dealing_staging.SP_Create_External_DB_Logs_History_ExecutedCloseOrders,Dealing_staging.External_DB_Logs_History_ExecutedCloseOrders,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_DealingLogs_Dictionary_InstrumentEventType,Dealing_staging.External_DealingLogs_Dictionary_InstrumentEventType,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_DealingLogs_Price_InstrumentEventLog,Dealing_staging.External_DealingLogs_Price_InstrumentEventLog,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_Dictionary_FailType,Dealing_staging.External_Etoro_Dictionary_FailType,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_Dictionary_InterestRate,Dealing_staging.External_Etoro_Dictionary_InterestRate,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_Dictionary_SpreadType,Dealing_staging.External_Etoro_Dictionary_SpreadType,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_Hedge_ExecutionLog,Dealing_staging.External_Etoro_Hedge_ExecutionLog,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_Hedge_ManualOrderExecutionLog,Dealing_staging.External_Etoro_Hedge_ManualOrderExecutionLog,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_Hedge_Netting,Dealing_staging.External_Etoro_Hedge_Netting,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_History_InstrumentSpread,Dealing_staging.External_Etoro_History_InstrumentSpread,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_History_InstrumentToFeeConfig,Dealing_staging.External_History_InstrumentToFeeConfig,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_History_InterestRate,Dealing_staging.External_Etoro_History_InterestRate,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_History_WithdrawToFundingAction,Dealing_staging.External_Etoro_History_WithdrawToFundingAction,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_Price_InstrumentConfiguration,Dealing_staging.External_Etoro_Price_InstrumentConfiguration,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_Price_PCSToLiquidityAccount,Dealing_staging.External_Etoro_Price_PCSToLiquidityAccount,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 5:21,0.3
+Dealing_staging.SP_Create_External_Etoro_Trade_ExchangeInstrumentFeeDefinition,Dealing_staging.External_Trade_ExchangeInstrumentFeeDefinition,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_Trade_FeatureThresholdValues,Dealing_staging.External_Etoro_Trade_FeatureThresholdValues,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_Trade_IndexDividends,Dealing_staging.External_Etoro_Trade_IndexDividends,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_Trade_InstrumentSpread,Dealing_staging.External_Etoro_Trade_InstrumentSpread,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_Trade_InstrumentToFeeConfig,Dealing_staging.External_Trade_InstrumentToFeeConfig,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_Trade_LiquidityAccounts,Dealing_staging.External_Etoro_Trade_LiquidityAccounts,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:31,0.3
+Dealing_staging.SP_Create_External_Etoro_Trade_ProviderToInstrument,Dealing_staging.External_Etoro_Trade_ProviderToInstrument,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:36,0.3
+Dealing_staging.SP_Create_External_ExternalOperations_Dictionary_PdtStatus,Dealing_staging.External_ExternalOperations_Dictionary_PdtStatus,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:37,0.3
+Dealing_staging.SP_Create_External_ExternalOperations_Trade_PdtOperations,Dealing_staging.External_ExternalOperations_Trade_PdtOperations,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:36,0.3
+Dealing_staging.SP_Create_External_Fivetran_gsheets_master_vision_insert_data,Dealing_staging.External_Fivetran_gsheets_master_vision_insert_data,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 5:26,0.3
+Dealing_staging.SP_Create_External_MarketMaker_dbo_Configurations,Dealing_staging.External_MarketMaker_dbo_Configurations,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:36,0.3
+Dealing_staging.SP_Create_External_MarketMaker_dbo_HedgeTrades,Dealing_staging.External_MarketMaker_dbo_HedgeTrades,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:36,0.3
+Dealing_staging.SP_Create_External_PriceLog_History_ClosingPrices,Dealing_staging.External_PriceLog_History_ClosingPrices,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:36,0.3
+Dealing_staging.SP_Create_External_Rankings_StockInfo_InstrumentData,Dealing_staging.External_Rankings_StockInfo_InstrumentData,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:36,0.3
+Dealing_staging.SP_Create_External_SettingsDB_Settings_Resources,Dealing_staging.External_SettingsDB_Settings_Resources,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:36,0.3
+Dealing_staging.SP_Create_External_Sodreconciliation_apex_EXT235_MandatoryCorporateActions,Dealing_staging.External_Sodreconciliation_apex_EXT235_MandatoryCorporateActions,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/31/2026 4:36,0.3
+Dealing_staging.SP_Create_External_Sodreconciliation_apex_EXT922_DividendReport,Dealing_staging.External_Sodreconciliation_apex_EXT922_DividendReport,Daily,SB_Daily,20,A3_USER_OVERRIDE,A3,KEEP,,5/30/2026 13:26,0.9
+BI_DB_dbo.SP_PositionPnL_Agg_daily_Staking,BI_DB_dbo.BI_DB_PositionPnL_Agg_daily_Staking,Daily,SB_Daily,21,A3_DAILY_365D,A3,A3_DAILY_365D,2/27/2022 13:28,5/26/2022 10:50,1553.9
+BI_DB_dbo.SP_DDR,BI_DB_dbo.BI_DB_DDR_CID_Level,Daily,SB_Daily,90,A3_USER_OVERRIDE,A3,KEEP,5/31/2026 4:26,12/6/2023 13:03,0.3
+BI_DB_dbo.SP_DDR,BI_DB_dbo.BI_DB_DDR_Daily_Aggregated,Daily,SB_Daily,90,A3_USER_OVERRIDE,A3,KEEP,5/31/2026 4:26,3/8/2023 11:23,0.3
+BI_DB_dbo.SP_DDR_Aggregated,BI_DB_dbo.BI_DB_DDR_TimeRange_Aggregated_Country_Level,Daily,SB_Daily,90,A3_USER_OVERRIDE,A3,KEEP,5/31/2026 5:06,5/15/2024 11:31,0.3
+BI_DB_dbo.SP_DDR_Aggregated_Auxiliary_Metrics,BI_DB_dbo.BI_DB_DDR_TimeRange_Aggregated_Country_Level,Daily,SB_Daily,90,A3_USER_OVERRIDE,A3,KEEP,5/31/2026 5:06,5/15/2024 11:31,0.3
+BI_DB_dbo.SP_DDR_Auxiliary_Metrics,BI_DB_dbo.BI_DB_DDR_CID_Level_Auxiliary_Metrics,Daily,SB_Daily,90,A3_USER_OVERRIDE,A3,KEEP,5/31/2026,5/15/2024 11:31,0.5
+BI_DB_dbo.SP_DDR_Auxiliary_Metrics,BI_DB_dbo.BI_DB_DDR_Daily_Aggregated_Auxiliary_Metrics,Daily,SB_Daily,90,A3_USER_OVERRIDE,A3,KEEP,5/31/2026,5/15/2024 11:31,0.5
+BI_DB_dbo.SP_Futures_Finance_Prep_Data,BI_DB_dbo.BI_DB_Futures_Finance_Prep_Data,Daily,SB_Daily,90,A3_USER_OVERRIDE,A3,KEEP,5/31/2026 4:05,5/24/2026 15:06,0.3

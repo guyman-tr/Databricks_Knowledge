@@ -1,0 +1,34 @@
+id: genie__dev_mimo__what_is_the_tp_withdrawal_approval_rate___0
+question: What is the TP withdrawal approval rate over the last month?
+source: genie_benchmark:01f15e792ce1140bbf6af2f8f7c6b54c
+asof: '2026-06-08'
+ground_truth_sql: "SELECT\n    COUNT(*)                                          \
+  \                                                  AS attempts,\n    SUM(CASE WHEN\
+  \ PaymentStatus = 'Processed' THEN 1 ELSE 0 END)                               \
+  \          AS approved_attempts,\n    SUM(CASE WHEN PaymentStatus IN ('Approved','Confirmed','Settled','Processed')\
+  \ THEN 1.0 END)\n      / NULLIF(COUNT(*), 0)                                   \
+  \                                           AS approval_rate\nFROM main.etoro_kpi.mimo_tp_withdraws_v\n\
+  WHERE TransactionDate >= ADD_MONTHS(CURRENT_DATE(), -1);"
+expected_value:
+  type: tabular
+  value:
+  - - 1027265
+    - 999509
+    - 0.9729806817130925
+  columns:
+  - attempts
+  - approved_attempts
+  - approval_rate
+  tolerance_pct: 0.5
+expected_skill_hub: _none_
+skill_coverage_status: missing
+canonical_tables:
+- main.etoro_kpi.mimo_tp_withdraws_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'DEV - MIMO' (01f15e792ce1140bbf6af2f8f7c6b54c) benchmark
+  question.
+tags:
+- genie_benchmark
+- dev_mimo
+max_replicas: 3

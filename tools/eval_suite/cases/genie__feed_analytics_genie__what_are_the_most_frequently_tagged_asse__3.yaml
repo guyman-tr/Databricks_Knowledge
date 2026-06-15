@@ -1,0 +1,337 @@
+id: genie__feed_analytics_genie__what_are_the_most_frequently_tagged_asse__3
+question: What are the most frequently tagged assets in the feed for created posts?
+source: genie_benchmark:01f105b421e7187baa5e81595599f7f3
+asof: '2026-06-08'
+ground_truth_sql: "WITH exploded_tags AS (\n  SELECT\n    EventPayloadRowData_Entity_Id\
+  \ AS post_id,\n    tag.Market.SymbolName AS symbol,\n    tag.Market.Id AS asset_id,\n\
+  \    tag.Market.DisplayName AS display_name,\n    tag.Market.AssetType AS asset_type\n\
+  \  FROM\n    `main`.`experience`.`bronze_event_hub_prod_event_streaming_we_streams_post`\n\
+  \    LATERAL VIEW explode(EventPayloadRowData_Entity_Tags) AS tag\n  WHERE\n   \
+  \ EventPayloadRowData_OperationType = 'Create'\n)\nSELECT\n  symbol,\n  asset_id,\n\
+  \  display_name,\n  asset_type,\n  COUNT(*) AS tag_count,\n  COUNT(DISTINCT post_id)\
+  \ AS unique_posts\nFROM\n  exploded_tags\nWHERE\n  symbol IS NOT NULL\nGROUP BY\n\
+  \  symbol,\n  asset_id,\n  display_name,\n  asset_type\nORDER BY\n  tag_count DESC\n\
+  LIMIT 50"
+expected_value:
+  type: tabular
+  value:
+  - - BTC
+    - 100000
+    - null
+    - 0
+    - 117203
+    - 116807
+  - - SPX500
+    - 27
+    - null
+    - 0
+    - 112845
+    - 112389
+  - - NSDQ100
+    - 28
+    - null
+    - 0
+    - 109238
+    - 108736
+  - - NVDA
+    - 1137
+    - null
+    - 0
+    - 59146
+    - 58839
+  - - ETH
+    - 100001
+    - null
+    - 0
+    - 50556
+    - 50407
+  - - GOLD
+    - 18
+    - null
+    - 0
+    - 46506
+    - 46407
+  - - XRP
+    - 100003
+    - null
+    - 0
+    - 37377
+    - 37297
+  - - TSLA
+    - 1111
+    - null
+    - 0
+    - 37036
+    - 36913
+  - - BTC
+    - 100000
+    - Bitcoin
+    - 50
+    - 34178
+    - 30171
+  - - MSFT
+    - 1004
+    - null
+    - 0
+    - 27209
+    - 27112
+  - - OIL
+    - 17
+    - null
+    - 0
+    - 27104
+    - 26980
+  - - DJ30
+    - 29
+    - null
+    - 0
+    - 25702
+    - 25591
+  - - SOL
+    - 100063
+    - null
+    - 0
+    - 24841
+    - 24761
+  - - AMZN
+    - 1005
+    - null
+    - 0
+    - 24491
+    - 24400
+  - - NSDQ100
+    - 28
+    - NASDAQ100 Index
+    - 13
+    - 23451
+    - 21327
+  - - GOOG
+    - 1002
+    - null
+    - 0
+    - 21573
+    - 21513
+  - - META
+    - 1003
+    - null
+    - 0
+    - 21327
+    - 21284
+  - - AAPL
+    - 1001
+    - null
+    - 0
+    - 21092
+    - 20983
+  - - SPX500
+    - 27
+    - SPX500 Index
+    - 13
+    - 19946
+    - 17755
+  - - ADA
+    - 100017
+    - null
+    - 0
+    - 19791
+    - 19695
+  - - SPY
+    - 3000
+    - null
+    - 0
+    - 15374
+    - 15317
+  - - QQQ
+    - 3006
+    - null
+    - 0
+    - 15127
+    - 15074
+  - - GER40
+    - 32
+    - null
+    - 0
+    - 14877
+    - 14787
+  - - NATGAS
+    - 22
+    - null
+    - 0
+    - 14835
+    - 14760
+  - - AMD
+    - 1832
+    - null
+    - 0
+    - 14153
+    - 14124
+  - - ETH
+    - 100001
+    - Ethereum
+    - 50
+    - 13352
+    - 12124
+  - - PLTR
+    - 7991
+    - null
+    - 0
+    - 12571
+    - 12545
+  - - NVDA
+    - 1137
+    - NVIDIA Corporation
+    - 10
+    - 12212
+    - 10832
+  - - UK100
+    - 30
+    - null
+    - 0
+    - 11905
+    - 11823
+  - - SILVER
+    - 19
+    - null
+    - 0
+    - 11158
+    - 11150
+  - - VOO
+    - 4238
+    - null
+    - 0
+    - 10768
+    - 10739
+  - - GOOGL
+    - 6434
+    - null
+    - 0
+    - 10055
+    - 10024
+  - - TSLA
+    - 1111
+    - Tesla Motors, Inc.
+    - 10
+    - 9155
+    - 8168
+  - - DOGE
+    - 100043
+    - null
+    - 0
+    - 9002
+    - 8984
+  - - HBAR
+    - 100061
+    - null
+    - 0
+    - 8964
+    - 8942
+  - - NSDQ100
+    - 28
+    - NASDAQ100 Index (Non Expiry)
+    - 13
+    - 8517
+    - 8210
+  - - BABA
+    - 1155
+    - null
+    - 0
+    - 8358
+    - 8343
+  - - EURUSD
+    - 1
+    - null
+    - 0
+    - 8351
+    - 8332
+  - - FRA40
+    - 31
+    - null
+    - 0
+    - 7942
+    - 7898
+  - - SPX500
+    - 27
+    - SPX500 Index (Non Expiry)
+    - 13
+    - 7696
+    - 7135
+  - - TSM
+    - 4481
+    - null
+    - 0
+    - 7505
+    - 7483
+  - - SOL
+    - 100063
+    - Solana
+    - 50
+    - 7471
+    - 6804
+  - - ADA
+    - 100017
+    - Cardano
+    - 50
+    - 7368
+    - 6798
+  - - MSTR
+    - 6473
+    - null
+    - 0
+    - 7287
+    - 7283
+  - - AAPL
+    - 1001
+    - Apple
+    - 10
+    - 7268
+    - 6508
+  - - FET
+    - 100079
+    - null
+    - 0
+    - 6739
+    - 6676
+  - - MSFT
+    - 1004
+    - Microsoft
+    - 10
+    - 6651
+    - 5954
+  - - DJ30
+    - 29
+    - DJ30 Index
+    - 13
+    - 6549
+    - 6031
+  - - XRP
+    - 100003
+    - XRP
+    - 50
+    - 6495
+    - 6026
+  - - MU
+    - 1130
+    - null
+    - 0
+    - 6142
+    - 6135
+  columns:
+  - symbol
+  - asset_id
+  - display_name
+  - asset_type
+  - tag_count
+  - unique_posts
+  tolerance_pct: 0.5
+expected_skill_hub: domain-product-analytics
+skill_coverage_status: covered
+canonical_tables:
+- main.experience.bronze_event_hub_prod_event_streaming_we_streams_post
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'Feed Analytics Genie' (01f105b421e7187baa5e81595599f7f3)
+  benchmark question.
+tags:
+- genie_benchmark
+- feed_analytics_genie
+max_replicas: 3

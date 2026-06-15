@@ -1,0 +1,52 @@
+id: genie__dev_mimo__rre_share_of_declines_monthly_last_12_mo__6
+question: RRE share of declines, monthly, last 12 months
+source: genie_benchmark:01f15e792ce1140bbf6af2f8f7c6b54c
+asof: '2026-06-08'
+ground_truth_sql: "SELECT\n    DATE_TRUNC('MONTH', TransactionDate)              \
+  \                                                AS txn_month,\n    SUM(CASE WHEN\
+  \ PaymentStatus = 'DeclineByRRE' THEN 1.0 END)\n      / NULLIF(SUM(CASE WHEN PaymentStatus\
+  \ IN ('Decline','Failed','Rejected','DeclineByRRE') THEN 1.0 END), 0) AS rre_share_of_declines\n\
+  FROM main.etoro_kpi.mimo_tp_deposits_v\nWHERE TransactionDate >= ADD_MONTHS(CURRENT_DATE(),\
+  \ -12)\nGROUP BY 1\nORDER BY 1;"
+expected_value:
+  type: numeric_series
+  value:
+  - - '2025-06-01T00:00:00.000Z'
+    - 0.2615376673435
+  - - '2025-07-01T00:00:00.000Z'
+    - 0.26962077763482
+  - - '2025-08-01T00:00:00.000Z'
+    - 0.27620473727198
+  - - '2025-09-01T00:00:00.000Z'
+    - 0.2653953933429
+  - - '2025-10-01T00:00:00.000Z'
+    - 0.26594648377812
+  - - '2025-11-01T00:00:00.000Z'
+    - 0.26833115618761
+  - - '2025-12-01T00:00:00.000Z'
+    - 0.26461115775013
+  - - '2026-01-01T00:00:00.000Z'
+    - 0.2878004854749
+  - - '2026-02-01T00:00:00.000Z'
+    - 0.26664048033219
+  - - '2026-03-01T00:00:00.000Z'
+    - 0.27136602362885
+  - - '2026-04-01T00:00:00.000Z'
+    - 0.24442771279841
+  - - '2026-05-01T00:00:00.000Z'
+    - 0.24489575456411
+  - - '2026-06-01T00:00:00.000Z'
+    - 0.22757752135879
+  tolerance_pct: 0.5
+expected_skill_hub: _none_
+skill_coverage_status: missing
+canonical_tables:
+- main.etoro_kpi.mimo_tp_deposits_v
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'DEV - MIMO' (01f15e792ce1140bbf6af2f8f7c6b54c) benchmark
+  question.
+tags:
+- genie_benchmark
+- dev_mimo
+max_replicas: 3

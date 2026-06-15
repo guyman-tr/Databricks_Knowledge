@@ -1,0 +1,26 @@
+id: genie__dev_compliance_genie__cfd_issettled_0__1
+question: CFD - IsSettled = 0!
+source: genie_benchmark:01f158ec1e0e1bb0852910e06d28c582
+asof: '2026-06-08'
+ground_truth_sql: "SELECT SUM(r.RevenueAmount) AS CFD_Fullcommission_Revenue_2025_ASIC\n\
+  FROM `main`.`etoro_kpi_stg`.`bi_output_vg_revenue_slim` r\nINNER JOIN `main`.`etoro_kpi`.`customer_snapshot_v`\
+  \ c\n  ON r.RealCID = c.RealCID AND r.DateID = c.DateID\nWHERE r.CalendarYear =\
+  \ 2025\n  AND r.Metric = 'FullCommission'\n  AND r.IncludedInTotalRevenue = 1\n\
+  \  AND r.IsSettled = 0\n  AND c.Regulation IN ('ASIC', 'ASIC & GAML')"
+expected_value:
+  type: numeric
+  value: 10185559.4965
+  tolerance_pct: 0.5
+expected_skill_hub: domain-customer-and-identity
+skill_coverage_status: covered
+canonical_tables:
+- main.etoro_kpi.customer_snapshot_v
+- main.etoro_kpi_stg.bi_output_vg_revenue_slim
+anti_sources: []
+expected_filters: []
+notes: Seeded from Genie space 'DEV - Compliance Genie' (01f158ec1e0e1bb0852910e06d28c582)
+  benchmark question.
+tags:
+- genie_benchmark
+- dev_compliance_genie
+max_replicas: 3
