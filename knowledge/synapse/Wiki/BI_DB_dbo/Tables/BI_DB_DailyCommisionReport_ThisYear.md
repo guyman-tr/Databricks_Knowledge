@@ -161,7 +161,7 @@ All columns are **Tier 2** (BI_DB intermediate layer, sourced from parent `BI_DB
 | 11 | Mifid | varchar(50) | NULL | T2 | MiFID classification. Values: `Retail`, `Retail Pending`, `Professional`, `Professional Pending`, `Pending`. |
 | 12 | InstrumentType | varchar(100) | NULL | T2 | Asset class of the traded instrument. Values: `Stocks`, `Crypto`, `ETF`, `Commodities`, `Indices`, `Currencies`, `Other`. |
 | 13 | IsValidCustomer | bit | NULL | T2 | 1 = customer meets validity criteria (KYC/AML). Passthrough from parent. |
-| 14 | IsCreditReportValidCB | bit | NULL | T2 | 1 = credit bureau report on file and valid. Passthrough from parent. |
+| 14 | IsCreditReportValidCB | bit | NULL | T2 | 1 = Client_Balance report on file and valid. Passthrough from parent. |
 | 15 | IsDLTUser | int | NULL | T2 | Flag indicating if customer is a DLT (Distributed Ledger Technology) participant. 0/1 as int. |
 | 16 | RollOverFee | money | NULL | T2 | `SUM(ISNULL(RollOverFee,0))` YTD. Overnight financing/rollover fees collected. |
 | 17 | TicketFee | money | NULL | T2 | `SUM(ISNULL(TicketFee,0))` YTD. Fixed per-trade ticket fee. |

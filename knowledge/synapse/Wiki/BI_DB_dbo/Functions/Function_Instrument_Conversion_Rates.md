@@ -33,12 +33,12 @@ Builds per-instrument **USD conversion multipliers** (bid/ask, raw and spreaded)
 
 | # | Column | Source | Transformation | Tier |
 |---|--------|--------|----------------|------|
-| 1 | InstrumentID | Dim_Instrument.InstrumentID | Direct | T1 |
-| 2 | SellCurrency | Dim_Instrument.SellCurrency | Direct | T1 |
-| 3 | InstrumentTypeID | Dim_Instrument.InstrumentTypeID | Direct | T1 |
-| 4 | InstrumentType | Dim_Instrument.InstrumentType | Direct | T2 |
-| 5 | Name | Dim_Instrument.Name | Direct | T1 |
-| 6 | InstrumentDisplayName | Dim_Instrument.InstrumentDisplayName | Direct | T1 |
+| 1 | InstrumentID | Dim_Instrument.InstrumentID | Primary key from Trade.Instrument. Identifies the tradeable instrument pair. (Tier 1 — Trade.GetInstrument) (via Dim_Instrument) | T1 |
+| 2 | SellCurrency | Dim_Instrument.SellCurrency | Trading symbol / ticker for the sell-side currency. "USD", "EUR", "GBX". UNIQUE constraint in production. Passthrough from Dictionary.Currency.Abbreviation via sell-side join. (Tier 1 — Dictionary.Currency) (via Dim_Instrument) | T1 |
+| 3 | InstrumentTypeID | Dim_Instrument.InstrumentTypeID | From IMD (InstrumentMetaData). Asset class: 1=Currencies, 2=Commodities, 3=CFD, 4=Indices, 5=Stocks, 6=ETF, 7=Bonds, 8=TrustFunds, 9=Options, 10=Crypto. FK to Dictionary.CurrencyType. (Tier 1 — Trade.GetInstrument) (via Dim_Instrument) | T1 |
+| 4 | InstrumentType | Dim_Instrument.InstrumentType | ETL-computed asset class label. CASE on InstrumentTypeID: 1=Currencies, 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto Currencies, else Other. (Tier 2 — SP_Dim_Instrument) (via Dim_Instrument) | T2 |
+| 5 | Name | Dim_Instrument.Name | Display name computed by Trade.GetInstrument as BuyCurrency Abbreviation + '/' + SellCurrency Abbreviation (e.g., EUR/USD for forex, AAPL/USD for stocks). Not a company name; see InstrumentDisplayName for human-readable labels. (via Dim_Instrument) | T1 |
+| 6 | InstrumentDisplayName | Dim_Instrument.InstrumentDisplayName | Human-readable name shown in UI (e.g., "Apple", "EUR/USD"). Used in position displays, order forms, and APIs. (Tier 1 — Trade.InstrumentMetaData) (via Dim_Instrument) | T1 |
 | 7 | ConversionRate_Buy_Spreaded | Dim_Instrument, Fact_CurrencyPriceWithSplit | `CAST(CASE WHEN SellCurrencyID = 1 THEN 1 WHEN BuyCurrencyID = 1 THEN 1/LatestP.RateBidSpreaded WHEN both non-USD THEN COALESCE(1/I2Price.RateBidSpreaded, I3Price.RateBidSpreaded, 1) ELSE 1 END AS MONEY)`; prices from **latest** `Fact_CurrencyPriceWithSplit` row per instrument **WHERE** `CAST(CAST(@DateID AS CHAR(8)) AS DATETIME) > Occurred`, `rn = 1` | T2 |
 | 8 | ConversionRate_Sell_Spreaded | Dim_Instrument, Fact_CurrencyPriceWithSplit | Same CASE shape as row 7 using `RateAskSpreaded` / `I2Price` / `I3Price` ask columns and same `Occurred` boundary | T2 |
 | 9 | ConversionRate_Buy | Dim_Instrument, Fact_CurrencyPriceWithSplit | Same as row 7 using **raw** `RateBid` (not spreaded) and same latest-price predicate | T2 |

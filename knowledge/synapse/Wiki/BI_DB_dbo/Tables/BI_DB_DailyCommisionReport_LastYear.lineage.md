@@ -23,7 +23,7 @@ Annual customer-level aggregation of BI_DB_DailyCommisionReport for the prior co
 | 11 | Mifid | BI_DB_dbo.BI_DB_DailyCommisionReport | Mifid | GROUP BY pass-through — MiFID classification label. | Tier 2 — SP_DailyCommisionReport |
 | 12 | InstrumentType | BI_DB_dbo.BI_DB_DailyCommisionReport | InstrumentType | GROUP BY pass-through — instrument type label (Currencies, Stocks, Crypto Currencies, etc.). | Tier 2 — SP_DailyCommisionReport |
 | 13 | IsValidCustomer | BI_DB_dbo.BI_DB_DailyCommisionReport | IsValidCustomer | GROUP BY pass-through — valid customer quality flag. | Tier 2 — SP_DailyCommisionReport |
-| 14 | IsCreditReportValidCB | BI_DB_dbo.BI_DB_DailyCommisionReport | IsCreditReportValidCB | GROUP BY pass-through — credit bureau validity flag. | Tier 2 — SP_DailyCommisionReport |
+| 14 | IsCreditReportValidCB | BI_DB_dbo.BI_DB_DailyCommisionReport | IsCreditReportValidCB | GROUP BY pass-through — Client_Balance validity flag. | Tier 2 — SP_DailyCommisionReport |
 | 15 | IsDLTUser | BI_DB_dbo.BI_DB_DailyCommisionReport | IsDLTUser | GROUP BY pass-through — DLT user flag. | Tier 2 — SP_DailyCommisionReport |
 | 16 | RollOverFee | BI_DB_dbo.BI_DB_DailyCommisionReport | RollOverFee | SUM(RollOverFee) — aggregated overnight rollover/carry fee for the year. | Tier 2 — SP_DailyCommisionReport |
 | 17 | TicketFee | BI_DB_dbo.BI_DB_DailyCommisionReport | TicketFee | SUM(TicketFee) — aggregated per-ticket transaction fee for the year. | Tier 2 — SP_DailyCommisionReport |

@@ -37,9 +37,9 @@ Surfaces MIMO-style cash activity for US **options** (Apex) accounts: deposits a
 
 | # | Column | Source | Transformation | Tier |
 |---|--------|--------|----------------|------|
-| 1 | OfficeCode | External_Sodreconciliation_apex_EXT869_CashActivity.OfficeCode | Direct | T1 |
-| 2 | RegisteredRepCode | External_Sodreconciliation_apex_EXT869_CashActivity.RegisteredRepCode | Direct | T1 |
-| 3 | AccountNumber | External_Sodreconciliation_apex_EXT869_CashActivity.AccountNumber | Direct | T1 |
+| 1 | OfficeCode | External_Sodreconciliation_apex_EXT869_CashActivity.OfficeCode | Passthrough from BI_DB_dbo.External_Sodreconciliation_apex_EXT869_CashActivity.OfficeCode (no upstream wiki) | T1 |
+| 2 | RegisteredRepCode | External_Sodreconciliation_apex_EXT869_CashActivity.RegisteredRepCode | Passthrough from BI_DB_dbo.External_Sodreconciliation_apex_EXT869_CashActivity.RegisteredRepCode (no upstream wiki) | T1 |
+| 3 | AccountNumber | External_Sodreconciliation_apex_EXT869_CashActivity.AccountNumber | Passthrough from BI_DB_dbo.External_Sodreconciliation_apex_EXT869_CashActivity.AccountNumber (no upstream wiki) | T1 |
 | 4 | DateID | External_Sodreconciliation_apex_EXT869_CashActivity.ProcessDate | CONVERT(nvarchar(8), ProcessDate, 112) | T2 |
 | 5 | Date | External_Sodreconciliation_apex_EXT869_CashActivity.ProcessDate | CONVERT(date, ProcessDate) | T2 |
 | 6 | RealCID | Dim_Customer.RealCID | Via Options GCID → Dim_Customer (MIMORecords) | T1 |
@@ -47,10 +47,10 @@ Surfaces MIMO-style cash activity for US **options** (Apex) accounts: deposits a
 | 8 | AmountUSD | External_Sodreconciliation_apex_EXT869_CashActivity.Amount | ABS(Amount) WHERE OfficeCode IN ('4GS','5GU'); AccountNumber NOT IN ('4GS43999','4GS00100','4GS00101','4GS00103','4GS00104'); EnteredBy IN ('ACH','WRD') OR TerminalID = 'OMJNL' | T2 |
 | 9 | IsFTD | External_Sodreconciliation_apex_EXT869_CashActivity, CTE FinalFTD | CASE WHEN FinalFTD.TransactionID IS NOT NULL THEN 1 ELSE 0 END | T2 |
 | 10 | IsInternalTransfer | External_Sodreconciliation_apex_EXT869_CashActivity.TerminalID, EnteredBy | CASE WHEN TerminalID = 'OMJNL' THEN 1 ELSE 0 END | T2 |
-| 11 | TransactionID | External_Sodreconciliation_apex_EXT869_CashActivity.ACATSControlNumber | Direct | T1 |
+| 11 | TransactionID | External_Sodreconciliation_apex_EXT869_CashActivity.ACATSControlNumber | Passthrough from BI_DB_dbo.External_Sodreconciliation_apex_EXT869_CashActivity.ACATSControlNumber (no upstream wiki) | T1 |
 | 12 | IsGlobalFTD | Dim_Customer, CTE GLOBAL_FTD / FinalFTD | ISNULL(IsGlobalFTD, 0) from FTD match to Dim_Customer first deposit | T2 |
-| 13 | IsValidCustomer | Fact_SnapshotCustomer.IsValidCustomer | Direct | T2 |
-| 14 | IsCreditReportValidCB | Fact_SnapshotCustomer.IsCreditReportValidCB | Direct | T2 |
+| 13 | IsValidCustomer | Fact_SnapshotCustomer.IsValidCustomer | 1 if the customer is a valid retail customer for analytics purposes. ETL-computed from PlayerLevelID, LabelID, CountryID. See §2.2. Approx 98% of current rows = 1. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer) | T2 |
+| 14 | IsCreditReportValidCB | Fact_SnapshotCustomer.IsCreditReportValidCB | Financial-customer flag for Client_Balance reports (CB = Client_Balance, NOT CreditBureau). ETL-computed. See §2.3. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer) | T2 |
 
 ---
 *Auto-generated from SSDT source on 2026-03-22. Knowledge-only -- not migrated to Unity Catalog.*

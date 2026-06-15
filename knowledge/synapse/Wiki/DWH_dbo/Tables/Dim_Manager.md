@@ -89,8 +89,8 @@ REPLICATE-distributed (5,152 rows trivially replicated). HEAP -- no clustered in
 
 | Stars | Tier | Tag |
 |-------|------|-----|
-| ★★★ | Tier 2 -- Synapse SP code / DDL | `(Tier 2 -- SP_Dictionaries_DL_To_Synapse)` |
-| ★★ | Tier 3 -- live data / structure | `(Tier 3 -- live data)` |
+| ★★★ | Tier 2 -- Synapse SP code / DDL | `(Tier 2 -SP_Dictionaries_DL_To_Synapse)` |
+| ★★ | Tier 3 -- live data / structure | `(Tier 3 -live data)` |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|

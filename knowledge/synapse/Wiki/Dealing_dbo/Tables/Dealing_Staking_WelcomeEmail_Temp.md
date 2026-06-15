@@ -55,7 +55,7 @@ Read-only checks executed **2026-03-21**.
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | GCID | int | YES | Global Customer ID of a new staking-eligible customer targeted for welcome email. (Tier 2 -- SP_Staking_WelcomeEmail, DWH_dbo.Dim_Customer.GCID) |
+| 1 | GCID | int | YES | Global Customer ID of a new staking-eligible customer targeted for welcome email. (Tier 2 -SP_Staking_WelcomeEmail, DWH_dbo.Dim_Customer.GCID) |
 
 ---
 

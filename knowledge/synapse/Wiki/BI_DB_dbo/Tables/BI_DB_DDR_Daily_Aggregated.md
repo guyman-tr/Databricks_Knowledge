@@ -106,7 +106,7 @@ Added 2022-01-24 to support **TRS (Total Return Swap) crypto equity reporting** 
 | 1 | DateID | int | YES | Date encoded as YYYYMMDD — the data date (joins to `Dim_Date.DateKey`). (Tier 1) |
 | 2 | Regulation | varchar(100) | YES | Regulatory entity at the customer's last-day attribute (`'CySEC'`, `'FCA'`, `'ASIC & GAML'`, ...). Pinned per §2.1. (Tier 2) |
 | 3 | IsBlocked | int | YES | 1 if the customer's account was in a blocked state on @date (PlayerStatusID NOT IN (1,3,5,7)). Last-day attribute. (Tier 2) |
-| 4 | IsCreditReportValidCB | int | YES | 1 if the customer has a valid credit report (cb=Credit Bureau). Last-day attribute, used for FCA RTS24 / regulatory eligibility filters. (Tier 2) |
+| 4 | IsCreditReportValidCB | int | YES | Financial-customer flag for Client_Balance reports (CB = Client_Balance, NOT CreditBureau). Last-day attribute, used for FCA RTS24 / regulatory eligibility filters. (Tier 2) |
 | 5 | IsGermanBaFin | int | YES | 1 if the customer falls under German BaFin regulation. Pinned per §2.1. (Tier 2) |
 | 6 | IsValidCustomer | int | YES | 1 if the customer is in valid (KYC-approved, not test/internal) state. Last-day attribute. (Tier 2) |
 | 7 | MifidCategory | varchar(100) | YES | MiFID II categorisation (`'Retail'`, `'Professional'`, `'Eligible Counterparty'`). Last-day attribute. (Tier 2) |

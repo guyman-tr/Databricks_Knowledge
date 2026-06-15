@@ -116,21 +116,21 @@ Note the **typo "Revnue"** (should be "Revenue") -- this persisted because the t
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | CID | int | NO | Customer ID -- unique identifier for a customer account in the eToro platform. Primary lookup key. (Tier 4 -- inferred from name) |
-| 2 | Country | varchar(50) | YES | Country name where the customer is registered. (Tier 4 -- inferred from name) |
-| 3 | EU | int | YES | EU membership flag for the customer's country. Expected: 1=EU member state, 0=non-EU. Used for regulatory compliance segmentation. (Tier 4 -- inferred from name) |
-| 4 | Desk | nvarchar(50) | YES | Internal sales/support desk assignment for the customer. (Tier 4 -- inferred from name) |
-| 5 | Club | varchar(50) | YES | eToro Club membership tier (e.g., Silver, Gold, Platinum, Diamond). Determines premium features and benefits. (Tier 4 -- inferred from name) |
-| 6 | Regulation | varchar(50) | YES | Regulatory jurisdiction governing the customer's account (e.g., CySEC, FCA, ASIC, eToro USA). (Tier 4 -- inferred from name) |
-| 7 | SymbolFull | varchar(100) | YES | Full symbol of the crypto asset airdropped to the customer (e.g., BTC, ETH, DOGE). (Tier 4 -- inferred from name) |
-| 8 | Amount | decimal(11,2) | NO | Quantity of the airdropped crypto token distributed to the customer. (Tier 4 -- inferred from name) |
-| 9 | ExecutionOccurred | date | YES | Date when the airdrop was executed/distributed to the customer. (Tier 4 -- inferred from name) |
-| 10 | FirstDepositDate | date | YES | Date of the customer's first fiat deposit. Used for tenure segmentation and FTD analysis. (Tier 4 -- inferred from name) |
-| 11 | Equity | decimal(23,4) | YES | Customer portfolio equity value at time of airdrop. High precision (4 decimal places) for accurate financial tracking. (Tier 4 -- inferred from name) |
-| 12 | Deposited | int | YES | Total deposited amount or deposit count for the customer. (Tier 4 -- inferred from name) |
-| 13 | Revnue | money | YES | Customer lifetime revenue. **Typo** -- should be "Revenue". (Tier 4 -- inferred from name) |
-| 14 | Deposit | money | YES | Fiat deposit amount (money type). Distinct from "Deposited" (int) -- this is likely the monetary value while Deposited is a count or flag. (Tier 4 -- inferred from name) |
-| 15 | UpdateDate | datetime | NO | Timestamp of last row update. (Tier 5 -- ETL metadata) |
+| 1 | CID | int | NO | Customer ID -- unique identifier for a customer account in the eToro platform. Primary lookup key. (Tier 4 -inferred from name) |
+| 2 | Country | varchar(50) | YES | Country name where the customer is registered. (Tier 4 -inferred from name) |
+| 3 | EU | int | YES | EU membership flag for the customer's country. Expected: 1=EU member state, 0=non-EU. Used for regulatory compliance segmentation. (Tier 4 -inferred from name) |
+| 4 | Desk | nvarchar(50) | YES | Internal sales/support desk assignment for the customer. (Tier 4 -inferred from name) |
+| 5 | Club | varchar(50) | YES | eToro Club membership tier (e.g., Silver, Gold, Platinum, Diamond). Determines premium features and benefits. (Tier 4 -inferred from name) |
+| 6 | Regulation | varchar(50) | YES | Regulatory jurisdiction governing the customer's account (e.g., CySEC, FCA, ASIC, eToro USA). (Tier 4 -inferred from name) |
+| 7 | SymbolFull | varchar(100) | YES | Full symbol of the crypto asset airdropped to the customer (e.g., BTC, ETH, DOGE). (Tier 4 -inferred from name) |
+| 8 | Amount | decimal(11,2) | NO | Quantity of the airdropped crypto token distributed to the customer. (Tier 4 -inferred from name) |
+| 9 | ExecutionOccurred | date | YES | Date when the airdrop was executed/distributed to the customer. (Tier 4 -inferred from name) |
+| 10 | FirstDepositDate | date | YES | Date of the customer's first fiat deposit. Used for tenure segmentation and FTD analysis. (Tier 4 -inferred from name) |
+| 11 | Equity | decimal(23,4) | YES | Customer portfolio equity value at time of airdrop. High precision (4 decimal places) for accurate financial tracking. (Tier 4 -inferred from name) |
+| 12 | Deposited | int | YES | Total deposited amount or deposit count for the customer. (Tier 4 -inferred from name) |
+| 13 | Revnue | money | YES | Customer lifetime revenue. **Typo** -- should be "Revenue". (Tier 4 -inferred from name) |
+| 14 | Deposit | money | YES | Fiat deposit amount (money type). Distinct from "Deposited" (int) -- this is likely the monetary value while Deposited is a count or flag. (Tier 4 -inferred from name) |
+| 15 | UpdateDate | datetime | NO | Timestamp of last row update. (Tier 5 -ETL metadata) |
 
 ---
 

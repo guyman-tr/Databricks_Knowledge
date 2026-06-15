@@ -40,39 +40,39 @@ Authored by Guy Manova (March 2020). Originally de-aggregated SettlementDB_Real 
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Gap_Type | nvarchar | YES | Settlement gap category. Current SP assigns constant `'NA'` in `#finalPrep` after removal of LP-side gap detection. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, #finalPrep.Gap_Type) |
-| 2 | ProviderID | int | YES | Hedge server identifier carried as provider key from `#relPos2` aggregation (`HedgeServerID` as `ProviderID` in `#dailyV_ClientsPositions_HistoryCurrency`). (Tier 2 -- SP_Finance_Non_US_Settlement_Report, #relPos1.HedgeServerID) |
-| 3 | Provider | varchar(100) | YES | Provider label from static `#hedgeServers` mapping (e.g. IG, BNYMellon, Saxo, IB, Apex, JPM). (Tier 2 -- SP_Finance_Non_US_Settlement_Report, #hedgeServers.Provider) |
-| 4 | InstrumentID | int | YES | Instrument key from position data. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, #relPos2.InstrumentID) |
-| 5 | Instrument_Name | nvarchar | YES | Display name from `Dim_Instrument.InstrumentDisplayName` in `#joined`. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, Dim_Instrument.InstrumentDisplayName) |
-| 6 | ReportDate | int | YES | Report date as YYYYMMDD `DateID`; matches SP `@dateID`. Clustered index leading column. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, @dateID) |
-| 7 | ISINCode | nvarchar | YES | ISIN from `Dim_Instrument`. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, Dim_Instrument.ISINCode) |
-| 8 | Symbol | nvarchar | YES | Trading symbol from `Dim_Instrument`. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, Dim_Instrument.Symbol) |
-| 9 | Closing_Rate_Price_Unspreaded | money | YES | End-of-day bid in USD (unspreaded), from `#prices`: `Fact_CurrencyPriceWithSplit.Bid` × USD conversion. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, Fact_CurrencyPriceWithSplit.Bid) |
-| 10 | Closing_Rate_Price_Spreaded | money | YES | End-of-day bid in USD (spreaded), from `#prices`: `BidSpreaded` × USD conversion. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, Fact_CurrencyPriceWithSplit.BidSpreaded) |
-| 11 | Total_Client_Holdings_In_Units | money | YES | Sum of client units (`Units`) for the instrument × hedge server × date from `#relPos` (named `InstrumentInventory` in temp pipeline). (Tier 2 -- SP_Finance_Non_US_Settlement_Report, SUM(#relPos1.Units)) |
-| 12 | Total_Custodian_Settled_Positions_In_Units | money | YES | Legacy custodian units; **0** in current build (LP path removed). (Tier 2 -- SP_Finance_Non_US_Settlement_Report, literal 0) |
-| 13 | Custodian_vs_Client_Holdings_Difference_In_units | money | YES | Legacy unit difference; **0** in current build. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, literal 0) |
-| 14 | Total_Clients_Holdings_in_$ | money | YES | Total client USD value: SUM of `Total_Open_$` (Amount + PositionPnL) for the bucket. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, SUM(#relPos1.Total_Open_$)) |
-| 15 | Total_Custodian_Settled_Positions_in_$ | money | YES | Legacy custodian USD; **0** in current build. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, literal 0) |
-| 16 | Custodian_vs_Client_Holdings_Difference_In_$ | money | YES | Legacy USD difference; **0** in current build. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, literal 0) |
-| 17 | ASIC_Client_Holdings_In_Units | money | YES | Units where `RegulationID = 4` (ASIC). (Tier 2 -- SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
-| 18 | CySEC_Client_Holdings_In_Units | money | YES | Units where `RegulationID IN (1,5)` (CySEC). (Tier 2 -- SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
-| 19 | FCA_Client_Holdings_In_Units | money | YES | Units where `RegulationID = 2` (FCA). (Tier 2 -- SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
-| 20 | GAML_Client_Holdings_In_Units | money | YES | Units where `RegulationID = 10` (GAML). (Tier 2 -- SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
-| 21 | ASIC_Client_Holdings_In_$ | money | YES | USD holdings for ASIC clients in the bucket. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
-| 22 | CySEC_Client_Holdings_In_$ | money | YES | USD holdings for CySEC clients in the bucket. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
-| 23 | FCA_Client_Holdings_In_$ | money | YES | USD holdings for FCA clients in the bucket. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
-| 24 | GAML_Client_Holdings_In_$ | money | YES | USD holdings for GAML clients in the bucket. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
-| 25 | UpdateDate | datetime | YES | Row load timestamp. (Tier 3 -- SP_Finance_Non_US_Settlement_Report, GETDATE()) |
-| 26 | Actual_Avg_Price | money | YES | Implied average price: `Total_Clients_Holdings_In_$ / InstrumentInventory` when inventory is non-zero, else NULL. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, computed) |
-| 27 | IsGermanBaFin | int | YES | 1 if customer appears in `V_GermanBaFin` for the report date. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, V_GermanBaFin) |
-| 28 | Seychelles_Client_Holdings_In_Units | money | YES | Units where `RegulationID = 9`. Added Apr 2021. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
-| 29 | Seychelles_Client_Holdings_In_$ | money | YES | USD holdings for Seychelles regulation in the bucket. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
-| 30 | Country | nvarchar | YES | Customer country name from `Dim_Country` via snapshot. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, Dim_Country.Name) |
-| 31 | PlayerLevel | nvarchar | YES | Player level name from `Dim_PlayerLevel` for Tableau filters. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, Dim_PlayerLevel.Name) |
-| 32 | FinCENFINRA_Client_Holdings_In_Units | money | YES | Units where `RegulationID IN (8)` in aggregation temp table; source `#relPos2` excludes regulation 8, so values are **0** in practice (column retained for schema). (Tier 2 -- SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
-| 33 | FinCENFINRA_Client_Holdings_In_$ | money | YES | USD for regulation 8 bucket; **0** in practice for same reason as units. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
+| 1 | Gap_Type | nvarchar | YES | Settlement gap category. Current SP assigns constant `'NA'` in `#finalPrep` after removal of LP-side gap detection. (Tier 2 -SP_Finance_Non_US_Settlement_Report, #finalPrep.Gap_Type) |
+| 2 | ProviderID | int | YES | Hedge server identifier carried as provider key from `#relPos2` aggregation (`HedgeServerID` as `ProviderID` in `#dailyV_ClientsPositions_HistoryCurrency`). (Tier 2 -SP_Finance_Non_US_Settlement_Report, #relPos1.HedgeServerID) |
+| 3 | Provider | varchar(100) | YES | Provider label from static `#hedgeServers` mapping (e.g. IG, BNYMellon, Saxo, IB, Apex, JPM). (Tier 2 -SP_Finance_Non_US_Settlement_Report, #hedgeServers.Provider) |
+| 4 | InstrumentID | int | YES | Instrument key from position data. (Tier 2 -SP_Finance_Non_US_Settlement_Report, #relPos2.InstrumentID) |
+| 5 | Instrument_Name | nvarchar | YES | Display name from `Dim_Instrument.InstrumentDisplayName` in `#joined`. (Tier 2 -SP_Finance_Non_US_Settlement_Report, Dim_Instrument.InstrumentDisplayName) |
+| 6 | ReportDate | int | YES | Report date as YYYYMMDD `DateID`; matches SP `@dateID`. Clustered index leading column. (Tier 2 -SP_Finance_Non_US_Settlement_Report, @dateID) |
+| 7 | ISINCode | nvarchar | YES | ISIN from `Dim_Instrument`. (Tier 2 -SP_Finance_Non_US_Settlement_Report, Dim_Instrument.ISINCode) |
+| 8 | Symbol | nvarchar | YES | Trading symbol from `Dim_Instrument`. (Tier 2 -SP_Finance_Non_US_Settlement_Report, Dim_Instrument.Symbol) |
+| 9 | Closing_Rate_Price_Unspreaded | money | YES | End-of-day bid in USD (unspreaded), from `#prices`: `Fact_CurrencyPriceWithSplit.Bid` × USD conversion. (Tier 2 -SP_Finance_Non_US_Settlement_Report, Fact_CurrencyPriceWithSplit.Bid) |
+| 10 | Closing_Rate_Price_Spreaded | money | YES | End-of-day bid in USD (spreaded), from `#prices`: `BidSpreaded` × USD conversion. (Tier 2 -SP_Finance_Non_US_Settlement_Report, Fact_CurrencyPriceWithSplit.BidSpreaded) |
+| 11 | Total_Client_Holdings_In_Units | money | YES | Sum of client units (`Units`) for the instrument × hedge server × date from `#relPos` (named `InstrumentInventory` in temp pipeline). (Tier 2 -SP_Finance_Non_US_Settlement_Report, SUM(#relPos1.Units)) |
+| 12 | Total_Custodian_Settled_Positions_In_Units | money | YES | Legacy custodian units; **0** in current build (LP path removed). (Tier 2 -SP_Finance_Non_US_Settlement_Report, literal 0) |
+| 13 | Custodian_vs_Client_Holdings_Difference_In_units | money | YES | Legacy unit difference; **0** in current build. (Tier 2 -SP_Finance_Non_US_Settlement_Report, literal 0) |
+| 14 | Total_Clients_Holdings_in_$ | money | YES | Total client USD value: SUM of `Total_Open_$` (Amount + PositionPnL) for the bucket. (Tier 2 -SP_Finance_Non_US_Settlement_Report, SUM(#relPos1.Total_Open_$)) |
+| 15 | Total_Custodian_Settled_Positions_in_$ | money | YES | Legacy custodian USD; **0** in current build. (Tier 2 -SP_Finance_Non_US_Settlement_Report, literal 0) |
+| 16 | Custodian_vs_Client_Holdings_Difference_In_$ | money | YES | Legacy USD difference; **0** in current build. (Tier 2 -SP_Finance_Non_US_Settlement_Report, literal 0) |
+| 17 | ASIC_Client_Holdings_In_Units | money | YES | Units where `RegulationID = 4` (ASIC). (Tier 2 -SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
+| 18 | CySEC_Client_Holdings_In_Units | money | YES | Units where `RegulationID IN (1,5)` (CySEC). (Tier 2 -SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
+| 19 | FCA_Client_Holdings_In_Units | money | YES | Units where `RegulationID = 2` (FCA). (Tier 2 -SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
+| 20 | GAML_Client_Holdings_In_Units | money | YES | Units where `RegulationID = 10` (GAML). (Tier 2 -SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
+| 21 | ASIC_Client_Holdings_In_$ | money | YES | USD holdings for ASIC clients in the bucket. (Tier 2 -SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
+| 22 | CySEC_Client_Holdings_In_$ | money | YES | USD holdings for CySEC clients in the bucket. (Tier 2 -SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
+| 23 | FCA_Client_Holdings_In_$ | money | YES | USD holdings for FCA clients in the bucket. (Tier 2 -SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
+| 24 | GAML_Client_Holdings_In_$ | money | YES | USD holdings for GAML clients in the bucket. (Tier 2 -SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
+| 25 | UpdateDate | datetime | YES | Row load timestamp. (Tier 3 -SP_Finance_Non_US_Settlement_Report, GETDATE()) |
+| 26 | Actual_Avg_Price | money | YES | Implied average price: `Total_Clients_Holdings_In_$ / InstrumentInventory` when inventory is non-zero, else NULL. (Tier 2 -SP_Finance_Non_US_Settlement_Report, computed) |
+| 27 | IsGermanBaFin | int | YES | 1 if customer appears in `V_GermanBaFin` for the report date. (Tier 2 -SP_Finance_Non_US_Settlement_Report, V_GermanBaFin) |
+| 28 | Seychelles_Client_Holdings_In_Units | money | YES | Units where `RegulationID = 9`. Added Apr 2021. (Tier 2 -SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
+| 29 | Seychelles_Client_Holdings_In_$ | money | YES | USD holdings for Seychelles regulation in the bucket. (Tier 2 -SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
+| 30 | Country | nvarchar | YES | Customer country name from `Dim_Country` via snapshot. (Tier 2 -SP_Finance_Non_US_Settlement_Report, Dim_Country.Name) |
+| 31 | PlayerLevel | nvarchar | YES | Player level name from `Dim_PlayerLevel` for Tableau filters. (Tier 2 -SP_Finance_Non_US_Settlement_Report, Dim_PlayerLevel.Name) |
+| 32 | FinCENFINRA_Client_Holdings_In_Units | money | YES | Units where `RegulationID IN (8)` in aggregation temp table; source `#relPos2` excludes regulation 8, so values are **0** in practice (column retained for schema). (Tier 2 -SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
+| 33 | FinCENFINRA_Client_Holdings_In_$ | money | YES | USD for regulation 8 bucket; **0** in practice for same reason as units. (Tier 2 -SP_Finance_Non_US_Settlement_Report, CASE RegulationID) |
 
 ---
 

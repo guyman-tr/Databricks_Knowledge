@@ -116,34 +116,34 @@ Note the **typo "Cocntact"** (should be "Contact") -- this persisted because the
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | YearMonth | varchar(7) | YES | Month identifier in "YYYY-MM" format. Defines the monthly grain of this acquisition funnel. (Tier 4 -- inferred from name and type) |
-| 2 | AffiliateID | int | NO | Affiliate partner identifier. FK to fiktivo affiliate system. Identifies the marketing affiliate driving mobile installs. (Tier 4 -- inferred from name) |
-| 3 | Cocntact | nvarchar(1000) | NO | Affiliate contact name or email. **Typo** -- should be "Contact". (Tier 4 -- inferred from name) |
-| 4 | AffiliatesGroupsName | nvarchar(50) | NO | Name of the affiliate group or network this affiliate belongs to. (Tier 4 -- inferred from name) |
-| 5 | PaymentTrigger | nvarchar(30) | NO | Event that triggers affiliate payment (e.g., FTD, Registration, Deposit). Determines when the CPA payout is activated. (Tier 4 -- inferred from name) |
-| 6 | CPA_Plan | nvarchar(11) | NO | Cost-per-acquisition plan code governing the payout structure for this affiliate. (Tier 4 -- inferred from name) |
-| 7 | Desk | nvarchar(50) | NO | Internal sales/support desk assignment for the affiliate's customers. (Tier 4 -- inferred from name) |
-| 8 | Region | nvarchar(50) | NO | Geographic marketing region grouping (e.g., Europe, APAC, LATAM). (Tier 4 -- inferred from name) |
-| 9 | Country | nvarchar(50) | NO | Country name or code where the mobile install originated. (Tier 4 -- inferred from name) |
-| 10 | TierCountry | int | YES | Country tier classification for CPA rate differentiation. Higher tiers typically command higher payouts. (Tier 4 -- inferred from name) |
-| 11 | Platform | nvarchar(10) | NO | Mobile platform identifier -- expected values: iOS, Android. (Tier 4 -- inferred from name) |
-| 12 | Installs | int | YES | Count of mobile app installs for this affiliate/platform/country/month. Top of the acquisition funnel. (Tier 4 -- inferred from name) |
-| 13 | Registrations | int | YES | Count of user registrations from mobile installs. Second stage of the funnel. (Tier 4 -- inferred from name) |
-| 14 | FTDs | int | YES | Count of first-time deposits (FTD). Key conversion event for affiliate commissions. (Tier 4 -- inferred from name) |
-| 15 | FraudFTDs | int | YES | Count of FTDs flagged as fraudulent. Subtracted from FTDs for valid commission calculation. (Tier 4 -- inferred from name) |
-| 16 | Verification1 | int | YES | Count of users passing KYC verification level 1 (identity document upload). (Tier 4 -- inferred from name) |
-| 17 | Verification2 | int | YES | Count of users passing KYC verification level 2 (proof of address). (Tier 4 -- inferred from name) |
-| 18 | Verification3 | int | YES | Count of users passing KYC verification level 3 (enhanced due diligence). (Tier 4 -- inferred from name) |
-| 19 | FTDEs | int | YES | First-time deposit equivalents -- normalized FTD count adjusted for currency or value thresholds. (Tier 4 -- inferred from name) |
-| 20 | FirstAction | int | YES | Count of users who executed their first trade after depositing. Measures activation post-FTD. (Tier 4 -- inferred from name) |
-| 21 | ReDeposit | int | YES | Count of subsequent deposits after the initial FTD. Measures retention and re-engagement. (Tier 4 -- inferred from name) |
-| 22 | UpdateDate | datetime | YES | Timestamp of last row update. (Tier 5 -- ETL metadata) |
-| 23 | Rev8Y_LTV | numeric(38,6) | YES | Projected 8-year revenue lifetime value for the cohort. Raw calculation including all customers. (Tier 4 -- inferred from name) |
-| 24 | Rev8Y_LTV_NoExtreme | numeric(38,6) | YES | Projected 8-year revenue lifetime value with statistical outlier removal (whale/test account filtering). (Tier 4 -- inferred from name) |
-| 25 | CPA | int | YES | Cost per acquisition -- the agreed payout amount per qualifying event for this affiliate/plan. (Tier 4 -- inferred from name) |
-| 26 | Cost | int | YES | Total marketing cost (spend) for this affiliate/platform/country/month. (Tier 4 -- inferred from name) |
-| 27 | FTDAmount | int | YES | Total monetary amount of first-time deposits for this cohort. (Tier 4 -- inferred from name) |
-| 28 | RedepositsAmount | int | YES | Total monetary amount of subsequent deposits for this cohort. (Tier 4 -- inferred from name) |
+| 1 | YearMonth | varchar(7) | YES | Month identifier in "YYYY-MM" format. Defines the monthly grain of this acquisition funnel. (Tier 4 -inferred from name and type) |
+| 2 | AffiliateID | int | NO | Affiliate partner identifier. FK to fiktivo affiliate system. Identifies the marketing affiliate driving mobile installs. (Tier 4 -inferred from name) |
+| 3 | Cocntact | nvarchar(1000) | NO | Affiliate contact name or email. **Typo** -- should be "Contact". (Tier 4 -inferred from name) |
+| 4 | AffiliatesGroupsName | nvarchar(50) | NO | Name of the affiliate group or network this affiliate belongs to. (Tier 4 -inferred from name) |
+| 5 | PaymentTrigger | nvarchar(30) | NO | Event that triggers affiliate payment (e.g., FTD, Registration, Deposit). Determines when the CPA payout is activated. (Tier 4 -inferred from name) |
+| 6 | CPA_Plan | nvarchar(11) | NO | Cost-per-acquisition plan code governing the payout structure for this affiliate. (Tier 4 -inferred from name) |
+| 7 | Desk | nvarchar(50) | NO | Internal sales/support desk assignment for the affiliate's customers. (Tier 4 -inferred from name) |
+| 8 | Region | nvarchar(50) | NO | Geographic marketing region grouping (e.g., Europe, APAC, LATAM). (Tier 4 -inferred from name) |
+| 9 | Country | nvarchar(50) | NO | Country name or code where the mobile install originated. (Tier 4 -inferred from name) |
+| 10 | TierCountry | int | YES | Country tier classification for CPA rate differentiation. Higher tiers typically command higher payouts. (Tier 4 -inferred from name) |
+| 11 | Platform | nvarchar(10) | NO | Mobile platform identifier -- expected values: iOS, Android. (Tier 4 -inferred from name) |
+| 12 | Installs | int | YES | Count of mobile app installs for this affiliate/platform/country/month. Top of the acquisition funnel. (Tier 4 -inferred from name) |
+| 13 | Registrations | int | YES | Count of user registrations from mobile installs. Second stage of the funnel. (Tier 4 -inferred from name) |
+| 14 | FTDs | int | YES | Count of first-time deposits (FTD). Key conversion event for affiliate commissions. (Tier 4 -inferred from name) |
+| 15 | FraudFTDs | int | YES | Count of FTDs flagged as fraudulent. Subtracted from FTDs for valid commission calculation. (Tier 4 -inferred from name) |
+| 16 | Verification1 | int | YES | Count of users passing KYC verification level 1 (identity document upload). (Tier 4 -inferred from name) |
+| 17 | Verification2 | int | YES | Count of users passing KYC verification level 2 (proof of address). (Tier 4 -inferred from name) |
+| 18 | Verification3 | int | YES | Count of users passing KYC verification level 3 (enhanced due diligence). (Tier 4 -inferred from name) |
+| 19 | FTDEs | int | YES | First-time deposit equivalents -- normalized FTD count adjusted for currency or value thresholds. (Tier 4 -inferred from name) |
+| 20 | FirstAction | int | YES | Count of users who executed their first trade after depositing. Measures activation post-FTD. (Tier 4 -inferred from name) |
+| 21 | ReDeposit | int | YES | Count of subsequent deposits after the initial FTD. Measures retention and re-engagement. (Tier 4 -inferred from name) |
+| 22 | UpdateDate | datetime | YES | Timestamp of last row update. (Tier 5 -ETL metadata) |
+| 23 | Rev8Y_LTV | numeric(38,6) | YES | Projected 8-year revenue lifetime value for the cohort. Raw calculation including all customers. (Tier 4 -inferred from name) |
+| 24 | Rev8Y_LTV_NoExtreme | numeric(38,6) | YES | Projected 8-year revenue lifetime value with statistical outlier removal (whale/test account filtering). (Tier 4 -inferred from name) |
+| 25 | CPA | int | YES | Cost per acquisition -- the agreed payout amount per qualifying event for this affiliate/plan. (Tier 4 -inferred from name) |
+| 26 | Cost | int | YES | Total marketing cost (spend) for this affiliate/platform/country/month. (Tier 4 -inferred from name) |
+| 27 | FTDAmount | int | YES | Total monetary amount of first-time deposits for this cohort. (Tier 4 -inferred from name) |
+| 28 | RedepositsAmount | int | YES | Total monetary amount of subsequent deposits for this cohort. (Tier 4 -inferred from name) |
 
 ---
 

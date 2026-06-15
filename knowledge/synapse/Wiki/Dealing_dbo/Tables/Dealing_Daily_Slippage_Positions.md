@@ -62,42 +62,42 @@ Read-only checks executed **2026-03-21**.
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Date | date | YES | Report date for the slippage event. (Tier 2 -- SP_Slippage_Report, @Start) |
-| 2 | PositionID | bigint | YES | Position identifier. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.PositionID) |
-| 3 | CID | int | YES | Customer identifier. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.CID) |
-| 4 | InstrumentID | int | YES | eToro instrument identifier. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.InstrumentID) |
-| 5 | InstrumentName | varchar(45) | YES | Short instrument name/ticker. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Instrument.Name) |
-| 6 | InstrumentTypeID | int | YES | Numeric instrument type (1=Currencies, 5=Stocks, 6=ETF, etc.). (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Instrument.InstrumentTypeID) |
-| 7 | InstrumentType | varchar(50) | YES | Instrument type string. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Instrument.InstrumentType) |
-| 8 | HedgeServerID | int | YES | Hedge server that processed the position. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.HedgeServerID) |
-| 9 | MirrorID | int | YES | CopyPortfolio / mirror relationship ID (0 if not mirrored). (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.MirrorID) |
-| 10 | IsBuy | int | YES | Position side as executed: 1=buy, 0=sell. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.IsBuy) |
-| 11 | OrigIsBuy | int | YES | Original requested direction before partial close reversals. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.OrigIsBuy) |
-| 12 | ExecutionAmountInUnits | decimal(16,8) | YES | Units executed on the specific action (open or close). (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.ExecutionAmountInUnits) |
-| 13 | AmountInUnitsDecimal | decimal(16,6) | YES | Full position size in units (split-adjusted). (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.AmountInUnitsDecimal × SplitRatio) |
-| 14 | Occurred | datetime | YES | Timestamp when the position action was executed. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.OpenOccurred / CloseOccurred) |
-| 15 | EndForexRate | decimal(16,8) | YES | Actual execution rate received (split-adjusted). (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.OpenForexRate / CloseForexRate × SplitRatio) |
-| 16 | ConversionRate | decimal(16,8) | YES | FX conversion rate to USD (UnitMargin/InitForexRate for opens). (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.ConversionRate) |
-| 17 | ActionTypeID | int | YES | Numeric action type from the position log. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.ActionTypeID) |
-| 18 | ActionType | varchar(50) | YES | Action type string (Open, Manual Close, Take Profit, Stop Loss, OpenOpen). (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position action type) |
-| 19 | HedgingMode | varchar(10) | YES | Hedging mode of the position (CBH / HBC / etc.). (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.HedgingMode) |
-| 20 | Precision | int | YES | Instrument price precision (decimal places). (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Instrument.Precision) |
-| 21 | IsOpen | int | YES | 1 if this is an open action, 0 if close. (Tier 2 -- SP_Slippage_Report, derived from ActionType) |
-| 22 | ExecutionID | int | YES | LP execution identifier from EMS. (Tier 2 -- SP_Slippage_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.ExecutionID) |
-| 23 | StopRate | decimal(16,8) | YES | Stop loss rate for the position. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.StopRate) |
-| 24 | LimitRate | decimal(16,8) | YES | Take profit (limit) rate for the position. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.LimitRate) |
-| 25 | RequestID | bigint | YES | Client request identifier (mapped from EMS ClientRequestID). (Tier 2 -- SP_Slippage_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.ClientRequestID) |
-| 26 | ClientViewRate | numeric(16,8) | YES | Price shown to the client in the UI at request time. (Tier 2 -- SP_Slippage_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.ClientViewRate) |
-| 27 | CustomerChosenRate | decimal(16,8) | YES | Rate at which the client's order was accepted (trigger rate for pending orders). (Tier 2 -- SP_Slippage_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.CustomerChosenRate) |
-| 28 | SlippageInPips | money | YES | Slippage in instrument pips: (CustomerChosenRate − EndForexRate) / Precision. (Tier 2 -- SP_Slippage_Report, computed) |
-| 29 | SlippageInDollar | money | YES | Monetary slippage in USD: SlippageInPips × AmountInUnitsDecimal × ConversionRate. (Tier 2 -- SP_Slippage_Report, computed) |
-| 30 | slippage % | decimal(38,21) | YES | Percentage slippage: ABS((CustomerChosenRate − EndForexRate) / CustomerChosenRate), signed by SlippageInDollar. NULL when CustomerChosenRate ≤ 0. (Tier 2 -- SP_Slippage_Report, computed) |
-| 31 | UpdateDate | datetime | NOT NULL | Batch execution timestamp (GETDATE()). (Tier 3 -- SP_Slippage_Report, GETDATE()) |
-| 32 | RequestTime | datetime | YES | Time of the original client request. (Tier 2 -- SP_Slippage_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.RequestTime) |
-| 33 | OverThreshold | tinyint | YES | 1 if ABS(slippage%) ≥ 0.5%, 0 otherwise — compensation eligibility flag. (Tier 2 -- SP_Slippage_Report, computed) |
-| 34 | OpenSession | int | YES | Market session identifier at the time of the action. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.OpenSession) |
-| 35 | Volume | int | YES | Trading volume associated with the position action. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.Volume) |
-| 36 | Regulation | varchar(50) | YES | Customer regulatory jurisdiction. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Regulation.Name) |
+| 1 | Date | date | YES | Report date for the slippage event. (Tier 2 -SP_Slippage_Report, @Start) |
+| 2 | PositionID | bigint | YES | Position identifier. (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.PositionID) |
+| 3 | CID | int | YES | Customer identifier. (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.CID) |
+| 4 | InstrumentID | int | YES | eToro instrument identifier. (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.InstrumentID) |
+| 5 | InstrumentName | varchar(45) | YES | Short instrument name/ticker. (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Instrument.Name) |
+| 6 | InstrumentTypeID | int | YES | Numeric instrument type (1=Currencies, 5=Stocks, 6=ETF, etc.). (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Instrument.InstrumentTypeID) |
+| 7 | InstrumentType | varchar(50) | YES | Instrument type string. (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Instrument.InstrumentType) |
+| 8 | HedgeServerID | int | YES | Hedge server that processed the position. (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.HedgeServerID) |
+| 9 | MirrorID | int | YES | CopyPortfolio / mirror relationship ID (0 if not mirrored). (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.MirrorID) |
+| 10 | IsBuy | int | YES | Position side as executed: 1=buy, 0=sell. (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.IsBuy) |
+| 11 | OrigIsBuy | int | YES | Original requested direction before partial close reversals. (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.OrigIsBuy) |
+| 12 | ExecutionAmountInUnits | decimal(16,8) | YES | Units executed on the specific action (open or close). (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.ExecutionAmountInUnits) |
+| 13 | AmountInUnitsDecimal | decimal(16,6) | YES | Full position size in units (split-adjusted). (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.AmountInUnitsDecimal × SplitRatio) |
+| 14 | Occurred | datetime | YES | Timestamp when the position action was executed. (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.OpenOccurred / CloseOccurred) |
+| 15 | EndForexRate | decimal(16,8) | YES | Actual execution rate received (split-adjusted). (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.OpenForexRate / CloseForexRate × SplitRatio) |
+| 16 | ConversionRate | decimal(16,8) | YES | FX conversion rate to USD (UnitMargin/InitForexRate for opens). (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.ConversionRate) |
+| 17 | ActionTypeID | int | YES | Numeric action type from the position log. (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.ActionTypeID) |
+| 18 | ActionType | varchar(50) | YES | Action type string (Open, Manual Close, Take Profit, Stop Loss, OpenOpen). (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position action type) |
+| 19 | HedgingMode | varchar(10) | YES | Hedging mode of the position (CBH / HBC / etc.). (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.HedgingMode) |
+| 20 | Precision | int | YES | Instrument price precision (decimal places). (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Instrument.Precision) |
+| 21 | IsOpen | int | YES | 1 if this is an open action, 0 if close. (Tier 2 -SP_Slippage_Report, derived from ActionType) |
+| 22 | ExecutionID | int | YES | LP execution identifier from EMS. (Tier 2 -SP_Slippage_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.ExecutionID) |
+| 23 | StopRate | decimal(16,8) | YES | Stop loss rate for the position. (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.StopRate) |
+| 24 | LimitRate | decimal(16,8) | YES | Take profit (limit) rate for the position. (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.LimitRate) |
+| 25 | RequestID | bigint | YES | Client request identifier (mapped from EMS ClientRequestID). (Tier 2 -SP_Slippage_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.ClientRequestID) |
+| 26 | ClientViewRate | numeric(16,8) | YES | Price shown to the client in the UI at request time. (Tier 2 -SP_Slippage_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.ClientViewRate) |
+| 27 | CustomerChosenRate | decimal(16,8) | YES | Rate at which the client's order was accepted (trigger rate for pending orders). (Tier 2 -SP_Slippage_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.CustomerChosenRate) |
+| 28 | SlippageInPips | money | YES | Slippage in instrument pips: (CustomerChosenRate − EndForexRate) / Precision. (Tier 2 -SP_Slippage_Report, computed) |
+| 29 | SlippageInDollar | money | YES | Monetary slippage in USD: SlippageInPips × AmountInUnitsDecimal × ConversionRate. (Tier 2 -SP_Slippage_Report, computed) |
+| 30 | slippage % | decimal(38,21) | YES | Percentage slippage: ABS((CustomerChosenRate − EndForexRate) / CustomerChosenRate), signed by SlippageInDollar. NULL when CustomerChosenRate ≤ 0. (Tier 2 -SP_Slippage_Report, computed) |
+| 31 | UpdateDate | datetime | NOT NULL | Batch execution timestamp (GETDATE()). (Tier 3 -SP_Slippage_Report, GETDATE()) |
+| 32 | RequestTime | datetime | YES | Time of the original client request. (Tier 2 -SP_Slippage_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.RequestTime) |
+| 33 | OverThreshold | tinyint | YES | 1 if ABS(slippage%) ≥ 0.5%, 0 otherwise — compensation eligibility flag. (Tier 2 -SP_Slippage_Report, computed) |
+| 34 | OpenSession | int | YES | Market session identifier at the time of the action. (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.OpenSession) |
+| 35 | Volume | int | YES | Trading volume associated with the position action. (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Position.Volume) |
+| 36 | Regulation | varchar(50) | YES | Customer regulatory jurisdiction. (Tier 2 -SP_Slippage_Report, DWH_dbo.Dim_Regulation.Name) |
 | 37 | IsSettled | tinyint | YES | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
 
 ---

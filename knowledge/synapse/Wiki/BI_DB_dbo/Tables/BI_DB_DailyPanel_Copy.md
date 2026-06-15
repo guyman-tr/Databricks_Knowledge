@@ -228,7 +228,7 @@ END
 | 29 | RealizedEquity | money | YES | Realized equity (cash + credit + in-process cashouts) on the snapshot date. Direct passthrough from V_Liabilities.RealizedEquity. (Tier 2 — Fact_SnapshotEquity) |
 | 30 | TotalPositionsAmount | money | YES | Total invested amount across all open positions on the snapshot date. Direct passthrough from V_Liabilities.TotalPositionsAmount. (Tier 2 — Fact_SnapshotEquity) |
 | 31 | PositionPnL | decimal(16,4) | YES | Unrealized position profit/loss on the snapshot date. Direct passthrough from V_Liabilities.PositionPnL. (Tier 2 — Fact_CustomerUnrealized_PnL) |
-| 32 | Credit | money | YES | Available credit balance on the snapshot date. Direct passthrough from V_Liabilities.Credit. (Tier 2 — Fact_SnapshotEquity) |
+| 32 | Credit | money | YES | Outstanding credit/bonus balance on the snapshot date. From V_Liabilities.Credit; negative values represent outstanding obligations. (Tier 2 — Fact_SnapshotEquity via V_Liabilities) |
 | 33 | NumOfCopiers | int | YES | Count of valid depositor customers currently copying this PI/Portfolio, from etoroGeneral_History_GuruCopiers where Timestamp = day-after-@date. Only counts IsValidCustomer=1 AND IsDepositor=1 copiers. (Tier 2 — etoroGeneral_History_GuruCopiers) |
 | 34 | CopyAUC | money | YES | Total Assets Under Copy -- sum of Cash + Investment + PnL + DetachedPosInvestment + Dit_PnL across all valid copiers of this PI/Portfolio. (Tier 2 — etoroGeneral_History_GuruCopiers) |
 | 35 | CopyPnL | money | YES | Total copy PnL -- sum of PnL + DetachedPosInvestment + Dit_PnL across all valid copiers of this PI/Portfolio. (Tier 2 — etoroGeneral_History_GuruCopiers) |

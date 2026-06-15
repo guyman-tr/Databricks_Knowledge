@@ -127,21 +127,21 @@ ROUND_ROBIN HEAP. Small table (3,137 rows). No index needed; full scans are inst
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | CID | int | YES | Customer ID -- platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Passthrough from Dim_Customer.RealCID. (Tier 1 -- Customer.CustomerStatic) |
-| 2 | BirthDate | datetime | YES | Customer date of birth. Used in KYC age verification. CAST to DATE from Dim_Customer.BirthDate. (Tier 1 -- Customer.CustomerStatic) |
-| 3 | Registered | datetime | YES | Account registration date. CAST to DATE from Dim_Customer.RegisteredReal. (Tier 1 -- Customer.CustomerStatic) |
-| 4 | Age | bigint | YES | Current age in years, recalculated daily. DATEDIFF(year, BirthDate, GETDATE()). Range: 85--126. Uses year-boundary crossing, not exact birthday. (Tier 2 -- SP_KYC_DOBover85) |
-| 5 | AgeAtReg | bigint | YES | Age at time of registration in years. DATEDIFF(year, BirthDate, RegisteredReal). This is the primary filter criterion (>=85). Frozen at registration time. (Tier 2 -- SP_KYC_DOBover85) |
-| 6 | VerificationLevelID | bigint | YES | KYC verification level. FK to Dictionary.VerificationLevel. 0=unverified, 1=partial, 2=intermediate, 3=fully verified. Always 3 in this table (filter condition). (Tier 1 -- BackOffice.Customer) |
-| 7 | FTDDate | datetime | YES | Date of first deposit. CAST to DATE from Dim_Customer.FirstDepositDate. 1900-01-01 = no deposit (54% of rows). (Tier 2 -- SP_Dim_Customer via Dim_Customer) |
-| 8 | Regulation | nvarchar(max) | YES | Regulation name. JOIN lookup from Dim_Regulation.Name on Dim_Customer.RegulationID. Top values: CySEC, BVI, eToroUS, FCA, FinCEN+FINRA. (Tier 2 -- SP_KYC_DOBover85 via Dim_Regulation) |
-| 9 | Country | nvarchar(max) | YES | Country of registration. JOIN lookup from Dim_Country.Name on Dim_Customer.CountryID. (Tier 2 -- SP_KYC_DOBover85 via Dim_Country) |
-| 10 | PlayerStatus | nvarchar(max) | YES | Player status name. LEFT JOIN from Dim_PlayerStatus.Name on Dim_Customer.PlayerStatusID. Always 'Normal' in this table (filter: PlayerStatusID=1). (Tier 2 -- SP_KYC_DOBover85 via Dim_PlayerStatus) |
-| 11 | IsAddressProof | bigint | YES | Whether address proof document is on file (1/0). Passthrough from Dim_Customer. NULL for 67% of rows (primarily US regulation customers). (Tier 2 -- SP_Dim_Customer via Dim_Customer) |
-| 12 | IsIDProof | bigint | YES | Whether ID proof document is on file (1/0). Passthrough from Dim_Customer. NULL for 67% of rows (primarily US regulation customers). (Tier 2 -- SP_Dim_Customer via Dim_Customer) |
-| 13 | EvMatchStatusName | nvarchar(max) | YES | Electronic verification match status name. LEFT JOIN from Dim_EvMatchStatus on Dim_Customer.EvMatchStatus. Values: Verified (79%), None (16%), NotVerified (3%), PartiallyVerified (1%). (Tier 2 -- SP_KYC_DOBover85 via Dim_EvMatchStatus) |
-| 14 | IsSelfielivelinessProof | bigint | YES | Flag indicating whether selfie/liveliness proof document is MISSING. 1=no SelfieLiveliness document found (82%), 0=document exists (18%). Checked via LEFT JOIN to External_etoro_BackOffice_CustomerDocument + CustomerDocumentToDocumentType (DocumentTypeID=18). **Inverted naming**: 1 means proof is absent. (Tier 2 -- SP_KYC_DOBover85) |
-| 15 | UpdateDate | datetime | YES | ETL metadata: timestamp when this row was inserted by SP_KYC_DOBover85. Set to GETDATE(). (Tier 5 -- SP_KYC_DOBover85) |
+| 1 | CID | int | YES | Customer ID -- platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Passthrough from Dim_Customer.RealCID. (Tier 1 -Customer.CustomerStatic) |
+| 2 | BirthDate | datetime | YES | Customer date of birth. Used in KYC age verification. CAST to DATE from Dim_Customer.BirthDate. (Tier 1 -Customer.CustomerStatic) |
+| 3 | Registered | datetime | YES | Account registration date. CAST to DATE from Dim_Customer.RegisteredReal. (Tier 1 -Customer.CustomerStatic) |
+| 4 | Age | bigint | YES | Current age in years, recalculated daily. DATEDIFF(year, BirthDate, GETDATE()). Range: 85--126. Uses year-boundary crossing, not exact birthday. (Tier 2 -SP_KYC_DOBover85) |
+| 5 | AgeAtReg | bigint | YES | Age at time of registration in years. DATEDIFF(year, BirthDate, RegisteredReal). This is the primary filter criterion (>=85). Frozen at registration time. (Tier 2 -SP_KYC_DOBover85) |
+| 6 | VerificationLevelID | bigint | YES | KYC verification level. FK to Dictionary.VerificationLevel. 0=unverified, 1=partial, 2=intermediate, 3=fully verified. Always 3 in this table (filter condition). (Tier 1 -BackOffice.Customer) |
+| 7 | FTDDate | datetime | YES | Date of first deposit. CAST to DATE from Dim_Customer.FirstDepositDate. 1900-01-01 = no deposit (54% of rows). (Tier 2 -SP_Dim_Customer via Dim_Customer) |
+| 8 | Regulation | nvarchar(max) | YES | Regulation name. JOIN lookup from Dim_Regulation.Name on Dim_Customer.RegulationID. Top values: CySEC, BVI, eToroUS, FCA, FinCEN+FINRA. (Tier 2 -SP_KYC_DOBover85 via Dim_Regulation) |
+| 9 | Country | nvarchar(max) | YES | Country of registration. JOIN lookup from Dim_Country.Name on Dim_Customer.CountryID. (Tier 2 -SP_KYC_DOBover85 via Dim_Country) |
+| 10 | PlayerStatus | nvarchar(max) | YES | Player status name. LEFT JOIN from Dim_PlayerStatus.Name on Dim_Customer.PlayerStatusID. Always 'Normal' in this table (filter: PlayerStatusID=1). (Tier 2 -SP_KYC_DOBover85 via Dim_PlayerStatus) |
+| 11 | IsAddressProof | bigint | YES | Whether address proof document is on file (1/0). Passthrough from Dim_Customer. NULL for 67% of rows (primarily US regulation customers). (Tier 2 -SP_Dim_Customer via Dim_Customer) |
+| 12 | IsIDProof | bigint | YES | Whether ID proof document is on file (1/0). Passthrough from Dim_Customer. NULL for 67% of rows (primarily US regulation customers). (Tier 2 -SP_Dim_Customer via Dim_Customer) |
+| 13 | EvMatchStatusName | nvarchar(max) | YES | Electronic verification match status name. LEFT JOIN from Dim_EvMatchStatus on Dim_Customer.EvMatchStatus. Values: Verified (79%), None (16%), NotVerified (3%), PartiallyVerified (1%). (Tier 2 -SP_KYC_DOBover85 via Dim_EvMatchStatus) |
+| 14 | IsSelfielivelinessProof | bigint | YES | Flag indicating whether selfie/liveliness proof document is MISSING. 1=no SelfieLiveliness document found (82%), 0=document exists (18%). Checked via LEFT JOIN to External_etoro_BackOffice_CustomerDocument + CustomerDocumentToDocumentType (DocumentTypeID=18). **Inverted naming**: 1 means proof is absent. (Tier 2 -SP_KYC_DOBover85) |
+| 15 | UpdateDate | datetime | YES | ETL metadata: timestamp when this row was inserted by SP_KYC_DOBover85. Set to GETDATE(). (Tier 5 -SP_KYC_DOBover85) |
 
 ---
 

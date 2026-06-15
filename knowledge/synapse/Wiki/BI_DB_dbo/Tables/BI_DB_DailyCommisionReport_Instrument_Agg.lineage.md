@@ -60,7 +60,7 @@ Daily DELETE WHERE DateID=@DateID + INSERT incremental instrument-level aggregat
 | 48 | IsAirDrop | BI_DB_dbo.BI_DB_DailyCommisionReport | IsAirDrop | GROUP BY pass-through — 1 for airdrop-created crypto positions. | Tier 2 — SP_DailyCommisionReport |
 | 49 | SettlementTypeID | BI_DB_dbo.BI_DB_DailyCommisionReport | SettlementTypeID | GROUP BY pass-through — position settlement type (0=CFD, 1=Real, 5=Margin trade). | Tier 2 — SP_DailyCommisionReport |
 | 50 | IsValidCustomer | BI_DB_dbo.BI_DB_DailyCommisionReport | IsValidCustomer | GROUP BY pass-through — valid customer flag. | Tier 2 — SP_DailyCommisionReport |
-| 51 | IsCreditReportValidCB | BI_DB_dbo.BI_DB_DailyCommisionReport | IsCreditReportValidCB | GROUP BY pass-through — credit bureau validity flag. | Tier 2 — SP_DailyCommisionReport |
+| 51 | IsCreditReportValidCB | BI_DB_dbo.BI_DB_DailyCommisionReport | IsCreditReportValidCB | GROUP BY pass-through — Client_Balance validity flag. | Tier 2 — SP_DailyCommisionReport |
 | 52 | Regulation | BI_DB_dbo.BI_DB_DailyCommisionReport | Regulation | GROUP BY pass-through — regulatory jurisdiction label. | Tier 2 — SP_DailyCommisionReport |
 | 53 | IsSettled | BI_DB_dbo.BI_DB_DailyCommisionReport | IsSettled | GROUP BY pass-through — 1=real/settled position, 0=CFD. | Tier 2 — SP_DailyCommisionReport |
 | 54 | RollOverFee_SDRT | BI_DB_dbo.BI_DB_DailyCommisionReport | RollOverFee_SDRT | SUM(ISNULL(RollOverFee_SDRT,0)) — aggregated UK Stamp Duty Reserve Tax. | Tier 2 — SP_DailyCommisionReport |

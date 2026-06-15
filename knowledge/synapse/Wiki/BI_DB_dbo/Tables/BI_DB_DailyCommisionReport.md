@@ -44,7 +44,7 @@ This table is the upstream dependency for: `BI_DB_DailyCommisionReport_Instrumen
 | 30 | PlayerLevelID | Integer player level key (1=Silver, 2=Gold, 3=Platinum, 4=Demo, etc.) from Fact_SnapshotCustomer. | DWH_dbo.Fact_SnapshotCustomer | Tier 2 — SP_DailyCommisionReport |
 | 31 | MifidCategorizationID | Integer MiFID categorization key from Fact_SnapshotCustomer. | DWH_dbo.Fact_SnapshotCustomer | Tier 2 — SP_DailyCommisionReport |
 | 32 | IsValidCustomer | 1 if customer meets eToro's valid customer criteria (non-demo, depositor, active) as of @DateID. From Fact_SnapshotCustomer. | DWH_dbo.Fact_SnapshotCustomer | Tier 2 — SP_DailyCommisionReport |
-| 33 | IsCreditReportValidCB | Credit report validity flag for US credit bureau reporting. From Fact_SnapshotCustomer. | DWH_dbo.Fact_SnapshotCustomer | Tier 2 — SP_DailyCommisionReport |
+| 33 | IsCreditReportValidCB | Financial-customer flag for Client_Balance reports (CB = Client_Balance, NOT CreditBureau). From Fact_SnapshotCustomer. | DWH_dbo.Fact_SnapshotCustomer | Tier 2 — SP_DailyCommisionReport |
 | 34 | Label | Customer segment label as of @DateID (e.g., 'Proprietary', internal classification). From BI_DB_Client_Balance_CID_Level_New.Label. | BI_DB_dbo.BI_DB_Client_Balance_CID_Level_New | Tier 2 — SP_DailyCommisionReport |
 | 35 | PlayerStatusID | Integer player status key from Fact_SnapshotCustomer. | DWH_dbo.Fact_SnapshotCustomer | Tier 2 — SP_DailyCommisionReport |
 | 36 | PlayerStatus | Player status name (Normal, Blocked, etc.) as of @DateID. From BI_DB_Client_Balance_CID_Level_New.PlayerStatus. | BI_DB_dbo.BI_DB_Client_Balance_CID_Level_New | Tier 2 — SP_DailyCommisionReport |

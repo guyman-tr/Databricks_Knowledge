@@ -137,36 +137,36 @@ ROUND_ROBIN HEAP with 335K rows. Small table -- broadcast-friendly for JOINs. Fu
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | CID | int | NO | Customer ID -- platform-internal primary key. Assigned at registration. Unique within eToro DB. Used as the universal customer identifier across all tables. Base population key from Freeze6. (Tier 1 -- Customer.CustomerStatic) |
-| 2 | GCID | int | YES | Group Customer ID -- cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction. (Tier 1 -- Customer.CustomerStatic) |
-| 3 | Email | varchar(100) | YES | Customer email address from Dim_Customer. PII -- handle with appropriate access controls. (Tier 1 -- Customer.CustomerStatic) |
-| 4 | Client Language | varchar(100) | YES | Customer's preferred language from Dim_Customer. Used for localised remediation outreach. (Tier 1 -- Customer.CustomerStatic) |
-| 5 | KYC_Country | varchar(100) | YES | Full country name in English for the customer's KYC country of residence. Resolved from Dim_Country.Name via Dim_Customer.CountryID. (Tier 1 -- Dictionary.Country) |
-| 6 | TaxCountry_1 | varchar(100) | YES | Full country name in English for the customer's first declared tax country. Pivoted from ExtendedUserField and resolved via Dim_Country.Name. (Tier 1 -- Dictionary.Country) |
-| 7 | TaxCountry_2 | varchar(100) | YES | Second declared tax country name. NULL if customer declares fewer than 2 tax countries. (Tier 1 -- Dictionary.Country) |
-| 8 | TaxCountry_3 | varchar(100) | YES | Third declared tax country name. NULL if customer declares fewer than 3 tax countries. (Tier 1 -- Dictionary.Country) |
-| 9 | TaxCode_1 | nvarchar(max) | YES | TIN value for first tax country from ExtendedUserField (FieldId=6). PII -- contains tax identification numbers. NULL or empty for gap types "No TIN" and "TIN_Null_With_Reason". (Tier 2 -- SP_TIN_Gap, External_UserApiDB_Customer_ExtendedUserField) |
-| 10 | TaxCode_2 | nvarchar(max) | YES | TIN value for second tax country. NULL if fewer than 2 tax countries declared. (Tier 2 -- SP_TIN_Gap, External_UserApiDB_Customer_ExtendedUserField) |
-| 11 | TaxCode_3 | nvarchar(max) | YES | TIN value for third tax country. NULL if fewer than 3 tax countries declared. (Tier 2 -- SP_TIN_Gap, External_UserApiDB_Customer_ExtendedUserField) |
-| 12 | NoTIN_Reason1 | varchar(1000) | YES | CRS no-TIN reason for first tax country. Populated when customer has a gap with a declared reason (e.g., reason 4 requires $5K lifetime deposit threshold). (Tier 2 -- SP_TIN_Gap, External_UserApiDB_Customer_ExtendedUserField) |
-| 13 | NoTIN_Reason2 | varchar(1000) | YES | CRS no-TIN reason for second tax country. NULL if fewer than 2 tax countries. (Tier 2 -- SP_TIN_Gap, External_UserApiDB_Customer_ExtendedUserField) |
-| 14 | NoTIN_Reason3 | varchar(1000) | YES | CRS no-TIN reason for third tax country. NULL if fewer than 3 tax countries. (Tier 2 -- SP_TIN_Gap, External_UserApiDB_Customer_ExtendedUserField) |
-| 15 | Player_Status | varchar(50) | YES | Customer player status name resolved from Dim_PlayerStatus.Name via Dim_Customer.PlayerStatusID. (Tier 1 -- Dictionary.PlayerStatus) |
-| 16 | Account Manager | varchar(100) | YES | Assigned account manager from Dim_Customer. Relevant for PI/Club remediation outreach (Group C). (Tier 2 -- SP_TIN_Gap, DWH_dbo.Dim_Customer) |
-| 17 | Group | char(2) | YES | Remediation priority group. A = no positions + equity < $10; B1 = inactive + equity < $30; B2 = inactive + equity >= $30; B3 = active/logged in last 12 months; C = PI/Club members (PlayerLevelID 2,6,7). Distribution: A=209K, B1=24K, B2=21K, B3=73K, C=8K. (Tier 2 -- SP_TIN_Gap, computed) |
-| 18 | Club | varchar(20) | YES | Customer loyalty tier name resolved from Dim_PlayerLevel.Name via Dim_Customer.PlayerLevelID. (Tier 1 -- Dictionary.PlayerLevel) |
-| 19 | Regulation | varchar(20) | YES | Regulatory entity short code resolved from Dim_Regulation.Name. Top values: CySEC (199K), FCA (90K), FSA Seychelles (25K), ASIC&GAML (12K), ASIC (7K). (Tier 1 -- Dictionary.Regulation) |
-| 20 | Open Positions | int | YES | Count of open trading positions for this CID from BI_DB_PositionPnL. Used in Group classification (A requires 0). (Tier 2 -- SP_TIN_Gap, BI_DB_dbo.BI_DB_PositionPnL) |
-| 21 | RealizedEquity | float | YES | Customer's realized equity from V_Liabilities. Used in Group classification thresholds ($10 for A, $30 for B1/B2). (Tier 2 -- SP_TIN_Gap, DWH_dbo.V_Liabilities) |
-| 22 | Ind_1 | varchar(100) | YES | Gap indicator for first tax country slot. '1' = resolved (valid TIN); otherwise contains gap type string: 'No TIN', 'TIN Not Valid', or 'TIN_Null_With_Reason'. (Tier 2 -- SP_TIN_Gap, computed) |
-| 23 | Ind_2 | varchar(100) | YES | Gap indicator for second tax country slot. Same values as Ind_1. NULL if fewer than 2 tax countries. (Tier 2 -- SP_TIN_Gap, computed) |
-| 24 | Ind_3 | varchar(100) | YES | Gap indicator for third tax country slot. Same values as Ind_1. NULL if fewer than 3 tax countries. (Tier 2 -- SP_TIN_Gap, computed) |
-| 25 | Ind_Done | int | YES | Overall resolution flag. 1 = all Ind columns are '1' (all tax countries resolved); 0 = at least one gap remains. Distribution: 0=232K, 1=104K. (Tier 2 -- SP_TIN_Gap, computed) |
-| 26 | UpdateDate | datetime | YES | ETL metadata: timestamp when this row was inserted by SP_TIN_Gap (GETDATE() at SP execution time). All rows share the same value per load. (Tier 5 -- Expert Review) |
-| 27 | PendingClosureStatusName | varchar(50) | YES | Pending closure status from Dim_Customer. Indicates if the customer's account is in a closure pipeline. (Tier 2 -- SP_TIN_Gap, DWH_dbo.Dim_Customer) |
-| 28 | LastLoggedIn | datetime | YES | Customer's last login timestamp. Used in Group classification (B3 includes customers who logged in within 12 months). (Tier 2 -- SP_TIN_Gap, DWH_dbo.Dim_Customer / login source) |
-| 29 | Annual Income_KYC | nvarchar(max) | YES | KYC-declared annual income from Dim_Customer. Context field for remediation prioritisation. (Tier 2 -- SP_TIN_Gap, DWH_dbo.Dim_Customer) |
-| 30 | Lifetime Deposits | float | YES | Total lifetime deposits for the customer. Used in TIN_Null_With_Reason classification ($5,000 threshold for reason 4). (Tier 2 -- SP_TIN_Gap, DWH_dbo.Fact_CustomerAction or V_Liabilities) |
+| 1 | CID | int | NO | Customer ID -- platform-internal primary key. Assigned at registration. Unique within eToro DB. Used as the universal customer identifier across all tables. Base population key from Freeze6. (Tier 1 -Customer.CustomerStatic) |
+| 2 | GCID | int | YES | Group Customer ID -- cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction. (Tier 1 -Customer.CustomerStatic) |
+| 3 | Email | varchar(100) | YES | Customer email address from Dim_Customer. PII -- handle with appropriate access controls. (Tier 1 -Customer.CustomerStatic) |
+| 4 | Client Language | varchar(100) | YES | Customer's preferred language from Dim_Customer. Used for localised remediation outreach. (Tier 1 -Customer.CustomerStatic) |
+| 5 | KYC_Country | varchar(100) | YES | Full country name in English for the customer's KYC country of residence. Resolved from Dim_Country.Name via Dim_Customer.CountryID. (Tier 1 -Dictionary.Country) |
+| 6 | TaxCountry_1 | varchar(100) | YES | Full country name in English for the customer's first declared tax country. Pivoted from ExtendedUserField and resolved via Dim_Country.Name. (Tier 1 -Dictionary.Country) |
+| 7 | TaxCountry_2 | varchar(100) | YES | Second declared tax country name. NULL if customer declares fewer than 2 tax countries. (Tier 1 -Dictionary.Country) |
+| 8 | TaxCountry_3 | varchar(100) | YES | Third declared tax country name. NULL if customer declares fewer than 3 tax countries. (Tier 1 -Dictionary.Country) |
+| 9 | TaxCode_1 | nvarchar(max) | YES | TIN value for first tax country from ExtendedUserField (FieldId=6). PII -- contains tax identification numbers. NULL or empty for gap types "No TIN" and "TIN_Null_With_Reason". (Tier 2 -SP_TIN_Gap, External_UserApiDB_Customer_ExtendedUserField) |
+| 10 | TaxCode_2 | nvarchar(max) | YES | TIN value for second tax country. NULL if fewer than 2 tax countries declared. (Tier 2 -SP_TIN_Gap, External_UserApiDB_Customer_ExtendedUserField) |
+| 11 | TaxCode_3 | nvarchar(max) | YES | TIN value for third tax country. NULL if fewer than 3 tax countries declared. (Tier 2 -SP_TIN_Gap, External_UserApiDB_Customer_ExtendedUserField) |
+| 12 | NoTIN_Reason1 | varchar(1000) | YES | CRS no-TIN reason for first tax country. Populated when customer has a gap with a declared reason (e.g., reason 4 requires $5K lifetime deposit threshold). (Tier 2 -SP_TIN_Gap, External_UserApiDB_Customer_ExtendedUserField) |
+| 13 | NoTIN_Reason2 | varchar(1000) | YES | CRS no-TIN reason for second tax country. NULL if fewer than 2 tax countries. (Tier 2 -SP_TIN_Gap, External_UserApiDB_Customer_ExtendedUserField) |
+| 14 | NoTIN_Reason3 | varchar(1000) | YES | CRS no-TIN reason for third tax country. NULL if fewer than 3 tax countries. (Tier 2 -SP_TIN_Gap, External_UserApiDB_Customer_ExtendedUserField) |
+| 15 | Player_Status | varchar(50) | YES | Customer player status name resolved from Dim_PlayerStatus.Name via Dim_Customer.PlayerStatusID. (Tier 1 -Dictionary.PlayerStatus) |
+| 16 | Account Manager | varchar(100) | YES | Assigned account manager from Dim_Customer. Relevant for PI/Club remediation outreach (Group C). (Tier 2 -SP_TIN_Gap, DWH_dbo.Dim_Customer) |
+| 17 | Group | char(2) | YES | Remediation priority group. A = no positions + equity < $10; B1 = inactive + equity < $30; B2 = inactive + equity >= $30; B3 = active/logged in last 12 months; C = PI/Club members (PlayerLevelID 2,6,7). Distribution: A=209K, B1=24K, B2=21K, B3=73K, C=8K. (Tier 2 -SP_TIN_Gap, computed) |
+| 18 | Club | varchar(20) | YES | Customer loyalty tier name resolved from Dim_PlayerLevel.Name via Dim_Customer.PlayerLevelID. (Tier 1 -Dictionary.PlayerLevel) |
+| 19 | Regulation | varchar(20) | YES | Regulatory entity short code resolved from Dim_Regulation.Name. Top values: CySEC (199K), FCA (90K), FSA Seychelles (25K), ASIC&GAML (12K), ASIC (7K). (Tier 1 -Dictionary.Regulation) |
+| 20 | Open Positions | int | YES | Count of open trading positions for this CID from BI_DB_PositionPnL. Used in Group classification (A requires 0). (Tier 2 -SP_TIN_Gap, BI_DB_dbo.BI_DB_PositionPnL) |
+| 21 | RealizedEquity | float | YES | Customer's realized equity from V_Liabilities. Used in Group classification thresholds ($10 for A, $30 for B1/B2). (Tier 2 -SP_TIN_Gap, DWH_dbo.V_Liabilities) |
+| 22 | Ind_1 | varchar(100) | YES | Gap indicator for first tax country slot. '1' = resolved (valid TIN); otherwise contains gap type string: 'No TIN', 'TIN Not Valid', or 'TIN_Null_With_Reason'. (Tier 2 -SP_TIN_Gap, computed) |
+| 23 | Ind_2 | varchar(100) | YES | Gap indicator for second tax country slot. Same values as Ind_1. NULL if fewer than 2 tax countries. (Tier 2 -SP_TIN_Gap, computed) |
+| 24 | Ind_3 | varchar(100) | YES | Gap indicator for third tax country slot. Same values as Ind_1. NULL if fewer than 3 tax countries. (Tier 2 -SP_TIN_Gap, computed) |
+| 25 | Ind_Done | int | YES | Overall resolution flag. 1 = all Ind columns are '1' (all tax countries resolved); 0 = at least one gap remains. Distribution: 0=232K, 1=104K. (Tier 2 -SP_TIN_Gap, computed) |
+| 26 | UpdateDate | datetime | YES | ETL metadata: timestamp when this row was inserted by SP_TIN_Gap (GETDATE() at SP execution time). All rows share the same value per load. (Tier 5 -Expert Review) |
+| 27 | PendingClosureStatusName | varchar(50) | YES | Pending closure status from Dim_Customer. Indicates if the customer's account is in a closure pipeline. (Tier 2 -SP_TIN_Gap, DWH_dbo.Dim_Customer) |
+| 28 | LastLoggedIn | datetime | YES | Customer's last login timestamp. Used in Group classification (B3 includes customers who logged in within 12 months). (Tier 2 -SP_TIN_Gap, DWH_dbo.Dim_Customer / login source) |
+| 29 | Annual Income_KYC | nvarchar(max) | YES | KYC-declared annual income from Dim_Customer. Context field for remediation prioritisation. (Tier 2 -SP_TIN_Gap, DWH_dbo.Dim_Customer) |
+| 30 | Lifetime Deposits | float | YES | Total lifetime deposits for the customer. Used in TIN_Null_With_Reason classification ($5,000 threshold for reason 4). (Tier 2 -SP_TIN_Gap, DWH_dbo.Fact_CustomerAction or V_Liabilities) |
 
 ---
 

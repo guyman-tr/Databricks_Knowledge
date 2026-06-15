@@ -285,7 +285,7 @@ Invalid customers (IsValidCustomer=0) are actively DELETED from this table each 
 | 44 | FirstDepositProcessor | varchar(500) | YES | Payment processor name for the first successful deposit. Dim-lookup from Dim_BillingDepot.Name. (Tier 2 -SP_CIDFirstDates) |
 | 45 | FirstDepositFundingType | varchar(500) | YES | Payment method name for the first successful deposit. Dim-lookup from Dim_FundingType.Name. (Tier 2 -SP_CIDFirstDates) |
 | 46 | FirstDepositAmount | money | YES | Amount of first deposit in USD. Default 0. From Dim_Customer.FirstDepositAmount. (Tier 2 -SP_CIDFirstDates) |
-| 47 | Credit | money | YES | Customer credit balance (promotional/bonus credit). Daily snapshot from V_Liabilities.Credit. Updated only for yesterday's run date. (Tier 2 — V_Liabilities via Fact_SnapshotEquity) |
+| 47 | Credit | money | YES | Customer credit from daily equity snapshot. Source: V_Liabilities.Credit wrapped as ISNULL(Credit, 0). Updated only for yesterday's run date. (Tier 2 - V_Liabilities) |
 | 48 | RealizedEquity | money | YES | Customer realized equity (total account value excluding unrealized PnL). Daily snapshot from V_Liabilities.RealizedEquity. Updated only for yesterday's run date. (Tier 2 — V_Liabilities via Fact_SnapshotEquity) |
 | 49 | LastDepositDate | datetime | YES | Most recent deposit date. From Fact_BillingDeposit.ModificationDate for today's deposits. (Tier 2 -SP_CIDFirstDates) |
 | 50 | LastDepositAmount | money | YES | Most recent deposit amount in USD (Amount * ExchangeRate). (Tier 2 -SP_CIDFirstDates) |

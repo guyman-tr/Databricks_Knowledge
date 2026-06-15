@@ -21,7 +21,7 @@
 
 Monthly aggregate of realized commissions from the group's subsidiary-company customers, collected since company inception (2007) to support adjustment of EU entity client balance calculations. The table classifies each commission amount by the regulatory jurisdiction at both position open and close, the customer's credit validity status at each snapshot date, the intra-year period of the position (opened/closed in the current year vs. prior year), the instrument type, and the settlement type (real asset vs. CFD).
 
-Created by Adi Meidan in August 2022. The SP filters for positions where at least one snapshot (open-date or close-date) has `IsCreditReportValidCB = 1`, ensuring that only credit-bureau-eligible customers are included in the subsidiary commission adjustment.
+Created by Adi Meidan in August 2022. The SP filters for positions where at least one snapshot (open-date or close-date) has `IsCreditReportValidCB = 1`, ensuring that only Client_Balance-eligible customers are included in the subsidiary commission adjustment.
 
 The "subsidiaries" reference in the name refers to the trading entities regulated outside the primary EU/UK framework. Historical data (2007–2022) was backfilled when the SP was created.
 

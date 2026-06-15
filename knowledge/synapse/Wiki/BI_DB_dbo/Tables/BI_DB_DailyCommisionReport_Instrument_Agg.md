@@ -177,7 +177,7 @@ The table is read by SP_EY_Audit_Opened_Positions for UnrealizedCommissionChange
 | 28 | eToroTradingGroupUser | varchar(50) | YES | eToro trading group identifier string for internal group accounts. GROUP BY pass-through. NULL for standard retail customers. (Tier 2 — SP_DailyCommisionReport) |
 | 29 | RegulationIDPrev | int | YES | **Always NULL.** Legacy column tracking a customer's prior regulatory jurisdiction ID; never activated. Do not use. (Tier 4 — Legacy/Deprecated) |
 | 30 | RegulationPrev | varchar(50) | YES | **Always NULL.** Legacy column tracking a customer's prior regulatory jurisdiction label; never activated. Do not use. (Tier 4 — Legacy/Deprecated) |
-| 31 | IsCreditReportValidCBPrev | int | YES | **Always NULL.** Legacy column tracking prior credit bureau validity; never activated. Do not use. (Tier 4 — Legacy/Deprecated) |
+| 31 | IsCreditReportValidCBPrev | int | YES | **Always NULL.** Legacy column tracking prior Client_Balance validity (CB = Client_Balance, NOT CreditBureau); never activated. Do not use. (Tier 4 — Legacy/Deprecated) |
 | 32 | US_State | varchar(50) | YES | US state or province short name (e.g., 'CA', 'NY'). NULL for non-US customers. GROUP BY pass-through for US state-level regulatory and reporting splits. (Tier 2 — SP_DailyCommisionReport) |
 | 33 | CommissionOnClose | float | YES | SUM of raw commission on positions closed on DateID. Float type (not money). Represents the gross spread captured at close before adjustments. (Tier 2 — SP_DailyCommisionReport) |
 | 34 | CommissionByUnitsAtClose | float | YES | **Always NULL.** Legacy column from a historical decomposition of CommissionOnClose by unit count; the decomposition was never implemented in the SP. (Tier 4 — Legacy/Deprecated) |
@@ -197,7 +197,7 @@ The table is read by SP_EY_Audit_Opened_Positions for UnrealizedCommissionChange
 | 48 | IsAirDrop | int | YES | Crypto airdrop flag. 1=position was created from a cryptocurrency airdrop event. GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
 | 49 | SettlementTypeID | int | YES | Position settlement type. Observed values: 0=CFD, 1=Real asset, 5=Margin trade. GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
 | 50 | IsValidCustomer | bit | YES | Valid customer quality flag (1=passes validation criteria for revenue reporting). GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
-| 51 | IsCreditReportValidCB | bit | YES | Credit bureau validity flag (1=credit report validated against external credit bureau). GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
+| 51 | IsCreditReportValidCB | bit | YES | Financial-customer flag for Client_Balance reports (CB = Client_Balance, NOT CreditBureau). GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
 | 52 | Regulation | varchar(50) | YES | Regulatory jurisdiction label (e.g., CySEC, FCA, ASIC, FSAS, GLOBAL). GROUP BY pass-through. 12 distinct values observed in 2026 YTD. (Tier 2 — SP_DailyCommisionReport) |
 | 53 | IsSettled | int | YES | Settlement completion flag. 1=real/settled position (actual asset transferred), 0=CFD (contract for difference). GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
 | 54 | RollOverFee_SDRT | float | YES | SUM of UK Stamp Duty Reserve Tax charged on UK equity positions. Zero for non-UK-equity instruments. Float type. (Tier 2 — SP_DailyCommisionReport) |

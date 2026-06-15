@@ -56,21 +56,21 @@ Read-only checks executed **2026-03-21**.
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Date | date | YES | Report date for the trade activity reconciliation. (Tier 2 -- SP_Apex_Recon, @Date) |
-| 2 | InstrumentID | int | YES | eToro instrument identifier. (Tier 2 -- SP_Apex_Recon, Dealing_Duco_ActivityRecon.InstrumentID) |
-| 3 | InstrumentDisplayName | varchar(100) | YES | Instrument display name. (Tier 2 -- SP_Apex_Recon, DWH_dbo.Dim_Instrument.InstrumentDisplayName) |
-| 4 | ISINCode | varchar(50) | YES | ISIN code for broker-side matching. (Tier 2 -- SP_Apex_Recon, Dealing_Duco_ActivityRecon.ISINCode) |
-| 5 | LiquidityAccountID | int | YES | Apex liquidity account identifier. (Tier 2 -- SP_Apex_Recon, Fivetran hedge server/LA mapping) |
-| 6 | IsBuy | int | YES | Trade direction: 1=buy, 0=sell. (Tier 2 -- SP_Apex_Recon, derived from Buy/Sell column in ActivityRecon) |
-| 7 | Etoro_Units | decimal(16,4) | YES | Total units traded on the eToro/LP side (from Duco ActivityRecon). (Tier 2 -- SP_Apex_Recon, Dealing_Duco_ActivityRecon.eToro_Units) |
-| 8 | Apex_Units | decimal(16,4) | YES | Total units reported by Apex for the same instrument/direction. (Tier 2 -- SP_Apex_Recon, Dealing_staging.LP_APEX_EXT872_3EU_217314.Units) |
-| 9 | Etoro_Rate | decimal(16,4) | YES | Weighted average execution rate on the eToro side. (Tier 2 -- SP_Apex_Recon, Dealing_Duco_ActivityRecon.eToro_AvgRate) |
-| 10 | Apex_Rate | decimal(16,4) | YES | Weighted average rate reported by Apex. (Tier 2 -- SP_Apex_Recon, Dealing_staging.LP_APEX_EXT872_3EU_217314.Rate) |
-| 11 | Etoro_Amount | decimal(16,4) | YES | Trade value on the eToro side in USD. (Tier 2 -- SP_Apex_Recon, Dealing_Duco_ActivityRecon.eToroUSDAmount) |
-| 12 | Apex_Amount | decimal(16,4) | YES | Trade value reported by Apex in USD. (Tier 2 -- SP_Apex_Recon, Dealing_staging.LP_APEX_EXT872_3EU_217314.Amount) |
-| 13 | UpdateDate | datetime | YES | Batch execution timestamp (GETDATE()). (Tier 3 -- SP_Apex_Recon, GETDATE()) |
-| 14 | HedgeServerID | int | YES | Hedge server associated with the Apex LP account. (Tier 2 -- SP_Apex_Recon, Fivetran HS mapping) |
-| 15 | AccountNumber | varchar(50) | YES | Apex account number (alphanumeric broker identifier, e.g., 3EW35324). (Tier 2 -- SP_Apex_Recon, Dealing_staging.LP_APEX_EXT872_3EU_217314.AccountNumber) |
+| 1 | Date | date | YES | Report date for the trade activity reconciliation. (Tier 2 -SP_Apex_Recon, @Date) |
+| 2 | InstrumentID | int | YES | eToro instrument identifier. (Tier 2 -SP_Apex_Recon, Dealing_Duco_ActivityRecon.InstrumentID) |
+| 3 | InstrumentDisplayName | varchar(100) | YES | Instrument display name. (Tier 2 -SP_Apex_Recon, DWH_dbo.Dim_Instrument.InstrumentDisplayName) |
+| 4 | ISINCode | varchar(50) | YES | ISIN code for broker-side matching. (Tier 2 -SP_Apex_Recon, Dealing_Duco_ActivityRecon.ISINCode) |
+| 5 | LiquidityAccountID | int | YES | Apex liquidity account identifier. (Tier 2 -SP_Apex_Recon, Fivetran hedge server/LA mapping) |
+| 6 | IsBuy | int | YES | Trade direction: 1=buy, 0=sell. (Tier 2 -SP_Apex_Recon, derived from Buy/Sell column in ActivityRecon) |
+| 7 | Etoro_Units | decimal(16,4) | YES | Total units traded on the eToro/LP side (from Duco ActivityRecon). (Tier 2 -SP_Apex_Recon, Dealing_Duco_ActivityRecon.eToro_Units) |
+| 8 | Apex_Units | decimal(16,4) | YES | Total units reported by Apex for the same instrument/direction. (Tier 2 -SP_Apex_Recon, Dealing_staging.LP_APEX_EXT872_3EU_217314.Units) |
+| 9 | Etoro_Rate | decimal(16,4) | YES | Weighted average execution rate on the eToro side. (Tier 2 -SP_Apex_Recon, Dealing_Duco_ActivityRecon.eToro_AvgRate) |
+| 10 | Apex_Rate | decimal(16,4) | YES | Weighted average rate reported by Apex. (Tier 2 -SP_Apex_Recon, Dealing_staging.LP_APEX_EXT872_3EU_217314.Rate) |
+| 11 | Etoro_Amount | decimal(16,4) | YES | Trade value on the eToro side in USD. (Tier 2 -SP_Apex_Recon, Dealing_Duco_ActivityRecon.eToroUSDAmount) |
+| 12 | Apex_Amount | decimal(16,4) | YES | Trade value reported by Apex in USD. (Tier 2 -SP_Apex_Recon, Dealing_staging.LP_APEX_EXT872_3EU_217314.Amount) |
+| 13 | UpdateDate | datetime | YES | Batch execution timestamp (GETDATE()). (Tier 3 -SP_Apex_Recon, GETDATE()) |
+| 14 | HedgeServerID | int | YES | Hedge server associated with the Apex LP account. (Tier 2 -SP_Apex_Recon, Fivetran HS mapping) |
+| 15 | AccountNumber | varchar(50) | YES | Apex account number (alphanumeric broker identifier, e.g., 3EW35324). (Tier 2 -SP_Apex_Recon, Dealing_staging.LP_APEX_EXT872_3EU_217314.AccountNumber) |
 
 ---
 

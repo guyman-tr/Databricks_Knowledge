@@ -126,29 +126,29 @@ HASH(GCID) with CLUSTERED INDEX on GCID ASC. Optimized for single-customer looku
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | GCID | int | YES | Global customer ID. One row per GCID. JOIN to Dim_Customer on GCID = RealCID. Distribution and clustering key. (Tier 2 -- SP_KYC_Panel) |
-| 2 | Q23_Assessment | varchar(200) | YES | Question text for Question 23. Typically 'Trading Knowledge Assessment'. From BI_DB_KYC_Questions_Answers_Row_Data.QuestionText. (Tier 2 -- SP_KYC_Panel) |
-| 3 | Q23_Is_Assessment_Pass | int | NO | Overall knowledge assessment pass flag. 1=passed at least one version, 0=attempted but failed all, -1=never attempted. 76% pass rate. (Tier 2 -- SP_KYC_Panel) |
-| 4 | Assessment_142_146_Ind | int | YES | Indicator for 142-146 assessment version. 1=customer took this version (7.1M), -1=did not. (Tier 2 -- SP_KYC_Panel) |
-| 5 | Is_Assessment_142_146_Pass | int | YES | Pass flag for 142-146 version. 1=passed (total points > -3), 0=failed, -1=version not taken. (Tier 2 -- SP_KYC_Panel) |
-| 6 | Total_Points_Assessment_142_146 | int | YES | Total score for 142-146 version. Range: -10 to +10. Each of 5 questions contributes +2 or -2. -100 sentinel if version not taken. (Tier 2 -- SP_KYC_Panel) |
-| 7 | P_AnswerId_142 | int | YES | Point score for answer 142. +2 if selected (correct), -2 if not. -100 sentinel if 142-146 version not taken. (Tier 2 -- SP_KYC_Panel) |
-| 8 | P_AnswerId_143 | int | YES | Point score for answer 143. -2 if selected (wrong), +2 if not selected (correct). -100 sentinel if 142-146 version not taken. (Tier 2 -- SP_KYC_Panel) |
-| 9 | P_AnswerId_144 | int | YES | Point score for answer 144. +2 if selected (correct), -2 if not. -100 sentinel if 142-146 version not taken. (Tier 2 -- SP_KYC_Panel) |
-| 10 | P_AnswerId_145 | int | YES | Point score for answer 145. -2 if selected (wrong), +2 if not selected (correct). -100 sentinel if 142-146 version not taken. (Tier 2 -- SP_KYC_Panel) |
-| 11 | P_AnswerId_146 | int | YES | Point score for answer 146. -2 if selected (wrong), +2 if not selected (correct). -100 sentinel if 142-146 version not taken. (Tier 2 -- SP_KYC_Panel) |
-| 12 | OccurredAt_Assessment_142_146 | datetime | YES | Timestamp of most recent 142-146 assessment attempt. MAX(OccurredAt) from raw Q&A data. 1900-01-01 sentinel if version not taken. (Tier 2 -- SP_KYC_Panel) |
-| 13 | Assessment_101_104_Ind | int | YES | Indicator for 101-104 assessment version. 1=customer took this version (8.4M), -1=did not. (Tier 2 -- SP_KYC_Panel) |
-| 14 | Is_Assessment_101_104_Pass | int | YES | Pass flag for 101-104 version. 1=selected AnswerID 102 (correct), 0=selected wrong answer, -1=version not taken. (Tier 2 -- SP_KYC_Panel) |
-| 15 | Q23_AnswerID_101_104 | int | YES | Selected answer ID for the 101-104 version. 101-104 or 127. -1 sentinel if version not taken. (Tier 2 -- SP_KYC_Panel) |
-| 16 | Q23_AnswerText_101_104 | varchar(200) | YES | Selected answer text for 101-104 version. e.g. 'Opening a trade With $100 and 20x leverage will equate To a $2000 investment' (correct). 'N/A' sentinel if version not taken. (Tier 2 -- SP_KYC_Panel) |
-| 17 | OccurredAt_Assessment_101_104 | datetime | YES | Timestamp of most recent 101-104 assessment attempt. 1900-01-01 sentinel if version not taken. (Tier 2 -- SP_KYC_Panel) |
-| 18 | Assessment_84_87_Ind | int | YES | Indicator for 84-87 assessment version. 1=customer took this version (32K), -1=did not. Legacy version, rare. (Tier 2 -- SP_KYC_Panel) |
-| 19 | Is_Assessment_84_87_Pass | int | YES | Pass flag for 84-87 version. 1=AnswerID 84 AND 87 selected AND 85 AND 86 not selected, 0=failed, -1=version not taken. (Tier 2 -- SP_KYC_Panel) |
-| 20 | OccurredAt_Assessment_84_87 | datetime | YES | Timestamp of most recent 84-87 assessment attempt. 1900-01-01 sentinel if version not taken. (Tier 2 -- SP_KYC_Panel) |
-| 21 | Q23_AnswerText | varchar(3) | NO | Legacy consolidated answer text. 'N/A' for virtually all rows. (Tier 2 -- SP_KYC_Panel) |
-| 22 | Q23_AnswerID | int | NO | Legacy consolidated answer ID. -1 for virtually all rows. (Tier 2 -- SP_KYC_Panel) |
-| 23 | UpdateDate | datetime | NO | ETL metadata: timestamp when this row was last inserted/updated by SP_KYC_Panel. Set to GETDATE(). (Tier 5 -- SP_KYC_Panel) |
+| 1 | GCID | int | YES | Global customer ID. One row per GCID. JOIN to Dim_Customer on GCID = RealCID. Distribution and clustering key. (Tier 2 -SP_KYC_Panel) |
+| 2 | Q23_Assessment | varchar(200) | YES | Question text for Question 23. Typically 'Trading Knowledge Assessment'. From BI_DB_KYC_Questions_Answers_Row_Data.QuestionText. (Tier 2 -SP_KYC_Panel) |
+| 3 | Q23_Is_Assessment_Pass | int | NO | Overall knowledge assessment pass flag. 1=passed at least one version, 0=attempted but failed all, -1=never attempted. 76% pass rate. (Tier 2 -SP_KYC_Panel) |
+| 4 | Assessment_142_146_Ind | int | YES | Indicator for 142-146 assessment version. 1=customer took this version (7.1M), -1=did not. (Tier 2 -SP_KYC_Panel) |
+| 5 | Is_Assessment_142_146_Pass | int | YES | Pass flag for 142-146 version. 1=passed (total points > -3), 0=failed, -1=version not taken. (Tier 2 -SP_KYC_Panel) |
+| 6 | Total_Points_Assessment_142_146 | int | YES | Total score for 142-146 version. Range: -10 to +10. Each of 5 questions contributes +2 or -2. -100 sentinel if version not taken. (Tier 2 -SP_KYC_Panel) |
+| 7 | P_AnswerId_142 | int | YES | Point score for answer 142. +2 if selected (correct), -2 if not. -100 sentinel if 142-146 version not taken. (Tier 2 -SP_KYC_Panel) |
+| 8 | P_AnswerId_143 | int | YES | Point score for answer 143. -2 if selected (wrong), +2 if not selected (correct). -100 sentinel if 142-146 version not taken. (Tier 2 -SP_KYC_Panel) |
+| 9 | P_AnswerId_144 | int | YES | Point score for answer 144. +2 if selected (correct), -2 if not. -100 sentinel if 142-146 version not taken. (Tier 2 -SP_KYC_Panel) |
+| 10 | P_AnswerId_145 | int | YES | Point score for answer 145. -2 if selected (wrong), +2 if not selected (correct). -100 sentinel if 142-146 version not taken. (Tier 2 -SP_KYC_Panel) |
+| 11 | P_AnswerId_146 | int | YES | Point score for answer 146. -2 if selected (wrong), +2 if not selected (correct). -100 sentinel if 142-146 version not taken. (Tier 2 -SP_KYC_Panel) |
+| 12 | OccurredAt_Assessment_142_146 | datetime | YES | Timestamp of most recent 142-146 assessment attempt. MAX(OccurredAt) from raw Q&A data. 1900-01-01 sentinel if version not taken. (Tier 2 -SP_KYC_Panel) |
+| 13 | Assessment_101_104_Ind | int | YES | Indicator for 101-104 assessment version. 1=customer took this version (8.4M), -1=did not. (Tier 2 -SP_KYC_Panel) |
+| 14 | Is_Assessment_101_104_Pass | int | YES | Pass flag for 101-104 version. 1=selected AnswerID 102 (correct), 0=selected wrong answer, -1=version not taken. (Tier 2 -SP_KYC_Panel) |
+| 15 | Q23_AnswerID_101_104 | int | YES | Selected answer ID for the 101-104 version. 101-104 or 127. -1 sentinel if version not taken. (Tier 2 -SP_KYC_Panel) |
+| 16 | Q23_AnswerText_101_104 | varchar(200) | YES | Selected answer text for 101-104 version. e.g. 'Opening a trade With $100 and 20x leverage will equate To a $2000 investment' (correct). 'N/A' sentinel if version not taken. (Tier 2 -SP_KYC_Panel) |
+| 17 | OccurredAt_Assessment_101_104 | datetime | YES | Timestamp of most recent 101-104 assessment attempt. 1900-01-01 sentinel if version not taken. (Tier 2 -SP_KYC_Panel) |
+| 18 | Assessment_84_87_Ind | int | YES | Indicator for 84-87 assessment version. 1=customer took this version (32K), -1=did not. Legacy version, rare. (Tier 2 -SP_KYC_Panel) |
+| 19 | Is_Assessment_84_87_Pass | int | YES | Pass flag for 84-87 version. 1=AnswerID 84 AND 87 selected AND 85 AND 86 not selected, 0=failed, -1=version not taken. (Tier 2 -SP_KYC_Panel) |
+| 20 | OccurredAt_Assessment_84_87 | datetime | YES | Timestamp of most recent 84-87 assessment attempt. 1900-01-01 sentinel if version not taken. (Tier 2 -SP_KYC_Panel) |
+| 21 | Q23_AnswerText | varchar(3) | NO | Legacy consolidated answer text. 'N/A' for virtually all rows. (Tier 2 -SP_KYC_Panel) |
+| 22 | Q23_AnswerID | int | NO | Legacy consolidated answer ID. -1 for virtually all rows. (Tier 2 -SP_KYC_Panel) |
+| 23 | UpdateDate | datetime | NO | ETL metadata: timestamp when this row was last inserted/updated by SP_KYC_Panel. Set to GETDATE(). (Tier 5 -SP_KYC_Panel) |
 
 ---
 

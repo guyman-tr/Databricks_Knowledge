@@ -39,22 +39,22 @@ Commission revenue has two components: **FullCommission** (the fixed commission 
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Date | date | YES | Calendar date. From SP @Date parameter. (Tier 2 -- SP_VarCommission, @Date) |
-| 2 | DateID | int | YES | Date as integer YYYYMMDD. Clustered index. (Tier 2 -- SP_VarCommission, @Date) |
-| 3 | InstrumentType | varchar(50) | YES | Instrument type from Dim_Instrument.InstrumentType. Values: "Stocks", "Currencies", "Indices", "Commodities", "Crypto", "ETFs". (Tier 2 -- SP_VarCommission, Dim_Instrument.InstrumentType) |
-| 4 | CalendarYearMonth | char(7) | YES | Year-month from Dim_Date.CalendarYearMonth. Format: "2025-04". (Tier 2 -- SP_VarCommission, Dim_Date.CalendarYearMonth) |
-| 5 | MonthName | varchar(10) | YES | Month name from Dim_Date.MonthName. Values: "January", "February", etc. (Tier 2 -- SP_VarCommission, Dim_Date.MonthName) |
+| 1 | Date | date | YES | Calendar date. From SP @Date parameter. (Tier 2 -SP_VarCommission, @Date) |
+| 2 | DateID | int | YES | Date as integer YYYYMMDD. Clustered index. (Tier 2 -SP_VarCommission, @Date) |
+| 3 | InstrumentType | varchar(50) | YES | Instrument type from Dim_Instrument.InstrumentType. Values: "Stocks", "Currencies", "Indices", "Commodities", "Crypto", "ETFs". (Tier 2 -SP_VarCommission, Dim_Instrument.InstrumentType) |
+| 4 | CalendarYearMonth | char(7) | YES | Year-month from Dim_Date.CalendarYearMonth. Format: "2025-04". (Tier 2 -SP_VarCommission, Dim_Date.CalendarYearMonth) |
+| 5 | MonthName | varchar(10) | YES | Month name from Dim_Date.MonthName. Values: "January", "February", etc. (Tier 2 -SP_VarCommission, Dim_Date.MonthName) |
 | 6 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. From Dim_Position.IsSettled. (Tier 5 — Expert Review) |
-| 7 | FullCommission | money | YES | Total fixed commission charged. Combines opening (FullCommissionByUnits) and closing (FullCommissionOnClose) commissions. (Tier 2 -- SP_VarCommission, Dim_Position) |
-| 8 | VarCommission | money | YES | Total spread-based commission (variable). `Units * Spread * USDRate` for both openings and closings. (Tier 2 -- SP_VarCommission, computed from Dim_Position forex fields) |
-| 9 | VarCommission_Openings | money | YES | Spread-based commission from positions opened on this date only. (Tier 2 -- SP_VarCommission, computed) |
-| 10 | FullCommission_Openings | money | YES | Fixed commission from positions opened on this date only. FullCommissionByUnits. (Tier 2 -- SP_VarCommission, Dim_Position.FullCommissionByUnits) |
-| 11 | UpdateDate | datetime | YES | SP execution timestamp. GETDATE(). (Tier 3 -- SP_VarCommission, GETDATE()) |
-| 12 | InstrumentID | int | YES | Instrument identifier from Dim_Position. (Tier 2 -- SP_VarCommission, Dim_Position.InstrumentID) |
-| 13 | InstrumentName | varchar(50) | YES | Instrument name from Dim_Instrument.Name. (Tier 2 -- SP_VarCommission, Dim_Instrument.Name) |
-| 14 | VarCommission_Closings | money | YES | Spread-based commission from positions closed on this date only. (Tier 2 -- SP_VarCommission, computed) |
-| 15 | FullCommission_Closings | money | YES | Fixed commission from positions closed on this date only. FullCommissionOnClose. (Tier 2 -- SP_VarCommission, Dim_Position.FullCommissionOnClose) |
-| 16 | HedgeServerID | int | YES | Hedge server that executed the trade. From Dim_PositionHedgeServerChangeLog_Snapshot (fallback: Dim_Position.HedgeServerID). (Tier 2 -- SP_VarCommission, ISNULL(Snapshot.HedgeServerID, Dim_Position.HedgeServerID)) |
+| 7 | FullCommission | money | YES | Total fixed commission charged. Combines opening (FullCommissionByUnits) and closing (FullCommissionOnClose) commissions. (Tier 2 -SP_VarCommission, Dim_Position) |
+| 8 | VarCommission | money | YES | Total spread-based commission (variable). `Units * Spread * USDRate` for both openings and closings. (Tier 2 -SP_VarCommission, computed from Dim_Position forex fields) |
+| 9 | VarCommission_Openings | money | YES | Spread-based commission from positions opened on this date only. (Tier 2 -SP_VarCommission, computed) |
+| 10 | FullCommission_Openings | money | YES | Fixed commission from positions opened on this date only. FullCommissionByUnits. (Tier 2 -SP_VarCommission, Dim_Position.FullCommissionByUnits) |
+| 11 | UpdateDate | datetime | YES | SP execution timestamp. GETDATE(). (Tier 3 -SP_VarCommission, GETDATE()) |
+| 12 | InstrumentID | int | YES | Instrument identifier from Dim_Position. (Tier 2 -SP_VarCommission, Dim_Position.InstrumentID) |
+| 13 | InstrumentName | varchar(50) | YES | Instrument name from Dim_Instrument.Name. (Tier 2 -SP_VarCommission, Dim_Instrument.Name) |
+| 14 | VarCommission_Closings | money | YES | Spread-based commission from positions closed on this date only. (Tier 2 -SP_VarCommission, computed) |
+| 15 | FullCommission_Closings | money | YES | Fixed commission from positions closed on this date only. FullCommissionOnClose. (Tier 2 -SP_VarCommission, Dim_Position.FullCommissionOnClose) |
+| 16 | HedgeServerID | int | YES | Hedge server that executed the trade. From Dim_PositionHedgeServerChangeLog_Snapshot (fallback: Dim_Position.HedgeServerID). (Tier 2 -SP_VarCommission, ISNULL(Snapshot.HedgeServerID, Dim_Position.HedgeServerID)) |
 
 ---
 

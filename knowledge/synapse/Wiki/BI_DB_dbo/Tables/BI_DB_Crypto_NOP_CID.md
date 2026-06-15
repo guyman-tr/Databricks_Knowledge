@@ -38,42 +38,42 @@ Daily **customer-level crypto net open position (NOP)** with **instrument name**
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Date | date | NO | As-of business date; SP `@Date`. Live samples **2026-03-19**. (Tier 2 -- SP_Crypto_NOP, @Date) |
-| 2 | Regulation | varchar(50) | YES | Regulation name from `Dim_Regulation.Name` via `#fsc`. Live 7-day: **CySEC**, **FCA**, **FinCEN+FINRA**, **FSA Seychelles**, **ASIC & GAML** lead by row count. (Tier 2 -- SP_Crypto_NOP, Dim_Regulation.Name) |
-| 3 | Label | varchar(50) | NO | Label from `Dim_Label.Name` via `#fsc`. (Tier 2 -- SP_Crypto_NOP, Dim_Label.Name) |
-| 4 | CID | int | YES | Customer identifier (`Fact_SnapshotCustomer` / position `CID`). Live samples show populated integer **CID** values. (Tier 2 -- SP_Crypto_NOP, Fact_SnapshotCustomer.CID) |
-| 5 | Real_NOP | numeric(38,6) | YES | Sum of NOP for settled real positions. (Tier 2 -- SP_Crypto_NOP, BI_DB_PositionPnL.NOP) |
-| 6 | CFD_NOP | numeric(38,6) | YES | Sum of NOP for CFD positions. (Tier 2 -- SP_Crypto_NOP, BI_DB_PositionPnL.NOP) |
-| 7 | Total_NOP | numeric(38,6) | YES | `SUM(NOP_CFD) + SUM(NOP_Real)`; TRS held in **TRS_NOP**. (Tier 2 -- SP_Crypto_NOP, computed) |
-| 8 | Real_Units | decimal(38,6) | YES | Real units (`IsSettled = 1`). (Tier 2 -- SP_Crypto_NOP, BI_DB_PositionPnL.AmountInUnitsDecimal) |
-| 9 | Real_Invested_Amount | money | YES | Sum of `InitialAmount` where `IsSettled = 1`. (Tier 2 -- SP_Crypto_NOP, Dim_Position.InitialAmountCents) |
-| 10 | CFD_Invested_Amount | money | YES | Sum of `InitialAmount` where `IsSettled = 0`. (Tier 2 -- SP_Crypto_NOP, Dim_Position.InitialAmountCents) |
-| 11 | Total_Invested_Amount | money | YES | Sum of `InitialAmount` across settlement types at grain. (Tier 2 -- SP_Crypto_NOP, Dim_Position.InitialAmountCents) |
-| 12 | UpdateDate | datetime | NO | `GETDATE()` on insert. (Tier 3 -- SP_Crypto_NOP, GETDATE()) |
-| 13 | IsBuy | bit | YES | Position direction. (Tier 2 -- SP_Crypto_NOP, Dim_Position.IsBuy) |
-| 14 | EquityReal | money | YES | Rounded sum of real equity. (Tier 2 -- SP_Crypto_NOP, computed) |
-| 15 | EquityCFD | money | YES | Rounded sum of CFD equity. (Tier 2 -- SP_Crypto_NOP, computed) |
-| 16 | InstrumentName | char(50) | YES | Crypto pair name from position / `Dim_Instrument`; **fixed width** -- expect trailing spaces in raw T-SQL output and trim in consuming apps. (Tier 2 -- SP_Crypto_NOP, Dim_Instrument.Name) |
-| 17 | MifidCategorizationID | int | YES | From `Fact_SnapshotCustomer`. (Tier 2 -- SP_Crypto_NOP, Fact_SnapshotCustomer.MifidCategorizationID) |
-| 18 | MifidCategorization | char(50) | YES | From `Dim_MifidCategorization.Name`. (Tier 2 -- SP_Crypto_NOP, Dim_MifidCategorization.Name) |
-| 19 | AccountTypeID | int | YES | From `Fact_SnapshotCustomer`. (Tier 2 -- SP_Crypto_NOP, Fact_SnapshotCustomer.AccountTypeID) |
-| 20 | AccountType | char(50) | YES | From `Dim_AccountType.Name`. (Tier 2 -- SP_Crypto_NOP, Dim_AccountType.Name) |
-| 21 | PlayerLevelID | int | YES | From `Fact_SnapshotCustomer`. (Tier 2 -- SP_Crypto_NOP, Fact_SnapshotCustomer.PlayerLevelID) |
-| 22 | Club | char(50) | YES | From `Dim_PlayerLevel.Name`. (Tier 2 -- SP_Crypto_NOP, Dim_PlayerLevel.Name) |
-| 23 | PlayerStatusID | int | YES | From `Fact_SnapshotCustomer`. (Tier 2 -- SP_Crypto_NOP, Fact_SnapshotCustomer.PlayerStatusID) |
-| 24 | PlayerStatus | char(50) | YES | From `Dim_PlayerStatus.Name`. (Tier 2 -- SP_Crypto_NOP, Dim_PlayerStatus.Name) |
-| 25 | IsGermanBaFin | bit | YES | German BaFin flag from `V_GermanBaFin`. (Tier 2 -- SP_Crypto_NOP, V_GermanBaFin) |
-| 26 | IsCreditReportValidCB | bit | YES | From `Fact_SnapshotCustomer`. (Tier 2 -- SP_Crypto_NOP, Fact_SnapshotCustomer.IsCreditReportValidCB) |
-| 27 | TRS_NOP | money | YES | NOP where `SettlementTypeID = 2`. (Tier 2 -- SP_Crypto_NOP, BI_DB_PositionPnL.NOP) |
-| 28 | TRS_Units | numeric(16,6) | YES | Units where `SettlementTypeID = 2`. (Tier 2 -- SP_Crypto_NOP, BI_DB_PositionPnL.AmountInUnitsDecimal) |
-| 29 | TRS_Invested_Amount | money | YES | Sum of `InitialAmount` for TRS. (Tier 2 -- SP_Crypto_NOP, Dim_Position.InitialAmountCents) |
-| 30 | EquityTRS | money | YES | Rounded sum of TRS equity. (Tier 2 -- SP_Crypto_NOP, computed) |
-| 31 | CFD_Units | numeric(16,6) | YES | CFD units. (Tier 2 -- SP_Crypto_NOP, BI_DB_PositionPnL.AmountInUnitsDecimal) |
-| 32 | Total_Units | numeric(16,6) | YES | All units. (Tier 2 -- SP_Crypto_NOP, BI_DB_PositionPnL.AmountInUnitsDecimal) |
-| 33 | TanganyStatus | varchar(20) | YES | Tangany dictionary label via `Dim_Customer.TanganyStatusID`; frequently **NULL** in live samples. (Tier 2 -- SP_Crypto_NOP, External_UserApiDB_Dictionary_TanganyStatus.Name) |
-| 34 | Real_Units_Staking_OptIn | decimal(38,6) | YES | Staking opt-in slice of real units (ETH vs non-ETH branch); live rows show complement vs **Real_Units_Staking_OptOut**. (Tier 2 -- SP_Crypto_NOP, computed) |
-| 35 | Real_Units_Staking_OptOut | decimal(38,6) | YES | Staking opt-out slice of real units. (Tier 2 -- SP_Crypto_NOP, computed) |
-| 36 | IsDLTUser | int | YES | DLT flag from snapshot (`DltStatusID = 4`). (Tier 2 -- SP_Crypto_NOP, Fact_SnapshotCustomer.DltStatusID) |
+| 1 | Date | date | NO | As-of business date; SP `@Date`. Live samples **2026-03-19**. (Tier 2 -SP_Crypto_NOP, @Date) |
+| 2 | Regulation | varchar(50) | YES | Regulation name from `Dim_Regulation.Name` via `#fsc`. Live 7-day: **CySEC**, **FCA**, **FinCEN+FINRA**, **FSA Seychelles**, **ASIC & GAML** lead by row count. (Tier 2 -SP_Crypto_NOP, Dim_Regulation.Name) |
+| 3 | Label | varchar(50) | NO | Label from `Dim_Label.Name` via `#fsc`. (Tier 2 -SP_Crypto_NOP, Dim_Label.Name) |
+| 4 | CID | int | YES | Customer identifier (`Fact_SnapshotCustomer` / position `CID`). Live samples show populated integer **CID** values. (Tier 2 -SP_Crypto_NOP, Fact_SnapshotCustomer.CID) |
+| 5 | Real_NOP | numeric(38,6) | YES | Sum of NOP for settled real positions. (Tier 2 -SP_Crypto_NOP, BI_DB_PositionPnL.NOP) |
+| 6 | CFD_NOP | numeric(38,6) | YES | Sum of NOP for CFD positions. (Tier 2 -SP_Crypto_NOP, BI_DB_PositionPnL.NOP) |
+| 7 | Total_NOP | numeric(38,6) | YES | `SUM(NOP_CFD) + SUM(NOP_Real)`; TRS held in **TRS_NOP**. (Tier 2 -SP_Crypto_NOP, computed) |
+| 8 | Real_Units | decimal(38,6) | YES | Real units (`IsSettled = 1`). (Tier 2 -SP_Crypto_NOP, BI_DB_PositionPnL.AmountInUnitsDecimal) |
+| 9 | Real_Invested_Amount | money | YES | Sum of `InitialAmount` where `IsSettled = 1`. (Tier 2 -SP_Crypto_NOP, Dim_Position.InitialAmountCents) |
+| 10 | CFD_Invested_Amount | money | YES | Sum of `InitialAmount` where `IsSettled = 0`. (Tier 2 -SP_Crypto_NOP, Dim_Position.InitialAmountCents) |
+| 11 | Total_Invested_Amount | money | YES | Sum of `InitialAmount` across settlement types at grain. (Tier 2 -SP_Crypto_NOP, Dim_Position.InitialAmountCents) |
+| 12 | UpdateDate | datetime | NO | `GETDATE()` on insert. (Tier 3 -SP_Crypto_NOP, GETDATE()) |
+| 13 | IsBuy | bit | YES | Position direction. (Tier 2 -SP_Crypto_NOP, Dim_Position.IsBuy) |
+| 14 | EquityReal | money | YES | Rounded sum of real equity. (Tier 2 -SP_Crypto_NOP, computed) |
+| 15 | EquityCFD | money | YES | Rounded sum of CFD equity. (Tier 2 -SP_Crypto_NOP, computed) |
+| 16 | InstrumentName | char(50) | YES | Crypto pair name from position / `Dim_Instrument`; **fixed width** -- expect trailing spaces in raw T-SQL output and trim in consuming apps. (Tier 2 -SP_Crypto_NOP, Dim_Instrument.Name) |
+| 17 | MifidCategorizationID | int | YES | From `Fact_SnapshotCustomer`. (Tier 2 -SP_Crypto_NOP, Fact_SnapshotCustomer.MifidCategorizationID) |
+| 18 | MifidCategorization | char(50) | YES | From `Dim_MifidCategorization.Name`. (Tier 2 -SP_Crypto_NOP, Dim_MifidCategorization.Name) |
+| 19 | AccountTypeID | int | YES | From `Fact_SnapshotCustomer`. (Tier 2 -SP_Crypto_NOP, Fact_SnapshotCustomer.AccountTypeID) |
+| 20 | AccountType | char(50) | YES | From `Dim_AccountType.Name`. (Tier 2 -SP_Crypto_NOP, Dim_AccountType.Name) |
+| 21 | PlayerLevelID | int | YES | From `Fact_SnapshotCustomer`. (Tier 2 -SP_Crypto_NOP, Fact_SnapshotCustomer.PlayerLevelID) |
+| 22 | Club | char(50) | YES | From `Dim_PlayerLevel.Name`. (Tier 2 -SP_Crypto_NOP, Dim_PlayerLevel.Name) |
+| 23 | PlayerStatusID | int | YES | From `Fact_SnapshotCustomer`. (Tier 2 -SP_Crypto_NOP, Fact_SnapshotCustomer.PlayerStatusID) |
+| 24 | PlayerStatus | char(50) | YES | From `Dim_PlayerStatus.Name`. (Tier 2 -SP_Crypto_NOP, Dim_PlayerStatus.Name) |
+| 25 | IsGermanBaFin | bit | YES | German BaFin flag from `V_GermanBaFin`. (Tier 2 -SP_Crypto_NOP, V_GermanBaFin) |
+| 26 | IsCreditReportValidCB | bit | YES | From `Fact_SnapshotCustomer`. (Tier 2 -SP_Crypto_NOP, Fact_SnapshotCustomer.IsCreditReportValidCB) |
+| 27 | TRS_NOP | money | YES | NOP where `SettlementTypeID = 2`. (Tier 2 -SP_Crypto_NOP, BI_DB_PositionPnL.NOP) |
+| 28 | TRS_Units | numeric(16,6) | YES | Units where `SettlementTypeID = 2`. (Tier 2 -SP_Crypto_NOP, BI_DB_PositionPnL.AmountInUnitsDecimal) |
+| 29 | TRS_Invested_Amount | money | YES | Sum of `InitialAmount` for TRS. (Tier 2 -SP_Crypto_NOP, Dim_Position.InitialAmountCents) |
+| 30 | EquityTRS | money | YES | Rounded sum of TRS equity. (Tier 2 -SP_Crypto_NOP, computed) |
+| 31 | CFD_Units | numeric(16,6) | YES | CFD units. (Tier 2 -SP_Crypto_NOP, BI_DB_PositionPnL.AmountInUnitsDecimal) |
+| 32 | Total_Units | numeric(16,6) | YES | All units. (Tier 2 -SP_Crypto_NOP, BI_DB_PositionPnL.AmountInUnitsDecimal) |
+| 33 | TanganyStatus | varchar(20) | YES | Tangany dictionary label via `Dim_Customer.TanganyStatusID`; frequently **NULL** in live samples. (Tier 2 -SP_Crypto_NOP, External_UserApiDB_Dictionary_TanganyStatus.Name) |
+| 34 | Real_Units_Staking_OptIn | decimal(38,6) | YES | Staking opt-in slice of real units (ETH vs non-ETH branch); live rows show complement vs **Real_Units_Staking_OptOut**. (Tier 2 -SP_Crypto_NOP, computed) |
+| 35 | Real_Units_Staking_OptOut | decimal(38,6) | YES | Staking opt-out slice of real units. (Tier 2 -SP_Crypto_NOP, computed) |
+| 36 | IsDLTUser | int | YES | DLT flag from snapshot (`DltStatusID = 4`). (Tier 2 -SP_Crypto_NOP, Fact_SnapshotCustomer.DltStatusID) |
 
 ---
 

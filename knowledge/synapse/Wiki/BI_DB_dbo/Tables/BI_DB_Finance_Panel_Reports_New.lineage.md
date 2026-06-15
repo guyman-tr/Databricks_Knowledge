@@ -87,7 +87,7 @@ BI_DB_dbo.BI_DB_Finance_Panel_Reports_New
 - **ISINCode LIKE 'GB%'** (UK-registered instruments only)
 - **HedgeServerID IN (121, 124, 125, 126, 128, 130)** (6 specific hedge execution venues)
 - **IsValidCustomer = 1** (via Fact_SnapshotCustomer/Dim_Range)
-- **IsCreditReportValidCB = 1** (credit bureau valid customers)
+- **IsCreditReportValidCB = 1** (Client_Balance valid customers)
 - **Is_Stamp_Duty = 1** (only rows subject to UK SDRT are inserted)
 - **IsPartialCloseChild ≠ 1** for Open_Position branch (excludes partial-close child positions)
 

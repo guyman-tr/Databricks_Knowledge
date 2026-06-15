@@ -39,14 +39,14 @@ Part of the **Crypto RECON** trio (populated by `SP_M_Crypto_RECON`). Unlike `BI
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Month | varchar(7) | YES | Calendar month in `YYYY-MM` format. Part of clustered index. (Tier 2 -- SP_M_Crypto_RECON, @date) |
-| 2 | CID | int | YES | Customer ID from Dim_Position.CID. Part of clustered index. (Tier 2 -- SP_M_Crypto_RECON, Dim_Position.CID) |
-| 3 | Regulation | varchar(50) | YES | Regulation name from Dim_Regulation.Name via Fact_SnapshotCustomer.RegulationID. (Tier 2 -- SP_M_Crypto_RECON, Dim_Regulation.Name) |
-| 4 | Instrument | varchar(50) | NO | Crypto instrument name from Dim_Instrument.Name. Values: "BTC/USD", "ETH/USD", "XLM/USD", "NEO/USD", etc. NOT NULL. (Tier 2 -- SP_M_Crypto_RECON, Dim_Instrument.Name) |
-| 5 | Units | decimal(38,6) | YES | Net crypto units held at month end. Formula: `SUM(AmountInUnitsDecimal * (2*IsBuy-1))`. Positive = net long, negative = net short. (Tier 2 -- SP_M_Crypto_RECON, computed from Dim_Position) |
-| 6 | UpdateDate | datetime | YES | SP execution timestamp. GETDATE(). (Tier 3 -- SP_M_Crypto_RECON, GETDATE()) |
-| 7 | SettlementType | varchar(10) | YES | Settlement classification: "Real", "CFD", "TRS", "CMT". NULL for pre-Feb 2022 data. (Tier 2 -- SP_M_Crypto_RECON, Dim_Position.IsSettled + SettlementTypeID) |
-| 8 | IsValidCustomer | int | YES | Customer validity flag. 1 = valid. Not filtered. NULL for pre-2022. (Tier 2 -- SP_M_Crypto_RECON, Fact_SnapshotCustomer.IsValidCustomer) |
+| 1 | Month | varchar(7) | YES | Calendar month in `YYYY-MM` format. Part of clustered index. (Tier 2 -SP_M_Crypto_RECON, @date) |
+| 2 | CID | int | YES | Customer ID from Dim_Position.CID. Part of clustered index. (Tier 2 -SP_M_Crypto_RECON, Dim_Position.CID) |
+| 3 | Regulation | varchar(50) | YES | Regulation name from Dim_Regulation.Name via Fact_SnapshotCustomer.RegulationID. (Tier 2 -SP_M_Crypto_RECON, Dim_Regulation.Name) |
+| 4 | Instrument | varchar(50) | NO | Crypto instrument name from Dim_Instrument.Name. Values: "BTC/USD", "ETH/USD", "XLM/USD", "NEO/USD", etc. NOT NULL. (Tier 2 -SP_M_Crypto_RECON, Dim_Instrument.Name) |
+| 5 | Units | decimal(38,6) | YES | Net crypto units held at month end. Formula: `SUM(AmountInUnitsDecimal * (2*IsBuy-1))`. Positive = net long, negative = net short. (Tier 2 -SP_M_Crypto_RECON, computed from Dim_Position) |
+| 6 | UpdateDate | datetime | YES | SP execution timestamp. GETDATE(). (Tier 3 -SP_M_Crypto_RECON, GETDATE()) |
+| 7 | SettlementType | varchar(10) | YES | Settlement classification: "Real", "CFD", "TRS", "CMT". NULL for pre-Feb 2022 data. (Tier 2 -SP_M_Crypto_RECON, Dim_Position.IsSettled + SettlementTypeID) |
+| 8 | IsValidCustomer | int | YES | Customer validity flag. 1 = valid. Not filtered. NULL for pre-2022. (Tier 2 -SP_M_Crypto_RECON, Fact_SnapshotCustomer.IsValidCustomer) |
 
 ---
 

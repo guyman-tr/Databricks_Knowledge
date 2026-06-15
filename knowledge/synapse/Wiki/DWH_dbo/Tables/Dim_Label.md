@@ -80,17 +80,17 @@ REPLICATE-distributed (26 rows fit trivially on every node). CLUSTERED INDEX on 
 | Stars | Tier | Tag |
 |-------|------|-----|
 | ★★★★ | Tier 1 -- Upstream dictionary | `(Tier 1 — Dictionary.Label)` |
-| ★★★ | Tier 2 -- Synapse SP code / DDL | `(Tier 2 -- SP_Dictionaries_DL_To_Synapse)` |
-| ★★ | Tier 3 -- live data / structure | `(Tier 3 -- live data)` |
+| ★★★ | Tier 2 -- Synapse SP code / DDL | `(Tier 2 -SP_Dictionaries_DL_To_Synapse)` |
+| ★★ | Tier 3 -- live data / structure | `(Tier 3 -live data)` |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | LabelID | int | NO | Primary key identifying the platform brand/label. 0/1/9=eToro (primary), 2=RetailFX, 10-26=white-label partners, 14=eToroUSA, 27=eToro-Partners, 29=eToroRussia, 30=Dealing, 31=eToroChina. Stored in customer records and referenced across billing, reporting, and registration procedures. (Tier 1 — Dictionary.Label) |
 | 2 | Name | varchar(50) | NO | Brand name displayed in BackOffice interfaces, reports, and internal systems. Multiple LabelIDs can share the same Name (e.g., 0, 1, 9 all = 'eToro'). (Tier 1 — Dictionary.Label) |
-| 3 | DWHLabelID | int | YES | Always equal to LabelID. Standard DWH DWH{X}ID redundancy pattern (ETL: `[LabelID] as [DWHLabelID]`). Do not use for JOINs. (Tier 2 -- SP_Dictionaries_DL_To_Synapse) |
-| 4 | StatusID | int | YES | Hardcoded to 1 for all rows (ETL: `1 as StatusID`). Conveys no business information. (Tier 2 -- SP_Dictionaries_DL_To_Synapse) |
-| 5 | UpdateDate | datetime | YES | ETL load timestamp -- GETDATE() at load time. Does not reflect production modification date. (Tier 2 -- SP_Dictionaries_DL_To_Synapse) |
-| 6 | InsertDate | datetime | YES | ETL load timestamp -- GETDATE() at load time, identical to UpdateDate (TRUNCATE + INSERT pattern). Does not reflect production insertion date. (Tier 2 -- SP_Dictionaries_DL_To_Synapse) |
+| 3 | DWHLabelID | int | YES | Always equal to LabelID. Standard DWH DWH{X}ID redundancy pattern (ETL: `[LabelID] as [DWHLabelID]`). Do not use for JOINs. (Tier 2 -SP_Dictionaries_DL_To_Synapse) |
+| 4 | StatusID | int | YES | Hardcoded to 1 for all rows (ETL: `1 as StatusID`). Conveys no business information. (Tier 2 -SP_Dictionaries_DL_To_Synapse) |
+| 5 | UpdateDate | datetime | YES | ETL load timestamp -- GETDATE() at load time. Does not reflect production modification date. (Tier 2 -SP_Dictionaries_DL_To_Synapse) |
+| 6 | InsertDate | datetime | YES | ETL load timestamp -- GETDATE() at load time, identical to UpdateDate (TRUNCATE + INSERT pattern). Does not reflect production insertion date. (Tier 2 -SP_Dictionaries_DL_To_Synapse) |
 
 ---
 

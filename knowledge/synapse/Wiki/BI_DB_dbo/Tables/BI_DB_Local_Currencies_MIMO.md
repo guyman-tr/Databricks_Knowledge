@@ -112,23 +112,23 @@ ROUND_ROBIN HEAP. Medium table (2.22M rows). Filter on DateID for date-specific 
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | DateID | int | YES | Modification date in YYYYMMDD format. Used for DELETE+INSERT partitioning. (Tier 2 -- SP_Local_Currencies_MIMO) |
-| 2 | Deposit/WD_ID | int | YES | Deposit ID (when IND='Deposits') or Withdraw ID (when IND='Cashout'). Overloaded key -- filter by IND before joining. (Tier 2 -- SP_Local_Currencies_MIMO) |
-| 3 | Country and Currency | varchar(100) | YES | Currency name from Dim_Currency. Examples: 'Singapore Dollar', 'UAE Dirham', 'USD/CZK', 'Polish Zloty'. Excludes USD/EUR/GBP/AUD. (Tier 2 -- SP_Local_Currencies_MIMO) |
-| 4 | Currency Amount | money | YES | Transaction amount in the local currency. Deposits: Fact_BillingDeposit.Amount. Cashouts: ISNULL(Amount_WithdrawToFunding, Amount_Withdraw). (Tier 2 -- SP_Local_Currencies_MIMO) |
-| 5 | FX Income | float | YES | Foreign exchange income from the spread. Deposits: (Amount * BaseExchangeRate) - (Amount * ExchangeRate). Cashouts: PIPsCalculation * ExchangeRate. In USD. (Tier 2 -- SP_Local_Currencies_MIMO) |
-| 6 | FX Cost | float | YES | Foreign exchange cost (provider/hedging). Amount * BaseExchangeRate * 0.008 for most currencies. 0 for CHF, NOK, SEK, PLN, HUF, DKK, CZK, RON. In USD. (Tier 2 -- SP_Local_Currencies_MIMO) |
-| 7 | Fee Percentage | float | YES | FX markup percentage: 1 - (ExchangeRate / BaseExchangeRate). NULL if BaseExchangeRate = 0. Typically 2-3%. (Tier 2 -- SP_Local_Currencies_MIMO) |
-| 8 | Exchange Rate | float | YES | eToro exchange rate with FX markup applied. Local currency to USD. (Tier 2 -- SP_Local_Currencies_MIMO) |
-| 9 | Base Exchange Rate | float | YES | Mid-market exchange rate (no markup). Local currency to USD. The difference between Exchange Rate and Base Exchange Rate represents the FX spread. (Tier 2 -- SP_Local_Currencies_MIMO) |
-| 10 | Payment Status | varchar(50) | YES | Payment/cashout status name. Deposits: from Dim_PaymentStatus. Cashouts: from Dim_CashoutStatus. Examples: 'Approved', 'Decline', 'Processed'. (Tier 2 -- SP_Local_Currencies_MIMO) |
-| 11 | Payment Date | date | YES | Transaction date. Deposits: PaymentDate. Cashouts: RequestDate. CAST to DATE. (Tier 2 -- SP_Local_Currencies_MIMO) |
-| 12 | USD Amount | money | YES | USD-equivalent amount. Deposits: Amount * ExchangeRate. Cashouts: raw currency amount (naming misleading). (Tier 2 -- SP_Local_Currencies_MIMO) |
-| 13 | FX Revenue | float | YES | Net FX revenue = FX Income - FX Cost. In USD. The primary metric for FX profitability analysis. (Tier 2 -- SP_Local_Currencies_MIMO) |
-| 14 | IND | varchar(50) | YES | Transaction type indicator: 'Deposits' or 'Cashout'. Note: inconsistent pluralization. (Tier 2 -- SP_Local_Currencies_MIMO) |
-| 15 | UpdateDate | datetime | YES | ETL metadata: timestamp when this row was inserted. Set to GETDATE(). (Tier 5 -- SP_Local_Currencies_MIMO) |
-| 16 | Date | date | YES | Business date (same as DateID but as date type). SP parameter @Date. (Tier 2 -- SP_Local_Currencies_MIMO) |
-| 17 | Provider | varchar(50) | YES | Payment provider name from Dim_BillingDepot.Name. Examples: 'Checkout', 'IXOPAY-Nuvei'. (Tier 2 -- SP_Local_Currencies_MIMO) |
+| 1 | DateID | int | YES | Modification date in YYYYMMDD format. Used for DELETE+INSERT partitioning. (Tier 2 -SP_Local_Currencies_MIMO) |
+| 2 | Deposit/WD_ID | int | YES | Deposit ID (when IND='Deposits') or Withdraw ID (when IND='Cashout'). Overloaded key -- filter by IND before joining. (Tier 2 -SP_Local_Currencies_MIMO) |
+| 3 | Country and Currency | varchar(100) | YES | Currency name from Dim_Currency. Examples: 'Singapore Dollar', 'UAE Dirham', 'USD/CZK', 'Polish Zloty'. Excludes USD/EUR/GBP/AUD. (Tier 2 -SP_Local_Currencies_MIMO) |
+| 4 | Currency Amount | money | YES | Transaction amount in the local currency. Deposits: Fact_BillingDeposit.Amount. Cashouts: ISNULL(Amount_WithdrawToFunding, Amount_Withdraw). (Tier 2 -SP_Local_Currencies_MIMO) |
+| 5 | FX Income | float | YES | Foreign exchange income from the spread. Deposits: (Amount * BaseExchangeRate) - (Amount * ExchangeRate). Cashouts: PIPsCalculation * ExchangeRate. In USD. (Tier 2 -SP_Local_Currencies_MIMO) |
+| 6 | FX Cost | float | YES | Foreign exchange cost (provider/hedging). Amount * BaseExchangeRate * 0.008 for most currencies. 0 for CHF, NOK, SEK, PLN, HUF, DKK, CZK, RON. In USD. (Tier 2 -SP_Local_Currencies_MIMO) |
+| 7 | Fee Percentage | float | YES | FX markup percentage: 1 - (ExchangeRate / BaseExchangeRate). NULL if BaseExchangeRate = 0. Typically 2-3%. (Tier 2 -SP_Local_Currencies_MIMO) |
+| 8 | Exchange Rate | float | YES | eToro exchange rate with FX markup applied. Local currency to USD. (Tier 2 -SP_Local_Currencies_MIMO) |
+| 9 | Base Exchange Rate | float | YES | Mid-market exchange rate (no markup). Local currency to USD. The difference between Exchange Rate and Base Exchange Rate represents the FX spread. (Tier 2 -SP_Local_Currencies_MIMO) |
+| 10 | Payment Status | varchar(50) | YES | Payment/cashout status name. Deposits: from Dim_PaymentStatus. Cashouts: from Dim_CashoutStatus. Examples: 'Approved', 'Decline', 'Processed'. (Tier 2 -SP_Local_Currencies_MIMO) |
+| 11 | Payment Date | date | YES | Transaction date. Deposits: PaymentDate. Cashouts: RequestDate. CAST to DATE. (Tier 2 -SP_Local_Currencies_MIMO) |
+| 12 | USD Amount | money | YES | USD-equivalent amount. Deposits: Amount * ExchangeRate. Cashouts: raw currency amount (naming misleading). (Tier 2 -SP_Local_Currencies_MIMO) |
+| 13 | FX Revenue | float | YES | Net FX revenue = FX Income - FX Cost. In USD. The primary metric for FX profitability analysis. (Tier 2 -SP_Local_Currencies_MIMO) |
+| 14 | IND | varchar(50) | YES | Transaction type indicator: 'Deposits' or 'Cashout'. Note: inconsistent pluralization. (Tier 2 -SP_Local_Currencies_MIMO) |
+| 15 | UpdateDate | datetime | YES | ETL metadata: timestamp when this row was inserted. Set to GETDATE(). (Tier 5 -SP_Local_Currencies_MIMO) |
+| 16 | Date | date | YES | Business date (same as DateID but as date type). SP parameter @Date. (Tier 2 -SP_Local_Currencies_MIMO) |
+| 17 | Provider | varchar(50) | YES | Payment provider name from Dim_BillingDepot.Name. Examples: 'Checkout', 'IXOPAY-Nuvei'. (Tier 2 -SP_Local_Currencies_MIMO) |
 
 ---
 

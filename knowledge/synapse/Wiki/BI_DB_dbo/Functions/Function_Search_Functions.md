@@ -31,8 +31,8 @@ No parameters.
 | # | Column | Source | Transformation | Tier |
 |---|--------|--------|----------------|------|
 | 1 | schema_name | sys.objects | SCHEMA_NAME(schema_id) | T2 |
-| 2 | function_name | sys.objects.name | Direct | T1 |
-| 3 | function_type | sys.objects.type_desc | Direct | T1 |
+| 2 | function_name | sys.objects.name | Passthrough from sys.objects.name (no upstream wiki) | T1 |
+| 3 | function_type | sys.objects.type_desc | Passthrough from sys.objects.type_desc (no upstream wiki) | T1 |
 
 ---
 *Auto-generated from SSDT source on 2026-03-22. Knowledge-only -- not migrated to Unity Catalog.*

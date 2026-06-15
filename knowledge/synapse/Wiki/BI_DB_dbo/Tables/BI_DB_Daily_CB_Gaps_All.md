@@ -38,17 +38,17 @@ The "gap" is the difference between a customer's `ClosingBalance` and the sum of
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | CID | int | YES | Customer ID from BI_DB_Client_Balance_CID_Level_New.CID. (Tier 2 -- SP_Daily_CB_Gaps_All, BI_DB_Client_Balance_CID_Level_New.CID) |
-| 2 | DateID | int | YES | Date as integer YYYYMMDD. Part of clustered index. From SP @date parameter. (Tier 2 -- SP_Daily_CB_Gaps_All, @date) |
-| 3 | Date | date | YES | Calendar date. Converted from DateID: `CONVERT(date, CONVERT(varchar(10), DateID))`. (Tier 2 -- SP_Daily_CB_Gaps_All, computed from DateID) |
-| 4 | Regulation | varchar(100) | YES | Regulation name from Dim_Regulation.Name via Fact_SnapshotCustomer.RegulationID. (Tier 2 -- SP_Daily_CB_Gaps_All, Dim_Regulation.Name) |
-| 5 | IsCreditReportValidCB | int | YES | Credit report validity flag from Fact_SnapshotCustomer. 1 = valid for CB reporting. (Tier 2 -- SP_Daily_CB_Gaps_All, Fact_SnapshotCustomer.IsCreditReportValidCB) |
-| 6 | IsGermanBaFin | int | YES | German BaFin indicator. 1 if CID in V_GermanBaFin for this date, 0 otherwise. (Tier 2 -- SP_Daily_CB_Gaps_All, V_GermanBaFin) |
-| 7 | PlayerStatus | varchar(100) | YES | Customer status from Dim_PlayerStatus.Name. Values: "Normal", "Blocked", etc. (Tier 2 -- SP_Daily_CB_Gaps_All, Dim_PlayerStatus.Name) |
-| 8 | ClosingBalance | money | YES | Actual closing balance from BI_DB_Client_Balance_CID_Level_New. SUM with ISNULL default 0. (Tier 2 -- SP_Daily_CB_Gaps_All, BI_DB_Client_Balance_CID_Level_New.ClosingBalance) |
-| 9 | CycleCalculation | money | YES | Expected closing balance = sum of ~27 individual transaction components from BI_DB_Client_Balance_CID_Level_New. (Tier 2 -- SP_Daily_CB_Gaps_All, computed from BI_DB_Client_Balance_CID_Level_New) |
-| 10 | Gap | money | YES | Reconciliation gap: `ClosingBalance - CycleCalculation`. Only rows with `ABS(Gap) > 0.01` are stored. Positive = closing balance higher than expected. (Tier 2 -- SP_Daily_CB_Gaps_All, computed) |
-| 11 | UpdateDate | datetime | YES | SP execution timestamp. GETDATE(). (Tier 3 -- SP_Daily_CB_Gaps_All, GETDATE()) |
+| 1 | CID | int | YES | Customer ID from BI_DB_Client_Balance_CID_Level_New.CID. (Tier 2 -SP_Daily_CB_Gaps_All, BI_DB_Client_Balance_CID_Level_New.CID) |
+| 2 | DateID | int | YES | Date as integer YYYYMMDD. Part of clustered index. From SP @date parameter. (Tier 2 -SP_Daily_CB_Gaps_All, @date) |
+| 3 | Date | date | YES | Calendar date. Converted from DateID: `CONVERT(date, CONVERT(varchar(10), DateID))`. (Tier 2 -SP_Daily_CB_Gaps_All, computed from DateID) |
+| 4 | Regulation | varchar(100) | YES | Regulation name from Dim_Regulation.Name via Fact_SnapshotCustomer.RegulationID. (Tier 2 -SP_Daily_CB_Gaps_All, Dim_Regulation.Name) |
+| 5 | IsCreditReportValidCB | int | YES | Credit report validity flag from Fact_SnapshotCustomer. 1 = valid for CB reporting. (Tier 2 -SP_Daily_CB_Gaps_All, Fact_SnapshotCustomer.IsCreditReportValidCB) |
+| 6 | IsGermanBaFin | int | YES | German BaFin indicator. 1 if CID in V_GermanBaFin for this date, 0 otherwise. (Tier 2 -SP_Daily_CB_Gaps_All, V_GermanBaFin) |
+| 7 | PlayerStatus | varchar(100) | YES | Customer status from Dim_PlayerStatus.Name. Values: "Normal", "Blocked", etc. (Tier 2 -SP_Daily_CB_Gaps_All, Dim_PlayerStatus.Name) |
+| 8 | ClosingBalance | money | YES | Actual closing balance from BI_DB_Client_Balance_CID_Level_New. SUM with ISNULL default 0. (Tier 2 -SP_Daily_CB_Gaps_All, BI_DB_Client_Balance_CID_Level_New.ClosingBalance) |
+| 9 | CycleCalculation | money | YES | Expected closing balance = sum of ~27 individual transaction components from BI_DB_Client_Balance_CID_Level_New. (Tier 2 -SP_Daily_CB_Gaps_All, computed from BI_DB_Client_Balance_CID_Level_New) |
+| 10 | Gap | money | YES | Reconciliation gap: `ClosingBalance - CycleCalculation`. Only rows with `ABS(Gap) > 0.01` are stored. Positive = closing balance higher than expected. (Tier 2 -SP_Daily_CB_Gaps_All, computed) |
+| 11 | UpdateDate | datetime | YES | SP execution timestamp. GETDATE(). (Tier 3 -SP_Daily_CB_Gaps_All, GETDATE()) |
 
 ---
 

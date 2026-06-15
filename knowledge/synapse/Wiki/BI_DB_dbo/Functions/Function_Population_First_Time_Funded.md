@@ -38,7 +38,7 @@ No parameters.
 | # | Column | Source | Transformation | Tier |
 |---|--------|--------|----------------|------|
 | 1 | RealCID | Dim_Customer.RealCID | Direct (via `DWH_FTD`) | T1 |
-| 2 | FTDPlatformID | Dim_Customer.FTDPlatformID | Direct | T2 |
+| 2 | FTDPlatformID | Dim_Customer.FTDPlatformID | Platform/account type of the first deposit (AccountTypeId from source). Added 2025-09-12. (Tier 2 — SP_Dim_Customer) (via Dim_Customer) | T2 |
 | 3 | FTDPlatform | Dim_FTDPlatform.FTDPlatformName | `COALESCE(FTDPlatformName, 'TP')` | T3 |
 | 4 | FTDDateID | Dim_Customer.FirstDepositDate | `CAST(CONVERT(VARCHAR(8), FirstDepositDate, 112) AS INT)` | T2 |
 | 5 | FTDDate | Dim_Customer.FirstDepositDate | `CAST(FirstDepositDate AS DATE)` | T2 |

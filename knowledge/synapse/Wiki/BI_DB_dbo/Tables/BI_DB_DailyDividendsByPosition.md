@@ -52,32 +52,32 @@ Read-only checks executed **2026-03-20** against Azure Synapse dedicated pool (O
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | DateID | int | YES | YYYYMMDD key for the dividend action day. (Tier 2 -- SP_DailyDividendsByPosition, Fact_CustomerAction.DateID) |
-| 2 | Date | date | YES | Calendar date from `CAST(fca.Occurred AS DATE)`. (Tier 2 -- SP_DailyDividendsByPosition, Fact_CustomerAction.Occurred) |
-| 3 | HedgeServerID | int | YES | Effective hedge server: snapshot override when active for `@DateID`, else `Dim_Position.HedgeServerID`. (Tier 2 -- SP_DailyDividendsByPosition, Dim_PositionHedgeServerChangeLog_Snapshot.HedgeServerID / Dim_Position.HedgeServerID) |
-| 4 | PositionID | bigint | YES | Position identifier. (Tier 2 -- SP_DailyDividendsByPosition, Dim_Position.PositionID) |
-| 5 | RealCID | int | YES | Customer identifier on the action. (Tier 2 -- SP_DailyDividendsByPosition, Fact_CustomerAction.RealCID) |
-| 6 | IsBuy | int | YES | Position side flag from `Dim_Position`. (Tier 2 -- SP_DailyDividendsByPosition, Dim_Position.IsBuy) |
-| 7 | InstrumentID | int | YES | Instrument on the position. (Tier 2 -- SP_DailyDividendsByPosition, Dim_Position.InstrumentID) |
-| 8 | Amount | money | YES | Dividend amount credited (customer action amount). (Tier 2 -- SP_DailyDividendsByPosition, Fact_CustomerAction.Amount) |
-| 9 | IsValidCustomer | int | YES | From snapshot for report date. (Tier 2 -- SP_DailyDividendsByPosition, Fact_SnapshotCustomer.IsValidCustomer) |
-| 10 | IsCreditReportValidCB | int | YES | Credit-report validity for CB reporting. (Tier 2 -- SP_DailyDividendsByPosition, Fact_SnapshotCustomer.IsCreditReportValidCB) |
+| 1 | DateID | int | YES | YYYYMMDD key for the dividend action day. (Tier 2 -SP_DailyDividendsByPosition, Fact_CustomerAction.DateID) |
+| 2 | Date | date | YES | Calendar date from `CAST(fca.Occurred AS DATE)`. (Tier 2 -SP_DailyDividendsByPosition, Fact_CustomerAction.Occurred) |
+| 3 | HedgeServerID | int | YES | Effective hedge server: snapshot override when active for `@DateID`, else `Dim_Position.HedgeServerID`. (Tier 2 -SP_DailyDividendsByPosition, Dim_PositionHedgeServerChangeLog_Snapshot.HedgeServerID / Dim_Position.HedgeServerID) |
+| 4 | PositionID | bigint | YES | Position identifier. (Tier 2 -SP_DailyDividendsByPosition, Dim_Position.PositionID) |
+| 5 | RealCID | int | YES | Customer identifier on the action. (Tier 2 -SP_DailyDividendsByPosition, Fact_CustomerAction.RealCID) |
+| 6 | IsBuy | int | YES | Position side flag from `Dim_Position`. (Tier 2 -SP_DailyDividendsByPosition, Dim_Position.IsBuy) |
+| 7 | InstrumentID | int | YES | Instrument on the position. (Tier 2 -SP_DailyDividendsByPosition, Dim_Position.InstrumentID) |
+| 8 | Amount | money | YES | Dividend amount credited (customer action amount). (Tier 2 -SP_DailyDividendsByPosition, Fact_CustomerAction.Amount) |
+| 9 | IsValidCustomer | int | YES | From snapshot for report date. (Tier 2 -SP_DailyDividendsByPosition, Fact_SnapshotCustomer.IsValidCustomer) |
+| 10 | IsCreditReportValidCB | int | YES | Credit-report validity for CB reporting. (Tier 2 -SP_DailyDividendsByPosition, Fact_SnapshotCustomer.IsCreditReportValidCB) |
 | 11 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
-| 12 | Regulation | varchar(50) | YES | Regulation name. (Tier 2 -- SP_DailyDividendsByPosition, Dim_Regulation.Name) |
-| 13 | DividendID | int | YES | Corporate action / index dividend id on the action. (Tier 2 -- SP_DailyDividendsByPosition, Fact_CustomerAction.DividendID) |
-| 14 | Status | int | YES | Index dividend processing status from `#IndexDiv` when matched (`etoro_Trade_IndexDividends.Status`); NULL when no index-dividend join. (Tier 2 -- SP_DailyDividendsByPosition, etoro_Trade_IndexDividends.Status) |
-| 15 | EventType | varchar(100) | YES | Raw event type string from index dividends when matched; NULL otherwise. (Tier 2 -- SP_DailyDividendsByPosition, etoro_Trade_IndexDividends.EventType) |
-| 16 | TaxCode | varchar(10) | YES | Tax code from index dividends when matched. (Tier 2 -- SP_DailyDividendsByPosition, etoro_Trade_IndexDividends.TaxCode) |
-| 17 | BuyTax | varchar(10) | YES | Buy-side tax from processed row or dividend default `ISNULL(p.BuyTax, d.BuyTax)`. (Tier 2 -- SP_DailyDividendsByPosition, etoro_Trade_PositionsProcessedForIndexDividnds.BuyTax / etoro_Trade_IndexDividends.BuyTax) |
-| 18 | SellTax | varchar(10) | YES | Sell-side tax, same coalesce pattern. (Tier 2 -- SP_DailyDividendsByPosition, etoro_Trade_PositionsProcessedForIndexDividnds.SellTax / etoro_Trade_IndexDividends.SellTax) |
-| 19 | PositionType | int | YES | Dividend position type from index dividends when matched. (Tier 2 -- SP_DailyDividendsByPosition, etoro_Trade_IndexDividends.PositionType) |
-| 20 | DividendValueInCurrency | money | YES | Dividend value in dividend currency from index master. (Tier 2 -- SP_DailyDividendsByPosition, etoro_Trade_IndexDividends.DividendValueInCurrency) |
-| 21 | DividendCurrencyID | int | YES | Currency id for dividend denomination. (Tier 2 -- SP_DailyDividendsByPosition, etoro_Trade_IndexDividends.DividendCurrencyID) |
-| 22 | Currency | varchar(50) | YES | Display currency code: `Dim_Instrument.SellCurrency` for type 5/6 instruments matching `DividendCurrencyID`. (Tier 2 -- SP_DailyDividendsByPosition, Dim_Instrument.SellCurrency) |
-| 23 | UpdateDate | datetime | YES | Batch timestamp `GETDATE()` in `#Final`. (Tier 3 -- SP_DailyDividendsByPosition, GETDATE()) |
-| 24 | PlayerLevelID | int | YES | Snapshot player level. (Tier 2 -- SP_DailyDividendsByPosition, Fact_SnapshotCustomer.PlayerLevelID) |
-| 25 | PlayerStatusID | int | YES | Snapshot player status. (Tier 2 -- SP_DailyDividendsByPosition, Fact_SnapshotCustomer.PlayerStatusID) |
-| 26 | IsComputeForHedge | bit | YES | Hedge computation flag from position. (Tier 2 -- SP_DailyDividendsByPosition, Dim_Position.IsComputeForHedge) |
+| 12 | Regulation | varchar(50) | YES | Regulation name. (Tier 2 -SP_DailyDividendsByPosition, Dim_Regulation.Name) |
+| 13 | DividendID | int | YES | Corporate action / index dividend id on the action. (Tier 2 -SP_DailyDividendsByPosition, Fact_CustomerAction.DividendID) |
+| 14 | Status | int | YES | Index dividend processing status from `#IndexDiv` when matched (`etoro_Trade_IndexDividends.Status`); NULL when no index-dividend join. (Tier 2 -SP_DailyDividendsByPosition, etoro_Trade_IndexDividends.Status) |
+| 15 | EventType | varchar(100) | YES | Raw event type string from index dividends when matched; NULL otherwise. (Tier 2 -SP_DailyDividendsByPosition, etoro_Trade_IndexDividends.EventType) |
+| 16 | TaxCode | varchar(10) | YES | Tax code from index dividends when matched. (Tier 2 -SP_DailyDividendsByPosition, etoro_Trade_IndexDividends.TaxCode) |
+| 17 | BuyTax | varchar(10) | YES | Buy-side tax from processed row or dividend default `ISNULL(p.BuyTax, d.BuyTax)`. (Tier 2 -SP_DailyDividendsByPosition, etoro_Trade_PositionsProcessedForIndexDividnds.BuyTax / etoro_Trade_IndexDividends.BuyTax) |
+| 18 | SellTax | varchar(10) | YES | Sell-side tax, same coalesce pattern. (Tier 2 -SP_DailyDividendsByPosition, etoro_Trade_PositionsProcessedForIndexDividnds.SellTax / etoro_Trade_IndexDividends.SellTax) |
+| 19 | PositionType | int | YES | Dividend position type from index dividends when matched. (Tier 2 -SP_DailyDividendsByPosition, etoro_Trade_IndexDividends.PositionType) |
+| 20 | DividendValueInCurrency | money | YES | Dividend value in dividend currency from index master. (Tier 2 -SP_DailyDividendsByPosition, etoro_Trade_IndexDividends.DividendValueInCurrency) |
+| 21 | DividendCurrencyID | int | YES | Currency id for dividend denomination. (Tier 2 -SP_DailyDividendsByPosition, etoro_Trade_IndexDividends.DividendCurrencyID) |
+| 22 | Currency | varchar(50) | YES | Display currency code: `Dim_Instrument.SellCurrency` for type 5/6 instruments matching `DividendCurrencyID`. (Tier 2 -SP_DailyDividendsByPosition, Dim_Instrument.SellCurrency) |
+| 23 | UpdateDate | datetime | YES | Batch timestamp `GETDATE()` in `#Final`. (Tier 3 -SP_DailyDividendsByPosition, GETDATE()) |
+| 24 | PlayerLevelID | int | YES | Snapshot player level. (Tier 2 -SP_DailyDividendsByPosition, Fact_SnapshotCustomer.PlayerLevelID) |
+| 25 | PlayerStatusID | int | YES | Snapshot player status. (Tier 2 -SP_DailyDividendsByPosition, Fact_SnapshotCustomer.PlayerStatusID) |
+| 26 | IsComputeForHedge | bit | YES | Hedge computation flag from position. (Tier 2 -SP_DailyDividendsByPosition, Dim_Position.IsComputeForHedge) |
 
 ---
 

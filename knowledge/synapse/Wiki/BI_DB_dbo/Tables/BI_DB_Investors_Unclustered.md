@@ -125,18 +125,18 @@ ROUND_ROBIN with CLUSTERED INDEX on Date ASC. Large table (~75M rows). Always fi
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | Date | date | YES | Business date for this daily snapshot. (Tier 2 -- SP_InvestorReport) |
-| 2 | DateID | int | YES | Date identifier in YYYYMMDD integer format. Derived as CONVERT(CHAR(8), @dd, 112). Used for delete-insert partitioning and efficient date-range queries. (Tier 2 -- SP_InvestorReport) |
-| 3 | AccountManagerID | int | YES | Salesforce account manager ID. FK to DWH_dbo.Dim_AccountManager. Identifies which AM manages the customers in this bucket. Sourced from Fact_SnapshotCustomer. (Tier 2 -- SP_InvestorReport) |
-| 4 | CountryID | int | YES | Country of customer registration. FK to DWH_dbo.Dim_Country. Sourced from Fact_SnapshotCustomer. (Tier 2 -- SP_InvestorReport) |
-| 5 | RegulationID | tinyint | YES | Regulatory entity ID. FK to DWH_dbo.Dim_Regulation. 1=CySEC, 2=FCA, 4=ASIC, 9=FSA Seychelles, 10=eToro US, 11=FSRA, etc. Sourced from Fact_SnapshotCustomer. (Tier 2 -- SP_InvestorReport) |
-| 6 | ActionType | varchar(50) | YES | Activity source stream: 'Manual' (direct position open/close), 'Copy' (copy-trading mirror activity), 'Balance' (uninvested cash). Determines how Customers/Amount/AUM_AUA are computed. (Tier 2 -- SP_InvestorReport) |
-| 7 | InstrumentType | varchar(50) | YES | Instrument category. Manual stream: Stocks, ETF, Crypto Currencies, Commodities, Indices, Currencies (from Dim_Instrument.InstrumentType). Copy stream: 'Copy Trading' (MirrorTypeID 1,2) or 'Copy Portfolio' (other). Balance stream: 'Balance'. (Tier 2 -- SP_InvestorReport) |
-| 8 | AssetType | varchar(50) | YES | Investment classification. 'Investment' (InstrumentTypeID 4/5/6 AND Leverage<3), 'Trade' (all other manual positions), 'Copy' (copy stream), 'NonInvested' (balance stream). (Tier 2 -- SP_InvestorReport) |
-| 9 | Customers | decimal(38,2) | YES | Count of customers in this dimensional bucket. Manual/Copy: COUNT(DISTINCT CID). Balance: COUNT(CID). Stored as decimal for aggregation flexibility. (Tier 2 -- SP_InvestorReport) |
-| 10 | Amount | decimal(38,2) | YES | Net money invested (NetMI) for this bucket. Manual: SUM(-1 * Fact_CustomerAction.Amount). Copy: SUM(mirror action amounts * -1). Balance: today's V_Liabilities.Credit minus yesterday's. In USD. Note: DDL column name is "Amount" but populated from SP's "NetMI" field. NULL for some Copy rows where no action occurred on the date. (Tier 2 -- SP_InvestorReport) |
-| 11 | AUM_AUA | decimal(38,2) | YES | Assets Under Management (for Copy stream: GuruCopiers Cash+Investment+PnL+DetachedPosInvestment+Dit_PnL) or Assets Under Administration (for Manual stream: BI_DB_PositionPnL Amount+PositionPnL; for Balance stream: V_Liabilities.Credit). In USD. 49 NULLs observed in recent April 2026 data (~0.01%). (Tier 2 -- SP_InvestorReport) |
-| 12 | UpdateDate | datetime | YES | ETL metadata: timestamp when this row was inserted by SP_InvestorReport. Set to GETDATE(). (Tier 5 -- SP_InvestorReport) |
+| 1 | Date | date | YES | Business date for this daily snapshot. (Tier 2 -SP_InvestorReport) |
+| 2 | DateID | int | YES | Date identifier in YYYYMMDD integer format. Derived as CONVERT(CHAR(8), @dd, 112). Used for delete-insert partitioning and efficient date-range queries. (Tier 2 -SP_InvestorReport) |
+| 3 | AccountManagerID | int | YES | Salesforce account manager ID. FK to DWH_dbo.Dim_AccountManager. Identifies which AM manages the customers in this bucket. Sourced from Fact_SnapshotCustomer. (Tier 2 -SP_InvestorReport) |
+| 4 | CountryID | int | YES | Country of customer registration. FK to DWH_dbo.Dim_Country. Sourced from Fact_SnapshotCustomer. (Tier 2 -SP_InvestorReport) |
+| 5 | RegulationID | tinyint | YES | Regulatory entity ID. FK to DWH_dbo.Dim_Regulation. 1=CySEC, 2=FCA, 4=ASIC, 9=FSA Seychelles, 10=eToro US, 11=FSRA, etc. Sourced from Fact_SnapshotCustomer. (Tier 2 -SP_InvestorReport) |
+| 6 | ActionType | varchar(50) | YES | Activity source stream: 'Manual' (direct position open/close), 'Copy' (copy-trading mirror activity), 'Balance' (uninvested cash). Determines how Customers/Amount/AUM_AUA are computed. (Tier 2 -SP_InvestorReport) |
+| 7 | InstrumentType | varchar(50) | YES | Instrument category. Manual stream: Stocks, ETF, Crypto Currencies, Commodities, Indices, Currencies (from Dim_Instrument.InstrumentType). Copy stream: 'Copy Trading' (MirrorTypeID 1,2) or 'Copy Portfolio' (other). Balance stream: 'Balance'. (Tier 2 -SP_InvestorReport) |
+| 8 | AssetType | varchar(50) | YES | Investment classification. 'Investment' (InstrumentTypeID 4/5/6 AND Leverage<3), 'Trade' (all other manual positions), 'Copy' (copy stream), 'NonInvested' (balance stream). (Tier 2 -SP_InvestorReport) |
+| 9 | Customers | decimal(38,2) | YES | Count of customers in this dimensional bucket. Manual/Copy: COUNT(DISTINCT CID). Balance: COUNT(CID). Stored as decimal for aggregation flexibility. (Tier 2 -SP_InvestorReport) |
+| 10 | Amount | decimal(38,2) | YES | Net money invested (NetMI) for this bucket. Manual: SUM(-1 * Fact_CustomerAction.Amount). Copy: SUM(mirror action amounts * -1). Balance: today's V_Liabilities.Credit minus yesterday's. In USD. Note: DDL column name is "Amount" but populated from SP's "NetMI" field. NULL for some Copy rows where no action occurred on the date. (Tier 2 -SP_InvestorReport) |
+| 11 | AUM_AUA | decimal(38,2) | YES | Assets Under Management (for Copy stream: GuruCopiers Cash+Investment+PnL+DetachedPosInvestment+Dit_PnL) or Assets Under Administration (for Manual stream: BI_DB_PositionPnL Amount+PositionPnL; for Balance stream: V_Liabilities.Credit). In USD. 49 NULLs observed in recent April 2026 data (~0.01%). (Tier 2 -SP_InvestorReport) |
+| 12 | UpdateDate | datetime | YES | ETL metadata: timestamp when this row was inserted by SP_InvestorReport. Set to GETDATE(). (Tier 5 -SP_InvestorReport) |
 
 ---
 

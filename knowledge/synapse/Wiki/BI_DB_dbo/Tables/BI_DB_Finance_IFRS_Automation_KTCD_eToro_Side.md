@@ -115,19 +115,19 @@ _Not_Migrated._
 
 | Stars | Tier | Tag |
 |-------|------|-----|
-| ★★★☆☆ | Tier 2 -- Synapse SP code | `(Tier 2 -- source)` |
-| ★★☆☆☆ | Tier 3 -- ETL metadata | `(Tier 3 -- source)` |
+| ★★★☆☆ | Tier 2 -- Synapse SP code | `(Tier 2 -source)` |
+| ★★☆☆☆ | Tier 3 -- ETL metadata | `(Tier 3 -source)` |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | ReportID | varchar(20) | YES | Regulation group identifier. 6-value enum: "ReportA" (CySEC/FCA/BVI excl. eToro Trading), "ReportB" (ASIC/GAML), "ReportC" (FSA Seychelles), "ReportD" (eToro Trading CIDs), "ReportE" (FSRA), "ReportF" (MAS). Hardcoded literal per UNION ALL segment. (Tier 2 -- SP_Finance_IFRS_Automation_KTCD_eToro_Side, hardcoded) |
-| 2 | Date | date | YES | Business date for the K-TCD calculation. From SP @Date parameter. Clustered index column. DELETE-INSERT scope key. (Tier 2 -- SP_Finance_IFRS_Automation_KTCD_eToro_Side, @Date) |
-| 3 | EV | float | YES | Exposure Value in USD. SUM of per-position EV where EV = MAX(0, RC + PFE - Collateral). Floored at zero per position before aggregation. Core numerator for Own Funds Requirement. (Tier 2 -- SP_Finance_IFRS_Automation_KTCD_eToro_Side, aggregated) |
-| 4 | Own_Funds_Requirement | float | YES | K-TCD capital requirement in USD. SUM of per-position `1.2 * CVA * RF * EV`. CVA is 1.0 for EU/UK/BVI or 1.5 for ASIC/GAML/Sey/FSRA/MAS. RF is 0.08 (Corporate) or 0.016 (Institutional). (Tier 2 -- SP_Finance_IFRS_Automation_KTCD_eToro_Side, aggregated) |
-| 5 | UpdateDate | datetime | YES | SP execution timestamp. GETDATE(). (Tier 3 -- SP_Finance_IFRS_Automation_KTCD_eToro_Side, GETDATE()) |
-| 6 | PFE | float | YES | Potential Future Exposure in USD. SUM of per-position PFE where PFE = Supervisory_Factor * Effective_Notional. Supervisory factor ranges from 0.005 (bonds) to 0.32 (crypto/stocks). (Tier 2 -- SP_Finance_IFRS_Automation_KTCD_eToro_Side, aggregated) |
-| 7 | RC | float | YES | Replacement Cost in USD. SUM of per-position RC = -1 * PositionPnL (or AdjustedPnLForRegulations for ASIC/GAML/Sey/FSRA/MAS). Negative PnL means counterparty owes the firm. (Tier 2 -- SP_Finance_IFRS_Automation_KTCD_eToro_Side, aggregated) |
-| 8 | Collateral_Value_after_adjustments | float | YES | Collateral mitigation in USD. For CySEC/FCA/BVI: SUM of (1 - CurrencyMismatch) * InvestedAmount. For others: SUM of RC * (1 - CurrencyMismatch) when RC > 0. Currency mismatch is 8% for non-USD, 0% for USD. (Tier 2 -- SP_Finance_IFRS_Automation_KTCD_eToro_Side, aggregated) |
+| 1 | ReportID | varchar(20) | YES | Regulation group identifier. 6-value enum: "ReportA" (CySEC/FCA/BVI excl. eToro Trading), "ReportB" (ASIC/GAML), "ReportC" (FSA Seychelles), "ReportD" (eToro Trading CIDs), "ReportE" (FSRA), "ReportF" (MAS). Hardcoded literal per UNION ALL segment. (Tier 2 -SP_Finance_IFRS_Automation_KTCD_eToro_Side, hardcoded) |
+| 2 | Date | date | YES | Business date for the K-TCD calculation. From SP @Date parameter. Clustered index column. DELETE-INSERT scope key. (Tier 2 -SP_Finance_IFRS_Automation_KTCD_eToro_Side, @Date) |
+| 3 | EV | float | YES | Exposure Value in USD. SUM of per-position EV where EV = MAX(0, RC + PFE - Collateral). Floored at zero per position before aggregation. Core numerator for Own Funds Requirement. (Tier 2 -SP_Finance_IFRS_Automation_KTCD_eToro_Side, aggregated) |
+| 4 | Own_Funds_Requirement | float | YES | K-TCD capital requirement in USD. SUM of per-position `1.2 * CVA * RF * EV`. CVA is 1.0 for EU/UK/BVI or 1.5 for ASIC/GAML/Sey/FSRA/MAS. RF is 0.08 (Corporate) or 0.016 (Institutional). (Tier 2 -SP_Finance_IFRS_Automation_KTCD_eToro_Side, aggregated) |
+| 5 | UpdateDate | datetime | YES | SP execution timestamp. GETDATE(). (Tier 3 -SP_Finance_IFRS_Automation_KTCD_eToro_Side, GETDATE()) |
+| 6 | PFE | float | YES | Potential Future Exposure in USD. SUM of per-position PFE where PFE = Supervisory_Factor * Effective_Notional. Supervisory factor ranges from 0.005 (bonds) to 0.32 (crypto/stocks). (Tier 2 -SP_Finance_IFRS_Automation_KTCD_eToro_Side, aggregated) |
+| 7 | RC | float | YES | Replacement Cost in USD. SUM of per-position RC = -1 * PositionPnL (or AdjustedPnLForRegulations for ASIC/GAML/Sey/FSRA/MAS). Negative PnL means counterparty owes the firm. (Tier 2 -SP_Finance_IFRS_Automation_KTCD_eToro_Side, aggregated) |
+| 8 | Collateral_Value_after_adjustments | float | YES | Collateral mitigation in USD. For CySEC/FCA/BVI: SUM of (1 - CurrencyMismatch) * InvestedAmount. For others: SUM of RC * (1 - CurrencyMismatch) when RC > 0. Currency mismatch is 8% for non-USD, 0% for USD. (Tier 2 -SP_Finance_IFRS_Automation_KTCD_eToro_Side, aggregated) |
 
 ---
 

@@ -134,7 +134,7 @@ _Pending — resolved during write-objects._
 | 14 | TotalMirrorCash | money | YES | Cash allocated to copy trading relationships. ISNULL to 0. (Tier 2 — V_Liabilities) |
 | 15 | TotalStockOrders | money | YES | Total value of pending stock orders. ISNULL to 0. (Tier 2 — V_Liabilities) |
 | 16 | TotalMirrorStockOrders | money | YES | Total value of pending stock orders via copy trading. ISNULL to 0. (Tier 2 — V_Liabilities) |
-| 17 | Credit | money | YES | Non-withdrawable promotional credit balance. ISNULL to 0. (Tier 2 — V_Liabilities) |
+| 17 | Credit | money | YES | Outstanding credit/bonus balance from Fact_SnapshotEquity (sourced from History.ActiveCredit); negative values represent outstanding obligations. ISNULL to 0. (Tier 2 - Fact_SnapshotEquity) |
 | 18 | AUM | money | YES | Assets Under Management — total account value including positions, cash, and credits. ISNULL to 0. (Tier 2 — V_Liabilities) |
 | 19 | BonusCredit | money | YES | Bonus credit balance from promotional campaigns. ISNULL to 0. (Tier 2 — V_Liabilities) |
 | 20 | TotalLiability | money | YES | Total liabilities owed by eToro to the customer. From V_Liabilities.Liabilities. ISNULL to 0. (Tier 2 — V_Liabilities) |

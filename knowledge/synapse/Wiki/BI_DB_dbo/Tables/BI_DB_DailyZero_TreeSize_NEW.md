@@ -41,41 +41,41 @@ Used for **risk management and P&L attribution** at the hedge-server level. The 
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Date | date | NO | Report date for the daily run (equals **@RepDate** / **@start** in the SP). (Tier 2 -- SP_DailyZero_TreeSize_NEW, @RepDate) |
-| 2 | HedgeServerID | int | NO | Hedge server from **Dim_Position**. Groups exposure by hedging infrastructure. (Tier 2 -- SP_DailyZero_TreeSize_NEW, Dim_Position.HedgeServerID) |
-| 3 | Copy | int | NO | Copy trade role: **1** if **MirrorID** > 0, **-1** if **OrigParentPositionID** > 0, else **0**. (Tier 2 -- SP_DailyZero_TreeSize_NEW, Dim_Position.MirrorID / OrigParentPositionID) |
-| 4 | InstrumentID | int | NO | Instrument id; **1000** when **InstrumentTypeID** in (5,6) (stocks/ETF rollup). (Tier 2 -- SP_DailyZero_TreeSize_NEW, Dim_Position.InstrumentID / Dim_Instrument) |
-| 5 | RiskIndex | int | NO | Placeholder in current ETL (inserted as empty string literal, effectively **0**). Reserved for future risk indexing. (Tier 2 -- SP_DailyZero_TreeSize_NEW, literal) |
-| 6 | TreeSize_Units | varchar(50) | NO | Bucket label from **AmountInUnitsDecimal** or tree-aggregated units (e.g. **10K+**, **1M+**, **Smaller**). (Tier 2 -- SP_DailyZero_TreeSize_NEW, computed bucket) |
-| 7 | TreeSize_USD | varchar(50) | NO | Bucket label from **OpenPosition** (USD) or tree-aggregated USD size (e.g. **100K+**, **1000K+**, **Smaller**). (Tier 2 -- SP_DailyZero_TreeSize_NEW, computed bucket) |
-| 8 | Leverage | int | NO | Position leverage from **Dim_Position**. (Tier 2 -- SP_DailyZero_TreeSize_NEW, Dim_Position.Leverage) |
-| 9 | RiskGroup | nvarchar(50) | YES | Placeholder; inserted as empty string in current SP. (Tier 2 -- SP_DailyZero_TreeSize_NEW, literal) |
-| 10 | DepositGroup | nvarchar(50) | YES | Placeholder; inserted as empty string in current SP. (Tier 2 -- SP_DailyZero_TreeSize_NEW, literal) |
-| 11 | RealizedCommission | money | YES | Sum of commission components (**FullCommissionOnClose** minus **FullCommissionByUnits** when applicable, or on-open close commission). (Tier 2 -- SP_DailyZero_TreeSize_NEW, #Realized / #UnRealized TotalCommission) |
-| 12 | RealizedZero | money | YES | Portion of **CalculatedZero** from closed positions on the report date (**Indicator** = **Realized**). (Tier 2 -- SP_DailyZero_TreeSize_NEW, #Realized.CalculatedZero) |
-| 13 | ChangeInUnrealizedZero | money | YES | Portion of **CalculatedZero** from open / marked positions (**Indicator** = **UnRealized**). (Tier 2 -- SP_DailyZero_TreeSize_NEW, #UnRealized.CalculatedZero) |
-| 14 | TotalZero | money | YES | **RealizedZero** + **ChangeInUnrealizedZero** (sum of **CalculatedZero**). (Tier 2 -- SP_DailyZero_TreeSize_NEW, computed aggregate) |
-| 15 | NOP | money | YES | Sum of net open position exposure (**NOP** from **BI_DB_PositionPnL** for the report **DateID**, signed by buy/sell). (Tier 2 -- SP_DailyZero_TreeSize_NEW, BI_DB_PositionPnL.NOP) |
-| 16 | OpenPositions | money | YES | Sum of **OpenPosition** (directional NOP). (Tier 2 -- SP_DailyZero_TreeSize_NEW, BI_DB_PositionPnL.NOP x IsBuy) |
-| 17 | Nop_Units | money | YES | Sum of **NOP_Units** (**AmountInUnitsDecimal** at mark from **PositionPnL** path). (Tier 2 -- SP_DailyZero_TreeSize_NEW, #Pos_with_Vol.NOP_Units) |
-| 18 | VolumeAtOpen | money | YES | Trading volume for positions opened on the report **DateID**. (Tier 2 -- SP_DailyZero_TreeSize_NEW, Dim_Position.Volume) |
-| 19 | VolumeAtClose | money | YES | Volume on close for positions closed on the report **DateID**. (Tier 2 -- SP_DailyZero_TreeSize_NEW, Dim_Position.VolumeOnClose) |
-| 20 | UpdateDate | datetime | YES | Load timestamp. (Tier 3 -- SP_DailyZero_TreeSize_NEW, GETDATE()) |
-| 21 | IsCFD | tinyint | YES | **1** when position is treated as CFD-like per **IsSettled** vs **BI_DB_PositionPnL.IsSettled** rules; **0** for **Real** cash-settled path. (Tier 2 -- SP_DailyZero_TreeSize_NEW, computed from Dim_Position / BI_DB_PositionPnL) |
-| 22 | Regulation | varchar(50) | YES | Regulation name from **Dim_Regulation** via **Fact_SnapshotCustomer**. (Tier 2 -- SP_DailyZero_TreeSize_NEW, Dim_Regulation.Name) |
-| 23 | MifID | int | YES | MiFID categorization id from snapshot customer (**MifidCategorizationID**). (Tier 2 -- SP_DailyZero_TreeSize_NEW, Fact_SnapshotCustomer.MifidCategorizationID) |
-| 24 | InstrumentType | varchar(50) | YES | Instrument type label; **Stocks/ETF** for instrument types 5 and 6. (Tier 2 -- SP_DailyZero_TreeSize_NEW, Dim_Instrument.InstrumentType) |
-| 25 | InstrumentName | varchar(50) | YES | Instrument name; **Stocks/ETF** for types 5 and 6. (Tier 2 -- SP_DailyZero_TreeSize_NEW, Dim_Instrument.Name) |
-| 26 | OpenPositionValue | money | YES | Sum of **Amount + PositionPnL** from **BI_DB_PositionPnL** (mark value). (Tier 2 -- SP_DailyZero_TreeSize_NEW, BI_DB_PositionPnL) |
-| 27 | Country | varchar(50) | YES | Customer country from **Dim_Country** on snapshot **CountryID**. (Tier 2 -- SP_DailyZero_TreeSize_NEW, Dim_Country.Name) |
-| 28 | PlayerLevel | varchar(100) | YES | Player level name from **Dim_PlayerLevel**. (Tier 2 -- SP_DailyZero_TreeSize_NEW, Dim_PlayerLevel.Name) |
-| 29 | GuruStatus | nvarchar(100) | YES | Guru program status from **Dim_GuruStatus**. (Tier 2 -- SP_DailyZero_TreeSize_NEW, Dim_GuruStatus.GuruStatusName) |
-| 30 | Long_OP | decimal(18,6) | YES | Aggregated long-side open position (NOP contribution). (Tier 2 -- SP_DailyZero_TreeSize_NEW, #Pos_with_Vol.Long_OP) |
-| 31 | Short_OP | decimal(18,6) | YES | Aggregated short-side open position (NOP contribution). (Tier 2 -- SP_DailyZero_TreeSize_NEW, #Pos_with_Vol.Short_OP) |
-| 32 | SettlementType | varchar(10) | YES | **Real** vs **CFD** / **TRS** / **CMT** from **SettlementTypeID** when not **Real** path. (Tier 2 -- SP_DailyZero_TreeSize_NEW, Dim_Position.SettlementTypeID) |
-| 33 | IsIslamic | varchar(50) | YES | **Islamic** when **WeekendFeePrecentage** = 0 on **Dim_Customer**, else **Not Islamic**. (Tier 2 -- SP_DailyZero_TreeSize_NEW, Dim_Customer.WeekendFeePrecentage) |
-| 34 | IsDLTUser | int | YES | **1** when **DltStatusID** = 4 on customer, else **0**. (Tier 2 -- SP_DailyZero_TreeSize_NEW, Dim_Customer.DltStatusID) |
-| 35 | TicketFees | money | YES | Sum of ticket-fee actions from **Fact_CustomerAction** (fee/dividend type 4) for the report **DateID**. (Tier 2 -- SP_DailyZero_TreeSize_NEW, Fact_CustomerAction.Amount) |
+| 1 | Date | date | NO | Report date for the daily run (equals **@RepDate** / **@start** in the SP). (Tier 2 -SP_DailyZero_TreeSize_NEW, @RepDate) |
+| 2 | HedgeServerID | int | NO | Hedge server from **Dim_Position**. Groups exposure by hedging infrastructure. (Tier 2 -SP_DailyZero_TreeSize_NEW, Dim_Position.HedgeServerID) |
+| 3 | Copy | int | NO | Copy trade role: **1** if **MirrorID** > 0, **-1** if **OrigParentPositionID** > 0, else **0**. (Tier 2 -SP_DailyZero_TreeSize_NEW, Dim_Position.MirrorID / OrigParentPositionID) |
+| 4 | InstrumentID | int | NO | Instrument id; **1000** when **InstrumentTypeID** in (5,6) (stocks/ETF rollup). (Tier 2 -SP_DailyZero_TreeSize_NEW, Dim_Position.InstrumentID / Dim_Instrument) |
+| 5 | RiskIndex | int | NO | Placeholder in current ETL (inserted as empty string literal, effectively **0**). Reserved for future risk indexing. (Tier 2 -SP_DailyZero_TreeSize_NEW, literal) |
+| 6 | TreeSize_Units | varchar(50) | NO | Bucket label from **AmountInUnitsDecimal** or tree-aggregated units (e.g. **10K+**, **1M+**, **Smaller**). (Tier 2 -SP_DailyZero_TreeSize_NEW, computed bucket) |
+| 7 | TreeSize_USD | varchar(50) | NO | Bucket label from **OpenPosition** (USD) or tree-aggregated USD size (e.g. **100K+**, **1000K+**, **Smaller**). (Tier 2 -SP_DailyZero_TreeSize_NEW, computed bucket) |
+| 8 | Leverage | int | NO | Position leverage from **Dim_Position**. (Tier 2 -SP_DailyZero_TreeSize_NEW, Dim_Position.Leverage) |
+| 9 | RiskGroup | nvarchar(50) | YES | Placeholder; inserted as empty string in current SP. (Tier 2 -SP_DailyZero_TreeSize_NEW, literal) |
+| 10 | DepositGroup | nvarchar(50) | YES | Placeholder; inserted as empty string in current SP. (Tier 2 -SP_DailyZero_TreeSize_NEW, literal) |
+| 11 | RealizedCommission | money | YES | Sum of commission components (**FullCommissionOnClose** minus **FullCommissionByUnits** when applicable, or on-open close commission). (Tier 2 -SP_DailyZero_TreeSize_NEW, #Realized / #UnRealized TotalCommission) |
+| 12 | RealizedZero | money | YES | Portion of **CalculatedZero** from closed positions on the report date (**Indicator** = **Realized**). (Tier 2 -SP_DailyZero_TreeSize_NEW, #Realized.CalculatedZero) |
+| 13 | ChangeInUnrealizedZero | money | YES | Portion of **CalculatedZero** from open / marked positions (**Indicator** = **UnRealized**). (Tier 2 -SP_DailyZero_TreeSize_NEW, #UnRealized.CalculatedZero) |
+| 14 | TotalZero | money | YES | **RealizedZero** + **ChangeInUnrealizedZero** (sum of **CalculatedZero**). (Tier 2 -SP_DailyZero_TreeSize_NEW, computed aggregate) |
+| 15 | NOP | money | YES | Sum of net open position exposure (**NOP** from **BI_DB_PositionPnL** for the report **DateID**, signed by buy/sell). (Tier 2 -SP_DailyZero_TreeSize_NEW, BI_DB_PositionPnL.NOP) |
+| 16 | OpenPositions | money | YES | Sum of **OpenPosition** (directional NOP). (Tier 2 -SP_DailyZero_TreeSize_NEW, BI_DB_PositionPnL.NOP x IsBuy) |
+| 17 | Nop_Units | money | YES | Sum of **NOP_Units** (**AmountInUnitsDecimal** at mark from **PositionPnL** path). (Tier 2 -SP_DailyZero_TreeSize_NEW, #Pos_with_Vol.NOP_Units) |
+| 18 | VolumeAtOpen | money | YES | Trading volume for positions opened on the report **DateID**. (Tier 2 -SP_DailyZero_TreeSize_NEW, Dim_Position.Volume) |
+| 19 | VolumeAtClose | money | YES | Volume on close for positions closed on the report **DateID**. (Tier 2 -SP_DailyZero_TreeSize_NEW, Dim_Position.VolumeOnClose) |
+| 20 | UpdateDate | datetime | YES | Load timestamp. (Tier 3 -SP_DailyZero_TreeSize_NEW, GETDATE()) |
+| 21 | IsCFD | tinyint | YES | **1** when position is treated as CFD-like per **IsSettled** vs **BI_DB_PositionPnL.IsSettled** rules; **0** for **Real** cash-settled path. (Tier 2 -SP_DailyZero_TreeSize_NEW, computed from Dim_Position / BI_DB_PositionPnL) |
+| 22 | Regulation | varchar(50) | YES | Regulation name from **Dim_Regulation** via **Fact_SnapshotCustomer**. (Tier 2 -SP_DailyZero_TreeSize_NEW, Dim_Regulation.Name) |
+| 23 | MifID | int | YES | MiFID categorization id from snapshot customer (**MifidCategorizationID**). (Tier 2 -SP_DailyZero_TreeSize_NEW, Fact_SnapshotCustomer.MifidCategorizationID) |
+| 24 | InstrumentType | varchar(50) | YES | Instrument type label; **Stocks/ETF** for instrument types 5 and 6. (Tier 2 -SP_DailyZero_TreeSize_NEW, Dim_Instrument.InstrumentType) |
+| 25 | InstrumentName | varchar(50) | YES | Instrument name; **Stocks/ETF** for types 5 and 6. (Tier 2 -SP_DailyZero_TreeSize_NEW, Dim_Instrument.Name) |
+| 26 | OpenPositionValue | money | YES | Sum of **Amount + PositionPnL** from **BI_DB_PositionPnL** (mark value). (Tier 2 -SP_DailyZero_TreeSize_NEW, BI_DB_PositionPnL) |
+| 27 | Country | varchar(50) | YES | Customer country from **Dim_Country** on snapshot **CountryID**. (Tier 2 -SP_DailyZero_TreeSize_NEW, Dim_Country.Name) |
+| 28 | PlayerLevel | varchar(100) | YES | Player level name from **Dim_PlayerLevel**. (Tier 2 -SP_DailyZero_TreeSize_NEW, Dim_PlayerLevel.Name) |
+| 29 | GuruStatus | nvarchar(100) | YES | Guru program status from **Dim_GuruStatus**. (Tier 2 -SP_DailyZero_TreeSize_NEW, Dim_GuruStatus.GuruStatusName) |
+| 30 | Long_OP | decimal(18,6) | YES | Aggregated long-side open position (NOP contribution). (Tier 2 -SP_DailyZero_TreeSize_NEW, #Pos_with_Vol.Long_OP) |
+| 31 | Short_OP | decimal(18,6) | YES | Aggregated short-side open position (NOP contribution). (Tier 2 -SP_DailyZero_TreeSize_NEW, #Pos_with_Vol.Short_OP) |
+| 32 | SettlementType | varchar(10) | YES | **Real** vs **CFD** / **TRS** / **CMT** from **SettlementTypeID** when not **Real** path. (Tier 2 -SP_DailyZero_TreeSize_NEW, Dim_Position.SettlementTypeID) |
+| 33 | IsIslamic | varchar(50) | YES | **Islamic** when **WeekendFeePrecentage** = 0 on **Dim_Customer**, else **Not Islamic**. (Tier 2 -SP_DailyZero_TreeSize_NEW, Dim_Customer.WeekendFeePrecentage) |
+| 34 | IsDLTUser | int | YES | **1** when **DltStatusID** = 4 on customer, else **0**. (Tier 2 -SP_DailyZero_TreeSize_NEW, Dim_Customer.DltStatusID) |
+| 35 | TicketFees | money | YES | Sum of ticket-fee actions from **Fact_CustomerAction** (fee/dividend type 4) for the report **DateID**. (Tier 2 -SP_DailyZero_TreeSize_NEW, Fact_CustomerAction.Amount) |
 
 ---
 

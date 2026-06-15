@@ -57,32 +57,32 @@ Read-only checks executed **2026-03-21**.
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Date | date | YES | Report date (EOD reconciliation date). (Tier 2 -- SP_DataForDuco, @Date) |
-| 2 | LiquidityAccountID | int | YES | LP account identifier from etoro_Trade_LiquidityAccounts. (Tier 2 -- SP_DataForDuco, Dealing_staging.etoro_Trade_LiquidityAccounts.LiquidityAccountID) |
-| 3 | LiquidityAccountName | varchar(max) | YES | LP account display name. (Tier 2 -- SP_DataForDuco, Dealing_staging.etoro_Trade_LiquidityAccounts.LiquidityAccountName) |
-| 4 | HedgeServerID | int | YES | Hedge server identifier associated with the LP position. (Tier 2 -- SP_DataForDuco, Dealing_staging.etoro_Hedge_Netting.HedgeServerID) |
-| 5 | InstrumentID | int | YES | eToro instrument identifier. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.InstrumentID) |
-| 6 | ISINCode | varchar(max) | YES | ISIN code from LP netting or instrument master. (Tier 2 -- SP_DataForDuco, DWH_dbo.Dim_Instrument.ISINCode) |
-| 7 | InstrumentDisplayName | varchar(max) | YES | Instrument display name. (Tier 2 -- SP_DataForDuco, DWH_dbo.Dim_Instrument.InstrumentDisplayName) |
-| 8 | Buy/Sell | varchar(10) | YES | Direction of the position: 'Buy' or 'Sell', derived from net units sign. (Tier 2 -- SP_DataForDuco, computed from eToro_Units / ClientUnits sign) |
-| 9 | eToro_Units | float | YES | Total LP hedge units held at EOD on the eToro side. (Tier 2 -- SP_DataForDuco, Dealing_staging.etoro_Hedge_Netting.Units) |
-| 10 | ClientUnits | float | YES | Total client NOP units from BI_DB_PositionPnL for the instrument. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.AmountInUnitsDecimal) |
-| 11 | eToroLocalAmount | money | YES | LP hedge position value in the instrument's local currency. (Tier 2 -- SP_DataForDuco, Dealing_staging.etoro_Hedge_Netting.Amount) |
-| 12 | eToroUSDAmount | money | YES | LP hedge position value converted to USD via FXratetoUSD. (Tier 2 -- SP_DataForDuco, computed: eToroLocalAmount × FXratetoUSD) |
-| 13 | ClientAmount | money | YES | Client NOP position value in USD. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.NOP via FX conversion) |
-| 14 | eToroRate | float | YES | Average rate of the eToro hedge holding (LP-side weighted average price). (Tier 2 -- SP_DataForDuco, Dealing_staging.etoro_Hedge_Netting.Rate) |
-| 15 | HedgingPercent | float | YES | eToro_Units / ClientUnits — hedge coverage ratio (1.0 = fully hedged). (Tier 2 -- SP_DataForDuco, computed: eToro_Units / NULLIF(ClientUnits, 0)) |
-| 16 | UpdateDate | datetime | YES | Batch execution timestamp (GETDATE()). (Tier 3 -- SP_DataForDuco, GETDATE()) |
-| 17 | Symbol | varchar(50) | YES | Instrument ticker symbol. (Tier 2 -- SP_DataForDuco, DWH_dbo.Dim_Instrument.Symbol) |
-| 18 | SellCurrency | varchar(10) | YES | Trade currency of the instrument. (Tier 2 -- SP_DataForDuco, DWH_dbo.Dim_Instrument.SellCurrency) |
-| 19 | Exchange | varchar(max) | YES | Exchange name for the instrument. (Tier 2 -- SP_DataForDuco, DWH_dbo.Dim_Instrument.Exchange) |
-| 20 | MKTcap | decimal(24,6) | YES | Market capitalization of the instrument from external reference. (Tier 2 -- SP_DataForDuco, external reference table) |
-| 21 | Clients_Units_Buy | float | YES | Client units on the buy side (long positions). (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL where IsBuy=1) |
-| 22 | Clients_Units_Sell | float | YES | Client units on the sell side (short positions). (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL where IsBuy=0) |
-| 23 | Clients_NOP_Buy | float | YES | Client NOP USD value for buy (long) positions. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL NOP buy-side) |
-| 24 | Clients_NOP_Sell | float | YES | Client NOP USD value for sell (short) positions. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL NOP sell-side) |
-| 25 | FXratetoUSD | float | YES | FX rate from instrument currency to USD for amount conversion. (Tier 2 -- SP_DataForDuco, DWH_dbo.Fact_CurrencyPriceWithSplit) |
-| 26 | CUSIP | varchar(max) | YES | CUSIP identifier from the LP netting/external data source. (Tier 2 -- SP_DataForDuco, Dealing_staging.etoro_Hedge_Netting.CUSIP / external source) |
+| 1 | Date | date | YES | Report date (EOD reconciliation date). (Tier 2 -SP_DataForDuco, @Date) |
+| 2 | LiquidityAccountID | int | YES | LP account identifier from etoro_Trade_LiquidityAccounts. (Tier 2 -SP_DataForDuco, Dealing_staging.etoro_Trade_LiquidityAccounts.LiquidityAccountID) |
+| 3 | LiquidityAccountName | varchar(max) | YES | LP account display name. (Tier 2 -SP_DataForDuco, Dealing_staging.etoro_Trade_LiquidityAccounts.LiquidityAccountName) |
+| 4 | HedgeServerID | int | YES | Hedge server identifier associated with the LP position. (Tier 2 -SP_DataForDuco, Dealing_staging.etoro_Hedge_Netting.HedgeServerID) |
+| 5 | InstrumentID | int | YES | eToro instrument identifier. (Tier 2 -SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.InstrumentID) |
+| 6 | ISINCode | varchar(max) | YES | ISIN code from LP netting or instrument master. (Tier 2 -SP_DataForDuco, DWH_dbo.Dim_Instrument.ISINCode) |
+| 7 | InstrumentDisplayName | varchar(max) | YES | Instrument display name. (Tier 2 -SP_DataForDuco, DWH_dbo.Dim_Instrument.InstrumentDisplayName) |
+| 8 | Buy/Sell | varchar(10) | YES | Direction of the position: 'Buy' or 'Sell', derived from net units sign. (Tier 2 -SP_DataForDuco, computed from eToro_Units / ClientUnits sign) |
+| 9 | eToro_Units | float | YES | Total LP hedge units held at EOD on the eToro side. (Tier 2 -SP_DataForDuco, Dealing_staging.etoro_Hedge_Netting.Units) |
+| 10 | ClientUnits | float | YES | Total client NOP units from BI_DB_PositionPnL for the instrument. (Tier 2 -SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.AmountInUnitsDecimal) |
+| 11 | eToroLocalAmount | money | YES | LP hedge position value in the instrument's local currency. (Tier 2 -SP_DataForDuco, Dealing_staging.etoro_Hedge_Netting.Amount) |
+| 12 | eToroUSDAmount | money | YES | LP hedge position value converted to USD via FXratetoUSD. (Tier 2 -SP_DataForDuco, computed: eToroLocalAmount × FXratetoUSD) |
+| 13 | ClientAmount | money | YES | Client NOP position value in USD. (Tier 2 -SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.NOP via FX conversion) |
+| 14 | eToroRate | float | YES | Average rate of the eToro hedge holding (LP-side weighted average price). (Tier 2 -SP_DataForDuco, Dealing_staging.etoro_Hedge_Netting.Rate) |
+| 15 | HedgingPercent | float | YES | eToro_Units / ClientUnits — hedge coverage ratio (1.0 = fully hedged). (Tier 2 -SP_DataForDuco, computed: eToro_Units / NULLIF(ClientUnits, 0)) |
+| 16 | UpdateDate | datetime | YES | Batch execution timestamp (GETDATE()). (Tier 3 -SP_DataForDuco, GETDATE()) |
+| 17 | Symbol | varchar(50) | YES | Instrument ticker symbol. (Tier 2 -SP_DataForDuco, DWH_dbo.Dim_Instrument.Symbol) |
+| 18 | SellCurrency | varchar(10) | YES | Trade currency of the instrument. (Tier 2 -SP_DataForDuco, DWH_dbo.Dim_Instrument.SellCurrency) |
+| 19 | Exchange | varchar(max) | YES | Exchange name for the instrument. (Tier 2 -SP_DataForDuco, DWH_dbo.Dim_Instrument.Exchange) |
+| 20 | MKTcap | decimal(24,6) | YES | Market capitalization of the instrument from external reference. (Tier 2 -SP_DataForDuco, external reference table) |
+| 21 | Clients_Units_Buy | float | YES | Client units on the buy side (long positions). (Tier 2 -SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL where IsBuy=1) |
+| 22 | Clients_Units_Sell | float | YES | Client units on the sell side (short positions). (Tier 2 -SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL where IsBuy=0) |
+| 23 | Clients_NOP_Buy | float | YES | Client NOP USD value for buy (long) positions. (Tier 2 -SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL NOP buy-side) |
+| 24 | Clients_NOP_Sell | float | YES | Client NOP USD value for sell (short) positions. (Tier 2 -SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL NOP sell-side) |
+| 25 | FXratetoUSD | float | YES | FX rate from instrument currency to USD for amount conversion. (Tier 2 -SP_DataForDuco, DWH_dbo.Fact_CurrencyPriceWithSplit) |
+| 26 | CUSIP | varchar(max) | YES | CUSIP identifier from the LP netting/external data source. (Tier 2 -SP_DataForDuco, Dealing_staging.etoro_Hedge_Netting.CUSIP / external source) |
 
 ---
 

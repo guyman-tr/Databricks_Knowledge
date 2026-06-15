@@ -1,6 +1,6 @@
 # DWH_dbo.Dim_DocumentStatus
 
-> Small dictionary (7 rows) mapping integer IDs to KYC document review status names in the eToro identity verification pipeline.
+> Small dictionary (5 rows) mapping integer IDs to KYC document review status names in the eToro identity verification pipeline.
 
 | Property | Value |
 |----------|-------|
@@ -21,7 +21,7 @@
 
 ## 1. Business Meaning
 
-`Dim_DocumentStatus` is a 7-row reference dictionary for KYC (Know Your Customer) document review states in the eToro identity verification pipeline. It classifies the review lifecycle of customer-uploaded identity documents: from initial upload (New Upload) through manual review (Reviewed) to final decision (Accepted/Rejected) and specific document-type approvals (POIApproved = Proof of Identity, POAApproved = Proof of Address).
+`Dim_DocumentStatus` is a 5-row reference dictionary for KYC (Know Your Customer) document review states in the eToro identity verification pipeline. It classifies the review lifecycle of customer-uploaded identity documents: from initial upload (Uploaded) through pending review (PendingReview) to final decision (Approved/Declined) and document expiration (Expired).
 
 The source is `etoro.Dictionary.DocumentStatus`. Both columns are passthroughs from the staging table; only UpdateDate is ETL-computed. The ETL is a full TRUNCATE-and-INSERT daily reload.
 
@@ -33,28 +33,25 @@ Upstream wiki: `DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.DocumentStatus
 
 ### 2.1 KYC Document Review States
 
-**What**: Seven states track the full review lifecycle of a customer's identity verification documents.
+**What**: Five states track the full review lifecycle of a customer's identity verification documents.
 
 **Columns Involved**: `DocumentStatusID`, `DocumentStatusName`
 
 **Rules**:
-- ID=0 (None): No document uploaded or status not applicable
-- ID=1 (New Upload): Document just uploaded by customer - awaiting review
-- ID=2 (Reviewed): Document has been reviewed but no final decision yet
-- ID=3 (Accepted): Document accepted as valid
-- ID=4 (Rejected): Document rejected (invalid, expired, wrong type)
-- ID=5 (POIApproved): Proof of Identity document specifically approved (passport, national ID, driver's license)
-- ID=6 (POAApproved): Proof of Address document specifically approved (utility bill, bank statement)
+- ID=1 (Uploaded): Document just uploaded by customer - awaiting review
+- ID=2 (PendingReview): Document has been reviewed but no final decision yet
+- ID=3 (Approved): Document accepted as valid
+- ID=4 (Declined): Document rejected (invalid, expired, wrong type)
+- ID=5 (Expired): Document has expired
 
 **Diagram**:
 ```
 Customer uploads document
-  -> ID=1 (New Upload)
-  -> ID=2 (Reviewed)         [optionally, after manual review begins]
-  -> ID=3 (Accepted)         [generic approval]
-     OR ID=4 (Rejected)      [failed verification]
-     OR ID=5 (POIApproved)   [identity document specifically approved]
-     OR ID=6 (POAApproved)   [address document specifically approved]
+  -> ID=1 (Uploaded)
+  -> ID=2 (PendingReview)    [optionally, after manual review begins]
+  -> ID=3 (Approved)         [generic approval]
+     OR ID=4 (Declined)      [failed verification]
+     OR ID=5 (Expired)
 ```
 
 ---
@@ -63,24 +60,24 @@ Customer uploads document
 
 ### 3.1 Synapse Distribution & Index
 
-**In Synapse**, REPLICATE is correct for 7 rows. CLUSTERED INDEX on DocumentStatusID is appropriate for point lookups.
+**In Synapse**, REPLICATE is correct for 5 rows. CLUSTERED INDEX on DocumentStatusID is appropriate for point lookups.
 
 ### 3.1b UC (Databricks) Storage & Partitioning
 
-**In Databricks**, store as Delta (MANAGED), no partitioning needed (7 rows).
+**In Databricks**, store as Delta (MANAGED), no partitioning needed (5 rows).
 
 ### 3.2 Common Query Patterns
 
 | Analyst Question | Recommended Approach |
 |-----------------|---------------------|
 | Decode document status in KYC facts | `JOIN DWH_dbo.Dim_DocumentStatus d ON f.DocumentStatusID = d.DocumentStatusID` |
-| Filter verified documents | `WHERE DocumentStatusID IN (3, 5, 6)` (Accepted, POI, POA approved) |
+| Filter verified documents | `WHERE DocumentStatusID IN (3, 5)` (Approved, Expired) |
 | Count rejected documents | `WHERE DocumentStatusID = 4` |
 
 ### 3.3 Gotchas
 
-- ID=0 (None) is a real row (not a typical NULL placeholder name). Filter with `WHERE DocumentStatusID > 0` for documents that have an actual status.
-- POIApproved (ID=5) and POAApproved (ID=6) are SEPARATE from Accepted (ID=3). A document may be POI-approved without being generically Accepted. Check both when filtering for "approved documents".
+- The canonical statuses start at ID=1. Filter with `WHERE DocumentStatusID > 0` to ensure only documents with a defined status are returned.
+- Expired (ID=5) is separate from Approved (ID=3). A document may be expired without being approved. Check both when filtering for document outcomes.
 
 ---
 
@@ -97,7 +94,7 @@ Customer uploads document
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | DocumentStatusID | int | NO | Primary key identifying the document review state. 1=Uploaded, 2=PendingReview, 3=Approved, 4=Declined, 5=Expired. See glossary Document Status. (Tier 1 - Dictionary.DocumentStatus) |
+| 1 | DocumentStatusID | int | NO | Primary key identifying the document review state. 1=Uploaded, 2=PendingReview, 3=Approved, 4=Declined, 5=Expired. See glossary Document Status (Tier 1 — Dictionary.DocumentStatus) |
 | 2 | DocumentStatusName | varchar(50) | NO | Human-readable status label. Used in compliance review UI, customer communications, and regulatory reporting. (Tier 1 — Dictionary.DocumentStatus) |
 | 3 | UpdateDate | datetime | NO | ETL load timestamp. Set to GETDATE() on each daily full reload by SP_Dictionaries_DL_To_Synapse. Reflects ETL run time, not source data change time. (Tier 2 — SP_Dictionaries_DL_To_Synapse) |
 
@@ -117,20 +114,18 @@ Upstream wiki: `DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.DocumentStatus
 
 ### 5.2 ETL Pipeline
 
-```
 etoro.Dictionary.DocumentStatus
   -> [Generic Pipeline]
   -> DWH_staging.etoro_Dictionary_DocumentStatus (HEAP, ROUND_ROBIN)
   -> DWH_dbo.SP_Dictionaries_DL_To_Synapse (TRUNCATE + INSERT, GETDATE() for UpdateDate)
-  -> DWH_dbo.Dim_DocumentStatus (7 rows)
-```
+  -> DWH_dbo.Dim_DocumentStatus (5 rows)
 
 | Step | Object | Description |
 |------|--------|-------------|
-| Source | etoro.Dictionary.DocumentStatus | 7-row KYC document status lookup in production etoro database. |
+| Source | etoro.Dictionary.DocumentStatus | 5-row KYC document status lookup in production etoro database. |
 | Staging | DWH_staging.etoro_Dictionary_DocumentStatus | Raw staging. Same 2-column structure. |
 | ETL | DWH_dbo.SP_Dictionaries_DL_To_Synapse | TRUNCATE + INSERT. Both columns passthrough. Injects GETDATE() for UpdateDate. |
-| Target | DWH_dbo.Dim_DocumentStatus | Final DWH dimension (7 rows) |
+| Target | DWH_dbo.Dim_DocumentStatus | Final DWH dimension (5 rows) |
 
 ---
 
@@ -159,12 +154,12 @@ FROM [DWH_dbo].[Dim_DocumentStatus]
 ORDER BY DocumentStatusID;
 ```
 
-### 7.2 Accepted documents in KYC fact
+### 7.2 Approved documents in KYC fact
 ```sql
 SELECT f.*, d.DocumentStatusName
 FROM [DWH_dbo].[Fact_KYC_Documents] f
 JOIN [DWH_dbo].[Dim_DocumentStatus] d ON f.DocumentStatusID = d.DocumentStatusID
-WHERE d.DocumentStatusID IN (3, 5, 6);
+WHERE d.DocumentStatusID IN (3, 5);
 ```
 
 ---

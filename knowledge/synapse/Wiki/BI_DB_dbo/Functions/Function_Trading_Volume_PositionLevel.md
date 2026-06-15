@@ -44,10 +44,10 @@ Position-level **one row per open or close event** (not aggregated across positi
 | # | Column | Source | Transformation | Tier |
 |---|--------|--------|----------------|------|
 | 1 | CID | DWH_dbo.Dim_Position.CID | Direct from union row | T2 |
-| 2 | PositionID | DWH_dbo.Dim_Position.PositionID | Direct | T1 |
-| 3 | InstrumentID | DWH_dbo.Dim_Position.InstrumentID | Direct | T1 |
-| 4 | Amount | DWH_dbo.Dim_Position.Amount | Direct | T1 |
-| 5 | Leverage | DWH_dbo.Dim_Position.Leverage | Direct | T1 |
+| 2 | PositionID | DWH_dbo.Dim_Position.PositionID | Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position. (Tier 1 — Trade.PositionTbl) (via Dim_Position) | T1 |
+| 3 | InstrumentID | DWH_dbo.Dim_Position.InstrumentID | FK to Trade.Instrument. Financial instrument being traded. (Tier 1 — Trade.PositionTbl) (via Dim_Position) | T1 |
+| 4 | Amount | DWH_dbo.Dim_Position.Amount | Position size in currency. Must be >= 0. Stored in dollars (PositionOpen divides by 100 from cents). (Tier 1 — Trade.PositionTbl) (via Dim_Position) | T1 |
+| 5 | Leverage | DWH_dbo.Dim_Position.Leverage | Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type. (Tier 1 — Trade.PositionTbl) (via Dim_Position) | T1 |
 | 6 | DateID | DWH_dbo.Dim_Position.OpenDateID, CloseDateID | Open or close calendar date | T2 |
 | 7 | VolumeOpen | DWH_dbo.Dim_Position.Volume | `ISNULL(CAST(Volume AS BIGINT),0)` on **open** leg only (`OpenDateID` in range); **0** on close leg | T2 |
 | 8 | VolumeClose | DWH_dbo.Dim_Position.VolumeOnClose | `ISNULL(CAST(VolumeOnClose AS BIGINT),0)` on **close** leg (`CloseDateID` in range); **0** on open leg | T2 |
@@ -58,10 +58,10 @@ Position-level **one row per open or close event** (not aggregated across positi
 | 13 | CountOpenTransactions | DWH_dbo.Dim_Position.IsPartialCloseChild | 1 or 0 on opens | T2 |
 | 14 | CountCloseTransactions | DWH_dbo.Dim_Position | 0 on opens; 1 on closes | T2 |
 | 15 | CountTotalTransactions | DWH_dbo.Dim_Position | CountOpenTransactions + CountCloseTransactions | T2 |
-| 16 | IsSettled | DWH_dbo.Dim_Position.IsSettled | Direct | T1 |
-| 17 | IsAirDrop | DWH_dbo.Dim_Position.IsAirDrop | Direct | T1 |
-| 18 | IsBuy | DWH_dbo.Dim_Position.IsBuy | Direct | T1 |
-| 19 | SettlementTypeID | DWH_dbo.Dim_Position.SettlementTypeID | Direct | T1 |
+| 16 | IsSettled | DWH_dbo.Dim_Position.IsSettled | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) (via Dim_Position) | T1 |
+| 17 | IsAirDrop | DWH_dbo.Dim_Position.IsAirDrop | 1=position was created via an airdrop event (crypto). ETL-computed: JOIN to etoro_Trade_PositionAirdropLog. NULL=not an airdrop. (Tier 2 - SP_Dim_Position_DL_To_Synapse) (via Dim_Position) | T1 |
+| 18 | IsBuy | DWH_dbo.Dim_Position.IsBuy | 1 = Long/Buy (profit when price rises), 0 = Short/Sell. (Tier 1 — Trade.PositionTbl) (via Dim_Position) | T1 |
+| 19 | SettlementTypeID | DWH_dbo.Dim_Position.SettlementTypeID | Modern settlement classification. Dictionary.SettlementTypes: 0=CFD, 1=REAL, 2=TRS, 3=CMT, 4=REAL_FUTURES, 5=MARGIN_TRADE. Replaces IsSettled. (Tier 1 — Trade.PositionTbl) (via Dim_Position) | T1 |
 | 20 | ComputedVolumeOpen | DWH_dbo.Dim_Position | `CASE WHEN IsPartialCloseChild = 1 THEN 0 ELSE InitialUnits * InitForexRate * ISNULL(COALESCE(InitForex_USDConversionRate, InitConversionRate, LastOpConversionRate), 1) END` on **opens**; **0** on closes | T2 |
 | 21 | ComputedVolumeClose | DWH_dbo.Dim_Position | `AmountInUnitsDecimal * EndForexRate * ISNULL(LastOpConversionRate, 1)` on **closes**; **0** on opens | T2 |
 | 22 | IsCopy | DWH_dbo.Dim_Position.MirrorID | CASE WHEN MirrorID > 0 THEN 1 ELSE 0 END | T2 |

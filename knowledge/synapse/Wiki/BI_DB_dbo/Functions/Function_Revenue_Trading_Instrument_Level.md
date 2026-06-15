@@ -78,7 +78,7 @@ Combines multiple trading revenue TVFs (full commissions, rollover, ticket fees,
 | 28 | IsAirDrop | BI_DB_Fact_Customer_Action_Position_Distribution.IsAirDrop, Fact_CustomerAction.IsAirDrop | Direct via nested TVFs | T2 |
 | 29 | IsLeverage | BI_DB_Fact_Customer_Action_Position_Distribution.Leverage, Fact_CustomerAction.Leverage | CASE WHEN Leverage > 1 THEN 1 ELSE 0 END | T2 |
 | 30 | IsCopy | BI_DB_Fact_Customer_Action_Position_Distribution.MirrorID, Fact_CustomerAction.MirrorID | CASE WHEN MirrorID > 0 THEN 1 ELSE 0 END | T2 |
-| 31 | IsSettled | BI_DB_Fact_Customer_Action_Position_Distribution.IsSettled, Fact_CustomerAction.IsSettled | Direct | T5 |
+| 31 | IsSettled | BI_DB_Fact_Customer_Action_Position_Distribution.IsSettled, Fact_CustomerAction.IsSettled | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) (via Fact_CustomerAction) | T5 |
 | 32 | IsActiveTrade | Function_Revenue_FullCommissions (computed from MirrorID + IsAirDrop); literal in other UNION branches | TotalFullCommission branch: `CASE WHEN ISNULL(IsAirDrop,0)=0 AND MirrorID=0 THEN 1 ELSE 0 END`. RolloverFee/AdminFee/SpotAdjustFee: literal `0`. TicketFee/TicketFeeByPercent: literal `1` | T2 |
 | 33 | IsCopyFund | BI_DB_CopyFund_Positions.PositionID | CASE WHEN PositionID IS NOT NULL THEN 1 ELSE 0 END | T2 |
 | 34 | IsIBANTrade | BI_DB_Positions_Closed_To_IBAN.PositionID, BI_DB_Positions_Opened_From_IBAN.PositionID | CASE WHEN closed OR opened IBAN PositionID IS NOT NULL THEN 1 ELSE 0 END | T2 |

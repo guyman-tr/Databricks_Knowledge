@@ -42,20 +42,20 @@ Tracks dividend payments credited to customers via `Fact_CustomerAction` (Action
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Regulation | varchar(50) | NO | Regulation name from Dim_Regulation.Name. NOT NULL. (Tier 2 -- SP_Daily_Dividends, Dim_Regulation.Name) |
-| 2 | Date | date | NO | Calendar date of dividend payment. Clustered index. NOT NULL. (Tier 2 -- SP_Daily_Dividends, @dd) |
-| 3 | InMonthWeekNumber | int | NO | Week within month: 1 (days 1-7), 2 (8-15), 3 (16-22), 4 (23+). (Tier 2 -- SP_Daily_Dividends, computed from DAY()) |
-| 4 | Is_US_Stock | tinyint | YES | Flag: 1 if InstrumentID in BI_DB_US_Stocks. US tax reporting relevance. (Tier 2 -- SP_Daily_Dividends, BI_DB_US_Stocks) |
-| 5 | Instrument_segment | varchar(50) | YES | Classification: "Real_Stocks", "Real_ETF", "CFD_Stocks", "CFD_ETF", "Other". Based on InstrumentTypeID, IsSettled, and Regulation. (Tier 2 -- SP_Daily_Dividends, computed) |
-| 6 | ISINCode | varchar(50) | YES | ISIN code from Dim_Instrument.ISINCode. International Securities Identification Number. (Tier 2 -- SP_Daily_Dividends, Dim_Instrument.ISINCode) |
-| 7 | InstrumentID | int | YES | Instrument identifier from Dim_Position.InstrumentID. (Tier 2 -- SP_Daily_Dividends, Dim_Position.InstrumentID) |
-| 8 | InstrumentName | varchar(100) | YES | Display name from Dim_Instrument.InstrumentDisplayName. (Tier 2 -- SP_Daily_Dividends, Dim_Instrument.InstrumentDisplayName) |
-| 9 | Symbol | varchar(50) | YES | Trading symbol from Dim_Instrument.Name. Values: "AAPL/USD", "ABBV/USD", etc. (Tier 2 -- SP_Daily_Dividends, Dim_Instrument.Name) |
-| 10 | Exchange | varchar(max) | YES | Exchange name from Dim_Instrument.Exchange. Values: "NYSE", "NASDAQ", "CFD", etc. (Tier 2 -- SP_Daily_Dividends, Dim_Instrument.Exchange) |
-| 11 | DividendPaid | decimal(16,8) | YES | Total dividend amount paid for this instrument on this date. SUM(Dividend) aggregated from Fact_CustomerAction.Amount. (Tier 2 -- SP_Daily_Dividends, Fact_CustomerAction.Amount) |
-| 12 | UpdateDate | datetime | YES | SP execution timestamp. GETDATE(). (Tier 3 -- SP_Daily_Dividends, GETDATE()) |
-| 13 | IsValidCustomer | int | YES | Customer validity flag from Fact_SnapshotCustomer. (Tier 2 -- SP_Daily_Dividends, Fact_SnapshotCustomer.IsValidCustomer) |
-| 14 | IsCreditReportValidCB | int | YES | Credit report validity flag from Fact_SnapshotCustomer. (Tier 2 -- SP_Daily_Dividends, Fact_SnapshotCustomer.IsCreditReportValidCB) |
+| 1 | Regulation | varchar(50) | NO | Regulation name from Dim_Regulation.Name. NOT NULL. (Tier 2 -SP_Daily_Dividends, Dim_Regulation.Name) |
+| 2 | Date | date | NO | Calendar date of dividend payment. Clustered index. NOT NULL. (Tier 2 -SP_Daily_Dividends, @dd) |
+| 3 | InMonthWeekNumber | int | NO | Week within month: 1 (days 1-7), 2 (8-15), 3 (16-22), 4 (23+). (Tier 2 -SP_Daily_Dividends, computed from DAY()) |
+| 4 | Is_US_Stock | tinyint | YES | Flag: 1 if InstrumentID in BI_DB_US_Stocks. US tax reporting relevance. (Tier 2 -SP_Daily_Dividends, BI_DB_US_Stocks) |
+| 5 | Instrument_segment | varchar(50) | YES | Classification: "Real_Stocks", "Real_ETF", "CFD_Stocks", "CFD_ETF", "Other". Based on InstrumentTypeID, IsSettled, and Regulation. (Tier 2 -SP_Daily_Dividends, computed) |
+| 6 | ISINCode | varchar(50) | YES | ISIN code from Dim_Instrument.ISINCode. International Securities Identification Number. (Tier 2 -SP_Daily_Dividends, Dim_Instrument.ISINCode) |
+| 7 | InstrumentID | int | YES | Instrument identifier from Dim_Position.InstrumentID. (Tier 2 -SP_Daily_Dividends, Dim_Position.InstrumentID) |
+| 8 | InstrumentName | varchar(100) | YES | Display name from Dim_Instrument.InstrumentDisplayName. (Tier 2 -SP_Daily_Dividends, Dim_Instrument.InstrumentDisplayName) |
+| 9 | Symbol | varchar(50) | YES | Trading symbol from Dim_Instrument.Name. Values: "AAPL/USD", "ABBV/USD", etc. (Tier 2 -SP_Daily_Dividends, Dim_Instrument.Name) |
+| 10 | Exchange | varchar(max) | YES | Exchange name from Dim_Instrument.Exchange. Values: "NYSE", "NASDAQ", "CFD", etc. (Tier 2 -SP_Daily_Dividends, Dim_Instrument.Exchange) |
+| 11 | DividendPaid | decimal(16,8) | YES | Total dividend amount paid for this instrument on this date. SUM(Dividend) aggregated from Fact_CustomerAction.Amount. (Tier 2 -SP_Daily_Dividends, Fact_CustomerAction.Amount) |
+| 12 | UpdateDate | datetime | YES | SP execution timestamp. GETDATE(). (Tier 3 -SP_Daily_Dividends, GETDATE()) |
+| 13 | IsValidCustomer | int | YES | Customer validity flag from Fact_SnapshotCustomer. (Tier 2 -SP_Daily_Dividends, Fact_SnapshotCustomer.IsValidCustomer) |
+| 14 | IsCreditReportValidCB | int | YES | Credit report validity flag from Fact_SnapshotCustomer. (Tier 2 -SP_Daily_Dividends, Fact_SnapshotCustomer.IsCreditReportValidCB) |
 
 ---
 

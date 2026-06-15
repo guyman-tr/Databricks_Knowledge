@@ -105,21 +105,21 @@ The table is rebuilt daily by `SP_NonPI_HighAUM` (no parameters). The SP pulls y
 
 | Stars | Tier | Tag |
 |-------|------|-----|
-| ★★★☆☆ | Tier 2 -- Synapse SP code | `(Tier 2 -- source)` |
-| ★☆☆☆☆ | Tier 5 -- ETL metadata only | `(Tier 5 -- source)` |
+| ★★★☆☆ | Tier 2 -- Synapse SP code | `(Tier 2 -source)` |
+| ★☆☆☆☆ | Tier 5 -- ETL metadata only | `(Tier 5 -source)` |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | ParentCID | bigint | YES | The CopyTrader parent customer ID from etoroGeneral_History_GuruCopiers. Clustered index column. Only non-PI parents (GuruStatusID IN (0,1) or NULL) with AUM > $15,000 and active copiers. (Tier 2 -- SP_NonPI_HighAUM, etoroGeneral_History_GuruCopiers.ParentCID) |
-| 2 | UserName | varchar(20) | YES | Parent customer login username from Dim_Customer. (Tier 2 -- SP_NonPI_HighAUM, Dim_Customer.UserName) |
-| 3 | AUM | money | YES | Assets Under Management: SUM(ISNULL(Cash,0) + ISNULL(Investment,0) + ISNULL(PnL,0)) from GuruCopiers. Only rows with AUM > $15,000 included. (Tier 2 -- SP_NonPI_HighAUM, etoroGeneral_History_GuruCopiers) |
-| 4 | copiers | int | YES | Number of active copiers: COUNT(CID) from GuruCopiers per ParentCID. (Tier 2 -- SP_NonPI_HighAUM, etoroGeneral_History_GuruCopiers.CID) |
-| 5 | PlayerStatus | varchar(50) | NO | Player status name from Dim_PlayerStatus. Values: Normal, etc. (Tier 2 -- SP_NonPI_HighAUM, Dim_PlayerStatus.Name) |
-| 6 | AM | varchar(101) | YES | Account manager full name: Dim_Manager.FirstName + ' ' + LastName. NULL if no AM assigned. (Tier 2 -- SP_NonPI_HighAUM, Dim_Manager.FirstName + LastName) |
-| 7 | Region | varchar(50) | NO | Marketing region from Dim_Country via Dim_Customer.CountryID. (Tier 2 -- SP_NonPI_HighAUM, Dim_Country.Region) |
-| 8 | HighLevCrypto | int | YES | Count of open crypto positions (InstrumentTypeID=10) with Leverage > 1 for this parent. 0 = no high-leverage crypto exposure. (Tier 2 -- SP_NonPI_HighAUM, Dim_Position + Dim_Instrument) |
-| 9 | BI_DB_NonPI_HighAUM | datetime | YES | ETL timestamp (GETDATE()). Column named same as table -- artifact. (Tier 5 -- SP_NonPI_HighAUM, GETDATE()) |
-| 10 | UpdateDate | datetime | YES | ETL metadata: GETDATE() at INSERT time. (Tier 5 -- SP_NonPI_HighAUM, GETDATE()) |
+| 1 | ParentCID | bigint | YES | The CopyTrader parent customer ID from etoroGeneral_History_GuruCopiers. Clustered index column. Only non-PI parents (GuruStatusID IN (0,1) or NULL) with AUM > $15,000 and active copiers. (Tier 2 -SP_NonPI_HighAUM, etoroGeneral_History_GuruCopiers.ParentCID) |
+| 2 | UserName | varchar(20) | YES | Parent customer login username from Dim_Customer. (Tier 2 -SP_NonPI_HighAUM, Dim_Customer.UserName) |
+| 3 | AUM | money | YES | Assets Under Management: SUM(ISNULL(Cash,0) + ISNULL(Investment,0) + ISNULL(PnL,0)) from GuruCopiers. Only rows with AUM > $15,000 included. (Tier 2 -SP_NonPI_HighAUM, etoroGeneral_History_GuruCopiers) |
+| 4 | copiers | int | YES | Number of active copiers: COUNT(CID) from GuruCopiers per ParentCID. (Tier 2 -SP_NonPI_HighAUM, etoroGeneral_History_GuruCopiers.CID) |
+| 5 | PlayerStatus | varchar(50) | NO | Player status name from Dim_PlayerStatus. Values: Normal, etc. (Tier 2 -SP_NonPI_HighAUM, Dim_PlayerStatus.Name) |
+| 6 | AM | varchar(101) | YES | Account manager full name: Dim_Manager.FirstName + ' ' + LastName. NULL if no AM assigned. (Tier 2 -SP_NonPI_HighAUM, Dim_Manager.FirstName + LastName) |
+| 7 | Region | varchar(50) | NO | Marketing region from Dim_Country via Dim_Customer.CountryID. (Tier 2 -SP_NonPI_HighAUM, Dim_Country.Region) |
+| 8 | HighLevCrypto | int | YES | Count of open crypto positions (InstrumentTypeID=10) with Leverage > 1 for this parent. 0 = no high-leverage crypto exposure. (Tier 2 -SP_NonPI_HighAUM, Dim_Position + Dim_Instrument) |
+| 9 | BI_DB_NonPI_HighAUM | datetime | YES | ETL timestamp (GETDATE()). Column named same as table -- artifact. (Tier 5 -SP_NonPI_HighAUM, GETDATE()) |
+| 10 | UpdateDate | datetime | YES | ETL metadata: GETDATE() at INSERT time. (Tier 5 -SP_NonPI_HighAUM, GETDATE()) |
 
 ---
 

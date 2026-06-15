@@ -50,8 +50,8 @@ Returns each customer’s **first eligible trading-platform action** row: **`Fac
 | 13 | IsCopyFund | Dim_Mirror.MirrorTypeID | `CASE WHEN ISNULL(MirrorTypeID, 0) = 4 THEN 1 ELSE 0 END` on first-action row | T2 |
 | 14 | FirstTradeDateID | Fact_CustomerAction.DateID | **`DateID` WHERE** same **`ActionTypeID IN (1,17,39)`** and airdrop filter, **`RN = 1`** | T2 |
 | 15 | Occurred | Fact_CustomerAction.Occurred | **`Occurred` WHERE** same filters as row 14 | T2 |
-| 16 | IsDepositor | Dim_Customer.IsDepositor | Direct from `Dim_Customer` | T2 |
-| 17 | FirstDepositDate | Dim_Customer.FirstDepositDate | Direct from `Dim_Customer` | T2 |
+| 16 | IsDepositor | Dim_Customer.IsDepositor | Whether the customer has ever deposited. DEFAULT=0. Updated post-load from FTD data. (Tier 2 — SP_Dim_Customer) (via Dim_Customer) | T2 |
+| 17 | FirstDepositDate | Dim_Customer.FirstDepositDate | Date of first deposit. DEFAULT='19000101'. Updated from CustomerFinanceDB FTD data with FTDRecoveryDate logic. (Tier 2 — SP_Dim_Customer) (via Dim_Customer) | T2 |
 | 18 | FirstTradeDate | Fact_CustomerAction.Occurred | **`Occurred AS FirstTradeDate`** — same value as row 15 on first-action row | T2 |
 | 19 | FirstDepositDateID | Dim_Customer.FirstDepositDate | `CAST(FORMAT(CAST(FirstDepositDate AS DATE), 'yyyyMMdd') AS INT)` | T2 |
 | 20 | FirstActionType | Dim_Instrument, Fact_CustomerAction | `CASE` on `InstrumentTypeID`, `MirrorID`, `IsCopyFund` → Forex / Crypto / Copy / Copy Fund / Stocks / NA | T2 |

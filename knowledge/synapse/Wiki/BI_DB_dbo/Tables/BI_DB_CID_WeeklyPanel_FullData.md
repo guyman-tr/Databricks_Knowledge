@@ -235,7 +235,7 @@ Each daily ACC_Revenue_Total is itself a lifetime running total (prior day + tod
 | 29 | Equity | decimal(23,4) | YES | Total EOW equity (USD): NWA + liabilities from DWH_dbo.V_Liabilities. Includes open position unrealised PnL. NULL for ~0.2% of rows (no V_Liabilities record). EOW snapshot. (Tier 2 — DWH_dbo.V_Liabilities, via DailyPanel) |
 | 30 | RealizedEquity | money | YES | Realized equity component (cash + closed positions, excluding open unrealised). EOW snapshot. (Tier 2 — DWH_dbo.V_Liabilities.RealizedEquity, via DailyPanel) |
 | 31 | AUM | money | YES | Assets Under Management: value in copy-trading and portfolio products. EOW snapshot. (Tier 2 — DWH_dbo.V_Liabilities.AUM, via DailyPanel) |
-| 32 | Credit | money | NO | Credit/margin balance (bonus credits, loans). NOT NULL — CASE WHEN NULL THEN 0 applied in SP. EOW snapshot. (Tier 2 — DWH_dbo.V_Liabilities.EOD_Balance, via DailyPanel) |
+| 32 | Credit | money | NO | Credit balance from equity snapshot. NOT NULL — CASE WHEN NULL THEN 0 applied in SP. EOW snapshot. (Tier 2 — DWH_dbo.V_Liabilities.Credit, via DailyPanel) |
 | 116 | EOW_Equity_Copy | money | YES | EOW equity in active copy/mirror positions (Amount + PositionPnL for MirrorID>0). EOW snapshot. (Tier 2 — BI_DB_PositionPnL, via DailyPanel) |
 | 119 | EOW_Equity_Real_Stocks | money | YES | EOW equity in settled stock/ETF positions (IsSettled=1, InstrumentTypeID IN 5,6). EOW snapshot. (Tier 2 — BI_DB_PositionPnL, via DailyPanel) |
 | 120 | EOW_Equity_CFD_Stocks | money | YES | EOW equity in leveraged stock/ETF CFD positions (IsSettled=0, InstrumentTypeID IN 5,6). EOW snapshot. (Tier 2 — BI_DB_PositionPnL, via DailyPanel) |

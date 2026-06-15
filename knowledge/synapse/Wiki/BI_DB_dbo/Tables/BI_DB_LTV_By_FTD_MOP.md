@@ -117,30 +117,30 @@ ROUND_ROBIN HEAP. Small table (41K rows). Full scans are instant.
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | RealCID | int | YES | Customer ID. One row per customer. FK to Dim_Customer.RealCID. (Tier 2 -- SP_LTV_By_FTD_MOP) |
-| 2 | FTDDate | date | YES | First-time deposit date. CAST to DATE from Dim_Customer.FirstDepositDate. (Tier 2 -- SP_LTV_By_FTD_MOP) |
-| 3 | FTDDateTime | datetime | YES | First-time deposit date with time component. From Dim_Customer.FirstDepositDate. (Tier 2 -- SP_LTV_By_FTD_MOP) |
-| 4 | FTDDateID | int | YES | FTD date as YYYYMMDD integer. CAST(CONVERT(VARCHAR(8), FirstDepositDate, 112) AS INT). (Tier 2 -- SP_LTV_By_FTD_MOP) |
-| 5 | Current_Country | varchar(50) | YES | Customer's current country. From Dim_Country.Name via Dim_Customer.CountryID. (Tier 2 -- SP_LTV_By_FTD_MOP) |
-| 6 | Current_Club | varchar(20) | YES | Customer's current player level (misleadingly named "Club"). From Dim_PlayerLevel.Name. Values: Standard, Silver, Gold, Platinum, Diamond, Popular Investor. (Tier 2 -- SP_LTV_By_FTD_MOP) |
-| 7 | Current_Regulation | varchar(20) | YES | Customer's current regulation. From Dim_Regulation.Name. (Tier 2 -- SP_LTV_By_FTD_MOP) |
-| 8 | Current_Region | varchar(50) | YES | Customer's current marketing region. From Dim_Country.MarketingRegionManualName. (Tier 2 -- SP_LTV_By_FTD_MOP) |
-| 9 | Is_Currently_BlockedInd | int | YES | Whether the customer is currently blocked. 1 if PlayerStatusID IN (2, 4, 14, 15), 0 otherwise. (Tier 2 -- SP_LTV_By_FTD_MOP) |
-| 10 | Currently_HighRiskInd | int | YES | Whether the customer is currently high-risk. 1 if BI_DB_RiskClassification.RiskScoreName = 'High', 0 otherwise. (Tier 2 -- SP_LTV_By_FTD_MOP) |
-| 11 | FTD_Country | varchar(50) | YES | Customer's country at the time of FTD. From Fact_SnapshotCustomer → Dim_Country at FTD date. May differ from Current_Country. (Tier 2 -- SP_LTV_By_FTD_MOP) |
-| 12 | FTD_Club | varchar(20) | YES | Customer's player level at the time of FTD. From Fact_SnapshotCustomer → Dim_PlayerLevel at FTD date. (Tier 2 -- SP_LTV_By_FTD_MOP) |
-| 13 | FTD_Regulation | varchar(20) | YES | Customer's regulation at the time of FTD. From Fact_SnapshotCustomer → Dim_Regulation at FTD date. (Tier 2 -- SP_LTV_By_FTD_MOP) |
-| 14 | FTD_Region | varchar(50) | YES | Customer's marketing region at the time of FTD. From Fact_SnapshotCustomer → Dim_Country at FTD date. (Tier 2 -- SP_LTV_By_FTD_MOP) |
-| 15 | FTD Method | varchar(50) | YES | Payment method used for the first deposit. From Dim_FundingType.Name via Fact_BillingDeposit WHERE IsFTD=1. Top: CreditCard (76%), eToroMoney, PayPal, iDEAL, WireTransfer. (Tier 2 -- SP_LTV_By_FTD_MOP) |
-| 16 | FTD Provider | varchar(50) | YES | Payment provider used for the first deposit. From Dim_BillingDepot.Name via Fact_BillingDeposit WHERE IsFTD=1. (Tier 2 -- SP_LTV_By_FTD_MOP) |
-| 17 | Revenue30days | money | YES | Cumulative revenue within 30 days of FTD. From BI_DB_First5Actions. In USD. NULL if not available. (Tier 2 -- SP_LTV_By_FTD_MOP via BI_DB_First5Actions) |
-| 18 | Revenue60days | money | YES | Cumulative revenue within 60 days of FTD. From BI_DB_First5Actions. In USD. (Tier 2 -- SP_LTV_By_FTD_MOP via BI_DB_First5Actions) |
-| 19 | Revenue90days | money | YES | Cumulative revenue within 90 days of FTD. From BI_DB_First5Actions. In USD. (Tier 2 -- SP_LTV_By_FTD_MOP via BI_DB_First5Actions) |
-| 20 | Revenue180days | money | YES | Cumulative revenue within 180 days of FTD. From BI_DB_First5Actions. In USD. (Tier 2 -- SP_LTV_By_FTD_MOP via BI_DB_First5Actions) |
-| 21 | Revenue360days | money | YES | Cumulative revenue within 360 days of FTD. From BI_DB_First5Actions. In USD. (Tier 2 -- SP_LTV_By_FTD_MOP via BI_DB_First5Actions) |
-| 22 | Current_LTV | money | YES | Current 8-year lifetime value. From BI_DB_LTV_BI_Actual.Revenue8Y_LTV_New. In USD. NULL if not yet calculated. (Tier 2 -- SP_LTV_By_FTD_MOP via BI_DB_LTV_BI_Actual) |
-| 23 | Current_LTV_NoExtreme | money | YES | Current 8-year LTV with extreme outliers removed. From BI_DB_LTV_BI_Actual.Revenue8Y_LTV_NoExtreme_New. In USD. (Tier 2 -- SP_LTV_By_FTD_MOP via BI_DB_LTV_BI_Actual) |
-| 24 | UpdateDate | datetime | NO | ETL metadata: timestamp when this row was inserted. Set to GETDATE(). (Tier 5 -- SP_LTV_By_FTD_MOP) |
+| 1 | RealCID | int | YES | Customer ID. One row per customer. FK to Dim_Customer.RealCID. (Tier 2 -SP_LTV_By_FTD_MOP) |
+| 2 | FTDDate | date | YES | First-time deposit date. CAST to DATE from Dim_Customer.FirstDepositDate. (Tier 2 -SP_LTV_By_FTD_MOP) |
+| 3 | FTDDateTime | datetime | YES | First-time deposit date with time component. From Dim_Customer.FirstDepositDate. (Tier 2 -SP_LTV_By_FTD_MOP) |
+| 4 | FTDDateID | int | YES | FTD date as YYYYMMDD integer. CAST(CONVERT(VARCHAR(8), FirstDepositDate, 112) AS INT). (Tier 2 -SP_LTV_By_FTD_MOP) |
+| 5 | Current_Country | varchar(50) | YES | Customer's current country. From Dim_Country.Name via Dim_Customer.CountryID. (Tier 2 -SP_LTV_By_FTD_MOP) |
+| 6 | Current_Club | varchar(20) | YES | Customer's current player level (misleadingly named "Club"). From Dim_PlayerLevel.Name. Values: Standard, Silver, Gold, Platinum, Diamond, Popular Investor. (Tier 2 -SP_LTV_By_FTD_MOP) |
+| 7 | Current_Regulation | varchar(20) | YES | Customer's current regulation. From Dim_Regulation.Name. (Tier 2 -SP_LTV_By_FTD_MOP) |
+| 8 | Current_Region | varchar(50) | YES | Customer's current marketing region. From Dim_Country.MarketingRegionManualName. (Tier 2 -SP_LTV_By_FTD_MOP) |
+| 9 | Is_Currently_BlockedInd | int | YES | Whether the customer is currently blocked. 1 if PlayerStatusID IN (2, 4, 14, 15), 0 otherwise. (Tier 2 -SP_LTV_By_FTD_MOP) |
+| 10 | Currently_HighRiskInd | int | YES | Whether the customer is currently high-risk. 1 if BI_DB_RiskClassification.RiskScoreName = 'High', 0 otherwise. (Tier 2 -SP_LTV_By_FTD_MOP) |
+| 11 | FTD_Country | varchar(50) | YES | Customer's country at the time of FTD. From Fact_SnapshotCustomer → Dim_Country at FTD date. May differ from Current_Country. (Tier 2 -SP_LTV_By_FTD_MOP) |
+| 12 | FTD_Club | varchar(20) | YES | Customer's player level at the time of FTD. From Fact_SnapshotCustomer → Dim_PlayerLevel at FTD date. (Tier 2 -SP_LTV_By_FTD_MOP) |
+| 13 | FTD_Regulation | varchar(20) | YES | Customer's regulation at the time of FTD. From Fact_SnapshotCustomer → Dim_Regulation at FTD date. (Tier 2 -SP_LTV_By_FTD_MOP) |
+| 14 | FTD_Region | varchar(50) | YES | Customer's marketing region at the time of FTD. From Fact_SnapshotCustomer → Dim_Country at FTD date. (Tier 2 -SP_LTV_By_FTD_MOP) |
+| 15 | FTD Method | varchar(50) | YES | Payment method used for the first deposit. From Dim_FundingType.Name via Fact_BillingDeposit WHERE IsFTD=1. Top: CreditCard (76%), eToroMoney, PayPal, iDEAL, WireTransfer. (Tier 2 -SP_LTV_By_FTD_MOP) |
+| 16 | FTD Provider | varchar(50) | YES | Payment provider used for the first deposit. From Dim_BillingDepot.Name via Fact_BillingDeposit WHERE IsFTD=1. (Tier 2 -SP_LTV_By_FTD_MOP) |
+| 17 | Revenue30days | money | YES | Cumulative revenue within 30 days of FTD. From BI_DB_First5Actions. In USD. NULL if not available. (Tier 2 -SP_LTV_By_FTD_MOP via BI_DB_First5Actions) |
+| 18 | Revenue60days | money | YES | Cumulative revenue within 60 days of FTD. From BI_DB_First5Actions. In USD. (Tier 2 -SP_LTV_By_FTD_MOP via BI_DB_First5Actions) |
+| 19 | Revenue90days | money | YES | Cumulative revenue within 90 days of FTD. From BI_DB_First5Actions. In USD. (Tier 2 -SP_LTV_By_FTD_MOP via BI_DB_First5Actions) |
+| 20 | Revenue180days | money | YES | Cumulative revenue within 180 days of FTD. From BI_DB_First5Actions. In USD. (Tier 2 -SP_LTV_By_FTD_MOP via BI_DB_First5Actions) |
+| 21 | Revenue360days | money | YES | Cumulative revenue within 360 days of FTD. From BI_DB_First5Actions. In USD. (Tier 2 -SP_LTV_By_FTD_MOP via BI_DB_First5Actions) |
+| 22 | Current_LTV | money | YES | Current 8-year lifetime value. From BI_DB_LTV_BI_Actual.Revenue8Y_LTV_New. In USD. NULL if not yet calculated. (Tier 2 -SP_LTV_By_FTD_MOP via BI_DB_LTV_BI_Actual) |
+| 23 | Current_LTV_NoExtreme | money | YES | Current 8-year LTV with extreme outliers removed. From BI_DB_LTV_BI_Actual.Revenue8Y_LTV_NoExtreme_New. In USD. (Tier 2 -SP_LTV_By_FTD_MOP via BI_DB_LTV_BI_Actual) |
+| 24 | UpdateDate | datetime | NO | ETL metadata: timestamp when this row was inserted. Set to GETDATE(). (Tier 5 -SP_LTV_By_FTD_MOP) |
 
 ---
 

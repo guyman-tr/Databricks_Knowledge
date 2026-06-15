@@ -41,7 +41,7 @@ DDR dashboard-style aggregates **year-to-date through `@edate`** for the calenda
 
 | # | Column | Source | Transformation | Tier |
 |---|--------|--------|----------------|------|
-| 1 | DateID | BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status.DateID | Direct | T1 |
+| 1 | DateID | BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status.DateID | Reporting `(int yyyymmdd)` = `@dateInt = CAST(CONVERT(varchar(8), @date, 112) AS INT)` ; delete/reinsert key (`DELETE WHERE DateID = @dateID`). (Tier 2 — BI_DB_dbo.SP_DDR_Customer_Periodic_Status) (via BI_DB_DDR_Customer_Periodic_Status) | T1 |
 | 2 | FirstActionType | BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status.FirstActionType_ThisYear | MAX(FirstActionType_ThisYear) in PERIODIC CTE; output GROUP BY dimension | T2 |
 | 3 | RegulationID | BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status.RegulationID_ThisYear | MAX(RegulationID_ThisYear) in PERIODIC CTE; output GROUP BY dimension | T2 |
 | 4 | IsCreditReportValidCB | BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status.IsCreditReportValidCB_ThisYear | MAX(IsCreditReportValidCB_ThisYear) in PERIODIC CTE; output GROUP BY dimension | T2 |

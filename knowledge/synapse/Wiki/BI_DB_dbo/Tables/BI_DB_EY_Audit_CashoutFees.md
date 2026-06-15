@@ -27,7 +27,7 @@ Each row represents one withdrawal (WithdrawID) on a given date, enriched with t
 
 The table is populated by `SP_EY_Audit_CashoutFees` (Author: Guy Manova, 2023-07-26). The SP accepts a @date parameter, performs a DELETE+INSERT for that date, and includes auto-completion logic that detects gaps between the last loaded date and the target date, recursively calling itself to fill missing dates.
 
-The core query joins Fact_CustomerAction to Fact_SnapshotCustomer (on RealCID with Dim_Range date-range bridging), then enriches via five dimension lookups (Dim_Regulation, Dim_PlayerLevel, Dim_Country, Dim_AccountType, Dim_GuruStatus). Only rows where IsCreditReportValidCB=1 are included, ensuring the audit population matches credit bureau reporting eligibility criteria.
+The core query joins Fact_CustomerAction to Fact_SnapshotCustomer (on RealCID with Dim_Range date-range bridging), then enriches via five dimension lookups (Dim_Regulation, Dim_PlayerLevel, Dim_Country, Dim_AccountType, Dim_GuruStatus). Only rows where IsCreditReportValidCB=1 are included, ensuring the audit population matches Client_Balance reporting eligibility criteria.
 
 As of 2025-10-27: ~6.1M rows, 1,028 distinct dates, 147 distinct countries, 11 distinct regulations. Commission is predominantly 0.0 (most processed cashouts carry no fee).
 
@@ -44,7 +44,7 @@ As of 2025-10-27: ~6.1M rows, 1,028 distinct dates, 147 distinct countries, 11 d
 **Rules**:
 - ActionTypeID=30 (Processed Cashout) is the sole event filter — excludes ActionTypeID=8 (Cashout), ActionTypeID=10 (Cashout request), ActionTypeID=42 (Cashout Rollback)
 - IsRedeem=0 — excludes redeem-based cashouts
-- IsCreditReportValidCB=1 on Fact_SnapshotCustomer — ensures the customer meets credit bureau reporting eligibility (excludes demo accounts, blocked countries, excluded labels)
+- IsCreditReportValidCB=1 on Fact_SnapshotCustomer — ensures the customer meets Client_Balance reporting eligibility (excludes demo accounts, blocked countries, excluded labels)
 - Commission is negated (-1 * SUM) and aggregated per WithdrawID — multiple commission rows for the same withdrawal are summed into a single cashout fee amount
 
 ### 2.2 Customer Snapshot Point-in-Time Join
@@ -99,7 +99,7 @@ As of 2025-10-27: ~6.1M rows, 1,028 distinct dates, 147 distinct countries, 11 d
 - **Category is always 'CashOut'**: This is a hardcoded literal in the SP, not a variable. Do not filter on it expecting variation — every row has the same value.
 - **Commission is NEGATED**: The SP applies `-1 * SUM(ca.Commission)`. In Fact_CustomerAction, cashout commissions are typically negative; the negation here makes them positive for reporting. A value of 0.0 means no fee was charged.
 - **Point-in-time snapshot**: Customer attributes (Regulation, Country, Club, etc.) reflect the state at the cashout date, not the customer's current state. Comparing this table to current Dim_Customer values may show differences for customers who changed regulation or country.
-- **IsCreditReportValidCB filter**: Not all customers appear — only those passing the credit bureau validity check (excludes demo, blocked countries, excluded labels). This is an audit-population filter, not a general cashout log.
+- **IsCreditReportValidCB filter**: Not all customers appear — only those passing the Client_Balance validity check (excludes demo, blocked countries, excluded labels). This is an audit-population filter, not a general cashout log.
 - **Commission is aggregated per WithdrawID**: If Fact_CustomerAction has multiple rows for the same WithdrawID (rare), they are summed into a single row here.
 - **No UC migration**: This table is BI_DB audit-specific and has no Unity Catalog target.
 

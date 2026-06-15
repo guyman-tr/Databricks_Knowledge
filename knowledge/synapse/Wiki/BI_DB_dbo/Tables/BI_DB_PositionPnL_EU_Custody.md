@@ -149,7 +149,7 @@ ROUND_ROBIN distribution — no hash key, data spread evenly across distribution
 | 26 | RateAsk | numeric(36,12) | YES | EOD ask from same price row, split-adjusted. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
 | 27 | USD_CR | money | YES | End-of-day conversion rate used with PnL context; from Dim_Position CurrentConversionRate. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
 | 28 | SettlementTypeID | int | YES | Modern settlement type from Dim_Position. 2 distinct values (NULL, 0, 1). Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
-| 29 | IsCreditReportValidCB | int | YES | 1 if customer is eligible for CreditBureau credit report validation. ETL-computed in Fact_SnapshotCustomer from PlayerLevelID, AccountTypeID, LabelID, CountryID. 99.96% = 1. Passthrough from Fact_SnapshotCustomer. (Tier 2 — DWH_dbo.Fact_SnapshotCustomer) |
+| 29 | IsCreditReportValidCB | int | YES | Financial-customer flag for Client_Balance reports (CB = Client_Balance, NOT CreditBureau). ETL-computed in Fact_SnapshotCustomer from PlayerLevelID, AccountTypeID, LabelID, CountryID. 99.96% = 1. Passthrough from Fact_SnapshotCustomer. (Tier 2 — DWH_dbo.Fact_SnapshotCustomer) |
 | 30 | IsValidCustomer | int | YES | 1 if the customer is a valid retail customer for analytics purposes. ETL-computed in Fact_SnapshotCustomer from PlayerLevelID, LabelID, CountryID. 99.96% = 1. Passthrough from Fact_SnapshotCustomer. (Tier 2 — DWH_dbo.Fact_SnapshotCustomer) |
 
 ---

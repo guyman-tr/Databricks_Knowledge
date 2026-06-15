@@ -40,17 +40,17 @@ When a customer buys real crypto with x2 leverage, they put up 50% and the platf
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Date | date | YES | Month-end date. Clustered index. Only populated on last day of month. (Tier 2 -- SP_Real_Crypto_Loans, @date) |
-| 2 | InstrumentID | int | YES | Crypto instrument ID from BI_DB_PositionPnL. Values: 100017 (ADA), 100028 (ZEC), etc. (Tier 2 -- SP_Real_Crypto_Loans, BI_DB_PositionPnL.InstrumentID) |
-| 3 | Instrument | varchar(100) | YES | Instrument name from Dim_Instrument.Name. Values: "ADA/USD", "ZEC/USD", etc. (Tier 2 -- SP_Real_Crypto_Loans, Dim_Instrument.Name) |
+| 1 | Date | date | YES | Month-end date. Clustered index. Only populated on last day of month. (Tier 2 -SP_Real_Crypto_Loans, @date) |
+| 2 | InstrumentID | int | YES | Crypto instrument ID from BI_DB_PositionPnL. Values: 100017 (ADA), 100028 (ZEC), etc. (Tier 2 -SP_Real_Crypto_Loans, BI_DB_PositionPnL.InstrumentID) |
+| 3 | Instrument | varchar(100) | YES | Instrument name from Dim_Instrument.Name. Values: "ADA/USD", "ZEC/USD", etc. (Tier 2 -SP_Real_Crypto_Loans, Dim_Instrument.Name) |
 | 4 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. This table is real-loan only (value is always 1). (Tier 5 — Expert Review) |
-| 5 | Leverage | int | YES | Always 2 (x2 leveraged). Filter condition, not variable. (Tier 2 -- SP_Real_Crypto_Loans, BI_DB_PositionPnL.Leverage) |
-| 6 | InitialUnits | money | YES | Total initial crypto units at position opening. SUM from Dim_Position.InitialUnits. (Tier 2 -- SP_Real_Crypto_Loans, Dim_Position.InitialUnits) |
-| 7 | CurrentUnits | money | YES | Current crypto units (may change due to fees/adjustments). SUM from BI_DB_PositionPnL.AmountInUnitsDecimal. (Tier 2 -- SP_Real_Crypto_Loans, BI_DB_PositionPnL.AmountInUnitsDecimal) |
-| 8 | InitialAmountCryptoLoan | money | YES | Original loan amount in USD. SUM(InitialAmountCents/100) from Dim_Position. (Tier 2 -- SP_Real_Crypto_Loans, Dim_Position.InitialAmountCents) |
-| 9 | CurrentAmountCryptoLoan | money | YES | Current position value in USD (market-adjusted). SUM from BI_DB_PositionPnL.Amount. (Tier 2 -- SP_Real_Crypto_Loans, BI_DB_PositionPnL.Amount) |
-| 10 | UpdateDate | datetime | YES | SP execution timestamp. GETDATE(). (Tier 3 -- SP_Real_Crypto_Loans, GETDATE()) |
-| 11 | Regulation | varchar(20) | YES | Regulation name from Dim_Regulation.Name. Added Oct 2021. (Tier 2 -- SP_Real_Crypto_Loans, Dim_Regulation.Name) |
+| 5 | Leverage | int | YES | Always 2 (x2 leveraged). Filter condition, not variable. (Tier 2 -SP_Real_Crypto_Loans, BI_DB_PositionPnL.Leverage) |
+| 6 | InitialUnits | money | YES | Total initial crypto units at position opening. SUM from Dim_Position.InitialUnits. (Tier 2 -SP_Real_Crypto_Loans, Dim_Position.InitialUnits) |
+| 7 | CurrentUnits | money | YES | Current crypto units (may change due to fees/adjustments). SUM from BI_DB_PositionPnL.AmountInUnitsDecimal. (Tier 2 -SP_Real_Crypto_Loans, BI_DB_PositionPnL.AmountInUnitsDecimal) |
+| 8 | InitialAmountCryptoLoan | money | YES | Original loan amount in USD. SUM(InitialAmountCents/100) from Dim_Position. (Tier 2 -SP_Real_Crypto_Loans, Dim_Position.InitialAmountCents) |
+| 9 | CurrentAmountCryptoLoan | money | YES | Current position value in USD (market-adjusted). SUM from BI_DB_PositionPnL.Amount. (Tier 2 -SP_Real_Crypto_Loans, BI_DB_PositionPnL.Amount) |
+| 10 | UpdateDate | datetime | YES | SP execution timestamp. GETDATE(). (Tier 3 -SP_Real_Crypto_Loans, GETDATE()) |
+| 11 | Regulation | varchar(20) | YES | Regulation name from Dim_Regulation.Name. Added Oct 2021. (Tier 2 -SP_Real_Crypto_Loans, Dim_Regulation.Name) |
 
 ---
 

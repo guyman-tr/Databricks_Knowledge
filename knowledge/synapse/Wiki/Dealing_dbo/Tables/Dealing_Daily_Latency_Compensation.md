@@ -63,43 +63,43 @@ Read-only checks executed **2026-03-21**.
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Date | date | YES | Report date for the latency event. (Tier 2 -- SP_Latency_Report, @StartDate) |
-| 2 | Regulation | varchar(50) | YES | Customer regulation from snapshot. (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Regulation.Name) |
-| 3 | HedgingType | varchar(5) | YES | LP routing type: 'CBH' (Citi Brokerage Holdings) or 'HBC' (Hedge Broker Connection). (Tier 2 -- SP_Latency_Report, derived from LP routing logic) |
-| 4 | PositionID | bigint | YES | Position identifier. (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Position.PositionID) |
-| 5 | InstrumentID | int | YES | eToro instrument identifier. (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Position.InstrumentID) |
-| 6 | InstrumentDisplayName | varchar(100) | YES | Instrument display name. (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Instrument.InstrumentDisplayName) |
-| 7 | IsBuy | int | YES | Position direction: 1=buy/long, 0=sell/short. (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Position.IsBuy) |
-| 8 | AmountInUnitsDecimal | decimal(16,6) | YES | Position size in instrument units (split-adjusted). (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Position.AmountInUnitsDecimal) |
-| 9 | ForexRate | decimal(16,6) | YES | Execution rate for the position action. (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Position.OpenForexRate / CloseForexRate) |
-| 10 | Occurred | datetime | YES | Timestamp when the position action occurred. (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Position.OpenOccurred / CloseOccurred) |
-| 11 | ActionName | varchar(50) | YES | Position action type (Open, Manual Close, Take Profit, Stop Loss, etc.). (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Position action type) |
-| 12 | ConversionRate | money | YES | FX conversion rate to USD for the position. (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Position.InitForexRate / EndForexRate) |
-| 13 | eToroTime | datetime | YES | eToro system timestamp for the position action. (Tier 2 -- SP_Latency_Report, from EMS order log) |
-| 14 | LiquidityAccountID | int | YES | LP account that executed the hedge for this position. (Tier 2 -- SP_Latency_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.LiquidityAccountID) |
-| 15 | Price_Requested | decimal(16,6) | YES | Price requested by the client at order submission. (Tier 2 -- SP_Latency_Report, from client request data) |
-| 16 | Spread | decimal(16,6) | YES | Bid-ask spread at execution time (CBH: from spreaded forex prices; HBC: derived from commission). (Tier 2 -- SP_Latency_Report, computed from InitForex/EndForex spreaded prices) |
-| 17 | KustoTime | datetime | YES | Timestamp from the Kusto (Azure Data Explorer) price tick log. (Tier 2 -- SP_Latency_Report, CopyFromLake.PriceLog_History_CurrencyPrice.Occurred) |
-| 18 | Kusto_Rate | decimal(16,6) | YES | LP price from the Kusto tick at execution time. (Tier 2 -- SP_Latency_Report, CopyFromLake.PriceLog_History_CurrencyPrice.Ask / Bid) |
-| 19 | SlippageInDollar | money | YES | Monetary slippage in USD from Dealing_Daily_Slippage_Positions. (Tier 2 -- SP_Latency_Report, Dealing_dbo.Dealing_Daily_Slippage_Positions.SlippageInDollar) |
-| 20 | UpdateDate | datetime | NOT NULL | Batch execution timestamp (GETDATE()). (Tier 3 -- SP_Latency_Report, GETDATE()) |
-| 21 | RequestOccurred | datetime | YES | Timestamp of the client's original request (OpenOccurred or CloseOccurred from Dim_Position). (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Position.RequestOpenOccurred / RequestCloseOccurred) |
-| 22 | ExecutionTime | datetime | YES | Timestamp when LP executed the order (from EMS log). (Tier 2 -- SP_Latency_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.ExecutionTime) |
-| 23 | RequestTimeFromEMS | datetime | YES | Request time as recorded in the EMS order log. (Tier 2 -- SP_Latency_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.RequestTime) |
-| 24 | ExecutionID | int | YES | EMS execution identifier linking to the LP order. (Tier 2 -- SP_Latency_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.ExecutionID) |
-| 25 | CID | int | YES | Customer identifier. (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Position.CID) |
+| 1 | Date | date | YES | Report date for the latency event. (Tier 2 -SP_Latency_Report, @StartDate) |
+| 2 | Regulation | varchar(50) | YES | Customer regulation from snapshot. (Tier 2 -SP_Latency_Report, DWH_dbo.Dim_Regulation.Name) |
+| 3 | HedgingType | varchar(5) | YES | LP routing type: 'CBH' (Citi Brokerage Holdings) or 'HBC' (Hedge Broker Connection). (Tier 2 -SP_Latency_Report, derived from LP routing logic) |
+| 4 | PositionID | bigint | YES | Position identifier. (Tier 2 -SP_Latency_Report, DWH_dbo.Dim_Position.PositionID) |
+| 5 | InstrumentID | int | YES | eToro instrument identifier. (Tier 2 -SP_Latency_Report, DWH_dbo.Dim_Position.InstrumentID) |
+| 6 | InstrumentDisplayName | varchar(100) | YES | Instrument display name. (Tier 2 -SP_Latency_Report, DWH_dbo.Dim_Instrument.InstrumentDisplayName) |
+| 7 | IsBuy | int | YES | Position direction: 1=buy/long, 0=sell/short. (Tier 2 -SP_Latency_Report, DWH_dbo.Dim_Position.IsBuy) |
+| 8 | AmountInUnitsDecimal | decimal(16,6) | YES | Position size in instrument units (split-adjusted). (Tier 2 -SP_Latency_Report, DWH_dbo.Dim_Position.AmountInUnitsDecimal) |
+| 9 | ForexRate | decimal(16,6) | YES | Execution rate for the position action. (Tier 2 -SP_Latency_Report, DWH_dbo.Dim_Position.OpenForexRate / CloseForexRate) |
+| 10 | Occurred | datetime | YES | Timestamp when the position action occurred. (Tier 2 -SP_Latency_Report, DWH_dbo.Dim_Position.OpenOccurred / CloseOccurred) |
+| 11 | ActionName | varchar(50) | YES | Position action type (Open, Manual Close, Take Profit, Stop Loss, etc.). (Tier 2 -SP_Latency_Report, DWH_dbo.Dim_Position action type) |
+| 12 | ConversionRate | money | YES | FX conversion rate to USD for the position. (Tier 2 -SP_Latency_Report, DWH_dbo.Dim_Position.InitForexRate / EndForexRate) |
+| 13 | eToroTime | datetime | YES | eToro system timestamp for the position action. (Tier 2 -SP_Latency_Report, from EMS order log) |
+| 14 | LiquidityAccountID | int | YES | LP account that executed the hedge for this position. (Tier 2 -SP_Latency_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.LiquidityAccountID) |
+| 15 | Price_Requested | decimal(16,6) | YES | Price requested by the client at order submission. (Tier 2 -SP_Latency_Report, from client request data) |
+| 16 | Spread | decimal(16,6) | YES | Bid-ask spread at execution time (CBH: from spreaded forex prices; HBC: derived from commission). (Tier 2 -SP_Latency_Report, computed from InitForex/EndForex spreaded prices) |
+| 17 | KustoTime | datetime | YES | Timestamp from the Kusto (Azure Data Explorer) price tick log. (Tier 2 -SP_Latency_Report, CopyFromLake.PriceLog_History_CurrencyPrice.Occurred) |
+| 18 | Kusto_Rate | decimal(16,6) | YES | LP price from the Kusto tick at execution time. (Tier 2 -SP_Latency_Report, CopyFromLake.PriceLog_History_CurrencyPrice.Ask / Bid) |
+| 19 | SlippageInDollar | money | YES | Monetary slippage in USD from Dealing_Daily_Slippage_Positions. (Tier 2 -SP_Latency_Report, Dealing_dbo.Dealing_Daily_Slippage_Positions.SlippageInDollar) |
+| 20 | UpdateDate | datetime | NOT NULL | Batch execution timestamp (GETDATE()). (Tier 3 -SP_Latency_Report, GETDATE()) |
+| 21 | RequestOccurred | datetime | YES | Timestamp of the client's original request (OpenOccurred or CloseOccurred from Dim_Position). (Tier 2 -SP_Latency_Report, DWH_dbo.Dim_Position.RequestOpenOccurred / RequestCloseOccurred) |
+| 22 | ExecutionTime | datetime | YES | Timestamp when LP executed the order (from EMS log). (Tier 2 -SP_Latency_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.ExecutionTime) |
+| 23 | RequestTimeFromEMS | datetime | YES | Request time as recorded in the EMS order log. (Tier 2 -SP_Latency_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.RequestTime) |
+| 24 | ExecutionID | int | YES | EMS execution identifier linking to the LP order. (Tier 2 -SP_Latency_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.ExecutionID) |
+| 25 | CID | int | YES | Customer identifier. (Tier 2 -SP_Latency_Report, DWH_dbo.Dim_Position.CID) |
 | 26 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
-| 27 | PnLVersion | int | YES | P&L version indicator for the position. (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Position.PnLVersion) |
-| 28 | OrderID | int | YES | Order identifier from the EMS system. (Tier 2 -- SP_Latency_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.OrderID) |
-| 29 | ClientToDbLatency | int | YES | Milliseconds from client request to DB entry. (Tier 2 -- SP_Latency_Report, computed from timestamps) |
-| 30 | ClientToExecutionLatency | int | YES | Milliseconds from client request to LP execution. (Tier 2 -- SP_Latency_Report, computed: ExecutionTime − RequestOccurred) |
-| 31 | TradingToExecutionLatency | int | YES | Milliseconds from trading engine timestamp to LP execution. (Tier 2 -- SP_Latency_Report, computed from EMS timestamps) |
-| 32 | OpenMarketTime | datetime | YES | Market open time for the instrument's exchange on the report date. (Tier 2 -- SP_Latency_Report, Dealing_staging.External_CalendarDB_Market_MergedDailySchedules) |
-| 33 | WithinFirst5Minutes_MarketHours | bit | YES | 1 if the action occurred within 5 minutes of market open. (Tier 2 -- SP_Latency_Report, computed: Occurred BETWEEN OpenMarketTime AND OpenMarketTime+5min) |
-| 34 | WithinFirst7Minutes_MarketHours | bit | YES | 1 if the action occurred within 7 minutes of market open. (Tier 2 -- SP_Latency_Report, computed: Occurred BETWEEN OpenMarketTime AND OpenMarketTime+7min) |
-| 35 | RoutedTime | datetime | YES | Timestamp when the order was routed to the LP. (Tier 2 -- SP_Latency_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.RoutedTime) |
-| 36 | ClientToRoutedLatency | int | YES | Milliseconds from client request to routing. (Tier 2 -- SP_Latency_Report, computed: RoutedTime − RequestOccurred) |
-| 37 | HedgeServerID | int | YES | Hedge server that processed the LP execution. (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Position.HedgeServerID) |
+| 27 | PnLVersion | int | YES | P&L version indicator for the position. (Tier 2 -SP_Latency_Report, DWH_dbo.Dim_Position.PnLVersion) |
+| 28 | OrderID | int | YES | Order identifier from the EMS system. (Tier 2 -SP_Latency_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.OrderID) |
+| 29 | ClientToDbLatency | int | YES | Milliseconds from client request to DB entry. (Tier 2 -SP_Latency_Report, computed from timestamps) |
+| 30 | ClientToExecutionLatency | int | YES | Milliseconds from client request to LP execution. (Tier 2 -SP_Latency_Report, computed: ExecutionTime − RequestOccurred) |
+| 31 | TradingToExecutionLatency | int | YES | Milliseconds from trading engine timestamp to LP execution. (Tier 2 -SP_Latency_Report, computed from EMS timestamps) |
+| 32 | OpenMarketTime | datetime | YES | Market open time for the instrument's exchange on the report date. (Tier 2 -SP_Latency_Report, Dealing_staging.External_CalendarDB_Market_MergedDailySchedules) |
+| 33 | WithinFirst5Minutes_MarketHours | bit | YES | 1 if the action occurred within 5 minutes of market open. (Tier 2 -SP_Latency_Report, computed: Occurred BETWEEN OpenMarketTime AND OpenMarketTime+5min) |
+| 34 | WithinFirst7Minutes_MarketHours | bit | YES | 1 if the action occurred within 7 minutes of market open. (Tier 2 -SP_Latency_Report, computed: Occurred BETWEEN OpenMarketTime AND OpenMarketTime+7min) |
+| 35 | RoutedTime | datetime | YES | Timestamp when the order was routed to the LP. (Tier 2 -SP_Latency_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.RoutedTime) |
+| 36 | ClientToRoutedLatency | int | YES | Milliseconds from client request to routing. (Tier 2 -SP_Latency_Report, computed: RoutedTime − RequestOccurred) |
+| 37 | HedgeServerID | int | YES | Hedge server that processed the LP execution. (Tier 2 -SP_Latency_Report, DWH_dbo.Dim_Position.HedgeServerID) |
 
 ---
 

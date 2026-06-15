@@ -123,7 +123,7 @@ total_columns: 90
 | CustomerRegionID | SP_EXW_C2F_E2E | — | — | 2 | CASE: RegionID for USA only |
 | State | SP_EXW_C2F_E2E | — | — | 2 | CASE: Dim_State_and_Province.Name for USA only |
 | IsValidCustomer | DWH_dbo.Fact_SnapshotCustomer | IsValidCustomer | NO | 2 | Point-in-time validity flag |
-| IsCreditReportValidCB | DWH_dbo.Fact_SnapshotCustomer | IsCreditReportValidCB | NO | 2 | Point-in-time credit bureau flag |
+| IsCreditReportValidCB | DWH_dbo.Fact_SnapshotCustomer | IsCreditReportValidCB | NO | 2 | Point-in-time Client_Balance flag |
 | PlayerLevelID | DWH_dbo.Fact_SnapshotCustomer | PlayerLevelID | NO | 2 | Point-in-time player level |
 | Club | DWH_dbo.Dim_PlayerLevel | Name | YES | 2 | Club name lookup |
 | PlayerStatusID | DWH_dbo.Fact_SnapshotCustomer | PlayerStatusID | NO | 2 | Point-in-time player status |

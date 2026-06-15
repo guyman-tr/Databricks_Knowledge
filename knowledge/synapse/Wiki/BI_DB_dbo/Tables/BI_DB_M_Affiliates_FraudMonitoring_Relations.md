@@ -113,20 +113,20 @@ ROUND_ROBIN HEAP. Large table (14M rows). Filter on RegisteredID (YYYYMM) for mo
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | AffiliateID | bigint | YES | Affiliate partner ID (SerialID from BI_DB_CIDFirstDates). FK to Dim_Affiliate. Identifies which affiliate referred the customer. (Tier 2 -- SP_M_Affiliates_FraudMonitoring_Relations) |
-| 2 | CID | int | YES | Customer ID. FK to Dim_Customer.RealCID. (Tier 2 -- SP_M_Affiliates_FraudMonitoring_Relations) |
-| 3 | GCID | int | YES | Global customer ID from BI_DB_CIDFirstDates. (Tier 2 -- SP_M_Affiliates_FraudMonitoring_Relations) |
-| 4 | registered | datetime | YES | Customer registration datetime from BI_DB_CIDFirstDates. (Tier 2 -- SP_M_Affiliates_FraudMonitoring_Relations) |
-| 5 | Country | varchar(max) | YES | Customer's country at registration from BI_DB_CIDFirstDates. (Tier 2 -- SP_M_Affiliates_FraudMonitoring_Relations) |
-| 6 | FirstDepositAmount | money | YES | First deposit amount from BI_DB_CIDFirstDates. In USD. (Tier 2 -- SP_M_Affiliates_FraudMonitoring_Relations) |
-| 7 | IsFTD | int | YES | Whether the customer has made a first deposit. 1=yes (FirstDepositDate NOT NULL), 0=no. (Tier 2 -- SP_M_Affiliates_FraudMonitoring_Relations) |
-| 8 | FTDYearMonth | int | YES | First deposit date as YYYYMM integer. NULL if no FTD. (Tier 2 -- SP_M_Affiliates_FraudMonitoring_Relations) |
-| 9 | ClientName | varchar(max) | YES | Customer's full name (FirstName + ' ' + LastName). PII -- handle with care. Used for PersonalDetailsRelation matching. (Tier 2 -- SP_M_Affiliates_FraudMonitoring_Relations via Dim_Customer) |
-| 10 | VerificationLevelID | int | YES | KYC verification level. 0=unverified, 1=partial, 2=intermediate, 3=fully verified. From Dim_Customer. (Tier 2 -- SP_M_Affiliates_FraudMonitoring_Relations via Dim_Customer) |
-| 11 | FundingRelation | int | YES | Funding source relation flag. 1=CID shares a deposit FundingID (!=1) with another CID under the same affiliate (0.03% flagged). 0=no shared funding detected. (Tier 2 -- SP_M_Affiliates_FraudMonitoring_Relations) |
-| 12 | PersonalDetailsRelation | int | YES | Personal details relation flag. 1=CID shares FirstName+LastName+BirthDate with another CID under the same affiliate (1.7% flagged). 0=no match. (Tier 2 -- SP_M_Affiliates_FraudMonitoring_Relations) |
-| 13 | UpdateDate | datetime | NO | ETL metadata: timestamp when this row was inserted. Set to GETDATE(). (Tier 5 -- SP_M_Affiliates_FraudMonitoring_Relations) |
-| 14 | RegisteredID | int | YES | Registration month as YYYYMM integer. Used for DELETE+INSERT partitioning. (Tier 2 -- SP_M_Affiliates_FraudMonitoring_Relations) |
+| 1 | AffiliateID | bigint | YES | Affiliate partner ID (SerialID from BI_DB_CIDFirstDates). FK to Dim_Affiliate. Identifies which affiliate referred the customer. (Tier 2 -SP_M_Affiliates_FraudMonitoring_Relations) |
+| 2 | CID | int | YES | Customer ID. FK to Dim_Customer.RealCID. (Tier 2 -SP_M_Affiliates_FraudMonitoring_Relations) |
+| 3 | GCID | int | YES | Global customer ID from BI_DB_CIDFirstDates. (Tier 2 -SP_M_Affiliates_FraudMonitoring_Relations) |
+| 4 | registered | datetime | YES | Customer registration datetime from BI_DB_CIDFirstDates. (Tier 2 -SP_M_Affiliates_FraudMonitoring_Relations) |
+| 5 | Country | varchar(max) | YES | Customer's country at registration from BI_DB_CIDFirstDates. (Tier 2 -SP_M_Affiliates_FraudMonitoring_Relations) |
+| 6 | FirstDepositAmount | money | YES | First deposit amount from BI_DB_CIDFirstDates. In USD. (Tier 2 -SP_M_Affiliates_FraudMonitoring_Relations) |
+| 7 | IsFTD | int | YES | Whether the customer has made a first deposit. 1=yes (FirstDepositDate NOT NULL), 0=no. (Tier 2 -SP_M_Affiliates_FraudMonitoring_Relations) |
+| 8 | FTDYearMonth | int | YES | First deposit date as YYYYMM integer. NULL if no FTD. (Tier 2 -SP_M_Affiliates_FraudMonitoring_Relations) |
+| 9 | ClientName | varchar(max) | YES | Customer's full name (FirstName + ' ' + LastName). PII -- handle with care. Used for PersonalDetailsRelation matching. (Tier 2 -SP_M_Affiliates_FraudMonitoring_Relations via Dim_Customer) |
+| 10 | VerificationLevelID | int | YES | KYC verification level. 0=unverified, 1=partial, 2=intermediate, 3=fully verified. From Dim_Customer. (Tier 2 -SP_M_Affiliates_FraudMonitoring_Relations via Dim_Customer) |
+| 11 | FundingRelation | int | YES | Funding source relation flag. 1=CID shares a deposit FundingID (!=1) with another CID under the same affiliate (0.03% flagged). 0=no shared funding detected. (Tier 2 -SP_M_Affiliates_FraudMonitoring_Relations) |
+| 12 | PersonalDetailsRelation | int | YES | Personal details relation flag. 1=CID shares FirstName+LastName+BirthDate with another CID under the same affiliate (1.7% flagged). 0=no match. (Tier 2 -SP_M_Affiliates_FraudMonitoring_Relations) |
+| 13 | UpdateDate | datetime | NO | ETL metadata: timestamp when this row was inserted. Set to GETDATE(). (Tier 5 -SP_M_Affiliates_FraudMonitoring_Relations) |
+| 14 | RegisteredID | int | YES | Registration month as YYYYMM integer. Used for DELETE+INSERT partitioning. (Tier 2 -SP_M_Affiliates_FraudMonitoring_Relations) |
 
 ---
 

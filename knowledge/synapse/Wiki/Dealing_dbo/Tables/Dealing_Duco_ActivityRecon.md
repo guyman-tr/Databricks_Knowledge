@@ -56,31 +56,31 @@ Read-only checks executed **2026-03-21**.
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Date | date | YES | Report date (trade activity reconciliation date). (Tier 2 -- SP_DataForDuco, @Date) |
-| 2 | LiquidityAccountID | int | YES | LP account identifier. (Tier 2 -- SP_DataForDuco, Dealing_staging.etoro_Trade_LiquidityAccounts.LiquidityAccountID) |
-| 3 | LiquidityAccountName | varchar(max) | YES | LP account display name. (Tier 2 -- SP_DataForDuco, Dealing_staging.etoro_Trade_LiquidityAccounts.LiquidityAccountName) |
-| 4 | HedgeServerID | int | YES | Hedge server associated with the LP execution. (Tier 2 -- SP_DataForDuco, CopyFromLake.etoro_Hedge_ExecutionLog.HedgeServerID) |
-| 5 | InstrumentID | int | YES | eToro instrument identifier. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.InstrumentID) |
-| 6 | ISINCode | varchar(max) | YES | ISIN code from instrument master. (Tier 2 -- SP_DataForDuco, DWH_dbo.Dim_Instrument.ISINCode) |
-| 7 | InstrumentDisplayName | varchar(max) | YES | Instrument display name. (Tier 2 -- SP_DataForDuco, DWH_dbo.Dim_Instrument.InstrumentDisplayName) |
-| 8 | Buy/Sell | varchar(10) | YES | Direction: 'Buy' or 'Sell', derived from net units sign. (Tier 2 -- SP_DataForDuco, computed from sign of eToro_Units / ClientUnits) |
-| 9 | eToro_Units | float | YES | Total LP units executed on the hedge server for the date. (Tier 2 -- SP_DataForDuco, CopyFromLake.etoro_Hedge_ExecutionLog.Units) |
-| 10 | ClientUnits | float | YES | Total client position units opened/closed on the date. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.AmountInUnitsDecimal) |
-| 11 | eToroLocalAmount | money | YES | LP execution value in local instrument currency. (Tier 2 -- SP_DataForDuco, CopyFromLake.etoro_Hedge_ExecutionLog.Amount) |
-| 12 | eToroUSDAmount | money | YES | LP execution value converted to USD. (Tier 2 -- SP_DataForDuco, computed: eToroLocalAmount × FXratetoUSD) |
-| 13 | ClientAmount | money | YES | Client activity value in USD. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.NOP via FX conversion) |
-| 14 | eToro_AvgRate | float | YES | Weighted average execution rate on the LP/hedge side. (Tier 2 -- SP_DataForDuco, CopyFromLake.etoro_Hedge_ExecutionLog.Rate weighted avg) |
-| 15 | Client_AvgRate | float | YES | Weighted average execution rate on the client side. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL rate weighted avg) |
-| 16 | UpdateDate | datetime | YES | Batch execution timestamp (GETDATE()). (Tier 3 -- SP_DataForDuco, GETDATE()) |
-| 17 | Symbol | varchar(50) | YES | Instrument ticker symbol. (Tier 2 -- SP_DataForDuco, DWH_dbo.Dim_Instrument.Symbol) |
-| 18 | SellCurrency | varchar(10) | YES | Trade currency of the instrument. (Tier 2 -- SP_DataForDuco, DWH_dbo.Dim_Instrument.SellCurrency) |
-| 19 | Exchange | varchar(max) | YES | Exchange name for the instrument. (Tier 2 -- SP_DataForDuco, DWH_dbo.Dim_Instrument.Exchange) |
-| 20 | Clients_Units_Buy | float | YES | Client trade units on the buy side. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL where IsBuy=1) |
-| 21 | Clients_Units_Sell | float | YES | Client trade units on the sell side. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL where IsBuy=0) |
-| 22 | Clients_NOP_Buy | float | YES | Client buy-side activity value in USD. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL NOP buy) |
-| 23 | Clients_NOP_Sell | float | YES | Client sell-side activity value in USD. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL NOP sell) |
-| 24 | FXratetoUSD | float | YES | FX rate from instrument currency to USD. (Tier 2 -- SP_DataForDuco, DWH_dbo.Fact_CurrencyPriceWithSplit) |
-| 25 | CUSIP | varchar(max) | YES | CUSIP identifier from LP execution log or external source. (Tier 2 -- SP_DataForDuco, external source / LP execution log) |
+| 1 | Date | date | YES | Report date (trade activity reconciliation date). (Tier 2 -SP_DataForDuco, @Date) |
+| 2 | LiquidityAccountID | int | YES | LP account identifier. (Tier 2 -SP_DataForDuco, Dealing_staging.etoro_Trade_LiquidityAccounts.LiquidityAccountID) |
+| 3 | LiquidityAccountName | varchar(max) | YES | LP account display name. (Tier 2 -SP_DataForDuco, Dealing_staging.etoro_Trade_LiquidityAccounts.LiquidityAccountName) |
+| 4 | HedgeServerID | int | YES | Hedge server associated with the LP execution. (Tier 2 -SP_DataForDuco, CopyFromLake.etoro_Hedge_ExecutionLog.HedgeServerID) |
+| 5 | InstrumentID | int | YES | eToro instrument identifier. (Tier 2 -SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.InstrumentID) |
+| 6 | ISINCode | varchar(max) | YES | ISIN code from instrument master. (Tier 2 -SP_DataForDuco, DWH_dbo.Dim_Instrument.ISINCode) |
+| 7 | InstrumentDisplayName | varchar(max) | YES | Instrument display name. (Tier 2 -SP_DataForDuco, DWH_dbo.Dim_Instrument.InstrumentDisplayName) |
+| 8 | Buy/Sell | varchar(10) | YES | Direction: 'Buy' or 'Sell', derived from net units sign. (Tier 2 -SP_DataForDuco, computed from sign of eToro_Units / ClientUnits) |
+| 9 | eToro_Units | float | YES | Total LP units executed on the hedge server for the date. (Tier 2 -SP_DataForDuco, CopyFromLake.etoro_Hedge_ExecutionLog.Units) |
+| 10 | ClientUnits | float | YES | Total client position units opened/closed on the date. (Tier 2 -SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.AmountInUnitsDecimal) |
+| 11 | eToroLocalAmount | money | YES | LP execution value in local instrument currency. (Tier 2 -SP_DataForDuco, CopyFromLake.etoro_Hedge_ExecutionLog.Amount) |
+| 12 | eToroUSDAmount | money | YES | LP execution value converted to USD. (Tier 2 -SP_DataForDuco, computed: eToroLocalAmount × FXratetoUSD) |
+| 13 | ClientAmount | money | YES | Client activity value in USD. (Tier 2 -SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.NOP via FX conversion) |
+| 14 | eToro_AvgRate | float | YES | Weighted average execution rate on the LP/hedge side. (Tier 2 -SP_DataForDuco, CopyFromLake.etoro_Hedge_ExecutionLog.Rate weighted avg) |
+| 15 | Client_AvgRate | float | YES | Weighted average execution rate on the client side. (Tier 2 -SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL rate weighted avg) |
+| 16 | UpdateDate | datetime | YES | Batch execution timestamp (GETDATE()). (Tier 3 -SP_DataForDuco, GETDATE()) |
+| 17 | Symbol | varchar(50) | YES | Instrument ticker symbol. (Tier 2 -SP_DataForDuco, DWH_dbo.Dim_Instrument.Symbol) |
+| 18 | SellCurrency | varchar(10) | YES | Trade currency of the instrument. (Tier 2 -SP_DataForDuco, DWH_dbo.Dim_Instrument.SellCurrency) |
+| 19 | Exchange | varchar(max) | YES | Exchange name for the instrument. (Tier 2 -SP_DataForDuco, DWH_dbo.Dim_Instrument.Exchange) |
+| 20 | Clients_Units_Buy | float | YES | Client trade units on the buy side. (Tier 2 -SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL where IsBuy=1) |
+| 21 | Clients_Units_Sell | float | YES | Client trade units on the sell side. (Tier 2 -SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL where IsBuy=0) |
+| 22 | Clients_NOP_Buy | float | YES | Client buy-side activity value in USD. (Tier 2 -SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL NOP buy) |
+| 23 | Clients_NOP_Sell | float | YES | Client sell-side activity value in USD. (Tier 2 -SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL NOP sell) |
+| 24 | FXratetoUSD | float | YES | FX rate from instrument currency to USD. (Tier 2 -SP_DataForDuco, DWH_dbo.Fact_CurrencyPriceWithSplit) |
+| 25 | CUSIP | varchar(max) | YES | CUSIP identifier from LP execution log or external source. (Tier 2 -SP_DataForDuco, external source / LP execution log) |
 
 ---
 

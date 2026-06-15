@@ -128,44 +128,44 @@ ROUND_ROBIN with CLUSTERED INDEX on Invitee ASC. No hash distribution key. Joins
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | Invitee | bigint | NO | Invitee CID (RealCID from BI_DB_CIDFirstDates). Clustered index key. (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 2 | Country | varchar(255) | YES | Country name from BI_DB_CIDFirstDates. (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 3 | State | varchar(255) | YES | State/province from BI_DB_CIDFirstDates. (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 4 | Inviter | bigint | YES | Inviter CID (ReferralID from BI_DB_CIDFirstDates). (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 5 | registered | datetime | YES | Registration date from BI_DB_CIDFirstDates. Used as refresh boundary (>= @Last2months). (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 6 | FirstDepositDate | datetime | YES | First deposit date from BI_DB_CIDFirstDates. Anchor for 30-day trading window and isFTD30days calculation. (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 7 | FirstDepositAmount | money | YES | First deposit amount from BI_DB_CIDFirstDates. Used in US eligibility check (>= $100). (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 8 | FunnelName | varchar(255) | YES | LEGACY -- not populated by current SP. Registration funnel name from older SP version. (Tier 4 -- legacy column) |
-| 9 | DesignatedRegulationID | int | YES | LEGACY -- not populated by current SP. Regulation ID from older SP version. (Tier 4 -- legacy column) |
-| 10 | PaymentToInvitee | money | YES | RAF bonus paid to invitee: $50 Global, $30 US. From History_Credit_Range WHERE CompensationReasonID=54, CreditTypeID=6. NULL if no compensation. (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 11 | PaymentToInviter | money | YES | RAF bonus paid to inviter: $50 Global, $30 US. From History_Credit_Range WHERE CompensationReasonID=53, CreditTypeID=6, invitee CID in Description. NULL if no matching compensation. (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 12 | RevenueFromUser | decimal(18,0) | YES | LEGACY -- not populated by current SP. (Tier 4 -- legacy column) |
-| 13 | NoOfTotalDeposits | int | YES | Total deposit count since registration. From Fact_CustomerAction ActionTypeID=7. (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 14 | TotalDepositAmount | money | YES | Total deposit amount since registration. From Fact_CustomerAction ActionTypeID=7. (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 15 | UpdateDate | datetime | YES | GETDATE() at SP execution. (Tier 5 -- ETL metadata) |
-| 16 | NoOfTotalCashout | int | YES | LEGACY -- not populated by current SP. (Tier 4 -- legacy column) |
-| 17 | TotalCashoutAmount | money | YES | Total cashout amount since registration. From Fact_CustomerAction ActionTypeID=8. (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 18 | FirstPosOpenDate | datetime | YES | LEGACY -- not populated by current SP. (Tier 4 -- legacy column) |
-| 19 | Compensation_date | datetime | YES | Latest RAF compensation date for invitee (CompensationReasonID=54). From History_Credit_Range. (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 20 | Cashout_request | datetime | YES | LEGACY -- not populated by current SP. (Tier 4 -- legacy column) |
-| 21 | Cashout_date | datetime | YES | LEGACY -- not populated by current SP. (Tier 4 -- legacy column) |
-| 22 | Revenue14days | decimal(38,2) | YES | LEGACY -- not populated by current SP. (Tier 4 -- legacy column) |
-| 23 | NewTrades | int | YES | Total trading amount (SUM of Dim_Position.Amount) within 30 days of FTD. Renamed from PositionsAmount in SP logic. Used in Global eligibility check (>= 100). (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 24 | FTDMeanOfPayment | nvarchar(max) | YES | LEGACY -- not populated by current SP. (Tier 4 -- legacy column) |
-| 25 | LastCashoutDate | datetime | YES | LEGACY -- not populated by current SP. (Tier 4 -- legacy column) |
-| 26 | MatualIPAdress30Days | int | YES | Mutual IP address flag. 1 if invitee and inviter shared an IP (login ActionTypeID=14) within 30 days of FTD. Column name has typo ("Matual" for "Mutual", "Adress" for "Address"). (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 27 | TradesAmount | decimal(38,2) | YES | LEGACY -- not populated by current SP. (Tier 4 -- legacy column) |
-| 28 | TradesAmount_tillRAFbonus | decimal(38,2) | YES | LEGACY -- not populated by current SP. (Tier 4 -- legacy column) |
-| 29 | Date_AccTrade100_Invitee | date | YES | LEGACY -- not populated by current SP. (Tier 4 -- legacy column) |
-| 30 | Date_AccTrade100_Inviter | date | YES | LEGACY -- not populated by current SP. (Tier 4 -- legacy column) |
-| 31 | NoOfTotalCashout14DaysFromFTD | int | YES | Count of cashouts within 14 days of FTD. From Fact_CustomerAction ActionTypeID=8. (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 32 | TotalCashoutAmount14DaysFromFTD | money | YES | Cashout amount within 14 days of FTD. From Fact_CustomerAction ActionTypeID=8. (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 33 | IsFundedAfter14Days | int | YES | IsFunded_New flag from BI_DB_CID_DailyPanel_FullData 14 days after FTD. (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 34 | TotalCashoutAmountAfterCompensation | decimal(11,2) | YES | Total cashout within 7 days after RAF compensation date. From Fact_CustomerAction ActionTypeID=8. (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 35 | EligibleForCompensation | int | YES | 1 if (Global regulation AND NewTrades >= 100) OR (US regulation AND FirstDepositAmount >= 100). (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 36 | isCashoutAfterCompensation | int | YES | 1 if TotalCashoutAmountAfterCompensation >= PaymentToInvitee. Abuse signal. (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 37 | isFTD30days | int | YES | 1 if FirstDepositDate within 30 days of registered. (Tier 2 -- SP_RAF_InviteeAbuser) |
-| 38 | isAbuser | int | YES | Final abuse flag: 1 if MatualIPAdress30Days=1 OR isCashoutAfterCompensation=1. NULL for legacy rows predating current SP. (Tier 2 -- SP_RAF_InviteeAbuser) |
+| 1 | Invitee | bigint | NO | Invitee CID (RealCID from BI_DB_CIDFirstDates). Clustered index key. (Tier 2 -SP_RAF_InviteeAbuser) |
+| 2 | Country | varchar(255) | YES | Country name from BI_DB_CIDFirstDates. (Tier 2 -SP_RAF_InviteeAbuser) |
+| 3 | State | varchar(255) | YES | State/province from BI_DB_CIDFirstDates. (Tier 2 -SP_RAF_InviteeAbuser) |
+| 4 | Inviter | bigint | YES | Inviter CID (ReferralID from BI_DB_CIDFirstDates). (Tier 2 -SP_RAF_InviteeAbuser) |
+| 5 | registered | datetime | YES | Registration date from BI_DB_CIDFirstDates. Used as refresh boundary (>= @Last2months). (Tier 2 -SP_RAF_InviteeAbuser) |
+| 6 | FirstDepositDate | datetime | YES | First deposit date from BI_DB_CIDFirstDates. Anchor for 30-day trading window and isFTD30days calculation. (Tier 2 -SP_RAF_InviteeAbuser) |
+| 7 | FirstDepositAmount | money | YES | First deposit amount from BI_DB_CIDFirstDates. Used in US eligibility check (>= $100). (Tier 2 -SP_RAF_InviteeAbuser) |
+| 8 | FunnelName | varchar(255) | YES | LEGACY -- not populated by current SP. Registration funnel name from older SP version. (Tier 4 -legacy column) |
+| 9 | DesignatedRegulationID | int | YES | LEGACY -- not populated by current SP. Regulation ID from older SP version. (Tier 4 -legacy column) |
+| 10 | PaymentToInvitee | money | YES | RAF bonus paid to invitee: $50 Global, $30 US. From History_Credit_Range WHERE CompensationReasonID=54, CreditTypeID=6. NULL if no compensation. (Tier 2 -SP_RAF_InviteeAbuser) |
+| 11 | PaymentToInviter | money | YES | RAF bonus paid to inviter: $50 Global, $30 US. From History_Credit_Range WHERE CompensationReasonID=53, CreditTypeID=6, invitee CID in Description. NULL if no matching compensation. (Tier 2 -SP_RAF_InviteeAbuser) |
+| 12 | RevenueFromUser | decimal(18,0) | YES | LEGACY -- not populated by current SP. (Tier 4 -legacy column) |
+| 13 | NoOfTotalDeposits | int | YES | Total deposit count since registration. From Fact_CustomerAction ActionTypeID=7. (Tier 2 -SP_RAF_InviteeAbuser) |
+| 14 | TotalDepositAmount | money | YES | Total deposit amount since registration. From Fact_CustomerAction ActionTypeID=7. (Tier 2 -SP_RAF_InviteeAbuser) |
+| 15 | UpdateDate | datetime | YES | GETDATE() at SP execution. (Tier 5 -ETL metadata) |
+| 16 | NoOfTotalCashout | int | YES | LEGACY -- not populated by current SP. (Tier 4 -legacy column) |
+| 17 | TotalCashoutAmount | money | YES | Total cashout amount since registration. From Fact_CustomerAction ActionTypeID=8. (Tier 2 -SP_RAF_InviteeAbuser) |
+| 18 | FirstPosOpenDate | datetime | YES | LEGACY -- not populated by current SP. (Tier 4 -legacy column) |
+| 19 | Compensation_date | datetime | YES | Latest RAF compensation date for invitee (CompensationReasonID=54). From History_Credit_Range. (Tier 2 -SP_RAF_InviteeAbuser) |
+| 20 | Cashout_request | datetime | YES | LEGACY -- not populated by current SP. (Tier 4 -legacy column) |
+| 21 | Cashout_date | datetime | YES | LEGACY -- not populated by current SP. (Tier 4 -legacy column) |
+| 22 | Revenue14days | decimal(38,2) | YES | LEGACY -- not populated by current SP. (Tier 4 -legacy column) |
+| 23 | NewTrades | int | YES | Total trading amount (SUM of Dim_Position.Amount) within 30 days of FTD. Renamed from PositionsAmount in SP logic. Used in Global eligibility check (>= 100). (Tier 2 -SP_RAF_InviteeAbuser) |
+| 24 | FTDMeanOfPayment | nvarchar(max) | YES | LEGACY -- not populated by current SP. (Tier 4 -legacy column) |
+| 25 | LastCashoutDate | datetime | YES | LEGACY -- not populated by current SP. (Tier 4 -legacy column) |
+| 26 | MatualIPAdress30Days | int | YES | Mutual IP address flag. 1 if invitee and inviter shared an IP (login ActionTypeID=14) within 30 days of FTD. Column name has typo ("Matual" for "Mutual", "Adress" for "Address"). (Tier 2 -SP_RAF_InviteeAbuser) |
+| 27 | TradesAmount | decimal(38,2) | YES | LEGACY -- not populated by current SP. (Tier 4 -legacy column) |
+| 28 | TradesAmount_tillRAFbonus | decimal(38,2) | YES | LEGACY -- not populated by current SP. (Tier 4 -legacy column) |
+| 29 | Date_AccTrade100_Invitee | date | YES | LEGACY -- not populated by current SP. (Tier 4 -legacy column) |
+| 30 | Date_AccTrade100_Inviter | date | YES | LEGACY -- not populated by current SP. (Tier 4 -legacy column) |
+| 31 | NoOfTotalCashout14DaysFromFTD | int | YES | Count of cashouts within 14 days of FTD. From Fact_CustomerAction ActionTypeID=8. (Tier 2 -SP_RAF_InviteeAbuser) |
+| 32 | TotalCashoutAmount14DaysFromFTD | money | YES | Cashout amount within 14 days of FTD. From Fact_CustomerAction ActionTypeID=8. (Tier 2 -SP_RAF_InviteeAbuser) |
+| 33 | IsFundedAfter14Days | int | YES | IsFunded_New flag from BI_DB_CID_DailyPanel_FullData 14 days after FTD. (Tier 2 -SP_RAF_InviteeAbuser) |
+| 34 | TotalCashoutAmountAfterCompensation | decimal(11,2) | YES | Total cashout within 7 days after RAF compensation date. From Fact_CustomerAction ActionTypeID=8. (Tier 2 -SP_RAF_InviteeAbuser) |
+| 35 | EligibleForCompensation | int | YES | 1 if (Global regulation AND NewTrades >= 100) OR (US regulation AND FirstDepositAmount >= 100). (Tier 2 -SP_RAF_InviteeAbuser) |
+| 36 | isCashoutAfterCompensation | int | YES | 1 if TotalCashoutAmountAfterCompensation >= PaymentToInvitee. Abuse signal. (Tier 2 -SP_RAF_InviteeAbuser) |
+| 37 | isFTD30days | int | YES | 1 if FirstDepositDate within 30 days of registered. (Tier 2 -SP_RAF_InviteeAbuser) |
+| 38 | isAbuser | int | YES | Final abuse flag: 1 if MatualIPAdress30Days=1 OR isCashoutAfterCompensation=1. NULL for legacy rows predating current SP. (Tier 2 -SP_RAF_InviteeAbuser) |
 
 ---
 

@@ -338,3 +338,26 @@ No Confluence or Jira sources found for this object.
 *Generated: 2026-04-30 | Quality: 7.0/10 | Phases: 12/14*
 *Tiers: 0 T1, 0 T2, 86 T3, 0 T4, 0 T5 | Elements: 86/86, Logic: 6/10, Lineage: 7/10*
 *Object: BI_DB_dbo.BI_DB_AppFlyer_Reports_Ext | Type: Table | Production Source: AppsFlyer Raw Data Export API (external)*
+
+<!-- APPSFLYER_PDF_APPENDIX_2026_06_10 -->
+
+## AppsFlyer field reference (PDF cross-reference)
+
+> Added 2026-06-10 by the one-shot AppsFlyer deployment.
+
+**UC FQN**: `(Synapse-only - not migrated to UC)`
+
+**Note**: Raw varchar landing zone for the AppsFlyer Raw Data Export. 86 cols (81 vendor + 5 eToro), all `varchar`. Receives `IP`.
+
+The authoritative AppsFlyer-vendor descriptions for every column live in the PDF cross-reference at `proposals/AppsFlyer_Fields.pdf`. The mapping covers every field used in the eToro pipeline against AppsFlyer's documented field name (e.g. `MediaSource <-> media_source`, `Partner <-> af_prt`, `SubParam1..5 <-> af_sub1..5`).
+
+Deployed UC ALTER scripts grounded in the PDF:
+
+| Object | UC ALTER file |
+|---|---|
+| Silver fact (1:1 with PDF) | `knowledge/UC_generated/de_output/Tables/de_output_appsflyer_silver_reports.alter.sql` |
+| Gold mirror (this object's UC face if migrated) | `knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_AppFlyer_Reports.alter.sql` |
+| CID bridge | `knowledge/UC_generated/bi_db/Tables/bronze_marketperformance_tracking_customer.alter.sql` |
+| Permissioned view | `knowledge/UC_generated/bridgeclaw_permitted_data/Views/appflyer_reports.alter.sql` |
+
+The five eToro custom fields (`DateID`, `Date`, `EtoroAppID`, `EtoroAppName`, `EtoroReport`) are not in the AppsFlyer schema - see "Custom eToro Fields (Not in AppsFlyer Documentation)" in the PDF.

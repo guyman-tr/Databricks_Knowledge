@@ -129,27 +129,27 @@ The hedge cost (`HC`) is the core metric: it measures the difference between wha
 
 | Stars | Tier | Tag |
 |-------|------|-----|
-| **** | Tier 1 -- upstream wiki verbatim | `(Tier 1 -- upstream wiki, source)` |
-| *** | Tier 2 -- Synapse SP code / DDL | `(Tier 2 -- SP_HedgeCost)` |
-| ** | Tier 3 -- live data / structure | `(Tier 3 -- live data)` |
+| **** | Tier 1 -- upstream wiki verbatim | `(Tier 1 -upstream wiki, source)` |
+| *** | Tier 2 -- Synapse SP code / DDL | `(Tier 2 -SP_HedgeCost)` |
+| ** | Tier 3 -- live data / structure | `(Tier 3 -live data)` |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | Date | date | YES | Report date for the hedge cost snapshot. SP parameter @Date. (Tier 2 -- SP_HedgeCost) |
-| 2 | InstrumentID | int | YES | The instrument being hedged (e.g., EUR/USD, Apple stock). Implicitly references Trade.Instrument. Filtered to SellCurrencyID=1 (USD) and InstrumentTypeID IN (5,6) (stocks/ETFs). (Tier 1 -- upstream wiki, Hedge.ExecutionLog via Dim_Instrument) |
+| 1 | Date | date | YES | Report date for the hedge cost snapshot. SP parameter @Date. (Tier 2 -SP_HedgeCost) |
+| 2 | InstrumentID | int | YES | The instrument being hedged (e.g., EUR/USD, Apple stock). Implicitly references Trade.Instrument. Filtered to SellCurrencyID=1 (USD) and InstrumentTypeID IN (5,6) (stocks/ETFs). (Tier 1 -upstream wiki, Hedge.ExecutionLog via Dim_Instrument) |
 | 3 | Name | varchar(50) | YES | Display name computed by Trade.GetInstrument as BuyCurrency Abbreviation + '/' + SellCurrency Abbreviation (e.g., EUR/USD for forex, AAPL/USD for stocks). Not a company name; see InstrumentDisplayName for human-readable labels. |
-| 4 | IsSettled | varchar(20) | YES | Settlement type classification: 'Real' = settled stock ownership position (IsSettled=1 or HedgeServerID IN (9,102,112,125,126) for LP side), 'CFD' = contract-for-difference. Client-side uses Dim_PositionChangeLog correction (ChangeTypeID=13) to recover the IsSettled value AS OF the report date before any subsequent changes. (Tier 2 -- SP_HedgeCost) |
-| 5 | Clients_Units | decimal(16,6) | YES | Net signed client position units for the instrument group: SUM((IsBuy*2-1)*AmountInUnitsDecimal). Positive = net long exposure, negative = net short. Combines positions opened on @Date (using InitForexRate) and closed on @Date (using EndForexRate with flipped IsBuy direction). (Tier 2 -- SP_HedgeCost) |
-| 6 | AvgRateClientsNoSpread | decimal(16,6) | YES | Commission-adjusted average client rate: (NetUnits*AvgRate - FullCommission) / NULLIF(NetUnits, 0). Represents the effective cost basis for client positions after removing commission impact. Returns 0 when NetUnits is 0. (Tier 2 -- SP_HedgeCost) |
-| 7 | VolumeMarket | decimal(16,6) | YES | Total client trading volume in USD for the instrument group: SUM(Volume) from Dim_Position for positions opened or closed on the report date. (Tier 2 -- SP_HedgeCost) |
-| 8 | LP_Executed_Units | decimal(16,6) | YES | Net signed liquidity provider execution units: ISNULL(SUM(Units*(IsBuy*2-1)), 0) from successful hedge fills (Success=1) in CopyFromLake.etoro_Hedge_ExecutionLog. Zero when no external hedging occurred (internalized risk). (Tier 2 -- SP_HedgeCost) |
-| 9 | LP_Avg_Rate | decimal(16,6) | YES | Volume-weighted average execution rate from the liquidity provider: ISNULL(SUM(Units*(IsBuy*2-1)*ExecutionRate) / NULLIF(SUM(Units*(IsBuy*2-1)), 0), 0). Zero when no LP executions exist. (Tier 2 -- SP_HedgeCost) |
-| 10 | LP_Volume | decimal(16,6) | YES | Total LP execution notional volume: ISNULL(SUM(Units*ExecutionRate), 0) from successful hedge fills. Zero when no external hedging occurred. (Tier 2 -- SP_HedgeCost) |
-| 11 | HC | decimal(16,6) | YES | Hedge cost: the net cost of hedging client positions against LP executions, marked to end-of-day market price. Formula: (AskSpreaded*NetUnits - (NetUnits*AvgRate - FullCommission)) - (AskSpreaded*LP_Executed_Units - (LP_Executed_Units*LP_Avg_Rate)). Positive = cost to eToro, negative = hedging profit. AskSpreaded from Fact_CurrencyPriceWithSplit. (Tier 2 -- SP_HedgeCost) |
-| 12 | UpdateDate | datetime | YES | SP execution timestamp (GETDATE()). Not a business date -- reflects when the ETL batch ran. (Tier 3 -- SP_HedgeCost, GETDATE()) |
-| 13 | HedgeServerID | int | YES | Hedge server that managed the position set. FK to Trade.HedgeServer. Grouping key -- positions and LP fills are matched by HedgeServerID. 25 distinct values in 2026 data. (Tier 2 -- SP_HedgeCost) |
-| 14 | FullCommission | decimal(16,6) | YES | Aggregate realized commission from positions closed on the report date. Despite the column name, this is sourced from SUM(RealizedCommission) in Dealing_DailyZeroPnL_Stocks, NOT from Dim_Position.FullCommission. (Tier 2 -- SP_HedgeCost, Dealing_DailyZeroPnL_Stocks.RealizedCommission) |
-| 15 | VariableSpread | decimal(16,6) | YES | Total spread-based (variable) commission for the instrument on the report date. Passthrough from BI_DB_VarCommission.VarCommission, matched by DateID, InstrumentID, IsSettled, and HedgeServerID. NULL when no matching VarCommission row exists (~29% of 2026 rows). (Tier 2 -- SP_HedgeCost, BI_DB_VarCommission.VarCommission) |
+| 4 | IsSettled | varchar(20) | YES | Settlement type classification: 'Real' = settled stock ownership position (IsSettled=1 or HedgeServerID IN (9,102,112,125,126) for LP side), 'CFD' = contract-for-difference. Client-side uses Dim_PositionChangeLog correction (ChangeTypeID=13) to recover the IsSettled value AS OF the report date before any subsequent changes. (Tier 2 -SP_HedgeCost) |
+| 5 | Clients_Units | decimal(16,6) | YES | Net signed client position units for the instrument group: SUM((IsBuy*2-1)*AmountInUnitsDecimal). Positive = net long exposure, negative = net short. Combines positions opened on @Date (using InitForexRate) and closed on @Date (using EndForexRate with flipped IsBuy direction). (Tier 2 -SP_HedgeCost) |
+| 6 | AvgRateClientsNoSpread | decimal(16,6) | YES | Commission-adjusted average client rate: (NetUnits*AvgRate - FullCommission) / NULLIF(NetUnits, 0). Represents the effective cost basis for client positions after removing commission impact. Returns 0 when NetUnits is 0. (Tier 2 -SP_HedgeCost) |
+| 7 | VolumeMarket | decimal(16,6) | YES | Total client trading volume in USD for the instrument group: SUM(Volume) from Dim_Position for positions opened or closed on the report date. (Tier 2 -SP_HedgeCost) |
+| 8 | LP_Executed_Units | decimal(16,6) | YES | Net signed liquidity provider execution units: ISNULL(SUM(Units*(IsBuy*2-1)), 0) from successful hedge fills (Success=1) in CopyFromLake.etoro_Hedge_ExecutionLog. Zero when no external hedging occurred (internalized risk). (Tier 2 -SP_HedgeCost) |
+| 9 | LP_Avg_Rate | decimal(16,6) | YES | Volume-weighted average execution rate from the liquidity provider: ISNULL(SUM(Units*(IsBuy*2-1)*ExecutionRate) / NULLIF(SUM(Units*(IsBuy*2-1)), 0), 0). Zero when no LP executions exist. (Tier 2 -SP_HedgeCost) |
+| 10 | LP_Volume | decimal(16,6) | YES | Total LP execution notional volume: ISNULL(SUM(Units*ExecutionRate), 0) from successful hedge fills. Zero when no external hedging occurred. (Tier 2 -SP_HedgeCost) |
+| 11 | HC | decimal(16,6) | YES | Hedge cost: the net cost of hedging client positions against LP executions, marked to end-of-day market price. Formula: (AskSpreaded*NetUnits - (NetUnits*AvgRate - FullCommission)) - (AskSpreaded*LP_Executed_Units - (LP_Executed_Units*LP_Avg_Rate)). Positive = cost to eToro, negative = hedging profit. AskSpreaded from Fact_CurrencyPriceWithSplit. (Tier 2 -SP_HedgeCost) |
+| 12 | UpdateDate | datetime | YES | SP execution timestamp (GETDATE()). Not a business date -- reflects when the ETL batch ran. (Tier 3 -SP_HedgeCost, GETDATE()) |
+| 13 | HedgeServerID | int | YES | Hedge server that managed the position set. FK to Trade.HedgeServer. Grouping key -- positions and LP fills are matched by HedgeServerID. 25 distinct values in 2026 data. (Tier 2 -SP_HedgeCost) |
+| 14 | FullCommission | decimal(16,6) | YES | Aggregate realized commission from positions closed on the report date. Despite the column name, this is sourced from SUM(RealizedCommission) in Dealing_DailyZeroPnL_Stocks, NOT from Dim_Position.FullCommission. (Tier 2 -SP_HedgeCost, Dealing_DailyZeroPnL_Stocks.RealizedCommission) |
+| 15 | VariableSpread | decimal(16,6) | YES | Total spread-based (variable) commission for the instrument on the report date. Passthrough from BI_DB_VarCommission.VarCommission, matched by DateID, InstrumentID, IsSettled, and HedgeServerID. NULL when no matching VarCommission row exists (~29% of 2026 rows). (Tier 2 -SP_HedgeCost, BI_DB_VarCommission.VarCommission) |
 
 ---
 

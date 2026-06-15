@@ -38,7 +38,7 @@ Aggregates US options/equity PFOF (payment for order flow) payback from Apex rec
 |---|--------|--------|----------------|------|
 | 1 | DateID | Sodreconciliation_apex_EXT1047_RevenueReports.TradeDate | CONVERT(NVARCHAR(8), TradeDate, 112) | T2 |
 | 2 | Date | Sodreconciliation_apex_EXT1047_RevenueReports.TradeDate | CONVERT(DATE, TradeDate) | T2 |
-| 3 | RealCID | Dim_Customer.RealCID | Direct | T1 |
+| 3 | RealCID | Dim_Customer.RealCID | Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. (Tier 1 — Customer.CustomerStatic) (via Dim_Customer) | T1 |
 | 4 | ActionTypeID | Sodreconciliation_apex_EXT1047_RevenueReports.Side | CASE WHEN Side = 'B' THEN 1 WHEN Side = 'S' THEN 4 END | T2 |
 | 5 | ActionType | Sodreconciliation_apex_EXT1047_RevenueReports.Side | CASE WHEN Side = 'B' THEN 'ManualPositionOpen' WHEN Side = 'S' THEN 'ManualPositionClose' END | T2 |
 | 6 | InstrumentTypeID | Sodreconciliation_apex_EXT1047_RevenueReports.InstrumentType | CASE WHEN InstrumentType = 'Option' THEN 9 WHEN InstrumentType = 'Equity' THEN 5 END | T2 |
@@ -56,12 +56,21 @@ Aggregates US options/equity PFOF (payment for order flow) payback from Apex rec
 | 18 | IsCopyFund | — | 0 | T2 |
 | 19 | IsOpenedFromIBAN | — | 0 | T2 |
 | 20 | IsClosedToIBAN | — | 0 | T2 |
-| 21 | IsRucurring | — | 0 | T2 |
+| 21 | IsRecurring | — | 0 | T2 |
 | 22 | IsAirDrop | — | 0 | T2 |
-| 23 | IsValidCustomer | Dim_Customer.IsValidCustomer | Direct | T2 |
-| 24 | IsCreditReportValidCB | Dim_Customer.IsCreditReportValidCB | Direct | T2 |
+| 23 | IsValidCustomer | Dim_Customer.IsValidCustomer | DWH-computed: 1 when not Popular Investor (PlayerLevelID≠4), not label 30/26, and not CountryID=250. Used in reporting to filter out non-standard customers. (Tier 2 — SP_Dim_Customer) (via Dim_Customer) | T2 |
+| 24 | IsCreditReportValidCB | Dim_Customer.IsCreditReportValidCB | Financial-customer flag for Client_Balance reports (CB = Client_Balance, NOT CreditBureau). Approximately = IsValidCustomer with AccountTypeID != 2 and 6 hardcoded CID exceptions for CountryID=250 — eToro-EU subsidiary accounts where the parent custodies assets (counted in regulatory capital reports; not counted as business revenue). | T2 |
 | 25 | FirstTradeDate | Sodreconciliation_apex_EXT1047_RevenueReports.TradeDate | First row per ClearingAccount (ROW_NUMBER partition) | T2 |
 | 26 | FirstTradeDateID | Sodreconciliation_apex_EXT1047_RevenueReports.TradeDate | CAST(FORMAT(CAST(TradeDate AS DATE),'yyyyMMdd') AS INT) on first trade | T2 |
 
 ---
 *Auto-generated from SSDT source on 2026-03-22. Knowledge-only -- not migrated to Unity Catalog.*
+
+> **IsCreditReportValidCB business semantic (Tier 5 user expert 2026-05-29):** The `CB` suffix stands for **Client_Balance** — the eToro internal subsystem name for the regulatory capital report family — NOT *CreditBureau*. The "CreditBureau credit report validation" narrative propagated through ~90 wiki §4 cells and 8 deployed UC column comments before being purged 2026-05-29; it was a fabrication.
+>
+> `IsCreditReportValidCB = 1` means "the customer counts as a **FINANCIAL CUSTOMER** for Client_Balance, FCA Liabilities, ASIC capital, and audit reports." It is identical to `IsValidCustomer` for 99.99% of rows. The carve-out is **6 hardcoded eToro-EU subsidiary trade accounts** (CIDs `3400616, 10526243, 10842855, 11464063, 21547142, 34537826`) — counterparty entities owned by the eToro parent, sitting under the internal pseudo-jurisdiction `CountryID = 250` (the "eToro country") with `AccountTypeID = 2`. For these six accounts:
+>
+> - `IsValidCustomer = 0` — their revenue / deposits / trading volume MUST NOT count as business activity in any commercial KPI (they are not commercial customers).
+> - `IsCreditReportValidCB = 1` — the parent eToro entity custodies their assets, so they DO appear in Client_Balance and regulatory capital reports (finance must see them for capital-adequacy calculations).
+>
+> That asymmetry is the entire reason the two flags coexist; neither is a superset of the other. Technical predicate verbatim from `DWH_dbo.SP_Dim_Customer`: `NOT (PlayerLevelID = 4 AND AccountTypeID <> 2) AND LabelID NOT IN (26, 30) AND NOT (CountryID = 250 AND CID NOT IN (6-CID list above))`. See [`knowledge/skills/_shared/valid-users-filter-contract.md`](../../../../../skills/_shared/valid-users-filter-contract.md) for the cross-cutting filter contract.

@@ -131,8 +131,8 @@ Rows are never deleted from Dim_Mirror (except for same-day re-processing). The 
 
 | Stars | Tier | Tag |
 |-------|------|-----|
-| ★★★ | Tier 2 -- Synapse SP code / DDL | `(Tier 2 -- SP_Dim_Mirror_DL_To_Synapse)` |
-| ★★ | Tier 3 -- live data / structure | `(Tier 3 -- live data)` |
+| ★★★ | Tier 2 -- Synapse SP code / DDL | `(Tier 2 -SP_Dim_Mirror_DL_To_Synapse)` |
+| ★★ | Tier 3 -- live data / structure | `(Tier 3 -live data)` |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|

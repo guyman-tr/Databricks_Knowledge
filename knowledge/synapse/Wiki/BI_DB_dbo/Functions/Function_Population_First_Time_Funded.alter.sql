@@ -43,13 +43,21 @@ AS WITH First_IOB AS (
     GROUP BY RealCID
 ),
 REMOVE_BAD_FTDS AS (
+    -- Wrongly tagged $1 FTDs to exclude from all FTF/MIMO outputs.
+    -- 2025-08-18..20: original Nir S exclusion (~13K synthetic FTDs).
+    -- 2026-05-22..23, 2026-05-25: rapid-fire sequential FTDTransactionID cohort on FTDPlatformID=1
+    --   (17,236 + 470 + 10 rows, all $1.0000, no follow-up deposits). Same script signature
+    --   as Aug 2025 incident. Added 2026-05-27 by Guy M.
     SELECT
         dc.RealCID
     FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked dc
     WHERE CAST(dc.FirstDepositDate AS DATE) IN (
         TO_DATE('20250818', 'yyyyMMdd'),
         TO_DATE('20250819', 'yyyyMMdd'),
-        TO_DATE('20250820', 'yyyyMMdd')
+        TO_DATE('20250820', 'yyyyMMdd'),
+        TO_DATE('20260522', 'yyyyMMdd'),
+        TO_DATE('20260523', 'yyyyMMdd'),
+        TO_DATE('20260525', 'yyyyMMdd')
     )
     AND dc.FirstDepositAmount = 1
     AND dc.RealCID NOT IN (

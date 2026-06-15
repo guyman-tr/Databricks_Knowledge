@@ -36,27 +36,27 @@ Daily **roll-over fee** and **dividend** cash flows aggregated by instrument, he
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | DateID | int | YES | Business date as `YYYYMMDD` integer for actions/dividends loaded. (Tier 2 -- SP_RollOverFee_Dividends, Fact_CustomerAction.DateID / BI_DB_DailyDividendsByPosition.DateID) |
-| 2 | PaymentDate | date | YES | Dividend payment date from index dividends; null for roll-over fee rows. (Tier 2 -- SP_RollOverFee_Dividends, etoro_Trade_IndexDividends.PaymentDate) |
-| 3 | InstrumentID | int | YES | Instrument key. (Tier 2 -- SP_RollOverFee_Dividends, Dim_Position.InstrumentID / BI_DB_DailyDividendsByPosition.InstrumentID) |
-| 4 | InstrumentName | varchar(50) | YES | Instrument display name. (Tier 2 -- SP_RollOverFee_Dividends, Dim_Instrument.Name) |
-| 5 | IsSettled | varchar(20) | YES | Settlement bucket: **Real** when `Dim_Position.IsSettled=1` (with optional `Dim_PositionChangeLog` override), else **CFD**. (Tier 2 -- SP_RollOverFee_Dividends, CASE on Dim_Position.IsSettled / log) |
-| 6 | PaymentType | varchar(20) | YES | **RollOverFee** or **Dividend** to distinguish the two UNION branches. (Tier 2 -- SP_RollOverFee_Dividends, literal in #FCA) |
-| 7 | EventType | varchar(50) | YES | **RollOverFee** for fee branch; dividend branch uses classified `etoro_Trade_IndexDividends.EventType`. (Tier 2 -- SP_RollOverFee_Dividends, CASE on etoro_Trade_IndexDividends.EventType) |
-| 8 | Amount | money | YES | Sum of **negated** position-level amounts (`SUM(-Amount)`) from FCA or daily dividends. (Tier 2 -- SP_RollOverFee_Dividends, Fact_CustomerAction.Amount / BI_DB_DailyDividendsByPosition.Amount) |
-| 9 | DividendValueInCurrency | decimal(16,8) | YES | Per-share dividend value in currency for dividend rows; null for roll-over. (Tier 2 -- SP_RollOverFee_Dividends, etoro_Trade_IndexDividends.DividendValueInCurrency) |
-| 10 | UpdateDate | datetime | YES | Row load timestamp. (Tier 3 -- SP_RollOverFee_Dividends, GETDATE()) |
-| 11 | InstrumentType | varchar(50) | YES | Asset class from dimension. (Tier 2 -- SP_RollOverFee_Dividends, Dim_Instrument.InstrumentType) |
-| 12 | HedgeServerID | int | YES | Hedge server on the action date: `ISNULL(Dim_PositionHedgeServerChangeLog_Snapshot.HedgeServerID, Dim_Position.HedgeServerID)`. (Tier 2 -- SP_RollOverFee_Dividends, snapshot / Dim_Position.HedgeServerID) |
-| 13 | DividendID | int | YES | Corporate action dividend id for dividend rows; null for roll-over. (Tier 2 -- SP_RollOverFee_Dividends, BI_DB_DailyDividendsByPosition.DividendID) |
-| 14 | CountCIDs | int | YES | **Average** of pre-grouped distinct `RealCID` counts for the instrument/settlement or dividend/settlement slice (not a simple COUNT on the final grain). (Tier 2 -- SP_RollOverFee_Dividends, AVG from #DistinctCIDs_RollOver / #DistinctCIDs_Div) |
-| 15 | Date | date | YES | Calendar date parameter `@Date` stored for readability. (Tier 2 -- SP_RollOverFee_Dividends, @Date) |
-| 16 | AmountOfUnits | decimal(38,8) | YES | Sum of eligible or roll-over units (`AmountInUnitsDecimal`) from `BI_DB_PositionPnL` / `Dim_Position` logic. (Tier 2 -- SP_RollOverFee_Dividends, #ROF_Units / #Div_EligibleUnits) |
-| 17 | ExDate | date | YES | Dividend ex-date; null for roll-over. (Tier 2 -- SP_RollOverFee_Dividends, etoro_Trade_IndexDividends.ExDate) |
-| 18 | IsValidCustomer | int | YES | Customer validity flag from `Dim_Customer` / daily dividends feed. (Tier 2 -- SP_RollOverFee_Dividends, Dim_Customer.IsValidCustomer) |
-| 19 | PlayerLevel | varchar(20) | YES | **BVI** for hard-coded CIDs, **Internal** when `PlayerLevelID=4`, else **Other**. (Tier 2 -- SP_RollOverFee_Dividends, CASE on Dim_Customer / daily dividends) |
-| 20 | PlayerStatus | varchar(20) | YES | **Deposit Blocked** when `PlayerStatusID=10`, else **Other**. (Tier 2 -- SP_RollOverFee_Dividends, CASE on Dim_Customer / daily dividends) |
-| 21 | IsComputeForHedge | bit | YES | Whether position is included in hedge computation (`Dim_Position.IsComputeForHedge`). (Tier 2 -- SP_RollOverFee_Dividends, Dim_Position.IsComputeForHedge) |
+| 1 | DateID | int | YES | Business date as `YYYYMMDD` integer for actions/dividends loaded. (Tier 2 -SP_RollOverFee_Dividends, Fact_CustomerAction.DateID / BI_DB_DailyDividendsByPosition.DateID) |
+| 2 | PaymentDate | date | YES | Dividend payment date from index dividends; null for roll-over fee rows. (Tier 2 -SP_RollOverFee_Dividends, etoro_Trade_IndexDividends.PaymentDate) |
+| 3 | InstrumentID | int | YES | Instrument key. (Tier 2 -SP_RollOverFee_Dividends, Dim_Position.InstrumentID / BI_DB_DailyDividendsByPosition.InstrumentID) |
+| 4 | InstrumentName | varchar(50) | YES | Instrument display name. (Tier 2 -SP_RollOverFee_Dividends, Dim_Instrument.Name) |
+| 5 | IsSettled | varchar(20) | YES | Settlement bucket: **Real** when `Dim_Position.IsSettled=1` (with optional `Dim_PositionChangeLog` override), else **CFD**. (Tier 2 -SP_RollOverFee_Dividends, CASE on Dim_Position.IsSettled / log) |
+| 6 | PaymentType | varchar(20) | YES | **RollOverFee** or **Dividend** to distinguish the two UNION branches. (Tier 2 -SP_RollOverFee_Dividends, literal in #FCA) |
+| 7 | EventType | varchar(50) | YES | **RollOverFee** for fee branch; dividend branch uses classified `etoro_Trade_IndexDividends.EventType`. (Tier 2 -SP_RollOverFee_Dividends, CASE on etoro_Trade_IndexDividends.EventType) |
+| 8 | Amount | money | YES | Sum of **negated** position-level amounts (`SUM(-Amount)`) from FCA or daily dividends. (Tier 2 -SP_RollOverFee_Dividends, Fact_CustomerAction.Amount / BI_DB_DailyDividendsByPosition.Amount) |
+| 9 | DividendValueInCurrency | decimal(16,8) | YES | Per-share dividend value in currency for dividend rows; null for roll-over. (Tier 2 -SP_RollOverFee_Dividends, etoro_Trade_IndexDividends.DividendValueInCurrency) |
+| 10 | UpdateDate | datetime | YES | Row load timestamp. (Tier 3 -SP_RollOverFee_Dividends, GETDATE()) |
+| 11 | InstrumentType | varchar(50) | YES | Asset class from dimension. (Tier 2 -SP_RollOverFee_Dividends, Dim_Instrument.InstrumentType) |
+| 12 | HedgeServerID | int | YES | Hedge server on the action date: `ISNULL(Dim_PositionHedgeServerChangeLog_Snapshot.HedgeServerID, Dim_Position.HedgeServerID)`. (Tier 2 -SP_RollOverFee_Dividends, snapshot / Dim_Position.HedgeServerID) |
+| 13 | DividendID | int | YES | Corporate action dividend id for dividend rows; null for roll-over. (Tier 2 -SP_RollOverFee_Dividends, BI_DB_DailyDividendsByPosition.DividendID) |
+| 14 | CountCIDs | int | YES | **Average** of pre-grouped distinct `RealCID` counts for the instrument/settlement or dividend/settlement slice (not a simple COUNT on the final grain). (Tier 2 -SP_RollOverFee_Dividends, AVG from #DistinctCIDs_RollOver / #DistinctCIDs_Div) |
+| 15 | Date | date | YES | Calendar date parameter `@Date` stored for readability. (Tier 2 -SP_RollOverFee_Dividends, @Date) |
+| 16 | AmountOfUnits | decimal(38,8) | YES | Sum of eligible or roll-over units (`AmountInUnitsDecimal`) from `BI_DB_PositionPnL` / `Dim_Position` logic. (Tier 2 -SP_RollOverFee_Dividends, #ROF_Units / #Div_EligibleUnits) |
+| 17 | ExDate | date | YES | Dividend ex-date; null for roll-over. (Tier 2 -SP_RollOverFee_Dividends, etoro_Trade_IndexDividends.ExDate) |
+| 18 | IsValidCustomer | int | YES | Customer validity flag from `Dim_Customer` / daily dividends feed. (Tier 2 -SP_RollOverFee_Dividends, Dim_Customer.IsValidCustomer) |
+| 19 | PlayerLevel | varchar(20) | YES | **BVI** for hard-coded CIDs, **Internal** when `PlayerLevelID=4`, else **Other**. (Tier 2 -SP_RollOverFee_Dividends, CASE on Dim_Customer / daily dividends) |
+| 20 | PlayerStatus | varchar(20) | YES | **Deposit Blocked** when `PlayerStatusID=10`, else **Other**. (Tier 2 -SP_RollOverFee_Dividends, CASE on Dim_Customer / daily dividends) |
+| 21 | IsComputeForHedge | bit | YES | Whether position is included in hedge computation (`Dim_Position.IsComputeForHedge`). (Tier 2 -SP_RollOverFee_Dividends, Dim_Position.IsComputeForHedge) |
 
 ---
 

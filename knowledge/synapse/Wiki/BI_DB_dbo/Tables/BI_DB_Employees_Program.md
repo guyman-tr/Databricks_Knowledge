@@ -129,7 +129,7 @@ None typically needed — table is self-contained with employee demographics.
 | 8 | StartProgramDate | datetime | YES | Date of the employee's first Bonus or Compensation action (ActionTypeID IN 9,36). MIN(Occurred) from Fact_CustomerAction. NULL if no bonus/compensation received. (Tier 2 — SP_M_EmployeesProgram) |
 | 9 | TotalEquity | money | NO | Total account equity: ActualNWA + Liabilities from V_Liabilities at the snapshot date. ISNULL to 0. (Tier 2 — SP_M_EmployeesProgram) |
 | 10 | ActualNWA | money | NO | Non-Withdrawal Amount: the portion of equity from company contributions (bonus/compensation). Can only decrease unless the employee adds personal funds. (Tier 2 — SP_M_EmployeesProgram, via V_Liabilities) |
-| 11 | Credit | money | NO | Available uninvested cash balance from V_Liabilities at the snapshot date. High Credit / RealizedEquity ratio (>50%) indicates insufficient investment for eligibility. (Tier 2 — SP_M_EmployeesProgram, via V_Liabilities) |
+| 11 | Credit | money | NO | Customer credit balance from V_Liabilities at the snapshot date. Used in AvgInvestment and eligibility formulas within SP_M_EmployeesProgram. (Tier 2 — V_Liabilities.Credit via Fact_SnapshotEquity.Credit) |
 | 12 | AvgInvestment | money | YES | Average investment ratio over the program year: AVG((RealizedEquity - Credit) / RealizedEquity). Range 0-1; >= 0.5 qualifies for eligibility path 1. (Tier 2 — SP_M_EmployeesProgram) |
 | 13 | ManualTrades | int | NO | Count of manual open positions (ActionTypeID=1) in the program year. Copy positions excluded. (Tier 2 — SP_M_EmployeesProgram) |
 | 14 | NewCopy | int | NO | Count of new copy relationships started (ActionTypeID=17) in the program year. (Tier 2 — SP_M_EmployeesProgram) |

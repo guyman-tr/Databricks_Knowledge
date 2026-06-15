@@ -93,14 +93,14 @@ REPLICATE-distributed (19 rows trivially replicated to all compute nodes). CLUST
 
 | Stars | Tier | Tag |
 |-------|------|-----|
-| ★★★★ | Tier 1 -- upstream production wiki | `(Tier 1 -- Dictionary.CashoutReason)` |
-| ★★★ | Tier 2 -- Synapse SP code / DDL | `(Tier 2 -- SP_Dictionaries_DL_To_Synapse)` |
+| ★★★★ | Tier 1 -- upstream production wiki | `(Tier 1 -Dictionary.CashoutReason)` |
+| ★★★ | Tier 2 -- Synapse SP code / DDL | `(Tier 2 -SP_Dictionaries_DL_To_Synapse)` |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | CashoutReasonID | int | NO | Primary key identifying the withdrawal reason. Range 1-19. Stored in Billing.Withdraw, History.WithdrawAction. Default 16 (user request) in WithdrawRequestAdd. Special processing for IN (12, 14, 15) in WithdrawToFundingProcess. Joined by 15+ BackOffice/Billing/Trade procedures. Values: 1=Adjustment, 2=Partners withdraw, 3=Risk Refund, 4=Negative Balance adjustment, 5=Withdraw fees adjustment, 6=Block account -- Not communicative, 7=3rd party payment, 8=Bonus abuse adjustment, 9=Returned withdraw, 10=Technical issue -- Customer side, 11=Underage, 12=Foreclose account, 13=Test, 14=PI Payment, 15=Affiliate Payment, 16=Requested by User, 17=Failed Verification, 18=Transfered by CryptoWallet, 19=ForClose(GAP). (Tier 1 -- Dictionary.CashoutReason) |
-| 2 | Name | varchar(50) | NO | Human-readable reason label. No unique constraint. Displayed in BackOffice withdrawal screens via LEFT JOIN. Used in reports, audit trails, and customer-facing credit history. (Tier 1 -- Dictionary.CashoutReason) |
-| 3 | UpdateDate | datetime | NO | ETL run timestamp set to GETDATE() on each daily TRUNCATE+INSERT cycle. Reflects last SP_Dictionaries_DL_To_Synapse execution, not production modification time. (Tier 2 -- SP_Dictionaries_DL_To_Synapse) |
+| 1 | CashoutReasonID | int | NO | Primary key identifying the withdrawal reason. Range 1-19. Stored in Billing.Withdraw, History.WithdrawAction. Default 16 (user request) in WithdrawRequestAdd. Special processing for IN (12, 14, 15) in WithdrawToFundingProcess. Joined by 15+ BackOffice/Billing/Trade procedures. Values: 1=Adjustment, 2=Partners withdraw, 3=Risk Refund, 4=Negative Balance adjustment, 5=Withdraw fees adjustment, 6=Block account -- Not communicative, 7=3rd party payment, 8=Bonus abuse adjustment, 9=Returned withdraw, 10=Technical issue -- Customer side, 11=Underage, 12=Foreclose account, 13=Test, 14=PI Payment, 15=Affiliate Payment, 16=Requested by User, 17=Failed Verification, 18=Transfered by CryptoWallet, 19=ForClose(GAP). (Tier 1 -Dictionary.CashoutReason) |
+| 2 | Name | varchar(50) | NO | Human-readable reason label. No unique constraint. Displayed in BackOffice withdrawal screens via LEFT JOIN. Used in reports, audit trails, and customer-facing credit history. (Tier 1 -Dictionary.CashoutReason) |
+| 3 | UpdateDate | datetime | NO | ETL run timestamp set to GETDATE() on each daily TRUNCATE+INSERT cycle. Reflects last SP_Dictionaries_DL_To_Synapse execution, not production modification time. (Tier 2 -SP_Dictionaries_DL_To_Synapse) |
 
 ---
 

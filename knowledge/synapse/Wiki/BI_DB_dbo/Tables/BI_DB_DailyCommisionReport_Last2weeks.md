@@ -161,7 +161,7 @@ The GROUP BY dimensions are: RealCID, Club, Manager, Country, Region, UserName, 
 | 14 | Mifid | varchar(50) | YES | MiFID classification label (e.g., 'MIFID', 'Non-MIFID'). Separate from Regulation — captures MIFID applicability independently of the regulatory entity. GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
 | 15 | InstrumentType | varchar(100) | YES | Instrument type name (Currencies, Commodities, Indices, Stocks, Crypto Currencies, ETF). GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
 | 16 | IsValidCustomer | bit | YES | Valid customer quality flag (1=passes validation criteria for revenue reporting). GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
-| 17 | IsCreditReportValidCB | bit | YES | Credit bureau validity flag (1=credit report validated against external credit bureau). GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
+| 17 | IsCreditReportValidCB | bit | YES | Financial-customer flag for Client_Balance reports (CB = Client_Balance, NOT CreditBureau). GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
 | 18 | IsDLTUser | int | YES | Distributed ledger technology (DLT) / blockchain user flag (1=yes). GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
 | 19 | RollOverFee | money | YES | SUM of overnight rollover/carry fees charged to this customer in the week. (Tier 2 — SP_DailyCommisionReport) |
 | 20 | TicketFee | money | YES | SUM of per-ticket transaction fees for the week. (Tier 2 — SP_DailyCommisionReport) |

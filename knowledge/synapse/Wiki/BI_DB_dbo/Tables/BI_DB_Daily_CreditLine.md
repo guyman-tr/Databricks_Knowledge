@@ -40,19 +40,19 @@ Credit lines are leveraged buying power extended to customers. This table tracks
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | RealCID | int | YES | Customer ID. Part of clustered index. From previous day's snapshot or new Fact_CustomerAction. (Tier 2 -- SP_Daily_CreditLine, Fact_CustomerAction.RealCID) |
-| 2 | Date | date | YES | Calendar date. Set from SP @ds parameter. (Tier 2 -- SP_Daily_CreditLine, @ds) |
-| 3 | DateID | int | YES | Date as integer YYYYMMDD. Part of clustered index. (Tier 2 -- SP_Daily_CreditLine, @ds) |
-| 4 | TotalCLAmount | decimal(11,2) | YES | Total credit line amount in USD. Carried forward from previous day + any new credit line actions for today. (Tier 2 -- SP_Daily_CreditLine, accumulated) |
-| 5 | MonthlyTableFeeCost | decimal(11,2) | YES | Monthly fee based on credit line tier from BI_DB_CreditLine_Amounts lookup. NULL if credit line amount not in tier table. (Tier 2 -- SP_Daily_CreditLine, BI_DB_CreditLine_Amounts.Cost) |
-| 6 | DailyFee | decimal(11,2) | YES | Daily fee: `MonthlyTableFeeCost / DAY(EOMONTH(@ds))`. Pro-rated by days in the month. (Tier 2 -- SP_Daily_CreditLine, computed) |
-| 7 | Liabilities | decimal(11,2) | YES | Customer's total liabilities from V_Liabilities on this date. Used for CLRatio calculation. (Tier 2 -- SP_Daily_CreditLine, V_Liabilities.Liabilities) |
-| 8 | CLRatio | decimal(11,2) | YES | Credit line to liability ratio: `TotalCLAmount / Liabilities`. Division-by-zero protected (denominator defaults to 1). (Tier 2 -- SP_Daily_CreditLine, computed) |
-| 9 | IsExceeded | int | YES | Flag: 1 if `CLRatio > 0.5` (credit line exceeds 50% of liabilities). Risk threshold indicator. (Tier 2 -- SP_Daily_CreditLine, computed) |
-| 10 | ExceedingDaysCount | int | YES | Consecutive days the credit line has been exceeded. Incremented from previous day if still exceeded, 0 if not. (Tier 2 -- SP_Daily_CreditLine, accumulated) |
-| 11 | DateReceive | date | YES | Date the credit line was received. Only set on the day of the credit line action; NULL otherwise. (Tier 2 -- SP_Daily_CreditLine, Fact_CustomerAction) |
-| 12 | DateDeduct | date | YES | Date the credit line was deducted. Only set on the day of the deduction action; NULL otherwise. (Tier 2 -- SP_Daily_CreditLine, Fact_CustomerAction) |
-| 13 | UpdateDate | datetime | YES | SP execution timestamp. GETDATE(). (Tier 3 -- SP_Daily_CreditLine, GETDATE()) |
+| 1 | RealCID | int | YES | Customer ID. Part of clustered index. From previous day's snapshot or new Fact_CustomerAction. (Tier 2 -SP_Daily_CreditLine, Fact_CustomerAction.RealCID) |
+| 2 | Date | date | YES | Calendar date. Set from SP @ds parameter. (Tier 2 -SP_Daily_CreditLine, @ds) |
+| 3 | DateID | int | YES | Date as integer YYYYMMDD. Part of clustered index. (Tier 2 -SP_Daily_CreditLine, @ds) |
+| 4 | TotalCLAmount | decimal(11,2) | YES | Total credit line amount in USD. Carried forward from previous day + any new credit line actions for today. (Tier 2 -SP_Daily_CreditLine, accumulated) |
+| 5 | MonthlyTableFeeCost | decimal(11,2) | YES | Monthly fee based on credit line tier from BI_DB_CreditLine_Amounts lookup. NULL if credit line amount not in tier table. (Tier 2 -SP_Daily_CreditLine, BI_DB_CreditLine_Amounts.Cost) |
+| 6 | DailyFee | decimal(11,2) | YES | Daily fee: `MonthlyTableFeeCost / DAY(EOMONTH(@ds))`. Pro-rated by days in the month. (Tier 2 -SP_Daily_CreditLine, computed) |
+| 7 | Liabilities | decimal(11,2) | YES | Customer's total liabilities from V_Liabilities on this date. Used for CLRatio calculation. (Tier 2 -SP_Daily_CreditLine, V_Liabilities.Liabilities) |
+| 8 | CLRatio | decimal(11,2) | YES | Credit line to liability ratio: `TotalCLAmount / Liabilities`. Division-by-zero protected (denominator defaults to 1). (Tier 2 -SP_Daily_CreditLine, computed) |
+| 9 | IsExceeded | int | YES | Flag: 1 if `CLRatio > 0.5` (credit line exceeds 50% of liabilities). Risk threshold indicator. (Tier 2 -SP_Daily_CreditLine, computed) |
+| 10 | ExceedingDaysCount | int | YES | Consecutive days the credit line has been exceeded. Incremented from previous day if still exceeded, 0 if not. (Tier 2 -SP_Daily_CreditLine, accumulated) |
+| 11 | DateReceive | date | YES | Date the credit line was received. Only set on the day of the credit line action; NULL otherwise. (Tier 2 -SP_Daily_CreditLine, Fact_CustomerAction) |
+| 12 | DateDeduct | date | YES | Date the credit line was deducted. Only set on the day of the deduction action; NULL otherwise. (Tier 2 -SP_Daily_CreditLine, Fact_CustomerAction) |
+| 13 | UpdateDate | datetime | YES | SP execution timestamp. GETDATE(). (Tier 3 -SP_Daily_CreditLine, GETDATE()) |
 
 ---
 

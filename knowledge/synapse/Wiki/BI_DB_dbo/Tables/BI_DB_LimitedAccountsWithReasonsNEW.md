@@ -130,28 +130,28 @@ ROUND_ROBIN HEAP. Medium table (118K rows). Full scans are fast.
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | RealCID | int | YES | Customer ID. One row per blocked customer. FK to Dim_Customer.RealCID. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 2 | DesignatedRegulation | varchar(30) | YES | Designated regulation name. The regulation entity the customer was assigned to (may differ from current). From Dim_Regulation.Name via Dim_Customer.DesignatedRegulationID. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 3 | Regulation | varchar(30) | YES | Current regulation name. From Dim_Regulation.Name via Dim_Customer.RegulationID. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 4 | PlayerStatusBlockedTime | datetime | YES | Date when the current PlayerStatus was applied. Derived via LAG() on Fact_SnapshotCustomer, taking MAX change date. Range: 2015-11-10 to 2026-04-12. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 5 | PlayerStatusReasonBlockedTime | datetime | YES | Date when the current PlayerStatusReason was applied. Derived via LAG() on Fact_SnapshotCustomer. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 6 | PlayerStatusSubReasonBlockedTime | datetime | YES | Date when the current PlayerStatusSubReason was applied. Derived via LAG() on Fact_SnapshotCustomer. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 7 | PendingClosureTime | datetime | YES | Date when the current PendingClosureStatus was applied. NULL if no pending closure status. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 8 | DaysFromBlock | bigint | YES | Days since PlayerStatusBlockedTime. DATEDIFF(DAY, PlayerStatusBlockedTime, GETDATE()). Recalculated daily. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 9 | PlayerStatus | varchar(max) | YES | Player status name. From Dim_PlayerStatus.Name. Values: 'Block Deposit & Trading' (58%), 'Pending Verification' (18%), 'Deposit Blocked' (14%), 'Trade & MIMO Blocked' (10%). (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 10 | PlayerStatusReason | varchar(max) | YES | Block reason. From Dim_PlayerStatusReasons.Name. Top: AML (70%), KYC (21%), Risk (6%). (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 11 | PlayerStatusSubReason | varchar(max) | YES | Block sub-reason. From Dim_PlayerStatusSubReasons.PlayerStatusSubReasonName. Specific compliance trigger (e.g., 'HRC', 'Screening - Sanctions', 'Expired POI/POA'). (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 12 | PendingClosureStatus | varchar(max) | YES | Pending closure status name. From Dim_PendingClosureStatus.PendingClosureStatusName. NULL if not in closure process. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 13 | VerificationLevelID | int | YES | KYC verification level. 0=unverified, 1=partial, 2=intermediate, 3=fully verified. Used in some SLA rules. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW via Dim_Customer) |
-| 14 | Equity | money | YES | Customer equity = Liabilities + ActualNWA from V_Liabilities (yesterday's snapshot). In USD. Can be negative. 83% of blocked accounts have < $5 equity. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 15 | IsHighRiskCountry | int | YES | Whether the customer's country is classified as high-risk. 1=high-risk, 0=not. From Dim_Country. Affects SLA rules for some AML sub-reasons. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 16 | PlayerStatusGrouping | varchar(max) | YES | SLA classification for the block. 'IN'=within SLA (1.6%), 'OUT'=exceeded SLA (98.4%). Based on ~60 hardcoded CASE rules combining Status, Reason, SubReason, DaysFromBlock, and other factors. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 17 | PendingClosureStatusGrouping | varchar(max) | YES | SLA classification for pending closure eligibility. 'IN'=eligible for closure, 'OUT'=not yet eligible. Separate rule set from PlayerStatusGrouping; requires PendingClosureStatusID != 1. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 18 | Equity_Level | varchar(max) | YES | Equity bracket. 'A:0-5' (83%), 'B:5-50', 'C:50-500', 'D: 500+'. Based on ISNULL(Equity, 0). (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 19 | Region | varchar(50) | YES | Customer's geographic region. From Dim_Country.Region via Dim_Customer.CountryID. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 20 | Country | varchar(50) | YES | Customer's country name. From Dim_Country.Name via Dim_Customer.CountryID. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
+| 1 | RealCID | int | YES | Customer ID. One row per blocked customer. FK to Dim_Customer.RealCID. (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 2 | DesignatedRegulation | varchar(30) | YES | Designated regulation name. The regulation entity the customer was assigned to (may differ from current). From Dim_Regulation.Name via Dim_Customer.DesignatedRegulationID. (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 3 | Regulation | varchar(30) | YES | Current regulation name. From Dim_Regulation.Name via Dim_Customer.RegulationID. (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 4 | PlayerStatusBlockedTime | datetime | YES | Date when the current PlayerStatus was applied. Derived via LAG() on Fact_SnapshotCustomer, taking MAX change date. Range: 2015-11-10 to 2026-04-12. (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 5 | PlayerStatusReasonBlockedTime | datetime | YES | Date when the current PlayerStatusReason was applied. Derived via LAG() on Fact_SnapshotCustomer. (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 6 | PlayerStatusSubReasonBlockedTime | datetime | YES | Date when the current PlayerStatusSubReason was applied. Derived via LAG() on Fact_SnapshotCustomer. (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 7 | PendingClosureTime | datetime | YES | Date when the current PendingClosureStatus was applied. NULL if no pending closure status. (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 8 | DaysFromBlock | bigint | YES | Days since PlayerStatusBlockedTime. DATEDIFF(DAY, PlayerStatusBlockedTime, GETDATE()). Recalculated daily. (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 9 | PlayerStatus | varchar(max) | YES | Player status name. From Dim_PlayerStatus.Name. Values: 'Block Deposit & Trading' (58%), 'Pending Verification' (18%), 'Deposit Blocked' (14%), 'Trade & MIMO Blocked' (10%). (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 10 | PlayerStatusReason | varchar(max) | YES | Block reason. From Dim_PlayerStatusReasons.Name. Top: AML (70%), KYC (21%), Risk (6%). (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 11 | PlayerStatusSubReason | varchar(max) | YES | Block sub-reason. From Dim_PlayerStatusSubReasons.PlayerStatusSubReasonName. Specific compliance trigger (e.g., 'HRC', 'Screening - Sanctions', 'Expired POI/POA'). (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 12 | PendingClosureStatus | varchar(max) | YES | Pending closure status name. From Dim_PendingClosureStatus.PendingClosureStatusName. NULL if not in closure process. (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 13 | VerificationLevelID | int | YES | KYC verification level. 0=unverified, 1=partial, 2=intermediate, 3=fully verified. Used in some SLA rules. (Tier 2 -SP_LimitedAccountsWithReasonsNEW via Dim_Customer) |
+| 14 | Equity | money | YES | Customer equity = Liabilities + ActualNWA from V_Liabilities (yesterday's snapshot). In USD. Can be negative. 83% of blocked accounts have < $5 equity. (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 15 | IsHighRiskCountry | int | YES | Whether the customer's country is classified as high-risk. 1=high-risk, 0=not. From Dim_Country. Affects SLA rules for some AML sub-reasons. (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 16 | PlayerStatusGrouping | varchar(max) | YES | SLA classification for the block. 'IN'=within SLA (1.6%), 'OUT'=exceeded SLA (98.4%). Based on ~60 hardcoded CASE rules combining Status, Reason, SubReason, DaysFromBlock, and other factors. (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 17 | PendingClosureStatusGrouping | varchar(max) | YES | SLA classification for pending closure eligibility. 'IN'=eligible for closure, 'OUT'=not yet eligible. Separate rule set from PlayerStatusGrouping; requires PendingClosureStatusID != 1. (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 18 | Equity_Level | varchar(max) | YES | Equity bracket. 'A:0-5' (83%), 'B:5-50', 'C:50-500', 'D: 500+'. Based on ISNULL(Equity, 0). (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 19 | Region | varchar(50) | YES | Customer's geographic region. From Dim_Country.Region via Dim_Customer.CountryID. (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
+| 20 | Country | varchar(50) | YES | Customer's country name. From Dim_Country.Name via Dim_Customer.CountryID. (Tier 2 -SP_LimitedAccountsWithReasonsNEW) |
 | 21 | PlayerLevel | varchar(max) | YES | Customer player-level tier. FK to DWH_dbo.Dim_PlayerLevel. Per dictionary (verified 2026-05-13): 0=N/A, 1=Bronze, 2=Platinum, 3=Gold, 4=Internal (in-house / eToro-employee accounts), 5=Silver, 6=Platinum Plus, 7=Diamond. NOT a Popular Investor signal (PI is tracked by GuruStatusID). NOT a demo flag (demo is AccountTypeID=2). Default=0. (Tier 2 - DWH_dbo.Dim_PlayerLevel)|
-| 22 | UpdateDate | datetime | NO | ETL metadata: timestamp when this row was inserted. Set to GETDATE(). (Tier 5 -- SP_LimitedAccountsWithReasonsNEW) |
+| 22 | UpdateDate | datetime | NO | ETL metadata: timestamp when this row was inserted. Set to GETDATE(). (Tier 5 -SP_LimitedAccountsWithReasonsNEW) |
 
 ---
 

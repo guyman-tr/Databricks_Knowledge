@@ -48,7 +48,7 @@ BI_DB_dbo.BI_DB_IFRS15_Daily_Balance
 | 9 | USDValue | BI_DB_dbo.BI_DB_PositionPnL + Prices | NOP / ComputedVolumeOpen / ComputedVolumeClose | Metric-dependent: SUM(TotalNOP) for balances, SUM(ComputedVolume) for flows, SUM(TotalZero) for zero metrics, SUM(-FullCommission) for commission metrics | Tier 2 |
 | 10 | UpdateDate | ETL | — | GETDATE() at INSERT time | ETL_METADATA |
 | 11 | IsValidCustomer | DWH_dbo.Fact_SnapshotCustomer | IsValidCustomer | Passthrough; customer validity flag at report date | Tier 2 |
-| 12 | IsCreditReportValidCB | DWH_dbo.Fact_SnapshotCustomer | IsCreditReportValidCB | Passthrough; credit bureau validity at report date | Tier 2 |
+| 12 | IsCreditReportValidCB | DWH_dbo.Fact_SnapshotCustomer | IsCreditReportValidCB | Passthrough; Client_Balance validity at report date | Tier 2 |
 | 13 | IsOutlier | BI_DB_dbo.BI_DB_Outliers_New | RealCID | CASE WHEN RealCID IS NOT NULL THEN 1 ELSE 0; NULL for DLT rows (ExcelOrder 32,33) | Tier 2 |
 | 14 | OutlierTransition | BI_DB_dbo.BI_DB_Outliers_New | Transition | Passthrough; 'NoTransition' when not outlier; NULL for DLT rows | Tier 2 |
 | 15 | TanganyStatus | BI_DB_dbo.BI_DB_Client_Balance_CID_Level_New | TanganyStatus | MAX(TanganyStatus) per CID at @startDateInt | Tier 2 |

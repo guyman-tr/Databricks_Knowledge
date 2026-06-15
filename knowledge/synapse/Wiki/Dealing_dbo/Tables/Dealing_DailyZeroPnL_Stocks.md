@@ -56,32 +56,32 @@ Read-only checks executed **2026-03-21**.
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Date | date | YES | Report date for the zero P&L snapshot. (Tier 2 -- SP_DailyZeroPnL_Stocks, @RepDate) |
-| 2 | HedgeServerID | int | YES | Hedge server identifier for the position set. (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Position.HedgeServerID) |
-| 3 | Industry | varchar(250) | YES | Industry classification of the instrument (from Dim_Instrument). (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Instrument.Industry) |
-| 4 | InstrumentType | varchar(50) | YES | Instrument type string (Stock / ETF). (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Instrument.InstrumentType) |
-| 5 | InstrumentID | int | YES | eToro instrument identifier. (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Instrument.InstrumentID) |
-| 6 | InstrumentDisplayName | varchar(250) | YES | Display name of the instrument. (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Instrument.InstrumentDisplayName) |
-| 7 | StockIndex | varchar(50) | YES | Index membership (e.g., S&P500, NASDAQ) from the static mapping table; NULL if not in any index. (Tier 2 -- SP_DailyZeroPnL_Stocks, BI_DB_dbo.BI_DB_IndexesMapping_Static.IndexName) |
-| 8 | IsManual | tinyint | YES | Flag indicating manual (non-automated) trading positions. (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Position.IsManual) |
-| 9 | Leverage | int | YES | Position leverage tier. (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Position.Leverage) |
-| 10 | IsCFD | tinyint | YES | 1 = CFD position, 0 = Real stocks position. Derived from HedgeServerID or IsSettled flag. (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Position.IsSettled / HedgeServerID) |
-| 11 | Regulation | varchar(50) | YES | Regulatory jurisdiction of the customer (e.g., ASIC, FCA, CySEC). (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Regulation.Name) |
-| 12 | MifID | int | YES | MiFID categorization ID of the customer snapshot. (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Fact_SnapshotCustomer.MifidCategorizationID) |
-| 13 | RealizedCommission | money | YES | Aggregate commission charged on positions closed on the report date. (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Position.CommissionOnClose) |
-| 14 | RealizedZero | money | YES | Realized eToro revenue for positions closed on @RepDate: SUM(NetProfit + CommissionOnClose − PrevDayPnL). (Tier 2 -- SP_DailyZeroPnL_Stocks, BI_DB_dbo.BI_DB_PositionPnL.DailyPnL / NetProfit / CommissionOnClose) |
-| 15 | ChangeInUnrealizedZero | money | YES | Change in unrealized eToro revenue for still-open positions: SUM(DailyPnL + commission adjustment). (Tier 2 -- SP_DailyZeroPnL_Stocks, BI_DB_dbo.BI_DB_PositionPnL.DailyPnL) |
-| 16 | TotalZero | money | YES | RealizedZero + ChangeInUnrealizedZero for the group. (Tier 2 -- SP_DailyZeroPnL_Stocks, computed) |
-| 17 | NOP | money | YES | Net Open Position in USD for open positions in the group. (Tier 2 -- SP_DailyZeroPnL_Stocks, BI_DB_dbo.BI_DB_PositionPnL.NOP via FX conversion) |
-| 18 | OpenPositions | money | YES | Count of open positions in the group (as money type). (Tier 2 -- SP_DailyZeroPnL_Stocks, BI_DB_dbo.BI_DB_PositionPnL) |
-| 19 | NOP_Units | numeric(38,6) | YES | Net open position in instrument units (signed: positive=long, negative=short). (Tier 2 -- SP_DailyZeroPnL_Stocks, BI_DB_dbo.BI_DB_PositionPnL.AmountInUnitsDecimal with sign) |
-| 20 | VolumeOnOpen | bigint | YES | Cumulative open-action volume for positions opened on the report date. (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Position.VolumeOnOpen) |
-| 21 | VolumeOnClose | bigint | YES | Cumulative close-action volume for positions closed on the report date. (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Position.VolumeOnClose) |
-| 22 | OpenPositionValue | money | YES | Aggregated USD value of open positions (units × price). (Tier 2 -- SP_DailyZeroPnL_Stocks, computed from NOP and FX rate) |
-| 23 | UpdateDate | datetime | YES | Batch execution timestamp (GETDATE()). (Tier 3 -- SP_DailyZeroPnL_Stocks, GETDATE()) |
-| 24 | InstrumentName | varchar(100) | YES | Short instrument name/ticker symbol. (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Instrument.Name) |
-| 25 | Units | decimal(16,6) | YES | Net units held across the group's open positions. (Tier 2 -- SP_DailyZeroPnL_Stocks, BI_DB_dbo.BI_DB_PositionPnL.AmountInUnitsDecimal) |
-| 26 | Currency | varchar(50) | YES | Trade currency of the instrument (SellCurrency). (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Instrument.SellCurrency) |
+| 1 | Date | date | YES | Report date for the zero P&L snapshot. (Tier 2 -SP_DailyZeroPnL_Stocks, @RepDate) |
+| 2 | HedgeServerID | int | YES | Hedge server identifier for the position set. (Tier 2 -SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Position.HedgeServerID) |
+| 3 | Industry | varchar(250) | YES | Industry classification of the instrument (from Dim_Instrument). (Tier 2 -SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Instrument.Industry) |
+| 4 | InstrumentType | varchar(50) | YES | Instrument type string (Stock / ETF). (Tier 2 -SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Instrument.InstrumentType) |
+| 5 | InstrumentID | int | YES | eToro instrument identifier. (Tier 2 -SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Instrument.InstrumentID) |
+| 6 | InstrumentDisplayName | varchar(250) | YES | Display name of the instrument. (Tier 2 -SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Instrument.InstrumentDisplayName) |
+| 7 | StockIndex | varchar(50) | YES | Index membership (e.g., S&P500, NASDAQ) from the static mapping table; NULL if not in any index. (Tier 2 -SP_DailyZeroPnL_Stocks, BI_DB_dbo.BI_DB_IndexesMapping_Static.IndexName) |
+| 8 | IsManual | tinyint | YES | Flag indicating manual (non-automated) trading positions. (Tier 2 -SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Position.IsManual) |
+| 9 | Leverage | int | YES | Position leverage tier. (Tier 2 -SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Position.Leverage) |
+| 10 | IsCFD | tinyint | YES | 1 = CFD position, 0 = Real stocks position. Derived from HedgeServerID or IsSettled flag. (Tier 2 -SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Position.IsSettled / HedgeServerID) |
+| 11 | Regulation | varchar(50) | YES | Regulatory jurisdiction of the customer (e.g., ASIC, FCA, CySEC). (Tier 2 -SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Regulation.Name) |
+| 12 | MifID | int | YES | MiFID categorization ID of the customer snapshot. (Tier 2 -SP_DailyZeroPnL_Stocks, DWH_dbo.Fact_SnapshotCustomer.MifidCategorizationID) |
+| 13 | RealizedCommission | money | YES | Aggregate commission charged on positions closed on the report date. (Tier 2 -SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Position.CommissionOnClose) |
+| 14 | RealizedZero | money | YES | Realized eToro revenue for positions closed on @RepDate: SUM(NetProfit + CommissionOnClose − PrevDayPnL). (Tier 2 -SP_DailyZeroPnL_Stocks, BI_DB_dbo.BI_DB_PositionPnL.DailyPnL / NetProfit / CommissionOnClose) |
+| 15 | ChangeInUnrealizedZero | money | YES | Change in unrealized eToro revenue for still-open positions: SUM(DailyPnL + commission adjustment). (Tier 2 -SP_DailyZeroPnL_Stocks, BI_DB_dbo.BI_DB_PositionPnL.DailyPnL) |
+| 16 | TotalZero | money | YES | RealizedZero + ChangeInUnrealizedZero for the group. (Tier 2 -SP_DailyZeroPnL_Stocks, computed) |
+| 17 | NOP | money | YES | Net Open Position in USD for open positions in the group. (Tier 2 -SP_DailyZeroPnL_Stocks, BI_DB_dbo.BI_DB_PositionPnL.NOP via FX conversion) |
+| 18 | OpenPositions | money | YES | Count of open positions in the group (as money type). (Tier 2 -SP_DailyZeroPnL_Stocks, BI_DB_dbo.BI_DB_PositionPnL) |
+| 19 | NOP_Units | numeric(38,6) | YES | Net open position in instrument units (signed: positive=long, negative=short). (Tier 2 -SP_DailyZeroPnL_Stocks, BI_DB_dbo.BI_DB_PositionPnL.AmountInUnitsDecimal with sign) |
+| 20 | VolumeOnOpen | bigint | YES | Cumulative open-action volume for positions opened on the report date. (Tier 2 -SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Position.VolumeOnOpen) |
+| 21 | VolumeOnClose | bigint | YES | Cumulative close-action volume for positions closed on the report date. (Tier 2 -SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Position.VolumeOnClose) |
+| 22 | OpenPositionValue | money | YES | Aggregated USD value of open positions (units × price). (Tier 2 -SP_DailyZeroPnL_Stocks, computed from NOP and FX rate) |
+| 23 | UpdateDate | datetime | YES | Batch execution timestamp (GETDATE()). (Tier 3 -SP_DailyZeroPnL_Stocks, GETDATE()) |
+| 24 | InstrumentName | varchar(100) | YES | Short instrument name/ticker symbol. (Tier 2 -SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Instrument.Name) |
+| 25 | Units | decimal(16,6) | YES | Net units held across the group's open positions. (Tier 2 -SP_DailyZeroPnL_Stocks, BI_DB_dbo.BI_DB_PositionPnL.AmountInUnitsDecimal) |
+| 26 | Currency | varchar(50) | YES | Trade currency of the instrument (SellCurrency). (Tier 2 -SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Instrument.SellCurrency) |
 
 ---
 

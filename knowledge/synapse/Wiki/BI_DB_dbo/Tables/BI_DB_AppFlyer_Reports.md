@@ -210,3 +210,26 @@ AppFlyer records up to 3 contributing touchpoints before the attributed install.
 | `AppName` not constant | Changed across app versions. Do not use as a stable filter — use `EtoroAppID` or `Platform` instead. |
 | `EventTime` as varchar | Stored as string, not datetime. Parse with `TRY_CAST(EventTime AS datetime)` if needed. |
 | No CID column | `CustomerUserID` is hashed — requires mapping to resolve to eToro CIDs. For user-level eToro analytics, join via the CustomerUserID hash mapping table (if available). |
+
+<!-- APPSFLYER_PDF_APPENDIX_2026_06_10 -->
+
+## AppsFlyer field reference (PDF cross-reference)
+
+> Added 2026-06-10 by the one-shot AppsFlyer deployment.
+
+**UC FQN**: `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports`
+
+**Note**: Cleansed Synapse mirror; the SP DROPS `IP` at load. 89 cols (80 vendor + 5 eToro + UpdateDate + 3 etr_*).
+
+The authoritative AppsFlyer-vendor descriptions for every column live in the PDF cross-reference at `proposals/AppsFlyer_Fields.pdf`. The mapping covers every field used in the eToro pipeline against AppsFlyer's documented field name (e.g. `MediaSource <-> media_source`, `Partner <-> af_prt`, `SubParam1..5 <-> af_sub1..5`).
+
+Deployed UC ALTER scripts grounded in the PDF:
+
+| Object | UC ALTER file |
+|---|---|
+| Silver fact (1:1 with PDF) | `knowledge/UC_generated/de_output/Tables/de_output_appsflyer_silver_reports.alter.sql` |
+| Gold mirror (this object's UC face if migrated) | `knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_AppFlyer_Reports.alter.sql` |
+| CID bridge | `knowledge/UC_generated/bi_db/Tables/bronze_marketperformance_tracking_customer.alter.sql` |
+| Permissioned view | `knowledge/UC_generated/bridgeclaw_permitted_data/Views/appflyer_reports.alter.sql` |
+
+The five eToro custom fields (`DateID`, `Date`, `EtoroAppID`, `EtoroAppName`, `EtoroReport`) are not in the AppsFlyer schema - see "Custom eToro Fields (Not in AppsFlyer Documentation)" in the PDF.

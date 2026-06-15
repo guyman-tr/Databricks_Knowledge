@@ -78,14 +78,14 @@ ETL: part of `SP_Dictionaries_DL_To_Synapse` (TRUNCATE + INSERT from `DWH_stagin
 | Stars | Tier | Tag |
 |-------|------|-----|
 | ★★★★ | Tier 1 — Dictionary (upstream wiki) | `(Tier 1 — Dictionary.MifidCategorization)` |
-| ★★★ | Tier 2 -- Synapse SP code / DDL | `(Tier 2 -- SP_Dictionaries_DL_To_Synapse)` |
-| ★★ | Tier 3 -- live data / structure | `(Tier 3 -- live data)` |
+| ★★★ | Tier 2 -- Synapse SP code / DDL | `(Tier 2 -SP_Dictionaries_DL_To_Synapse)` |
+| ★★ | Tier 3 -- live data / structure | `(Tier 3 -live data)` |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | MifidCategorizationID | int | NO | MiFID II client classification tier: 0=None (non-EU), 1=Retail (full protection, default), 2=Professional (reduced protection), 3=Elective Professional (opted-in retail), 4=Retail Pending (under review), 5=Pending (assessment incomplete). Referenced by BackOffice.Customer.MifidCategorizationID (FK, DEFAULT 1) and History.BackOfficeCustomer. Feeds into computed column TradingRiskStatusID. (Tier 1 — Dictionary.MifidCategorization) |
 | 2 | Name | varchar | YES | Human-readable classification label. Used in compliance dashboards and regulatory reports. (Tier 1 — Dictionary.MifidCategorization) |
-| 3 | UpdateDate | datetime | YES | ETL load timestamp -- GETDATE() at load time. Does not reflect production modification date. (Tier 2 -- SP_Dictionaries_DL_To_Synapse) |
+| 3 | UpdateDate | datetime | YES | ETL load timestamp -- GETDATE() at load time. Does not reflect production modification date. (Tier 2 -SP_Dictionaries_DL_To_Synapse) |
 
 ---
 

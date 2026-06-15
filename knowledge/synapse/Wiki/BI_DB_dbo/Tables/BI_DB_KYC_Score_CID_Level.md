@@ -127,17 +127,17 @@ HASH(RealCID) with CLUSTERED INDEX on UpdateDate ASC. Efficient for single-custo
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | RealCID | int | YES | Customer ID. One row per customer. FK to Dim_Customer.RealCID. Distribution key. (Tier 2 -- SP_KYC_Score_CID_Level via BI_DB_KYC_Panel) |
-| 2 | Q11_Answer_Grouped_IND | int | NO | Liquid assets group index from KYC Q11 (Liquid Assets). 1='Up to $10K', 2='$10K-$50K & $1M-$5M', 3='$50K-$1M', 99='Not_Answered'. (Tier 2 -- SP_KYC_Score_CID_Level) |
-| 3 | Q11_Answer_Grouped | varchar(19) | NO | Liquid assets group label. Maps from Q11_Answer_Grouped_IND. Values: 'Up to $10K', '$10K-$50K & $1M-$5M', '$50K-$1M', 'Not_Answered'. (Tier 2 -- SP_KYC_Score_CID_Level) |
-| 4 | Age_On_Reg_Grouped_IND | int | NO | Age at registration group index. 1='up to 26', 2='between 27 and 34', 3='Above 35', 99='Not_Answered'. (Tier 2 -- SP_KYC_Score_CID_Level) |
-| 5 | Age_On_Reg_Grouped | varchar(17) | NO | Age at registration group label. Maps from Age_On_Reg_Grouped_IND. Values: 'up to 26', 'between 27 and 34', 'Above 35', 'Not_Answered'. (Tier 2 -- SP_KYC_Score_CID_Level) |
-| 6 | Max(33,35)_IND | int | NO | Trading experience group index. MAX across Q33 (Equities experience), Q35 (CFDs experience), Q2 (general). 1='Never traded', 2='0-10 times/Less than 1 Year', 3='10-20/10-40 times/1-3 Years', 4='Above 20/40 times/3+ years', 99='Not_Answered'. (Tier 2 -- SP_KYC_Score_CID_Level) |
-| 7 | Max(33,35) | varchar(50) | YES | Trading experience group label. Values: 'Never traded', '0-10 times / Less than 1 Year', '10-20 Or 10-40 times / Between 1-3 Years', 'Above 20 Or 40 times / More than 3 years', 'Not_Answered'. (Tier 2 -- SP_KYC_Score_CID_Level) |
-| 8 | Revenue30days | decimal(38,2) | YES | Customer's 30-day revenue from BI_DB_KYC_Panel. In USD. NULL if no trading activity. (Tier 2 -- SP_KYC_Score_CID_Level via BI_DB_KYC_Panel) |
-| 9 | Reg_Date | date | YES | Customer registration date from BI_DB_KYC_Panel. (Tier 2 -- SP_KYC_Score_CID_Level via BI_DB_KYC_Panel) |
-| 10 | Cluster | nvarchar(50) | NO | Behavioral cluster assignment. Looked up from Rev_Cluster_Dict via 3-way key (Q11_IND, Age_IND, Max33_35_IND). Values: '1'-'10' or 'No Cluster'. Cluster 1 largest (30%). (Tier 2 -- SP_KYC_Score_CID_Level via Rev_Cluster_Dict) |
-| 11 | UpdateDate | datetime | NO | ETL metadata: timestamp of last TRUNCATE+INSERT. All rows share the same value. Set to GETDATE(). (Tier 5 -- SP_KYC_Score_CID_Level) |
+| 1 | RealCID | int | YES | Customer ID. One row per customer. FK to Dim_Customer.RealCID. Distribution key. (Tier 2 -SP_KYC_Score_CID_Level via BI_DB_KYC_Panel) |
+| 2 | Q11_Answer_Grouped_IND | int | NO | Liquid assets group index from KYC Q11 (Liquid Assets). 1='Up to $10K', 2='$10K-$50K & $1M-$5M', 3='$50K-$1M', 99='Not_Answered'. (Tier 2 -SP_KYC_Score_CID_Level) |
+| 3 | Q11_Answer_Grouped | varchar(19) | NO | Liquid assets group label. Maps from Q11_Answer_Grouped_IND. Values: 'Up to $10K', '$10K-$50K & $1M-$5M', '$50K-$1M', 'Not_Answered'. (Tier 2 -SP_KYC_Score_CID_Level) |
+| 4 | Age_On_Reg_Grouped_IND | int | NO | Age at registration group index. 1='up to 26', 2='between 27 and 34', 3='Above 35', 99='Not_Answered'. (Tier 2 -SP_KYC_Score_CID_Level) |
+| 5 | Age_On_Reg_Grouped | varchar(17) | NO | Age at registration group label. Maps from Age_On_Reg_Grouped_IND. Values: 'up to 26', 'between 27 and 34', 'Above 35', 'Not_Answered'. (Tier 2 -SP_KYC_Score_CID_Level) |
+| 6 | Max(33,35)_IND | int | NO | Trading experience group index. MAX across Q33 (Equities experience), Q35 (CFDs experience), Q2 (general). 1='Never traded', 2='0-10 times/Less than 1 Year', 3='10-20/10-40 times/1-3 Years', 4='Above 20/40 times/3+ years', 99='Not_Answered'. (Tier 2 -SP_KYC_Score_CID_Level) |
+| 7 | Max(33,35) | varchar(50) | YES | Trading experience group label. Values: 'Never traded', '0-10 times / Less than 1 Year', '10-20 Or 10-40 times / Between 1-3 Years', 'Above 20 Or 40 times / More than 3 years', 'Not_Answered'. (Tier 2 -SP_KYC_Score_CID_Level) |
+| 8 | Revenue30days | decimal(38,2) | YES | Customer's 30-day revenue from BI_DB_KYC_Panel. In USD. NULL if no trading activity. (Tier 2 -SP_KYC_Score_CID_Level via BI_DB_KYC_Panel) |
+| 9 | Reg_Date | date | YES | Customer registration date from BI_DB_KYC_Panel. (Tier 2 -SP_KYC_Score_CID_Level via BI_DB_KYC_Panel) |
+| 10 | Cluster | nvarchar(50) | NO | Behavioral cluster assignment. Looked up from Rev_Cluster_Dict via 3-way key (Q11_IND, Age_IND, Max33_35_IND). Values: '1'-'10' or 'No Cluster'. Cluster 1 largest (30%). (Tier 2 -SP_KYC_Score_CID_Level via Rev_Cluster_Dict) |
+| 11 | UpdateDate | datetime | NO | ETL metadata: timestamp of last TRUNCATE+INSERT. All rows share the same value. Set to GETDATE(). (Tier 5 -SP_KYC_Score_CID_Level) |
 
 ---
 

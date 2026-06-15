@@ -38,7 +38,7 @@ DDR metrics for **the single calendar day `@edate` only** (not month-to-date). T
 
 | # | Column | Source | Transformation | Tier |
 |---|--------|--------|----------------|------|
-| 1 | DateID | BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status.DateID | Direct | T1 |
+| 1 | DateID | BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status.DateID | `@dateID` (`YYYYMMDD`) — partition / delete key for the narrow table. (Tier 2 — SP_DDR_Customer_Daily_Status) (via BI_DB_DDR_Customer_Daily_Status) | T1 |
 | 2 | FirstActionType | BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status.FirstActionType | MAX(FirstActionType) in PERIODIC CTE; output GROUP BY dimension | T2 |
 | 3 | RegulationID | BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status.RegulationID | MAX(RegulationID) in PERIODIC CTE; output GROUP BY dimension | T2 |
 | 4 | IsCreditReportValidCB | BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status.IsCreditReportValidCB | MAX(IsCreditReportValidCB) in PERIODIC CTE; output GROUP BY dimension | T2 |

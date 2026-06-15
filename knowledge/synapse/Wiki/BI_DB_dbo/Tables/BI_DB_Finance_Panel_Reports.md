@@ -40,44 +40,44 @@ Supports **UK regulatory panel** submissions: multi-currency notionals (USD/GBP/
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Position_Phase | varchar(50) | YES | Event class: `Open_Position` (opens + settlement-change rows) or `Close_Position`. (Tier 2 -- SP_Finance_Panel_Reports, literal.Open_Position / Close_Position) |
-| 2 | DateID | int | YES | Reporting date as `YYYYMMDD` int; aligns to open, close, or change date per phase. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.OpenDateID / CloseDateID or #IsSettled_Changes_Final.ChangedDateID) |
-| 3 | EOW | date | YES | Week-ending date derived from the phase `Occurred` date (`OpenOccurred`, `CloseOccurred`, or `ChangedOccurred`). (Tier 2 -- SP_Finance_Panel_Reports, computed from Dim_Position / ChangeLog occurred) |
-| 4 | EOM | date | YES | Calendar month-end date (`EOMONTH`) for the phase occurred date. (Tier 2 -- SP_Finance_Panel_Reports, computed.EOMONTH) |
-| 5 | HedgeServerID | int | YES | Execution/hedge server on the position; drives stamp-duty multiplier (125/126). (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.HedgeServerID) |
-| 6 | ISINCountryCode | varchar(50) | YES | Parsed ISO segment from `Dim_Instrument.ISINCode` (2- or 3-char); `'-'` when ISIN missing/too short. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Instrument.ISINCode) |
-| 7 | InstrumentTypeID | int | YES | Instrument type; filtered to 5 and 6 in SP. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Instrument.InstrumentTypeID) |
-| 8 | InstrumentTypeName | varchar(50) | YES | Instrument type label. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Instrument.InstrumentType) |
-| 9 | InstrumentID | int | YES | Instrument identifier. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Instrument.InstrumentID) |
-| 10 | InstrumentName | varchar(50) | YES | Instrument display name. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Instrument.Name) |
-| 11 | CID | bigint | YES | Customer ID on the position. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.CID) |
-| 12 | PositionID | bigint | YES | Platform position identifier. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.PositionID) |
+| 1 | Position_Phase | varchar(50) | YES | Event class: `Open_Position` (opens + settlement-change rows) or `Close_Position`. (Tier 2 -SP_Finance_Panel_Reports, literal.Open_Position / Close_Position) |
+| 2 | DateID | int | YES | Reporting date as `YYYYMMDD` int; aligns to open, close, or change date per phase. (Tier 2 -SP_Finance_Panel_Reports, Dim_Position.OpenDateID / CloseDateID or #IsSettled_Changes_Final.ChangedDateID) |
+| 3 | EOW | date | YES | Week-ending date derived from the phase `Occurred` date (`OpenOccurred`, `CloseOccurred`, or `ChangedOccurred`). (Tier 2 -SP_Finance_Panel_Reports, computed from Dim_Position / ChangeLog occurred) |
+| 4 | EOM | date | YES | Calendar month-end date (`EOMONTH`) for the phase occurred date. (Tier 2 -SP_Finance_Panel_Reports, computed.EOMONTH) |
+| 5 | HedgeServerID | int | YES | Execution/hedge server on the position; drives stamp-duty multiplier (125/126). (Tier 2 -SP_Finance_Panel_Reports, Dim_Position.HedgeServerID) |
+| 6 | ISINCountryCode | varchar(50) | YES | Parsed ISO segment from `Dim_Instrument.ISINCode` (2- or 3-char); `'-'` when ISIN missing/too short. (Tier 2 -SP_Finance_Panel_Reports, Dim_Instrument.ISINCode) |
+| 7 | InstrumentTypeID | int | YES | Instrument type; filtered to 5 and 6 in SP. (Tier 2 -SP_Finance_Panel_Reports, Dim_Instrument.InstrumentTypeID) |
+| 8 | InstrumentTypeName | varchar(50) | YES | Instrument type label. (Tier 2 -SP_Finance_Panel_Reports, Dim_Instrument.InstrumentType) |
+| 9 | InstrumentID | int | YES | Instrument identifier. (Tier 2 -SP_Finance_Panel_Reports, Dim_Instrument.InstrumentID) |
+| 10 | InstrumentName | varchar(50) | YES | Instrument display name. (Tier 2 -SP_Finance_Panel_Reports, Dim_Instrument.Name) |
+| 11 | CID | bigint | YES | Customer ID on the position. (Tier 2 -SP_Finance_Panel_Reports, Dim_Position.CID) |
+| 12 | PositionID | bigint | YES | Platform position identifier. (Tier 2 -SP_Finance_Panel_Reports, Dim_Position.PositionID) |
 | 13 | IsSettled_OnOpen | int | YES | 1 = real asset, 0 = CFD asset; `-1` when not applicable. From `Fact_CustomerAction` for open-day actions (types 1–3). (Tier 5 — Expert Review) |
 | 14 | IsSettled_OnClose | int | YES | 1 = real asset, 0 = CFD asset; `-1` when not applicable. From `Dim_Position` on close rows. (Tier 5 — Expert Review) |
-| 15 | Leverage | int | YES | Position leverage from `Dim_Position` (change path may join position for consistency). (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.Leverage) |
-| 16 | SellCurrencyID | int | YES | Quote/sell currency id for FX conversion routing. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Instrument.SellCurrencyID) |
-| 17 | SellCurrency | varchar(50) | YES | Sell currency code/name from dimension. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Instrument.SellCurrency) |
-| 18 | Amount_OnOpen_USD | money | YES | Open notional in USD: `InitialAmountCents/100` on opens; change path uses `NewAmount` from change log; zero on pure closes. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.InitialAmountCents / Dim_PositionChangeLog.NewAmount) |
-| 19 | Amount_OnOpen_GBP | money | YES | Open amount converted to GBP via instrument 2 ask when `SellCurrencyID` in (666,3); else 0. (Tier 2 -- SP_Finance_Panel_Reports, #Prices.Ask where InstrumentID=2) |
-| 20 | Amount_OnOpen_EUR | money | YES | Open amount converted to EUR via instrument 1 ask when `SellCurrencyID` = 2; else 0. (Tier 2 -- SP_Finance_Panel_Reports, #Prices.Ask where InstrumentID=1) |
-| 21 | Notional_Value | money | YES | Open: `AmountInUnitsDecimal / InitForexRate` (zero if `InitForexRate` = 0); close: `AmountInUnitsDecimal * EndForexRate`; change: open USD × leverage. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.AmountInUnitsDecimal / InitForexRate / EndForexRate) |
-| 22 | Amount_OnClose_USD | money | YES | Close-row USD amount from `Dim_Position.Amount`; zero on open/change rows. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.Amount) |
-| 23 | Amount_OnClose_GBP | money | YES | Close amount in GBP via instrument 2 ask when `SellCurrencyID` in (666,3). (Tier 2 -- SP_Finance_Panel_Reports, #Prices.Ask InstrumentID=2) |
-| 24 | Amount_OnClose_EUR | money | YES | Close amount in EUR via instrument 1 ask when `SellCurrencyID` = 2. (Tier 2 -- SP_Finance_Panel_Reports, #Prices.Ask InstrumentID=1) |
-| 25 | RegulationID_OnOpen | int | YES | Regulation at open from `Dim_Position.RegulationIDOnOpen`; `-1` on closes. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.RegulationIDOnOpen) |
-| 26 | RegulationName_OnOpen | varchar(50) | YES | Regulation name for open; `'N/A'` when not applicable. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Regulation.Name) |
-| 27 | RegulationID_OnClose | int | YES | On closes: `Fact_SnapshotCustomer.RegulationID`; `-1` on opens/changes. (Tier 2 -- SP_Finance_Panel_Reports, Fact_SnapshotCustomer.RegulationID) |
-| 28 | RegulationName_OnClose | varchar(50) | YES | Regulation name on close from customer snapshot; `'N/A'` when not applicable. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Regulation.Name) |
-| 29 | Is_Copy | int | YES | `1` if `MirrorID <> 0` (copy/mirror position), else `0`. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.MirrorID) |
-| 30 | Position_Quantity | int | YES | Always `1` in SP (one logical position row per event). (Tier 2 -- SP_Finance_Panel_Reports, literal.1) |
-| 31 | Is_Stamp_Duty | int | YES | Flag when stamp-duty conditions met (settlement + instrument types 5/6, with extra guards on change path vs prior rows). (Tier 2 -- SP_Finance_Panel_Reports, computed from IsSettled / InstrumentTypeID) |
-| 32 | Is_MP | int | YES | `1` for main portfolio (`MirrorID` null or 0), else `0`. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.MirrorID) |
-| 33 | UpdateDate | datetime | YES | Row load timestamp. (Tier 3 -- SP_Finance_Panel_Reports, GETDATE()) |
-| 34 | DateOccurred | date | YES | Calendar date of open, close, or settlement change. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.OpenOccurred / CloseOccurred / Dim_PositionChangeLog.Occurred) |
-| 35 | ISINCode | char(30) | YES | Raw ISIN from instrument dimension. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Instrument.ISINCode) |
-| 36 | Units_OnOpen | decimal(16,6) | YES | Units at open: `InitialUnits` on opens/changes; `0` on closes. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.InitialUnits / Dim_PositionChangeLog path AmountInUnits) |
-| 37 | Units_OnClose | decimal(16,6) | YES | Units at close: `AmountInUnitsDecimal` on closes; `0` on opens/changes. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.AmountInUnitsDecimal) |
-| 38 | Total_Stamp_Duty | money | YES | Stamp duty estimate: `0.005` × amount × multiplier 3 (server 126) or 2 (server 125), else 0. (Tier 2 -- SP_Finance_Panel_Reports, computed from Dim_Position.HedgeServerID and InitialAmountCents or Amount) |
+| 15 | Leverage | int | YES | Position leverage from `Dim_Position` (change path may join position for consistency). (Tier 2 -SP_Finance_Panel_Reports, Dim_Position.Leverage) |
+| 16 | SellCurrencyID | int | YES | Quote/sell currency id for FX conversion routing. (Tier 2 -SP_Finance_Panel_Reports, Dim_Instrument.SellCurrencyID) |
+| 17 | SellCurrency | varchar(50) | YES | Sell currency code/name from dimension. (Tier 2 -SP_Finance_Panel_Reports, Dim_Instrument.SellCurrency) |
+| 18 | Amount_OnOpen_USD | money | YES | Open notional in USD: `InitialAmountCents/100` on opens; change path uses `NewAmount` from change log; zero on pure closes. (Tier 2 -SP_Finance_Panel_Reports, Dim_Position.InitialAmountCents / Dim_PositionChangeLog.NewAmount) |
+| 19 | Amount_OnOpen_GBP | money | YES | Open amount converted to GBP via instrument 2 ask when `SellCurrencyID` in (666,3); else 0. (Tier 2 -SP_Finance_Panel_Reports, #Prices.Ask where InstrumentID=2) |
+| 20 | Amount_OnOpen_EUR | money | YES | Open amount converted to EUR via instrument 1 ask when `SellCurrencyID` = 2; else 0. (Tier 2 -SP_Finance_Panel_Reports, #Prices.Ask where InstrumentID=1) |
+| 21 | Notional_Value | money | YES | Open: `AmountInUnitsDecimal / InitForexRate` (zero if `InitForexRate` = 0); close: `AmountInUnitsDecimal * EndForexRate`; change: open USD × leverage. (Tier 2 -SP_Finance_Panel_Reports, Dim_Position.AmountInUnitsDecimal / InitForexRate / EndForexRate) |
+| 22 | Amount_OnClose_USD | money | YES | Close-row USD amount from `Dim_Position.Amount`; zero on open/change rows. (Tier 2 -SP_Finance_Panel_Reports, Dim_Position.Amount) |
+| 23 | Amount_OnClose_GBP | money | YES | Close amount in GBP via instrument 2 ask when `SellCurrencyID` in (666,3). (Tier 2 -SP_Finance_Panel_Reports, #Prices.Ask InstrumentID=2) |
+| 24 | Amount_OnClose_EUR | money | YES | Close amount in EUR via instrument 1 ask when `SellCurrencyID` = 2. (Tier 2 -SP_Finance_Panel_Reports, #Prices.Ask InstrumentID=1) |
+| 25 | RegulationID_OnOpen | int | YES | Regulation at open from `Dim_Position.RegulationIDOnOpen`; `-1` on closes. (Tier 2 -SP_Finance_Panel_Reports, Dim_Position.RegulationIDOnOpen) |
+| 26 | RegulationName_OnOpen | varchar(50) | YES | Regulation name for open; `'N/A'` when not applicable. (Tier 2 -SP_Finance_Panel_Reports, Dim_Regulation.Name) |
+| 27 | RegulationID_OnClose | int | YES | On closes: `Fact_SnapshotCustomer.RegulationID`; `-1` on opens/changes. (Tier 2 -SP_Finance_Panel_Reports, Fact_SnapshotCustomer.RegulationID) |
+| 28 | RegulationName_OnClose | varchar(50) | YES | Regulation name on close from customer snapshot; `'N/A'` when not applicable. (Tier 2 -SP_Finance_Panel_Reports, Dim_Regulation.Name) |
+| 29 | Is_Copy | int | YES | `1` if `MirrorID <> 0` (copy/mirror position), else `0`. (Tier 2 -SP_Finance_Panel_Reports, Dim_Position.MirrorID) |
+| 30 | Position_Quantity | int | YES | Always `1` in SP (one logical position row per event). (Tier 2 -SP_Finance_Panel_Reports, literal.1) |
+| 31 | Is_Stamp_Duty | int | YES | Flag when stamp-duty conditions met (settlement + instrument types 5/6, with extra guards on change path vs prior rows). (Tier 2 -SP_Finance_Panel_Reports, computed from IsSettled / InstrumentTypeID) |
+| 32 | Is_MP | int | YES | `1` for main portfolio (`MirrorID` null or 0), else `0`. (Tier 2 -SP_Finance_Panel_Reports, Dim_Position.MirrorID) |
+| 33 | UpdateDate | datetime | YES | Row load timestamp. (Tier 3 -SP_Finance_Panel_Reports, GETDATE()) |
+| 34 | DateOccurred | date | YES | Calendar date of open, close, or settlement change. (Tier 2 -SP_Finance_Panel_Reports, Dim_Position.OpenOccurred / CloseOccurred / Dim_PositionChangeLog.Occurred) |
+| 35 | ISINCode | char(30) | YES | Raw ISIN from instrument dimension. (Tier 2 -SP_Finance_Panel_Reports, Dim_Instrument.ISINCode) |
+| 36 | Units_OnOpen | decimal(16,6) | YES | Units at open: `InitialUnits` on opens/changes; `0` on closes. (Tier 2 -SP_Finance_Panel_Reports, Dim_Position.InitialUnits / Dim_PositionChangeLog path AmountInUnits) |
+| 37 | Units_OnClose | decimal(16,6) | YES | Units at close: `AmountInUnitsDecimal` on closes; `0` on opens/changes. (Tier 2 -SP_Finance_Panel_Reports, Dim_Position.AmountInUnitsDecimal) |
+| 38 | Total_Stamp_Duty | money | YES | Stamp duty estimate: `0.005` × amount × multiplier 3 (server 126) or 2 (server 125), else 0. (Tier 2 -SP_Finance_Panel_Reports, computed from Dim_Position.HedgeServerID and InitialAmountCents or Amount) |
 
 ---
 

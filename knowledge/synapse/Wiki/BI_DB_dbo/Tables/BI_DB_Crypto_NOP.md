@@ -40,44 +40,44 @@ Daily **instrument-level crypto net open position (NOP)** and related units, equ
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Date | date | NO | As-of business date for the load; equals SP parameter `@Date`. Live samples show daily loads through **2026-03-19**. (Tier 2 -- SP_Crypto_NOP, @Date) |
-| 2 | Regulation | varchar(50) | YES | Regulation name from `Dim_Regulation.Name` via `Fact_SnapshotCustomer.RegulationID` in `#fsc`. Live 7-day data: highest row counts **CySEC**, **FCA**, **FSA Seychelles**, **ASIC & GAML**, **FSRA**, **FinCEN+FINRA**, **BVI**, **ASIC**, **FinCEN**, **eToroUS**. (Tier 2 -- SP_Crypto_NOP, Dim_Regulation.Name) |
-| 3 | Label | varchar(50) | NO | Broker / entity label from `Dim_Label.Name` via `Fact_SnapshotCustomer.LabelID`. Live 7-day: **eToro** dominates; smaller volumes include **eToroRussia**, **ILQ**, **Royal-CM**, **JCLyons**, **eToroUSA**, **Dealing**, **ICMarkets**, **eToroChina**, **RetailFX**. (Tier 2 -- SP_Crypto_NOP, Dim_Label.Name) |
-| 4 | InstrumentID | int | NO | Crypto instrument key; filtered to `Dim_Instrument.InstrumentTypeID = 10` in `#pnl_posDist`. (Tier 2 -- SP_Crypto_NOP, Dim_Instrument.InstrumentID) |
-| 5 | InstrumentName | varchar(50) | NO | Instrument display name from `BI_DB_PositionPnL` / `Dim_Instrument.Name`. Live 7-day row counts top instruments include **BTC/USD**, **ETH/USD**, **XRP/USD**, **ADA/USD**, **SOL/USD**, **DOGE/USD**, **XLM/USD**, **TRX/USD**, **SHIBxM/USD**, **LINK/USD**. (Tier 2 -- SP_Crypto_NOP, Dim_Instrument.Name) |
-| 6 | Real_NOP | numeric(38,6) | YES | Sum of NOP on settled real positions (`IsSettled = 1`) from `#pos_new`. (Tier 2 -- SP_Crypto_NOP, BI_DB_PositionPnL.NOP) |
-| 7 | CFD_NOP | numeric(38,6) | YES | Sum of NOP on CFD positions (`IsSettled = 0`). (Tier 2 -- SP_Crypto_NOP, BI_DB_PositionPnL.NOP) |
-| 8 | Total_NOP | numeric(38,6) | YES | `SUM(NOP_CFD) + SUM(NOP_Real)` at instrument grain; does not add TRS into this field. (Tier 2 -- SP_Crypto_NOP, computed) |
-| 9 | Real_Units | decimal(38,6) | YES | Sum of `AmountInUnitsDecimal` where `IsSettled = 1`. (Tier 2 -- SP_Crypto_NOP, BI_DB_PositionPnL.AmountInUnitsDecimal) |
-| 10 | CFD_Units | decimal(38,6) | YES | Sum of `AmountInUnitsDecimal` where `IsSettled = 0`. (Tier 2 -- SP_Crypto_NOP, BI_DB_PositionPnL.AmountInUnitsDecimal) |
-| 11 | Total_Units | decimal(38,6) | YES | Sum of all `AmountInUnitsDecimal` for the grain. (Tier 2 -- SP_Crypto_NOP, BI_DB_PositionPnL.AmountInUnitsDecimal) |
-| 12 | EOD_Bid_Price | numeric(36,12) | YES | End-of-day bid (spreaded) from `Fact_CurrencyPriceWithSplit.BidSpreaded` for the instrument on `@DateID`; `MAX` in aggregate. (Tier 2 -- SP_Crypto_NOP, Fact_CurrencyPriceWithSplit.BidSpreaded) |
-| 13 | UpdateDate | datetime | NO | Row load timestamp. `GETDATE()` at insert. (Tier 3 -- SP_Crypto_NOP, GETDATE()) |
-| 14 | Leverage | int | YES | Position leverage from `BI_DB_PositionPnL` / `#pos`. (Tier 2 -- SP_Crypto_NOP, BI_DB_PositionPnL.Leverage) |
-| 15 | EquityCFD | money | YES | Rounded sum of CFD equity (`Amount + PositionPnL` when `IsSettled = 0`). (Tier 2 -- SP_Crypto_NOP, computed) |
-| 16 | EquityReal | money | YES | Rounded sum of real equity (`Amount + PositionPnL` when `IsSettled = 1`). (Tier 2 -- SP_Crypto_NOP, computed) |
-| 17 | IsBuy | bit | YES | Position direction from open snapshot (`Dim_Position` / `#pos`). Live 7-day: rows with **IsBuy** = 1 greatly exceed **IsBuy** = 0. (Tier 2 -- SP_Crypto_NOP, Dim_Position.IsBuy) |
-| 18 | MifidCategorizationID | int | YES | MiFID categorization key from `Fact_SnapshotCustomer`. (Tier 2 -- SP_Crypto_NOP, Fact_SnapshotCustomer.MifidCategorizationID) |
-| 19 | MifidCategorization | char(50) | YES | MiFID categorization name from `Dim_MifidCategorization.Name`. (Tier 2 -- SP_Crypto_NOP, Dim_MifidCategorization.Name) |
-| 20 | AccountTypeID | int | YES | Account type key from `Fact_SnapshotCustomer`. (Tier 2 -- SP_Crypto_NOP, Fact_SnapshotCustomer.AccountTypeID) |
-| 21 | AccountType | char(50) | YES | Account type name from `Dim_AccountType.Name`. (Tier 2 -- SP_Crypto_NOP, Dim_AccountType.Name) |
-| 22 | PlayerLevelID | int | YES | Player level key from `Fact_SnapshotCustomer`. (Tier 2 -- SP_Crypto_NOP, Fact_SnapshotCustomer.PlayerLevelID) |
-| 23 | Club | char(50) | YES | Club name from `Dim_PlayerLevel.Name`. (Tier 2 -- SP_Crypto_NOP, Dim_PlayerLevel.Name) |
-| 24 | PlayerStatusID | int | YES | Player status key from `Fact_SnapshotCustomer`. (Tier 2 -- SP_Crypto_NOP, Fact_SnapshotCustomer.PlayerStatusID) |
-| 25 | PlayerStatus | char(50) | YES | Player status name from `Dim_PlayerStatus.Name`. (Tier 2 -- SP_Crypto_NOP, Dim_PlayerStatus.Name) |
-| 26 | IsGermanBaFin | bit | YES | `1` if customer appears in `BI_DB_dbo.V_GermanBaFin` for `@DateID`. (Tier 2 -- SP_Crypto_NOP, V_GermanBaFin) |
-| 27 | IsCreditReportValidCB | bit | YES | Credit report validity flag from `Fact_SnapshotCustomer`. (Tier 2 -- SP_Crypto_NOP, Fact_SnapshotCustomer.IsCreditReportValidCB) |
-| 28 | Total_NOP_ReversedUnits | decimal(16,6) | YES | `Total_NOP / BidSpreaded` when `Dim_Instrument.InstrumentTypeID = 10`, else 0; **BidSpreaded** from **#reversed_units** (USD leg price). Often **NULL** in live samples when the reversed-pair price is missing. (Tier 2 -- SP_Crypto_NOP, computed) |
-| 29 | CountryName | varchar(50) | YES | Country from `Dim_Country.Name` via `Fact_SnapshotCustomer.CountryID`. (Tier 2 -- SP_Crypto_NOP, Dim_Country.Name) |
-| 30 | NewUsers | bit | YES | `1` when `Dim_Customer.RegisteredReal >= '2022-02-08'`, else `0`. (Tier 2 -- SP_Crypto_NOP, Dim_Customer.RegisteredReal) |
-| 31 | BuyCurrency | varchar(50) | YES | Instrument buy currency from `Dim_Instrument.BuyCurrency` (joined on final insert); live rows show codes such as **STRK**, **BONKxM** aligned to the pair. (Tier 2 -- SP_Crypto_NOP, Dim_Instrument.BuyCurrency) |
-| 32 | TRS_NOP | money | YES | Sum of NOP where `SettlementTypeID = 2`. (Tier 2 -- SP_Crypto_NOP, BI_DB_PositionPnL.NOP) |
-| 33 | TRS_Units | numeric(16,6) | YES | Sum of units where `SettlementTypeID = 2`. (Tier 2 -- SP_Crypto_NOP, BI_DB_PositionPnL.AmountInUnitsDecimal) |
-| 34 | EquityTRS | money | YES | Rounded sum of TRS equity (`Amount + PositionPnL` when `SettlementTypeID = 2`). (Tier 2 -- SP_Crypto_NOP, computed) |
-| 35 | TanganyStatus | varchar(20) | YES | Custodian status label from `External_UserApiDB_Dictionary_TanganyStatus.Name` via `Dim_Customer.TanganyStatusID`. Live 7-day: mostly **NULL**; non-null top values **Inactive**, **MicaCustomer**, **Customer**, **Internal**, **ConsentCustomer**. (Tier 2 -- SP_Crypto_NOP, External_UserApiDB_Dictionary_TanganyStatus.Name) |
-| 36 | Real_Units_Staking_OptIn | decimal(38,6) | YES | Subset of real units per crypto staking enrolment rules (branch differs for ETH/USD vs other pairs); live rows show split vs **Real_Units_Staking_OptOut** summing to **Real_Units** where applicable. (Tier 2 -- SP_Crypto_NOP, computed) |
-| 37 | Real_Units_Staking_OptOut | decimal(38,6) | YES | Complement slice of real units for staking opt-in/out logic. (Tier 2 -- SP_Crypto_NOP, computed) |
-| 38 | IsDLTUser | int | YES | DLT user flag: `1` if `DltStatusID = 4` on snapshot customer, else `0`. (Tier 2 -- SP_Crypto_NOP, Fact_SnapshotCustomer.DltStatusID) |
+| 1 | Date | date | NO | As-of business date for the load; equals SP parameter `@Date`. Live samples show daily loads through **2026-03-19**. (Tier 2 -SP_Crypto_NOP, @Date) |
+| 2 | Regulation | varchar(50) | YES | Regulation name from `Dim_Regulation.Name` via `Fact_SnapshotCustomer.RegulationID` in `#fsc`. Live 7-day data: highest row counts **CySEC**, **FCA**, **FSA Seychelles**, **ASIC & GAML**, **FSRA**, **FinCEN+FINRA**, **BVI**, **ASIC**, **FinCEN**, **eToroUS**. (Tier 2 -SP_Crypto_NOP, Dim_Regulation.Name) |
+| 3 | Label | varchar(50) | NO | Broker / entity label from `Dim_Label.Name` via `Fact_SnapshotCustomer.LabelID`. Live 7-day: **eToro** dominates; smaller volumes include **eToroRussia**, **ILQ**, **Royal-CM**, **JCLyons**, **eToroUSA**, **Dealing**, **ICMarkets**, **eToroChina**, **RetailFX**. (Tier 2 -SP_Crypto_NOP, Dim_Label.Name) |
+| 4 | InstrumentID | int | NO | Crypto instrument key; filtered to `Dim_Instrument.InstrumentTypeID = 10` in `#pnl_posDist`. (Tier 2 -SP_Crypto_NOP, Dim_Instrument.InstrumentID) |
+| 5 | InstrumentName | varchar(50) | NO | Instrument display name from `BI_DB_PositionPnL` / `Dim_Instrument.Name`. Live 7-day row counts top instruments include **BTC/USD**, **ETH/USD**, **XRP/USD**, **ADA/USD**, **SOL/USD**, **DOGE/USD**, **XLM/USD**, **TRX/USD**, **SHIBxM/USD**, **LINK/USD**. (Tier 2 -SP_Crypto_NOP, Dim_Instrument.Name) |
+| 6 | Real_NOP | numeric(38,6) | YES | Sum of NOP on settled real positions (`IsSettled = 1`) from `#pos_new`. (Tier 2 -SP_Crypto_NOP, BI_DB_PositionPnL.NOP) |
+| 7 | CFD_NOP | numeric(38,6) | YES | Sum of NOP on CFD positions (`IsSettled = 0`). (Tier 2 -SP_Crypto_NOP, BI_DB_PositionPnL.NOP) |
+| 8 | Total_NOP | numeric(38,6) | YES | `SUM(NOP_CFD) + SUM(NOP_Real)` at instrument grain; does not add TRS into this field. (Tier 2 -SP_Crypto_NOP, computed) |
+| 9 | Real_Units | decimal(38,6) | YES | Sum of `AmountInUnitsDecimal` where `IsSettled = 1`. (Tier 2 -SP_Crypto_NOP, BI_DB_PositionPnL.AmountInUnitsDecimal) |
+| 10 | CFD_Units | decimal(38,6) | YES | Sum of `AmountInUnitsDecimal` where `IsSettled = 0`. (Tier 2 -SP_Crypto_NOP, BI_DB_PositionPnL.AmountInUnitsDecimal) |
+| 11 | Total_Units | decimal(38,6) | YES | Sum of all `AmountInUnitsDecimal` for the grain. (Tier 2 -SP_Crypto_NOP, BI_DB_PositionPnL.AmountInUnitsDecimal) |
+| 12 | EOD_Bid_Price | numeric(36,12) | YES | End-of-day bid (spreaded) from `Fact_CurrencyPriceWithSplit.BidSpreaded` for the instrument on `@DateID`; `MAX` in aggregate. (Tier 2 -SP_Crypto_NOP, Fact_CurrencyPriceWithSplit.BidSpreaded) |
+| 13 | UpdateDate | datetime | NO | Row load timestamp. `GETDATE()` at insert. (Tier 3 -SP_Crypto_NOP, GETDATE()) |
+| 14 | Leverage | int | YES | Position leverage from `BI_DB_PositionPnL` / `#pos`. (Tier 2 -SP_Crypto_NOP, BI_DB_PositionPnL.Leverage) |
+| 15 | EquityCFD | money | YES | Rounded sum of CFD equity (`Amount + PositionPnL` when `IsSettled = 0`). (Tier 2 -SP_Crypto_NOP, computed) |
+| 16 | EquityReal | money | YES | Rounded sum of real equity (`Amount + PositionPnL` when `IsSettled = 1`). (Tier 2 -SP_Crypto_NOP, computed) |
+| 17 | IsBuy | bit | YES | Position direction from open snapshot (`Dim_Position` / `#pos`). Live 7-day: rows with **IsBuy** = 1 greatly exceed **IsBuy** = 0. (Tier 2 -SP_Crypto_NOP, Dim_Position.IsBuy) |
+| 18 | MifidCategorizationID | int | YES | MiFID categorization key from `Fact_SnapshotCustomer`. (Tier 2 -SP_Crypto_NOP, Fact_SnapshotCustomer.MifidCategorizationID) |
+| 19 | MifidCategorization | char(50) | YES | MiFID categorization name from `Dim_MifidCategorization.Name`. (Tier 2 -SP_Crypto_NOP, Dim_MifidCategorization.Name) |
+| 20 | AccountTypeID | int | YES | Account type key from `Fact_SnapshotCustomer`. (Tier 2 -SP_Crypto_NOP, Fact_SnapshotCustomer.AccountTypeID) |
+| 21 | AccountType | char(50) | YES | Account type name from `Dim_AccountType.Name`. (Tier 2 -SP_Crypto_NOP, Dim_AccountType.Name) |
+| 22 | PlayerLevelID | int | YES | Player level key from `Fact_SnapshotCustomer`. (Tier 2 -SP_Crypto_NOP, Fact_SnapshotCustomer.PlayerLevelID) |
+| 23 | Club | char(50) | YES | Club name from `Dim_PlayerLevel.Name`. (Tier 2 -SP_Crypto_NOP, Dim_PlayerLevel.Name) |
+| 24 | PlayerStatusID | int | YES | Player status key from `Fact_SnapshotCustomer`. (Tier 2 -SP_Crypto_NOP, Fact_SnapshotCustomer.PlayerStatusID) |
+| 25 | PlayerStatus | char(50) | YES | Player status name from `Dim_PlayerStatus.Name`. (Tier 2 -SP_Crypto_NOP, Dim_PlayerStatus.Name) |
+| 26 | IsGermanBaFin | bit | YES | `1` if customer appears in `BI_DB_dbo.V_GermanBaFin` for `@DateID`. (Tier 2 -SP_Crypto_NOP, V_GermanBaFin) |
+| 27 | IsCreditReportValidCB | bit | YES | Credit report validity flag from `Fact_SnapshotCustomer`. (Tier 2 -SP_Crypto_NOP, Fact_SnapshotCustomer.IsCreditReportValidCB) |
+| 28 | Total_NOP_ReversedUnits | decimal(16,6) | YES | `Total_NOP / BidSpreaded` when `Dim_Instrument.InstrumentTypeID = 10`, else 0; **BidSpreaded** from **#reversed_units** (USD leg price). Often **NULL** in live samples when the reversed-pair price is missing. (Tier 2 -SP_Crypto_NOP, computed) |
+| 29 | CountryName | varchar(50) | YES | Country from `Dim_Country.Name` via `Fact_SnapshotCustomer.CountryID`. (Tier 2 -SP_Crypto_NOP, Dim_Country.Name) |
+| 30 | NewUsers | bit | YES | `1` when `Dim_Customer.RegisteredReal >= '2022-02-08'`, else `0`. (Tier 2 -SP_Crypto_NOP, Dim_Customer.RegisteredReal) |
+| 31 | BuyCurrency | varchar(50) | YES | Instrument buy currency from `Dim_Instrument.BuyCurrency` (joined on final insert); live rows show codes such as **STRK**, **BONKxM** aligned to the pair. (Tier 2 -SP_Crypto_NOP, Dim_Instrument.BuyCurrency) |
+| 32 | TRS_NOP | money | YES | Sum of NOP where `SettlementTypeID = 2`. (Tier 2 -SP_Crypto_NOP, BI_DB_PositionPnL.NOP) |
+| 33 | TRS_Units | numeric(16,6) | YES | Sum of units where `SettlementTypeID = 2`. (Tier 2 -SP_Crypto_NOP, BI_DB_PositionPnL.AmountInUnitsDecimal) |
+| 34 | EquityTRS | money | YES | Rounded sum of TRS equity (`Amount + PositionPnL` when `SettlementTypeID = 2`). (Tier 2 -SP_Crypto_NOP, computed) |
+| 35 | TanganyStatus | varchar(20) | YES | Custodian status label from `External_UserApiDB_Dictionary_TanganyStatus.Name` via `Dim_Customer.TanganyStatusID`. Live 7-day: mostly **NULL**; non-null top values **Inactive**, **MicaCustomer**, **Customer**, **Internal**, **ConsentCustomer**. (Tier 2 -SP_Crypto_NOP, External_UserApiDB_Dictionary_TanganyStatus.Name) |
+| 36 | Real_Units_Staking_OptIn | decimal(38,6) | YES | Subset of real units per crypto staking enrolment rules (branch differs for ETH/USD vs other pairs); live rows show split vs **Real_Units_Staking_OptOut** summing to **Real_Units** where applicable. (Tier 2 -SP_Crypto_NOP, computed) |
+| 37 | Real_Units_Staking_OptOut | decimal(38,6) | YES | Complement slice of real units for staking opt-in/out logic. (Tier 2 -SP_Crypto_NOP, computed) |
+| 38 | IsDLTUser | int | YES | DLT user flag: `1` if `DltStatusID = 4` on snapshot customer, else `0`. (Tier 2 -SP_Crypto_NOP, Fact_SnapshotCustomer.DltStatusID) |
 
 ---
 

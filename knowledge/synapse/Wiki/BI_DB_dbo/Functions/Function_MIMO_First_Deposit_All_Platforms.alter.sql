@@ -114,6 +114,31 @@ dimcust AS (
         AND TRY_CAST(tp.DepositID AS BIGINT) = TRY_CAST(dc.FTDTransactionID AS BIGINT)
         AND dc.FTDPlatformID = 1
     WHERE dc.FirstDepositDate >= '2025-09-01'
+),
+REMOVE_BAD_FTDS AS (
+    -- Wrongly tagged $1 FTDs to exclude (parity with Synapse Function_MIMO_First_Deposit_All_Platforms).
+    -- Backfilled into DBX on 2026-05-27: the 2025-11-23 Synapse exclusion was never ported here,
+    -- so Aug 2025 bad FTDs were still flowing through DBX MIMO. Also adds 2026-05-22..23, 2026-05-25
+    -- ($1 cohort, rapid-fire sequential FTDTransactionIDs on FTDPlatformID=1).
+    SELECT
+        dc.RealCID
+    FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked dc
+    WHERE CAST(dc.FirstDepositDate AS DATE) IN (
+        TO_DATE('20250818', 'yyyyMMdd'),
+        TO_DATE('20250819', 'yyyyMMdd'),
+        TO_DATE('20250820', 'yyyyMMdd'),
+        TO_DATE('20260522', 'yyyyMMdd'),
+        TO_DATE('20260523', 'yyyyMMdd'),
+        TO_DATE('20260525', 'yyyyMMdd')
+    )
+    AND dc.FirstDepositAmount = 1
+    AND dc.RealCID NOT IN (
+        SELECT map.RealCID
+        FROM main.etoro_kpi_prep.v_mimo_allplatforms map
+        WHERE map.MIMOAction = 'Deposit'
+        GROUP BY map.RealCID
+        HAVING COUNT(map.RealCID) > 1
+    )
 )
 
 -- Final output: simplified to just FTD essentials
@@ -125,5 +150,6 @@ SELECT
     FTDPlatform,
     FTDPlatformID
 FROM dimcust
+WHERE RealCID NOT IN (SELECT RealCID FROM REMOVE_BAD_FTDS)
 
 ;

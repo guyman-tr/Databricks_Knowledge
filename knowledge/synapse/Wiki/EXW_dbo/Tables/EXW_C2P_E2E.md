@@ -184,7 +184,7 @@ Key distribution (3,967 rows as of April 2026):
 | 78 | CustomerRegionID | int | YES | — | CODE-BACKED | US state/region ID for US customers only. Computed: Fact_SnapshotCustomer.RegionID when CountryID=219, NULL otherwise. (Tier 2 — SP_EXW_C2F_E2E) |
 | 79 | State | varchar(256) | YES | — | CODE-BACKED | US state name for US customers only. Lookup from DWH_dbo.Dim_State_and_Province when CountryID=219, NULL otherwise. (Tier 2 — SP_EXW_C2F_E2E) |
 | 80 | IsValidCustomer | tinyint | YES | — | CODE-BACKED | Customer validity flag at conversion time from Fact_SnapshotCustomer. (Tier 2 — SP_EXW_C2F_E2E) |
-| 81 | IsCreditReportValidCB | tinyint | YES | — | CODE-BACKED | Credit bureau report validity flag at conversion time from Fact_SnapshotCustomer. (Tier 2 — SP_EXW_C2F_E2E) |
+| 81 | IsCreditReportValidCB | tinyint | YES | — | CODE-BACKED | Financial-customer flag for Client_Balance reports (CB = Client_Balance, NOT CreditBureau); captured at conversion time from Fact_SnapshotCustomer. (Tier 2 — SP_EXW_C2F_E2E) |
 | 82 | PlayerLevelID | int | YES | — | CODE-BACKED | Customer club tier ID at conversion time from Fact_SnapshotCustomer. FK to DWH_dbo.Dim_PlayerLevel. (Tier 2 — SP_EXW_C2F_E2E) |
 | 83 | Club | varchar(256) | YES | — | CODE-BACKED | Club tier name lookup from DWH_dbo.Dim_PlayerLevel. Values observed: Bronze, Gold, Silver, Platinum, Diamond. (Tier 2 — SP_EXW_C2F_E2E) |
 | 84 | PlayerStatusID | int | YES | — | CODE-BACKED | Customer activity status ID at conversion time from Fact_SnapshotCustomer. FK to DWH_dbo.Dim_PlayerStatus. (Tier 2 — SP_EXW_C2F_E2E) |

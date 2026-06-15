@@ -127,18 +127,18 @@ UC target pending write-objects configuration. At 2,491 rows, no partitioning is
 
 | Stars | Tier | Tag |
 |-------|------|-----|
-| ★★★ | Tier 2 -- SP code / DDL | `(Tier 2 -- SP_Apex_PnL)` |
+| ★★★ | Tier 2 -- SP code / DDL | `(Tier 2 -SP_Apex_PnL)` |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | Date | date | YES | Business date for the daily equity row. One row per AccountNumber per trading day. The SP uses `@Date` parameter; bank holidays shift to the prior business day for equity reads. (Tier 2 -- SP_Apex_PnL) |
-| 2 | AccountNumber | varchar(20) | YES | Apex LP account identifier (e.g. 3EU05025, 3EU00101). Resolved via ISNULL cascade across equity, transfers, and dividends feeds -- whichever feed carries the account for the day. 6 distinct accounts historically. (Tier 2 -- SP_Apex_PnL) |
-| 3 | Equity_Start | decimal(16,6) | YES | Total account equity (USD) at prior business day EOD. Monday rows use Friday; bank holidays shift back one additional day. Source: `Dealing_staging.LP_APEX_EXT981_3EU.TotalEquity` with scientific notation handling. NULL for 7.6% of rows (new accounts or no prior-day position). (Tier 2 -- SP_Apex_PnL) |
-| 4 | Equity_End | decimal(16,6) | YES | Total account equity (USD) at current day EOD. Source: `Dealing_staging.LP_APEX_EXT981_3EU.TotalEquity` with scientific notation handling. NULL for 3% of rows. (Tier 2 -- SP_Apex_PnL) |
-| 5 | Transfers | decimal(16,8) | YES | Net cash transfers into/out of the Apex account on this day. Source: `SUM(-Amount)` from `LP_APEX_EXT869_3EU` where `TerminalID IN ('CSCSG','FWWRD','MGLOA','MGJNL')`. Positive = funds received; negative = funds withdrawn. NULL when no transfers occurred (61% of rows). (Tier 2 -- SP_Apex_PnL) |
-| 6 | PnL | decimal(16,6) | YES | Daily equity PnL: `ISNULL(Equity_End,0) - ISNULL(Equity_Start,0) - ISNULL(Transfers,0)`. Isolates market-driven equity change by removing transfer effects. Does NOT include Dividends in the formula. (Tier 2 -- SP_Apex_PnL) |
-| 7 | UpdateDate | datetime | YES | ETL execution timestamp from `GETDATE()` in `SP_Apex_PnL`. Reflects when the row was loaded, not when the equity was valued. (Tier 2 -- SP_Apex_PnL) |
-| 8 | Dividends | decimal(16,6) | YES | Aggregate dividends credited to the account on this day (all instruments). Source: `SUM(-Amount)` from `LP_APEX_EXT869_3EU` where `TerminalID = '$+DIV'`. NULL when no dividends were credited (52% of rows). Not embedded in PnL -- add explicitly for total daily income. (Tier 2 -- SP_Apex_PnL) |
+| 1 | Date | date | YES | Business date for the daily equity row. One row per AccountNumber per trading day. The SP uses `@Date` parameter; bank holidays shift to the prior business day for equity reads. (Tier 2 -SP_Apex_PnL) |
+| 2 | AccountNumber | varchar(20) | YES | Apex LP account identifier (e.g. 3EU05025, 3EU00101). Resolved via ISNULL cascade across equity, transfers, and dividends feeds -- whichever feed carries the account for the day. 6 distinct accounts historically. (Tier 2 -SP_Apex_PnL) |
+| 3 | Equity_Start | decimal(16,6) | YES | Total account equity (USD) at prior business day EOD. Monday rows use Friday; bank holidays shift back one additional day. Source: `Dealing_staging.LP_APEX_EXT981_3EU.TotalEquity` with scientific notation handling. NULL for 7.6% of rows (new accounts or no prior-day position). (Tier 2 -SP_Apex_PnL) |
+| 4 | Equity_End | decimal(16,6) | YES | Total account equity (USD) at current day EOD. Source: `Dealing_staging.LP_APEX_EXT981_3EU.TotalEquity` with scientific notation handling. NULL for 3% of rows. (Tier 2 -SP_Apex_PnL) |
+| 5 | Transfers | decimal(16,8) | YES | Net cash transfers into/out of the Apex account on this day. Source: `SUM(-Amount)` from `LP_APEX_EXT869_3EU` where `TerminalID IN ('CSCSG','FWWRD','MGLOA','MGJNL')`. Positive = funds received; negative = funds withdrawn. NULL when no transfers occurred (61% of rows). (Tier 2 -SP_Apex_PnL) |
+| 6 | PnL | decimal(16,6) | YES | Daily equity PnL: `ISNULL(Equity_End,0) - ISNULL(Equity_Start,0) - ISNULL(Transfers,0)`. Isolates market-driven equity change by removing transfer effects. Does NOT include Dividends in the formula. (Tier 2 -SP_Apex_PnL) |
+| 7 | UpdateDate | datetime | YES | ETL execution timestamp from `GETDATE()` in `SP_Apex_PnL`. Reflects when the row was loaded, not when the equity was valued. (Tier 2 -SP_Apex_PnL) |
+| 8 | Dividends | decimal(16,6) | YES | Aggregate dividends credited to the account on this day (all instruments). Source: `SUM(-Amount)` from `LP_APEX_EXT869_3EU` where `TerminalID = '$+DIV'`. NULL when no dividends were credited (52% of rows). Not embedded in PnL -- add explicitly for total daily income. (Tier 2 -SP_Apex_PnL) |
 
 ---
 

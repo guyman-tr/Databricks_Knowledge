@@ -40,36 +40,36 @@ Used by **finance** to monitor **leveraged real crypto** exposure and **loan/cre
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Date | date | YES | Report date parameter `@dd` applied to every inserted row. (Tier 2 -- SP_RealCrypto_Lev2, @dd) |
-| 2 | CID | int | YES | Customer ID from the position snapshot. (Tier 2 -- SP_RealCrypto_Lev2, BI_DB_PositionPnL.CID) |
-| 3 | Indicator | varchar(25) | YES | Row role: `OpenPosition` (state) or `RollOverFee` (fee event on report date). (Tier 2 -- SP_RealCrypto_Lev2, literal.OpenPosition / RollOverFee) |
-| 4 | Regulation | varchar(50) | YES | Customer regulation name from snapshot. (Tier 2 -- SP_RealCrypto_Lev2, Dim_Regulation.Name) |
-| 5 | Country | varchar(100) | YES | Customer country name. (Tier 2 -- SP_RealCrypto_Lev2, Dim_Country.Name) |
-| 6 | Region | varchar(100) | YES | Customer region from country dimension. (Tier 2 -- SP_RealCrypto_Lev2, Dim_Country.Region) |
-| 7 | PositionID | bigint | YES | Platform position identifier. (Tier 2 -- SP_RealCrypto_Lev2, BI_DB_PositionPnL.PositionID) |
-| 8 | OpenPosDate | date | YES | Calendar date of position occurrence from PositionPnL. (Tier 2 -- SP_RealCrypto_Lev2, BI_DB_PositionPnL.Occurred) |
-| 9 | InstrumentID | int | YES | Crypto instrument id; restricted to type 10 in SP. (Tier 2 -- SP_RealCrypto_Lev2, BI_DB_PositionPnL.InstrumentID) |
-| 10 | InstrumentDisplayName | varchar(250) | YES | Instrument display label. (Tier 2 -- SP_RealCrypto_Lev2, Dim_Instrument.InstrumentDisplayName) |
-| 11 | Units | decimal(16,6) | YES | Position size in units (`AmountInUnitsDecimal`). (Tier 2 -- SP_RealCrypto_Lev2, BI_DB_PositionPnL.AmountInUnitsDecimal) |
-| 12 | Leverage | smallint | YES | Always **2** in filter; passthrough from PositionPnL. (Tier 2 -- SP_RealCrypto_Lev2, BI_DB_PositionPnL.Leverage) |
-| 13 | InitialAmount | money | YES | Starting from `PositionPnL.Amount`, reduced by cumulative **edit stop loss** adjustments (`ActionTypeID = 32`) through report date. (Tier 2 -- SP_RealCrypto_Lev2, BI_DB_PositionPnL.Amount minus Fact_CustomerAction.ActionTypeID=32) |
-| 14 | Amount | money | YES | Position amount from `BI_DB_PositionPnL.Amount`; **not** reduced by the edit stop-loss adjustment (only `InitialAmount` is updated). (Tier 2 -- SP_RealCrypto_Lev2, BI_DB_PositionPnL.Amount) |
-| 15 | PositionPnL | money | YES | Mark-to-market PnL from PositionPnL. (Tier 2 -- SP_RealCrypto_Lev2, BI_DB_PositionPnL.PositionPnL) |
-| 16 | NOP | money | YES | Net open position metric from PositionPnL. (Tier 2 -- SP_RealCrypto_Lev2, BI_DB_PositionPnL.NOP) |
-| 17 | ROF_Date | date | YES | Date of rollover fee action; `NULL` on `OpenPosition`, populated on `RollOverFee` from `fca.Occurred`. (Tier 2 -- SP_RealCrypto_Lev2, Fact_CustomerAction.Occurred) |
-| 18 | RollOverFee | money | YES | Per-row rollover fee (`-Amount` from action 35); `NULL` on `OpenPosition`. (Tier 2 -- SP_RealCrypto_Lev2, Fact_CustomerAction.Amount) |
-| 19 | TotalRollOverFee | money | YES | On `OpenPosition`: cumulative sum of `RollOverFee` for same `PositionID` with `Indicator='RollOverFee'` and `Date <= @dd`; `NULL` on insert, set by `UPDATE`. (Tier 2 -- SP_RealCrypto_Lev2, SUM(BI_DB_RealCrypto_Lev2.RollOverFee)) |
-| 20 | UpdateDate | datetime | YES | Row load timestamp. (Tier 3 -- SP_RealCrypto_Lev2, GETDATE()) |
-| 21 | MifidCategorizationID | int | YES | MiFID categorization id from customer snapshot. (Tier 2 -- SP_RealCrypto_Lev2, Fact_SnapshotCustomer.MifidCategorizationID) |
-| 22 | MifidCategorization | char(50) | YES | MiFID categorization name. (Tier 2 -- SP_RealCrypto_Lev2, Dim_MifidCategorization.Name) |
-| 23 | AccountTypeID | int | YES | Account type id. (Tier 2 -- SP_RealCrypto_Lev2, Fact_SnapshotCustomer.AccountTypeID) |
-| 24 | AccountType | char(50) | YES | Account type name. (Tier 2 -- SP_RealCrypto_Lev2, Dim_AccountType.Name) |
-| 25 | PlayerLevelID | int | YES | Player level / club tier id. (Tier 2 -- SP_RealCrypto_Lev2, Fact_SnapshotCustomer.PlayerLevelID) |
-| 26 | Club | char(50) | YES | Club name from player level dimension. (Tier 2 -- SP_RealCrypto_Lev2, Dim_PlayerLevel.Name) |
-| 27 | PlayerStatusID | int | YES | Player status id. (Tier 2 -- SP_RealCrypto_Lev2, Fact_SnapshotCustomer.PlayerStatusID) |
-| 28 | PlayerStatus | char(50) | YES | Player status name. (Tier 2 -- SP_RealCrypto_Lev2, Dim_PlayerStatus.Name) |
-| 29 | IsGermanBaFin | bit | YES | `1` when customer appears in `V_GermanBaFin` for `@ddINT`. (Tier 2 -- SP_RealCrypto_Lev2, V_GermanBaFin.CID) |
-| 30 | IsCreditReportValidCB | bit | YES | Credit report validity flag from customer snapshot (`Fact_SnapshotCustomer.IsCreditReportValidCB`). (Tier 2 -- SP_RealCrypto_Lev2, Fact_SnapshotCustomer.IsCreditReportValidCB) |
+| 1 | Date | date | YES | Report date parameter `@dd` applied to every inserted row. (Tier 2 -SP_RealCrypto_Lev2, @dd) |
+| 2 | CID | int | YES | Customer ID from the position snapshot. (Tier 2 -SP_RealCrypto_Lev2, BI_DB_PositionPnL.CID) |
+| 3 | Indicator | varchar(25) | YES | Row role: `OpenPosition` (state) or `RollOverFee` (fee event on report date). (Tier 2 -SP_RealCrypto_Lev2, literal.OpenPosition / RollOverFee) |
+| 4 | Regulation | varchar(50) | YES | Customer regulation name from snapshot. (Tier 2 -SP_RealCrypto_Lev2, Dim_Regulation.Name) |
+| 5 | Country | varchar(100) | YES | Customer country name. (Tier 2 -SP_RealCrypto_Lev2, Dim_Country.Name) |
+| 6 | Region | varchar(100) | YES | Customer region from country dimension. (Tier 2 -SP_RealCrypto_Lev2, Dim_Country.Region) |
+| 7 | PositionID | bigint | YES | Platform position identifier. (Tier 2 -SP_RealCrypto_Lev2, BI_DB_PositionPnL.PositionID) |
+| 8 | OpenPosDate | date | YES | Calendar date of position occurrence from PositionPnL. (Tier 2 -SP_RealCrypto_Lev2, BI_DB_PositionPnL.Occurred) |
+| 9 | InstrumentID | int | YES | Crypto instrument id; restricted to type 10 in SP. (Tier 2 -SP_RealCrypto_Lev2, BI_DB_PositionPnL.InstrumentID) |
+| 10 | InstrumentDisplayName | varchar(250) | YES | Instrument display label. (Tier 2 -SP_RealCrypto_Lev2, Dim_Instrument.InstrumentDisplayName) |
+| 11 | Units | decimal(16,6) | YES | Position size in units (`AmountInUnitsDecimal`). (Tier 2 -SP_RealCrypto_Lev2, BI_DB_PositionPnL.AmountInUnitsDecimal) |
+| 12 | Leverage | smallint | YES | Always **2** in filter; passthrough from PositionPnL. (Tier 2 -SP_RealCrypto_Lev2, BI_DB_PositionPnL.Leverage) |
+| 13 | InitialAmount | money | YES | Starting from `PositionPnL.Amount`, reduced by cumulative **edit stop loss** adjustments (`ActionTypeID = 32`) through report date. (Tier 2 -SP_RealCrypto_Lev2, BI_DB_PositionPnL.Amount minus Fact_CustomerAction.ActionTypeID=32) |
+| 14 | Amount | money | YES | Position amount from `BI_DB_PositionPnL.Amount`; **not** reduced by the edit stop-loss adjustment (only `InitialAmount` is updated). (Tier 2 -SP_RealCrypto_Lev2, BI_DB_PositionPnL.Amount) |
+| 15 | PositionPnL | money | YES | Mark-to-market PnL from PositionPnL. (Tier 2 -SP_RealCrypto_Lev2, BI_DB_PositionPnL.PositionPnL) |
+| 16 | NOP | money | YES | Net open position metric from PositionPnL. (Tier 2 -SP_RealCrypto_Lev2, BI_DB_PositionPnL.NOP) |
+| 17 | ROF_Date | date | YES | Date of rollover fee action; `NULL` on `OpenPosition`, populated on `RollOverFee` from `fca.Occurred`. (Tier 2 -SP_RealCrypto_Lev2, Fact_CustomerAction.Occurred) |
+| 18 | RollOverFee | money | YES | Per-row rollover fee (`-Amount` from action 35); `NULL` on `OpenPosition`. (Tier 2 -SP_RealCrypto_Lev2, Fact_CustomerAction.Amount) |
+| 19 | TotalRollOverFee | money | YES | On `OpenPosition`: cumulative sum of `RollOverFee` for same `PositionID` with `Indicator='RollOverFee'` and `Date <= @dd`; `NULL` on insert, set by `UPDATE`. (Tier 2 -SP_RealCrypto_Lev2, SUM(BI_DB_RealCrypto_Lev2.RollOverFee)) |
+| 20 | UpdateDate | datetime | YES | Row load timestamp. (Tier 3 -SP_RealCrypto_Lev2, GETDATE()) |
+| 21 | MifidCategorizationID | int | YES | MiFID categorization id from customer snapshot. (Tier 2 -SP_RealCrypto_Lev2, Fact_SnapshotCustomer.MifidCategorizationID) |
+| 22 | MifidCategorization | char(50) | YES | MiFID categorization name. (Tier 2 -SP_RealCrypto_Lev2, Dim_MifidCategorization.Name) |
+| 23 | AccountTypeID | int | YES | Account type id. (Tier 2 -SP_RealCrypto_Lev2, Fact_SnapshotCustomer.AccountTypeID) |
+| 24 | AccountType | char(50) | YES | Account type name. (Tier 2 -SP_RealCrypto_Lev2, Dim_AccountType.Name) |
+| 25 | PlayerLevelID | int | YES | Player level / club tier id. (Tier 2 -SP_RealCrypto_Lev2, Fact_SnapshotCustomer.PlayerLevelID) |
+| 26 | Club | char(50) | YES | Club name from player level dimension. (Tier 2 -SP_RealCrypto_Lev2, Dim_PlayerLevel.Name) |
+| 27 | PlayerStatusID | int | YES | Player status id. (Tier 2 -SP_RealCrypto_Lev2, Fact_SnapshotCustomer.PlayerStatusID) |
+| 28 | PlayerStatus | char(50) | YES | Player status name. (Tier 2 -SP_RealCrypto_Lev2, Dim_PlayerStatus.Name) |
+| 29 | IsGermanBaFin | bit | YES | `1` when customer appears in `V_GermanBaFin` for `@ddINT`. (Tier 2 -SP_RealCrypto_Lev2, V_GermanBaFin.CID) |
+| 30 | IsCreditReportValidCB | bit | YES | Credit report validity flag from customer snapshot (`Fact_SnapshotCustomer.IsCreditReportValidCB`). (Tier 2 -SP_RealCrypto_Lev2, Fact_SnapshotCustomer.IsCreditReportValidCB) |
 
 ---
 

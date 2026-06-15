@@ -101,7 +101,7 @@ ROUND_ROBIN distribution. CLUSTERED INDEX on DateID ASC. Always include DateID f
 | 8 | NOP | money | YES | Aggregate net open position in USD. SUM of position-level NOP. (Tier 2 — SP_BI_DB_PositionPnL_EU_Custody, SUM) |
 | 9 | IsBuy | int | YES | Long (1) vs short (0). GROUP BY key. Always 1 in practice (custody = BUY-only). (Tier 2 — BI_DB_PositionPnL) |
 | 10 | UpdateDate | datetime | YES | Row load timestamp. GETDATE() at aggregation insert time. (Tier 3 — SP_BI_DB_PositionPnL_EU_Custody, GETDATE()) |
-| 11 | IsCreditReportValidCB | int | YES | 1 if customer eligible for CreditBureau credit report validation. ETL-computed in Fact_SnapshotCustomer. GROUP BY key. (Tier 2 — DWH_dbo.Fact_SnapshotCustomer) |
+| 11 | IsCreditReportValidCB | int | YES | 1 if customer eligible for Client_Balance credit report validation. ETL-computed in Fact_SnapshotCustomer. GROUP BY key. (Tier 2 — DWH_dbo.Fact_SnapshotCustomer) |
 | 12 | IsValidCustomer | int | YES | 1 if valid retail customer for analytics. ETL-computed in Fact_SnapshotCustomer. GROUP BY key. (Tier 2 — DWH_dbo.Fact_SnapshotCustomer) |
 | 13 | HedgeServerID | int | YES | Hedge server for the position group. GROUP BY key. (Tier 2 — BI_DB_PositionPnL) |
 

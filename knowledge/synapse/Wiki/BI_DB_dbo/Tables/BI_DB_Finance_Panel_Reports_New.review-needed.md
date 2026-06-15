@@ -22,7 +22,7 @@
 
 3. **Change_CFD_To_Real branch deduplication**: The `Change_CFD_To_Real` UNION branch self-JOINs back to `BI_DB_Finance_Panel_Reports_New` to exclude positions already present from the Open/Close branches (`WHERE fpr.PositionID IS NULL`). This means the third branch is order-dependent — it must run after Open and Close have been inserted in prior days. Is this by design, and is there a risk of over-deduplication on same-day re-runs?
 
-4. **`IsCreditReportValidCB = 1` filter**: This filter (via `Fact_SnapshotCustomer + Dim_Range`) excludes customers without valid credit bureau checks. Confirm this is an HMRC/FCA regulatory requirement, not an internal data-quality filter.
+4. **`IsCreditReportValidCB = 1` filter**: This filter (via `Fact_SnapshotCustomer + Dim_Range`) excludes customers without valid Client_Balance checks. Confirm this is an HMRC/FCA regulatory requirement, not an internal data-quality filter.
 
 5. **`IsPartialCloseChild ≠ 1` scope**: The partial-close child exclusion applies only to the `Open_Position` branch. Partial-close child positions ARE included in `Close_Position`. Confirm this asymmetry is intentional.
 

@@ -144,7 +144,7 @@ The `--,[PnL]` column is in the SP's INSERT column list but commented out. The `
 | CurrenyEquity | NULL | decimal(20,4) | Current open-position equity: TotalPositionsAmount + PositionPnL. Column name is a typo (should be CurrentEquity). Different from TotalEquity — excludes cash, includes unrealized P&L. (Tier 2 — DWH_dbo.V_Liabilities) |
 | RealizedEquity | NULL | money | Realized equity from closed positions. Source: V_Liabilities.RealizedEquity. (Tier 2 — DWH_dbo.V_Liabilities) |
 | TotalPositionsAmount | NULL | money | Total invested amount across all open positions (excluding P&L). Source: V_Liabilities.TotalPositionsAmount. (Tier 2 — DWH_dbo.V_Liabilities) |
-| Credit | NULL | money | Credit balance (bonus funds) in the account. Source: V_Liabilities.Credit. (Tier 2 — DWH_dbo.V_Liabilities) |
+| Credit | NULL | money | Outstanding credit/bonus balance carried forward from Fact_SnapshotEquity. Last credit event per CID per day; negative values represent outstanding obligations. Subtracted from TotalCash to produce TotalMirrorCash. (Tier 2 - DWH_dbo.Fact_SnapshotEquity via History.ActiveCredit) |
 | PI_CopyAUM | NULL | decimal(20,4) | Copy-trading AUM: V_Liabilities.AUM + V_Liabilities.CopyPositionPnL. Total value managed through copy relationships. (Tier 2 — DWH_dbo.V_Liabilities) |
 | PI_ManualStocks | NULL | decimal(20,4) | PI's manually-managed stock portfolio: TotalStockManualPosition + ManualStockPositionPnL. (Tier 2 — DWH_dbo.V_Liabilities) |
 | PI_ManualCrypto | NULL | decimal(20,4) | PI's manually-managed crypto portfolio: TotalCryptoManualPosition + ManualCryptoPositionPnL. (Tier 2 — DWH_dbo.V_Liabilities) |

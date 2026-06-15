@@ -75,14 +75,14 @@ This table is the type lookup for `DWH_dbo.Dim_Mirror` (the mirror relationship 
 | Stars | Tier | Tag |
 |-------|------|-----|
 | ★★★★ | Tier 1 — Dictionary (upstream wiki) | `(Tier 1 — Dictionary.MirrorType)` |
-| ★★★ | Tier 2 -- Synapse SP code / DDL | `(Tier 2 -- SP_Dictionaries_DL_To_Synapse)` |
-| ★★ | Tier 3 -- live data / structure | `(Tier 3 -- live data)` |
+| ★★★ | Tier 2 -- Synapse SP code / DDL | `(Tier 2 -SP_Dictionaries_DL_To_Synapse)` |
+| ★★ | Tier 3 -- live data / structure | `(Tier 3 -live data)` |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | MirrorTypeID | int | NO | Primary key identifying the copy relationship type. 1=Regular (standard copy), 2=CopyMe (legacy), 3=Social Index (algorithmic), 4=Fund (managed). (Tier 1 — Dictionary.MirrorType) |
 | 2 | MirrorTypeName | varchar | YES | Short code name used in code branching and API responses. (Tier 1 — Dictionary.MirrorType) |
-| 3 | UpdateDate | datetime | YES | ETL load timestamp -- GETDATE() at load time. (Tier 2 -- SP_Dictionaries_DL_To_Synapse) |
+| 3 | UpdateDate | datetime | YES | ETL load timestamp -- GETDATE() at load time. (Tier 2 -SP_Dictionaries_DL_To_Synapse) |
 
 ---
 

@@ -183,8 +183,28 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports ALTE
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports ALTER COLUMN EtoroReport SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 
+-- == 2026-06-10 SUPPLEMENT (one-shot AppsFlyer deploy) ==
+-- Adds: refreshed table comment + 9 missing column comments
+-- (SubParam1-5 + etr_y / etr_ym / etr_ymd).
+-- Source-of-truth: proposals/AppsFlyer_Fields.pdf
+-- ----------------------------------------------------------
+
+-- ---- Refreshed Table Comment ----
+COMMENT ON TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports IS 'BI_DB_AppFlyer_Reports - cleansed Synapse mirror of the AppsFlyer Raw Data Export feed for the eToro OneApp Android / OneApp iOS apps. 131M+ rows since 2022-10-25. Loaded daily by SP_AppFlyer_Reports from BI_DB_AppFlyer_Reports_Ext (raw varchar landing). 89 columns: 80 of 81 AppsFlyer-documented vendor fields (the SP DROPS `IP` at load time - only present on the de_output silver sibling), 5 eToro pipeline-added fields (DateID / Date / EtoroAppID / EtoroAppName / EtoroReport), 1 always-NULL DDL artefact (UpdateDate, not in the SP INSERT list), and 3 UC-pipeline partition columns (etr_y / etr_ym / etr_ymd). Always filter EtoroReport (the 3 classes never sum cleanly: OrganicInstalls 86.5M / InAppEvents 37.8M / Installs 7.0M) and EventSource IN (''SDK'',''S2S'') (~1M rows carry malformed JSON-fragment values). Prefer _S2S events for revenue / FTD / registration. CID resolution: main.bi_db.bronze_marketperformance_tracking_customer.AppsflyerID. Field-level vendor-doc reference: proposals/AppsFlyer_Fields.pdf.';
+
+-- ---- Supplement Column Comments (9 columns) ----
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports ALTER COLUMN Contributor3TouchTime COMMENT 'Date and time of the 3rd (oldest) contributing touchpoint. Stored as TIMESTAMP on this gold mirror (Contributor1/2 TouchTime are STRING - the type-asymmetry is a known anomaly; SP_AppFlyer_Reports CASTs Contributor3 to datetime while leaving 1/2 as varchar). (Tier 1 - AppsFlyer field contributor3_touch_time)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports ALTER COLUMN SubParam1 COMMENT 'Custom parameter populated by the advertiser in the attribution link. Used for eToro-side tracking dimensions passed through the AppsFlyer OneLink / S2S URL. (Tier 1 - AppsFlyer field af_sub1)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports ALTER COLUMN SubParam2 COMMENT 'Custom parameter populated by the advertiser in the attribution link. Used for eToro-side tracking dimensions passed through the AppsFlyer OneLink / S2S URL. (Tier 1 - AppsFlyer field af_sub2)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports ALTER COLUMN SubParam3 COMMENT 'Custom parameter populated by the advertiser in the attribution link. Used for eToro-side tracking dimensions passed through the AppsFlyer OneLink / S2S URL. (Tier 1 - AppsFlyer field af_sub3)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports ALTER COLUMN SubParam4 COMMENT 'Custom parameter populated by the advertiser in the attribution link. Used for eToro-side tracking dimensions passed through the AppsFlyer OneLink / S2S URL. (Tier 1 - AppsFlyer field af_sub4)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports ALTER COLUMN SubParam5 COMMENT 'Custom parameter populated by the advertiser in the attribution link. Used for eToro-side tracking dimensions passed through the AppsFlyer OneLink / S2S URL. (Tier 1 - AppsFlyer field af_sub5)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports ALTER COLUMN etr_y COMMENT 'Year partition value injected by the gold UC pipeline. Equals YEAR(etr_ts). Used as Delta partition key for year-level pruning. (Tier 2 - UC pipeline metadata; not present in Synapse source DDL)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports ALTER COLUMN etr_ym COMMENT 'Year-month partition value (YYYYMM as INT) injected by the gold UC pipeline. Equals YEAR(etr_ts)*100 + MONTH(etr_ts). Used as Delta partition key for month-level pruning. (Tier 2 - UC pipeline metadata; not present in Synapse source DDL)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports ALTER COLUMN etr_ymd COMMENT 'Year-month-day partition value (YYYYMMDD as INT) injected by the gold UC pipeline. Equals YEAR(etr_ts)*10000 + MONTH(etr_ts)*100 + DAY(etr_ts). Used as Delta partition key for day-level pruning. (Tier 2 - UC pipeline metadata; not present in Synapse source DDL)';
+
 -- == LAST EXECUTION ==
--- Timestamp: 2026-05-07 08:53:18 UTC
--- Batch deploy resume: BI_DB_dbo deploy batch 11
--- Statements: 162/162 succeeded
+-- Timestamp: 2026-06-10 13:03:14 UTC
+-- Batch: appsflyer one-shot deploy (proposals/appsflyer_one_shot/deploy.py)
+-- Statements: 172/172 succeeded
 -- ====================

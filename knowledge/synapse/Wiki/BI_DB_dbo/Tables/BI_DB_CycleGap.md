@@ -56,33 +56,33 @@ Read-only checks executed **2026-03-20** against Azure Synapse dedicated pool (O
 
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
-| 1 | Date | date | YES | Report date; SP parameter `@date`. (Tier 2 -- SP_CycleGap, @date) |
-| 2 | CID | int | YES | Customer real CID. (Tier 2 -- SP_CycleGap, #gaps.CID) |
-| 3 | Type | varchar(20) | YES | `Withdraw` or `Position`. (Tier 2 -- SP_CycleGap, #gaps.Type) |
-| 4 | ID | bigint | YES | WithdrawID when Type = Withdraw; PositionID when Type = Position. (Tier 2 -- SP_CycleGap, #gaps.ID) |
-| 5 | StatusORTypeID | int | YES | Withdraw: `CashoutStatusID`; position: `ActionTypeID` from open/close pattern. (Tier 2 -- SP_CycleGap, #gaps.StatusORTypeID) |
-| 6 | COStatusPosType | varchar(50) | YES | Withdraw: `Dim_CashoutStatus.Name`, `Integrity CHECK Billing.Withdraw`, or `Processed Manual`; position: `OpenAt00:00` / `ClosedAt00:00`. (Tier 2 -- SP_CycleGap, Dim_CashoutStatus.Name / computed CASE) |
-| 7 | Occurred | datetime | YES | Withdraw status time or position occurrence. (Tier 2 -- SP_CycleGap, #gaps.Occurred) |
-| 8 | COPosAmount | money | YES | Requested cashout amount or position notional amount. (Tier 2 -- SP_CycleGap, #gaps.COPosAmount) |
-| 9 | Payed | money | YES | Total paid toward withdraw (`TotalPayed` in `#gaps`); often NULL for position-only rows. (Tier 2 -- SP_CycleGap, #gaps.TotalPayed) |
-| 10 | Fee | money | YES | Request commission. (Tier 2 -- SP_CycleGap, Fact_CustomerAction.Commission) |
-| 11 | Reverse | money | YES | Reversed amount (ActionTypeID 37) per withdraw. (Tier 2 -- SP_CycleGap, #reverse.AmountRequest) |
-| 12 | Gap | money | YES | Resolved monetary gap. (Tier 2 -- SP_CycleGap, #co_gap.Gap / #position_gap.Gap) |
-| 13 | GapClosed | bit | YES | 1 if current and prior gap for same `ID` net to zero. (Tier 2 -- SP_CycleGap, computed vs. BI_DB_CycleGap history) |
-| 14 | PrevGapDate | date | YES | Prior row `Date` for same `ID`. (Tier 2 -- SP_CycleGap, BI_DB_CycleGap.Date) |
-| 15 | PrevGapAmount | money | YES | Prior `Gap`. (Tier 2 -- SP_CycleGap, BI_DB_CycleGap.Gap) |
-| 16 | PrevStatusORTypeID | int | YES | Prior `StatusORTypeID` (withdraw chain). (Tier 2 -- SP_CycleGap, BI_DB_CycleGap.StatusORTypeID) |
-| 17 | PrevCOStatusPosType | varchar(50) | YES | Prior `COStatusPosType`. (Tier 2 -- SP_CycleGap, BI_DB_CycleGap.COStatusPosType) |
-| 18 | UpdateDate | datetime | YES | Insert time `GETDATE()`. (Tier 3 -- SP_CycleGap, GETDATE()) |
-| 19 | Regulation | varchar(50) | YES | Regulation name from snapshot. (Tier 2 -- SP_CycleGap, Dim_Regulation.Name) |
-| 20 | IsGermanBaFin | int | YES | 1 if CID in `V_GermanBaFin` for report date. (Tier 2 -- SP_CycleGap, V_GermanBaFin.CID) |
-| 21 | IsCreditReportValidCB | int | YES | From customer snapshot. (Tier 2 -- SP_CycleGap, Fact_SnapshotCustomer.IsCreditReportValidCB) |
-| 22 | AccountType | varchar(100) | YES | `Dim_AccountType.Name`. (Tier 2 -- SP_CycleGap, Dim_AccountType.Name) |
-| 23 | Country | varchar(100) | YES | Intended source `Dim_Country.Name` via `#RegulationID`; SSDT `INSERT` list does not map this column -- often NULL in production. (Tier 2 -- SP_CycleGap, Dim_Country.Name) |
-| 24 | Label | varchar(100) | YES | `Dim_Label.Name`. (Tier 2 -- SP_CycleGap, Dim_Label.Name) |
-| 25 | PlayerLevel | varchar(100) | YES | `Dim_PlayerLevel.Name`. (Tier 2 -- SP_CycleGap, Dim_PlayerLevel.Name) |
-| 26 | PlayerStatus | varchar(100) | YES | `Dim_PlayerStatus.Name`. (Tier 2 -- SP_CycleGap, Dim_PlayerStatus.Name) |
-| 27 | MifidCategory | varchar(100) | YES | `Dim_MifidCategorization.Name`. (Tier 2 -- SP_CycleGap, Dim_MifidCategorization.Name) |
+| 1 | Date | date | YES | Report date; SP parameter `@date`. (Tier 2 -SP_CycleGap, @date) |
+| 2 | CID | int | YES | Customer real CID. (Tier 2 -SP_CycleGap, #gaps.CID) |
+| 3 | Type | varchar(20) | YES | `Withdraw` or `Position`. (Tier 2 -SP_CycleGap, #gaps.Type) |
+| 4 | ID | bigint | YES | WithdrawID when Type = Withdraw; PositionID when Type = Position. (Tier 2 -SP_CycleGap, #gaps.ID) |
+| 5 | StatusORTypeID | int | YES | Withdraw: `CashoutStatusID`; position: `ActionTypeID` from open/close pattern. (Tier 2 -SP_CycleGap, #gaps.StatusORTypeID) |
+| 6 | COStatusPosType | varchar(50) | YES | Withdraw: `Dim_CashoutStatus.Name`, `Integrity CHECK Billing.Withdraw`, or `Processed Manual`; position: `OpenAt00:00` / `ClosedAt00:00`. (Tier 2 -SP_CycleGap, Dim_CashoutStatus.Name / computed CASE) |
+| 7 | Occurred | datetime | YES | Withdraw status time or position occurrence. (Tier 2 -SP_CycleGap, #gaps.Occurred) |
+| 8 | COPosAmount | money | YES | Requested cashout amount or position notional amount. (Tier 2 -SP_CycleGap, #gaps.COPosAmount) |
+| 9 | Payed | money | YES | Total paid toward withdraw (`TotalPayed` in `#gaps`); often NULL for position-only rows. (Tier 2 -SP_CycleGap, #gaps.TotalPayed) |
+| 10 | Fee | money | YES | Request commission. (Tier 2 -SP_CycleGap, Fact_CustomerAction.Commission) |
+| 11 | Reverse | money | YES | Reversed amount (ActionTypeID 37) per withdraw. (Tier 2 -SP_CycleGap, #reverse.AmountRequest) |
+| 12 | Gap | money | YES | Resolved monetary gap. (Tier 2 -SP_CycleGap, #co_gap.Gap / #position_gap.Gap) |
+| 13 | GapClosed | bit | YES | 1 if current and prior gap for same `ID` net to zero. (Tier 2 -SP_CycleGap, computed vs. BI_DB_CycleGap history) |
+| 14 | PrevGapDate | date | YES | Prior row `Date` for same `ID`. (Tier 2 -SP_CycleGap, BI_DB_CycleGap.Date) |
+| 15 | PrevGapAmount | money | YES | Prior `Gap`. (Tier 2 -SP_CycleGap, BI_DB_CycleGap.Gap) |
+| 16 | PrevStatusORTypeID | int | YES | Prior `StatusORTypeID` (withdraw chain). (Tier 2 -SP_CycleGap, BI_DB_CycleGap.StatusORTypeID) |
+| 17 | PrevCOStatusPosType | varchar(50) | YES | Prior `COStatusPosType`. (Tier 2 -SP_CycleGap, BI_DB_CycleGap.COStatusPosType) |
+| 18 | UpdateDate | datetime | YES | Insert time `GETDATE()`. (Tier 3 -SP_CycleGap, GETDATE()) |
+| 19 | Regulation | varchar(50) | YES | Regulation name from snapshot. (Tier 2 -SP_CycleGap, Dim_Regulation.Name) |
+| 20 | IsGermanBaFin | int | YES | 1 if CID in `V_GermanBaFin` for report date. (Tier 2 -SP_CycleGap, V_GermanBaFin.CID) |
+| 21 | IsCreditReportValidCB | int | YES | From customer snapshot. (Tier 2 -SP_CycleGap, Fact_SnapshotCustomer.IsCreditReportValidCB) |
+| 22 | AccountType | varchar(100) | YES | `Dim_AccountType.Name`. (Tier 2 -SP_CycleGap, Dim_AccountType.Name) |
+| 23 | Country | varchar(100) | YES | Intended source `Dim_Country.Name` via `#RegulationID`; SSDT `INSERT` list does not map this column -- often NULL in production. (Tier 2 -SP_CycleGap, Dim_Country.Name) |
+| 24 | Label | varchar(100) | YES | `Dim_Label.Name`. (Tier 2 -SP_CycleGap, Dim_Label.Name) |
+| 25 | PlayerLevel | varchar(100) | YES | `Dim_PlayerLevel.Name`. (Tier 2 -SP_CycleGap, Dim_PlayerLevel.Name) |
+| 26 | PlayerStatus | varchar(100) | YES | `Dim_PlayerStatus.Name`. (Tier 2 -SP_CycleGap, Dim_PlayerStatus.Name) |
+| 27 | MifidCategory | varchar(100) | YES | `Dim_MifidCategorization.Name`. (Tier 2 -SP_CycleGap, Dim_MifidCategorization.Name) |
 
 ---
 

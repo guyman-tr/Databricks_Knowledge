@@ -36,8 +36,8 @@ Returns one row per customer linked via **Apex options** (`External_USABroker_Ap
 
 | # | Column | Source | Transformation | Tier |
 |---|--------|--------|----------------|------|
-| 1 | RealCID | Fact_SnapshotCustomer.RealCID | Direct | T2 |
-| 2 | IsValidCustomer | Fact_SnapshotCustomer.IsValidCustomer | Direct | T2 |
+| 1 | RealCID | Fact_SnapshotCustomer.RealCID | Real (funded) customer ID. Hash distribution key. The primary customer identifier in the DWH ecosystem. FK to Dim_Customer (if exists). 46.4M distinct values. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer) | T2 |
+| 2 | IsValidCustomer | Fact_SnapshotCustomer.IsValidCustomer | 1 if the customer is a valid retail customer for analytics purposes. ETL-computed from PlayerLevelID, LabelID, CountryID. See §2.2. Approx 98% of current rows = 1. (Tier 2 - SP_Fact_SnapshotCustomer) (via Fact_SnapshotCustomer) | T2 |
 | 3 | DateID | External_Sodreconciliation_apex_EXT981_BuyPowerSummary.ProcessDate | `CONVERT(nvarchar(8), ProcessDate, 112)` **WHERE** `ProcessDate = (SELECT MAX(ProcessDate) FROM … WHERE ProcessDate <= @sdateInt)` **AND** options join + snapshot `Dim_Range` window **AND** `OfficeCode IN ('4GS','5GU')` **AND** account not in house list | T2 |
 | 4 | Date | External_Sodreconciliation_apex_EXT981_BuyPowerSummary.ProcessDate | `CONVERT(date, ProcessDate)` under same snapshot/join/filter predicates as DateID | T2 |
 | 5 | OptionsTotalEquity | External_Sodreconciliation_apex_EXT981_BuyPowerSummary.TotalEquity | `CAST(TotalEquity AS DECIMAL(18,2))` **WHERE** same Apex options + buy-power snapshot filters as DateID (not unfiltered `Amount`-style semantics) | T2 |

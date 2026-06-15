@@ -127,7 +127,7 @@ ROUND_ROBIN with CLUSTERED INDEX on Date. Always filter by Date for efficient se
 | 31 | Short_OP | decimal(18,6) | YES | SUM of NOP for short positions (IsBuy=0). (Tier 2 — SP_DailyZero_TreeSize_NEW_InvalidCustomers) |
 | 32 | SettlementType | varchar(10) | YES | Settlement classification derived from IsCFD and SettlementTypeID: 'Real' if not CFD, else 'CFD' (default/SettlementTypeID=0), 'TRS' (SettlementTypeID=2), or 'CMT' (SettlementTypeID=3). Values: Real=3.36M, CFD=2.82M, TRS=1.2K. (Tier 2 — SP_DailyZero_TreeSize_NEW_InvalidCustomers) |
 | 33 | IsValidCustomer | int | YES | 1 if the customer is a valid retail customer for analytics purposes. ETL-computed from PlayerLevelID, LabelID, CountryID. Approx 98% of current rows = 1 in Fact_SnapshotCustomer. Always 0 in this table (SP filters WHERE IsValidCustomer=0). (Tier 2 — DWH_dbo.Fact_SnapshotCustomer) |
-| 34 | IsCreditReportValidCB | int | YES | 1 if customer is eligible for CreditBureau credit report validation. ETL-computed. Passthrough from Fact_SnapshotCustomer. (Tier 2 — DWH_dbo.Fact_SnapshotCustomer) |
+| 34 | IsCreditReportValidCB | int | YES | Financial-customer flag for Client_Balance reports (CB = Client_Balance, NOT CreditBureau). ETL-computed. Passthrough from Fact_SnapshotCustomer. (Tier 2 — DWH_dbo.Fact_SnapshotCustomer) |
 
 ---
 

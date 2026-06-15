@@ -40,8 +40,8 @@ Flags **DDR-style “active traders”** per customer per `DateID` inside `[@sda
 | # | Column | Source | Transformation | Tier |
 |---|--------|--------|----------------|------|
 | 1 | GCID | Fact_CustomerAction.GCID, Dim_Customer.GCID | Direct from union branches | T1 |
-| 2 | RealCID | Fact_CustomerAction.RealCID, Function_Revenue_OptionsPlatform.RealCID | Direct | T1 |
-| 3 | DateID | Fact_CustomerAction.DateID, Function_Revenue_OptionsPlatform.DateID | Direct | T2 |
+| 2 | RealCID | Fact_CustomerAction.RealCID, Function_Revenue_OptionsPlatform.RealCID | Real-account Customer ID. HASH distribution key. References `Dim_Customer.RealCID`. Each customer has one real CID. (Tier 1 — Customer.CustomerStatic) (via Fact_CustomerAction) | T1 |
+| 3 | DateID | Fact_CustomerAction.DateID, Function_Revenue_OptionsPlatform.DateID | **`Occurred`** → `YYYYMMDD` int (nonclustered index driver). (Tier 2 — SP_Fact_CustomerAction) (via Fact_CustomerAction) | T2 |
 | 4 | ActiveTraded | *(literal)* | `1` | T2 |
 | 5 | ActiveTradedManual | Fact_CustomerAction, Function_Revenue_OptionsPlatform | `MAX(CASE WHEN MirrorID = 0 THEN 1 ELSE 0 END)` **over rows matching** TP filters **(ActionTypeID IN (1,39,15,17), IsAirDrop=0, valid customer, date range)** **union** options branch **(ActionTypeID = 1)** | T2 |
 | 6 | ActiveTradedCFD | Fact_CustomerAction, Dim_Instrument, options branch | Same eligible rowset as row 5; `MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (1,2,4) THEN 1 ELSE 0 END)` | T2 |
