@@ -1,5 +1,4 @@
 ---
-name: domain-options
 description: "The 8 Options KPIs computed against the Apex stack — the metrics that drive
   Paloma's Tableau dashboards and the DDR Options rows. FTD = First-Time Deposit per Apex
   options account (Local) reconciled to Dim_Customer.FirstDepositDate where FTDPlatformID=2
@@ -69,11 +68,22 @@ required_tables:
   - main.finance.bronze_sodreconciliation_apex_ext872_tradeactivity
   - main.general.bronze_sodreconciliation_apex_ext765_accountmaster
   - main.general.bronze_usabroker_apex_options
+name: domain-options
 version: 1
 owner: "dataplatform"
+last_validated_at: "2026-06-04"
 ---
 
 # Options KPI metric definitions
+
+## When to Use
+Load when the user asks how an Options KPI is computed — FTD (Local vs Global), MIMO formula, Funded vs Trader, Contracts Traded, AUM components, PFOF (estimate vs final), or any of the cohort segmentation cuts (New Signups vs Legacy / 3.0 States vs Majority / GAT vs FO1 vs NY1 vs UK1).
+
+## Scope
+In scope: The 8 Options KPI families — FTD, MIMO, Funded, Trader, Contracts Traded, AUM, PFOF, Cohort Segmentation — with business meaning, exact formula, filter contract, and caveats per KPI.
+
+Out of scope: Raw bronze table schemas → `options-source-tables.md`. Prep-view DDLs + CTE walkthroughs → `options-views-architecture.md`. Reusable filter CTEs → `options-data-patterns.md`. Tableau workbook-to-KPI mapping → `options-dashboard-queries.md`.
+Last verified: 2026-06-04
 
 Eight KPI families drive the Options Tableau dashboards and the DDR Options-platform rows. Each definition below includes: business meaning, exact computation, filter contract, segmentation cuts, and known caveats.
 

@@ -47,7 +47,7 @@ sample_questions:
   - "What is rnd_output_experience_clubactivitieseodedentestmoneyfarmfilterbyproduct?"
 required_tables:
   - main.general.bronze_moneyfarm_users
-  - main.experience.bronze_fivetran_experience_money_farm_product_names
+  - main.experience.bronze_fivetran_experience_money_farm_product_names  # historical name, table is now stale
   - main.experience.rnd_output_experience_clubactivitieseodedentestmoneyfarmfilterbyproduct
   - main.money_farm.silver_moneyfarm_etoro_mf_aum
   - main.money_farm.silver_moneyfarm_historical_events
@@ -71,7 +71,7 @@ required_tables:
   - main.etoro_kpi_prep.v_moneyfarm_fees
 version: 1
 owner: "dataplatform"
-last_validated_at: "2026-05-31"
+last_validated_at: "2026-06-04"
 ---
 
 # MoneyFarm — UC Source Tables Catalog
@@ -111,7 +111,7 @@ regtech_stg.silver_moneyfarm_etoro_mf_aum_parquet
 sharepoint.silver_sharepoint_experience_money_farm_product_names
 ```
 
-The **live event** path also feeds `compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts` (out-of-domain) which is filtered `ProviderName='Moneyfarm'` by `v_moneyfarm_mimo` and the bizops pipelines. See `views-architecture.md` for the full DDLs.
+The **live event** path also feeds `compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts` (out-of-domain) which is filtered `ProviderName='Moneyfarm'` by `v_moneyfarm_mimo` and the bizops pipelines. See `moneyfarm-views-architecture.md` for the full DDLs.
 
 ## Bronze (raw / Cosmos)
 
@@ -124,13 +124,16 @@ The **live event** path also feeds `compliance.bronze_event_hub_prod_event_strea
 **Used by**: `bi_output_moneyfarm_customers` `Date_Source_Type='Bronze Table (Recent)'` rung (~45K rows back-fill).
 **Pipeline owner**: BI / DataPlatform — Cosmos export is a continuous-replication feed; check freshness via `MAX(_ts)`.
 
-## Bronze (Fivetran auxiliary)
+## Silver (SharePoint auxiliary)
 
-### `main.experience.bronze_fivetran_experience_money_farm_product_names` (EXTERNAL)
-**Source**: Fivetran connector pulling MoneyFarm's product reference table.
+### `main.sharepoint.silver_sharepoint_experience_money_farm_product_names` (EXTERNAL) — LIVE
+**Source**: Excel workbook on SharePoint, ingested via Fivetran connector. Replaces the pre-2026 `experience.bronze_fivetran_experience_money_farm_product_names` Google-Sheets pipeline.
 **Row count**: 9 (small dimension).
 **Purpose**: lookup table for product-name → MoneyFarm-side product code.
 **Used by**: occasionally surfaces in Tableau workbooks needing the product display name; not used by the 3 prep views (which use `Product_Name` directly from `bi_output_moneyfarm_fact_portfolio_snapshot`).
+
+### `main.experience.bronze_fivetran_experience_money_farm_product_names` (EXTERNAL) — STALE / HISTORICAL
+**Status**: superseded. Last `_fivetran_synced` = 2025-06-13. Do NOT query for current product names. Listed here only so analysts who encounter the name in old notebooks / SP code can locate the live replacement above.
 
 ### `main.experience.rnd_output_experience_clubactivitieseodedentestmoneyfarmfilterbyproduct` (EXTERNAL)
 **Source**: an experimental output (`rnd_output_*` naming convention = R&D / experimentation).
@@ -256,7 +259,7 @@ These are the DDR-side cuts (different consumer than `bi_output.*` which is BI-t
 | `v_moneyfarm_mimo` | 12 | `(date, gcid)` | Daily MIMO (deposits + withdrawals + net) — live-event-fed; Oct 2025+ |
 | `v_moneyfarm_fees` | 5 | `(date, gcid)` | **Placeholder** — `WHERE 1=0`, all NULL CASTs |
 
-Full DDLs in `views-architecture.md`. Detailed per-view wiki at `knowledge/uc_domains/moneyfarm/schemas/etoro_kpi_prep/Views/v_moneyfarm_*.md`.
+Full DDLs in `moneyfarm-views-architecture.md`. Detailed per-view wiki at `knowledge/uc_domains/moneyfarm/schemas/etoro_kpi_prep/Views/v_moneyfarm_*.md`.
 
 ## Cross-domain joins (where MoneyFarm meets eToro)
 
@@ -267,7 +270,7 @@ Full DDLs in `views-architecture.md`. Detailed per-view wiki at `knowledge/uc_do
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `GCID` | `RealCID` | (none — `RealCID = GCID` semantics for resolved customers) |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit` | (FX leg) | `InstrumentID = 2` (GBP/USD) | `InstrumentID = 2` |
 
-Full join pattern with SQL bodies in `data-patterns.md`.
+Full join pattern with SQL bodies in `moneyfarm-data-patterns.md`.
 
 ## Tables explicitly NOT in this skill's scope
 

@@ -1,5 +1,4 @@
 ---
-name: domain-options
 description: "Map of Paloma Cui's Tableau workbooks under USA / Paloma's Repository / 1-US Management
   to the Unity Catalog views and bronze tables they read. The 11 workbooks (3 Options-explicit,
   8 cross-functional that include Options): US Options Performance Monitoring (workbook 5820,
@@ -66,11 +65,22 @@ required_tables:
   - main.finance.bronze_sodreconciliation_apex_ext872_tradeactivity
   - main.general.bronze_sodreconciliation_apex_ext981_buypowersummary
   - main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports
+name: domain-options
 version: 1
 owner: "dataplatform"
+last_validated_at: "2026-06-04"
 ---
 
 # Tableau dashboard map + sample queries
+
+## When to Use
+Load when the user asks about Paloma Cui's `1-US Management` Tableau workbooks — "which workbook drives Options KPIs", "what data source is Options Revenue built from", "who consumes US Options Weekly Mgmt Update", "where's the apex last reports dates freshness query", or "where can I find the 9 Brian Sullivan / Paloma Cui sample queries from the BI knowledge-transfer Doc".
+
+## Scope
+In scope: The 11 `1-US Management` Tableau workbooks (3 Options-explicit + 8 cross-functional that include Options); per-workbook data-source map; the 9 verbatim sample queries from the BI knowledge-transfer Doc (Population / All Apex Options Accounts / Funded / Traded / MIMO / Trading / Balance / Revenue).
+
+Out of scope: Bronze schemas → `options-source-tables.md`. KPI formulas → `options-metric-definitions.md`. Prep-view DDLs → `options-views-architecture.md`. Reusable SQL filter contracts → `options-data-patterns.md`.
+Last verified: 2026-06-04
 
 ## Repository structure
 

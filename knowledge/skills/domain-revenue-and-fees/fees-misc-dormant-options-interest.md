@@ -72,7 +72,14 @@ This sub-skill is the lightest in the H super-domain. It owns two small Other-ca
 - **DDR fact**, `Metric = 'InterestFee'` — daily aggregated. Most rows are pre-Aug-2023.
 - **`etoro_kpi_prep.v_revenue_interestfee`** — atomic per-event view.
 
-**`InterestFee` is functionally deprecated.** New questions involving "interest" almost certainly mean something else — `RollOverFee` (overnight financing), staking yield (`StakingLagOneMonth`), or treasury MMF interest (Finance super-domain). If a user asks about "interest", clarify intent before falling back to this metric.
+**`InterestFee` is functionally deprecated.** New questions involving "interest" almost certainly mean something else:
+
+- **Interest on Balance (IOB)** — interest *paid TO customers* on idle cash, with eToro keeping the spread vs the gross treasury yield as **net revenue**. `ActionTypeID = 36 AND CompensationReasonID = 57` on `fact_customeraction`. Economic twin of staking. **This is the most common modern meaning of "interest".** → `interest-on-balance.md`.
+- **`RollOverFee`** (overnight financing on leveraged positions) → `trading-revenue-and-fees.md`.
+- **Staking yield** (`StakingLagOneMonth`) → `revenue-staking-and-share-lending.md`.
+- **Treasury MMF / counterparty yield** (the GROSS side that produces IOB) — owned by Finance, not yet in UC. Surfaced in `interest-on-balance.md` as a known gap.
+
+If a user asks about "interest", clarify intent before falling back to this deprecated metric. **`InterestFee` (charged TO customer for borrowing) and IOB (paid TO customer for lending us cash) are polar opposites — easy to confuse, never the same answer.**
 
 ## Query patterns
 

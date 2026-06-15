@@ -1,5 +1,4 @@
 ---
-name: domain-options
 description: "Reusable SQL building blocks for any Options-domain query against the Apex stack:
   the canonical house-account exclusion (5 equity 3ET + 5 options 4GS), the OfficeCode
   filter contract (4GS/5GU options vs 3E% equity), the MarketCode='5' options-only filter on
@@ -50,11 +49,22 @@ required_tables:
   - main.finance.bronze_sodreconciliation_apex_ext872_tradeactivity
   - main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked
+name: domain-options
 version: 1
 owner: "dataplatform"
+last_validated_at: "2026-06-04"
 ---
 
 # Reusable SQL patterns for the Options domain
+
+## When to Use
+Load whenever you're writing a new Options-domain SQL query against the Apex bronze tables — house-account exclusion, OfficeCode / RepCode filter contracts, GCID-to-OptionsApexID bridge join, ICT-vs-direct funding split, daily AUM dedup, first-funding-per-account, Apex SOD freshness checks, or Equity-vs-Options PFOF reconciliation.
+
+## Scope
+In scope: Reusable CTEs that encode the filter logic the 3 prep views apply — copy/paste them into raw-bronze queries to avoid re-deriving the rules and to prevent the most common bugs (mixing 4GS+3ET, forgetting house-account exclusion, using TradeNumber instead of OrderID, joining on TradeMonth instead of TradeDate).
+
+Out of scope: Bronze table schemas → `options-source-tables.md`. KPI formulas / business meaning → `options-metric-definitions.md`. Prep-view DDLs → `options-views-architecture.md`. Tableau workbook map → `options-dashboard-queries.md`.
+Last verified: 2026-06-04
 
 Copy/paste these CTEs into new queries. They encode the filter contract that the 3 prep views apply, so you can write raw-bronze queries without re-deriving the rules.
 

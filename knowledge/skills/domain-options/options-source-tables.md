@@ -1,5 +1,4 @@
 ---
-name: domain-options
 description: "Complete inventory of the 38 Apex / USABroker bronze tables in Unity Catalog,
   organised by schema (main.general for accounts, main.finance for financial activity + user
   data + dictionaries, main.bi_db for regulatory/reasoning dictionaries, main.trading for
@@ -71,11 +70,22 @@ required_tables:
   - main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports
   - main.bi_db.bronze_sodreconciliation_apex_ext1034_newaccountfinancialinformation
   - main.trading.bronze_sodreconciliation_apex_ext235_mandatorycorporateactions
+name: domain-options
 version: 1
 owner: "dataplatform"
+last_validated_at: "2026-06-04"
 ---
 
 # Apex / USABroker source tables
+
+## When to Use
+Load when the user asks about raw Apex / USABroker bronze tables in Unity Catalog — "which table holds X", "is X in Synapse or only UC", "where do PII fields live", or "which dictionary do I join for EligibilityStatusID".
+
+## Scope
+In scope: 38-table Apex / USABroker bronze catalog across `main.general` / `main.finance` / `main.bi_db` / `main.trading`; key fields per core SOD table (EXT765/869/872/981/1047/1034); PII inventory; dictionary IDs; the USABroker bridge mechanics.
+
+Out of scope: KPI definitions → `options-metric-definitions.md`. Prep-view DDLs → `options-views-architecture.md`. Reusable SQL filter contracts → `options-data-patterns.md`.
+Last verified: 2026-06-04
 
 ## 38-table inventory across 4 schemas
 

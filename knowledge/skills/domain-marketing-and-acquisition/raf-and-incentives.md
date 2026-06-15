@@ -116,7 +116,8 @@ triggers:
   - IsExternalTriggerReceived
   - bronze_etoro_trade_positionairdroplog
   - positionairdroplog
-  - bronze_fivetran_dealing_staking_airdrop_hs
+  - silver_sharepoint_dealing_staking_airdrop_hs
+  - bronze_fivetran_dealing_staking_airdrop_hs  # historical name, table is now stale
   - bi_output_product_analytics_airdrop_financial_metrics
   - bi_output_product_analytics_giorgich_tables_airdrop_2
   - silver_crm_benefit_loyalty__c
@@ -169,7 +170,7 @@ required_tables:
   - main.bi_output.bi_output_marketing_promotion_bi_db_promo_card
 version: 1
 owner: "dataplatform"
-last_validated_at: "2026-05-28"
+last_validated_at: "2026-06-04"
 ---
 
 # RAF (Refer-A-Friend) + Airdrops + Loyalty Incentives
@@ -257,7 +258,7 @@ Related tables:
 - `general.bronze_marketperformance_dictionary_airdropstatusreason` ג€” reasons for status transitions.
 - `experience.bronze_marketperformance_airdrop_customererrors` ג€” per-customer error log for `AirdropStatusID = 7` (Failed) rows.
 - `trading.bronze_etoro_trade_positionairdroplog` ג€” the position-level log when the airdrop becomes an actual open position.
-- `dealing.bronze_fivetran_dealing_staking_airdrop_hs` ג€” Dealing-side hedging record (small).
+- `sharepoint.silver_sharepoint_dealing_staking_airdrop_hs` ג€” Dealing-side hedging record (small). Excel-on-SharePoint via Fivetran (live). Pre-2026 sibling `dealing.bronze_fivetran_dealing_staking_airdrop_hs` is STALE (last sync 2026-02-03) ג€" do NOT use.
 - `product_analytics_stg.bi_output_product_analytics_airdrop_financial_metrics` ג€” financial roll-up of airdrop cost-vs-revenue (lives in product-analytics-stg, owned by the airdrop-team).
 - `product_analytics_stg.bi_output_product_analytics_giorgich_tables_airdrop_2` ג€” owner-prefixed personal table; non-canonical.
 

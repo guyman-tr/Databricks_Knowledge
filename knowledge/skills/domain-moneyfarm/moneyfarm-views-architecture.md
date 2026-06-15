@@ -271,7 +271,7 @@ LEFT JOIN gbp_usd_rates       r ON m.date = r.rate_date
 
 **Granularity (target)**: one row per `(date, gcid)` of fee revenue.
 **Current state**: returns 0 rows. The DDL is literally `SELECT NULL CASTS WHERE 1=0`.
-**Status**: PLACEHOLDER — schema reservation only; no fee-data ingestion exists today. The customer-facing fee schedule lives in Confluence (page `11942330382` — see `metric-definitions.md`) but **no UC table holds per-portfolio or per-customer fee deductions**.
+**Status**: PLACEHOLDER — schema reservation only; no fee-data ingestion exists today. The customer-facing fee schedule lives in Confluence (page `11942330382` — see `moneyfarm-metric-definitions.md`) but **no UC table holds per-portfolio or per-customer fee deductions**.
 
 ### Verbatim DDL
 
@@ -324,7 +324,7 @@ Documented in Confluence page `11942330382` ("Individual Savings Account (ISA) -
 - **Managed ISA** (Oct 21, 2025): explicit tiered AUM fee — Under £100K: 0.75% / 0.70% / 0.65% / 0.60% across £10K / £20K / £50K / £100K bands. Over £100K: 0.45% / 0.40% / 0.35%.
 - **Cash ISA** (Oct 21, 2025): Standard Variable Rate + 12-month boost (interest *paid to* customer, not a fee).
 
-Full schedule with exact thresholds + cashback offer details in `metric-definitions.md`.
+Full schedule with exact thresholds + cashback offer details in `moneyfarm-metric-definitions.md`.
 
 ### When fees do eventually land
 

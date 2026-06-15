@@ -79,7 +79,7 @@ Anchors every KPI to a deployed UC view + the cached source documents (Confluenc
 >
 > For booked fee revenue → ask **Finance** directly. The data is in Finance's ledger, not in eToro UC.
 >
-> See `views-architecture.md` §3 for the full DDL and the rationale for declining the synthetic-fee-from-AUM approach.
+> See `moneyfarm-views-architecture.md` §3 for the full DDL and the rationale for declining the synthetic-fee-from-AUM approach.
 
 ## 1. AUM (Assets Under Management)
 
@@ -284,11 +284,11 @@ The **historical cashback paid** by Club tier and tax year is **not in UC** — 
 
 | KPI | View / Table | Column / Filter | Doc anchor |
 |---|---|---|---|
-| Daily AUM (GBP / USD) | `v_moneyfarm_aum` | `total_balance_gbp` / `total_balance_usd` | view DDL — see `views-architecture.md` §1 |
-| Daily MIMO (GBP / USD) | `v_moneyfarm_mimo` | `total_deposits_gbp` / `total_withdrawals_gbp` / `net_flow_gbp` | view DDL — see `views-architecture.md` §2 |
-| FTD (live-stream era) | `v_moneyfarm_mimo` | `is_ftd = TRUE` | view DDL — see `views-architecture.md` §2 |
+| Daily AUM (GBP / USD) | `v_moneyfarm_aum` | `total_balance_gbp` / `total_balance_usd` | view DDL — see `moneyfarm-views-architecture.md` §1 |
+| Daily MIMO (GBP / USD) | `v_moneyfarm_mimo` | `total_deposits_gbp` / `total_withdrawals_gbp` / `net_flow_gbp` | view DDL — see `moneyfarm-views-architecture.md` §2 |
+| FTD (live-stream era) | `v_moneyfarm_mimo` | `is_ftd = TRUE` | view DDL — see `moneyfarm-views-architecture.md` §2 |
 | FTD (historical) | `bi_output_moneyfarm_fact_transactions` | `MIN(Transaction_Date) WHERE TransactionType = 'Deposit'` per GCID | wiki — `bi_output_moneyfarm_fact_transactions.md` |
-| Funded customer | `v_moneyfarm_aum` | `is_funded = TRUE` | view DDL — `views-architecture.md` §1 |
+| Funded customer | `v_moneyfarm_aum` | `is_funded = TRUE` | view DDL — `moneyfarm-views-architecture.md` §1 |
 | Cumulative funded | `bi_output_moneyfarm_fact_transactions` | `EXISTS` per GCID | wiki — fact_transactions |
 | FTDPlatformID = 4 (cross-platform) | `Dim_Customer` | `FTDPlatformID = 4` | UK BA Genie sql_snippet |
 | Provenance cohort | `bi_output_moneyfarm_customers` | `Date_Source_Type` 3-rung | Confluence XP/13551468545 |

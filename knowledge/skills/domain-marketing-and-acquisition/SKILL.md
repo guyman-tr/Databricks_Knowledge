@@ -51,8 +51,46 @@ triggers:
   - YouTube
   - Taboola
   - AppsFlyer
+  - AppFlyer
   - AppsFlyer_Registrations
+  - AppsFlyerID
+  - AppsflyerID
+  - appflyer_reports
+  - gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports
+  - bronze_marketperformance_tracking_customer
+  - mobile attribution
+  - mobile install
+  - mobile measurement partner
+  - MMP
+  - MMP postback
+  - S2S
+  - SDK event
+  - multi-touch attribution
+  - attribution chain
+  - contributor chain
+  - retargeting
+  - OrganicInstalls
+  - Installs
+  - InAppEvents
+  - EtoroReport
+  - EventName
+  - EventSource
+  - IDFA
+  - AdvertisingID
+  - CustomerUserID
+  - ATT
+  - iOS14
+  - SKAdNetwork
+  - OneApp Android
+  - OneApp iOS
+  - MediaSource
+  - googleadwords_int
+  - tiktokglobal_int
+  - Apple Search Ads
+  - Open Trade
+  - Registration_S2S
   - FTD_S2S
+  - Redeposit_S2S
   - FTD_Android_Firebase
   - FTD_IOS_Firebase
   - Firebase
@@ -161,6 +199,7 @@ triggers:
   - OfferTypeID
   - bronze_etoro_trade_positionairdroplog
   - positionairdroplog
+  - silver_sharepoint_dealing_staking_airdrop_hs
   - bronze_fivetran_dealing_staking_airdrop_hs
   - bi_output_product_analytics_airdrop_financial_metrics
   - bi_output_product_analytics_giorgich_tables_airdrop_2
@@ -239,8 +278,8 @@ triggers:
   - loyalty offer
   - silver_sharepoint_marketing_region_mapping
   - silver_sharepoint_marketing_subchannel_level_data
-  - bronze_fivetran_google_sheets_marketing_subchannel_level_data
-  - bronze_fivetran_google_sheets_multiregulationaffiliatecompliance
+  - bronze_fivetran_google_sheets_marketing_subchannel_level_data  # historical name (Google-Sheets-via-Fivetran), superseded by the silver_sharepoint sibling
+  - bronze_fivetran_google_sheets_multiregulationaffiliatecompliance  # historical name (Google-Sheets-via-Fivetran), superseded by the silver_sharepoint sibling
   - silver_sharepoint_multiregulationaffiliatecompliance
   - silver_sharepoint_sedric_etoro_mapping_sedric_additionalaffiliatesurl
   - sedric_additionalaffiliatesurl
@@ -278,6 +317,8 @@ required_tables:
   - main.bi_output.bi_output_marketing_liveacquisitiondashboard
   - main.etoro_kpi_stg.v_marketing_campaigns_social
   - main.etoro_kpi_stg.v_marketing_campaigns_google
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports
+  - main.bi_db.bronze_marketperformance_tracking_customer
   - main.etoro_kpi.v_raf
   - main.etoro_kpi.v_raf_config
   - main.experience.bronze_etoro_customer_rafgiven
@@ -306,11 +347,12 @@ domain_tags:
   - comms
 sub_skills:
   - affiliate-and-paid-media.md
+  - appflyer-mobile-attribution.md
   - marketing-comms-and-sfmc.md
   - raf-and-incentives.md
 version: 1
 owner: "dataplatform"
-last_validated_at: "2026-05-28"
+last_validated_at: "2026-06-08"
 ---
 
 # Marketing & Acquisition Super-Domain
@@ -331,6 +373,7 @@ Load when the question is about:
 
 - Affiliate performance, click-through, commission, payment tier — see [`affiliate-and-paid-media.md`](affiliate-and-paid-media.md)
 - Paid-media cost, channel ROI, cost-per-FTD, Google / FB / TikTok / Apple / Snap performance, the live acquisition funnel — see [`affiliate-and-paid-media.md`](affiliate-and-paid-media.md)
+- AppFlyer / AppsFlyer mobile-attribution: OneApp Android / iOS installs (organic / paid / restricted), in-app events (Open Trade / Registration_S2S / FTD_S2S / Verification Level), S2S vs SDK reconciliation, multi-touch contributor chain, iOS14 ATT / IDFA decline, AppsFlyerID-to-CID bridge, cost-per-install per MediaSource, mobile install cohort retention — see [`appflyer-mobile-attribution.md`](appflyer-mobile-attribution.md)
 - RAF compensation, who-referred-whom, why a referral failed (FraudReason / RafStatusName multi-reason strings), per-country config, eligibility — see [`raf-and-incentives.md`](raf-and-incentives.md)
 - Airdrop allocations, airdrop-status, airdrop offers per country, airdrop variant experiments — see [`raf-and-incentives.md`](raf-and-incentives.md)
 - SFMC email engagement (sent / opens / clicks / bounces / unsubs / complaints), campaign group taxonomy, send-job dimension, Marketing Cloud user-behavior, marketing comms templates and notification channels — see [`marketing-comms-and-sfmc.md`](marketing-comms-and-sfmc.md)
@@ -354,7 +397,7 @@ Last verified: 2026-05-28
 
 ## Critical Warnings
 
-> **Tier 0 — Filter Contract (cross-cutting).** Every per-customer marketing aggregate in this domain (RAF compensation per club tier, FTDs from a campaign rolled per CID, paid-acquisition cost per acquired customer, affiliate-driven registration cohorts) MUST follow [`../cross-cutting/valid-users-filter-contract.md`](../cross-cutting/valid-users-filter-contract.md): silent SCD-2 walk on `V_Fact_SnapshotCustomer_FromDateID` with `IsValidCustomer = 1` and `DateID BETWEEN snap.FromDateID AND snap.ToDateID` (period-correct — never current-state `Dim_Customer` for period queries); mandatory one-line scope footer on every numeric output. Marketing measures EXTERNAL acquisition, so internal / test / dealing CIDs must be filtered out the moment a question rolls up per-customer. The carve-out: pre-aggregated channel-grain views (`v_marketing_campaigns_google`, `v_marketing_campaigns_facebook`, `v_marketing_campaigns_appsflyer`) have NO CID column — they're already aggregated to Region × Channel × Date and the filter is moot. The regulatory variant (`IsCreditReportValidCB = 1`) fires ONLY when the user explicitly says "CB valid" / "Client Balance valid" / "credit-report valid" — never on topic heuristics. Opt-out (unfiltered, include non-valids / internals / etorians / test) only on explicit user request. Never pre-flight.
+> **Tier 0 — Filter Contract (cross-cutting).** Every per-customer marketing aggregate in this domain (RAF compensation per club tier, FTDs from a campaign rolled per CID, paid-acquisition cost per acquired customer, affiliate-driven registration cohorts) MUST follow [`../cross-cutting/valid-users-filter-contract.md`](../cross-cutting/valid-users-filter-contract.md): silent SCD-2 walk on `V_Fact_SnapshotCustomer_FromDateID` with `IsValidCustomer = 1` and `DateID BETWEEN snap.FromDateID AND snap.ToDateID` (period-correct — never current-state `Dim_Customer` for period queries); mandatory one-line scope footer on every numeric output. Marketing measures EXTERNAL acquisition, so internal / test / dealing CIDs must be filtered out the moment a question rolls up per-customer. The carve-out: pre-aggregated channel-grain views (`v_marketing_campaigns_google`, `v_marketing_campaigns_social`) have NO CID column — they're already aggregated to Region × Channel × Date and the filter is moot. The regulatory variant (`IsCreditReportValidCB = 1`) fires ONLY when the user explicitly says "CB valid" / "Client Balance valid" / "credit-report valid" — never on topic heuristics. Opt-out (unfiltered, include non-valids / internals / etorians / test) only on explicit user request. Never pre-flight.
 
 1. **Tier 1 — `dim_affiliate_masked` is the canonical affiliate dimension and IS PRE-AGGREGATED for trailing-windows already.** Columns like `RegistrationLifeTime`, `RegistrationThisMonth`, `FTDeLastQuarter`, `FTDLastYear` etc. are computed counters baked into the affiliate row. Do not re-sum them across multiple affiliate rows for a given day — they're per-affiliate-state-now. Use them for ranking ("top 10 affiliates by FTDs this month") but NOT for time-series ("FTDs by week"). For time-series, drive off `bronze_fiktivo_affiliatecommission_registrationvw` (per-registration grain with `RegistrationDate`) joined to `dim_affiliate_masked` for the affiliate metadata.
 

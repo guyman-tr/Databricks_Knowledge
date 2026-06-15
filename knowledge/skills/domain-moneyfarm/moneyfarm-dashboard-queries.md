@@ -284,7 +284,7 @@ GROUP BY ROLLUP (fps.Product_Name, fps.Portfolio_Risk_Level)
 ORDER BY fps.Product_Name, fps.Portfolio_Risk_Level
 ```
 
-**Caveat**: `Portfolio_Risk_Level` band semantics (`P0..P7`) are NOT Confluence-anchored — see `metric-definitions.md` §5.
+**Caveat**: `Portfolio_Risk_Level` band semantics (`P0..P7`) are NOT Confluence-anchored — see `moneyfarm-metric-definitions.md` §5.
 
 ### Sample 6 — Cross-platform funded universe (MF + Spaceship + eToro)
 
@@ -325,7 +325,7 @@ ORDER BY uk_funded_customers DESC
 ```
 
 **Caveats**:
-- This sample assumes Spaceship's view name is `v_spaceship_aum` and column is `date_id` (with underscore). Confirm against `domain-spaceship/views-architecture.md` before running.
+- This sample assumes Spaceship's view name is `v_spaceship_aum` and column is `date_id` (with underscore). Confirm against `domain-spaceship/spaceship-views-architecture.md` before running.
 - The eToro-funded UK universe uses `Dim_Customer.FirstDepositAmount > 0` + UK country filter, which is approximate — for the precise "funded customer" definition see `domain-customer-and-identity/customer-populations`.
 - `IsValidCustomer = 1` filter from the UK BA Genie sql_snippet — keep it on.
 
