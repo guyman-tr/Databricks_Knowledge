@@ -1,0 +1,53 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_instrument_conversion_rates_dwh",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "dim_lookup_Pair",
+      "name": "Dim lookup via Pair",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "alias": "Pair",
+      "join_conditions": [
+        "Pair.InstrumentID = LatestP.InstrumentID\n    AND LatestP.DateID = ds.DateID",
+        "I2.InstrumentID <> Pair.InstrumentID\n    AND I2.SellCurrencyID = Pair.SellCurrencyID\n    AND I2.BuyCurrencyID = 1",
+        "I3.InstrumentID <> Pair.InstrumentID\n    AND I3.BuyCurrencyID = Pair.SellCurrencyID\n    AND I3.SellCurrencyID = 1"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L79,L85,L93",
+      "scopes": [
+        "main",
+        "main",
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "Pair.InstrumentID = LatestP.InstrumentID\n    AND LatestP.DateID = ds.DateID"
+    },
+    {
+      "id": "filter_block_LatestDailyPrices",
+      "name": "Filter block on LatestDailyPrices",
+      "kind": "filter_block",
+      "columns_involved": [
+        "rn"
+      ],
+      "predicates": [
+        {
+          "col": "rn",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L29",
+      "scope": "LatestDailyPrices",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_instrument_conversion_rates_dwh.sql"
+}

@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_revenue_transfercoinfee
--- Captured: 2026-05-18T08:14:36Z
+-- Captured: 2026-05-19T12:24:11Z
 -- ==========================================================================
 
 SELECT

@@ -1,0 +1,692 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_jp_recon_trades",
+  "rows": [
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "Buy/Sell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Settlement_Currency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Settlement_Currency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Settlement_Currency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "ISIN",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "ISIN",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "ISIN",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Gross_Notional_Settle_Ccy",
+      "target_column_name": "JP-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Gross_Notional_Settle_Ccy",
+      "target_column_name": "JP-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Gross_Notional_Settle_Ccy",
+      "target_column_name": "JP-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "JP-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro_report_fxrates",
+      "source_column_name": "Rate",
+      "target_column_name": "JP-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Quantity",
+      "target_column_name": "JP-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Quantity",
+      "target_column_name": "JP-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Quantity",
+      "target_column_name": "JP-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "JP-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Gross_Notional_Settle_Ccy",
+      "target_column_name": "JP-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "JP-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Gross_Notional_Settle_Ccy",
+      "target_column_name": "JP-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Gross_Notional_Settle_Ccy",
+      "target_column_name": "JP-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro_report_fxrates",
+      "source_column_name": "Rate",
+      "target_column_name": "JP-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Gross_Notional_Local",
+      "target_column_name": "JP-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "JP-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Gross_Notional_Local",
+      "target_column_name": "JP-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "JP-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Gross_Notional_Local",
+      "target_column_name": "JP-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Gross_Price_Local",
+      "target_column_name": "JP-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Gross_Price_Local",
+      "target_column_name": "JP-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Gross_Price_Local",
+      "target_column_name": "JP-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "JP-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToro_AvgRate",
+      "target_column_name": "JP-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Quantity",
+      "target_column_name": "JP-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Quantity",
+      "target_column_name": "JP-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Quantity",
+      "target_column_name": "JP-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "JP-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Gross_Notional_Settle_Ccy",
+      "target_column_name": "JP_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Gross_Notional_Settle_Ccy",
+      "target_column_name": "JP_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro_report_fxrates",
+      "source_column_name": "Rate",
+      "target_column_name": "JP_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Gross_Notional_Settle_Ccy",
+      "target_column_name": "JP_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro_report_fxrates",
+      "source_column_name": "Rate",
+      "target_column_name": "JP_FXRate",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Gross_Notional_Local",
+      "target_column_name": "JP_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Gross_Notional_Local",
+      "target_column_name": "JP_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Gross_Notional_Local",
+      "target_column_name": "JP_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Gross_Price_Local",
+      "target_column_name": "JP_Rate",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Gross_Price_Local",
+      "target_column_name": "JP_Rate",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Gross_Price_Local",
+      "target_column_name": "JP_Rate",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Quantity",
+      "target_column_name": "JP_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Quantity",
+      "target_column_name": "JP_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Quantity",
+      "target_column_name": "JP_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Client_Direction",
+      "target_column_name": "JP_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "BBG_Code",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "BBG_Code",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "BBG_Code",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "source_column_name": "Comms",
+      "target_column_name": "Total_Commission_USD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "source_column_name": "Comms",
+      "target_column_name": "Total_Commission_USD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro_report_fxrates",
+      "source_column_name": "Rate",
+      "target_column_name": "Total_Commission_USD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "source_column_name": "Comms",
+      "target_column_name": "Total_Commission_USD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "FXratetoUSD",
+      "target_column_name": "eToro_FXRate",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToro_AvgRate",
+      "target_column_name": "eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 25
+    }
+  ],
+  "generated_at": "2026-05-19T12:28:27Z"
+}

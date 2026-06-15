@@ -1,0 +1,230 @@
+{
+  "object": "main.bi_output.bi_output_urban_notifications_monthly_lsd",
+  "rows": [
+    {
+      "source_table_full_name": "main.urban.gold_push_body",
+      "source_column_name": "NotificationSubCategory",
+      "target_column_name": "Account",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_message_send",
+      "source_column_name": "ExternalUserId",
+      "target_column_name": "Account",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "AppInstallStatus",
+      "target_column_name": "Account",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "PushOptIn",
+      "target_column_name": "Account",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "AppInstallStatus",
+      "target_column_name": "AutoVolatility",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_push_body",
+      "source_column_name": "NotificationSubCategory",
+      "target_column_name": "AutoVolatility",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "PushOptIn",
+      "target_column_name": "AutoVolatility",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_message_send",
+      "source_column_name": "ExternalUserId",
+      "target_column_name": "AutoVolatility",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_lifestagedefinition",
+      "source_column_name": "RealCID",
+      "target_column_name": "Installed_optedIn_users",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "AppInstallStatus",
+      "target_column_name": "Installed_optedIn_users",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "PushOptIn",
+      "target_column_name": "Installed_optedIn_users",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_lifestagedefinition",
+      "source_column_name": "LSD",
+      "target_column_name": "LSD",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "LSD",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_urban_notifications_monthly_lsd",
+      "source_column_name": "LSD_Date",
+      "target_column_name": "LSD_Date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "AppInstallStatus",
+      "target_column_name": "Marketing",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_push_body",
+      "source_column_name": "NotificationSubCategory",
+      "target_column_name": "Marketing",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_message_send",
+      "source_column_name": "ExternalUserId",
+      "target_column_name": "Marketing",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "PushOptIn",
+      "target_column_name": "Marketing",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "MarketingRegionManualName",
+      "target_column_name": "Region",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_push_body",
+      "source_column_name": "NotificationSubCategory",
+      "target_column_name": "Social",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "PushOptIn",
+      "target_column_name": "Social",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_message_send",
+      "source_column_name": "ExternalUserId",
+      "target_column_name": "Social",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "AppInstallStatus",
+      "target_column_name": "Social",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "PushOptIn",
+      "target_column_name": "Total_sent",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_message_send",
+      "source_column_name": "ExternalUserId",
+      "target_column_name": "Total_sent",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "AppInstallStatus",
+      "target_column_name": "Total_sent",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_message_send",
+      "source_column_name": "ExternalUserId",
+      "target_column_name": "Trading",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "PushOptIn",
+      "target_column_name": "Trading",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_push_body",
+      "source_column_name": "NotificationSubCategory",
+      "target_column_name": "Trading",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "AppInstallStatus",
+      "target_column_name": "Trading",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_lifestagedefinition",
+      "source_column_name": "RealCID",
+      "target_column_name": "Users",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_urban_notifications_monthly_lsd",
+      "source_column_name": "LSD_Date",
+      "target_column_name": "YearMonth",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    }
+  ],
+  "generated_at": "2026-05-19T14:46:09Z"
+}

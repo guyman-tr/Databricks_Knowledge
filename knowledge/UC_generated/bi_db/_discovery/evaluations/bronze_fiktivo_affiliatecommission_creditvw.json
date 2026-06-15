@@ -1,0 +1,221 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiktivo_affiliatecommission_creditvw",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:45Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "CreditID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From Credit. Credit event identifier.",
+      "wiki_quote": "From Credit. Credit event identifier (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreditDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From Credit. Event timestamp.",
+      "wiki_quote": "From Credit. Event timestamp (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From RegistrationMetaData. Customer ID.",
+      "wiki_quote": "From RegistrationMetaData. Customer ID (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateCampaign",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From RegistrationMetaData. Campaign tracking.",
+      "wiki_quote": "From RegistrationMetaData. Campaign tracking (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreditTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From Credit. 1=Deposit, 4/5=Chargeback.",
+      "wiki_quote": "From Credit. 1=Deposit, 4/5=Chargeback (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From RegistrationMetaData. Referring affiliate.",
+      "wiki_quote": "From RegistrationMetaData. Referring affiliate (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From Credit. Credit amount.",
+      "wiki_quote": "From Credit. Credit amount (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BannerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From RegistrationMetaData.",
+      "wiki_quote": "From RegistrationMetaData (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsFirstDeposit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From Credit. FTD flag.",
+      "wiki_quote": "From Credit. FTD flag (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DownloadID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From RegistrationMetaData.",
+      "wiki_quote": "From RegistrationMetaData (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From Credit. Provider.",
+      "wiki_quote": "From Credit. Provider (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OriginalProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From Credit. Original provider.",
+      "wiki_quote": "From Credit. Original provider (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RealProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From Credit. Execution entity.",
+      "wiki_quote": "From Credit. Execution entity (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From Credit. Customer country.",
+      "wiki_quote": "From Credit. Customer country (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FunnelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From RegistrationMetaData. Marketing funnel.",
+      "wiki_quote": "From RegistrationMetaData. Marketing funnel (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LabelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "Always NULL. Backward compatibility.",
+      "wiki_quote": "Always NULL. Backward compatibility (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PlayerLevelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From RegistrationMetaData.",
+      "wiki_quote": "From RegistrationMetaData (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Valid",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From Credit. Commission eligibility.",
+      "wiki_quote": "From Credit. Commission eligibility (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OriginalCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From RegistrationMetaData. Original customer.",
+      "wiki_quote": "From RegistrationMetaData. Original customer (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TrackingDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From Credit. Tracking entry time.",
+      "wiki_quote": "From Credit. Tracking entry time (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsProcessed",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From Credit. Processing flag.",
+      "wiki_quote": "From Credit. Processing flag (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidFrom",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From RegistrationMetaData. Attribution effective date.",
+      "wiki_quote": "From RegistrationMetaData. Attribution effective date (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "UpdateDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "Computed: GREATEST(CreditDate, ValidFrom).",
+      "wiki_quote": "Computed: GREATEST(CreditDate, ValidFrom) (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AdditionalData",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From RegistrationMetaData.",
+      "wiki_quote": "From RegistrationMetaData (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CommissionSource",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From Credit. Commission calculation source.",
+      "wiki_quote": "From Credit. Commission calculation source (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProductID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.CreditVW.md",
+      "upstream_quote": "From Credit. Product identifier (ISA MoneyFarm).",
+      "wiki_quote": "From Credit. Product identifier (ISA MoneyFarm) (Tier 1 — inherited from fiktivo.AffiliateCommission.CreditVW).",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 26,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 26 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

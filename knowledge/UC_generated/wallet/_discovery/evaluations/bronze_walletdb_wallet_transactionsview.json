@@ -1,0 +1,193 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_transactionsview",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:24Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "gcid",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "Global Customer ID of the wallet owner. Resolved by joining the final output to Wallet.Wallets via WalletId. Gcid=0 indi",
+      "wiki_quote": "Global Customer ID of the wallet owner. Resolved by joining the final output to Wallet.Wallets via WalletId. Gcid=0 indi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "The cryptocurrency of this transaction. FK to Wallet.CryptoTypes.CryptoID. From SentTransactions.CryptoId or ReceivedTra",
+      "wiki_quote": "The cryptocurrency of this transaction. FK to Wallet.CryptoTypes.CryptoID. From SentTransactions.CryptoId or ReceivedTra",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "The wallet involved in this transaction. From SentTransactions.WalletId or ReceivedTransactions.WalletId.",
+      "wiki_quote": "The wallet involved in this transaction. From SentTransactions.WalletId or ReceivedTransactions.WalletId (Tier 1 — inher",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TranID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "Transaction identifier. SentTransactions.Id for sends, ReceivedTransactions.Id for receives. Not globally unique across ",
+      "wiki_quote": "Transaction identifier. SentTransactions.Id for sends, ReceivedTransactions.Id for receives. Not globally unique across ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TransStatusId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "Latest status ID. Resolved via correlated subquery: `SELECT TOP 1 StatusId FROM *Statuses ORDER BY Id DESC`. FK to Dicti",
+      "wiki_quote": "Latest status ID. Resolved via correlated subquery: `SELECT TOP 1 StatusId FROM *Statuses ORDER BY Id DESC`. FK to Dicti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TransStatus",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "Human-readable status name from Dictionary.TransactionStatus. Values: Pending, Verified, Error, Done, Cancelled, NeedsAp",
+      "wiki_quote": "Human-readable status name from Dictionary.TransactionStatus. Values: Pending, Verified, Error, Done, Cancelled, NeedsAp",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TransDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "Transaction date. For sends: SentTransactions.Occurred. For receives: ReceivedTransactions.BlockchainTransactionDate.",
+      "wiki_quote": "Transaction date. For sends: SentTransactions.Occurred. For receives: ReceivedTransactions.BlockchainTransactionDate (Ti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "Transaction amount in native crypto units. From SentTransactionOutputs.Amount (sends) or ReceivedTransactions.Amount (re",
+      "wiki_quote": "Transaction amount in native crypto units. From SentTransactionOutputs.Amount (sends) or ReceivedTransactions.Amount (re",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EtoroFees",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "eToro platform fees. Source varies: Redemptions -> eToroFeeAmount, ConversionOut -> EtoroFeeCalculated, Payments -> Etor",
+      "wiki_quote": "eToro platform fees. Source varies: Redemptions -> eToroFeeAmount, ConversionOut -> EtoroFeeCalculated, Payments -> Etor",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProviderFees",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "External provider fees. Only populated for Payment transactions (type 7) from PaymentTransactions.ProviderFeeCalculated.",
+      "wiki_quote": "External provider fees. Only populated for Payment transactions (type 7) from PaymentTransactions.ProviderFeeCalculated.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FeeExchangeRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "Exchange rate for fee currency conversion. ConversionOut: source/dest USD rate ratio. Payment: 1/ExchangeRate. Others: 1",
+      "wiki_quote": "Exchange rate for fee currency conversion. ConversionOut: source/dest USD rate ratio. Payment: 1/ExchangeRate. Others: 1",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "Actual blockchain network fee (gas/miner fee). For redemptions: counted once per transaction (ROW_NUMBER=1). From SentTr",
+      "wiki_quote": "Actual blockchain network fee (gas/miner fee). For redemptions: counted once per transaction (ROW_NUMBER=1). From SentTr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EffectiveBlockchainFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "Estimated/effective blockchain fee for fee calculations. Redemptions: EstimatedBlockchainFee + InitialFeeAmount. Convers",
+      "wiki_quote": "Estimated/effective blockchain fee for fee calculations. Redemptions: EstimatedBlockchainFee + InitialFeeAmount. Convers",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ActionTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "Transaction direction: 1=Sent (outgoing), 2=Recive (incoming). Hard-coded per CTE block.",
+      "wiki_quote": "Transaction direction: 1=Sent (outgoing), 2=Recive (incoming). Hard-coded per CTE block (Tier 1 — inherited from WalletD",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ActionTypeName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "Human-readable direction: 'Sent' or 'Recive' (legacy misspelling preserved for backward compatibility).",
+      "wiki_quote": "Human-readable direction: 'Sent' or 'Recive' (legacy misspelling preserved for backward compatibility) (Tier 1 — inherit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SenderAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "Sender's blockchain address. Sends: from WalletPool.PublicAddress (wallet's own address). Receives: from ReceivedTransac",
+      "wiki_quote": "Sender's blockchain address. Sends: from WalletPool.PublicAddress (wallet's own address). Receives: from ReceivedTransac",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ReciverAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "Receiver's blockchain address (legacy misspelling \"Reciver\"). Sends: from SentTransactionOutputs.ToAddress. Receives: fr",
+      "wiki_quote": "Receiver's blockchain address (legacy misspelling \"Reciver\"). Sends: from SentTransactionOutputs.ToAddress. Receives: fr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainTransactionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "On-chain transaction hash. Unique identifier on the blockchain for tracking and verification. From SentTransactions or R",
+      "wiki_quote": "On-chain transaction hash. Unique identifier on the blockchain for tracking and verification. From SentTransactions or R",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TransactionTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "Sent transaction type: 0=Redeem, 5=ConversionMoneyIn, 6=ConversionMoneyOut, 7=Payment, 8=RedeemAsic, 9=Staking. NULL for",
+      "wiki_quote": "Sent transaction type: 0=Redeem, 5=ConversionMoneyIn, 6=ConversionMoneyOut, 7=Payment, 8=RedeemAsic, 9=Staking. NULL for",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TransactionType",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "Human-readable type name from Dictionary.TransactionTypes. NULL for received transactions.",
+      "wiki_quote": "Human-readable type name from Dictionary.TransactionTypes. NULL for received transactions (Tier 1 — inherited from Walle",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "When the transaction record was created in the database. From SentTransactions.Occurred or ReceivedTransactions.Occurred",
+      "wiki_quote": "When the transaction record was created in the database. From SentTransactions.Occurred or ReceivedTransactions.Occurred",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LastStatusUpdateOccurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.TransactionsView.md",
+      "upstream_quote": "Timestamp of the most recent status change. Resolved via correlated subquery like TransStatusId. Enables \"time since las",
+      "wiki_quote": "Timestamp of the most recent status change. Resolved via correlated subquery like TransStatusId. Enables \"time since las",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 22,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 22 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

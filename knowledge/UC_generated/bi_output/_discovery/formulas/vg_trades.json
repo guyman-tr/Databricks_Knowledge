@@ -1,0 +1,261 @@
+{
+  "object_fqn": "main.bi_output.vg_trades",
+  "generated_at": "2026-05-19T15:01:28Z",
+  "formula_count": 23,
+  "formulas": [
+    {
+      "column": "Date",
+      "formula": "etr_ymd `Date`",
+      "expression_raw": "fca.etr_ymd `Date`",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "CID",
+      "formula": "RealCID",
+      "expression_raw": "fca.RealCID AS CID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "Country",
+      "formula": "Name",
+      "expression_raw": "dc.Name AS Country",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "Region",
+      "formula": "MarketingRegionManualName",
+      "expression_raw": "dc.MarketingRegionManualName AS Region",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentType",
+      "formula": "InstrumentType",
+      "expression_raw": "InstrumentType",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentID",
+      "formula": "InstrumentID",
+      "expression_raw": "fca.InstrumentID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentDisplayName",
+      "formula": "InstrumentDisplayName",
+      "expression_raw": "InstrumentDisplayName",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "IsFuture",
+      "formula": "IsFuture",
+      "expression_raw": "di.IsFuture",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "ClubTier",
+      "formula": "Name",
+      "expression_raw": "dpl.Name as ClubTier",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatus",
+      "formula": "Name PlayerStatus",
+      "expression_raw": "ps.Name PlayerStatus",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": "Name",
+      "expression_raw": "dr.Name AS Regulation",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "RegistrationDate",
+      "formula": "DATE(RegisteredReal)",
+      "expression_raw": "DATE(dmc.RegisteredReal) AS RegistrationDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "FTDDate",
+      "formula": "DATE(FirstDepositDate)",
+      "expression_raw": "DATE(dmc.FirstDepositDate) AS FTDDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "IsProfessionalCustomer",
+      "formula": "CASE WHEN MifidCategorizationID in (2,3) THEN 1 else 0 END IsProfessionalCustomer",
+      "expression_raw": "CASE WHEN fsc.MifidCategorizationID in (2,3) THEN 1 else 0 END IsProfessionalCustomer",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "ActionType",
+      "formula": "CASE WHEN ActionTypeID IN (1, 4, 39, 40) THEN 'Manual' ELSE 'Copy' END",
+      "expression_raw": "CASE WHEN ActionTypeID IN (1, 4, 39, 40) THEN 'Manual'\n    ELSE 'Copy'\n  END AS ActionType",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L22-L24",
+      "scope": "main"
+    },
+    {
+      "column": "Real/CFD",
+      "formula": "CASE WHEN IsSettled = 1 THEN 'Real' WHEN IsSettled = 0 THEn 'CFD' END AS `Real/CFD`",
+      "expression_raw": "CASE\n    WHEN IsSettled = 1 THEN 'Real'\n    WHEN IsSettled = 0 THEn 'CFD'\n  END AS `Real/CFD`",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L25-L28",
+      "scope": "main"
+    },
+    {
+      "column": "OpenTrades",
+      "formula": "SUM( CASE WHEN ActionTypeID IN (1, 2, 3, 39) THEN 1 ELSE 0 END ) OpenTrades",
+      "expression_raw": "SUM(\n    CASE\n      WHEN ActionTypeID IN (1, 2, 3, 39) THEN 1\n      ELSE 0\n    END\n  ) OpenTrades",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L29-L34",
+      "scope": "main"
+    },
+    {
+      "column": "ClosedTrades",
+      "formula": "SUM( CASE WHEN ActionTypeID IN (4, 5, 6, 28, 40) THEN 1 ELSE 0 END ) ClosedTrades",
+      "expression_raw": "SUM(\n    CASE\n      WHEN ActionTypeID IN (4, 5, 6, 28, 40) THEN 1\n      ELSE 0\n    END\n  ) ClosedTrades",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L35-L40",
+      "scope": "main"
+    },
+    {
+      "column": "TotalTrades",
+      "formula": "SUM( CASE WHEN ActionTypeID IN (1, 2, 3, 39, 4, 5, 6, 28, 40) THEN 1 ELSE 0 end ) TotalTrades",
+      "expression_raw": "SUM(\n    CASE\n      WHEN ActionTypeID IN (1, 2, 3, 39, 4, 5, 6, 28, 40) THEN 1\n      ELSE 0\n    end\n  ) TotalTrades",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L41-L46",
+      "scope": "main"
+    },
+    {
+      "column": "InvestedAmountOpen",
+      "formula": "SUM( CASE WHEN ActionTypeID IN (1, 2, 3, 39) THEN -1 * Amount ELSE 0 END )",
+      "expression_raw": "SUM(\n    CASE\n      WHEN ActionTypeID IN (1, 2, 3, 39) THEN -1 * fca.Amount\n      ELSE 0\n    END\n  ) AS InvestedAmountOpen",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L47-L52",
+      "scope": "main"
+    },
+    {
+      "column": "AmountClose",
+      "formula": "SUM( CASE WHEN ActionTypeID IN (4, 5, 6, 28, 40) THEN Amount ELSE 0 END )",
+      "expression_raw": "SUM(\n    CASE\n      WHEN ActionTypeID IN (4, 5, 6, 28, 40) THEN fca.Amount\n      ELSE 0\n    END\n  ) AS AmountClose",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L53-L58",
+      "scope": "main"
+    },
+    {
+      "column": "TotalAmount",
+      "formula": "SUM( CASE WHEN ActionTypeID IN (1, 2, 3, 39) THEN -1 * Amount WHEN ActionTypeID IN (4, 5, 6, 28, 40) THEN Amount ELSE 0 END )",
+      "expression_raw": "SUM(\n    CASE\n      WHEN ActionTypeID IN (1, 2, 3, 39) THEN -1 * fca.Amount\n      WHEN ActionTypeID IN (4, 5, 6, 28, 40) THEN fca.Amount\n      ELSE 0\n    END\n  ) AS TotalAmount",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L59-L65",
+      "scope": "main"
+    },
+    {
+      "column": "Leverage",
+      "formula": ",Leverage",
+      "expression_raw": ",fca.Leverage",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L66-L66",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_trades.sql"
+}

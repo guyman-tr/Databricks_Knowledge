@@ -1,0 +1,72 @@
+{
+  "object_fqn": "main.etoro_kpi.v_ddr_non_revenue_actions",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 6,
+  "formulas": [
+    {
+      "column": "DateID",
+      "formula": "DateID",
+      "expression_raw": "fca.DateID",
+      "inputs": [
+        "main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "financial_actions"
+    },
+    {
+      "column": "RealCID",
+      "formula": "RealCID",
+      "expression_raw": "fca.RealCID",
+      "inputs": [
+        "main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "financial_actions"
+    },
+    {
+      "column": "ActionType",
+      "formula": "CASE WHEN ActionTypeID = 36 AND CompensationReasonID IN (53,54) THEN 'CompensationRAFInvitedInviting' WHEN ActionTypeID = 36 AND CompensationReasonID = 22 THEN 'PnLAdjustme…",
+      "expression_raw": "CASE\n      WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID IN (53,54) THEN 'CompensationRAFInvitedInviting'\n      WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 22 THEN 'PnLAdjustme…",
+      "inputs": [
+        "main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L12-L29",
+      "scope": "financial_actions"
+    },
+    {
+      "column": "Amount",
+      "formula": "CASE WHEN ActionTypeID = 36 THEN Amount WHEN ActionTypeID = 9 THEN Amount WHEN ActionTypeID = 32 THEN -1 * Amount WHEN ActionTypeID IN (1,2,3,39) TH…",
+      "expression_raw": "CASE\n      WHEN fca.ActionTypeID = 36 THEN fca.Amount\n      WHEN fca.ActionTypeID = 9 THEN fca.Amount\n      WHEN fca.ActionTypeID = 32 THEN -1 * fca.Amount\n      WHEN fca.ActionTypeID IN (1,2,3,39) TH…",
+      "inputs": [
+        "main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L30-L41",
+      "scope": "financial_actions"
+    },
+    {
+      "column": "CountActions",
+      "formula": "COUNT(*)",
+      "expression_raw": "COUNT(*) AS CountActions",
+      "inputs": [],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L74-L74",
+      "scope": "main"
+    },
+    {
+      "column": "IsCopyFund",
+      "formula": "0",
+      "expression_raw": "0 AS IsCopyFund",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L56-L56",
+      "scope": "non_financial_actions"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/v_ddr_non_revenue_actions.sql"
+}

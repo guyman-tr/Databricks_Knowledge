@@ -1,0 +1,286 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_ib_recon_eod",
+  "rows": [
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "ClientAccountID",
+      "target_column_name": "ClientAccountID",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "ClientUnits",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "Clients_AmountNOP",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "CurrencyPrimary",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "ListingExchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "FXratetoUSD",
+      "target_column_name": "FX_Rate",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "IB-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "Side",
+      "target_column_name": "IB-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "Quantity",
+      "target_column_name": "IB-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "Side",
+      "target_column_name": "IB-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "IB-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "Quantity",
+      "target_column_name": "IB-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "PositionValue",
+      "target_column_name": "IB_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "FXRateToBase",
+      "target_column_name": "IB_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "PositionValue",
+      "target_column_name": "IB_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "FXRateToBase",
+      "target_column_name": "IB_Rate",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "Symbol",
+      "target_column_name": "IB_Symbol",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "Quantity",
+      "target_column_name": "IB_Units",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "Side",
+      "target_column_name": "IB_Units",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "ISIN",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "Description",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "Side",
+      "target_column_name": "IsBuy",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Buy/Sell",
+      "target_column_name": "IsBuy",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "FXRateToBase",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "PositionValue",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "PositionValue",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i3158027_open_positions",
+      "source_column_name": "FXRateToBase",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "eToroAmountUSD",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Symbol",
+      "target_column_name": "eToro_Symbol",
+      "entity_type": "JOB",
+      "event_count": 48
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 48
+    }
+  ],
+  "generated_at": "2026-05-19T12:27:07Z"
+}

@@ -1,0 +1,221 @@
+{
+  "object_fqn": "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:55Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "ID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.ID. Unique identifier for the recurring investment plan. Not an identity ",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.ID. Unique identifier for the recurring investment plan. Not an identity ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "GCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.GCID. Global Customer ID of the user who owns this plan.",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.GCID. Global Customer ID of the user who owns this plan (Tier 1 — inherit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.CID. Customer ID - alternate user identifier.",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.CID. Customer ID - alternate user identifier (Tier 1 — inherited from Rec",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.InstrumentID. ID of the instrument for Instrument-type plans (PlanType=1)",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.InstrumentID. ID of the instrument for Instrument-type plans (PlanType=1)",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RecurringDepositID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.RecurringDepositID. ID of the linked Recurring Deposit Plan from MIMO/Mon",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.RecurringDepositID. ID of the linked Recurring Deposit Plan from MIMO/Mon",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.Amount. Investment amount per cycle in the plan's CurrencyID at the time ",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.Amount. Investment amount per cycle in the plan's CurrencyID at the time ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.CurrencyID. Currency of the plan's Amount.",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.CurrencyID. Currency of the plan's Amount (Tier 1 — inherited from Recurr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PlanStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.PlanStatusID. Lifecycle state: 0=Initializing, 1=Active, 2=Cancelled.",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.PlanStatusID. Lifecycle state: 0=Initializing, 1=Active, 2=Cancelled (Tie",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepositPlanStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.DepositPlanStatusID. DEPRECATED. Status of the linked recurring deposit p",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.DepositPlanStatusID. DEPRECATED. Status of the linked recurring deposit p",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StatusReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.StatusReasonID. Reason for the plan status at this point in time. Maps to",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.StatusReasonID. Reason for the plan status at this point in time. Maps to",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.CreationDate. When the plan was originally created.",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.CreationDate. When the plan was originally created (Tier 1 — inherited fr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EndDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.EndDate. When the plan was cancelled. NULL while active.",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.EndDate. When the plan was cancelled. NULL while active (Tier 1 — inherit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepositStartDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.DepositStartDate. When the plan's first deposit occurred or was scheduled",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.DepositStartDate. When the plan's first deposit occurred or was scheduled",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FrequencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.FrequencyID. Execution cadence: 3=Monthly.",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.FrequencyID. Execution cadence: 3=Monthly (Tier 1 — inherited from Recurr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RepeatsOn",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.RepeatsOn. Day of the month when the plan executes (1-28).",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.RepeatsOn. Day of the month when the plan executes (1-28) (Tier 1 — inher",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundingID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.FundingID. ID of the plan's payment method.",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.FundingID. ID of the plan's payment method (Tier 1 — inherited from Recur",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Trace",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.Trace, but stored as nvarchar(733) NOT computed (unlike the parent's comp",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.Trace, but stored as nvarchar(733) NOT computed (unlike the parent's comp",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidFrom",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Period start - the point in time when this row version became the \"current\" version in the parent table.",
+      "wiki_quote": "Period start - the point in time when this row version became the \"current\" version in the parent table (Tier 1 — inheri",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidTo",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Period end - the point in time when this row version was superseded by an update or deleted from the parent table.",
+      "wiki_quote": "Period end - the point in time when this row version was superseded by an update or deleted from the parent table (Tier ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PlanType",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.PlanType. Plan classification: 1=Instrument, 2=Copy.",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.PlanType. Plan classification: 1=Instrument, 2=Copy (Tier 1 — inherited f",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CopyParentCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.CopyParentCID. CID of the trader being copied. NULL for Instrument-type p",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.CopyParentCID. CID of the trader being copied. NULL for Instrument-type p",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CopyParentGCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.CopyParentGCID. GCID of the trader being copied. NULL for Instrument-type",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.CopyParentGCID. GCID of the trader being copied. NULL for Instrument-type",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CopyType",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.CopyType. Copy relationship type: 0=None, 1=PI, 4=SmartPortfolio.",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.CopyType. Copy relationship type: 0=None, 1=PI, 4=SmartPortfolio (Tier 1 ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "HasBackupPayment",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.HasBackupPayment. Whether the plan has a fallback payment method.",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.HasBackupPayment. Whether the plan has a fallback payment method (Tier 1 ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MopType",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.MopType. Method of Payment type for deposits.",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.MopType. Method of Payment type for deposits (Tier 1 — inherited from Rec",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AmountUsd",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\History\\Tables\\History.RecurringInvestmentPlans.md",
+      "upstream_quote": "Same as parent table RecurringInvestment.Plans.AmountUsd. Investment amount per cycle in USD.",
+      "wiki_quote": "Same as parent table RecurringInvestment.Plans.AmountUsd. Investment amount per cycle in USD (Tier 1 — inherited from Re",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 26,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 26 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

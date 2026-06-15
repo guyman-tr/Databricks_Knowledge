@@ -1,0 +1,46 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_copyfund_positions",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "filter_block_copyfund_mirrors",
+      "name": "Filter block on copyfund_mirrors",
+      "kind": "filter_block",
+      "columns_involved": [
+        "MirrorTypeID"
+      ],
+      "predicates": [
+        {
+          "col": "MirrorTypeID",
+          "op": "=",
+          "val": "4"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L14",
+      "scope": "copyfund_mirrors",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_copyfund_positions",
+      "name": "Filter block on copyfund_positions",
+      "kind": "filter_block",
+      "columns_involved": [
+        "MirrorID"
+      ],
+      "predicates": [
+        {
+          "col": "MirrorID",
+          "op": ">",
+          "val": "0"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L30",
+      "scope": "copyfund_positions",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_copyfund_positions.sql"
+}

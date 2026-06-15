@@ -5,7 +5,7 @@
 | **UC Object** | `main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd` |
 | **Object Type** | `EXTERNAL` |
 | **Source** | (no source code snapshot — JOB-written table or fetch failed) |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 > No SQL/notebook source was cached for this object. The wiki for this object
 > relies on `system.access.column_lineage` data cached under

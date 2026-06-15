@@ -1,0 +1,67 @@
+{
+  "object_fqn": "main.bi_db.bronze_riskclassification_riskclassification_customeronboardingriskclassification",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:56Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "GCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\RiskClassification\\Wiki\\RiskClassification\\Tables\\RiskClassification.CustomerOnboardingRiskClassification.md",
+      "upstream_quote": "Global Customer ID. PK. One row per customer who has completed the onboarding risk assessment. Same customer identifier ",
+      "wiki_quote": "Global Customer ID. PK. One row per customer who has completed the onboarding risk assessment. Same customer identifier ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Score",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\RiskClassification\\Wiki\\RiskClassification\\Tables\\RiskClassification.CustomerOnboardingRiskClassification.md",
+      "upstream_quote": "Weighted composite onboarding risk score. Continuous decimal value representing the sum of all parameter WeightedScores.",
+      "wiki_quote": "Weighted composite onboarding risk score. Continuous decimal value representing the sum of all parameter WeightedScores.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LastUpdate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\RiskClassification\\Wiki\\RiskClassification\\Tables\\RiskClassification.CustomerOnboardingRiskClassification.md",
+      "upstream_quote": "Timestamp of the most recent score calculation. Set to CURRENT_TIMESTAMP on both INSERT and UPDATE by the Upsert procedu",
+      "wiki_quote": "Timestamp of the most recent score calculation. Set to CURRENT_TIMESTAMP on both INSERT and UPDATE by the Upsert procedu",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Data",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\RiskClassification\\Wiki\\RiskClassification\\Tables\\RiskClassification.CustomerOnboardingRiskClassification.md",
+      "upstream_quote": "Complete JSON scoring breakdown. Contains a \"Contributions\" object with nested objects per parameter (CountryOfResidence",
+      "wiki_quote": "Complete JSON scoring breakdown. Contains a \"Contributions\" object with nested objects per parameter (CountryOfResidence",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 4,
+    "B": 0,
+    "C": 1,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 4 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 1 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

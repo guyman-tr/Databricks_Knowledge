@@ -1,0 +1,123 @@
+{
+  "object_fqn": "main.bi_db.bronze_walletdb_wallet_transactiontravelruleinformation",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:14:07Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleInformation.md",
+      "upstream_quote": "Auto-incrementing PK. FK target for TransactionTravelRuleStatuses and TransactionTravelRuleBeneficiaryDetails.",
+      "wiki_quote": "Auto-incrementing PK. FK target for TransactionTravelRuleStatuses and TransactionTravelRuleBeneficiaryDetails (Tier 1 — ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RequestId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleInformation.md",
+      "upstream_quote": "Parent request. FK to Wallet.Requests.Id. Links Travel Rule data to the transaction request.",
+      "wiki_quote": "Parent request. FK to Wallet.Requests.Id. Links Travel Rule data to the transaction request (Tier 1 — inherited from Wal",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RequestCorrelationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleInformation.md",
+      "upstream_quote": "Parent request's CorrelationId for cross-service lookups.",
+      "wiki_quote": "Parent request's CorrelationId for cross-service lookups (Tier 1 — inherited from WalletDB.Wallet.TransactionTravelRuleI",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FiatSymbol",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleInformation.md",
+      "upstream_quote": "Fiat currency used for threshold calculation (e.g., \"USD\", \"EUR\").",
+      "wiki_quote": "Fiat currency used for threshold calculation (e.g., \"USD\", \"EUR\") (Tier 1 — inherited from WalletDB.Wallet.TransactionTr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FiatAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleInformation.md",
+      "upstream_quote": "Transaction value in fiat for threshold comparison.",
+      "wiki_quote": "Transaction value in fiat for threshold comparison (Tier 1 — inherited from WalletDB.Wallet.TransactionTravelRuleInforma",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleInformation.md",
+      "upstream_quote": "Record creation timestamp.",
+      "wiki_quote": "Record creation timestamp (Tier 1 — inherited from WalletDB.Wallet.TransactionTravelRuleInformation).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FiatRateCalculationTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleInformation.md",
+      "upstream_quote": "When the fiat conversion rate was fetched.",
+      "wiki_quote": "When the fiat conversion rate was fetched (Tier 1 — inherited from WalletDB.Wallet.TransactionTravelRuleInformation).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CounterpartyAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleInformation.md",
+      "upstream_quote": "Blockchain address of the counterparty (recipient for sends, sender for receives).",
+      "wiki_quote": "Blockchain address of the counterparty (recipient for sends, sender for receives) (Tier 1 — inherited from WalletDB.Wall",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FiatConversionTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleInformation.md",
+      "upstream_quote": "When the fiat conversion was performed.",
+      "wiki_quote": "When the fiat conversion was performed (Tier 1 — inherited from WalletDB.Wallet.TransactionTravelRuleInformation).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FiatRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleInformation.md",
+      "upstream_quote": "Crypto-to-fiat conversion rate used.",
+      "wiki_quote": "Crypto-to-fiat conversion rate used (Tier 1 — inherited from WalletDB.Wallet.TransactionTravelRuleInformation).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BeneficiaryAddressType",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleInformation.md",
+      "upstream_quote": "Whether the counterparty address is \"Private\" (self-hosted wallet) or \"Hosted\" (VASP-custodied). Determines compliance r",
+      "wiki_quote": "Whether the counterparty address is \"Private\" (self-hosted wallet) or \"Hosted\" (VASP-custodied). Determines compliance r",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProviderMessageId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleInformation.md",
+      "upstream_quote": "Message ID from the Travel Rule provider (e.g., Notabene) for inter-VASP information sharing.",
+      "wiki_quote": "Message ID from the Travel Rule provider (e.g., Notabene) for inter-VASP information sharing (Tier 1 — inherited from Wa",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 12,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 12 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "object": "main.bi_output.bi_output_finance_tables_bi_db_recurringinvestment_positions_parquet",
+  "writers": [
+    {
+      "kind": "DBSQL_QUERY",
+      "entity_id": "05293a5b-1d3b-4302-9856-f4cbc6942396",
+      "event_count_lookback": 128,
+      "role": "primary",
+      "fetched": false,
+      "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+    },
+    {
+      "kind": "DBSQL_QUERY",
+      "entity_id": "421b9943-9dae-4f4a-acc0-9272c4f2a70d",
+      "event_count_lookback": 54,
+      "role": "secondary",
+      "fetched": false,
+      "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+    },
+    {
+      "kind": "JOB",
+      "entity_id": "844382279060709",
+      "event_count_lookback": 2,
+      "role": "secondary",
+      "fetched": false,
+      "fetch_error": "job has no notebook tasks"
+    }
+  ],
+  "generated_at": "2026-05-19T14:31:42Z"
+}

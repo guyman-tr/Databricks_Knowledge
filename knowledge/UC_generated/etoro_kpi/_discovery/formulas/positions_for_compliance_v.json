@@ -1,0 +1,591 @@
+{
+  "object_fqn": "main.etoro_kpi.positions_for_compliance_v",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 53,
+  "formulas": [
+    {
+      "column": "positionid",
+      "formula": "-- ========================================================================== -- Source: information_schema.views.view_definition -- Object: etoro_kpi.positions_for_compliance_v -- Captured: 2026…",
+      "expression_raw": "-- ==========================================================================\n-- Source: information_schema.views.view_definition\n-- Object: main.etoro_kpi.positions_for_compliance_v\n-- Captured: 2026…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L1-L7",
+      "scope": "main"
+    },
+    {
+      "column": "cid",
+      "formula": "cid",
+      "expression_raw": "dp.cid",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "instrumentid",
+      "formula": "instrumentid",
+      "expression_raw": "dp.instrumentid",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "amount",
+      "formula": "amount",
+      "expression_raw": "dp.amount",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "InitialAmount",
+      "formula": "initialamountcents / 100",
+      "expression_raw": "dp.initialamountcents / 100 AS InitialAmount",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "hedgeserverid",
+      "formula": "hedgeserverid",
+      "expression_raw": "dp.hedgeserverid",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "leverage",
+      "formula": "leverage",
+      "expression_raw": "dp.leverage",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "isbuy",
+      "formula": "isbuy",
+      "expression_raw": "dp.isbuy",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "openoccurred",
+      "formula": "openoccurred",
+      "expression_raw": "dp.openoccurred",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "closeoccurred",
+      "formula": "closeoccurred",
+      "expression_raw": "dp.closeoccurred",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "parentpositionid",
+      "formula": "parentpositionid",
+      "expression_raw": "dp.parentpositionid",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "origparentpositionid",
+      "formula": "origparentpositionid",
+      "expression_raw": "dp.origparentpositionid",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "mirrorid",
+      "formula": "mirrorid",
+      "expression_raw": "dp.mirrorid",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "isopenopen",
+      "formula": "isopenopen",
+      "expression_raw": "dp.isopenopen",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "opendateid",
+      "formula": "opendateid",
+      "expression_raw": "dp.opendateid",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "closedateid",
+      "formula": "closedateid",
+      "expression_raw": "dp.closedateid",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "volume",
+      "formula": "volume",
+      "expression_raw": "dp.volume",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "regulationidonopen",
+      "formula": "regulationidonopen",
+      "expression_raw": "dp.regulationidonopen",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "treeid",
+      "formula": "treeid",
+      "expression_raw": "dp.treeid",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "initialunits",
+      "formula": "initialunits",
+      "expression_raw": "dp.initialunits",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "Units",
+      "formula": "amountinunitsdecimal",
+      "expression_raw": "dp.amountinunitsdecimal     AS Units",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "isdiscounted",
+      "formula": "isdiscounted",
+      "expression_raw": "dp.isdiscounted",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "issettled",
+      "formula": "issettled",
+      "expression_raw": "dp.issettled",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "issettledonopen",
+      "formula": "issettledonopen",
+      "expression_raw": "dp.issettledonopen",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "volumeonclose",
+      "formula": "volumeonclose",
+      "expression_raw": "dp.volumeonclose",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "isairdrop",
+      "formula": "isairdrop",
+      "expression_raw": "dp.isairdrop",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "inithedgetype",
+      "formula": "inithedgetype",
+      "expression_raw": "dp.inithedgetype",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "endhedgetype",
+      "formula": "endhedgetype",
+      "expression_raw": "dp.endhedgetype",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    },
+    {
+      "column": "orderid",
+      "formula": "orderid",
+      "expression_raw": "dp.orderid",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L35-L35",
+      "scope": "main"
+    },
+    {
+      "column": "closepositionreasonid",
+      "formula": "closepositionreasonid",
+      "expression_raw": "dp.closepositionreasonid",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "instrumenttypeid",
+      "formula": "instrumenttypeid",
+      "expression_raw": "di.instrumenttypeid",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L37-L37",
+      "scope": "main"
+    },
+    {
+      "column": "instrumenttype",
+      "formula": "instrumenttype",
+      "expression_raw": "di.instrumenttype",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "Instrument",
+      "formula": "NAME",
+      "expression_raw": "di.NAME                     AS Instrument",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L39-L39",
+      "scope": "main"
+    },
+    {
+      "column": "buycurrencyid",
+      "formula": "buycurrencyid",
+      "expression_raw": "di.buycurrencyid",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L40-L40",
+      "scope": "main"
+    },
+    {
+      "column": "sellcurrencyid",
+      "formula": "sellcurrencyid",
+      "expression_raw": "di.sellcurrencyid",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L41-L41",
+      "scope": "main"
+    },
+    {
+      "column": "buycurrency",
+      "formula": "buycurrency",
+      "expression_raw": "di.buycurrency",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L42-L42",
+      "scope": "main"
+    },
+    {
+      "column": "sellcurrency",
+      "formula": "sellcurrency",
+      "expression_raw": "di.sellcurrency",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L43-L43",
+      "scope": "main"
+    },
+    {
+      "column": "ismajor",
+      "formula": "ismajor",
+      "expression_raw": "di.ismajor",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L44-L44",
+      "scope": "main"
+    },
+    {
+      "column": "instrumentdisplayname",
+      "formula": "instrumentdisplayname",
+      "expression_raw": "di.instrumentdisplayname",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L45-L45",
+      "scope": "main"
+    },
+    {
+      "column": "industry",
+      "formula": "industry",
+      "expression_raw": "di.industry",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L46-L46",
+      "scope": "main"
+    },
+    {
+      "column": "exchange",
+      "formula": "exchange",
+      "expression_raw": "di.exchange",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L47-L47",
+      "scope": "main"
+    },
+    {
+      "column": "isincode",
+      "formula": "isincode",
+      "expression_raw": "di.isincode",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L48-L48",
+      "scope": "main"
+    },
+    {
+      "column": "isincountrycode",
+      "formula": "isincountrycode",
+      "expression_raw": "di.isincountrycode",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L49-L49",
+      "scope": "main"
+    },
+    {
+      "column": "tradable",
+      "formula": "tradable",
+      "expression_raw": "di.tradable",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L50-L50",
+      "scope": "main"
+    },
+    {
+      "column": "symbol",
+      "formula": "symbol",
+      "expression_raw": "di.symbol",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L51-L51",
+      "scope": "main"
+    },
+    {
+      "column": "symbolfull",
+      "formula": "symbolfull",
+      "expression_raw": "di.symbolfull",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L52-L52",
+      "scope": "main"
+    },
+    {
+      "column": "cusip",
+      "formula": "cusip",
+      "expression_raw": "di.cusip",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L53-L53",
+      "scope": "main"
+    },
+    {
+      "column": "isfuture",
+      "formula": "isfuture",
+      "expression_raw": "di.isfuture",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L54-L54",
+      "scope": "main"
+    },
+    {
+      "column": "ClosePositionReason",
+      "formula": "NAME",
+      "expression_raw": "dcpr.NAME                   AS ClosePositionReason",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L55-L55",
+      "scope": "main"
+    },
+    {
+      "column": "ispartialclosechild",
+      "formula": "ispartialclosechild",
+      "expression_raw": "dp.ispartialclosechild",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L56-L56",
+      "scope": "main"
+    },
+    {
+      "column": "ispartialcloseparent",
+      "formula": "ispartialcloseparent",
+      "expression_raw": "dp.ispartialcloseparent",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L57-L57",
+      "scope": "main"
+    },
+    {
+      "column": "netprofit",
+      "formula": "netprofit",
+      "expression_raw": "dp.netprofit",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L58-L58",
+      "scope": "main"
+    },
+    {
+      "column": "pnlindollars",
+      "formula": "pnlindollars",
+      "expression_raw": "dp.pnlindollars",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L59-L59",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/positions_for_compliance_v.sql"
+}

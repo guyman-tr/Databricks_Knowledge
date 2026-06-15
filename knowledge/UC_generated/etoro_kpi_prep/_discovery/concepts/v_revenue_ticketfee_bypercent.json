@@ -1,0 +1,49 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_revenue_ticketfee_bypercent",
+  "generated_at": "2026-05-18T16:27:27Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "union_leg_sign_flip_after_20260308",
+      "name": "Sign-flip leg (after_20260308)",
+      "kind": "union_leg_sign_flip",
+      "columns_involved": [
+        "DECIMAL"
+      ],
+      "predicates": [],
+      "sign": "-1",
+      "expressions": [
+        "fca.Amount"
+      ],
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "evidence_lines": "L59",
+      "scope": "after_20260308"
+    },
+    {
+      "id": "dim_lookup_di",
+      "name": "Dim lookup via di",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "alias": "di",
+      "join_conditions": [
+        "fca.InstrumentID = di.InstrumentID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L62",
+      "scopes": [
+        "after_20260308"
+      ],
+      "scope": "after_20260308",
+      "join_condition": "fca.InstrumentID = di.InstrumentID"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_revenue_ticketfee_bypercent.sql"
+}

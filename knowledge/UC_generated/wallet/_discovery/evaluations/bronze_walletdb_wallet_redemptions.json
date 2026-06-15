@@ -1,0 +1,158 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_redemptions",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:23Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "Auto-incrementing surrogate primary key.",
+      "wiki_quote": "Auto-incrementing surrogate primary key (Tier 1 — inherited from WalletDB.Wallet.Redemptions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OriginalRequestGuid",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "GUID of the original redemption request from the trading platform. Used for idempotency and cross-system correlation.",
+      "wiki_quote": "GUID of the original redemption request from the trading platform. Used for idempotency and cross-system correlation (Ti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SendRequestCorrelationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "Links to the send transaction request in Wallet.Requests.CorrelationId created when the blockchain transfer is initiated",
+      "wiki_quote": "Links to the send transaction request in Wallet.Requests.CorrelationId created when the blockchain transfer is initiated",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PositionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "Trading platform position being redeemed. Unique constraint - each position can only be redeemed once. NULL only for leg",
+      "wiki_quote": "Trading platform position being redeemed. Unique constraint - each position can only be redeemed once. NULL only for leg",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RequestingGcid",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "Global Customer ID of the customer requesting the redemption.",
+      "wiki_quote": "Global Customer ID of the customer requesting the redemption (Tier 1 — inherited from WalletDB.Wallet.Redemptions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "The cryptocurrency being redeemed. Implicit reference to Wallet.CryptoTypes.CryptoID.",
+      "wiki_quote": "The cryptocurrency being redeemed. Implicit reference to Wallet.CryptoTypes.CryptoID (Tier 1 — inherited from WalletDB.W",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RequestedAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "Gross amount of crypto requested for redemption. In native units of CryptoId.",
+      "wiki_quote": "Gross amount of crypto requested for redemption. In native units of CryptoId (Tier 1 — inherited from WalletDB.Wallet.Re",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "eToroFeeAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "eToro's service fee deducted from the redemption. Typically ~2% of RequestedAmount.",
+      "wiki_quote": "eToro's service fee deducted from the redemption. Typically ~2% of RequestedAmount (Tier 1 — inherited from WalletDB.Wal",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RedemptionStatus",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "Lifecycle status: 0=Persisted, 1=Retrieved, 2=SentToExecuter, 3=SuccessReported, 4=FailureReported. See [Redemption Stat",
+      "wiki_quote": "Lifecycle status: 0=Persisted, 1=Retrieved, 2=SentToExecuter, 3=SuccessReported, 4=FailureReported. See [Redemption Stat",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BillingTransId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "Transaction ID in the billing/accounting system for the fee charge.",
+      "wiki_quote": "Transaction ID in the billing/accounting system for the fee charge (Tier 1 — inherited from WalletDB.Wallet.Redemptions)",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BillingRedeemId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "Redemption ID in the billing/accounting system.",
+      "wiki_quote": "Redemption ID in the billing/accounting system (Tier 1 — inherited from WalletDB.Wallet.Redemptions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BeginDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "System-versioned temporal column (ROW START).",
+      "wiki_quote": "System-versioned temporal column (ROW START) (Tier 1 — inherited from WalletDB.Wallet.Redemptions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EndDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "System-versioned temporal column (ROW END).",
+      "wiki_quote": "System-versioned temporal column (ROW END) (Tier 1 — inherited from WalletDB.Wallet.Redemptions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EstimatedBlockchainFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "Estimated network fee for the blockchain transfer. Calculated before execution based on current network conditions.",
+      "wiki_quote": "Estimated network fee for the blockchain transfer. Calculated before execution based on current network conditions (Tier",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InitialFeeAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "Fixed base fee charged regardless of amount. Defaults to 0 for most cryptos.",
+      "wiki_quote": "Fixed base fee charged regardless of amount. Defaults to 0 for most cryptos (Tier 1 — inherited from WalletDB.Wallet.Red",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SourceWalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "The omnibus/system wallet from which the crypto is sent to the customer. FK to Wallet.Wallets.WalletId. NULL for legacy ",
+      "wiki_quote": "The omnibus/system wallet from which the crypto is sent to the customer. FK to Wallet.Wallets.WalletId. NULL for legacy ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TransactionTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Redemptions.md",
+      "upstream_quote": "Type of sent transaction created: typically 0 (Redeem) or 8 (RedeemAsic). FK to Dictionary.TransactionTypes. See [Transa",
+      "wiki_quote": "Type of sent transaction created: typically 0 (Redeem) or 8 (RedeemAsic). FK to Dictionary.TransactionTypes. See [Transa",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 17,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 17 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

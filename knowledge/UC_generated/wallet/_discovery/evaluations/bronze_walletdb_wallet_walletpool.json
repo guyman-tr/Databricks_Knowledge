@@ -1,0 +1,88 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_walletpool",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:26Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletPool.md",
+      "upstream_quote": "Auto-incrementing surrogate key.",
+      "wiki_quote": "Auto-incrementing surrogate key (Tier 1 — inherited from WalletDB.Wallet.WalletPool).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletPool.md",
+      "upstream_quote": "Internal wallet identifier (GUID). The primary business key used across the wallet system. Unique constraint. FK target ",
+      "wiki_quote": "Internal wallet identifier (GUID). The primary business key used across the wallet system. Unique constraint. FK target ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainCryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletPool.md",
+      "upstream_quote": "The blockchain this pool wallet was created for. FK to Wallet.BlockchainCryptos.Id. Determines which blockchain network ",
+      "wiki_quote": "The blockchain this pool wallet was created for. FK to Wallet.BlockchainCryptos.Id. Determines which blockchain network ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProviderWalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletPool.md",
+      "upstream_quote": "Wallet identifier assigned by the external custody provider (BitGo or CUG). Used for all API interactions with the provi",
+      "wiki_quote": "Wallet identifier assigned by the external custody provider (BitGo or CUG). Used for all API interactions with the provi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PublicAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletPool.md",
+      "upstream_quote": "Blockchain address associated with this wallet. Users send crypto to this address. NULL during initial creation before a",
+      "wiki_quote": "Blockchain address associated with this wallet. Users send crypto to this address. NULL during initial creation before a",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Created",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletPool.md",
+      "upstream_quote": "Timestamp when this pool wallet was created. Used for pool age monitoring and FIFO assignment ordering.",
+      "wiki_quote": "Timestamp when this pool wallet was created. Used for pool age monitoring and FIFO assignment ordering (Tier 1 — inherit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletProviderId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletPool.md",
+      "upstream_quote": "Custody provider that holds the keys: 1=BitGo, 2=CUG, 3=None. See [Wallet Provider](../../_glossary.md#wallet-provider).",
+      "wiki_quote": "Custody provider that holds the keys: 1=BitGo, 2=CUG, 3=None. See [Wallet Provider](../../_glossary.md#wallet-provider).",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 7,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 7 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

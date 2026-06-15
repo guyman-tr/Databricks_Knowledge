@@ -1,0 +1,933 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_parentcid",
+  "generated_at": "2026-05-19T15:01:26Z",
+  "formula_count": 76,
+  "formulas": [
+    {
+      "column": "DateID",
+      "formula": "-- ========================================================================== -- Source: information_schema.views.view_definition -- Object: bi_output.bi_output_vg_parentcid -- Captured: 2026-05-…",
+      "expression_raw": "-- ==========================================================================\n-- Source: information_schema.views.view_definition\n-- Object: main.bi_output.bi_output_vg_parentcid\n-- Captured: 2026-05-…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L1-L7",
+      "scope": "main"
+    },
+    {
+      "column": "Date",
+      "formula": ",Date",
+      "expression_raw": ",dd.Date",
+      "inputs": [
+        "bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "WeekNumberYear",
+      "formula": ",Date ,WeekNumberYear",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear",
+      "inputs": [
+        "bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L9",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYearMonth",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth",
+      "inputs": [
+        "bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L10",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarQuarter",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter",
+      "inputs": [
+        "bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L11",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYear",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear",
+      "inputs": [
+        "bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L12",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayWeek",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek",
+      "inputs": [
+        "bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L13",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayMonth",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth",
+      "inputs": [
+        "bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L14",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayQuarter",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter",
+      "inputs": [
+        "bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L15",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayYear",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear",
+      "inputs": [
+        "bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L16",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L17",
+      "scope": "main"
+    },
+    {
+      "column": "UserName",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L18",
+      "scope": "main"
+    },
+    {
+      "column": "Gender",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L19",
+      "scope": "main"
+    },
+    {
+      "column": "Manager",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L20",
+      "scope": "main"
+    },
+    {
+      "column": "Country",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L21",
+      "scope": "main"
+    },
+    {
+      "column": "Region",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L22",
+      "scope": "main"
+    },
+    {
+      "column": "Language",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L23",
+      "scope": "main"
+    },
+    {
+      "column": "Club",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L24",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L25",
+      "scope": "main"
+    },
+    {
+      "column": "RegisteredReal",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L26",
+      "scope": "main"
+    },
+    {
+      "column": "FirstDepositDate",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L27",
+      "scope": "main"
+    },
+    {
+      "column": "Seniority",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L28",
+      "scope": "main"
+    },
+    {
+      "column": "DaysAsPI",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L29",
+      "scope": "main"
+    },
+    {
+      "column": "CopyType",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L30",
+      "scope": "main"
+    },
+    {
+      "column": "PortfolioType",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L31",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusID",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L32",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatus",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L33",
+      "scope": "main"
+    },
+    {
+      "column": "PreviousGuruStatus",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L34",
+      "scope": "main"
+    },
+    {
+      "column": "TotalDaysInCurrentStatus",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L35",
+      "scope": "main"
+    },
+    {
+      "column": "BIO_Len",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L36",
+      "scope": "main"
+    },
+    {
+      "column": "IsPrivate",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,cp.…",
+      "expression_raw": ",dd.Date\n,dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L37",
+      "scope": "main"
+    },
+    {
+      "column": "AllowDisplayFullName",
+      "formula": ",WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,Gender ,c…",
+      "expression_raw": ",dd.WeekNumberYear\n,dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.Gender\n,c…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L38",
+      "scope": "main"
+    },
+    {
+      "column": "HasAvatar",
+      "formula": ",CalendarYearMonth ,CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,Gender ,Manager ,Count…",
+      "expression_raw": ",dd.CalendarYearMonth\n,dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.Gender\n,cp.Manager\n,cp.Count…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L10-L39",
+      "scope": "main"
+    },
+    {
+      "column": "RiskScore",
+      "formula": ",CalendarQuarter ,CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,Gender ,Manager ,Country ,Region ,Lang…",
+      "expression_raw": ",dd.CalendarQuarter\n,dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.Gender\n,cp.Manager\n,cp.Country\n,cp.Region\n,cp.Lang…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L11-L40",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatus",
+      "formula": ",CalendarYear ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,Gender ,Manager ,Country ,Region ,Language ,Club ,Re…",
+      "expression_raw": ",dd.CalendarYear\n,dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.Gender\n,cp.Manager\n,cp.Country\n,cp.Region\n,cp.Language\n,cp.Club\n,cp.Re…",
+      "inputs": [
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L12-L41",
+      "scope": "main"
+    },
+    {
+      "column": "LastBlockedDate",
+      "formula": ",IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,Gender ,Manager ,Country ,Region ,Language ,Club ,Regulation ,Reg…",
+      "expression_raw": ",dd.IsLastDayWeek\n,dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.Gender\n,cp.Manager\n,cp.Country\n,cp.Region\n,cp.Language\n,cp.Club\n,cp.Regulation\n,dcu.Reg…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L13-L42",
+      "scope": "main"
+    },
+    {
+      "column": "BlockReason",
+      "formula": ",IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,Gender ,Manager ,Country ,Region ,Language ,Club ,Regulation ,RegisteredReal ,F…",
+      "expression_raw": ",dd.IsLastDayMonth\n,dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.Gender\n,cp.Manager\n,cp.Country\n,cp.Region\n,cp.Language\n,cp.Club\n,cp.Regulation\n,dcu.RegisteredReal\n,dcu.F…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L14-L43",
+      "scope": "main"
+    },
+    {
+      "column": "CanOpenPosition",
+      "formula": ",IsLastDayQuarter ,IsLastDayYear ,CID AS RealCID ,UserName ,Gender ,Manager ,Country ,Region ,Language ,Club ,Regulation ,RegisteredReal ,FirstDepositDate ,cp…",
+      "expression_raw": ",dd.IsLastDayQuarter\n,dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.Gender\n,cp.Manager\n,cp.Country\n,cp.Region\n,cp.Language\n,cp.Club\n,cp.Regulation\n,dcu.RegisteredReal\n,dcu.FirstDepositDate\n,cp…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L15-L44",
+      "scope": "main"
+    },
+    {
+      "column": "CanClosePosition",
+      "formula": ",IsLastDayYear ,CID AS RealCID ,UserName ,Gender ,Manager ,Country ,Region ,Language ,Club ,Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAs…",
+      "expression_raw": ",dd.IsLastDayYear \n,cp.CID AS RealCID\n,cp.UserName\n,cp.Gender\n,cp.Manager\n,cp.Country\n,cp.Region\n,cp.Language\n,cp.Club\n,cp.Regulation\n,dcu.RegisteredReal\n,dcu.FirstDepositDate\n,cp.Seniority\n,cp.DaysAs…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L16-L45",
+      "scope": "main"
+    },
+    {
+      "column": "CanEditPosition",
+      "formula": ",CID AS RealCID ,UserName ,Gender ,Manager ,Country ,Region ,Language ,Club ,Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,cp…",
+      "expression_raw": ",cp.CID AS RealCID\n,cp.UserName\n,cp.Gender\n,cp.Manager\n,cp.Country\n,cp.Region\n,cp.Language\n,cp.Club\n,cp.Regulation\n,dcu.RegisteredReal\n,dcu.FirstDepositDate\n,cp.Seniority\n,cp.DaysAsPI\n,cp.CopyType\n,cp…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L17-L46",
+      "scope": "main"
+    },
+    {
+      "column": "CanBeCopied",
+      "formula": ",UserName ,Gender ,Manager ,Country ,Region ,Language ,Club ,Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,PortfolioType ,cp.…",
+      "expression_raw": ",cp.UserName\n,cp.Gender\n,cp.Manager\n,cp.Country\n,cp.Region\n,cp.Language\n,cp.Club\n,cp.Regulation\n,dcu.RegisteredReal\n,dcu.FirstDepositDate\n,cp.Seniority\n,cp.DaysAsPI\n,cp.CopyType\n,cp.PortfolioType\n,cp.…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L18-L47",
+      "scope": "main"
+    },
+    {
+      "column": "CanDeposit",
+      "formula": ",Gender ,Manager ,Country ,Region ,Language ,Club ,Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,PortfolioType ,GuruStatusID …",
+      "expression_raw": ",cp.Gender\n,cp.Manager\n,cp.Country\n,cp.Region\n,cp.Language\n,cp.Club\n,cp.Regulation\n,dcu.RegisteredReal\n,dcu.FirstDepositDate\n,cp.Seniority\n,cp.DaysAsPI\n,cp.CopyType\n,cp.PortfolioType\n,cp.GuruStatusID\n…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L19-L48",
+      "scope": "main"
+    },
+    {
+      "column": "CanRequestWithdraw",
+      "formula": ",Manager ,Country ,Region ,Language ,Club ,Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,PortfolioType ,GuruStatusID ,GuruSta…",
+      "expression_raw": ",cp.Manager\n,cp.Country\n,cp.Region\n,cp.Language\n,cp.Club\n,cp.Regulation\n,dcu.RegisteredReal\n,dcu.FirstDepositDate\n,cp.Seniority\n,cp.DaysAsPI\n,cp.CopyType\n,cp.PortfolioType\n,cp.GuruStatusID\n,cp.GuruSta…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L20-L49",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonID",
+      "formula": ",Country ,Region ,Language ,Club ,Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,PortfolioType ,GuruStatusID ,GuruStatus ,Prev…",
+      "expression_raw": ",cp.Country\n,cp.Region\n,cp.Language\n,cp.Club\n,cp.Regulation\n,dcu.RegisteredReal\n,dcu.FirstDepositDate\n,cp.Seniority\n,cp.DaysAsPI\n,cp.CopyType\n,cp.PortfolioType\n,cp.GuruStatusID\n,cp.GuruStatus\n,cp.Prev…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L21-L50",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonName",
+      "formula": ",Region ,Language ,Club ,Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,PortfolioType ,GuruStatusID ,GuruStatus ,PreviousGuruStat…",
+      "expression_raw": ",cp.Region\n,cp.Language\n,cp.Club\n,cp.Regulation\n,dcu.RegisteredReal\n,dcu.FirstDepositDate\n,cp.Seniority\n,cp.DaysAsPI\n,cp.CopyType\n,cp.PortfolioType\n,cp.GuruStatusID\n,cp.GuruStatus\n,cp.PreviousGuruStat…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L51",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonID",
+      "formula": ",Language ,Club ,Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,PortfolioType ,GuruStatusID ,GuruStatus ,PreviousGuruStatus ,Tota…",
+      "expression_raw": ",cp.Language\n,cp.Club\n,cp.Regulation\n,dcu.RegisteredReal\n,dcu.FirstDepositDate\n,cp.Seniority\n,cp.DaysAsPI\n,cp.CopyType\n,cp.PortfolioType\n,cp.GuruStatusID\n,cp.GuruStatus\n,cp.PreviousGuruStatus\n,cp.Tota…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L23-L52",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonName",
+      "formula": ",Club ,Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,PortfolioType ,GuruStatusID ,GuruStatus ,PreviousGuruStatus ,TotalDaysInCurren…",
+      "expression_raw": ",cp.Club\n,cp.Regulation\n,dcu.RegisteredReal\n,dcu.FirstDepositDate\n,cp.Seniority\n,cp.DaysAsPI\n,cp.CopyType\n,cp.PortfolioType\n,cp.GuruStatusID\n,cp.GuruStatus\n,cp.PreviousGuruStatus\n,cp.TotalDaysInCurren…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L24-L53",
+      "scope": "main"
+    },
+    {
+      "column": "TotalEquity",
+      "formula": ",Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,PortfolioType ,GuruStatusID ,GuruStatus ,PreviousGuruStatus ,TotalDaysInCurrentStatus ,…",
+      "expression_raw": ",cp.Regulation\n,dcu.RegisteredReal\n,dcu.FirstDepositDate\n,cp.Seniority\n,cp.DaysAsPI\n,cp.CopyType\n,cp.PortfolioType\n,cp.GuruStatusID\n,cp.GuruStatus\n,cp.PreviousGuruStatus\n,cp.TotalDaysInCurrentStatus\n,…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L25-L54",
+      "scope": "main"
+    },
+    {
+      "column": "RealizedEquity",
+      "formula": ",RegisteredReal ,FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,PortfolioType ,GuruStatusID ,GuruStatus ,PreviousGuruStatus ,TotalDaysInCurrentStatus ,BIO_Len ,cp.…",
+      "expression_raw": ",dcu.RegisteredReal\n,dcu.FirstDepositDate\n,cp.Seniority\n,cp.DaysAsPI\n,cp.CopyType\n,cp.PortfolioType\n,cp.GuruStatusID\n,cp.GuruStatus\n,cp.PreviousGuruStatus\n,cp.TotalDaysInCurrentStatus\n,cp.BIO_Len\n,cp.…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L26-L55",
+      "scope": "main"
+    },
+    {
+      "column": "TotalPositionsAmount",
+      "formula": ",FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,PortfolioType ,GuruStatusID ,GuruStatus ,PreviousGuruStatus ,TotalDaysInCurrentStatus ,BIO_Len ,IsPrivate ,AllowD…",
+      "expression_raw": ",dcu.FirstDepositDate\n,cp.Seniority\n,cp.DaysAsPI\n,cp.CopyType\n,cp.PortfolioType\n,cp.GuruStatusID\n,cp.GuruStatus\n,cp.PreviousGuruStatus\n,cp.TotalDaysInCurrentStatus\n,cp.BIO_Len\n,cp.IsPrivate\n,cp.AllowD…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L27-L56",
+      "scope": "main"
+    },
+    {
+      "column": "PositionPnL",
+      "formula": ",Seniority ,DaysAsPI ,CopyType ,PortfolioType ,GuruStatusID ,GuruStatus ,PreviousGuruStatus ,TotalDaysInCurrentStatus ,BIO_Len ,IsPrivate ,AllowDisplayFullName ,Has…",
+      "expression_raw": ",cp.Seniority\n,cp.DaysAsPI\n,cp.CopyType\n,cp.PortfolioType\n,cp.GuruStatusID\n,cp.GuruStatus\n,cp.PreviousGuruStatus\n,cp.TotalDaysInCurrentStatus\n,cp.BIO_Len\n,cp.IsPrivate\n,cp.AllowDisplayFullName\n,cp.Has…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L28-L57",
+      "scope": "main"
+    },
+    {
+      "column": "Credit",
+      "formula": ",DaysAsPI ,CopyType ,PortfolioType ,GuruStatusID ,GuruStatus ,PreviousGuruStatus ,TotalDaysInCurrentStatus ,BIO_Len ,IsPrivate ,AllowDisplayFullName ,HasAvatar ,Ris…",
+      "expression_raw": ",cp.DaysAsPI\n,cp.CopyType\n,cp.PortfolioType\n,cp.GuruStatusID\n,cp.GuruStatus\n,cp.PreviousGuruStatus\n,cp.TotalDaysInCurrentStatus\n,cp.BIO_Len\n,cp.IsPrivate\n,cp.AllowDisplayFullName\n,cp.HasAvatar\n,cp.Ris…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L29-L58",
+      "scope": "main"
+    },
+    {
+      "column": "NumOfCopiers",
+      "formula": ",CopyType ,PortfolioType ,GuruStatusID ,GuruStatus ,PreviousGuruStatus ,TotalDaysInCurrentStatus ,BIO_Len ,IsPrivate ,AllowDisplayFullName ,HasAvatar ,RiskScore ,Pl…",
+      "expression_raw": ",cp.CopyType\n,cp.PortfolioType\n,cp.GuruStatusID\n,cp.GuruStatus\n,cp.PreviousGuruStatus\n,cp.TotalDaysInCurrentStatus\n,cp.BIO_Len\n,cp.IsPrivate\n,cp.AllowDisplayFullName\n,cp.HasAvatar\n,cp.RiskScore\n,cp.Pl…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L30-L59",
+      "scope": "main"
+    },
+    {
+      "column": "CopyAUC",
+      "formula": ",PortfolioType ,GuruStatusID ,GuruStatus ,PreviousGuruStatus ,TotalDaysInCurrentStatus ,BIO_Len ,IsPrivate ,AllowDisplayFullName ,HasAvatar ,RiskScore ,PlayerStatus ,c…",
+      "expression_raw": ",cp.PortfolioType\n,cp.GuruStatusID\n,cp.GuruStatus\n,cp.PreviousGuruStatus\n,cp.TotalDaysInCurrentStatus\n,cp.BIO_Len\n,cp.IsPrivate\n,cp.AllowDisplayFullName\n,cp.HasAvatar\n,cp.RiskScore\n,cp.PlayerStatus\n,c…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L31-L60",
+      "scope": "main"
+    },
+    {
+      "column": "CopyPnL",
+      "formula": ",GuruStatusID ,GuruStatus ,PreviousGuruStatus ,TotalDaysInCurrentStatus ,BIO_Len ,IsPrivate ,AllowDisplayFullName ,HasAvatar ,RiskScore ,PlayerStatus ,LastBlockedDate …",
+      "expression_raw": ",cp.GuruStatusID\n,cp.GuruStatus\n,cp.PreviousGuruStatus\n,cp.TotalDaysInCurrentStatus\n,cp.BIO_Len\n,cp.IsPrivate\n,cp.AllowDisplayFullName\n,cp.HasAvatar\n,cp.RiskScore\n,cp.PlayerStatus\n,cp.LastBlockedDate\n…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L32-L61",
+      "scope": "main"
+    },
+    {
+      "column": "MI",
+      "formula": ",GuruStatus ,PreviousGuruStatus ,TotalDaysInCurrentStatus ,BIO_Len ,IsPrivate ,AllowDisplayFullName ,HasAvatar ,RiskScore ,PlayerStatus ,LastBlockedDate ,BlockReason ,…",
+      "expression_raw": ",cp.GuruStatus\n,cp.PreviousGuruStatus\n,cp.TotalDaysInCurrentStatus\n,cp.BIO_Len\n,cp.IsPrivate\n,cp.AllowDisplayFullName\n,cp.HasAvatar\n,cp.RiskScore\n,cp.PlayerStatus\n,cp.LastBlockedDate\n,cp.BlockReason\n,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L33-L62",
+      "scope": "main"
+    },
+    {
+      "column": "MO",
+      "formula": ",PreviousGuruStatus ,TotalDaysInCurrentStatus ,BIO_Len ,IsPrivate ,AllowDisplayFullName ,HasAvatar ,RiskScore ,PlayerStatus ,LastBlockedDate ,BlockReason ,CanOpenPosi…",
+      "expression_raw": ",cp.PreviousGuruStatus\n,cp.TotalDaysInCurrentStatus\n,cp.BIO_Len\n,cp.IsPrivate\n,cp.AllowDisplayFullName\n,cp.HasAvatar\n,cp.RiskScore\n,cp.PlayerStatus\n,cp.LastBlockedDate\n,cp.BlockReason\n,pst.CanOpenPosi…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L34-L63",
+      "scope": "main"
+    },
+    {
+      "column": "NetMI",
+      "formula": ",TotalDaysInCurrentStatus ,BIO_Len ,IsPrivate ,AllowDisplayFullName ,HasAvatar ,RiskScore ,PlayerStatus ,LastBlockedDate ,BlockReason ,CanOpenPosition ,CanClosePosit…",
+      "expression_raw": ",cp.TotalDaysInCurrentStatus\n,cp.BIO_Len\n,cp.IsPrivate\n,cp.AllowDisplayFullName\n,cp.HasAvatar\n,cp.RiskScore\n,cp.PlayerStatus\n,cp.LastBlockedDate\n,cp.BlockReason\n,pst.CanOpenPosition\n,pst.CanClosePosit…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L35-L64",
+      "scope": "main"
+    },
+    {
+      "column": "Trades",
+      "formula": ",BIO_Len ,IsPrivate ,AllowDisplayFullName ,HasAvatar ,RiskScore ,PlayerStatus ,LastBlockedDate ,BlockReason ,CanOpenPosition ,CanClosePosition ,CanEditPosition ,pst…",
+      "expression_raw": ",cp.BIO_Len\n,cp.IsPrivate\n,cp.AllowDisplayFullName\n,cp.HasAvatar\n,cp.RiskScore\n,cp.PlayerStatus\n,cp.LastBlockedDate\n,cp.BlockReason\n,pst.CanOpenPosition\n,pst.CanClosePosition\n,pst.CanEditPosition\n,pst…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L36-L65",
+      "scope": "main"
+    },
+    {
+      "column": "Top_3_Traded_Instruments",
+      "formula": ",IsPrivate ,AllowDisplayFullName ,HasAvatar ,RiskScore ,PlayerStatus ,LastBlockedDate ,BlockReason ,CanOpenPosition ,CanClosePosition ,CanEditPosition ,CanBeCopied…",
+      "expression_raw": ",cp.IsPrivate\n,cp.AllowDisplayFullName\n,cp.HasAvatar\n,cp.RiskScore\n,cp.PlayerStatus\n,cp.LastBlockedDate\n,cp.BlockReason\n,pst.CanOpenPosition\n,pst.CanClosePosition\n,pst.CanEditPosition\n,pst.CanBeCopied…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L37-L66",
+      "scope": "main"
+    },
+    {
+      "column": "Top3TradedIndustries",
+      "formula": ",AllowDisplayFullName ,HasAvatar ,RiskScore ,PlayerStatus ,LastBlockedDate ,BlockReason ,CanOpenPosition ,CanClosePosition ,CanEditPosition ,CanBeCopied ,CanDepos…",
+      "expression_raw": ",cp.AllowDisplayFullName\n,cp.HasAvatar\n,cp.RiskScore\n,cp.PlayerStatus\n,cp.LastBlockedDate\n,cp.BlockReason\n,pst.CanOpenPosition\n,pst.CanClosePosition\n,pst.CanEditPosition\n,pst.CanBeCopied\n,pst.CanDepos…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L38-L67",
+      "scope": "main"
+    },
+    {
+      "column": "Lev_weighted_average",
+      "formula": ",HasAvatar ,RiskScore ,PlayerStatus ,LastBlockedDate ,BlockReason ,CanOpenPosition ,CanClosePosition ,CanEditPosition ,CanBeCopied ,CanDeposit ,CanRequestWithdra…",
+      "expression_raw": ",cp.HasAvatar\n,cp.RiskScore\n,cp.PlayerStatus\n,cp.LastBlockedDate\n,cp.BlockReason\n,pst.CanOpenPosition\n,pst.CanClosePosition\n,pst.CanEditPosition\n,pst.CanBeCopied\n,pst.CanDeposit\n,pst.CanRequestWithdra…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L68",
+      "scope": "main"
+    },
+    {
+      "column": "BuyPercent",
+      "formula": ",RiskScore ,PlayerStatus ,LastBlockedDate ,BlockReason ,CanOpenPosition ,CanClosePosition ,CanEditPosition ,CanBeCopied ,CanDeposit ,CanRequestWithdraw ,PlayerS…",
+      "expression_raw": ",cp.RiskScore\n,cp.PlayerStatus\n,cp.LastBlockedDate\n,cp.BlockReason\n,pst.CanOpenPosition\n,pst.CanClosePosition\n,pst.CanEditPosition\n,pst.CanBeCopied\n,pst.CanDeposit\n,pst.CanRequestWithdraw\n,fsc.PlayerS…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L40-L69",
+      "scope": "main"
+    },
+    {
+      "column": "SellPercent",
+      "formula": ",PlayerStatus ,LastBlockedDate ,BlockReason ,CanOpenPosition ,CanClosePosition ,CanEditPosition ,CanBeCopied ,CanDeposit ,CanRequestWithdraw ,PlayerStatusReasonID …",
+      "expression_raw": ",cp.PlayerStatus\n,cp.LastBlockedDate\n,cp.BlockReason\n,pst.CanOpenPosition\n,pst.CanClosePosition\n,pst.CanEditPosition\n,pst.CanBeCopied\n,pst.CanDeposit\n,pst.CanRequestWithdraw\n,fsc.PlayerStatusReasonID\n…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L41-L70",
+      "scope": "main"
+    },
+    {
+      "column": "HoldsHighLevPosition",
+      "formula": ",LastBlockedDate ,BlockReason ,CanOpenPosition ,CanClosePosition ,CanEditPosition ,CanBeCopied ,CanDeposit ,CanRequestWithdraw ,PlayerStatusReasonID ,Name AS Play…",
+      "expression_raw": ",cp.LastBlockedDate\n,cp.BlockReason\n,pst.CanOpenPosition\n,pst.CanClosePosition\n,pst.CanEditPosition\n,pst.CanBeCopied\n,pst.CanDeposit\n,pst.CanRequestWithdraw\n,fsc.PlayerStatusReasonID\n,psr.Name AS Play…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L42-L71",
+      "scope": "main"
+    },
+    {
+      "column": "Classification",
+      "formula": ",BlockReason ,CanOpenPosition ,CanClosePosition ,CanEditPosition ,CanBeCopied ,CanDeposit ,CanRequestWithdraw ,PlayerStatusReasonID ,Name AS PlayerStatusReasonName ,…",
+      "expression_raw": ",cp.BlockReason\n,pst.CanOpenPosition\n,pst.CanClosePosition\n,pst.CanEditPosition\n,pst.CanBeCopied\n,pst.CanDeposit\n,pst.CanRequestWithdraw\n,fsc.PlayerStatusReasonID\n,psr.Name AS PlayerStatusReasonName\n,…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L43-L72",
+      "scope": "main"
+    },
+    {
+      "column": "Largest_Asset_Class",
+      "formula": ",CanOpenPosition ,CanClosePosition ,CanEditPosition ,CanBeCopied ,CanDeposit ,CanRequestWithdraw ,PlayerStatusReasonID ,Name AS PlayerStatusReasonName ,PlayerStatus…",
+      "expression_raw": ",pst.CanOpenPosition\n,pst.CanClosePosition\n,pst.CanEditPosition\n,pst.CanBeCopied\n,pst.CanDeposit\n,pst.CanRequestWithdraw\n,fsc.PlayerStatusReasonID\n,psr.Name AS PlayerStatusReasonName\n,fsc.PlayerStatus…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L44-L73",
+      "scope": "main"
+    },
+    {
+      "column": "AvgerageHoldingTime",
+      "formula": ",CanClosePosition ,CanEditPosition ,CanBeCopied ,CanDeposit ,CanRequestWithdraw ,PlayerStatusReasonID ,Name AS PlayerStatusReasonName ,PlayerStatusSubReasonID ,Pla…",
+      "expression_raw": ",pst.CanClosePosition\n,pst.CanEditPosition\n,pst.CanBeCopied\n,pst.CanDeposit\n,pst.CanRequestWithdraw\n,fsc.PlayerStatusReasonID\n,psr.Name AS PlayerStatusReasonName\n,fsc.PlayerStatusSubReasonID\n,pssr.Pla…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L45-L74",
+      "scope": "main"
+    },
+    {
+      "column": "TraderType",
+      "formula": ",CanEditPosition ,CanBeCopied ,CanDeposit ,CanRequestWithdraw ,PlayerStatusReasonID ,Name AS PlayerStatusReasonName ,PlayerStatusSubReasonID ,PlayerStatusSubReasonName…",
+      "expression_raw": ",pst.CanEditPosition\n,pst.CanBeCopied\n,pst.CanDeposit\n,pst.CanRequestWithdraw\n,fsc.PlayerStatusReasonID\n,psr.Name AS PlayerStatusReasonName\n,fsc.PlayerStatusSubReasonID\n,pssr.PlayerStatusSubReasonName…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L75",
+      "scope": "main"
+    },
+    {
+      "column": "HighLevHoldingDetail",
+      "formula": ",CanBeCopied ,CanDeposit ,CanRequestWithdraw ,PlayerStatusReasonID ,Name AS PlayerStatusReasonName ,PlayerStatusSubReasonID ,PlayerStatusSubReasonName ,TotalEquity ,cp.…",
+      "expression_raw": ",pst.CanBeCopied\n,pst.CanDeposit\n,pst.CanRequestWithdraw\n,fsc.PlayerStatusReasonID\n,psr.Name AS PlayerStatusReasonName\n,fsc.PlayerStatusSubReasonID\n,pssr.PlayerStatusSubReasonName\n,cp.TotalEquity\n,cp.…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L47-L76",
+      "scope": "main"
+    },
+    {
+      "column": "Value_percenet",
+      "formula": ",CanDeposit ,CanRequestWithdraw ,PlayerStatusReasonID ,Name AS PlayerStatusReasonName ,PlayerStatusSubReasonID ,PlayerStatusSubReasonName ,TotalEquity ,RealizedEquity ,c…",
+      "expression_raw": ",pst.CanDeposit\n,pst.CanRequestWithdraw\n,fsc.PlayerStatusReasonID\n,psr.Name AS PlayerStatusReasonName\n,fsc.PlayerStatusSubReasonID\n,pssr.PlayerStatusSubReasonName\n,cp.TotalEquity\n,cp.RealizedEquity\n,c…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L48-L77",
+      "scope": "main"
+    },
+    {
+      "column": "Last_Day_Performance",
+      "formula": ",CanRequestWithdraw ,PlayerStatusReasonID ,Name AS PlayerStatusReasonName ,PlayerStatusSubReasonID ,PlayerStatusSubReasonName ,TotalEquity ,RealizedEquity ,TotalPositions…",
+      "expression_raw": ",pst.CanRequestWithdraw\n,fsc.PlayerStatusReasonID\n,psr.Name AS PlayerStatusReasonName\n,fsc.PlayerStatusSubReasonID\n,pssr.PlayerStatusSubReasonName\n,cp.TotalEquity\n,cp.RealizedEquity\n,cp.TotalPositions…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L49-L78",
+      "scope": "main"
+    },
+    {
+      "column": "Gain_YTD",
+      "formula": ",PlayerStatusReasonID ,Name AS PlayerStatusReasonName ,PlayerStatusSubReasonID ,PlayerStatusSubReasonName ,TotalEquity ,RealizedEquity ,TotalPositionsAmount ,PositionPnL ,…",
+      "expression_raw": ",fsc.PlayerStatusReasonID\n,psr.Name AS PlayerStatusReasonName\n,fsc.PlayerStatusSubReasonID\n,pssr.PlayerStatusSubReasonName\n,cp.TotalEquity\n,cp.RealizedEquity\n,cp.TotalPositionsAmount\n,cp.PositionPnL\n,…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L50-L79",
+      "scope": "main"
+    },
+    {
+      "column": "Gain_QTD",
+      "formula": ",Name AS PlayerStatusReasonName ,PlayerStatusSubReasonID ,PlayerStatusSubReasonName ,TotalEquity ,RealizedEquity ,TotalPositionsAmount ,PositionPnL ,Credit ,NumOfCopiers…",
+      "expression_raw": ",psr.Name AS PlayerStatusReasonName\n,fsc.PlayerStatusSubReasonID\n,pssr.PlayerStatusSubReasonName\n,cp.TotalEquity\n,cp.RealizedEquity\n,cp.TotalPositionsAmount\n,cp.PositionPnL\n,cp.Credit\n,cp.NumOfCopiers…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L51-L80",
+      "scope": "main"
+    },
+    {
+      "column": "Gain_MTD",
+      "formula": ",PlayerStatusSubReasonID ,PlayerStatusSubReasonName ,TotalEquity ,RealizedEquity ,TotalPositionsAmount ,PositionPnL ,Credit ,NumOfCopiers ,CopyAUC ,CopyPnL ,MI ,cp.…",
+      "expression_raw": ",fsc.PlayerStatusSubReasonID\n,pssr.PlayerStatusSubReasonName\n,cp.TotalEquity\n,cp.RealizedEquity\n,cp.TotalPositionsAmount\n,cp.PositionPnL\n,cp.Credit\n,cp.NumOfCopiers\n,cp.CopyAUC\n,cp.CopyPnL\n,cp.MI\n,cp.…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L52-L81",
+      "scope": "main"
+    },
+    {
+      "column": "MonthsSinceFirstOpen",
+      "formula": ",PlayerStatusSubReasonName ,TotalEquity ,RealizedEquity ,TotalPositionsAmount ,PositionPnL ,Credit ,NumOfCopiers ,CopyAUC ,CopyPnL ,MI ,MO ,NetMI ,Trades ,T…",
+      "expression_raw": ",pssr.PlayerStatusSubReasonName\n,cp.TotalEquity\n,cp.RealizedEquity\n,cp.TotalPositionsAmount\n,cp.PositionPnL\n,cp.Credit\n,cp.NumOfCopiers\n,cp.CopyAUC\n,cp.CopyPnL\n,cp.MI\n,cp.MO\n,cp.NetMI\n,cp.Trades\n,cp.T…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L53-L82",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_parentcid.sql"
+}

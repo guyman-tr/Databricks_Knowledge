@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_population_active_traders
--- Captured: 2026-05-18T08:08:16Z
+-- Captured: 2026-05-19T12:15:47Z
 -- ==========================================================================
 
 WITH actionsprep AS (

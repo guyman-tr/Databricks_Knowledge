@@ -1,0 +1,130 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_limitationsdefinitions",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:21Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.LimitationsDefinitions.md",
+      "upstream_quote": "Auto-incrementing surrogate primary key. Referenced by LimitExceeds when recording which rule was breached.",
+      "wiki_quote": "Auto-incrementing surrogate primary key. Referenced by LimitExceeds when recording which rule was breached (Tier 1 — inh",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DefinitionJson",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.LimitationsDefinitions.md",
+      "upstream_quote": "Full structured definition of the limit rule consumed by the evaluation service. Contains threshold values, period windo",
+      "wiki_quote": "Full structured definition of the limit rule consumed by the evaluation service. Contains threshold values, period windo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LastChanged",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.LimitationsDefinitions.md",
+      "upstream_quote": "UTC timestamp of the most recent modification to this limit definition. Tracks when operations last adjusted this rule.",
+      "wiki_quote": "UTC timestamp of the most recent modification to this limit definition. Tracks when operations last adjusted this rule (",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LastChangedBy",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.LimitationsDefinitions.md",
+      "upstream_quote": "Identity (username or service account) that last modified this row. Provides an audit trail for limit configuration chan",
+      "wiki_quote": "Identity (username or service account) that last modified this row. Provides an audit trail for limit configuration chan",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsActive",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.LimitationsDefinitions.md",
+      "upstream_quote": "1=limit rule is currently evaluated; 0=retired/deactivated. Only active rules are applied during transaction validation.",
+      "wiki_quote": "1=limit rule is currently evaluated; 0=retired/deactivated. Only active rules are applied during transaction validation ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LimitClassificationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.LimitationsDefinitions.md",
+      "upstream_quote": "Enforcement mode: 1=Soft (alert only), 2=Hard (block transaction). FK to Dict.LimitClassifications.",
+      "wiki_quote": "Enforcement mode: 1=Soft (alert only), 2=Hard (block transaction). FK to Dict.LimitClassifications (Tier 1 — inherited f",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LimitTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.LimitationsDefinitions.md",
+      "upstream_quote": "Threshold direction: 1=Min (amount must be >= threshold), 2=Max (amount must be <= threshold). FK to Dict.LimitTypes.",
+      "wiki_quote": "Threshold direction: 1=Min (amount must be >= threshold), 2=Max (amount must be <= threshold). FK to Dict.LimitTypes (Ti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LimitTargetId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.LimitationsDefinitions.md",
+      "upstream_quote": "Evaluation scope target: 1=User (per customer), 2=Global (platform-wide). FK to Dict.LimitTargets.",
+      "wiki_quote": "Evaluation scope target: 1=User (per customer), 2=Global (platform-wide). FK to Dict.LimitTargets (Tier 1 — inherited fr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TransactionTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.LimitationsDefinitions.md",
+      "upstream_quote": "The transaction type this limit governs. FK to Dict.TransactionTypes (e.g., Send, Receive, Buy).",
+      "wiki_quote": "The transaction type this limit governs. FK to Dict.TransactionTypes (e.g., Send, Receive, Buy) (Tier 1 — inherited from",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.LimitationsDefinitions.md",
+      "upstream_quote": "Specific cryptocurrency this rule applies to. NULL when rule is defined at category level (see CryptoCategoryName). FK t",
+      "wiki_quote": "Specific cryptocurrency this rule applies to. NULL when rule is defined at category level (see CryptoCategoryName). FK t",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoCategoryName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.LimitationsDefinitions.md",
+      "upstream_quote": "Named category of cryptocurrencies this rule applies to (e.g., \"Stablecoins\"). Used when the rule covers a group rather ",
+      "wiki_quote": "Named category of cryptocurrencies this rule applies to (e.g., \"Stablecoins\"). Used when the rule covers a group rather ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LimitScopeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.LimitationsDefinitions.md",
+      "upstream_quote": "Aggregation scope: 1=Single (applies to individual transaction), 2=Periodic (applies to rolling sum over a time window).",
+      "wiki_quote": "Aggregation scope: 1=Single (applies to individual transaction), 2=Periodic (applies to rolling sum over a time window).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LimitActionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.LimitationsDefinitions.md",
+      "upstream_quote": "Action taken on breach: 1=Enforce (apply the limit), 2=Alert (notify only). FK to Dict.LimitActions.",
+      "wiki_quote": "Action taken on breach: 1=Enforce (apply the limit), 2=Alert (notify only). FK to Dict.LimitActions (Tier 1 — inherited ",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 13,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 13 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

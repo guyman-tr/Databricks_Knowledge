@@ -3,151 +3,113 @@
 | Property | Value |
 |----------|-------|
 | **UC Object** | `main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics` |
-| **Object Type** | `EXTERNAL` (Delta) |
-| **Location** | `abfss://analysis@dldataplatformprodwe.dfs.core.windows.net/DE_OUTPUT/Etoro_KPI/Fact_CustomerAction_W_Metrics` |
-| **Row count** | 9,128,648,899 |
-| **Source code** | _not available — writer is a `JOB` (id `712655402982749`) with no notebook tasks; lineage built from `system.access.column_lineage` runtime cache_ |
-| **Column-lineage cache** | `knowledge/UC_generated/de_output/_discovery/column_lineage/de_output_etoro_kpi_fact_customeraction_w_metrics.json` (rows: 196) |
-| **Primary upstream** | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` |
-| **Writer (primary)** | JOB id `712655402982749` (kind=JOB; no source fetched — `job has no notebook tasks`) |
-| **Writer (secondary)** | 3 DBSQL queries observed in last 90d (likely manual reruns / repair runs) |
-| **Generated** | 2026-05-17 |
+| **Object Type** | `EXTERNAL` |
+| **Source** | (no source code snapshot — JOB-written table or fetch failed) |
+| **Generated** | 2026-05-19 |
 
-## Upstream Objects
-
-| Upstream UC Object | Role | Upstream Wiki |
-|--------------------|------|---------------|
-| `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | Primary (only source per runtime lineage; 97 of 98 columns pass through 1:1) | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-
-## Lineage Chain
-
-```
-main.etoro_kpi_prep.v_fact_customeraction_w_metrics   ←── primary (and only) upstream
-        │
-        ▼  JOB id 712655402982749 (Delta MERGE / overwrite — no notebook source)
-main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics   ←── this object (EXTERNAL Delta @ abfss://analysis@dldataplatformprodwe.dfs.core.windows.net/DE_OUTPUT/Etoro_KPI/Fact_CustomerAction_W_Metrics)
-```
+> No SQL/notebook source was cached for this object. The wiki for this object
+> relies on `system.access.column_lineage` data cached under
+> `_discovery/column_lineage/de_output_etoro_kpi_fact_customeraction_w_metrics.json` for upstream resolution.
 
 ## Column Lineage
 
-| # | UC Column | Source UC Object | Source Column | Transform | Upstream Tier | Notes |
-|---|-----------|------------------|---------------|-----------|---------------|-------|
-| 1 | `GCID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `gcid` | `passthrough` | (Tier 1 — Customer.CustomerStatic) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 2 | `RealCID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `realcid` | `passthrough` | (Tier 1 — Customer.CustomerStatic) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 3 | `Occurred` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `occurred` | `passthrough` | (Tier 1 — source-dependent) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 4 | `ActionTypeID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `actiontypeid` | `passthrough` | (Tier 1 — History.Credit / Trade snapshots / STS / Customer payloads) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 5 | `PlatformTypeID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `platformtypeid` | `passthrough` | (Tier 3 — ETL-assigned) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 6 | `InstrumentID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `instrumentid` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 7 | `Amount` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `amount` | `passthrough` | (Tier 1 — Trade.PositionTbl / History.Credit) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 8 | `Leverage` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `leverage` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 9 | `NetProfit` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `netprofit` | `passthrough` | (Tier 1 — Trade.PositionTbl) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 10 | `Commission` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `commission` | `passthrough` | (Tier 1 — Trade.PositionTbl) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 11 | `PositionID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `positionid` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 12 | `FundingTypeID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `fundingtypeid` | `passthrough` | (Tier 1 — History.Credit) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 13 | `MirrorID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `mirrorid` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 14 | `WithdrawID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `withdrawid` | `passthrough` | (Tier 1 — History.Credit) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 15 | `DateID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `dateid` | `passthrough` | (Tier 2 — SP_Fact_CustomerAction) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 16 | `CompensationReasonID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `compensationreasonid` | `passthrough` | (Tier 1 — History.Credit, updated wiki 2025-12) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 17 | `WithdrawPaymentID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `withdrawpaymentid` | `passthrough` | (Tier 1 — History.Credit) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 18 | `CommissionOnClose` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `commissiononclose` | `passthrough` | (Tier 1 — Trade.PositionTbl) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 19 | `DepositID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `depositid` | `passthrough` | (Tier 1 — History.Credit) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 20 | `FullCommission` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `fullcommission` | `passthrough` | (Tier 1 — Trade.PositionTbl) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 21 | `FullCommissionOnClose` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `fullcommissiononclose` | `passthrough` | (Tier 1 — Trade.PositionTbl) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 22 | `RedeemID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `redeemid` | `passthrough` | (Tier 1 — Trade.PositionTbl) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 23 | `RedeemStatus` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `redeemstatus` | `passthrough` | (Tier 1 — Trade.PositionTbl) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 24 | `IsRedeem` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `isredeem` | `passthrough` | (Tier 2 — SP_Fact_CustomerAction) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 25 | `ReopenForPositionID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `reopenforpositionid` | `passthrough` | (Tier 1 — Trade.PositionTbl) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 26 | `IsReOpen` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `isreopen` | `passthrough` | (Tier 2 — SP_Dim_Position_DL_To_Synapse) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 27 | `CommissionOnCloseOrig` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `commissiononcloseorig` | `passthrough` | (Tier 2 — SP_Dim_Position_DL_To_Synapse) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 28 | `FullCommissionOnCloseOrig` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `fullcommissiononcloseorig` | `passthrough` | (Tier 2 — SP_Dim_Position_DL_To_Synapse) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 29 | `OriginalPositionID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `originalpositionid` | `passthrough` | (Tier 2 — SP_Dim_Position_DL_To_Synapse) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 30 | `IsPartialCloseParent` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `ispartialcloseparent` | `passthrough` | (Tier 5 — domain expert, SP_Fact_CustomerAction_IsParitalCloseParent) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 31 | `IsPartialCloseChild` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `ispartialclosechild` | `passthrough` | (Tier 5 — domain expert, SP_Dim_Position_DL_To_Synapse) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 32 | `PaymentStatusID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `paymentstatusid` | `passthrough` | (Tier 5 — domain expert) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 33 | `IsDiscounted` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `isdiscounted` | `passthrough` | (Tier 1 — Trade.PositionTbl) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 34 | `IsSettled` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `issettled` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 35 | `CommissionByUnits` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `commissionbyunits` | `passthrough` | (Tier 1 — Trade.Position) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 36 | `FullCommissionByUnits` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `fullcommissionbyunits` | `passthrough` | (Tier 1 — Trade.Position) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 37 | `IsFTD` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `isftd` | `passthrough` | (Tier 2 — SP_Fact_CustomerAction) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 38 | `IsFeeDividend` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `isfeedividend` | `passthrough` | (Tier 2 — SP_Fact_CustomerAction) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 39 | `IsAirDrop` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `isairdrop` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 40 | `DividendID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `dividendid` | `passthrough` | (Tier 1 — Trade.Positions/dividends lineage) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 41 | `MoveMoneyReasonID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `movemoneyreasonid` | `passthrough` | (Tier 1 — History.Credit) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 42 | `SettlementTypeID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `settlementtypeid` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 43 | `etr_y` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `etr_y` | `passthrough` | (Tier 2 — gold/spaceship pipeline) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 44 | `etr_ym` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `etr_ym` | `passthrough` | (Tier 2 — gold/spaceship pipeline) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 45 | `etr_ymd` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `etr_ymd` | `passthrough` | (Tier 2 — gold/spaceship pipeline) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 46 | `DLTOpen` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `dltopen` | `passthrough` | (Tier 2 — SP_Dim_Position_DL_To_Synapse) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 47 | `DLTClose` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `dltclose` | `passthrough` | (Tier 2 — SP_Dim_Position_DL_To_Synapse) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 48 | `OpenMarkupByUnits` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `openmarkupbyunits` | `passthrough` | (Tier 1 — Trade.Position) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 49 | `Description` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `description` | `passthrough` | (Tier 1 — History.Credit) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 50 | `IsBuy` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `isbuy` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 51 | `CreditID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `creditid` | `passthrough` | (Tier 1 — History.Credit) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 52 | `OpenDateID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `opendateid` | `passthrough` | (Tier 2 — main.dwh.dim_position) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 53 | `CloseDateID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `closedateid` | `passthrough` | (Tier 2 — main.dwh.dim_position) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 54 | `TicketFeeAction` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `ticketfeeaction` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 55 | `RollOverFee` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `rolloverfee` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 56 | `Dividend` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `dividend` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 57 | `SDRT` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `sdrt` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 58 | `AdminFee` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `adminfee` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 59 | `SpotAdjustFee` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `spotadjustfee` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 60 | `ConversionFeeDeposit` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `conversionfeedeposit` | `passthrough` | (Tier 2 — main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee / main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 61 | `ConversionFeeWithdraw` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `conversionfeewithdraw` | `passthrough` | (Tier 2 — main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee / main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 62 | `ConversionFeeReversal` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `conversionfeereversal` | `passthrough` | (Tier 2 — main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 63 | `CashoutFeeExludingRedeem` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `cashoutfeeexludingredeem` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 64 | `TransferCoinFee` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `transfercoinfee` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 65 | `DormantFee` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `dormantfee` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 66 | `ShareLendingFeeEtoroShare` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `sharelendingfeeetoroshare` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 67 | `ShareLendingFeeUserShare` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `sharelendingfeeusershare` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 68 | `ShareLendingFeeBrokerShare` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `sharelendingfeebrokershare` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 69 | `ShareLendingGrossAmount` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `sharelendinggrossamount` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 70 | `CashoutAdjustment` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `cashoutadjustment` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 71 | `NewCopyAmount` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `newcopyamount` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 72 | `StopCopyAmount` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `stopcopyamount` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 73 | `AddToCopyAmount` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `addtocopyamount` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 74 | `RemoveFromCopyAmount` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `removefromcopyamount` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 75 | `CryptoToPosition` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `cryptotoposition` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 76 | `BonusCompensation` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `bonuscompensation` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 77 | `PnLAdjustment` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `pnladjustment` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 78 | `InvestedAmountIn` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `investedamountin` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 79 | `InvestedAmountOut` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `investedamountout` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 80 | `VolumeOpen` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `volumeopen` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 81 | `VolumeClose` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `volumeclose` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 82 | `TicketFeeOpen` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `ticketfeeopen` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 83 | `TicketFeeClose` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `ticketfeeclose` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 84 | `FullCommissionCloseAdjustment` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `fullcommissioncloseadjustment` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 85 | `CommissionCloseAdjustment` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `commissioncloseadjustment` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 86 | `FullCommissionTotal` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `fullcommissiontotal` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 87 | `CommissionTotal` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `commissiontotal` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 88 | `IsActiveTrade` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `isactivetrade` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 89 | `IsSQF` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `issqf` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_dim_instrument_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 90 | `Is_245_Instrument` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `is_245_instrument` | `passthrough` | (Tier 2 — main.etoro_kpi_prep.v_dim_instrument_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 91 | `IsCopyFund` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `iscopyfund` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 92 | `ParentCID` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `parentcid` | `passthrough` | (Tier 1 — Trade.Mirror) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 93 | `ParentUserName` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `parentusername` | `passthrough` | (Tier 1 — Trade.Mirror) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 94 | `IsOpenFromIBAN` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `isopenfromiban` | `passthrough` | (Tier 2 — main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 95 | `IsClosedToIBAN` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `isclosedtoiban` | `passthrough` | (Tier 2 — main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 96 | `IsRecurring` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `isrecurring` | `passthrough` | (Tier 2 — main.general.bronze_recurringinvestment_recurringinvestment_planinstances / main.dwh.dim_position / main.etoro_kpi_prep.v_fact_customeraction_enriched) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 97 | `IsC2P` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `isc2p` | `passthrough` | (Tier 2 — main.bi_db.bronze_etoro_trade_adminpositionlog) | 1:1 passthrough from upstream view; tier inherited from `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| 98 | `UpdateDate` | `—` | `—` | `literal` | — | writer-stamped TIMESTAMP (UC lineage shows source=null); likely `current_timestamp()` set by the JOB at materialization time. Sample row value: 2026-05-02T09:47:47Z. Not present in upstream view. |
-
-## Cross-check vs system.access.column_lineage
-
-- Total UC columns: **98**
-- Columns with a runtime lineage row: **98**
-- Columns with a non-NULL upstream source: **97**
-- Columns whose only lineage row is source=null: **1** (= `UpdateDate`)
-- All non-`UpdateDate` columns trace back to exactly **one** upstream column on **`main.etoro_kpi_prep.v_fact_customeraction_w_metrics`** — this is the strongest form of evidence that the JOB is a straight materialization of the upstream view + an `UpdateDate` stamp.
-
-## Lost / added columns
-
-- Added vs primary upstream: **1** (`UpdateDate` — writer-stamped TIMESTAMP)
-- Dropped vs primary upstream: **0** — the materialization preserves every column of `v_fact_customeraction_w_metrics`.
-- Unclassified columns (Phase 5 will treat as Tier 4 / UNVERIFIED): **0**.
-
-## Writer notes
-
-- **Job id**: `712655402982749` (kind=JOB, role=primary, 60 events in last 90d).
-- **Why no source snapshot**: the job has no notebook tasks (Workspace API `jobs.get` returned tasks that aren't notebook tasks — likely a JAR / Python wheel / Delta Live Table task). `fetch_writer_source.py` correctly reports `fetch_error: 'job has no notebook tasks'` rather than fabricating one.
-- **Three DBSQL queries** also wrote into this table within the lookback window (`0e24356b-…`, `1233bc96-…`, `68a459bd-…`) — low event counts (4, 2, 2) suggest these were manual reruns / backfills / repair runs from a notebook or SQL editor, not the production cadence.
-- **Runtime UC column lineage is sufficient** for this object: a 1:1 column-name match against the upstream view leaves no ambiguity about column semantics. Any future schema drift (column added / dropped / renamed by the job) will surface immediately as a `WARN` or `ERROR` in this cross-check.
+| # | Element | source_object | source_column | transform |
+|---|---------|---------------|---------------|-----------|
+| 1 | `GCID` | `—` | `—` | `runtime_lineage` |
+| 2 | `RealCID` | `—` | `—` | `runtime_lineage` |
+| 3 | `Occurred` | `—` | `—` | `runtime_lineage` |
+| 4 | `ActionTypeID` | `—` | `—` | `runtime_lineage` |
+| 5 | `PlatformTypeID` | `—` | `—` | `runtime_lineage` |
+| 6 | `InstrumentID` | `—` | `—` | `runtime_lineage` |
+| 7 | `Amount` | `—` | `—` | `runtime_lineage` |
+| 8 | `Leverage` | `—` | `—` | `runtime_lineage` |
+| 9 | `NetProfit` | `—` | `—` | `runtime_lineage` |
+| 10 | `Commission` | `—` | `—` | `runtime_lineage` |
+| 11 | `PositionID` | `—` | `—` | `runtime_lineage` |
+| 12 | `FundingTypeID` | `—` | `—` | `runtime_lineage` |
+| 13 | `MirrorID` | `—` | `—` | `runtime_lineage` |
+| 14 | `WithdrawID` | `—` | `—` | `runtime_lineage` |
+| 15 | `DateID` | `—` | `—` | `runtime_lineage` |
+| 16 | `CompensationReasonID` | `—` | `—` | `runtime_lineage` |
+| 17 | `WithdrawPaymentID` | `—` | `—` | `runtime_lineage` |
+| 18 | `CommissionOnClose` | `—` | `—` | `runtime_lineage` |
+| 19 | `DepositID` | `—` | `—` | `runtime_lineage` |
+| 20 | `FullCommission` | `—` | `—` | `runtime_lineage` |
+| 21 | `FullCommissionOnClose` | `—` | `—` | `runtime_lineage` |
+| 22 | `RedeemID` | `—` | `—` | `runtime_lineage` |
+| 23 | `RedeemStatus` | `—` | `—` | `runtime_lineage` |
+| 24 | `IsRedeem` | `—` | `—` | `runtime_lineage` |
+| 25 | `ReopenForPositionID` | `—` | `—` | `runtime_lineage` |
+| 26 | `IsReOpen` | `—` | `—` | `runtime_lineage` |
+| 27 | `CommissionOnCloseOrig` | `—` | `—` | `runtime_lineage` |
+| 28 | `FullCommissionOnCloseOrig` | `—` | `—` | `runtime_lineage` |
+| 29 | `OriginalPositionID` | `—` | `—` | `runtime_lineage` |
+| 30 | `IsPartialCloseParent` | `—` | `—` | `runtime_lineage` |
+| 31 | `IsPartialCloseChild` | `—` | `—` | `runtime_lineage` |
+| 32 | `PaymentStatusID` | `—` | `—` | `runtime_lineage` |
+| 33 | `IsDiscounted` | `—` | `—` | `runtime_lineage` |
+| 34 | `IsSettled` | `—` | `—` | `runtime_lineage` |
+| 35 | `CommissionByUnits` | `—` | `—` | `runtime_lineage` |
+| 36 | `FullCommissionByUnits` | `—` | `—` | `runtime_lineage` |
+| 37 | `IsFTD` | `—` | `—` | `runtime_lineage` |
+| 38 | `IsFeeDividend` | `—` | `—` | `runtime_lineage` |
+| 39 | `IsAirDrop` | `—` | `—` | `runtime_lineage` |
+| 40 | `DividendID` | `—` | `—` | `runtime_lineage` |
+| 41 | `MoveMoneyReasonID` | `—` | `—` | `runtime_lineage` |
+| 42 | `SettlementTypeID` | `—` | `—` | `runtime_lineage` |
+| 43 | `etr_y` | `—` | `—` | `runtime_lineage` |
+| 44 | `etr_ym` | `—` | `—` | `runtime_lineage` |
+| 45 | `etr_ymd` | `—` | `—` | `runtime_lineage` |
+| 46 | `DLTOpen` | `—` | `—` | `runtime_lineage` |
+| 47 | `DLTClose` | `—` | `—` | `runtime_lineage` |
+| 48 | `OpenMarkupByUnits` | `—` | `—` | `runtime_lineage` |
+| 49 | `Description` | `—` | `—` | `runtime_lineage` |
+| 50 | `IsBuy` | `—` | `—` | `runtime_lineage` |
+| 51 | `CreditID` | `—` | `—` | `runtime_lineage` |
+| 52 | `OpenDateID` | `—` | `—` | `runtime_lineage` |
+| 53 | `CloseDateID` | `—` | `—` | `runtime_lineage` |
+| 54 | `TicketFeeAction` | `—` | `—` | `runtime_lineage` |
+| 55 | `RollOverFee` | `—` | `—` | `runtime_lineage` |
+| 56 | `Dividend` | `—` | `—` | `runtime_lineage` |
+| 57 | `SDRT` | `—` | `—` | `runtime_lineage` |
+| 58 | `AdminFee` | `—` | `—` | `runtime_lineage` |
+| 59 | `SpotAdjustFee` | `—` | `—` | `runtime_lineage` |
+| 60 | `ConversionFeeDeposit` | `—` | `—` | `runtime_lineage` |
+| 61 | `ConversionFeeWithdraw` | `—` | `—` | `runtime_lineage` |
+| 62 | `ConversionFeeReversal` | `—` | `—` | `runtime_lineage` |
+| 63 | `CashoutFeeExludingRedeem` | `—` | `—` | `runtime_lineage` |
+| 64 | `TransferCoinFee` | `—` | `—` | `runtime_lineage` |
+| 65 | `DormantFee` | `—` | `—` | `runtime_lineage` |
+| 66 | `ShareLendingFeeEtoroShare` | `—` | `—` | `runtime_lineage` |
+| 67 | `ShareLendingFeeUserShare` | `—` | `—` | `runtime_lineage` |
+| 68 | `ShareLendingFeeBrokerShare` | `—` | `—` | `runtime_lineage` |
+| 69 | `ShareLendingGrossAmount` | `—` | `—` | `runtime_lineage` |
+| 70 | `CashoutAdjustment` | `—` | `—` | `runtime_lineage` |
+| 71 | `NewCopyAmount` | `—` | `—` | `runtime_lineage` |
+| 72 | `StopCopyAmount` | `—` | `—` | `runtime_lineage` |
+| 73 | `AddToCopyAmount` | `—` | `—` | `runtime_lineage` |
+| 74 | `RemoveFromCopyAmount` | `—` | `—` | `runtime_lineage` |
+| 75 | `CryptoToPosition` | `—` | `—` | `runtime_lineage` |
+| 76 | `BonusCompensation` | `—` | `—` | `runtime_lineage` |
+| 77 | `PnLAdjustment` | `—` | `—` | `runtime_lineage` |
+| 78 | `InvestedAmountIn` | `—` | `—` | `runtime_lineage` |
+| 79 | `InvestedAmountOut` | `—` | `—` | `runtime_lineage` |
+| 80 | `VolumeOpen` | `—` | `—` | `runtime_lineage` |
+| 81 | `VolumeClose` | `—` | `—` | `runtime_lineage` |
+| 82 | `TicketFeeOpen` | `—` | `—` | `runtime_lineage` |
+| 83 | `TicketFeeClose` | `—` | `—` | `runtime_lineage` |
+| 84 | `FullCommissionCloseAdjustment` | `—` | `—` | `runtime_lineage` |
+| 85 | `CommissionCloseAdjustment` | `—` | `—` | `runtime_lineage` |
+| 86 | `FullCommissionTotal` | `—` | `—` | `runtime_lineage` |
+| 87 | `CommissionTotal` | `—` | `—` | `runtime_lineage` |
+| 88 | `IsActiveTrade` | `—` | `—` | `runtime_lineage` |
+| 89 | `IsSQF` | `—` | `—` | `runtime_lineage` |
+| 90 | `Is_245_Instrument` | `—` | `—` | `runtime_lineage` |
+| 91 | `IsCopyFund` | `—` | `—` | `runtime_lineage` |
+| 92 | `ParentCID` | `—` | `—` | `runtime_lineage` |
+| 93 | `ParentUserName` | `—` | `—` | `runtime_lineage` |
+| 94 | `IsOpenFromIBAN` | `—` | `—` | `runtime_lineage` |
+| 95 | `IsClosedToIBAN` | `—` | `—` | `runtime_lineage` |
+| 96 | `IsRecurring` | `—` | `—` | `runtime_lineage` |
+| 97 | `IsC2P` | `—` | `—` | `runtime_lineage` |
+| 98 | `UpdateDate` | `—` | `—` | `runtime_lineage` |

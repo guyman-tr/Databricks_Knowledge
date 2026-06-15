@@ -1,0 +1,76 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_volatility_bucket",
+  "rows": [
+    {
+      "source_table_full_name": "main.dealing.candles_get_spreaded_price_candle1min_splitted",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.candles_get_spreaded_price_candle1min_splitted",
+      "source_column_name": "BidMax",
+      "target_column_name": "Threshold_BP",
+      "entity_type": "JOB",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.candles_get_spreaded_price_candle1min_splitted",
+      "source_column_name": "AskMax",
+      "target_column_name": "Threshold_BP",
+      "entity_type": "JOB",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.candles_get_spreaded_price_candle1min_splitted",
+      "source_column_name": "BidMin",
+      "target_column_name": "Threshold_BP",
+      "entity_type": "JOB",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.candles_get_spreaded_price_candle1min_splitted",
+      "source_column_name": "AskMin",
+      "target_column_name": "Threshold_BP",
+      "entity_type": "JOB",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.candles_get_spreaded_price_candle1min_splitted",
+      "source_column_name": "AskMin",
+      "target_column_name": "Volatility_Bucket",
+      "entity_type": "JOB",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentTypeID",
+      "target_column_name": "Volatility_Bucket",
+      "entity_type": "JOB",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.candles_get_spreaded_price_candle1min_splitted",
+      "source_column_name": "BidMax",
+      "target_column_name": "Volatility_Bucket",
+      "entity_type": "JOB",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.candles_get_spreaded_price_candle1min_splitted",
+      "source_column_name": "BidMin",
+      "target_column_name": "Volatility_Bucket",
+      "entity_type": "JOB",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.candles_get_spreaded_price_candle1min_splitted",
+      "source_column_name": "AskMax",
+      "target_column_name": "Volatility_Bucket",
+      "entity_type": "JOB",
+      "event_count": 3
+    }
+  ],
+  "generated_at": "2026-05-19T12:41:51Z"
+}

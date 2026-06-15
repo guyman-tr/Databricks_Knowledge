@@ -1,0 +1,97 @@
+{
+  "object": "main.bi_output.bi_output_compliance_kycscreeninglimitation",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "Name",
+      "target_column_name": "Club",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 89
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "Country",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 89
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "source_column_name": "Name",
+      "target_column_name": "DesignatedRegulaiton",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 89
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "GCID",
+      "target_column_name": "GCID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 89
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_compliancestatedb_compliance_customerinteractions",
+      "source_column_name": "IsCompleted",
+      "target_column_name": "HasAPUGapOpen",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 89
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_compliancestatedb_compliance_customerinteractions",
+      "source_column_name": "IsActive",
+      "target_column_name": "HasAPUGapOpen",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 89
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+      "source_column_name": "FullDate",
+      "target_column_name": "LimitationDate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 89
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_pendingclosurestatus",
+      "source_column_name": "PendingClosureStatusName",
+      "target_column_name": "PendingClosureStatus",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 89
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "source_column_name": "Name",
+      "target_column_name": "PlayerStatus",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 89
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "PlayerStatusID",
+      "target_column_name": "PlayerStatusID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 89
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 89
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_screeningstatus",
+      "source_column_name": "Name",
+      "target_column_name": "ScreeningStatus",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 89
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "VerificationLevelID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 89
+    }
+  ],
+  "generated_at": "2026-05-19T14:12:49Z"
+}

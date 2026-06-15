@@ -1,0 +1,1371 @@
+{
+  "object": "main.bi_output.bi_output_customer_investment_capital_guarantee_capital_guarantee_q42024_global",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "source_column_name": "Credit",
+      "target_column_name": "%Eligibility",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "%Eligibility",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "%Eligibility",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorId",
+      "target_column_name": "%Eligibility",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Amount",
+      "target_column_name": "%Eligibility",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentCID",
+      "target_column_name": "%Eligibility",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "MirrorOperationID",
+      "target_column_name": "%Eligibility",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.sfmc.silver_sfmc_accountjourneylogtracking",
+      "source_column_name": "Action",
+      "target_column_name": "%Eligibility",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ActionTypeID",
+      "target_column_name": "%Eligibility",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Occurred",
+      "target_column_name": "%Eligibility",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "CID",
+      "target_column_name": "%Eligibility",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "%Eligibility",
+      "entity_type": "JOB",
+      "event_count": 122
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "%Eligibility",
+      "entity_type": "JOB",
+      "event_count": 59
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ActionTypeID",
+      "target_column_name": "Cashout",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "Cashout",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "CloseDateID",
+      "target_column_name": "CloseDateID",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "CloseOccurred",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "Name",
+      "target_column_name": "Club",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "Country",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "source_column_name": "Credit",
+      "target_column_name": "Credit_20.10.24",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "Date",
+      "entity_type": "JOB",
+      "event_count": 121
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "DateID",
+      "entity_type": "JOB",
+      "event_count": 121
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ActionTypeID",
+      "target_column_name": "Deposit",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "Deposit",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ActionTypeID",
+      "target_column_name": "ELIGIBLE_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorId",
+      "target_column_name": "ELIGIBLE_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "ELIGIBLE_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentCID",
+      "target_column_name": "ELIGIBLE_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "ELIGIBLE_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.sfmc.silver_sfmc_accountjourneylogtracking",
+      "source_column_name": "Action",
+      "target_column_name": "ELIGIBLE_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "source_column_name": "Credit",
+      "target_column_name": "ELIGIBLE_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Amount",
+      "target_column_name": "ELIGIBLE_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "MirrorOperationID",
+      "target_column_name": "ELIGIBLE_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "ELIGIBLE_ind",
+      "entity_type": "JOB",
+      "event_count": 122
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "ELIGIBLE_ind",
+      "entity_type": "JOB",
+      "event_count": 59
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "CID",
+      "target_column_name": "Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Occurred",
+      "target_column_name": "Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ActionTypeID",
+      "target_column_name": "Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.sfmc.silver_sfmc_accountjourneylogtracking",
+      "source_column_name": "Action",
+      "target_column_name": "Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "PnLInDollars",
+      "target_column_name": "Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "source_column_name": "Credit",
+      "target_column_name": "Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "MirrorOperationID",
+      "target_column_name": "Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Amount",
+      "target_column_name": "Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentCID",
+      "target_column_name": "Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorId",
+      "target_column_name": "Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Amount",
+      "target_column_name": "Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 122
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 59
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "GCID",
+      "target_column_name": "GCID",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "IsCreditReportValidCB",
+      "target_column_name": "IsCreditReportValidCB",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "IsValidCustomer",
+      "target_column_name": "IsValidCustomer",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Occurred",
+      "target_column_name": "LastActionDate",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "source_column_name": "Credit",
+      "target_column_name": "MEA_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ActionTypeID",
+      "target_column_name": "MEA_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentCID",
+      "target_column_name": "MEA_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "MEA_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "LastName",
+      "target_column_name": "Manager",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "FirstName",
+      "target_column_name": "Manager",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "ManagerID",
+      "target_column_name": "ManagerID",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "Manual_Approved_ind",
+      "entity_type": "JOB",
+      "event_count": 122
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "Manual_Approved_ind",
+      "entity_type": "JOB",
+      "event_count": 59
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ActionTypeID",
+      "target_column_name": "Max_Eligible_Amount",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "Max_Eligible_Amount",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "source_column_name": "Credit",
+      "target_column_name": "Max_Eligible_Amount",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorId",
+      "target_column_name": "MirrorId",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorId",
+      "target_column_name": "NMI_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "MirrorOperationID",
+      "target_column_name": "NMI_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "NMI_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Amount",
+      "target_column_name": "NMI_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentCID",
+      "target_column_name": "NMI_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ActionTypeID",
+      "target_column_name": "NetDeposit",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "NetDeposit",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Amount",
+      "target_column_name": "Non_Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "Non_Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ActionTypeID",
+      "target_column_name": "Non_Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentCID",
+      "target_column_name": "Non_Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "CID",
+      "target_column_name": "Non_Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorId",
+      "target_column_name": "Non_Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "Non_Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Amount",
+      "target_column_name": "Non_Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "PnLInDollars",
+      "target_column_name": "Non_Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.sfmc.silver_sfmc_accountjourneylogtracking",
+      "source_column_name": "Action",
+      "target_column_name": "Non_Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "MirrorOperationID",
+      "target_column_name": "Non_Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Occurred",
+      "target_column_name": "Non_Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "source_column_name": "Credit",
+      "target_column_name": "Non_Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "Non_Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "Non_Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 122
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "Non_Eligible_PnL",
+      "entity_type": "JOB",
+      "event_count": 59
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "OpenOccurred",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentCID",
+      "target_column_name": "ParentCID",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentUserName",
+      "target_column_name": "ParentUserName",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "MarketingRegionManualName",
+      "target_column_name": "Region",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "source_column_name": "Name",
+      "target_column_name": "Regulation",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "source_column_name": "Credit",
+      "target_column_name": "TotalMirror_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.sfmc.silver_sfmc_accountjourneylogtracking",
+      "source_column_name": "Action",
+      "target_column_name": "TotalMirror_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Occurred",
+      "target_column_name": "TotalMirror_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "MirrorOperationID",
+      "target_column_name": "TotalMirror_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorId",
+      "target_column_name": "TotalMirror_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "TotalMirror_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "CID",
+      "target_column_name": "TotalMirror_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ActionTypeID",
+      "target_column_name": "TotalMirror_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Amount",
+      "target_column_name": "TotalMirror_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentCID",
+      "target_column_name": "TotalMirror_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "TotalMirror_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "TotalMirror_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 122
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "TotalMirror_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 59
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorId",
+      "target_column_name": "TotalMirror_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentCID",
+      "target_column_name": "TotalMirror_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "source_column_name": "Credit",
+      "target_column_name": "TotalMirror_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "CID",
+      "target_column_name": "TotalMirror_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "MirrorOperationID",
+      "target_column_name": "TotalMirror_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.sfmc.silver_sfmc_accountjourneylogtracking",
+      "source_column_name": "Action",
+      "target_column_name": "TotalMirror_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Occurred",
+      "target_column_name": "TotalMirror_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Amount",
+      "target_column_name": "TotalMirror_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "TotalMirror_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ActionTypeID",
+      "target_column_name": "TotalMirror_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "TotalMirror_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "TotalMirror_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 122
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "TotalMirror_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 59
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentCID",
+      "target_column_name": "TotalMirror_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "CID",
+      "target_column_name": "TotalMirror_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Amount",
+      "target_column_name": "TotalMirror_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.sfmc.silver_sfmc_accountjourneylogtracking",
+      "source_column_name": "Action",
+      "target_column_name": "TotalMirror_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ActionTypeID",
+      "target_column_name": "TotalMirror_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Occurred",
+      "target_column_name": "TotalMirror_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "TotalMirror_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "source_column_name": "Credit",
+      "target_column_name": "TotalMirror_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorId",
+      "target_column_name": "TotalMirror_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "TotalMirror_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "MirrorOperationID",
+      "target_column_name": "TotalMirror_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "TotalMirror_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 122
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "TotalMirror_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 59
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorId",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ActionTypeID",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Amount",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "source_column_name": "Credit",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "CID",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Occurred",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentCID",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "MirrorOperationID",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.sfmc.silver_sfmc_accountjourneylogtracking",
+      "source_column_name": "Action",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 122
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 59
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "MirrorOperationID",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "CID",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Occurred",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.sfmc.silver_sfmc_accountjourneylogtracking",
+      "source_column_name": "Action",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentCID",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorId",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "source_column_name": "Credit",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ActionTypeID",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Amount",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 122
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "TotalMirror_Non_Eligible_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 59
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorId",
+      "target_column_name": "TotalMirror_Non_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "source_column_name": "Credit",
+      "target_column_name": "TotalMirror_Non_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Amount",
+      "target_column_name": "TotalMirror_Non_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "TotalMirror_Non_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "MirrorOperationID",
+      "target_column_name": "TotalMirror_Non_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Occurred",
+      "target_column_name": "TotalMirror_Non_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "TotalMirror_Non_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentCID",
+      "target_column_name": "TotalMirror_Non_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.sfmc.silver_sfmc_accountjourneylogtracking",
+      "source_column_name": "Action",
+      "target_column_name": "TotalMirror_Non_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "CID",
+      "target_column_name": "TotalMirror_Non_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ActionTypeID",
+      "target_column_name": "TotalMirror_Non_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "TotalMirror_Non_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 122
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_capital_guarantee",
+      "source_column_name": "gcid",
+      "target_column_name": "TotalMirror_Non_Eligible_NMI",
+      "entity_type": "JOB",
+      "event_count": 59
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "MirrorOperationID",
+      "target_column_name": "Total_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorId",
+      "target_column_name": "Total_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "Total_MoneyIn",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorId",
+      "target_column_name": "Total_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "MirrorOperationID",
+      "target_column_name": "Total_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Amount",
+      "target_column_name": "Total_MoneyOut",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorId",
+      "target_column_name": "Total_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Amount",
+      "target_column_name": "Total_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "MirrorOperationID",
+      "target_column_name": "Total_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "Total_NMI",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "Total_Pnl",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "PnLInDollars",
+      "target_column_name": "Total_Pnl",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "MirrorOperationID",
+      "target_column_name": "Total_Pnl",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Amount",
+      "target_column_name": "Total_Pnl",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "amount",
+      "target_column_name": "Total_Pnl",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorId",
+      "target_column_name": "Total_Pnl",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_mirror",
+      "source_column_name": "Amount",
+      "target_column_name": "Total_Pnl",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.sfmc.silver_sfmc_accountjourneylogtracking",
+      "source_column_name": "Message",
+      "target_column_name": "TypeformDate",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": "main.sfmc.silver_sfmc_accountjourneylogtracking",
+      "source_column_name": "Action",
+      "target_column_name": "Typeform_ind",
+      "entity_type": "JOB",
+      "event_count": 181
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 121
+    }
+  ],
+  "generated_at": "2026-05-19T14:23:01Z"
+}

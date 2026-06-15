@@ -1,0 +1,293 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_stocklending_balance_and_transactions_check",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_balance_today_reduced_bny_and_diff",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "source_column_name": "ISIN",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Security_Id",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "IsQuantityBreach",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_balance_today_reduced_bny_and_diff",
+      "source_column_name": "Qty_tody",
+      "target_column_name": "IsQuantityBreach",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Account_No",
+      "target_column_name": "IsQuantityBreach",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Deliver_To_Account",
+      "target_column_name": "IsQuantityBreach",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Quantity",
+      "target_column_name": "IsQuantityBreach",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Trade_Type",
+      "target_column_name": "IsQuantityBreach",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "source_column_name": "Units_-_Settled_Basis",
+      "target_column_name": "IsQuantityBreach",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "source_column_name": "Units_-_Settled_Basis",
+      "target_column_name": "Quantity_BNY_Start",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Quantity",
+      "target_column_name": "Quantity_BNY_Supposed_End",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Deliver_To_Account",
+      "target_column_name": "Quantity_BNY_Supposed_End",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Account_No",
+      "target_column_name": "Quantity_BNY_Supposed_End",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Trade_Type",
+      "target_column_name": "Quantity_BNY_Supposed_End",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "source_column_name": "Units_-_Settled_Basis",
+      "target_column_name": "Quantity_BNY_Supposed_End",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Quantity_Clients_Today",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_balance_today_reduced_bny_and_diff",
+      "source_column_name": "Qty",
+      "target_column_name": "Quantity_Clients_Today_Procedure",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_balance_today_reduced_bny_and_diff",
+      "source_column_name": "Qty_tody",
+      "target_column_name": "Quantity_Clients_Today_Procedure",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Trade_Type",
+      "target_column_name": "Quantity_Difference",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Account_No",
+      "target_column_name": "Quantity_Difference",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "source_column_name": "Units_-_Settled_Basis",
+      "target_column_name": "Quantity_Difference",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_balance_today_reduced_bny_and_diff",
+      "source_column_name": "Qty",
+      "target_column_name": "Quantity_Difference",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Deliver_To_Account",
+      "target_column_name": "Quantity_Difference",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Quantity",
+      "target_column_name": "Quantity_Difference",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_balance_today_reduced_bny_and_diff",
+      "source_column_name": "Qty_tody",
+      "target_column_name": "Quantity_Difference",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "Quantity_Equilend_Start",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "SellCurrency",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Deliver_To_Account",
+      "target_column_name": "Transaction",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Account_No",
+      "target_column_name": "Transaction",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Quantity",
+      "target_column_name": "Transaction",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Trade_Type",
+      "target_column_name": "Transaction",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "source_column_name": "Accr_Mkt_Val_Rpting_Ccy-Settled_Basis",
+      "target_column_name": "Value_BNY_USD_Start",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_y",
+      "entity_type": "JOB",
+      "event_count": 104
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ym",
+      "entity_type": "JOB",
+      "event_count": 104
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ymd",
+      "entity_type": "JOB",
+      "event_count": 104
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "etr_ymd_bny",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_balance_today_reduced_bny_and_diff",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "etr_ymd_client",
+      "entity_type": "JOB",
+      "event_count": 134
+    }
+  ],
+  "generated_at": "2026-05-19T12:37:49Z"
+}

@@ -1,0 +1,365 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_population_portfolio_only",
+  "generated_at": "2026-05-18T16:27:37Z",
+  "formula_count": 21,
+  "formulas": [
+    {
+      "column": "DateID",
+      "formula": "CAST(DATE_FORMAT(CAST(ProcessDate AS TIMESTAMP), 'yyyyMMdd') AS INT)",
+      "expression_raw": "CAST(DATE_FORMAT(CAST(bps.ProcessDate AS TIMESTAMP), 'yyyyMMdd') AS INT) AS DateID",
+      "inputs": [
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L34-L34",
+      "scope": "options_aum"
+    },
+    {
+      "column": "RealCID",
+      "formula": "CID",
+      "expression_raw": "dp.CID AS RealCID",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "holders"
+    },
+    {
+      "column": "Portfolio_Only",
+      "formula": "1",
+      "expression_raw": "1 AS Portfolio_Only",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L75-L75",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_Manual",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) = 0 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) = 0 THEN 1 ELSE 0 END) AS Portfolio_Only_Manual",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L76-L76",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_CFD_Manual",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) = 0 AND COALESCE(InstrumentTypeID, 0) IN (1, 2, 4) THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) = 0 AND COALESCE(f.InstrumentTypeID, 0) IN (1, 2, 4) THEN 1 ELSE 0 END) AS Portfolio_Only_CFD_Manual",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L77-L77",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_CryptoCFD_Manual",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) = 0 AND COALESCE(InstrumentTypeID, 0) IN (10) AND COALESCE(IsSettled, 0) = 0 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) = 0 AND COALESCE(f.InstrumentTypeID, 0) IN (10) AND COALESCE(f.IsSettled, 0) = 0 THEN 1 ELSE 0 END) AS Portfolio_Only_CryptoCFD_Manual",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L78-L78",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_CryptoReal_Manual",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) = 0 AND COALESCE(InstrumentTypeID, 0) IN (10) AND COALESCE(IsSettled, 0) = 1 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) = 0 AND COALESCE(f.InstrumentTypeID, 0) IN (10) AND COALESCE(f.IsSettled, 0) = 1 THEN 1 ELSE 0 END) AS Portfolio_Only_CryptoReal_Manual",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L79-L79",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_StocksCFD_Manual",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) = 0 AND COALESCE(InstrumentTypeID, 0) IN (5) AND COALESCE(IsSettled, 0) = 0 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) = 0 AND COALESCE(f.InstrumentTypeID, 0) IN (5) AND COALESCE(f.IsSettled, 0) = 0 THEN 1 ELSE 0 END) AS Portfolio_Only_StocksCFD_Manual",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L80-L80",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_StocksReal_Manual",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) = 0 AND COALESCE(InstrumentTypeID, 0) IN (5) AND COALESCE(IsSettled, 0) = 1 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) = 0 AND COALESCE(f.InstrumentTypeID, 0) IN (5) AND COALESCE(f.IsSettled, 0) = 1 THEN 1 ELSE 0 END) AS Portfolio_Only_StocksReal_Manual",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L81-L81",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_ETFCFD_Manual",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) = 0 AND COALESCE(InstrumentTypeID, 0) IN (6) AND COALESCE(IsSettled, 0) = 0 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) = 0 AND COALESCE(f.InstrumentTypeID, 0) IN (6) AND COALESCE(f.IsSettled, 0) = 0 THEN 1 ELSE 0 END) AS Portfolio_Only_ETFCFD_Manual",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L82-L82",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_ETFReal_Manual",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) = 0 AND COALESCE(InstrumentTypeID, 0) IN (6) AND COALESCE(IsSettled, 0) = 1 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) = 0 AND COALESCE(f.InstrumentTypeID, 0) IN (6) AND COALESCE(f.IsSettled, 0) = 1 THEN 1 ELSE 0 END) AS Portfolio_Only_ETFReal_Manual",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L83-L83",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_Copy",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) > 0 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) > 0 THEN 1 ELSE 0 END) AS Portfolio_Only_Copy",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L84-L84",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_CFD_Copy",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) > 0 AND COALESCE(InstrumentTypeID, 0) IN (1, 2, 4) THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) > 0 AND COALESCE(f.InstrumentTypeID, 0) IN (1, 2, 4) THEN 1 ELSE 0 END) AS Portfolio_Only_CFD_Copy",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L85-L85",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_CryptoCFD_Copy",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) > 0 AND COALESCE(InstrumentTypeID, 0) IN (10) AND COALESCE(IsSettled, 0) = 0 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) > 0 AND COALESCE(f.InstrumentTypeID, 0) IN (10) AND COALESCE(f.IsSettled, 0) = 0 THEN 1 ELSE 0 END) AS Portfolio_Only_CryptoCFD_Copy",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L86-L86",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_CryptoReal_Copy",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) > 0 AND COALESCE(InstrumentTypeID, 0) IN (10) AND COALESCE(IsSettled, 0) = 1 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) > 0 AND COALESCE(f.InstrumentTypeID, 0) IN (10) AND COALESCE(f.IsSettled, 0) = 1 THEN 1 ELSE 0 END) AS Portfolio_Only_CryptoReal_Copy",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L87-L87",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_StocksCFD_Copy",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) > 0 AND COALESCE(InstrumentTypeID, 0) IN (5) AND COALESCE(IsSettled, 0) = 0 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) > 0 AND COALESCE(f.InstrumentTypeID, 0) IN (5) AND COALESCE(f.IsSettled, 0) = 0 THEN 1 ELSE 0 END) AS Portfolio_Only_StocksCFD_Copy",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L88-L88",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_StocksReal_Copy",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) > 0 AND COALESCE(InstrumentTypeID, 0) IN (5) AND COALESCE(IsSettled, 0) = 1 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) > 0 AND COALESCE(f.InstrumentTypeID, 0) IN (5) AND COALESCE(f.IsSettled, 0) = 1 THEN 1 ELSE 0 END) AS Portfolio_Only_StocksReal_Copy",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L89-L89",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_ETFCFD_Copy",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) > 0 AND COALESCE(InstrumentTypeID, 0) IN (6) AND COALESCE(IsSettled, 0) = 0 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) > 0 AND COALESCE(f.InstrumentTypeID, 0) IN (6) AND COALESCE(f.IsSettled, 0) = 0 THEN 1 ELSE 0 END) AS Portfolio_Only_ETFCFD_Copy",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L90-L90",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_ETFReal_Copy",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) > 0 AND COALESCE(InstrumentTypeID, 0) IN (6) AND COALESCE(IsSettled, 0) = 1 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) > 0 AND COALESCE(f.InstrumentTypeID, 0) IN (6) AND COALESCE(f.IsSettled, 0) = 1 THEN 1 ELSE 0 END) AS Portfolio_Only_ETFReal_Copy",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L91-L91",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_CopyFund",
+      "formula": "MAX(CASE WHEN COALESCE(MirrorID, 0) > 0 AND COALESCE(IsCopyFund, 0) = 1 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.MirrorID, 0) > 0 AND COALESCE(f.IsCopyFund, 0) = 1 THEN 1 ELSE 0 END) AS Portfolio_Only_CopyFund",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L92-L92",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_Options",
+      "formula": "MAX(CASE WHEN COALESCE(PositionMarketValue, 0) > 0 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN COALESCE(f.PositionMarketValue, 0) > 0 THEN 1 ELSE 0 END) AS Portfolio_Only_Options",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.etoro_kpi_prep.v_population_active_traders"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L93-L93",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql"
+}

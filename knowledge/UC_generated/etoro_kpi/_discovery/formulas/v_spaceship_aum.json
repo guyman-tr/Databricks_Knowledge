@@ -1,0 +1,177 @@
+{
+  "object_fqn": "main.etoro_kpi.v_spaceship_aum",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 13,
+  "formulas": [
+    {
+      "column": "date",
+      "formula": "CAST(date AS DATE)",
+      "expression_raw": "CAST(sb.date AS DATE)                                     AS date",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_user_balances"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L30-L30",
+      "scope": "super_bal_raw"
+    },
+    {
+      "column": "date_id",
+      "formula": "CAST(DATE_FORMAT(date, 'yyyyMMdd') AS INT)",
+      "expression_raw": "CAST(DATE_FORMAT(c.date, 'yyyyMMdd') AS INT)               AS date_id",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_user_beta",
+        "main.spaceship.spaceship_metabase_voyager_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_nova_user_balances"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L147-L147",
+      "scope": "main"
+    },
+    {
+      "column": "user_id",
+      "formula": "COALESCE(canonical_user_id, member_id)",
+      "expression_raw": "COALESCE(mc.canonical_user_id, sb.member_id)              AS user_id",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_user_beta"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L31-L31",
+      "scope": "super_bal_raw"
+    },
+    {
+      "column": "gcid",
+      "formula": "gcid",
+      "expression_raw": "sa.gcid",
+      "inputs": [
+        "main.bi_db.bronze_sub_accounts_accounts"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L129-L129",
+      "scope": "user_gcid"
+    },
+    {
+      "column": "super_balance_aud",
+      "formula": "SUM(CASE WHEN src = 'S' THEN balance_aud ELSE 0 END)",
+      "expression_raw": "SUM(CASE WHEN src = 'S' THEN balance_aud ELSE 0 END)     AS super_balance_aud",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L113-L113",
+      "scope": "combined"
+    },
+    {
+      "column": "voyager_balance_aud",
+      "formula": "SUM(CASE WHEN src = 'V' THEN balance_aud ELSE 0 END)",
+      "expression_raw": "SUM(CASE WHEN src = 'V' THEN balance_aud ELSE 0 END)     AS voyager_balance_aud",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L114-L114",
+      "scope": "combined"
+    },
+    {
+      "column": "nova_balance_aud",
+      "formula": "SUM(CASE WHEN src = 'N' THEN balance_aud ELSE 0 END)",
+      "expression_raw": "SUM(CASE WHEN src = 'N' THEN balance_aud ELSE 0 END)     AS nova_balance_aud",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L115-L115",
+      "scope": "combined"
+    },
+    {
+      "column": "total_balance_aud",
+      "formula": "super_balance_aud + voyager_balance_aud + nova_balance_aud",
+      "expression_raw": "c.super_balance_aud + c.voyager_balance_aud\n    + c.nova_balance_aud                                      AS total_balance_aud",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_user_beta",
+        "main.spaceship.spaceship_metabase_voyager_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_nova_user_balances"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L153-L154",
+      "scope": "main"
+    },
+    {
+      "column": "super_balance_usd",
+      "formula": "super_balance_aud * COALESCE(aud_to_usd_rate, 0)",
+      "expression_raw": "c.super_balance_aud   * COALESCE(r.aud_to_usd_rate, 0)     AS super_balance_usd",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+        "main.spaceship.bronze_spaceship_metabase_super_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_user_beta",
+        "main.spaceship.spaceship_metabase_voyager_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_nova_user_balances"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L155-L155",
+      "scope": "main"
+    },
+    {
+      "column": "voyager_balance_usd",
+      "formula": "voyager_balance_aud * COALESCE(aud_to_usd_rate, 0)",
+      "expression_raw": "c.voyager_balance_aud * COALESCE(r.aud_to_usd_rate, 0)     AS voyager_balance_usd",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+        "main.spaceship.bronze_spaceship_metabase_super_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_user_beta",
+        "main.spaceship.spaceship_metabase_voyager_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_nova_user_balances"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L156-L156",
+      "scope": "main"
+    },
+    {
+      "column": "nova_balance_usd",
+      "formula": "nova_balance_aud * COALESCE(aud_to_usd_rate, 0)",
+      "expression_raw": "c.nova_balance_aud    * COALESCE(r.aud_to_usd_rate, 0)     AS nova_balance_usd",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+        "main.spaceship.bronze_spaceship_metabase_super_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_user_beta",
+        "main.spaceship.spaceship_metabase_voyager_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_nova_user_balances"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L157-L157",
+      "scope": "main"
+    },
+    {
+      "column": "total_balance_usd",
+      "formula": "+ nova_balance_aud) * COALESCE(aud_to_usd_rate, 0)",
+      "expression_raw": "+ c.nova_balance_aud) * COALESCE(r.aud_to_usd_rate, 0)   AS total_balance_usd",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+        "main.spaceship.bronze_spaceship_metabase_super_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_user_beta",
+        "main.spaceship.spaceship_metabase_voyager_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_nova_user_balances"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L159-L159",
+      "scope": "main"
+    },
+    {
+      "column": "is_funded",
+      "formula": "CASE WHEN (super_balance_aud + voyager_balance_aud + nova_balance_aud) > 0 THEN TRUE ELSE FALSE END",
+      "expression_raw": "CASE\n    WHEN (c.super_balance_aud + c.voyager_balance_aud\n          + c.nova_balance_aud) > 0\n    THEN TRUE ELSE FALSE\n  END                                                         AS is_funded",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_user_beta",
+        "main.spaceship.spaceship_metabase_voyager_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_nova_user_balances"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L160-L164",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/v_spaceship_aum.sql"
+}

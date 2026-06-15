@@ -1,0 +1,123 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_backoffice_tncdocument",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:29Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "DocumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.TncDocument.md",
+      "upstream_quote": "Surrogate PK. Auto-incremented. NOT FOR REPLICATION. Uniquely identifies each T&C document entry. Referenced by BackOffi",
+      "wiki_quote": "Surrogate PK. Auto-incremented. NOT FOR REPLICATION. Uniquely identifies each T&C document entry. Referenced by BackOffi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RegulationID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.TncDocument.md",
+      "upstream_quote": "The regulatory jurisdiction this document applies to. Maps to Dictionary.Regulation.ID values (1=CySEC, 2=FCA, 4=ASIC, 5",
+      "wiki_quote": "The regulatory jurisdiction this document applies to. Maps to Dictionary.Regulation.ID values (1=CySEC, 2=FCA, 4=ASIC, 5",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.TncDocument.md",
+      "upstream_quote": "The back-office manager who uploaded this document. Audit trail reference to BackOffice.Manager.ManagerID.",
+      "wiki_quote": "The back-office manager who uploaded this document. Audit trail reference to BackOffice.Manager.ManagerID (Tier 1 — inhe",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DisplayName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.TncDocument.md",
+      "upstream_quote": "Human-readable name shown to customers in the T&C acceptance UI (e.g., \"Terms and Conditions - CySEC\").",
+      "wiki_quote": "Human-readable name shown to customers in the T&C acceptance UI (e.g., \"Terms and Conditions - CySEC\") (Tier 1 — inherit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ComputerName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.TncDocument.md",
+      "upstream_quote": "Hostname of the machine from which the document was uploaded. Used for upload audit trail.",
+      "wiki_quote": "Hostname of the machine from which the document was uploaded. Used for upload audit trail (Tier 1 — inherited from etoro",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FileName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.TncDocument.md",
+      "upstream_quote": "Physical filename/path of the PDF in storage. Format: `{RegulationID}-{timestamp}-{original_name}.pdf`. Used by StorageI",
+      "wiki_quote": "Physical filename/path of the PDF in storage. Format: `{RegulationID}-{timestamp}-{original_name}.pdf`. Used by StorageI",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DateAdded",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.TncDocument.md",
+      "upstream_quote": "Timestamp when this document was uploaded/registered. Earliest records from 2015-05-03.",
+      "wiki_quote": "Timestamp when this document was uploaded/registered. Earliest records from 2015-05-03 (Tier 1 — inherited from etoro.Ba",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StorageID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.TncDocument.md",
+      "upstream_quote": "Reference to the external storage system record (blob store or file share). Used with FileName to retrieve the actual PD",
+      "wiki_quote": "Reference to the external storage system record (blob store or file share). Used with FileName to retrieve the actual PD",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TncDocTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.TncDocument.md",
+      "upstream_quote": "FK to Dictionary.TncDocType. Classifies the document type. Default=1 (main Terms & Conditions). Other values may represe",
+      "wiki_quote": "FK to Dictionary.TncDocType. Classifies the document type. Default=1 (main Terms & Conditions). Other values may represe",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Enabled",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.TncDocument.md",
+      "upstream_quote": "1=Document is active and visible to customers. 0=Document is suppressed/hidden without deletion. Can be toggled independ",
+      "wiki_quote": "1=Document is active and visible to customers. 0=Document is suppressed/hidden without deletion. Can be toggled independ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsActive",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.TncDocument.md",
+      "upstream_quote": "1=Document is the current valid version. 0=Document has been superseded by a newer version (set by TncDocumentUpdateIsAc",
+      "wiki_quote": "1=Document is the current valid version. 0=Document has been superseded by a newer version (set by TncDocumentUpdateIsAc",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.TncDocument.md",
+      "upstream_quote": "FK to Dictionary.Country. If non-NULL, this document applies only to customers in the specified country within the regul",
+      "wiki_quote": "FK to Dictionary.Country. If non-NULL, this document applies only to customers in the specified country within the regul",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 12,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 12 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

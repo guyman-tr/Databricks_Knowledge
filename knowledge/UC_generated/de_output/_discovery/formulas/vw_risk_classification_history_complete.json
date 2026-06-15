@@ -1,0 +1,1064 @@
+{
+  "object_fqn": "main.de_output.vw_risk_classification_history_complete",
+  "generated_at": "2026-05-19T14:11:58Z",
+  "formula_count": 96,
+  "formulas": [
+    {
+      "column": "BeginTime",
+      "formula": "Update_Datetime",
+      "expression_raw": "r.Update_Datetime AS BeginTime",
+      "inputs": [
+        "main.de_output.de_output_risk_classification"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L111-L111",
+      "scope": "main"
+    },
+    {
+      "column": "EndTime",
+      "formula": "TIMESTAMP '2099-01-01'",
+      "expression_raw": "TIMESTAMP '2099-01-01' AS EndTime",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L112-L112",
+      "scope": "main"
+    },
+    {
+      "column": "GCID",
+      "formula": "GCID",
+      "expression_raw": "GCID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "CID",
+      "formula": "CID",
+      "expression_raw": "CID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationID",
+      "formula": "RegulationID",
+      "expression_raw": "RegulationID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": "Regulation",
+      "expression_raw": "Regulation",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "CountryofResidence_Onboarding_RiskScore",
+      "formula": "CountryofResidence_Onboarding_RiskScore",
+      "expression_raw": "CountryofResidence_Onboarding_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "CountryofResidence_Onboarding_Value",
+      "formula": "CountryofResidence_Onboarding_Value",
+      "expression_raw": "CountryofResidence_Onboarding_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "CountryofResidence_Existingclients_RiskScore",
+      "formula": "CountryofResidence_Existingclients_RiskScore",
+      "expression_raw": "CountryofResidence_Existingclients_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "CountryofResidence_Existingclients_Value",
+      "formula": "CountryofResidence_Existingclients_Value",
+      "expression_raw": "CountryofResidence_Existingclients_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "Ageofcustomer_RiskScore",
+      "formula": "Ageofcustomer_RiskScore",
+      "expression_raw": "Ageofcustomer_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "Ageofcustomer_Value",
+      "formula": "Ageofcustomer_Value",
+      "expression_raw": "Ageofcustomer_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "AgeAlert_RiskScore",
+      "formula": "AgeAlert_RiskScore",
+      "expression_raw": "AgeAlert_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "AgeAlert_Value",
+      "formula": "AgeAlert_Value",
+      "expression_raw": "AgeAlert_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "ScreeningStatus_RiskScore",
+      "formula": "ScreeningStatus_RiskScore",
+      "expression_raw": "ScreeningStatus_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "ScreeningStatus_Value",
+      "formula": "ScreeningStatus_Value",
+      "expression_raw": "ScreeningStatus_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "MainSourceofIncome_RiskScore",
+      "formula": "MainSourceofIncome_RiskScore",
+      "expression_raw": "MainSourceofIncome_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "MainSourceofIncome_Value",
+      "formula": "MainSourceofIncome_Value",
+      "expression_raw": "MainSourceofIncome_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "Occupation_RiskScore",
+      "formula": "Occupation_RiskScore",
+      "expression_raw": "Occupation_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "Occupation_Value",
+      "formula": "Occupation_Value",
+      "expression_raw": "Occupation_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "SpecialScore_RiskScore",
+      "formula": "SpecialScore_RiskScore",
+      "expression_raw": "SpecialScore_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "SpecialScore_Value",
+      "formula": "SpecialScore_Value",
+      "expression_raw": "SpecialScore_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "AnnualIncome_RiskScore",
+      "formula": "AnnualIncome_RiskScore",
+      "expression_raw": "AnnualIncome_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "AnnualIncome_Value",
+      "formula": "AnnualIncome_Value",
+      "expression_raw": "AnnualIncome_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "TotalCashAndLiquidAssets_RiskScore",
+      "formula": "TotalCashAndLiquidAssets_RiskScore",
+      "expression_raw": "TotalCashAndLiquidAssets_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "TotalCashAndLiquidAssets_Value",
+      "formula": "TotalCashAndLiquidAssets_Value",
+      "expression_raw": "TotalCashAndLiquidAssets_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "MoneyplanToinvest_RiskScore",
+      "formula": "MoneyplanToinvest_RiskScore",
+      "expression_raw": "MoneyplanToinvest_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    },
+    {
+      "column": "MoneyplanToinvest_Value",
+      "formula": "MoneyplanToinvest_Value",
+      "expression_raw": "MoneyplanToinvest_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L35-L35",
+      "scope": "main"
+    },
+    {
+      "column": "HighRisk_RiskScore",
+      "formula": "HighRisk_RiskScore",
+      "expression_raw": "HighRisk_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "HighRisk_Value",
+      "formula": "HighRisk_Value",
+      "expression_raw": "HighRisk_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L37-L37",
+      "scope": "main"
+    },
+    {
+      "column": "SectorMLTF_RiskScore",
+      "formula": "SectorMLTF_RiskScore",
+      "expression_raw": "SectorMLTF_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "SectorMLTF_Value",
+      "formula": "SectorMLTF_Value",
+      "expression_raw": "SectorMLTF_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L39-L39",
+      "scope": "main"
+    },
+    {
+      "column": "NetDeposit_RiskScore",
+      "formula": "NetDeposit_RiskScore",
+      "expression_raw": "NetDeposit_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L40-L40",
+      "scope": "main"
+    },
+    {
+      "column": "NetDeposit_Value",
+      "formula": "NetDeposit_Value",
+      "expression_raw": "NetDeposit_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L41-L41",
+      "scope": "main"
+    },
+    {
+      "column": "FTD_RiskScore",
+      "formula": "FTD_RiskScore",
+      "expression_raw": "FTD_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L42-L42",
+      "scope": "main"
+    },
+    {
+      "column": "FTD_Value",
+      "formula": "FTD_Value",
+      "expression_raw": "FTD_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L43-L43",
+      "scope": "main"
+    },
+    {
+      "column": "ScoreExpectedOriginFunds_RiskScore",
+      "formula": "ScoreExpectedOriginFunds_RiskScore",
+      "expression_raw": "ScoreExpectedOriginFunds_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L44-L44",
+      "scope": "main"
+    },
+    {
+      "column": "ScoreExpectedOriginFunds_Value",
+      "formula": "ScoreExpectedOriginFunds_Value",
+      "expression_raw": "ScoreExpectedOriginFunds_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L45-L45",
+      "scope": "main"
+    },
+    {
+      "column": "ScoreExpectedDestinationPayments_RiskScore",
+      "formula": "ScoreExpectedDestinationPayments_RiskScore",
+      "expression_raw": "ScoreExpectedDestinationPayments_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L46-L46",
+      "scope": "main"
+    },
+    {
+      "column": "ScoreExpectedDestinationPayments_Value",
+      "formula": "ScoreExpectedDestinationPayments_Value",
+      "expression_raw": "ScoreExpectedDestinationPayments_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L47-L47",
+      "scope": "main"
+    },
+    {
+      "column": "SectorHighRisk_RiskScore",
+      "formula": "SectorHighRisk_RiskScore",
+      "expression_raw": "SectorHighRisk_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L48-L48",
+      "scope": "main"
+    },
+    {
+      "column": "SectorHighRisk_Value",
+      "formula": "SectorHighRisk_Value",
+      "expression_raw": "SectorHighRisk_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L49-L49",
+      "scope": "main"
+    },
+    {
+      "column": "Sector_ML_TF_RiskScore",
+      "formula": "Sector_ML_TF_RiskScore",
+      "expression_raw": "Sector_ML_TF_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L50-L50",
+      "scope": "main"
+    },
+    {
+      "column": "Sector_ML_TF_Value",
+      "formula": "Sector_ML_TF_Value",
+      "expression_raw": "Sector_ML_TF_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L51-L51",
+      "scope": "main"
+    },
+    {
+      "column": "SectorHighCash_RiskScore",
+      "formula": "SectorHighCash_RiskScore",
+      "expression_raw": "SectorHighCash_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L52-L52",
+      "scope": "main"
+    },
+    {
+      "column": "SectorHighCash_Value",
+      "formula": "SectorHighCash_Value",
+      "expression_raw": "SectorHighCash_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L53-L53",
+      "scope": "main"
+    },
+    {
+      "column": "EstablishmentApproved_RiskScore",
+      "formula": "EstablishmentApproved_RiskScore",
+      "expression_raw": "EstablishmentApproved_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L54-L54",
+      "scope": "main"
+    },
+    {
+      "column": "EstablishmentApproved_Value",
+      "formula": "EstablishmentApproved_Value",
+      "expression_raw": "EstablishmentApproved_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L55-L55",
+      "scope": "main"
+    },
+    {
+      "column": "HighPublicProfile_RiskScore",
+      "formula": "HighPublicProfile_RiskScore",
+      "expression_raw": "HighPublicProfile_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L56-L56",
+      "scope": "main"
+    },
+    {
+      "column": "HighPublicProfile_Value",
+      "formula": "HighPublicProfile_Value",
+      "expression_raw": "HighPublicProfile_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L57-L57",
+      "scope": "main"
+    },
+    {
+      "column": "DisclosureSubjected_RiskScore",
+      "formula": "DisclosureSubjected_RiskScore",
+      "expression_raw": "DisclosureSubjected_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L58-L58",
+      "scope": "main"
+    },
+    {
+      "column": "DisclosureSubjected_Value",
+      "formula": "DisclosureSubjected_Value",
+      "expression_raw": "DisclosureSubjected_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L59-L59",
+      "scope": "main"
+    },
+    {
+      "column": "RegionSupervised_RiskScore",
+      "formula": "RegionSupervised_RiskScore",
+      "expression_raw": "RegionSupervised_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L60-L60",
+      "scope": "main"
+    },
+    {
+      "column": "RegionSupervised_Value",
+      "formula": "RegionSupervised_Value",
+      "expression_raw": "RegionSupervised_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L61-L61",
+      "scope": "main"
+    },
+    {
+      "column": "JurisdictionNonCorrupt_RiskScore",
+      "formula": "JurisdictionNonCorrupt_RiskScore",
+      "expression_raw": "JurisdictionNonCorrupt_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L62-L62",
+      "scope": "main"
+    },
+    {
+      "column": "JurisdictionNonCorrupt_Value",
+      "formula": "JurisdictionNonCorrupt_Value",
+      "expression_raw": "JurisdictionNonCorrupt_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L63-L63",
+      "scope": "main"
+    },
+    {
+      "column": "AML_CFT_Failure_RiskScore",
+      "formula": "AML_CFT_Failure_RiskScore",
+      "expression_raw": "AML_CFT_Failure_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L64-L64",
+      "scope": "main"
+    },
+    {
+      "column": "AML_CFT_Failure_Value",
+      "formula": "AML_CFT_Failure_Value",
+      "expression_raw": "AML_CFT_Failure_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L65-L65",
+      "scope": "main"
+    },
+    {
+      "column": "BackgroundConsistent_RiskScore",
+      "formula": "BackgroundConsistent_RiskScore",
+      "expression_raw": "BackgroundConsistent_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L66-L66",
+      "scope": "main"
+    },
+    {
+      "column": "BackgroundConsistent_Value",
+      "formula": "BackgroundConsistent_Value",
+      "expression_raw": "BackgroundConsistent_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L67-L67",
+      "scope": "main"
+    },
+    {
+      "column": "TransactionSuspicious_RiskScore",
+      "formula": "TransactionSuspicious_RiskScore",
+      "expression_raw": "TransactionSuspicious_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L68-L68",
+      "scope": "main"
+    },
+    {
+      "column": "TransactionSuspicious_Value",
+      "formula": "TransactionSuspicious_Value",
+      "expression_raw": "TransactionSuspicious_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L69-L69",
+      "scope": "main"
+    },
+    {
+      "column": "IdentityEvidence_RiskScore",
+      "formula": "IdentityEvidence_RiskScore",
+      "expression_raw": "IdentityEvidence_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L70-L70",
+      "scope": "main"
+    },
+    {
+      "column": "IdentityEvidence_Value",
+      "formula": "IdentityEvidence_Value",
+      "expression_raw": "IdentityEvidence_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L71-L71",
+      "scope": "main"
+    },
+    {
+      "column": "AvoidBusinessRelations_RiskScore",
+      "formula": "AvoidBusinessRelations_RiskScore",
+      "expression_raw": "AvoidBusinessRelations_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L72-L72",
+      "scope": "main"
+    },
+    {
+      "column": "AvoidBusinessRelations_Value",
+      "formula": "AvoidBusinessRelations_Value",
+      "expression_raw": "AvoidBusinessRelations_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L73-L73",
+      "scope": "main"
+    },
+    {
+      "column": "OwnershipTransparent_RiskScore",
+      "formula": "OwnershipTransparent_RiskScore",
+      "expression_raw": "OwnershipTransparent_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L74-L74",
+      "scope": "main"
+    },
+    {
+      "column": "OwnershipTransparent_Value",
+      "formula": "OwnershipTransparent_Value",
+      "expression_raw": "OwnershipTransparent_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L75-L75",
+      "scope": "main"
+    },
+    {
+      "column": "AssetHoldingVehicle_RiskScore",
+      "formula": "AssetHoldingVehicle_RiskScore",
+      "expression_raw": "AssetHoldingVehicle_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L76-L76",
+      "scope": "main"
+    },
+    {
+      "column": "AssetHoldingVehicle_Value",
+      "formula": "AssetHoldingVehicle_Value",
+      "expression_raw": "AssetHoldingVehicle_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L77-L77",
+      "scope": "main"
+    },
+    {
+      "column": "TransactionsUnusual_RiskScore",
+      "formula": "TransactionsUnusual_RiskScore",
+      "expression_raw": "TransactionsUnusual_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L78-L78",
+      "scope": "main"
+    },
+    {
+      "column": "TransactionsUnusual_Value",
+      "formula": "TransactionsUnusual_Value",
+      "expression_raw": "TransactionsUnusual_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L79-L79",
+      "scope": "main"
+    },
+    {
+      "column": "SecrecyUnreasonable_RiskScore",
+      "formula": "SecrecyUnreasonable_RiskScore",
+      "expression_raw": "SecrecyUnreasonable_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L80-L80",
+      "scope": "main"
+    },
+    {
+      "column": "SecrecyUnreasonable_Value",
+      "formula": "SecrecyUnreasonable_Value",
+      "expression_raw": "SecrecyUnreasonable_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L81-L81",
+      "scope": "main"
+    },
+    {
+      "column": "NFTF_RiskScore",
+      "formula": "NFTF_RiskScore",
+      "expression_raw": "NFTF_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L82-L82",
+      "scope": "main"
+    },
+    {
+      "column": "NFTF_Value",
+      "formula": "NFTF_Value",
+      "expression_raw": "NFTF_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L83-L83",
+      "scope": "main"
+    },
+    {
+      "column": "IdentityDoubts_RiskScore",
+      "formula": "IdentityDoubts_RiskScore",
+      "expression_raw": "IdentityDoubts_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L84-L84",
+      "scope": "main"
+    },
+    {
+      "column": "IdentityDoubts_Value",
+      "formula": "IdentityDoubts_Value",
+      "expression_raw": "IdentityDoubts_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L85-L85",
+      "scope": "main"
+    },
+    {
+      "column": "ExpectedProductsUsed_RiskScore",
+      "formula": "ExpectedProductsUsed_RiskScore",
+      "expression_raw": "ExpectedProductsUsed_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L86-L86",
+      "scope": "main"
+    },
+    {
+      "column": "ExpectedProductsUsed_Value",
+      "formula": "ExpectedProductsUsed_Value",
+      "expression_raw": "ExpectedProductsUsed_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L87-L87",
+      "scope": "main"
+    },
+    {
+      "column": "NonProfitOrgAbused_RiskScore",
+      "formula": "NonProfitOrgAbused_RiskScore",
+      "expression_raw": "NonProfitOrgAbused_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L88-L88",
+      "scope": "main"
+    },
+    {
+      "column": "NonProfitOrgAbused_Value",
+      "formula": "NonProfitOrgAbused_Value",
+      "expression_raw": "NonProfitOrgAbused_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L89-L89",
+      "scope": "main"
+    },
+    {
+      "column": "CooperativeClient_RiskScore",
+      "formula": "CooperativeClient_RiskScore",
+      "expression_raw": "CooperativeClient_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L90-L90",
+      "scope": "main"
+    },
+    {
+      "column": "CooperativeClient_Value",
+      "formula": "CooperativeClient_Value",
+      "expression_raw": "CooperativeClient_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L91-L91",
+      "scope": "main"
+    },
+    {
+      "column": "IdentityAnonymous_RiskScore",
+      "formula": "IdentityAnonymous_RiskScore",
+      "expression_raw": "IdentityAnonymous_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L92-L92",
+      "scope": "main"
+    },
+    {
+      "column": "IdentityAnonymous_Value",
+      "formula": "IdentityAnonymous_Value",
+      "expression_raw": "IdentityAnonymous_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L93-L93",
+      "scope": "main"
+    },
+    {
+      "column": "TransactionComplexity_RiskScore",
+      "formula": "TransactionComplexity_RiskScore",
+      "expression_raw": "TransactionComplexity_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L94-L94",
+      "scope": "main"
+    },
+    {
+      "column": "TransactionComplexity_Value",
+      "formula": "TransactionComplexity_Value",
+      "expression_raw": "TransactionComplexity_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L95-L95",
+      "scope": "main"
+    },
+    {
+      "column": "PaymentsThirdParty_RiskScore",
+      "formula": "PaymentsThirdParty_RiskScore",
+      "expression_raw": "PaymentsThirdParty_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L96-L96",
+      "scope": "main"
+    },
+    {
+      "column": "PaymentsThirdParty_Value",
+      "formula": "PaymentsThirdParty_Value",
+      "expression_raw": "PaymentsThirdParty_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L97-L97",
+      "scope": "main"
+    },
+    {
+      "column": "Finalscore_RiskScore",
+      "formula": "Finalscore_RiskScore",
+      "expression_raw": "Finalscore_RiskScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L98-L98",
+      "scope": "main"
+    },
+    {
+      "column": "Finalscore_Value",
+      "formula": "Finalscore_Value",
+      "expression_raw": "Finalscore_Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L99-L99",
+      "scope": "main"
+    },
+    {
+      "column": "RiskScore_Explanation",
+      "formula": "RiskScore_Explanation",
+      "expression_raw": "RiskScore_Explanation",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L100-L100",
+      "scope": "main"
+    },
+    {
+      "column": "RiskScoreName",
+      "formula": "RiskScoreName",
+      "expression_raw": "RiskScoreName",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L101-L101",
+      "scope": "main"
+    },
+    {
+      "column": "SourceDate",
+      "formula": "NULL",
+      "expression_raw": "NULL AS SourceDate",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L205-L205",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastUpdate",
+      "formula": "1",
+      "expression_raw": "1 AS IsLastUpdate",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L206-L206",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/de_output/_discovery/source_code/vw_risk_classification_history_complete.sql"
+}

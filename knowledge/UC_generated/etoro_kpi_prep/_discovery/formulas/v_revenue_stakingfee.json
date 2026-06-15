@@ -1,0 +1,250 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_revenue_stakingfee",
+  "generated_at": "2026-05-18T16:27:37Z",
+  "formula_count": 22,
+  "formulas": [
+    {
+      "column": "StakingMonthID",
+      "formula": "LEFT(CAST(StakingMonthID AS STRING), 6)",
+      "expression_raw": "LEFT(CAST(dss.StakingMonthID AS STRING), 6) AS StakingMonthID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "Date",
+      "formula": "ADD_MONTHS(UpdateDate, -1)",
+      "expression_raw": "ADD_MONTHS(dss.UpdateDate, -1) AS Date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "DateID",
+      "formula": "CAST(DATE_FORMAT(CAST(ADD_MONTHS(UpdateDate, -1) AS DATE), 'yyyyMMdd') AS INT)",
+      "expression_raw": "CAST(DATE_FORMAT(CAST(ADD_MONTHS(dss.UpdateDate, -1) AS DATE), 'yyyyMMdd') AS INT) AS DateID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "StakingMonth",
+      "formula": "StakingMonth",
+      "expression_raw": "dss.StakingMonth",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "StakingYear",
+      "formula": "StakingYear",
+      "expression_raw": "dss.StakingYear",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentID",
+      "formula": "InstrumentID",
+      "expression_raw": "dss.InstrumentID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "Instrument",
+      "formula": "Name",
+      "expression_raw": "di.Name AS Instrument",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "CID",
+      "formula": "CID",
+      "expression_raw": "dss.CID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "GCID",
+      "formula": "GCID",
+      "expression_raw": "fsc.GCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "IsEligible",
+      "formula": "IsEligible",
+      "expression_raw": "dss.IsEligible",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "NonEligible_PrimaryReason",
+      "formula": "NonEligible_PrimaryReason",
+      "expression_raw": "dss.NonEligible_PrimaryReason",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "IneligibleCustomerRewards",
+      "formula": "CASE WHEN IsEligible = 0 THEN Etoro_Amount ELSE 0 END",
+      "expression_raw": "CASE WHEN dss.IsEligible = 0 THEN dss.Etoro_Amount ELSE 0 END AS IneligibleCustomerRewards",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "RevShareCommission",
+      "formula": "CASE WHEN IsEligible = 1 THEN Etoro_Amount ELSE 0 END",
+      "expression_raw": "CASE WHEN dss.IsEligible = 1 THEN dss.Etoro_Amount ELSE 0 END AS RevShareCommission",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "ClientPercent",
+      "formula": "Client_Airdrop / NULLIF(Client_Airdrop + Etoro_Amount, 0)",
+      "expression_raw": "dss.Client_Airdrop / NULLIF(dss.Client_Airdrop + dss.Etoro_Amount, 0) AS ClientPercent",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "EtoroPercent",
+      "formula": "Etoro_Amount / NULLIF(Client_Airdrop + Etoro_Amount, 0)",
+      "expression_raw": "dss.Etoro_Amount / NULLIF(dss.Client_Airdrop + dss.Etoro_Amount, 0) AS EtoroPercent",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "ClientUSDDistributed",
+      "formula": "CASE WHEN IsEligible = 1 THEN USD_Compensation ELSE 0 END",
+      "expression_raw": "CASE WHEN dss.IsEligible = 1 THEN dss.USD_Compensation ELSE 0 END AS ClientUSDDistributed",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "EtoroUSDDistributed",
+      "formula": "Etoro_Amount_USD",
+      "expression_raw": "dss.Etoro_Amount_USD AS EtoroUSDDistributed",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "TotalUSDDistributed",
+      "formula": "CASE WHEN IsEligible = 1 THEN USD_Compensation ELSE 0 END + Etoro_Amount_USD",
+      "expression_raw": "CASE WHEN dss.IsEligible = 1 THEN dss.USD_Compensation ELSE 0 END + dss.Etoro_Amount_USD AS TotalUSDDistributed",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "AirDropDateID",
+      "formula": "CAST(DATE_FORMAT(CAST(AirdropOccurred AS DATE), 'yyyyMMdd') AS INT)",
+      "expression_raw": "CAST(DATE_FORMAT(CAST(dss.AirdropOccurred AS DATE), 'yyyyMMdd') AS INT) AS AirDropDateID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "ActualCompensationType",
+      "formula": "ActualCompensationType",
+      "expression_raw": "dss.ActualCompensationType",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "ClubCategory",
+      "formula": "ClubCategory",
+      "expression_raw": "dss.ClubCategory",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "IsValidCustomer",
+      "formula": "IsValidCustomer",
+      "expression_raw": "fsc.IsValidCustomer",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_revenue_stakingfee.sql"
+}

@@ -1,0 +1,116 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_conversiontransactions",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:19Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ConversionTransactions.md",
+      "upstream_quote": "Auto-incrementing primary key.",
+      "wiki_quote": "Auto-incrementing primary key (Tier 1 — inherited from WalletDB.Wallet.ConversionTransactions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ConversionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ConversionTransactions.md",
+      "upstream_quote": "Parent conversion. FK to Wallet.Conversions.Id. Part of unique constraint.",
+      "wiki_quote": "Parent conversion. FK to Wallet.Conversions.Id. Part of unique constraint (Tier 1 — inherited from WalletDB.Wallet.Conve",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ConversionTransactions.md",
+      "upstream_quote": "The wallet for this conversion leg. FK to Wallet.Wallets.WalletId. Part of unique constraint.",
+      "wiki_quote": "The wallet for this conversion leg. FK to Wallet.Wallets.WalletId. Part of unique constraint (Tier 1 — inherited from Wa",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoRateUsd",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ConversionTransactions.md",
+      "upstream_quote": "USD exchange rate of this crypto at execution time. Used for valuation and fee calculation.",
+      "wiki_quote": "USD exchange rate of this crypto at execution time. Used for valuation and fee calculation (Tier 1 — inherited from Wall",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ToAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ConversionTransactions.md",
+      "upstream_quote": "Destination blockchain address for this conversion leg. NULL when the transfer is internal.",
+      "wiki_quote": "Destination blockchain address for this conversion leg. NULL when the transfer is internal (Tier 1 — inherited from Wall",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ConversionTransactions.md",
+      "upstream_quote": "Amount of crypto for this conversion leg in native units.",
+      "wiki_quote": "Amount of crypto for this conversion leg in native units (Tier 1 — inherited from WalletDB.Wallet.ConversionTransactions",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EtoroFeePercentage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ConversionTransactions.md",
+      "upstream_quote": "eToro fee percentage applied to this leg.",
+      "wiki_quote": "eToro fee percentage applied to this leg (Tier 1 — inherited from WalletDB.Wallet.ConversionTransactions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EtoroFeeCalculated",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ConversionTransactions.md",
+      "upstream_quote": "Calculated eToro fee amount in the crypto's native units.",
+      "wiki_quote": "Calculated eToro fee amount in the crypto's native units (Tier 1 — inherited from WalletDB.Wallet.ConversionTransactions",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EstimatedBlockChainFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ConversionTransactions.md",
+      "upstream_quote": "Estimated blockchain network fee for this leg.",
+      "wiki_quote": "Estimated blockchain network fee for this leg (Tier 1 — inherited from WalletDB.Wallet.ConversionTransactions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ConversionTransactions.md",
+      "upstream_quote": "Timestamp of this transaction record creation.",
+      "wiki_quote": "Timestamp of this transaction record creation (Tier 1 — inherited from WalletDB.Wallet.ConversionTransactions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ConversionTransactions.md",
+      "upstream_quote": "The cryptocurrency for this leg. FK to Wallet.CryptoTypes.CryptoID. Part of unique constraint.",
+      "wiki_quote": "The cryptocurrency for this leg. FK to Wallet.CryptoTypes.CryptoID. Part of unique constraint (Tier 1 — inherited from W",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 11,
+    "B": 0,
+    "C": 6,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 11 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 6 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_mimo_options_platform
--- Captured: 2026-05-18T08:06:24Z
+-- Captured: 2026-05-19T12:14:00Z
 -- ==========================================================================
 
 WITH MIMORecords AS (

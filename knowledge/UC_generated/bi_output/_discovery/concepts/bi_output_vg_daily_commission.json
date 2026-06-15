@@ -1,0 +1,99 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_daily_commission",
+  "generated_at": "2026-05-19T15:01:19Z",
+  "concept_count": 5,
+  "concepts": [
+    {
+      "id": "case_flag_isfuture",
+      "name": "IsFuture computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsFuture"
+      ],
+      "predicates": [
+        {
+          "col": "isfuture",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {
+        "isfuture=1": "futures contract"
+      },
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "evidence_lines": "bi_output.sql L71-L71",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_issqf",
+      "name": "IsSQF computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsSQF"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.trading.bronze_etoro_trade_instrumentgroups"
+      ],
+      "evidence_lines": "bi_output.sql L72-L72",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_is_245",
+      "name": "Is_245 computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "Is_245"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "bi_output.sql L73-L73",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_isusstock",
+      "name": "IsUSStock computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsUSStock"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "bi_output.sql L74-L74",
+      "scope": "main"
+    },
+    {
+      "id": "filter_block_sqf_instruments",
+      "name": "Filter block on sqf_instruments",
+      "kind": "filter_block",
+      "columns_involved": [
+        "GroupID"
+      ],
+      "predicates": [
+        {
+          "col": "GroupID",
+          "op": "=",
+          "val": "59"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L19",
+      "scope": "sqf_instruments",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_daily_commission.sql"
+}

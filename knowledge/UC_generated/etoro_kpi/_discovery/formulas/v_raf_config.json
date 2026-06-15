@@ -1,0 +1,173 @@
+{
+  "object_fqn": "main.etoro_kpi.v_raf_config",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 15,
+  "formulas": [
+    {
+      "column": "CountryName",
+      "formula": "CountryName",
+      "expression_raw": "CountryName",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationName",
+      "formula": "Name",
+      "expression_raw": "DR.Name as RegulationName",
+      "inputs": [
+        "main.general.bronze_etoro_dictionary_regulation"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "ReferringCompensationInDollar",
+      "formula": "ReferringCompensationInCents/100",
+      "expression_raw": "ReferringCompensationInCents/100 as ReferringCompensationInDollar",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "ReferredCompensationInDollar",
+      "formula": "ReferredCompensationInCents/100",
+      "expression_raw": "ReferredCompensationInCents/100 as ReferredCompensationInDollar",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "MaxNumberOfCompensations",
+      "formula": "MaxNumberOfCompensations",
+      "expression_raw": "MaxNumberOfCompensations",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "FraudScore",
+      "formula": "FraudScore",
+      "expression_raw": "FraudScore",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "LevelName",
+      "formula": "LevelName",
+      "expression_raw": "LevelName",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "ValidFrom",
+      "formula": "ValidFrom",
+      "expression_raw": "ValidFrom",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "ReferringMinDepositInDollar",
+      "formula": "ReferringMinDepositInCents/100",
+      "expression_raw": "ReferringMinDepositInCents/100 as ReferringMinDepositInDollar",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "ReferredMinDepositInDollar",
+      "formula": "ReferredMinDepositInCents/100",
+      "expression_raw": "ReferredMinDepositInCents/100 as ReferredMinDepositInDollar",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "RafProgramStartDate",
+      "formula": "RafProgramStartDate",
+      "expression_raw": "RafProgramStartDate",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "DaysToWaitFromFTD",
+      "formula": "DaysToWaitFromFTD",
+      "expression_raw": "DaysToWaitFromFTD",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "ReferringMinPositionsAmountInDollar",
+      "formula": "ReferringMinPositionsAmountInCents/100",
+      "expression_raw": "ReferringMinPositionsAmountInCents/100 as ReferringMinPositionsAmountInDollar",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "ReferredMinPositionsAmountInDollar",
+      "formula": "ReferredMinPositionsAmountInCents/100",
+      "expression_raw": "ReferredMinPositionsAmountInCents/100 as ReferredMinPositionsAmountInDollar",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "DaysToCheckMinPositionsAmountFromRegistration",
+      "formula": "DaysToCheckMinPositionsAmountFromRegistration",
+      "expression_raw": "DaysToCheckMinPositionsAmountFromRegistration",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/v_raf_config.sql"
+}

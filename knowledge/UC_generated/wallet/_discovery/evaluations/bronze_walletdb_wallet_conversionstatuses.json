@@ -1,0 +1,67 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_conversionstatuses",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:19Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ConversionStatuses.md",
+      "upstream_quote": "Auto-incrementing event identifier.",
+      "wiki_quote": "Auto-incrementing event identifier (Tier 1 — inherited from WalletDB.Wallet.ConversionStatuses).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ConversionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ConversionStatuses.md",
+      "upstream_quote": "Parent conversion. FK to Wallet.Conversions.Id.",
+      "wiki_quote": "Parent conversion. FK to Wallet.Conversions.Id (Tier 1 — inherited from WalletDB.Wallet.ConversionStatuses).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ConversionStatusId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ConversionStatuses.md",
+      "upstream_quote": "Status: 1=Pending, 2=Failed, 3=Completed. See [Conversion Status](../../_glossary.md#conversion-status). FK to Dictionar",
+      "wiki_quote": "Status: 1=Pending, 2=Failed, 3=Completed. See [Conversion Status](../../_glossary.md#conversion-status). FK to Dictionar",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ConversionStatuses.md",
+      "upstream_quote": "Timestamp of this status transition.",
+      "wiki_quote": "Timestamp of this status transition (Tier 1 — inherited from WalletDB.Wallet.ConversionStatuses).",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 4,
+    "B": 0,
+    "C": 6,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 4 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 6 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

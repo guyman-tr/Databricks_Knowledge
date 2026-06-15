@@ -1,0 +1,88 @@
+{
+  "object_fqn": "main.bi_dealing.gold_dealing_oms_delta_diffusionanalysis_v",
+  "generated_at": "2026-05-19T12:47:56Z",
+  "formula_count": 8,
+  "formulas": [
+    {
+      "column": "Instrument",
+      "formula": "CAST(InstrumentID as STRING)",
+      "expression_raw": "CAST(InstrumentID as STRING) as Instrument",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "Model",
+      "formula": "\"FuturesNOP\" Model",
+      "expression_raw": "\"FuturesNOP\" Model",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "ModelParameter",
+      "formula": "\"portfolioId\" ModelParameter",
+      "expression_raw": "\"portfolioId\" ModelParameter",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "Value",
+      "formula": "\"HS225-ExpiringFutures-Hedging_NOP\" Value",
+      "expression_raw": "\"HS225-ExpiringFutures-Hedging_NOP\" Value",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "UpdateTime",
+      "formula": "cast(PositionsTime as STRING) UpdateTime",
+      "expression_raw": "cast(PositionsTime as STRING) UpdateTime",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "ModelVersion",
+      "formula": "\"1\" ModelVersion",
+      "expression_raw": "\"1\" ModelVersion",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "URL",
+      "formula": "\"/api/db/table/PortfolioProperty\" URL",
+      "expression_raw": "\"/api/db/table/PortfolioProperty\" URL",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "OmsParam",
+      "formula": "\"portfolioId\" OmsParam",
+      "expression_raw": "\"portfolioId\" OmsParam",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_dealing/_discovery/source_code/gold_dealing_oms_delta_diffusionanalysis_v.sql"
+}

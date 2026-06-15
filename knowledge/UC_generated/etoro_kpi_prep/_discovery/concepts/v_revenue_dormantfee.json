@@ -1,0 +1,50 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_revenue_dormantfee",
+  "generated_at": "2026-05-18T16:27:27Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "union_leg_sign_flip_main",
+      "name": "Sign-flip leg (main)",
+      "kind": "union_leg_sign_flip",
+      "columns_involved": [
+        "DormantFee"
+      ],
+      "predicates": [],
+      "sign": "-1",
+      "expressions": [
+        "fca.Amount"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+      ],
+      "evidence_lines": "L12",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_dr",
+      "name": "Dim lookup via dr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "alias": "dr",
+      "join_conditions": [
+        "fsc.DateRangeID = dr.DateRangeID\n    AND fca.DateID BETWEEN dr.FromDateID AND dr.ToDateID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L17",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.DateRangeID = dr.DateRangeID\n    AND fca.DateID BETWEEN dr.FromDateID AND dr.ToDateID"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_revenue_dormantfee.sql"
+}

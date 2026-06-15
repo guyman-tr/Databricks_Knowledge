@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_instrument_conversion_rates_dwh
--- Captured: 2026-05-18T08:05:56Z
+-- Captured: 2026-05-19T12:13:20Z
 -- ==========================================================================
 
 WITH LatestDailyPrices AS (

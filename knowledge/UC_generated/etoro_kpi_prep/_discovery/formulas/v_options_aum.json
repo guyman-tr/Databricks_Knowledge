@@ -1,0 +1,96 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_options_aum",
+  "generated_at": "2026-05-18T16:27:36Z",
+  "formula_count": 8,
+  "formulas": [
+    {
+      "column": "GCID",
+      "formula": "GCID",
+      "expression_raw": "op.GCID",
+      "inputs": [
+        "main.general.bronze_usabroker_apex_options"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L42-L42",
+      "scope": "main"
+    },
+    {
+      "column": "DateID",
+      "formula": "CAST(DATE_FORMAT(Date, 'yyyyMMdd') AS INT)",
+      "expression_raw": "CAST(DATE_FORMAT(bp.Date, 'yyyyMMdd') AS INT) AS DateID",
+      "inputs": [
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L43-L43",
+      "scope": "main"
+    },
+    {
+      "column": "Date",
+      "formula": "CAST(ProcessDate AS DATE)",
+      "expression_raw": "CAST(ProcessDate AS DATE) AS Date",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L33-L33",
+      "scope": "latest_daily_buypower"
+    },
+    {
+      "column": "OptionsTotalEquity",
+      "formula": "CAST(TotalEquity AS DECIMAL(18,2))",
+      "expression_raw": "CAST(bp.TotalEquity AS DECIMAL(18,2)) AS OptionsTotalEquity",
+      "inputs": [
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L45-L45",
+      "scope": "main"
+    },
+    {
+      "column": "OptionsCashEquity",
+      "formula": "CAST(CashEquity AS DECIMAL(18,2))",
+      "expression_raw": "CAST(bp.CashEquity AS DECIMAL(18,2)) AS OptionsCashEquity",
+      "inputs": [
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L46-L46",
+      "scope": "main"
+    },
+    {
+      "column": "OptionsPositionMarketValue",
+      "formula": "CAST(PositionMarketValue AS DECIMAL(18,2))",
+      "expression_raw": "CAST(bp.PositionMarketValue AS DECIMAL(18,2)) AS OptionsPositionMarketValue",
+      "inputs": [
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L47-L47",
+      "scope": "main"
+    },
+    {
+      "column": "FirstOptionsAUMDateID",
+      "formula": "CAST(DATE_FORMAT(CAST(FirstFundingDate AS DATE), 'yyyyMMdd') AS INT)",
+      "expression_raw": "CAST(DATE_FORMAT(CAST(ff.FirstFundingDate AS DATE), 'yyyyMMdd') AS INT) AS FirstOptionsAUMDateID",
+      "inputs": [
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L48-L48",
+      "scope": "main"
+    },
+    {
+      "column": "FirstOptionsAUMDate",
+      "formula": "CAST(FirstFundingDate AS DATE)",
+      "expression_raw": "CAST(ff.FirstFundingDate AS DATE) AS FirstOptionsAUMDate",
+      "inputs": [
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L49-L49",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_options_aum.sql"
+}

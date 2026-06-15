@@ -1,0 +1,951 @@
+{
+  "object": "main.etoro_kpi.positions_for_compliance_v",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "cid",
+      "target_column_name": "CID",
+      "entity_type": null,
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason",
+      "source_column_name": "NAME",
+      "target_column_name": "ClosePositionReason",
+      "entity_type": null,
+      "event_count": 83
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason",
+      "source_column_name": "NAME",
+      "target_column_name": "ClosePositionReason",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 14
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "initialamountcents",
+      "target_column_name": "InitialAmount",
+      "entity_type": null,
+      "event_count": 197
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "initialamountcents",
+      "target_column_name": "InitialAmount",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 42
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "NAME",
+      "target_column_name": "Instrument",
+      "entity_type": null,
+      "event_count": 188
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "NAME",
+      "target_column_name": "Instrument",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "instrumenttype",
+      "target_column_name": "InstrumentType",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "instrumenttypeid",
+      "target_column_name": "InstrumentTypeID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "ispartialclosechild",
+      "target_column_name": "IsPartialCloseChild",
+      "entity_type": null,
+      "event_count": 153
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "ispartialclosechild",
+      "target_column_name": "IsPartialCloseChild",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 5
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "ispartialcloseparent",
+      "target_column_name": "IsPartialCloseParent",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "opendateid",
+      "target_column_name": "OpenDateID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "amountinunitsdecimal",
+      "target_column_name": "Units",
+      "entity_type": null,
+      "event_count": 32
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "amountinunitsdecimal",
+      "target_column_name": "Units",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "amount",
+      "target_column_name": "amount",
+      "entity_type": null,
+      "event_count": 147
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "amount",
+      "target_column_name": "amount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 72
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "amount",
+      "target_column_name": "amount",
+      "entity_type": "JOB",
+      "event_count": 56
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "amount",
+      "target_column_name": "amount",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "buycurrency",
+      "target_column_name": "buycurrency",
+      "entity_type": null,
+      "event_count": 31
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "buycurrency",
+      "target_column_name": "buycurrency",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "buycurrencyid",
+      "target_column_name": "buycurrencyid",
+      "entity_type": null,
+      "event_count": 28
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "buycurrencyid",
+      "target_column_name": "buycurrencyid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "cid",
+      "target_column_name": "cid",
+      "entity_type": null,
+      "event_count": 361
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "cid",
+      "target_column_name": "cid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 45
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "cid",
+      "target_column_name": "cid",
+      "entity_type": "JOB",
+      "event_count": 24
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "cid",
+      "target_column_name": "cid",
+      "entity_type": "NOTEBOOK",
+      "event_count": 16
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "closedateid",
+      "target_column_name": "closedateid",
+      "entity_type": null,
+      "event_count": 198
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "closedateid",
+      "target_column_name": "closedateid",
+      "entity_type": "JOB",
+      "event_count": 138
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "closedateid",
+      "target_column_name": "closedateid",
+      "entity_type": "NOTEBOOK",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "closedateid",
+      "target_column_name": "closedateid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "closeoccurred",
+      "target_column_name": "closeoccurred",
+      "entity_type": null,
+      "event_count": 30
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "closeoccurred",
+      "target_column_name": "closeoccurred",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason",
+      "source_column_name": "NAME",
+      "target_column_name": "closepositionreason",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "closepositionreasonid",
+      "target_column_name": "closepositionreasonid",
+      "entity_type": null,
+      "event_count": 30
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "closepositionreasonid",
+      "target_column_name": "closepositionreasonid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "cusip",
+      "target_column_name": "cusip",
+      "entity_type": null,
+      "event_count": 31
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "cusip",
+      "target_column_name": "cusip",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "endhedgetype",
+      "target_column_name": "endhedgetype",
+      "entity_type": null,
+      "event_count": 33
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "endhedgetype",
+      "target_column_name": "endhedgetype",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "exchange",
+      "target_column_name": "exchange",
+      "entity_type": null,
+      "event_count": 73
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "exchange",
+      "target_column_name": "exchange",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 9
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "hedgeserverid",
+      "target_column_name": "hedgeserverid",
+      "entity_type": null,
+      "event_count": 42
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "hedgeserverid",
+      "target_column_name": "hedgeserverid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 13
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "industry",
+      "target_column_name": "industry",
+      "entity_type": null,
+      "event_count": 31
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "industry",
+      "target_column_name": "industry",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "inithedgetype",
+      "target_column_name": "inithedgetype",
+      "entity_type": null,
+      "event_count": 51
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "inithedgetype",
+      "target_column_name": "inithedgetype",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 13
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "initialamountcents",
+      "target_column_name": "initialamount",
+      "entity_type": null,
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "initialunits",
+      "target_column_name": "initialunits",
+      "entity_type": null,
+      "event_count": 34
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "initialunits",
+      "target_column_name": "initialunits",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "NAME",
+      "target_column_name": "instrument",
+      "entity_type": null,
+      "event_count": 13
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "NAME",
+      "target_column_name": "instrument",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 10
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "instrumentdisplayname",
+      "target_column_name": "instrumentdisplayname",
+      "entity_type": null,
+      "event_count": 47
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "instrumentdisplayname",
+      "target_column_name": "instrumentdisplayname",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 11
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "instrumentid",
+      "target_column_name": "instrumentid",
+      "entity_type": null,
+      "event_count": 167
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "instrumentid",
+      "target_column_name": "instrumentid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "instrumentid",
+      "target_column_name": "instrumentid",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "instrumenttype",
+      "target_column_name": "instrumenttype",
+      "entity_type": null,
+      "event_count": 169
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "instrumenttype",
+      "target_column_name": "instrumenttype",
+      "entity_type": "NOTEBOOK",
+      "event_count": 88
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "instrumenttype",
+      "target_column_name": "instrumenttype",
+      "entity_type": "JOB",
+      "event_count": 83
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "instrumenttype",
+      "target_column_name": "instrumenttype",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 14
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "instrumenttypeid",
+      "target_column_name": "instrumenttypeid",
+      "entity_type": null,
+      "event_count": 60
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "instrumenttypeid",
+      "target_column_name": "instrumenttypeid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "isairdrop",
+      "target_column_name": "isairdrop",
+      "entity_type": null,
+      "event_count": 30
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "isairdrop",
+      "target_column_name": "isairdrop",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "isbuy",
+      "target_column_name": "isbuy",
+      "entity_type": null,
+      "event_count": 98
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "isbuy",
+      "target_column_name": "isbuy",
+      "entity_type": "NOTEBOOK",
+      "event_count": 72
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "isbuy",
+      "target_column_name": "isbuy",
+      "entity_type": "JOB",
+      "event_count": 56
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "isbuy",
+      "target_column_name": "isbuy",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "isdiscounted",
+      "target_column_name": "isdiscounted",
+      "entity_type": null,
+      "event_count": 28
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "isdiscounted",
+      "target_column_name": "isdiscounted",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "isfuture",
+      "target_column_name": "isfuture",
+      "entity_type": null,
+      "event_count": 41
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "isfuture",
+      "target_column_name": "isfuture",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 8
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "isincode",
+      "target_column_name": "isincode",
+      "entity_type": null,
+      "event_count": 31
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "isincode",
+      "target_column_name": "isincode",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "isincountrycode",
+      "target_column_name": "isincountrycode",
+      "entity_type": null,
+      "event_count": 31
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "isincountrycode",
+      "target_column_name": "isincountrycode",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "ismajor",
+      "target_column_name": "ismajor",
+      "entity_type": null,
+      "event_count": 31
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "ismajor",
+      "target_column_name": "ismajor",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "isopenopen",
+      "target_column_name": "isopenopen",
+      "entity_type": null,
+      "event_count": 33
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "isopenopen",
+      "target_column_name": "isopenopen",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "ispartialclosechild",
+      "target_column_name": "ispartialclosechild",
+      "entity_type": null,
+      "event_count": 46
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "ispartialclosechild",
+      "target_column_name": "ispartialclosechild",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "ispartialcloseparent",
+      "target_column_name": "ispartialcloseparent",
+      "entity_type": null,
+      "event_count": 30
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "ispartialcloseparent",
+      "target_column_name": "ispartialcloseparent",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "issettled",
+      "target_column_name": "issettled",
+      "entity_type": null,
+      "event_count": 158
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "issettled",
+      "target_column_name": "issettled",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 9
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "issettledonopen",
+      "target_column_name": "issettledonopen",
+      "entity_type": null,
+      "event_count": 29
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "issettledonopen",
+      "target_column_name": "issettledonopen",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "leverage",
+      "target_column_name": "leverage",
+      "entity_type": null,
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "leverage",
+      "target_column_name": "leverage",
+      "entity_type": "NOTEBOOK",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "leverage",
+      "target_column_name": "leverage",
+      "entity_type": "JOB",
+      "event_count": 86
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "leverage",
+      "target_column_name": "leverage",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 9
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "mirrorid",
+      "target_column_name": "mirrorid",
+      "entity_type": null,
+      "event_count": 86
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "mirrorid",
+      "target_column_name": "mirrorid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "netprofit",
+      "target_column_name": "netprofit",
+      "entity_type": null,
+      "event_count": 218
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "netprofit",
+      "target_column_name": "netprofit",
+      "entity_type": "JOB",
+      "event_count": 107
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "netprofit",
+      "target_column_name": "netprofit",
+      "entity_type": "NOTEBOOK",
+      "event_count": 99
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "netprofit",
+      "target_column_name": "netprofit",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 24
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "opendateid",
+      "target_column_name": "opendateid",
+      "entity_type": null,
+      "event_count": 186
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "opendateid",
+      "target_column_name": "opendateid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 30
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "opendateid",
+      "target_column_name": "opendateid",
+      "entity_type": "JOB",
+      "event_count": 24
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "opendateid",
+      "target_column_name": "opendateid",
+      "entity_type": "NOTEBOOK",
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "openoccurred",
+      "target_column_name": "openoccurred",
+      "entity_type": null,
+      "event_count": 37
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "openoccurred",
+      "target_column_name": "openoccurred",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "orderid",
+      "target_column_name": "orderid",
+      "entity_type": null,
+      "event_count": 28
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "orderid",
+      "target_column_name": "orderid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "origparentpositionid",
+      "target_column_name": "origparentpositionid",
+      "entity_type": null,
+      "event_count": 29
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "origparentpositionid",
+      "target_column_name": "origparentpositionid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "parentpositionid",
+      "target_column_name": "parentpositionid",
+      "entity_type": null,
+      "event_count": 31
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "parentpositionid",
+      "target_column_name": "parentpositionid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "pnlindollars",
+      "target_column_name": "pnlindollars",
+      "entity_type": null,
+      "event_count": 86
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "pnlindollars",
+      "target_column_name": "pnlindollars",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "positionid",
+      "target_column_name": "positionid",
+      "entity_type": null,
+      "event_count": 249
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "positionid",
+      "target_column_name": "positionid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 54
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "positionid",
+      "target_column_name": "positionid",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "regulationidonopen",
+      "target_column_name": "regulationidonopen",
+      "entity_type": null,
+      "event_count": 28
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "regulationidonopen",
+      "target_column_name": "regulationidonopen",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "sellcurrency",
+      "target_column_name": "sellcurrency",
+      "entity_type": null,
+      "event_count": 31
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "sellcurrency",
+      "target_column_name": "sellcurrency",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "sellcurrencyid",
+      "target_column_name": "sellcurrencyid",
+      "entity_type": null,
+      "event_count": 28
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "sellcurrencyid",
+      "target_column_name": "sellcurrencyid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "symbol",
+      "target_column_name": "symbol",
+      "entity_type": null,
+      "event_count": 136
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "symbol",
+      "target_column_name": "symbol",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 13
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "symbolfull",
+      "target_column_name": "symbolfull",
+      "entity_type": null,
+      "event_count": 31
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "symbolfull",
+      "target_column_name": "symbolfull",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "tradable",
+      "target_column_name": "tradable",
+      "entity_type": null,
+      "event_count": 28
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "tradable",
+      "target_column_name": "tradable",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "treeid",
+      "target_column_name": "treeid",
+      "entity_type": null,
+      "event_count": 28
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "treeid",
+      "target_column_name": "treeid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "volume",
+      "target_column_name": "volume",
+      "entity_type": null,
+      "event_count": 56
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "volume",
+      "target_column_name": "volume",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "volumeonclose",
+      "target_column_name": "volumeonclose",
+      "entity_type": null,
+      "event_count": 33
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "volumeonclose",
+      "target_column_name": "volumeonclose",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    }
+  ],
+  "generated_at": "2026-05-19T15:17:27Z"
+}

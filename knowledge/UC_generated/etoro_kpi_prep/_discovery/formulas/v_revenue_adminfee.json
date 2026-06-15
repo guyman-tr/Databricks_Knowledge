@@ -1,0 +1,96 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_revenue_adminfee",
+  "generated_at": "2026-05-18T16:27:37Z",
+  "formula_count": 8,
+  "formulas": [
+    {
+      "column": "PositionID",
+      "formula": "CAST(PositionID AS BIGINT)",
+      "expression_raw": "CAST(fca.PositionID AS BIGINT) as PositionID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": "CAST(RealCID AS INT)",
+      "expression_raw": "CAST(fca.RealCID AS INT) as RealCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "DateID",
+      "formula": "CAST(DateID AS INT)",
+      "expression_raw": "CAST(fca.DateID AS INT) as DateID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "Occurred",
+      "formula": "Occurred",
+      "expression_raw": "fca.Occurred",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "AdminFee",
+      "formula": "CAST(-1 * Amount AS DECIMAL(38, 6))",
+      "expression_raw": "CAST(-1 * fca.Amount AS DECIMAL(38, 6)) AS AdminFee",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "IsSettled",
+      "formula": "CAST(IsSettled AS INT)",
+      "expression_raw": "CAST(fca.IsSettled AS INT) as IsSettled",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "MirrorID",
+      "formula": "CAST(MirrorID AS INT)",
+      "expression_raw": "CAST(fca.MirrorID AS INT) as MirrorID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "SettlementTypeID",
+      "formula": "CAST(SettlementTypeID AS INT)",
+      "expression_raw": "CAST(fca.SettlementTypeID AS INT) as SettlementTypeID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_revenue_adminfee.sql"
+}

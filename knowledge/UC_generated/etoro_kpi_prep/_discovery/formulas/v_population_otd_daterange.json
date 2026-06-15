@@ -1,0 +1,39 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_population_otd_daterange",
+  "generated_at": "2026-05-18T16:27:37Z",
+  "formula_count": 3,
+  "formulas": [
+    {
+      "column": "RealCID",
+      "formula": "CID",
+      "expression_raw": "mfts.CID AS RealCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "PREP"
+    },
+    {
+      "column": "FromDateID",
+      "formula": "MIN(DateID)",
+      "expression_raw": "MIN(DateID) AS FromDateID",
+      "inputs": [],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L50-L50",
+      "scope": "DATERANGE"
+    },
+    {
+      "column": "ToDateID",
+      "formula": "CASE WHEN MIN(TotalRows) = 1 THEN CAST(DATE_FORMAT(CURRENT_DATE(), 'yyyyMMdd') AS INT) WHEN MIN(CountDeposits) > 1 THEN MIN(DateID) ELSE COALESCE(MIN(CASE WHEN RowN…",
+      "expression_raw": "CASE\n            WHEN MIN(TotalRows) = 1 THEN CAST(DATE_FORMAT(CURRENT_DATE(), 'yyyyMMdd') AS INT)\n            WHEN MIN(CountDeposits) > 1 THEN MIN(DateID)\n            ELSE COALESCE(MIN(CASE WHEN RowN…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L51-L55",
+      "scope": "DATERANGE"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_otd_daterange.sql"
+}

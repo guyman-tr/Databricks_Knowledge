@@ -1,0 +1,413 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_copy_mimo",
+  "generated_at": "2026-05-19T15:01:19Z",
+  "concept_count": 17,
+  "concepts": [
+    {
+      "id": "case_flag_ispi",
+      "name": "IsPI computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsPI"
+      ],
+      "predicates": [
+        {
+          "col": "GuruStatusID",
+          "op": ">",
+          "val": "1"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "evidence_lines": "bi_output.sql L41-L41",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_isdetachmirror",
+      "name": "IsDetachMirror computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsDetachMirror"
+      ],
+      "predicates": [
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "19"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "evidence_lines": "bi_output.sql L56-L56",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_mirrortype",
+      "name": "MirrorType computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "MirrorType"
+      ],
+      "predicates": [
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "15"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "16"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "18"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "17"
+        },
+        {
+          "col": "AccountTypeID",
+          "op": "=",
+          "val": "9"
+        },
+        {
+          "col": "GuruStatusID",
+          "op": ">",
+          "val": "1"
+        }
+      ],
+      "then_value": "'  '",
+      "else_value": "'    '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "evidence_lines": "bi_output.sql L57-L63",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_mr",
+      "name": "Dim lookup via mr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "alias": "mr",
+      "join_conditions": [
+        "fca.MirrorID = mr.MirrorID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L65",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fca.MirrorID = mr.MirrorID"
+    },
+    {
+      "id": "dim_lookup_dcu",
+      "name": "Dim lookup via dcu",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "alias": "dcu",
+      "join_conditions": [
+        "fsc.RealCID = dcu.RealCID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L73",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.RealCID = dcu.RealCID"
+    },
+    {
+      "id": "dim_lookup_dpl",
+      "name": "Dim lookup via dpl",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "alias": "dpl",
+      "join_conditions": [
+        "fsc.PlayerLevelID = dpl.PlayerLevelID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L75",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.PlayerLevelID = dpl.PlayerLevelID"
+    },
+    {
+      "id": "dim_lookup_dm",
+      "name": "Dim lookup via dm",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "alias": "dm",
+      "join_conditions": [
+        "fsc.AccountManagerID = dm.ManagerID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L77",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.AccountManagerID = dm.ManagerID"
+    },
+    {
+      "id": "dim_lookup_dr",
+      "name": "Dim lookup via dr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "alias": "dr",
+      "join_conditions": [
+        "fsc.RegulationID = dr.ID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L79",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.RegulationID = dr.ID"
+    },
+    {
+      "id": "dim_lookup_dc",
+      "name": "Dim lookup via dc",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "alias": "dc",
+      "join_conditions": [
+        "fsc.CountryID = dc.CountryID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L81",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.CountryID = dc.CountryID"
+    },
+    {
+      "id": "dim_lookup_dl",
+      "name": "Dim lookup via dl",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+      "alias": "dl",
+      "join_conditions": [
+        "fsc.LanguageID = dl.LanguageID",
+        "fsc.CommunicationLanguageID = dcl.LanguageID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L83,L99",
+      "scopes": [
+        "main",
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.LanguageID = dl.LanguageID"
+    },
+    {
+      "id": "dim_lookup_dv",
+      "name": "Dim lookup via dv",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+      "alias": "dv",
+      "join_conditions": [
+        "fsc.VerificationLevelID = dv.ID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L85",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.VerificationLevelID = dv.ID"
+    },
+    {
+      "id": "dim_lookup_gs",
+      "name": "Dim lookup via gs",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "alias": "gs",
+      "join_conditions": [
+        "fsc.GuruStatusID = gs.GuruStatusID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L87",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.GuruStatusID = gs.GuruStatusID"
+    },
+    {
+      "id": "dim_lookup_ast",
+      "name": "Dim lookup via ast",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus",
+      "alias": "ast",
+      "join_conditions": [
+        "fsc.AccountStatusID = ast.AccountStatusID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L89",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.AccountStatusID = ast.AccountStatusID"
+    },
+    {
+      "id": "dim_lookup_act",
+      "name": "Dim lookup via act",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+      "alias": "act",
+      "join_conditions": [
+        "fsc.AccountTypeID = act.AccountTypeID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L91",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.AccountTypeID = act.AccountTypeID"
+    },
+    {
+      "id": "dim_lookup_pst",
+      "name": "Dim lookup via pst",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "alias": "pst",
+      "join_conditions": [
+        "fsc.PlayerStatusID = pst.PlayerStatusID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L93",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.PlayerStatusID = pst.PlayerStatusID"
+    },
+    {
+      "id": "dim_lookup_psr",
+      "name": "Dim lookup via psr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+      "alias": "psr",
+      "join_conditions": [
+        "fsc.PlayerStatusReasonID = psr.PlayerStatusReasonID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L95",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.PlayerStatusReasonID = psr.PlayerStatusReasonID"
+    },
+    {
+      "id": "dim_lookup_pssr",
+      "name": "Dim lookup via pssr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+      "alias": "pssr",
+      "join_conditions": [
+        "fsc.PlayerStatusSubReasonID = pssr.PlayerStatusSubReasonID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L97",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.PlayerStatusSubReasonID = pssr.PlayerStatusSubReasonID"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_copy_mimo.sql"
+}

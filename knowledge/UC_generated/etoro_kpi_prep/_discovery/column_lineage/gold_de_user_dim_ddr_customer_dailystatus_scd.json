@@ -12,15 +12,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "AccountActive",
       "target_column_name": "AccountActive",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "AccountActive",
       "target_column_name": "AccountActive",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -103,15 +103,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "AccountInActive",
       "target_column_name": "AccountInActive",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "AccountInActive",
       "target_column_name": "AccountInActive",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -194,15 +194,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "ActiveTraded",
       "target_column_name": "ActiveTraded",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "ActiveTraded",
       "target_column_name": "ActiveTraded",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -285,15 +285,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "BalanceOnlyAccount",
       "target_column_name": "BalanceOnlyAccount",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "BalanceOnlyAccount",
       "target_column_name": "BalanceOnlyAccount",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -402,6 +402,41 @@
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
+      "source_column_name": "IsFunded",
+      "target_column_name": "ChurnDateID_InRange",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
+      "source_column_name": "DateID",
+      "target_column_name": "ChurnDateID_InRange",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
+      "source_column_name": "prev_ChurnDateID",
+      "target_column_name": "ChurnDateID_InRange",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
+      "source_column_name": "prev_IsFunded",
+      "target_column_name": "ChurnDateID_InRange",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
+      "source_column_name": "prev_IsChurned",
+      "target_column_name": "ChurnDateID_InRange",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "prev_IsChurned",
       "target_column_name": "ChurnDateID_InRange",
       "entity_type": "DBSQL_QUERY",
@@ -434,41 +469,6 @@
       "target_column_name": "ChurnDateID_InRange",
       "entity_type": "DBSQL_QUERY",
       "event_count": 20
-    },
-    {
-      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
-      "source_column_name": "IsFunded",
-      "target_column_name": "ChurnDateID_InRange",
-      "entity_type": "JOB",
-      "event_count": 19
-    },
-    {
-      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
-      "source_column_name": "DateID",
-      "target_column_name": "ChurnDateID_InRange",
-      "entity_type": "JOB",
-      "event_count": 19
-    },
-    {
-      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
-      "source_column_name": "prev_ChurnDateID",
-      "target_column_name": "ChurnDateID_InRange",
-      "entity_type": "JOB",
-      "event_count": 19
-    },
-    {
-      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
-      "source_column_name": "prev_IsFunded",
-      "target_column_name": "ChurnDateID_InRange",
-      "entity_type": "JOB",
-      "event_count": 19
-    },
-    {
-      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
-      "source_column_name": "prev_IsChurned",
-      "target_column_name": "ChurnDateID_InRange",
-      "entity_type": "JOB",
-      "event_count": 19
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -635,15 +635,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "prev_DateRangeID",
       "target_column_name": "DateRangeID",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "prev_DateRangeID",
       "target_column_name": "DateRangeID",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd",
@@ -747,15 +747,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "FirstActionDateID",
       "target_column_name": "FirstActionDateID",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "FirstActionDateID",
       "target_column_name": "FirstActionDateID",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -845,15 +845,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "FirstActionType",
       "target_column_name": "FirstActionType",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "FirstActionType",
       "target_column_name": "FirstActionType",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -943,15 +943,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "FirstFundedDateID",
       "target_column_name": "FirstFundedDateID",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "FirstFundedDateID",
       "target_column_name": "FirstFundedDateID",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -1041,15 +1041,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "FirstIOBDateID",
       "target_column_name": "FirstIOBDateID",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "FirstIOBDateID",
       "target_column_name": "FirstIOBDateID",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -1139,15 +1139,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "FirstIOBTime",
       "target_column_name": "FirstIOBTime",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "FirstIOBTime",
       "target_column_name": "FirstIOBTime",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -1237,15 +1237,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "FirstTimeFunded",
       "target_column_name": "FirstTimeFunded",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "FirstTimeFunded",
       "target_column_name": "FirstTimeFunded",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -1335,15 +1335,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "DateID",
       "target_column_name": "FromDateID",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "DateID",
       "target_column_name": "FromDateID",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -1426,15 +1426,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "Global_FTDA",
       "target_column_name": "Global_FTDA",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "Global_FTDA",
       "target_column_name": "Global_FTDA",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -1524,15 +1524,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "Global_FTD_Date",
       "target_column_name": "Global_FTD_Date",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "Global_FTD_Date",
       "target_column_name": "Global_FTD_Date",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -1622,15 +1622,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "Global_FTD_DateID",
       "target_column_name": "Global_FTD_DateID",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "Global_FTD_DateID",
       "target_column_name": "Global_FTD_DateID",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -1720,15 +1720,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "IBAN_FTDA",
       "target_column_name": "IBAN_FTDA",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "IBAN_FTDA",
       "target_column_name": "IBAN_FTDA",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -1818,15 +1818,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "IBAN_FTD_Date",
       "target_column_name": "IBAN_FTD_Date",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "IBAN_FTD_Date",
       "target_column_name": "IBAN_FTD_Date",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -1916,15 +1916,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "IBAN_FTD_DateID",
       "target_column_name": "IBAN_FTD_DateID",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "IBAN_FTD_DateID",
       "target_column_name": "IBAN_FTD_DateID",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -2026,6 +2026,27 @@
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
+      "source_column_name": "prev_IsChurned",
+      "target_column_name": "IsChurned",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
+      "source_column_name": "IsFunded",
+      "target_column_name": "IsChurned",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
+      "source_column_name": "prev_IsFunded",
+      "target_column_name": "IsChurned",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "IsFunded",
       "target_column_name": "IsChurned",
       "entity_type": "DBSQL_QUERY",
@@ -2044,27 +2065,6 @@
       "target_column_name": "IsChurned",
       "entity_type": "DBSQL_QUERY",
       "event_count": 20
-    },
-    {
-      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
-      "source_column_name": "prev_IsChurned",
-      "target_column_name": "IsChurned",
-      "entity_type": "JOB",
-      "event_count": 19
-    },
-    {
-      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
-      "source_column_name": "IsFunded",
-      "target_column_name": "IsChurned",
-      "entity_type": "JOB",
-      "event_count": 19
-    },
-    {
-      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
-      "source_column_name": "prev_IsFunded",
-      "target_column_name": "IsChurned",
-      "entity_type": "JOB",
-      "event_count": 19
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -2203,15 +2203,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "IsFunded",
       "target_column_name": "IsFunded",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "IsFunded",
       "target_column_name": "IsFunded",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -2308,43 +2308,43 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "prev_IsWinBack",
       "target_column_name": "IsWinBack",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
-    },
-    {
-      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
-      "source_column_name": "IsFunded",
-      "target_column_name": "IsWinBack",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "prev_IsFunded",
       "target_column_name": "IsWinBack",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
+      "source_column_name": "IsFunded",
+      "target_column_name": "IsWinBack",
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "prev_IsWinBack",
       "target_column_name": "IsWinBack",
-      "entity_type": "JOB",
-      "event_count": 19
-    },
-    {
-      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
-      "source_column_name": "prev_IsFunded",
-      "target_column_name": "IsWinBack",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "IsFunded",
       "target_column_name": "IsWinBack",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
+      "source_column_name": "prev_IsFunded",
+      "target_column_name": "IsWinBack",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -2483,15 +2483,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "MoneyFarm_FTDA",
       "target_column_name": "MoneyFarm_FTDA",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "MoneyFarm_FTDA",
       "target_column_name": "MoneyFarm_FTDA",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -2581,15 +2581,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "MoneyFarm_FTD_Date",
       "target_column_name": "MoneyFarm_FTD_Date",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "MoneyFarm_FTD_Date",
       "target_column_name": "MoneyFarm_FTD_Date",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -2679,15 +2679,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "MoneyFarm_FTD_DateID",
       "target_column_name": "MoneyFarm_FTD_DateID",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "MoneyFarm_FTD_DateID",
       "target_column_name": "MoneyFarm_FTD_DateID",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -2777,15 +2777,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "Options_FTDA",
       "target_column_name": "Options_FTDA",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "Options_FTDA",
       "target_column_name": "Options_FTDA",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -2875,15 +2875,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "Options_FTD_Date",
       "target_column_name": "Options_FTD_Date",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "Options_FTD_Date",
       "target_column_name": "Options_FTD_Date",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -2973,15 +2973,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "Options_FTD_DateID",
       "target_column_name": "Options_FTD_DateID",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "Options_FTD_DateID",
       "target_column_name": "Options_FTD_DateID",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -3065,7 +3065,7 @@
       "source_column_name": null,
       "target_column_name": "OriginalRowCount",
       "entity_type": "JOB",
-      "event_count": 54
+      "event_count": 56
     },
     {
       "source_table_full_name": null,
@@ -3148,15 +3148,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "Portfolio_Only",
       "target_column_name": "Portfolio_Only",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "Portfolio_Only",
       "target_column_name": "Portfolio_Only",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -3239,15 +3239,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "RealCID",
       "target_column_name": "RealCID",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "RealCID",
       "target_column_name": "RealCID",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -3281,15 +3281,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "TP_External_FTDA",
       "target_column_name": "TP_External_FTDA",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "TP_External_FTDA",
       "target_column_name": "TP_External_FTDA",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -3379,15 +3379,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "TP_FTDA",
       "target_column_name": "TP_FTDA",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "TP_FTDA",
       "target_column_name": "TP_FTDA",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -3477,15 +3477,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "TP_FTD_Date",
       "target_column_name": "TP_FTD_Date",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "TP_FTD_Date",
       "target_column_name": "TP_FTD_Date",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -3575,15 +3575,15 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "TP_FTD_DateID",
       "target_column_name": "TP_FTD_DateID",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "TP_FTD_DateID",
       "target_column_name": "TP_FTD_DateID",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -3667,7 +3667,7 @@
       "source_column_name": null,
       "target_column_name": "ToDateID",
       "entity_type": "JOB",
-      "event_count": 108
+      "event_count": 112
     },
     {
       "source_table_full_name": null,
@@ -3765,7 +3765,7 @@
       "source_column_name": null,
       "target_column_name": "UpdateDate",
       "entity_type": "JOB",
-      "event_count": 19
+      "event_count": 21
     },
     {
       "source_table_full_name": null,
@@ -3813,71 +3813,71 @@
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "IsFunded",
       "target_column_name": "WinBackDateID_InRange",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "prev_IsWinBack",
       "target_column_name": "WinBackDateID_InRange",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
-    },
-    {
-      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
-      "source_column_name": "prev_IsFunded",
-      "target_column_name": "WinBackDateID_InRange",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
-    },
-    {
-      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
-      "source_column_name": "DateID",
-      "target_column_name": "WinBackDateID_InRange",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "prev_WinBackDateID",
       "target_column_name": "WinBackDateID_InRange",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
+      "source_column_name": "prev_IsFunded",
+      "target_column_name": "WinBackDateID_InRange",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
+      "source_column_name": "DateID",
+      "target_column_name": "WinBackDateID_InRange",
+      "entity_type": "JOB",
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "IsFunded",
       "target_column_name": "WinBackDateID_InRange",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "prev_IsWinBack",
       "target_column_name": "WinBackDateID_InRange",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "prev_IsFunded",
       "target_column_name": "WinBackDateID_InRange",
-      "entity_type": "JOB",
-      "event_count": 19
-    },
-    {
-      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
-      "source_column_name": "prev_WinBackDateID",
-      "target_column_name": "WinBackDateID_InRange",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
       "source_column_name": "DateID",
       "target_column_name": "WinBackDateID_InRange",
-      "entity_type": "JOB",
-      "event_count": 19
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.bi_output._tmp_scd_merge_source",
+      "source_column_name": "prev_WinBackDateID",
+      "target_column_name": "WinBackDateID_InRange",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -4034,5 +4034,5 @@
       "event_count": 1
     }
   ],
-  "generated_at": "2026-05-18T08:03:56Z"
+  "generated_at": "2026-05-19T12:07:01Z"
 }

@@ -1,0 +1,528 @@
+{
+  "object_fqn": "main.bi_output.vg_positions_open_closed_iban_tp",
+  "generated_at": "2026-05-19T15:01:28Z",
+  "formula_count": 47,
+  "formulas": [
+    {
+      "column": "PositionID",
+      "formula": "PositionID, CID, InstrumentID, OpenDateID, CloseDateID, PlatformTypeID, Amount, Volume, NetProfit, Commission, Leverage, RegulationIDOnOpen, UpdateDate",
+      "expression_raw": "a.PositionID, a.CID, a.InstrumentID, a.OpenDateID, a.CloseDateID, a.PlatformTypeID, a.Amount, a.Volume, a.NetProfit, a.Commission, a.Leverage, a.RegulationIDOnOpen, a.UpdateDate AS PositionUpdateDate",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "CID",
+      "formula": "PositionID, CID, InstrumentID, OpenDateID, CloseDateID, PlatformTypeID, Amount, Volume, NetProfit, Commission, Leverage, RegulationIDOnOpen, UpdateDate",
+      "expression_raw": "a.PositionID, a.CID, a.InstrumentID, a.OpenDateID, a.CloseDateID, a.PlatformTypeID, a.Amount, a.Volume, a.NetProfit, a.Commission, a.Leverage, a.RegulationIDOnOpen, a.UpdateDate AS PositionUpdateDate",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentID",
+      "formula": "PositionID, CID, InstrumentID, OpenDateID, CloseDateID, PlatformTypeID, Amount, Volume, NetProfit, Commission, Leverage, RegulationIDOnOpen, UpdateDate",
+      "expression_raw": "a.PositionID, a.CID, a.InstrumentID, a.OpenDateID, a.CloseDateID, a.PlatformTypeID, a.Amount, a.Volume, a.NetProfit, a.Commission, a.Leverage, a.RegulationIDOnOpen, a.UpdateDate AS PositionUpdateDate",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "OpenDateID",
+      "formula": "PositionID, CID, InstrumentID, OpenDateID, CloseDateID, PlatformTypeID, Amount, Volume, NetProfit, Commission, Leverage, RegulationIDOnOpen, UpdateDate",
+      "expression_raw": "a.PositionID, a.CID, a.InstrumentID, a.OpenDateID, a.CloseDateID, a.PlatformTypeID, a.Amount, a.Volume, a.NetProfit, a.Commission, a.Leverage, a.RegulationIDOnOpen, a.UpdateDate AS PositionUpdateDate",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "CloseDateID",
+      "formula": "PositionID, CID, InstrumentID, OpenDateID, CloseDateID, PlatformTypeID, Amount, Volume, NetProfit, Commission, Leverage, RegulationIDOnOpen, UpdateDate",
+      "expression_raw": "a.PositionID, a.CID, a.InstrumentID, a.OpenDateID, a.CloseDateID, a.PlatformTypeID, a.Amount, a.Volume, a.NetProfit, a.Commission, a.Leverage, a.RegulationIDOnOpen, a.UpdateDate AS PositionUpdateDate",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "PlatformTypeID",
+      "formula": "PositionID, CID, InstrumentID, OpenDateID, CloseDateID, PlatformTypeID, Amount, Volume, NetProfit, Commission, Leverage, RegulationIDOnOpen, UpdateDate",
+      "expression_raw": "a.PositionID, a.CID, a.InstrumentID, a.OpenDateID, a.CloseDateID, a.PlatformTypeID, a.Amount, a.Volume, a.NetProfit, a.Commission, a.Leverage, a.RegulationIDOnOpen, a.UpdateDate AS PositionUpdateDate",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "Amount",
+      "formula": "PositionID, CID, InstrumentID, OpenDateID, CloseDateID, PlatformTypeID, Amount, Volume, NetProfit, Commission, Leverage, RegulationIDOnOpen, UpdateDate",
+      "expression_raw": "a.PositionID, a.CID, a.InstrumentID, a.OpenDateID, a.CloseDateID, a.PlatformTypeID, a.Amount, a.Volume, a.NetProfit, a.Commission, a.Leverage, a.RegulationIDOnOpen, a.UpdateDate AS PositionUpdateDate",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "Volume",
+      "formula": "PositionID, CID, InstrumentID, OpenDateID, CloseDateID, PlatformTypeID, Amount, Volume, NetProfit, Commission, Leverage, RegulationIDOnOpen, UpdateDate",
+      "expression_raw": "a.PositionID, a.CID, a.InstrumentID, a.OpenDateID, a.CloseDateID, a.PlatformTypeID, a.Amount, a.Volume, a.NetProfit, a.Commission, a.Leverage, a.RegulationIDOnOpen, a.UpdateDate AS PositionUpdateDate",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "NetProfit",
+      "formula": "PositionID, CID, InstrumentID, OpenDateID, CloseDateID, PlatformTypeID, Amount, Volume, NetProfit, Commission, Leverage, RegulationIDOnOpen, UpdateDate",
+      "expression_raw": "a.PositionID, a.CID, a.InstrumentID, a.OpenDateID, a.CloseDateID, a.PlatformTypeID, a.Amount, a.Volume, a.NetProfit, a.Commission, a.Leverage, a.RegulationIDOnOpen, a.UpdateDate AS PositionUpdateDate",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "Commission",
+      "formula": "PositionID, CID, InstrumentID, OpenDateID, CloseDateID, PlatformTypeID, Amount, Volume, NetProfit, Commission, Leverage, RegulationIDOnOpen, UpdateDate",
+      "expression_raw": "a.PositionID, a.CID, a.InstrumentID, a.OpenDateID, a.CloseDateID, a.PlatformTypeID, a.Amount, a.Volume, a.NetProfit, a.Commission, a.Leverage, a.RegulationIDOnOpen, a.UpdateDate AS PositionUpdateDate",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "Leverage",
+      "formula": "PositionID, CID, InstrumentID, OpenDateID, CloseDateID, PlatformTypeID, Amount, Volume, NetProfit, Commission, Leverage, RegulationIDOnOpen, UpdateDate",
+      "expression_raw": "a.PositionID, a.CID, a.InstrumentID, a.OpenDateID, a.CloseDateID, a.PlatformTypeID, a.Amount, a.Volume, a.NetProfit, a.Commission, a.Leverage, a.RegulationIDOnOpen, a.UpdateDate AS PositionUpdateDate",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationIDOnOpen",
+      "formula": "PositionID, CID, InstrumentID, OpenDateID, CloseDateID, PlatformTypeID, Amount, Volume, NetProfit, Commission, Leverage, RegulationIDOnOpen, UpdateDate",
+      "expression_raw": "a.PositionID, a.CID, a.InstrumentID, a.OpenDateID, a.CloseDateID, a.PlatformTypeID, a.Amount, a.Volume, a.NetProfit, a.Commission, a.Leverage, a.RegulationIDOnOpen, a.UpdateDate AS PositionUpdateDate",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "PositionUpdateDate",
+      "formula": "PositionID, CID, InstrumentID, OpenDateID, CloseDateID, PlatformTypeID, Amount, Volume, NetProfit, Commission, Leverage, RegulationIDOnOpen, UpdateDate",
+      "expression_raw": "a.PositionID, a.CID, a.InstrumentID, a.OpenDateID, a.CloseDateID, a.PlatformTypeID, a.Amount, a.Volume, a.NetProfit, a.Commission, a.Leverage, a.RegulationIDOnOpen, a.UpdateDate AS PositionUpdateDate",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "CountryID",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "LanguageID",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerLevelID",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusID",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "AccountTypeID",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationID",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "RiskStatusID",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "RiskClassificationID",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "IsValidCustomer",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusID",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevelID",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "RegionID",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "IsDepositor",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "FirstDepositDate",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManagerID",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "PremiumAccount",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "AffiliateID",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "CampaignID",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "SubChannelID",
+      "formula": "RealCID, CountryID, LanguageID, PlayerLevelID, AccountStatusID, AccountTypeID, RegulationID, RiskStatusID, RiskClassificationID, IsValidCustomer, PlayerStatusID, Ve…",
+      "expression_raw": "dc.RealCID, dc.CountryID, dc.LanguageID, dc.PlayerLevelID, dc.AccountStatusID, dc.AccountTypeID, dc.RegulationID, dc.RiskStatusID, dc.RiskClassificationID, dc.IsValidCustomer, dc.PlayerStatusID, dc.Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "LabelID",
+      "formula": "LabelID, RegisteredReal, RegisteredDemo, ReferralID, UpdateDate",
+      "expression_raw": "dc.LabelID,  dc.RegisteredReal, dc.RegisteredDemo, dc.ReferralID, dc.UpdateDate AS CustomerUpdateDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "RegisteredReal",
+      "formula": "LabelID, RegisteredReal, RegisteredDemo, ReferralID, UpdateDate",
+      "expression_raw": "dc.LabelID,  dc.RegisteredReal, dc.RegisteredDemo, dc.ReferralID, dc.UpdateDate AS CustomerUpdateDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "RegisteredDemo",
+      "formula": "LabelID, RegisteredReal, RegisteredDemo, ReferralID, UpdateDate",
+      "expression_raw": "dc.LabelID,  dc.RegisteredReal, dc.RegisteredDemo, dc.ReferralID, dc.UpdateDate AS CustomerUpdateDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "ReferralID",
+      "formula": "LabelID, RegisteredReal, RegisteredDemo, ReferralID, UpdateDate",
+      "expression_raw": "dc.LabelID,  dc.RegisteredReal, dc.RegisteredDemo, dc.ReferralID, dc.UpdateDate AS CustomerUpdateDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "CustomerUpdateDate",
+      "formula": "LabelID, RegisteredReal, RegisteredDemo, ReferralID, UpdateDate",
+      "expression_raw": "dc.LabelID,  dc.RegisteredReal, dc.RegisteredDemo, dc.ReferralID, dc.UpdateDate AS CustomerUpdateDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentType",
+      "formula": "InstrumentType, SellCurrency, InstrumentDisplayName",
+      "expression_raw": "i.InstrumentType, i.SellCurrency, i.InstrumentDisplayName",
+      "inputs": [
+        "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "SellCurrency",
+      "formula": "InstrumentType, SellCurrency, InstrumentDisplayName",
+      "expression_raw": "i.InstrumentType, i.SellCurrency, i.InstrumentDisplayName",
+      "inputs": [
+        "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentDisplayName",
+      "formula": "InstrumentType, SellCurrency, InstrumentDisplayName",
+      "expression_raw": "i.InstrumentType, i.SellCurrency, i.InstrumentDisplayName",
+      "inputs": [
+        "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "IsCloseToIBan",
+      "formula": "CASE WHEN PositionID IS NOT NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN b.PositionID IS NOT NULL THEN 1 ELSE 0 END AS IsCloseToIBan",
+      "inputs": [
+        "main.bi_output.BI_OUTPUT_Finance_Tables_bi_db_positions_closed_to_iban_parquet"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "IsOpenFromIBan",
+      "formula": "CASE WHEN PositionID IS NOT NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN c.PositionID IS NOT NULL THEN 1 ELSE 0 END AS IsOpenFromIBan",
+      "inputs": [
+        "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "AccountCreateDate",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "transform_kind": "join_enriched",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "AccountCreateDate"
+    },
+    {
+      "column": "AccountSubProgram",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "transform_kind": "join_enriched",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "AccountSubProgram"
+    },
+    {
+      "column": "AccountSubProgramID",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "transform_kind": "join_enriched",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "AccountSubProgramID"
+    },
+    {
+      "column": "IsEmoneyCustomer",
+      "formula": "AccountCreateDate, AccountSubProgram, AccountSubProgramID, case when CID is not null then 1 else 0 end",
+      "expression_raw": "e.AccountCreateDate, e.AccountSubProgram, e.AccountSubProgramID, case when e.CID is not null then 1 else 0 end as IsEmoneyCustomer",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_positions_open_closed_iban_tp.sql"
+}

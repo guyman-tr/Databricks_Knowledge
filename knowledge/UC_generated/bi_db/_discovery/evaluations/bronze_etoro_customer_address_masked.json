@@ -1,0 +1,116 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_customer_address_masked",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:31Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "GCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.Address.md",
+      "upstream_quote": "Global Customer ID - part of composite PK. Identifies the customer globally across eToro systems. References the same GC",
+      "wiki_quote": "Global Customer ID - part of composite PK. Identifies the customer globally across eToro systems. References the same GC",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AddressTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.Address.md",
+      "upstream_quote": "Address classification: 1=Mailing (only current type). FK to Dictionary.AddressType. Designed for future expansion (bill",
+      "wiki_quote": "Address classification: 1=Mailing (only current type). FK to Dictionary.AddressType. Designed for future expansion (bill",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.Address.md",
+      "upstream_quote": "Country of the address. FK to Dictionary.Country. Always populated - the minimum required field for tax and KYC purposes",
+      "wiki_quote": "Country of the address. FK to Dictionary.Country. Always populated - the minimum required field for tax and KYC purposes",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Address",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.Address.md",
+      "upstream_quote": "Street address line (street name and number). NULL in many records, indicating partial submissions where only Zip was re",
+      "wiki_quote": "Street address line (street name and number). NULL in many records, indicating partial submissions where only Zip was re",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "City",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.Address.md",
+      "upstream_quote": "City/locality of the address. NULL in many records — optional depending on country-specific KYC requirements.",
+      "wiki_quote": "City/locality of the address. NULL in many records — optional depending on country-specific KYC requirements (Tier 1 — i",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Zip",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.Address.md",
+      "upstream_quote": "Postal/ZIP code. The most frequently populated address field — used for country-level verification, mailing zone determi",
+      "wiki_quote": "Postal/ZIP code. The most frequently populated address field — used for country-level verification, mailing zone determi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BuildingNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.Address.md",
+      "upstream_quote": "Building or apartment number, separate from the street address line. NULL in most records. Supports address formats (com",
+      "wiki_quote": "Building or apartment number, separate from the street address line. NULL in most records. Supports address formats (com",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SubRegionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.Address.md",
+      "upstream_quote": "Sub-regional geographic division (e.g., US state, Canadian province). FK to Dictionary.SubRegion. NULL for most records;",
+      "wiki_quote": "Sub-regional geographic division (e.g., US state, Canadian province). FK to Dictionary.SubRegion. NULL for most records;",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BeginTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.Address.md",
+      "upstream_quote": "System-generated temporal period start. Set automatically by SQL Server when the row is created or when a previous versi",
+      "wiki_quote": "System-generated temporal period start. Set automatically by SQL Server when the row is created or when a previous versi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.Address.md",
+      "upstream_quote": "System-generated temporal period end. Value of '9999-12-31 23:59:59.9999999' indicates the current active version. SQL S",
+      "wiki_quote": "System-generated temporal period end. Value of '9999-12-31 23:59:59.9999999' indicates the current active version. SQL S",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RegionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.Address.md",
+      "upstream_quote": "IP-based geographic region. FK to Dictionary.RegionByIP (RegionByIP_ID). Optionally populated to correlate declared addr",
+      "wiki_quote": "IP-based geographic region. FK to Dictionary.RegionByIP (RegionByIP_ID). Optionally populated to correlate declared addr",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 11,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 11 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

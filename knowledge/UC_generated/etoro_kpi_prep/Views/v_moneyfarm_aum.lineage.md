@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_moneyfarm_aum.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_moneyfarm_aum.json` (rows: 7, mismatches: 7) |
 | **Primary upstream** | `main.money_farm.silver_moneyfarm_etoro_mf_aum` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 

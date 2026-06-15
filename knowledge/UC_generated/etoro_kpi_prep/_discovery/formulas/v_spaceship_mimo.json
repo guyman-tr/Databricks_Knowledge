@@ -1,0 +1,213 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_spaceship_mimo",
+  "generated_at": "2026-05-18T16:27:37Z",
+  "formula_count": 15,
+  "formulas": [
+    {
+      "column": "date",
+      "formula": "CAST(paid_date AS DATE)",
+      "expression_raw": "CAST(st.paid_date AS DATE)                                AS date",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_transactions"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L32-L32",
+      "scope": "super_mimo"
+    },
+    {
+      "column": "date_id",
+      "formula": "CAST(DATE_FORMAT(date, 'yyyyMMdd') AS INT)",
+      "expression_raw": "CAST(DATE_FORMAT(m.date, 'yyyyMMdd') AS INT)               AS date_id",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_transactions",
+        "main.spaceship.bronze_spaceship_metabase_user_beta",
+        "main.spaceship.bronze_spaceship_analytics_fct_money_transactions",
+        "main.spaceship.bronze_spaceship_metabase_contact",
+        "main.spaceship.spaceship_metabase_voyager_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_nova_transactions"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L268-L268",
+      "scope": "main"
+    },
+    {
+      "column": "product",
+      "formula": "'Super'",
+      "expression_raw": "'Super'                                                   AS product",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L30-L30",
+      "scope": "super_mimo"
+    },
+    {
+      "column": "is_internal_transfer",
+      "formula": "FALSE",
+      "expression_raw": "FALSE                                                     AS is_internal_transfer",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L31-L31",
+      "scope": "super_mimo"
+    },
+    {
+      "column": "user_id",
+      "formula": "COALESCE(user_id, member_id)",
+      "expression_raw": "COALESCE(ua.user_id, st.member_id)                        AS user_id",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_user_beta",
+        "main.spaceship.bronze_spaceship_metabase_super_transactions"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L33-L33",
+      "scope": "super_mimo"
+    },
+    {
+      "column": "gcid",
+      "formula": "gcid",
+      "expression_raw": "sa.gcid",
+      "inputs": [
+        "main.bi_db.bronze_sub_accounts_accounts"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L250-L250",
+      "scope": "user_gcid"
+    },
+    {
+      "column": "total_deposits_aud",
+      "formula": "total_deposits",
+      "expression_raw": "m.total_deposits                                            AS total_deposits_aud",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_transactions",
+        "main.spaceship.bronze_spaceship_metabase_user_beta",
+        "main.spaceship.bronze_spaceship_analytics_fct_money_transactions",
+        "main.spaceship.bronze_spaceship_metabase_contact",
+        "main.spaceship.spaceship_metabase_voyager_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_nova_transactions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L273-L273",
+      "scope": "main"
+    },
+    {
+      "column": "total_withdrawals_aud",
+      "formula": "total_withdrawals",
+      "expression_raw": "m.total_withdrawals                                         AS total_withdrawals_aud",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_transactions",
+        "main.spaceship.bronze_spaceship_metabase_user_beta",
+        "main.spaceship.bronze_spaceship_analytics_fct_money_transactions",
+        "main.spaceship.bronze_spaceship_metabase_contact",
+        "main.spaceship.spaceship_metabase_voyager_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_nova_transactions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L274-L274",
+      "scope": "main"
+    },
+    {
+      "column": "net_flow_aud",
+      "formula": "net_flow",
+      "expression_raw": "m.net_flow                                                  AS net_flow_aud",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_transactions",
+        "main.spaceship.bronze_spaceship_metabase_user_beta",
+        "main.spaceship.bronze_spaceship_analytics_fct_money_transactions",
+        "main.spaceship.bronze_spaceship_metabase_contact",
+        "main.spaceship.spaceship_metabase_voyager_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_nova_transactions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L275-L275",
+      "scope": "main"
+    },
+    {
+      "column": "total_deposits_usd",
+      "formula": "total_deposits * COALESCE(aud_to_usd_rate, 0)",
+      "expression_raw": "m.total_deposits    * COALESCE(r.aud_to_usd_rate, 0)       AS total_deposits_usd",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_transactions",
+        "main.spaceship.bronze_spaceship_metabase_user_beta",
+        "main.spaceship.bronze_spaceship_analytics_fct_money_transactions",
+        "main.spaceship.bronze_spaceship_metabase_contact",
+        "main.spaceship.spaceship_metabase_voyager_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_nova_transactions",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L276-L276",
+      "scope": "main"
+    },
+    {
+      "column": "total_withdrawals_usd",
+      "formula": "total_withdrawals * COALESCE(aud_to_usd_rate, 0)",
+      "expression_raw": "m.total_withdrawals * COALESCE(r.aud_to_usd_rate, 0)       AS total_withdrawals_usd",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_transactions",
+        "main.spaceship.bronze_spaceship_metabase_user_beta",
+        "main.spaceship.bronze_spaceship_analytics_fct_money_transactions",
+        "main.spaceship.bronze_spaceship_metabase_contact",
+        "main.spaceship.spaceship_metabase_voyager_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_nova_transactions",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L277-L277",
+      "scope": "main"
+    },
+    {
+      "column": "net_flow_usd",
+      "formula": "net_flow * COALESCE(aud_to_usd_rate, 0)",
+      "expression_raw": "m.net_flow          * COALESCE(r.aud_to_usd_rate, 0)       AS net_flow_usd",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_transactions",
+        "main.spaceship.bronze_spaceship_metabase_user_beta",
+        "main.spaceship.bronze_spaceship_analytics_fct_money_transactions",
+        "main.spaceship.bronze_spaceship_metabase_contact",
+        "main.spaceship.spaceship_metabase_voyager_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_nova_transactions",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L278-L278",
+      "scope": "main"
+    },
+    {
+      "column": "count_deposits",
+      "formula": "SUM(is_deposit)",
+      "expression_raw": "SUM(is_deposit)                                           AS count_deposits",
+      "inputs": [],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L177-L177",
+      "scope": "mimo_aggregated"
+    },
+    {
+      "column": "count_withdrawals",
+      "formula": "SUM(is_withdrawal)",
+      "expression_raw": "SUM(is_withdrawal)                                        AS count_withdrawals",
+      "inputs": [],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L178-L178",
+      "scope": "mimo_aggregated"
+    },
+    {
+      "column": "is_ftd",
+      "formula": "CASE WHEN _is_orphan_ftd THEN TRUE WHEN date = first_deposit_date AND total_deposits > 0 THEN TRUE ELSE FALSE END AS is_ft…",
+      "expression_raw": "CASE\n    WHEN m._is_orphan_ftd THEN TRUE\n    WHEN m.date = f.first_deposit_date AND m.total_deposits > 0 THEN TRUE\n    ELSE FALSE\n  END                                                         AS is_ft…",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_transactions",
+        "main.spaceship.bronze_spaceship_metabase_user_beta",
+        "main.spaceship.bronze_spaceship_analytics_fct_money_transactions",
+        "main.spaceship.bronze_spaceship_metabase_contact",
+        "main.spaceship.spaceship_metabase_voyager_user_balances",
+        "main.spaceship.bronze_spaceship_metabase_nova_transactions"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L281-L285",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_spaceship_mimo.sql"
+}

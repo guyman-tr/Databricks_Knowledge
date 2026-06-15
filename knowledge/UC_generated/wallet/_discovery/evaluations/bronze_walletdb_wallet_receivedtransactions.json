@@ -1,0 +1,151 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_receivedtransactions",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:22Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ReceivedTransactions.md",
+      "upstream_quote": "Auto-incrementing primary key. FK target for Wallet.ReceivedTransactionStatuses.",
+      "wiki_quote": "Auto-incrementing primary key. FK target for Wallet.ReceivedTransactionStatuses (Tier 1 — inherited from WalletDB.Wallet",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ReceivedTransactions.md",
+      "upstream_quote": "Timestamp when this received transaction was detected and recorded by the system.",
+      "wiki_quote": "Timestamp when this received transaction was detected and recorded by the system (Tier 1 — inherited from WalletDB.Walle",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ReceivedTransactions.md",
+      "upstream_quote": "The eToro wallet that received the funds. FK to Wallet.WalletPool.WalletId. Used to identify the owning customer.",
+      "wiki_quote": "The eToro wallet that received the funds. FK to Wallet.WalletPool.WalletId. Used to identify the owning customer (Tier 1",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SenderAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ReceivedTransactions.md",
+      "upstream_quote": "The blockchain address that sent the funds. NULL when the sender cannot be determined (e.g., coinbase transactions). Use",
+      "wiki_quote": "The blockchain address that sent the funds. NULL when the sender cannot be determined (e.g., coinbase transactions). Use",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ReceiverAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ReceivedTransactions.md",
+      "upstream_quote": "The specific blockchain address within the wallet that received the funds. A wallet may have multiple addresses.",
+      "wiki_quote": "The specific blockchain address within the wallet that received the funds. A wallet may have multiple addresses (Tier 1 ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ReceivedTransactions.md",
+      "upstream_quote": "Amount of crypto received in native units. NULL for zero-value transactions (e.g., token approvals).",
+      "wiki_quote": "Amount of crypto received in native units. NULL for zero-value transactions (e.g., token approvals) (Tier 1 — inherited ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ReceivedTransactions.md",
+      "upstream_quote": "Network fee associated with this incoming transaction. Usually the sender's fee, recorded for reference.",
+      "wiki_quote": "Network fee associated with this incoming transaction. Usually the sender's fee, recorded for reference (Tier 1 — inheri",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CorrelationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ReceivedTransactions.md",
+      "upstream_quote": "Links to the parent request in Wallet.Requests.CorrelationId for system-initiated receives (redemptions, conversions). N",
+      "wiki_quote": "Links to the parent request in Wallet.Requests.CorrelationId for system-initiated receives (redemptions, conversions). N",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainTransactionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ReceivedTransactions.md",
+      "upstream_quote": "On-chain transaction hash. Format varies by blockchain (0x-prefixed hex for ETH, base58 for SOL, uppercase hex for XRP).",
+      "wiki_quote": "On-chain transaction hash. Format varies by blockchain (0x-prefixed hex for ETH, base58 for SOL, uppercase hex for XRP).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainTransactionDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ReceivedTransactions.md",
+      "upstream_quote": "Timestamp of the transaction on the blockchain itself (block time). May differ from Occurred which is when the system de",
+      "wiki_quote": "Timestamp of the transaction on the blockchain itself (block time). May differ from Occurred which is when the system de",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ReceivedTransactions.md",
+      "upstream_quote": "The cryptocurrency received. FK to Wallet.CryptoTypes.CryptoID.",
+      "wiki_quote": "The cryptocurrency received. FK to Wallet.CryptoTypes.CryptoID (Tier 1 — inherited from WalletDB.Wallet.ReceivedTransact",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ReceivedTransactionTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ReceivedTransactions.md",
+      "upstream_quote": "Business classification: 1=MoneyIn, 2=Redeem, 3=Funding, 4=ConversionFromUser, 5=ConversionFromEtoro, 6=Payment, 7=Redee",
+      "wiki_quote": "Business classification: 1=MoneyIn, 2=Redeem, 3=Funding, 4=ConversionFromUser, 5=ConversionFromEtoro, 6=Payment, 7=Redee",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "NormalizedSenderAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ReceivedTransactions.md",
+      "upstream_quote": "Computed PERSISTED column stripping protocol prefix and query parameters from SenderAddress for consistent matching.",
+      "wiki_quote": "Computed PERSISTED column stripping protocol prefix and query parameters from SenderAddress for consistent matching (Tie",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "NormalizedReceiverAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ReceivedTransactions.md",
+      "upstream_quote": "Computed PERSISTED column stripping protocol prefix and query parameters from ReceiverAddress for consistent matching.",
+      "wiki_quote": "Computed PERSISTED column stripping protocol prefix and query parameters from ReceiverAddress for consistent matching (T",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProviderTransactionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ReceivedTransactions.md",
+      "upstream_quote": "Transaction identifier assigned by the custody provider (BitGo/CUG). May differ from the blockchain hash. Used for provi",
+      "wiki_quote": "Transaction identifier assigned by the custody provider (BitGo/CUG). May differ from the blockchain hash. Used for provi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ReceiveRequestCorrelationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ReceivedTransactions.md",
+      "upstream_quote": "Links to a ReceiveTransaction request (RequestTypeId=8) when the incoming transaction is processed as a formal request. ",
+      "wiki_quote": "Links to a ReceiveTransaction request (RequestTypeId=8) when the incoming transaction is processed as a formal request. ",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 16,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 16 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

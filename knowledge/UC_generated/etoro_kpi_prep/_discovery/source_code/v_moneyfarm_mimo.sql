@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_moneyfarm_mimo
--- Captured: 2026-05-18T08:07:03Z
+-- Captured: 2026-05-19T12:14:41Z
 -- ==========================================================================
 
 WITH raw_events AS (

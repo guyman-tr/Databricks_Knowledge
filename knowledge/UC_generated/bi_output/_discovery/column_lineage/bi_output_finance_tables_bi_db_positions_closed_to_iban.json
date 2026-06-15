@@ -1,0 +1,174 @@
+{
+  "object": "main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban",
+  "rows": [
+    {
+      "source_table_full_name": "main.billing.bronze_etoro_billing_vwithdrawtofunding",
+      "source_column_name": "BaseExchangeRate",
+      "target_column_name": "BaseExchangeRate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.billing.bronze_etoro_billing_withdraw",
+      "source_column_name": "CashoutStatusID",
+      "target_column_name": "CashoutStatusID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "CloseDate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "EndForex_USDConversionRate",
+      "target_column_name": "EndForex_USDConversionRate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.billing.bronze_etoro_billing_vwithdrawtofunding",
+      "source_column_name": "ExchangeFee",
+      "target_column_name": "ExchangeFee",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.billing.bronze_etoro_billing_vwithdrawtofunding",
+      "source_column_name": "ExchangeFeeInUSD",
+      "target_column_name": "ExchangeFeeInUSD",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.billing.bronze_etoro_billing_vwithdrawtofunding",
+      "source_column_name": "ExchangeRate",
+      "target_column_name": "ExchangeRate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "OpenDate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_iban_trade_ordertoexternaloperation",
+      "source_column_name": "OrderID",
+      "target_column_name": "OrderID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "PositionID",
+      "target_column_name": "PositionID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
+      "source_column_name": "Abbreviation",
+      "target_column_name": "ProcessCurrency",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.billing.bronze_etoro_billing_vwithdrawtofunding",
+      "source_column_name": "ProcessCurrencyID",
+      "target_column_name": "ProcessCurrencyID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.billing.bronze_etoro_billing_vwithdrawtofunding",
+      "source_column_name": "RefundAmountInDepositCurrency",
+      "target_column_name": "RefundAmountInDepositCurrency",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "SellCurrency",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.billing.bronze_etoro_billing_vwithdrawtofunding",
+      "source_column_name": "Amount",
+      "target_column_name": "WithdrawAmount",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.billing.bronze_etoro_billing_withdraw",
+      "source_column_name": "WithdrawID",
+      "target_column_name": "WithdrawID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.billing.bronze_etoro_billing_vwithdrawtofunding",
+      "source_column_name": "ModificationDate",
+      "target_column_name": "WithdrawToFundingDate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.billing.bronze_etoro_billing_vwithdrawtofunding",
+      "source_column_name": "ID",
+      "target_column_name": "WithdrawToFundingID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.billing.bronze_etoro_billing_withdraw",
+      "source_column_name": "cid",
+      "target_column_name": "cid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.billing.bronze_etoro_billing_withdraw",
+      "source_column_name": "exTransactionID",
+      "target_column_name": "exTransactionID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Amount",
+      "target_column_name": "position_proceeds",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "NetProfit",
+      "target_column_name": "position_proceeds",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.billing.bronze_etoro_billing_withdraw",
+      "source_column_name": "withdrawtypeID",
+      "target_column_name": "withdrawtypeID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    }
+  ],
+  "generated_at": "2026-05-19T14:26:41Z"
+}

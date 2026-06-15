@@ -1,0 +1,3380 @@
+{
+  "schema": "bi_output",
+  "catalog": "main",
+  "generated_at": "2026-05-19T15:01:07Z",
+  "lineage_lookback_days": 90,
+  "objects": [
+    {
+      "object": "main.bi_output.bi_ouput_v_dim_instrumenttype",
+      "name": "bi_ouput_v_dim_instrumenttype",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_ouput_v_dim_instrumenttype.json",
+      "column_lineage_row_count": 11,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_ouput_v_dim_instrumenttype.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_ouput_vg_etoro_emoney",
+      "name": "bi_ouput_vg_etoro_emoney",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_ouput_vg_etoro_emoney.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_ouput_vg_etoro_emoney.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_compliance_kycscreeninglimitation",
+      "name": "bi_output_compliance_kycscreeninglimitation",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_compliance_kycscreeninglimitation.json",
+      "column_lineage_row_count": 13,
+      "writers": [
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "982b26eb-dea3-4ee6-847b-81a6b3aa146d",
+          "event_count_lookback": 1157,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_compliance_kycscreeninglimitation.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_compliance_mas_daily_client_metrics",
+      "name": "bi_output_customer_compliance_mas_daily_client_metrics",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_compliance_mas_daily_client_metrics.json",
+      "column_lineage_row_count": 142,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "553708992053298",
+          "event_count_lookback": 12,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "121903962414337",
+          "event_count_lookback": 12,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "365636647943809",
+          "event_count_lookback": 12,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "513799814970178",
+          "event_count_lookback": 12,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "931042621395701",
+          "event_count_lookback": 12,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_compliance_mas_daily_client_metrics.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_compliance_mas_population",
+      "name": "bi_output_customer_compliance_mas_population",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_compliance_mas_population.json",
+      "column_lineage_row_count": 101,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "452829038886114",
+          "event_count_lookback": 25,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1049293600177185",
+          "event_count_lookback": 25,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "43616668268882",
+          "event_count_lookback": 25,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "523145378039789",
+          "event_count_lookback": 25,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "839572198440513",
+          "event_count_lookback": 25,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_compliance_mas_population.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_compliance_uk_social_activity_monitoring",
+      "name": "bi_output_customer_compliance_uk_social_activity_monitoring",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_compliance_uk_social_activity_monitoring.json",
+      "column_lineage_row_count": 13,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "374814150093854",
+          "event_count_lookback": 3,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "810925114521363",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "938227598135468",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1005913687984284",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "392817602714607",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_compliance_uk_social_activity_monitoring.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_compliance_uk_social_activity_monitoring_m",
+      "name": "bi_output_customer_compliance_uk_social_activity_monitoring_m",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_compliance_uk_social_activity_monitoring_m.json",
+      "column_lineage_row_count": 10,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "323435626616999",
+          "event_count_lookback": 5,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "492964131788276",
+          "event_count_lookback": 5,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "641564879231393",
+          "event_count_lookback": 5,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "77921288655923",
+          "event_count_lookback": 5,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "492768399853985",
+          "event_count_lookback": 5,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_compliance_uk_social_activity_monitoring_m.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "name": "bi_output_customer_customer_facing_agent_engagement",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_facing_agent_engagement.json",
+      "column_lineage_row_count": 29,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "110831025821996",
+          "event_count_lookback": 7,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "542741219872423",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "534967818664429",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "69936325008235",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "422076944607076",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_customer_facing_agent_engagement.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_customer_facing_club_club_equity",
+      "name": "bi_output_customer_customer_facing_club_club_equity",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_facing_club_club_equity.json",
+      "column_lineage_row_count": 88,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "783342669166219",
+          "event_count_lookback": 9,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1017796813835243",
+          "event_count_lookback": 9,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "900509950879270",
+          "event_count_lookback": 9,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "119376001178234",
+          "event_count_lookback": 9,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "253640431463555",
+          "event_count_lookback": 9,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_customer_facing_club_club_equity.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_customer_facing_club_club_offer_eligibilty",
+      "name": "bi_output_customer_customer_facing_club_club_offer_eligibilty",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_facing_club_club_offer_eligibilty.json",
+      "column_lineage_row_count": 79,
+      "writers": [
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "1200434159941085",
+          "event_count_lookback": 12,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "525624360584016",
+          "event_count_lookback": 12,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_customer_facing_club_club_offer_eligibilty.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_customer_facing_pageviews_behaviour",
+      "name": "bi_output_customer_customer_facing_pageviews_behaviour",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_facing_pageviews_behaviour.json",
+      "column_lineage_row_count": 11,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "98393716349984",
+          "event_count_lookback": 6,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "767498751687355",
+          "event_count_lookback": 6,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1115194246640170",
+          "event_count_lookback": 6,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1092247851427176",
+          "event_count_lookback": 6,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "147790262536032",
+          "event_count_lookback": 6,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_customer_facing_pageviews_behaviour.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_customer_facing_survey",
+      "name": "bi_output_customer_customer_facing_survey",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_facing_survey.json",
+      "column_lineage_row_count": 16,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "705275531255649",
+          "event_count_lookback": 2,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1032261611884529",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1067804482238566",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "931160506542812",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "213935658623860",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_customer_facing_survey.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_customer_facing_survey_taker",
+      "name": "bi_output_customer_customer_facing_survey_taker",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_facing_survey_taker.json",
+      "column_lineage_row_count": 30,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1067804482238566",
+          "event_count_lookback": 2,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1032261611884529",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "738011865257471",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "931160506542812",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "440390444241455",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_customer_facing_survey_taker.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_customer_facing_triggers",
+      "name": "bi_output_customer_customer_facing_triggers",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_facing_triggers.json",
+      "column_lineage_row_count": 29,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "941099411255830",
+          "event_count_lookback": 10,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "548035998096434",
+          "event_count_lookback": 10,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "194501561242339",
+          "event_count_lookback": 9,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "547685931010570",
+          "event_count_lookback": 9,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "203108797970413",
+          "event_count_lookback": 8,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_customer_facing_triggers.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_customer_facing_triggers_filtered",
+      "name": "bi_output_customer_customer_facing_triggers_filtered",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_facing_triggers_filtered.json",
+      "column_lineage_row_count": 42,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1123572466349475",
+          "event_count_lookback": 12,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "703435196816309",
+          "event_count_lookback": 12,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "941111178793767",
+          "event_count_lookback": 12,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1099205354005653",
+          "event_count_lookback": 12,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "890492072529400",
+          "event_count_lookback": 12,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_customer_facing_triggers_filtered.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_customer_facing_triggers_lead_score",
+      "name": "bi_output_customer_customer_facing_triggers_lead_score",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_facing_triggers_lead_score.json",
+      "column_lineage_row_count": 23,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "251824554559438",
+          "event_count_lookback": 17,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "569767140828026",
+          "event_count_lookback": 17,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "939455828201778",
+          "event_count_lookback": 17,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "739031687300121",
+          "event_count_lookback": 17,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "267909903178263",
+          "event_count_lookback": 17,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_customer_facing_triggers_lead_score.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_customer_support_agent_user",
+      "name": "bi_output_customer_customer_support_agent_user",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_support_agent_user.json",
+      "column_lineage_row_count": 42,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "418338092021449",
+          "event_count_lookback": 81,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_customer_support_agent_user.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_customer_support_aml_handling_days",
+      "name": "bi_output_customer_customer_support_aml_handling_days",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_support_aml_handling_days.json",
+      "column_lineage_row_count": 7,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "911521582160615",
+          "event_count_lookback": 1,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "555849343656950",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "734237967276077",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "778167258896804",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "749936095890123",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_customer_support_aml_handling_days.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_customer_support_case",
+      "name": "bi_output_customer_customer_support_case",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_support_case.json",
+      "column_lineage_row_count": 114,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "553082743927082",
+          "event_count_lookback": 2,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "316761042674048",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "949227768132298",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1013765770330109",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "868884686790272",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_customer_support_case.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_customer_support_case_event",
+      "name": "bi_output_customer_customer_support_case_event",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_support_case_event.json",
+      "column_lineage_row_count": 49,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "635177630152503",
+          "event_count_lookback": 2,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "663582837398909",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1024763679658203",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "357349691239711",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "746334764557185",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_customer_support_case_event.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_customer_support_customer_engagement",
+      "name": "bi_output_customer_customer_support_customer_engagement",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_support_customer_engagement.json",
+      "column_lineage_row_count": 31,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1065771415401276",
+          "event_count_lookback": 2,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "561570059609104",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "802746391266075",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "746180077717078",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "42798092229893",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_customer_support_customer_engagement.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_customer_support_task",
+      "name": "bi_output_customer_customer_support_task",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_support_task.json",
+      "column_lineage_row_count": 36,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "454785896908590",
+          "event_count_lookback": 1,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "653716170318283",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1022911323332553",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "402345041632305",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "927849595684848",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_customer_support_task.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_external_table_isa",
+      "name": "bi_output_customer_external_table_isa",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_external_table_isa.json",
+      "column_lineage_row_count": 34,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "264788163149603",
+          "event_count_lookback": 5,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "911754404643932",
+          "event_count_lookback": 5,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "177765599221098",
+          "event_count_lookback": 5,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "402441936640766",
+          "event_count_lookback": 5,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "331483120022520",
+          "event_count_lookback": 5,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_external_table_isa.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_investment_capital_guarantee_capital_guarantee_q42024_global",
+      "name": "bi_output_customer_investment_capital_guarantee_capital_guarantee_q42024_global",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_investment_capital_guarantee_capital_guarantee_q42024_global.json",
+      "column_lineage_row_count": 195,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "467841512123679",
+          "event_count_lookback": 15,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1046247837342443",
+          "event_count_lookback": 15,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "929729319572724",
+          "event_count_lookback": 15,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "388984772940028",
+          "event_count_lookback": 15,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "339954650798635",
+          "event_count_lookback": 15,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_investment_capital_guarantee_capital_guarantee_q42024_global.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_customer_social_social_feed",
+      "name": "bi_output_customer_social_social_feed",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_social_social_feed.json",
+      "column_lineage_row_count": 78,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "46561576245848",
+          "event_count_lookback": 11,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "401599839665697",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "935151289384493",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "528561847699615",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "219299298941907",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_social_social_feed.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_deltaapp_subscription_view",
+      "name": "bi_output_deltaapp_subscription_view",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_deltaapp_subscription_view.json",
+      "column_lineage_row_count": 82,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_deltaapp_subscription_view.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_external_table_bi_db_sharelending_custodyreconciliation_external",
+      "name": "bi_output_finance_external_table_bi_db_sharelending_custodyreconciliation_external",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_external_table_bi_db_sharelending_custodyreconciliation_external.json",
+      "column_lineage_row_count": 166,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "366335424855208",
+          "event_count_lookback": 16,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "680834468518019",
+          "event_count_lookback": 16,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "984427966039068",
+          "event_count_lookback": 16,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "98178902746257",
+          "event_count_lookback": 16,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "638748149782155",
+          "event_count_lookback": 16,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_external_table_bi_db_sharelending_custodyreconciliation_external.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_external_table_bi_db_sharelending_reconciliation_external",
+      "name": "bi_output_finance_external_table_bi_db_sharelending_reconciliation_external",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_external_table_bi_db_sharelending_reconciliation_external.json",
+      "column_lineage_row_count": 58,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "333631390353161",
+          "event_count_lookback": 7,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "164863133418087",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "171289446369426",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "438369326402471",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "870179891053771",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_external_table_bi_db_sharelending_reconciliation_external.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
+      "name": "bi_output_finance_tables_bi_db_hedge_nettingbalance",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_hedge_nettingbalance.json",
+      "column_lineage_row_count": 31,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "564791906722426",
+          "event_count_lookback": 3,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1032435984692804",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "323604495690947",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "581384956201308",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "850642533991707",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_hedge_nettingbalance.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban",
+      "name": "bi_output_finance_tables_bi_db_positions_closed_to_iban",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_positions_closed_to_iban.json",
+      "column_lineage_row_count": 24,
+      "writers": [
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "88a61c9d-50c8-4516-a27d-ed802ebae419",
+          "event_count_lookback": 637,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_positions_closed_to_iban.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban_parquet",
+      "name": "bi_output_finance_tables_bi_db_positions_closed_to_iban_parquet",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_positions_closed_to_iban_parquet.json",
+      "column_lineage_row_count": 2,
+      "writers": [
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "88a61c9d-50c8-4516-a27d-ed802ebae419",
+          "event_count_lookback": 91,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_positions_closed_to_iban_parquet.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban",
+      "name": "bi_output_finance_tables_bi_db_positions_opened_from_iban",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_positions_opened_from_iban.json",
+      "column_lineage_row_count": 27,
+      "writers": [
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "6db2e20c-4cb2-4bbb-86ae-fbb3baeae78c",
+          "event_count_lookback": 819,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_positions_opened_from_iban.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet",
+      "name": "bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet.json",
+      "column_lineage_row_count": 2,
+      "writers": [
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "6db2e20c-4cb2-4bbb-86ae-fbb3baeae78c",
+          "event_count_lookback": 91,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_recurringinvestment_positions_parquet",
+      "name": "bi_output_finance_tables_bi_db_recurringinvestment_positions_parquet",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_recurringinvestment_positions_parquet.json",
+      "column_lineage_row_count": 4,
+      "writers": [
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "05293a5b-1d3b-4302-9856-f4cbc6942396",
+          "event_count_lookback": 128,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "421b9943-9dae-4f4a-acc0-9272c4f2a70d",
+          "event_count_lookback": 54,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "844382279060709",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_recurringinvestment_positions_parquet.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_collateraldetaileseu",
+      "name": "bi_output_finance_tables_bi_db_sharelending_collateraldetaileseu",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_sharelending_collateraldetaileseu.json",
+      "column_lineage_row_count": 63,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1075774964365528",
+          "event_count_lookback": 10,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "467145825982480",
+          "event_count_lookback": 10,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "96057006581011",
+          "event_count_lookback": 10,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "765545700561167",
+          "event_count_lookback": 10,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "388131355962550",
+          "event_count_lookback": 10,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_sharelending_collateraldetaileseu.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_collateraldetailesmain",
+      "name": "bi_output_finance_tables_bi_db_sharelending_collateraldetailesmain",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_sharelending_collateraldetailesmain.json",
+      "column_lineage_row_count": 64,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "286906934457272",
+          "event_count_lookback": 10,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "359550865941958",
+          "event_count_lookback": 10,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "386931753440702",
+          "event_count_lookback": 10,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "432697436883087",
+          "event_count_lookback": 10,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "302988174335890",
+          "event_count_lookback": 10,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_sharelending_collateraldetailesmain.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_collateraldetailesuk",
+      "name": "bi_output_finance_tables_bi_db_sharelending_collateraldetailesuk",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_sharelending_collateraldetailesuk.json",
+      "column_lineage_row_count": 63,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "944212823380282",
+          "event_count_lookback": 10,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "688149681306423",
+          "event_count_lookback": 10,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "47673804099153",
+          "event_count_lookback": 10,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "825621836382481",
+          "event_count_lookback": 10,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "794589421869501",
+          "event_count_lookback": 10,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_sharelending_collateraldetailesuk.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation",
+      "name": "bi_output_finance_tables_bi_db_sharelending_custodyreconciliation",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_sharelending_custodyreconciliation.json",
+      "column_lineage_row_count": 323,
+      "writers": [
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "929841887099956",
+          "event_count_lookback": 50,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "449177029092311",
+          "event_count_lookback": 17,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "131261705122566",
+          "event_count_lookback": 17,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "931695897996839",
+          "event_count_lookback": 17,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "821502515933568",
+          "event_count_lookback": 17,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_sharelending_custodyreconciliation.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu",
+      "name": "bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu.json",
+      "column_lineage_row_count": 131,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "98910090369345",
+          "event_count_lookback": 15,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1001204586163142",
+          "event_count_lookback": 15,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "958990206882230",
+          "event_count_lookback": 15,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "235947973569207",
+          "event_count_lookback": 15,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "208603954893821",
+          "event_count_lookback": 15,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_uk",
+      "name": "bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_uk",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_uk.json",
+      "column_lineage_row_count": 127,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "591258689062912",
+          "event_count_lookback": 14,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "886687968120294",
+          "event_count_lookback": 14,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "494279110328937",
+          "event_count_lookback": 14,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "824913801855994",
+          "event_count_lookback": 14,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "585180331385182",
+          "event_count_lookback": 14,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_uk.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_loansandcollateraleu",
+      "name": "bi_output_finance_tables_bi_db_sharelending_loansandcollateraleu",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_sharelending_loansandcollateraleu.json",
+      "column_lineage_row_count": 59,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "138151664061318",
+          "event_count_lookback": 11,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "659571473937788",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "27544170671570",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "74771781756749",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1099456476947239",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_sharelending_loansandcollateraleu.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_loansandcollateralmain",
+      "name": "bi_output_finance_tables_bi_db_sharelending_loansandcollateralmain",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_sharelending_loansandcollateralmain.json",
+      "column_lineage_row_count": 59,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "138151664061318",
+          "event_count_lookback": 11,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "659571473937788",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "27544170671570",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "74771781756749",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1099456476947239",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_sharelending_loansandcollateralmain.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_loansandcollateraluk",
+      "name": "bi_output_finance_tables_bi_db_sharelending_loansandcollateraluk",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_sharelending_loansandcollateraluk.json",
+      "column_lineage_row_count": 59,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "467145825982480",
+          "event_count_lookback": 11,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "388131355962550",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "96057006581011",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "765545700561167",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1118951765671794",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_sharelending_loansandcollateraluk.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_price_estimated",
+      "name": "bi_output_finance_tables_bi_db_sharelending_price_estimated",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_sharelending_price_estimated.json",
+      "column_lineage_row_count": 15,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "536770310918301",
+          "event_count_lookback": 7,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "81764622456245",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "832793623099840",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "718044804698590",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "922788945759077",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_sharelending_price_estimated.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_reconciliation",
+      "name": "bi_output_finance_tables_bi_db_sharelending_reconciliation",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_sharelending_reconciliation.json",
+      "column_lineage_row_count": 58,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "899547074594827",
+          "event_count_lookback": 7,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "472323883251842",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "429057295408521",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "720471926746870",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "397807143223489",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_sharelending_reconciliation.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_finance_tables_ptp_tax",
+      "name": "bi_output_finance_tables_ptp_tax",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_ptp_tax.json",
+      "column_lineage_row_count": 21,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "90904867162520",
+          "event_count_lookback": 2,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1052308287267965",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "301631128019800",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "650499042068818",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "422867527116039",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_ptp_tax.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_fullname_apiresults",
+      "name": "bi_output_fullname_apiresults",
+      "table_type": "MANAGED",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_fullname_apiresults.json",
+      "column_lineage_row_count": 7,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "384802822442789",
+          "event_count_lookback": 69,
+          "role": "primary",
+          "notebooks": [
+            {
+              "task": "AI_Fake_Name_Processing",
+              "path": "/Workspace/Shared/BI/BI CY/Ad hoc and Projects/Teams/FCMU/AI Fake Name Processing",
+              "language": "PYTHON",
+              "fetched": true
+            }
+          ],
+          "fetched": true
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_fullname_apiresults.json",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_fullname_apiresults.py",
+      "status": "OK"
+    },
+    {
+      "object": "main.bi_output.bi_output_marketing_acquisition_demo",
+      "name": "bi_output_marketing_acquisition_demo",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_marketing_acquisition_demo.json",
+      "column_lineage_row_count": 33,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "962658155699673",
+          "event_count_lookback": 819,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_marketing_acquisition_demo.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_marketing_acquisition_liveacquisition",
+      "name": "bi_output_marketing_acquisition_liveacquisition",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_marketing_acquisition_liveacquisition.json",
+      "column_lineage_row_count": 7,
+      "writers": [
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "78916582-774e-46cc-8195-8a41a333aa6f",
+          "event_count_lookback": 5934,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_marketing_acquisition_liveacquisition.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_marketing_affiliate_payments_report_closed_position",
+      "name": "bi_output_marketing_affiliate_payments_report_closed_position",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_marketing_affiliate_payments_report_closed_position.json",
+      "column_lineage_row_count": 5,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "649649054957599",
+          "event_count_lookback": 2,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "887462372922711",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "437146905298849",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "131117946631349",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "775947482926248",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_marketing_affiliate_payments_report_closed_position.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_marketing_liveacquisitiondashboard",
+      "name": "bi_output_marketing_liveacquisitiondashboard",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_marketing_liveacquisitiondashboard.json",
+      "column_lineage_row_count": 42,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "362438626229151",
+          "event_count_lookback": 18009,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_marketing_liveacquisitiondashboard.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_marketing_marketingcloud_user_behavior_instrument_v",
+      "name": "bi_output_marketing_marketingcloud_user_behavior_instrument_v",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_marketing_marketingcloud_user_behavior_instrument_v.json",
+      "column_lineage_row_count": 48,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_marketing_marketingcloud_user_behavior_instrument_v.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_marketing_marketingcloud_user_behavior_pi_v",
+      "name": "bi_output_marketing_marketingcloud_user_behavior_pi_v",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_marketing_marketingcloud_user_behavior_pi_v.json",
+      "column_lineage_row_count": 39,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_marketing_marketingcloud_user_behavior_pi_v.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_marketing_promotion_bi_db_promo_card",
+      "name": "bi_output_marketing_promotion_bi_db_promo_card",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_marketing_promotion_bi_db_promo_card.json",
+      "column_lineage_row_count": 118,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1044486077439857",
+          "event_count_lookback": 683,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "4212210221780631",
+          "event_count_lookback": 45,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "2650238679543064",
+          "event_count_lookback": 36,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_marketing_promotion_bi_db_promo_card.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_marketing_sfmc_sfmc_filter",
+      "name": "bi_output_marketing_sfmc_sfmc_filter",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_marketing_sfmc_sfmc_filter.json",
+      "column_lineage_row_count": 14,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "451426030017327",
+          "event_count_lookback": 6,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "691531654438458",
+          "event_count_lookback": 6,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "246629763380198",
+          "event_count_lookback": 6,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "373562646619705",
+          "event_count_lookback": 6,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "24862886087047",
+          "event_count_lookback": 6,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_marketing_sfmc_sfmc_filter.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_marketing_sfmc_sfmc_report",
+      "name": "bi_output_marketing_sfmc_sfmc_report",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_marketing_sfmc_sfmc_report.json",
+      "column_lineage_row_count": 45,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "858981201252265",
+          "event_count_lookback": 8,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "839187636540229",
+          "event_count_lookback": 8,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "548001487452763",
+          "event_count_lookback": 8,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "607962715752985",
+          "event_count_lookback": 8,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "549986057896970",
+          "event_count_lookback": 8,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_marketing_sfmc_sfmc_report.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_moneyfarm_customers",
+      "name": "bi_output_moneyfarm_customers",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_moneyfarm_customers.json",
+      "column_lineage_row_count": 9,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "909845381518474",
+          "event_count_lookback": 372,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_moneyfarm_customers.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_moneyfarm_fact_portfolio_snapshot",
+      "name": "bi_output_moneyfarm_fact_portfolio_snapshot",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_moneyfarm_fact_portfolio_snapshot.json",
+      "column_lineage_row_count": 14,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "909845381518474",
+          "event_count_lookback": 186,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_moneyfarm_fact_portfolio_snapshot.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_moneyfarm_fact_transactions",
+      "name": "bi_output_moneyfarm_fact_transactions",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_moneyfarm_fact_transactions.json",
+      "column_lineage_row_count": 6,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "909845381518474",
+          "event_count_lookback": 135,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_moneyfarm_fact_transactions.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_regtechops_wash_trading_alerts_daily",
+      "name": "bi_output_regtechops_wash_trading_alerts_daily",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_regtechops_wash_trading_alerts_daily.json",
+      "column_lineage_row_count": 14,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "832857154712514",
+          "event_count_lookback": 32,
+          "role": "primary",
+          "notebooks": [
+            {
+              "task": "notebook_task_RegTech_WashTrading_Daily_Detection",
+              "path": "/Users/matanmo@etoro.com/market-abuse-monitor/RegTech_WashTrading_Daily_Detection",
+              "language": "PYTHON",
+              "fetched": true
+            }
+          ],
+          "fetched": true
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "4404603554302505",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "79e27f88-3eac-4a54-8339-4d613a5e90da",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_regtechops_wash_trading_alerts_daily.json",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_regtechops_wash_trading_alerts_daily.py",
+      "status": "OK"
+    },
+    {
+      "object": "main.bi_output.bi_output_urban_notifications_daily_panel",
+      "name": "bi_output_urban_notifications_daily_panel",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_urban_notifications_daily_panel.json",
+      "column_lineage_row_count": 44,
+      "writers": [
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "1e56fdd1-177f-4f99-ac29-1aa01e651514",
+          "event_count_lookback": 1183,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_urban_notifications_daily_panel.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_urban_notifications_daily_panel_agg",
+      "name": "bi_output_urban_notifications_daily_panel_agg",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_urban_notifications_daily_panel_agg.json",
+      "column_lineage_row_count": 21,
+      "writers": [
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "259a1f94-441c-43c2-bd95-11b2ed9d69fa",
+          "event_count_lookback": 91,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_urban_notifications_daily_panel_agg.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_urban_notifications_monthly_lsd",
+      "name": "bi_output_urban_notifications_monthly_lsd",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_urban_notifications_monthly_lsd.json",
+      "column_lineage_row_count": 32,
+      "writers": [
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "97133d78-c951-4751-be0d-a80338fc9d6b",
+          "event_count_lookback": 27,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_urban_notifications_monthly_lsd.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_output.bi_output_v_recurring_investment",
+      "name": "bi_output_v_recurring_investment",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_v_recurring_investment.json",
+      "column_lineage_row_count": 281,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_v_recurring_investment.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_aum",
+      "name": "bi_output_vg_aum",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_aum.json",
+      "column_lineage_row_count": 197,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_aum.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_case",
+      "name": "bi_output_vg_case",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_case.json",
+      "column_lineage_row_count": 54,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_case.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_case_event",
+      "name": "bi_output_vg_case_event",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_case_event.json",
+      "column_lineage_row_count": 63,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_case_event.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_cf_crm_contact",
+      "name": "bi_output_vg_cf_crm_contact",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_cf_crm_contact.json",
+      "column_lineage_row_count": 6,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_cf_crm_contact.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_club",
+      "name": "bi_output_vg_club",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_club.json",
+      "column_lineage_row_count": 191,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_club.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_club_offers",
+      "name": "bi_output_vg_club_offers",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_club_offers.json",
+      "column_lineage_row_count": 130,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_club_offers.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_copy_mimo",
+      "name": "bi_output_vg_copy_mimo",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_copy_mimo.json",
+      "column_lineage_row_count": 140,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_copy_mimo.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_crm_user",
+      "name": "bi_output_vg_crm_user",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_crm_user.json",
+      "column_lineage_row_count": 75,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_crm_user.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_customer_assignment",
+      "name": "bi_output_vg_customer_assignment",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_customer_assignment.json",
+      "column_lineage_row_count": 11,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_customer_assignment.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_customer_first_dates",
+      "name": "bi_output_vg_customer_first_dates",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_customer_first_dates.json",
+      "column_lineage_row_count": 166,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_customer_first_dates.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_customer_snapshot",
+      "name": "bi_output_vg_customer_snapshot",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_customer_snapshot.json",
+      "column_lineage_row_count": 200,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_customer_snapshot.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_customer_snapshot_test",
+      "name": "bi_output_vg_customer_snapshot_test",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_customer_snapshot_test.json",
+      "column_lineage_row_count": 106,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_customer_snapshot_test.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_customer_snapshot_v2",
+      "name": "bi_output_vg_customer_snapshot_v2",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_customer_snapshot_v2.json",
+      "column_lineage_row_count": 1,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_customer_snapshot_v2.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_daily_commission",
+      "name": "bi_output_vg_daily_commission",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_daily_commission.json",
+      "column_lineage_row_count": 42,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_daily_commission.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_date",
+      "name": "bi_output_vg_date",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_date.json",
+      "column_lineage_row_count": 50,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_date.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_ddr_customers_snapshot",
+      "name": "bi_output_vg_ddr_customers_snapshot",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_ddr_customers_snapshot.json",
+      "column_lineage_row_count": 215,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_ddr_customers_snapshot.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_mimo",
+      "name": "bi_output_vg_mimo",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_mimo.json",
+      "column_lineage_row_count": 324,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_mimo.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_parentcid",
+      "name": "bi_output_vg_parentcid",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_parentcid.json",
+      "column_lineage_row_count": 153,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_parentcid.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_revenue",
+      "name": "bi_output_vg_revenue",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_revenue.json",
+      "column_lineage_row_count": 142,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_revenue.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_vg_volume_amount",
+      "name": "bi_output_vg_volume_amount",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_volume_amount.json",
+      "column_lineage_row_count": 178,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_volume_amount.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.bi_output_wf_view",
+      "name": "bi_output_wf_view",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_wf_view.json",
+      "column_lineage_row_count": 116,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_wf_view.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.current",
+      "name": "current",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\current.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\current.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.current_table",
+      "name": "current_table",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\current_table.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\current_table.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.finance_tables_functions_revenue_sdrt",
+      "name": "finance_tables_functions_revenue_sdrt",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\finance_tables_functions_revenue_sdrt.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\finance_tables_functions_revenue_sdrt.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.finance_tables_functions_revenue_trading_fees",
+      "name": "finance_tables_functions_revenue_trading_fees",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\finance_tables_functions_revenue_trading_fees.json",
+      "column_lineage_row_count": 54,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\finance_tables_functions_revenue_trading_fees.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.funded",
+      "name": "funded",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\funded.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\funded.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.limitation_to_normal_conversion",
+      "name": "limitation_to_normal_conversion",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\limitation_to_normal_conversion.json",
+      "column_lineage_row_count": 5,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\limitation_to_normal_conversion.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.negative_nmi",
+      "name": "negative_nmi",
+      "table_type": "MATERIALIZED_VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\negative_nmi.json",
+      "column_lineage_row_count": 8,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\negative_nmi.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.nmi_by_portfoliopi_new",
+      "name": "nmi_by_portfoliopi_new",
+      "table_type": "MATERIALIZED_VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\nmi_by_portfoliopi_new.json",
+      "column_lineage_row_count": 10,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\nmi_by_portfoliopi_new.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.positionsvolumeandattributes_lc4_source",
+      "name": "positionsvolumeandattributes_lc4_source",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\positionsvolumeandattributes_lc4_source.json",
+      "column_lineage_row_count": 16,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\positionsvolumeandattributes_lc4_source.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.positive_nmi",
+      "name": "positive_nmi",
+      "table_type": "MATERIALIZED_VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\positive_nmi.json",
+      "column_lineage_row_count": 8,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\positive_nmi.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.positive_nmi_commodities",
+      "name": "positive_nmi_commodities",
+      "table_type": "MATERIALIZED_VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\positive_nmi_commodities.json",
+      "column_lineage_row_count": 8,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\positive_nmi_commodities.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.snapshot",
+      "name": "snapshot",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\snapshot.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\snapshot.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.snapshot_table",
+      "name": "snapshot_table",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\snapshot_table.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\snapshot_table.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.v_external_france_wealth_contracts_transactions",
+      "name": "v_external_france_wealth_contracts_transactions",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\v_external_france_wealth_contracts_transactions.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\v_external_france_wealth_contracts_transactions.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_acquisitionfunnel_em1",
+      "name": "vg_acquisitionfunnel_em1",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_acquisitionfunnel_em1.json",
+      "column_lineage_row_count": 17,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_acquisitionfunnel_em1.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_bidb_alldeposits_for_genie",
+      "name": "vg_bidb_alldeposits_for_genie",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_bidb_alldeposits_for_genie.json",
+      "column_lineage_row_count": 46,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_bidb_alldeposits_for_genie.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_emoney_card_instance_summary",
+      "name": "vg_emoney_card_instance_summary",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_emoney_card_instance_summary.json",
+      "column_lineage_row_count": 13,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_emoney_card_instance_summary.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_emoney_card_transactions",
+      "name": "vg_emoney_card_transactions",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_emoney_card_transactions.json",
+      "column_lineage_row_count": 29,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_emoney_card_transactions.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_emoney_openbankingdeposit",
+      "name": "vg_emoney_openbankingdeposit",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_emoney_openbankingdeposit.json",
+      "column_lineage_row_count": 6,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_emoney_openbankingdeposit.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_emoney_panel_firstdates_em1",
+      "name": "vg_emoney_panel_firstdates_em1",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_emoney_panel_firstdates_em1.json",
+      "column_lineage_row_count": 44,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_emoney_panel_firstdates_em1.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_emoney_potentialclients_attributes",
+      "name": "vg_emoney_potentialclients_attributes",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_emoney_potentialclients_attributes.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_emoney_potentialclients_attributes.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_emoney_txs",
+      "name": "vg_emoney_txs",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_emoney_txs.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_emoney_txs.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_emoneydimaccount_forgenie",
+      "name": "vg_emoneydimaccount_forgenie",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_emoneydimaccount_forgenie.json",
+      "column_lineage_row_count": 16,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_emoneydimaccount_forgenie.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_emoneydimtransaction_forgenie",
+      "name": "vg_emoneydimtransaction_forgenie",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_emoneydimtransaction_forgenie.json",
+      "column_lineage_row_count": 28,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_emoneydimtransaction_forgenie.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_fact_billingdeposit_for_genie",
+      "name": "vg_fact_billingdeposit_for_genie",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_fact_billingdeposit_for_genie.json",
+      "column_lineage_row_count": 2,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_fact_billingdeposit_for_genie.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_fact_billingdepost_forgenie",
+      "name": "vg_fact_billingdepost_forgenie",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_fact_billingdepost_forgenie.json",
+      "column_lineage_row_count": 23,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_fact_billingdepost_forgenie.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_fact_billingdepost_forgenie_new",
+      "name": "vg_fact_billingdepost_forgenie_new",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_fact_billingdepost_forgenie_new.json",
+      "column_lineage_row_count": 42,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_fact_billingdepost_forgenie_new.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_fact_billingwithdraw_for_genie",
+      "name": "vg_fact_billingwithdraw_for_genie",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_fact_billingwithdraw_for_genie.json",
+      "column_lineage_row_count": 21,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_fact_billingwithdraw_for_genie.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_fact_snapshotcustomer_for_emoney_genie",
+      "name": "vg_fact_snapshotcustomer_for_emoney_genie",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_fact_snapshotcustomer_for_emoney_genie.json",
+      "column_lineage_row_count": 26,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_fact_snapshotcustomer_for_emoney_genie.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_factbillingdeposit_transactionsandattributes",
+      "name": "vg_factbillingdeposit_transactionsandattributes",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_factbillingdeposit_transactionsandattributes.json",
+      "column_lineage_row_count": 78,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_factbillingdeposit_transactionsandattributes.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_factbillingwithdraw_transactionsandattributes",
+      "name": "vg_factbillingwithdraw_transactionsandattributes",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_factbillingwithdraw_transactionsandattributes.json",
+      "column_lineage_row_count": 35,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_factbillingwithdraw_transactionsandattributes.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_fullbincodelist",
+      "name": "vg_fullbincodelist",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_fullbincodelist.json",
+      "column_lineage_row_count": 21,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_fullbincodelist.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_payments_mimo_allplatformddr_genienew",
+      "name": "vg_payments_mimo_allplatformddr_genienew",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_payments_mimo_allplatformddr_genienew.json",
+      "column_lineage_row_count": 36,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_payments_mimo_allplatformddr_genienew.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_payments_mimo_basedonddrallplatfrommimo_for_genie",
+      "name": "vg_payments_mimo_basedonddrallplatfrommimo_for_genie",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_payments_mimo_basedonddrallplatfrommimo_for_genie.json",
+      "column_lineage_row_count": 33,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_payments_mimo_basedonddrallplatfrommimo_for_genie.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_positions_open_closed_iban_tp",
+      "name": "vg_positions_open_closed_iban_tp",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_positions_open_closed_iban_tp.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_positions_open_closed_iban_tp.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_positionsvolumeandattributes_lc4_source",
+      "name": "vg_positionsvolumeandattributes_lc4_source",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_positionsvolumeandattributes_lc4_source.json",
+      "column_lineage_row_count": 36,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_positionsvolumeandattributes_lc4_source.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_positionsvolumeandattributes_lc4_source_test1",
+      "name": "vg_positionsvolumeandattributes_lc4_source_test1",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_positionsvolumeandattributes_lc4_source_test1.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_positionsvolumeandattributes_lc4_source_test1.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_output.vg_trades",
+      "name": "vg_trades",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_trades.json",
+      "column_lineage_row_count": 26,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_trades.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "ok": 67,
+    "no_lineage": 0,
+    "no_view_def": 0,
+    "errors": 0,
+    "wall_seconds": 2937.0
+  }
+}

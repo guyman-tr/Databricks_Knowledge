@@ -1,0 +1,395 @@
+{
+  "object_fqn": "main.de_output.vw_bronze_public_api_operations",
+  "generated_at": "2026-05-19T14:11:58Z",
+  "formula_count": 38,
+  "formulas": [
+    {
+      "column": "schema_id",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "enqueuedTime",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventType",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "fallbackEventType",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_correlationId",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_requestId",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_gcid",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_oauthClientId",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_applicationName",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_authenticationChannel",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_ipAddress",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_httpMethod",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_externalPath",
+      "formula": "-- api_endpoint: same logic as the failed view regexp_replace( regexp_replace( regexp_replace( regexp_replace( regexp_replace(eventData_externalPath",
+      "expression_raw": "-- api_endpoint: same logic as the failed view\n  regexp_replace(\n    regexp_replace(\n      regexp_replace(\n        regexp_replace(\n          regexp_replace(eventData_externalPath",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L15-L20",
+      "scope": "base"
+    },
+    {
+      "column": "eventData_apiGroup",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_body",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_responseContent",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_httpStatusCode",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_success",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_errorCode",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_durationMs",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventMetadata_gcid",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventMetadata_correlationId",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventMetadata_eventDataVersion",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventMetadata_durationInMilliseconds",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventMetadata_createdAt",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "event_date",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "ymd",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_userAgent",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_agentName",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_routeTemplate",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_routeKey",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "eventData_operationId",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "api_endpoint",
+      "formula": "'/(FAKE-ORDER-ID|healthcheck-trade-id)', '' )",
+      "expression_raw": "'/(FAKE-ORDER-ID|healthcheck-trade-id)', ''\n  ) AS api_endpoint",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L25-L26",
+      "scope": "base"
+    },
+    {
+      "column": "error_field",
+      "formula": "NULL",
+      "expression_raw": "NULL AS error_field",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L27-L27",
+      "scope": "base"
+    },
+    {
+      "column": "error_message",
+      "formula": "NULL",
+      "expression_raw": "NULL AS error_message",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L28-L28",
+      "scope": "base"
+    },
+    {
+      "column": "is_demo",
+      "formula": ", CASE WHEN eventData_externalPath LIKE '%demo%' THEN 'demo' ELSE 'real' END",
+      "expression_raw": ",   CASE WHEN eventData_externalPath LIKE '%demo%' THEN 'demo' ELSE 'real' END AS is_demo",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "position_id",
+      "formula": ", CASE WHEN eventData_externalPath LIKE '%demo%' THEN 'demo' ELSE 'real' END AS is_demo , regexp_extract(eventData_externalPath, '/positions/([^/]+)', 1)",
+      "expression_raw": ",   CASE WHEN eventData_externalPath LIKE '%demo%' THEN 'demo' ELSE 'real' END AS is_demo\n,   regexp_extract(eventData_externalPath, '/positions/([^/]+)', 1) AS position_id",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L32-L33",
+      "scope": "main"
+    },
+    {
+      "column": "trading_action",
+      "formula": ", CASE WHEN eventData_externalPath LIKE '%demo%' THEN 'demo' ELSE 'real' END AS is_demo , regexp_extract(eventData_externalPath, '/positions/([^/]+)', 1) AS position_id , regexp_extract(eventDat…",
+      "expression_raw": ",   CASE WHEN eventData_externalPath LIKE '%demo%' THEN 'demo' ELSE 'real' END AS is_demo\n,   regexp_extract(eventData_externalPath, '/positions/([^/]+)', 1) AS position_id\n,   regexp_extract(eventDat…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L32-L34",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/de_output/_discovery/source_code/vw_bronze_public_api_operations.sql"
+}

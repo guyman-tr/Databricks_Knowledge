@@ -1,0 +1,125 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.mv_revenue_trading",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 6,
+  "concepts": [
+    {
+      "id": "case_flag_isopenfromiban",
+      "name": "IsOpenFromIBAN computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsOpenFromIBAN"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L173-L176",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_isclosedtoiban",
+      "name": "IsClosedToIBAN computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsClosedToIBAN"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L177-L180",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_iscopyfund",
+      "name": "IsCopyFund computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsCopyFund"
+      ],
+      "predicates": [
+        {
+          "col": "MirrorTypeID",
+          "op": "=",
+          "val": "4"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {
+        "MirrorTypeID=4": "Fund"
+      },
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L181-L184",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_issqf",
+      "name": "IsSQF computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsSQF"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.trading.bronze_etoro_trade_instrumentgroups"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L190-L193",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_di",
+      "name": "Dim lookup via di",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "alias": "di",
+      "join_conditions": [
+        "dp.InstrumentID = di.InstrumentID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L204",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "dp.InstrumentID = di.InstrumentID"
+    },
+    {
+      "id": "filter_block_SQF",
+      "name": "Filter block on SQF",
+      "kind": "filter_block",
+      "columns_involved": [
+        "GroupID"
+      ],
+      "predicates": [
+        {
+          "col": "GroupID",
+          "op": "=",
+          "val": "59"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L165",
+      "scope": "SQF",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/mv_revenue_trading.sql"
+}

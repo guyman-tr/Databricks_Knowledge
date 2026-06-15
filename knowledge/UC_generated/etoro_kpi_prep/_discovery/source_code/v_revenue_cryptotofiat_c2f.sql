@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_revenue_cryptotofiat_c2f
--- Captured: 2026-05-18T08:12:27Z
+-- Captured: 2026-05-19T12:22:15Z
 -- ==========================================================================
 
 SELECT

@@ -1,0 +1,291 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiktivo_dbo_tblaff_paymentdetails",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:51Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "PaymentDetailsID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Primary key. Referenced by tblaff_Affiliates.PaymentDetailsID/PaymentDetails2ID/PaymentDetails3ID and tblaff_PaymentHist",
+      "wiki_quote": "Primary key. Referenced by tblaff_Affiliates.PaymentDetailsID/PaymentDetails2ID/PaymentDetails3ID and tblaff_PaymentHist",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentMethodID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Payment method selector. See [Payment Methods](../../_glossary.md#payment-methods): 1=None, 2=PayPal, 3=Wire Transfer, 4",
+      "wiki_quote": "Payment method selector. See [Payment Methods](../../_glossary.md#payment-methods): 1=None, 2=PayPal, 3=Wire Transfer, 4",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Payment amount or limit associated with this payment detail record.",
+      "wiki_quote": "Payment amount or limit associated with this payment detail record (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDe",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PayPalAccount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "PayPal email address for PayPal payments (PaymentMethodID=2).",
+      "wiki_quote": "PayPal email address for PayPal payments (PaymentMethodID=2) (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails)",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WireBeneficiary",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Wire transfer beneficiary name (PaymentMethodID=3).",
+      "wiki_quote": "Wire transfer beneficiary name (PaymentMethodID=3) (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WireBankName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Wire transfer bank name.",
+      "wiki_quote": "Wire transfer bank name (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WireBankAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Wire transfer bank address.",
+      "wiki_quote": "Wire transfer bank address (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WireBranchNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Wire transfer branch/routing number.",
+      "wiki_quote": "Wire transfer branch/routing number (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WireAccountNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Wire transfer account number.",
+      "wiki_quote": "Wire transfer account number (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WireSwiftCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Wire transfer SWIFT/BIC code for international routing.",
+      "wiki_quote": "Wire transfer SWIFT/BIC code for international routing (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WireIBAN",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Wire transfer IBAN (International Bank Account Number).",
+      "wiki_quote": "Wire transfer IBAN (International Bank Account Number) (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Username",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "General username field for e-wallet services. Indexed for lookups.",
+      "wiki_quote": "General username field for e-wallet services. Indexed for lookups (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDet",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "NetellerAccount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Neteller account ID (PaymentMethodID=5).",
+      "wiki_quote": "Neteller account ID (PaymentMethodID=5) (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "NetellerEmail",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Neteller registered email address.",
+      "wiki_quote": "Neteller registered email address (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MoneybookersAccount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Skrill (formerly Moneybookers) account ID (PaymentMethodID=6).",
+      "wiki_quote": "Skrill (formerly Moneybookers) account ID (PaymentMethodID=6) (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WebMoneyAccount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "WebMoney account ID (PaymentMethodID=7).",
+      "wiki_quote": "WebMoney account ID (PaymentMethodID=7) (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WebMoneyPurseID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "WebMoney purse identifier for specific currency wallets.",
+      "wiki_quote": "WebMoney purse identifier for specific currency wallets (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreditCardNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Credit card number (PaymentMethodID=8). MASKED with partial display (all X's).",
+      "wiki_quote": "Credit card number (PaymentMethodID=8). MASKED with partial display (all X's) (Tier 1 — inherited from fiktivo.dbo.tblaf",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreditCardExpMonth",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Credit card expiration month (01-12).",
+      "wiki_quote": "Credit card expiration month (01-12) (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreditCardExpYear",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Credit card expiration year (4-digit).",
+      "wiki_quote": "Credit card expiration year (4-digit) (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PayeeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "External payee identifier for payment processor integration.",
+      "wiki_quote": "External payee identifier for payment processor integration (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IntermediaryBankName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Intermediary/correspondent bank name for international wire transfers. MASKED.",
+      "wiki_quote": "Intermediary/correspondent bank name for international wire transfers. MASKED (Tier 1 — inherited from fiktivo.dbo.tblaf",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IntermediaryBankAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Intermediary bank address. MASKED.",
+      "wiki_quote": "Intermediary bank address. MASKED (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IntermediaryAccountNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Account number at the intermediary bank.",
+      "wiki_quote": "Account number at the intermediary bank (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IntermediarySwiftCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "SWIFT code of the intermediary bank.",
+      "wiki_quote": "SWIFT code of the intermediary bank (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IntermediaryIBAN",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "IBAN at the intermediary bank.",
+      "wiki_quote": "IBAN at the intermediary bank (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "VerifiedBy",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "FK to [dbo.tblaff_User](dbo.tblaff_User.md).UserID. Admin user who verified these payment details. NULL = unverified.",
+      "wiki_quote": "FK to [dbo.tblaff_User](dbo.tblaff_User.md).UserID. Admin user who verified these payment details. NULL = unverified (Ti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "VerifiedOn",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Timestamp when payment details were verified. NULL = unverified.",
+      "wiki_quote": "Timestamp when payment details were verified. NULL = unverified (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetai",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ChinaUnionPayBeneficiaryFullName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "China UnionPay beneficiary full name (PaymentMethodID=9).",
+      "wiki_quote": "China UnionPay beneficiary full name (PaymentMethodID=9) (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ChinaUnionPayBankName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "China UnionPay bank name.",
+      "wiki_quote": "China UnionPay bank name (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ChinaUnionPayBankAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "China UnionPay bank address.",
+      "wiki_quote": "China UnionPay bank address (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ChinaUnionPayBranchNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "China UnionPay branch number.",
+      "wiki_quote": "China UnionPay branch number (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ChinaUnionPayAccountNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "China UnionPay account number.",
+      "wiki_quote": "China UnionPay account number (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WireSortCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "UK sort code for domestic wire transfers.",
+      "wiki_quote": "UK sort code for domestic wire transfers (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WireBankCountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "Country of the wire transfer bank. References tblaff_Country for bank location.",
+      "wiki_quote": "Country of the wire transfer bank. References tblaff_Country for bank location (Tier 1 — inherited from fiktivo.dbo.tbla",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WireRoutingNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentDetails.md",
+      "upstream_quote": "US ABA routing number for domestic wire transfers.",
+      "wiki_quote": "US ABA routing number for domestic wire transfers (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentDetails).",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 34,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 36 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

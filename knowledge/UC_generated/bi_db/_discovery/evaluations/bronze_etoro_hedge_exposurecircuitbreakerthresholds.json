@@ -1,0 +1,95 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_hedge_exposurecircuitbreakerthresholds",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:35Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.ExposureCircuitBreakerThresholds.md",
+      "upstream_quote": "The instrument this circuit breaker applies to. Part of composite PK. No FK constraint - implicit reference to Trade.Ins",
+      "wiki_quote": "The instrument this circuit breaker applies to. Part of composite PK. No FK constraint - implicit reference to Trade.Ins",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsOverHedged",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.ExposureCircuitBreakerThresholds.md",
+      "upstream_quote": "Direction flag. 1=over-hedged circuit breaker (excess hedge above required), 0=under-hedged circuit breaker (deficit hed",
+      "wiki_quote": "Direction flag. 1=over-hedged circuit breaker (excess hedge above required), 0=under-hedged circuit breaker (deficit hed",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CircuitBreakerAlertThresholdUSD",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.ExposureCircuitBreakerThresholds.md",
+      "upstream_quote": "USD exposure amount at which a soft alert is triggered. When the direction-specific exposure exceeds this value, an aler",
+      "wiki_quote": "USD exposure amount at which a soft alert is triggered. When the direction-specific exposure exceeds this value, an aler",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CircuitBreakerTriggerThresholdUSD",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.ExposureCircuitBreakerThresholds.md",
+      "upstream_quote": "USD exposure amount at which the circuit breaker trips. When exceeded, hedge execution for this instrument halts. Should",
+      "wiki_quote": "USD exposure amount at which the circuit breaker trips. When exceeded, hedge execution for this instrument halts. Should",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DbLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.ExposureCircuitBreakerThresholds.md",
+      "upstream_quote": "Computed audit column. SQL Server login executing the DML.",
+      "wiki_quote": "Computed audit column. SQL Server login executing the DML (Tier 1 — inherited from etoro.Hedge.ExposureCircuitBreakerThr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AppLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.ExposureCircuitBreakerThresholds.md",
+      "upstream_quote": "Computed audit column. Application identity from CONTEXT_INFO(). NULL when not set.",
+      "wiki_quote": "Computed audit column. Application identity from CONTEXT_INFO(). NULL when not set (Tier 1 — inherited from etoro.Hedge.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysStartTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.ExposureCircuitBreakerThresholds.md",
+      "upstream_quote": "Temporal period start. UTC timestamp when this row version became active.",
+      "wiki_quote": "Temporal period start. UTC timestamp when this row version became active (Tier 1 — inherited from etoro.Hedge.ExposureCi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysEndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.ExposureCircuitBreakerThresholds.md",
+      "upstream_quote": "Temporal period end. 9999-12-31 for current rows. History in History.ExposureCircuitBreakerThresholds.",
+      "wiki_quote": "Temporal period end. 9999-12-31 for current rows. History in History.ExposureCircuitBreakerThresholds (Tier 1 — inherite",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 8,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 8 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

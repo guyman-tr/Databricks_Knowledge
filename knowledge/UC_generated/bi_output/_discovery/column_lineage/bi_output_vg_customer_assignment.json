@@ -1,0 +1,83 @@
+{
+  "object": "main.bi_output.bi_output_vg_customer_assignment",
+  "rows": [
+    {
+      "source_table_full_name": "main.bi_output.bi_output_vg_crm_user",
+      "source_column_name": "BO_User_ID",
+      "target_column_name": "AM_CID",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_vg_crm_user",
+      "source_column_name": "Department",
+      "target_column_name": "AM_Department",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_vg_crm_user",
+      "source_column_name": "FullName",
+      "target_column_name": "AM_FullName",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.crm.gold_crm_accountsmanager",
+      "source_column_name": "OwnerId",
+      "target_column_name": "AM_ID",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_vg_crm_user",
+      "source_column_name": "Position",
+      "target_column_name": "AM_Position",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.crm.gold_crm_accountsmanager",
+      "source_column_name": "CreatedDate",
+      "target_column_name": "AssignmentCreatedDate",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.crm.gold_crm_accountsmanager",
+      "source_column_name": "__END_AT",
+      "target_column_name": "AssignmentEndAt",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.crm.gold_crm_accountsmanager",
+      "source_column_name": "__START_AT",
+      "target_column_name": "AssignmentStartAt",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.crm.gold_crm_accountsmanager",
+      "source_column_name": "__END_AT",
+      "target_column_name": "IsCurrentAssignment",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.crm.gold_crm_accountsmanager",
+      "source_column_name": "AccountId",
+      "target_column_name": "SalesForceAccountID",
+      "entity_type": null,
+      "event_count": 2
+    }
+  ],
+  "generated_at": "2026-05-19T14:48:14Z"
+}

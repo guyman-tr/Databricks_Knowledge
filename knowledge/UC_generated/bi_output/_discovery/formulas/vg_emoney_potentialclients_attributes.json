@@ -1,0 +1,109 @@
+{
+  "object_fqn": "main.bi_output.vg_emoney_potentialclients_attributes",
+  "generated_at": "2026-05-19T15:01:28Z",
+  "formula_count": 9,
+  "formulas": [
+    {
+      "column": "CID",
+      "formula": "RealCID",
+      "expression_raw": "dc.RealCID AS CID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "base_customers"
+    },
+    {
+      "column": "CountryName",
+      "formula": "Name",
+      "expression_raw": "co.Name AS CountryName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "base_customers"
+    },
+    {
+      "column": "Club",
+      "formula": "Name",
+      "expression_raw": "dpl.Name AS Club",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "base_customers"
+    },
+    {
+      "column": "PlayerStatusID",
+      "formula": "PlayerStatusID",
+      "expression_raw": "dc.PlayerStatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "base_customers"
+    },
+    {
+      "column": "VerificationLevelID",
+      "formula": "VerificationLevelID",
+      "expression_raw": "dc.VerificationLevelID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "base_customers"
+    },
+    {
+      "column": "IsEligible",
+      "formula": "IsEligible_AU",
+      "expression_raw": "e.IsEligible_AU AS IsEligible",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L77-L77",
+      "scope": "main"
+    },
+    {
+      "column": "HasETMAccount",
+      "formula": "1",
+      "expression_raw": "1 AS HasETMAccount",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L57-L57",
+      "scope": "etm_accounts"
+    },
+    {
+      "column": "AccountSubProgramID",
+      "formula": "AccountSubProgramID",
+      "expression_raw": "mda.AccountSubProgramID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L58-L58",
+      "scope": "etm_accounts"
+    },
+    {
+      "column": "AccountCreateDateID",
+      "formula": "AccountCreateDateID",
+      "expression_raw": "mda.AccountCreateDateID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L59-L59",
+      "scope": "etm_accounts"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_emoney_potentialclients_attributes.sql"
+}

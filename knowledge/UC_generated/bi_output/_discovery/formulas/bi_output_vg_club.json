@@ -1,0 +1,767 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_club",
+  "generated_at": "2026-05-19T15:01:25Z",
+  "formula_count": 69,
+  "formulas": [
+    {
+      "column": "Date",
+      "formula": "Date",
+      "expression_raw": "dd.Date",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "DateID",
+      "formula": "DateID",
+      "expression_raw": "dd.DateID",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYearMonth",
+      "formula": "CalendarYearMonth",
+      "expression_raw": "dd.CalendarYearMonth",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarQuarter",
+      "formula": "CalendarQuarter",
+      "expression_raw": "dd.CalendarQuarter",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYear",
+      "formula": "CalendarYear",
+      "expression_raw": "dd.CalendarYear",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": "STRING(RealCID)",
+      "expression_raw": "STRING(dc1.RealCID) AS RealCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "PLChangeType",
+      "formula": "PLChangeType",
+      "expression_raw": "clb.PLChangeType",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "PLChangeTypeDate",
+      "formula": "PLChangeTypeDate",
+      "expression_raw": "clb.PLChangeTypeDate",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "IsUpgrade",
+      "formula": "IsUpgrade",
+      "expression_raw": "clb.IsUpgrade",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "IsDowngrade",
+      "formula": "IsDowngrade",
+      "expression_raw": "clb.IsDowngrade",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "IsFTC",
+      "formula": "IsFTC",
+      "expression_raw": "clb.IsFTC",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "CurrentTier",
+      "formula": "CurrentTier",
+      "expression_raw": "clb.CurrentTier",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "LastTier",
+      "formula": "LastTier",
+      "expression_raw": "clb.LastTier",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "MaxTier",
+      "formula": "MaxTier",
+      "expression_raw": "clb.MaxTier",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "FTDDate",
+      "formula": "FTDDate",
+      "expression_raw": "clb.FTDDate",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "FTCDate",
+      "formula": "FTCDate",
+      "expression_raw": "clb.FTCDate",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "IsFTC_Status",
+      "formula": "IsFTC_Status",
+      "expression_raw": "clb.IsFTC_Status",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "DaysTillFTC",
+      "formula": "DaysTillFTC",
+      "expression_raw": "clb.DaysTillFTC",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "DaysFromFTD",
+      "formula": "DaysFromFTD",
+      "expression_raw": "clb.DaysFromFTD",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "DaysInClub",
+      "formula": "DaysInClub",
+      "expression_raw": "clb.DaysInClub",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "DaysInCurrentClub",
+      "formula": "DaysInCurrentClub",
+      "expression_raw": "clb.DaysInCurrentClub",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "AmountForUpgrade",
+      "formula": "AmountForUpgrade",
+      "expression_raw": "clb.AmountForUpgrade",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "IsOptInIOB",
+      "formula": "IsOptInIOB",
+      "expression_raw": "clb.IsOptInIOB",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "IOB_Date",
+      "formula": "IOB_Date",
+      "expression_raw": "clb.IOB_Date",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "UpdateDate",
+      "formula": "UpdateDate",
+      "expression_raw": "clb.UpdateDate",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "GCID_Club",
+      "formula": "GCID_Club",
+      "expression_raw": "clb.GCID_Club",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "TotalEquityClub",
+      "formula": "TotalEquityClub",
+      "expression_raw": "clb.TotalEquityClub",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    },
+    {
+      "column": "WealthFrance",
+      "formula": "WealthFrance",
+      "expression_raw": "clb.WealthFrance",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L35-L35",
+      "scope": "main"
+    },
+    {
+      "column": "MoneyBalance",
+      "formula": "MoneyBalance",
+      "expression_raw": "clb.MoneyBalance",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "RealizedEquity",
+      "formula": "RealizedEquity",
+      "expression_raw": "clb.RealizedEquity",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L37-L37",
+      "scope": "main"
+    },
+    {
+      "column": "MoneyFarmBalance",
+      "formula": "MoneyFarmBalance",
+      "expression_raw": "clb.MoneyFarmBalance",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerLevelID",
+      "formula": "PlayerLevelID",
+      "expression_raw": "fsc.PlayerLevelID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L39-L39",
+      "scope": "main"
+    },
+    {
+      "column": "ClubTier",
+      "formula": "Name",
+      "expression_raw": "dpl.Name AS ClubTier",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L40-L40",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationID",
+      "formula": "RegulationID",
+      "expression_raw": "fsc.RegulationID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L41-L41",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": "Name",
+      "expression_raw": "dr.Name AS Regulation",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L42-L42",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevelID",
+      "formula": "VerificationLevelID",
+      "expression_raw": "fsc.VerificationLevelID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L43-L43",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel",
+      "formula": "Name",
+      "expression_raw": "dv.Name AS VerificationLevel",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L44-L44",
+      "scope": "main"
+    },
+    {
+      "column": "CountryID",
+      "formula": "CountryID",
+      "expression_raw": "fsc.CountryID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L45-L45",
+      "scope": "main"
+    },
+    {
+      "column": "Country",
+      "formula": "Name",
+      "expression_raw": "dc.Name AS Country",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L46-L46",
+      "scope": "main"
+    },
+    {
+      "column": "Region",
+      "formula": "MarketingRegionManualName",
+      "expression_raw": "dc.MarketingRegionManualName AS Region",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L47-L47",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManagerID",
+      "formula": "AccountManagerID",
+      "expression_raw": "fsc.AccountManagerID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L48-L48",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManager",
+      "formula": "concat_ws(FirstName, '', LastName)",
+      "expression_raw": "concat_ws(dm.FirstName, '', dm.LastName) AS AccountManager",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L49-L49",
+      "scope": "main"
+    },
+    {
+      "column": "LanguageID",
+      "formula": "LanguageID",
+      "expression_raw": "fsc.LanguageID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L50-L50",
+      "scope": "main"
+    },
+    {
+      "column": "Language",
+      "formula": "Name",
+      "expression_raw": "dl.Name AS Language",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L51-L51",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguageID",
+      "formula": "CommunicationLanguageID",
+      "expression_raw": "fsc.CommunicationLanguageID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L52-L52",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguage",
+      "formula": "Name",
+      "expression_raw": "dcl.Name AS CommunicationLanguage",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L53-L53",
+      "scope": "main"
+    },
+    {
+      "column": "AccountTypeID",
+      "formula": "AccountTypeID",
+      "expression_raw": "fsc.AccountTypeID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L54-L54",
+      "scope": "main"
+    },
+    {
+      "column": "AccountType",
+      "formula": "Name",
+      "expression_raw": "act.Name AS AccountType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L55-L55",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusID",
+      "formula": "GuruStatusID",
+      "expression_raw": "fsc.GuruStatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L56-L56",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusName",
+      "formula": "GuruStatusName",
+      "expression_raw": "gs.GuruStatusName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L57-L57",
+      "scope": "main"
+    },
+    {
+      "column": "IsPI",
+      "formula": "CASE WHEN GuruStatusID > 1 THEN 1 ELSE 0 END",
+      "expression_raw": "CASE\n    WHEN fsc.GuruStatusID > 1 THEN 1\n    ELSE 0\n  END AS IsPI",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L58-L61",
+      "scope": "main"
+    },
+    {
+      "column": "IsPro",
+      "formula": "CASE WHEN MifidCategorizationID in (2,3) THEN 1 else 0 END",
+      "expression_raw": "CASE WHEN fsc.MifidCategorizationID in (2,3) THEN 1 else 0 END AS IsPro",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L62-L62",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusID",
+      "formula": "AccountStatusID",
+      "expression_raw": "fsc.AccountStatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L63-L63",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusName",
+      "formula": "AccountStatusName",
+      "expression_raw": "ast.AccountStatusName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L64-L64",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusID",
+      "formula": "PlayerStatusID",
+      "expression_raw": "fsc.PlayerStatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L65-L65",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusName",
+      "formula": "Name",
+      "expression_raw": "pst.Name AS PlayerStatusName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L66-L66",
+      "scope": "main"
+    },
+    {
+      "column": "CanOpenPosition",
+      "formula": "CanOpenPosition",
+      "expression_raw": "pst.CanOpenPosition",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L67-L67",
+      "scope": "main"
+    },
+    {
+      "column": "CanClosePosition",
+      "formula": "CanClosePosition",
+      "expression_raw": "pst.CanClosePosition",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L68-L68",
+      "scope": "main"
+    },
+    {
+      "column": "CanEditPosition",
+      "formula": "CanEditPosition",
+      "expression_raw": "pst.CanEditPosition",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L69-L69",
+      "scope": "main"
+    },
+    {
+      "column": "CanBeCopied",
+      "formula": "CanBeCopied",
+      "expression_raw": "pst.CanBeCopied",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L70-L70",
+      "scope": "main"
+    },
+    {
+      "column": "CanDeposit",
+      "formula": "CanDeposit",
+      "expression_raw": "pst.CanDeposit",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L71-L71",
+      "scope": "main"
+    },
+    {
+      "column": "CanRequestWithdraw",
+      "formula": "CanRequestWithdraw",
+      "expression_raw": "pst.CanRequestWithdraw",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L72-L72",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonID",
+      "formula": "PlayerStatusReasonID",
+      "expression_raw": "fsc.PlayerStatusReasonID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L73-L73",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonName",
+      "formula": "Name",
+      "expression_raw": "psr.Name AS PlayerStatusReasonName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L74-L74",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonID",
+      "formula": "PlayerStatusSubReasonID",
+      "expression_raw": "fsc.PlayerStatusSubReasonID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L75-L75",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonName",
+      "formula": "PlayerStatusSubReasonName",
+      "expression_raw": "pssr.PlayerStatusSubReasonName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L76-L76",
+      "scope": "main"
+    },
+    {
+      "column": "CitizenshipCountryID",
+      "formula": "CitizenshipCountryID",
+      "expression_raw": "dcu.CitizenshipCountryID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L77-L77",
+      "scope": "main"
+    },
+    {
+      "column": "CitizenshipCountry",
+      "formula": "Name",
+      "expression_raw": "dcz.Name AS CitizenshipCountry",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L78-L78",
+      "scope": "main"
+    },
+    {
+      "column": "AffiliateID",
+      "formula": "AffiliateID",
+      "expression_raw": "dcu.AffiliateID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L79-L79",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_club.sql"
+}

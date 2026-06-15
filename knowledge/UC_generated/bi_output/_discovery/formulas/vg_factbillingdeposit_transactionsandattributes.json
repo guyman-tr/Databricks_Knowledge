@@ -1,0 +1,305 @@
+{
+  "object_fqn": "main.bi_output.vg_factbillingdeposit_transactionsandattributes",
+  "generated_at": "2026-05-19T15:01:28Z",
+  "formula_count": 27,
+  "formulas": [
+    {
+      "column": "CID",
+      "formula": "-- ====================== -- Core identifiers -- ====================== CID",
+      "expression_raw": "-- ======================\n  -- Core identifiers\n  -- ======================\n  fd.CID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L11",
+      "scope": "main"
+    },
+    {
+      "column": "DepositID",
+      "formula": "DepositID",
+      "expression_raw": "fd.DepositID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "FundingType",
+      "formula": "Name",
+      "expression_raw": "x.Name                                           AS FundingType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "PaymentDate",
+      "formula": "-- ====================== -- Dates -- ====================== PaymentDate",
+      "expression_raw": "-- ======================\n  -- Dates\n  -- ======================\n  fd.PaymentDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L14-L18",
+      "scope": "main"
+    },
+    {
+      "column": "ModificationDate",
+      "formula": "ModificationDate",
+      "expression_raw": "fd.ModificationDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "Amount_OriginalCurrency",
+      "formula": "-- ====================== -- Amounts & currency -- ====================== Amount",
+      "expression_raw": "-- ======================\n  -- Amounts & currency\n  -- ======================\n  fd.Amount                                        AS Amount_OriginalCurrency",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L20-L24",
+      "scope": "main"
+    },
+    {
+      "column": "AmountUSD",
+      "formula": "AmountUSD",
+      "expression_raw": "fd.AmountUSD",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "Currency",
+      "formula": "Abbreviation",
+      "expression_raw": "cur.Abbreviation                                 AS Currency",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "BaseExchangeRate",
+      "formula": "BaseExchangeRate",
+      "expression_raw": "fd.BaseExchangeRate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "ExchangeFee",
+      "formula": "ExchangeFee",
+      "expression_raw": "fd.ExchangeFee",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "IsFTD",
+      "formula": "-- ====================== -- Status & approval -- ====================== IsFTD",
+      "expression_raw": "-- ======================\n  -- Status & approval\n  -- ======================\n  fd.IsFTD",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L29-L33",
+      "scope": "main"
+    },
+    {
+      "column": "PaymentStatus",
+      "formula": "Name",
+      "expression_raw": "ps.Name                                          AS PaymentStatus",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_paymentstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    },
+    {
+      "column": "RRE_DeclineReason",
+      "formula": "-- ====================== -- RRE (Risk Rule Engine) - pre-PSP decline -- ====================== Name",
+      "expression_raw": "-- ======================\n  -- RRE (Risk Rule Engine) - pre-PSP decline\n  -- ======================\n  rms.Name                                         AS RRE_DeclineReason",
+      "inputs": [
+        "main.general.bronze_etoro_dictionary_riskmanagementstatus"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L35-L39",
+      "scope": "main"
+    },
+    {
+      "column": "ThreeDS_Result",
+      "formula": "-- ====================== -- 3D Secure -- ====================== CASE WHEN ThreeDsAsJson IS NULL AND ThreeDsResponseType IS NULL THEN 'No 3DS' WHEN ThreeDsResponseType = '1' THE…",
+      "expression_raw": "-- ======================\n  -- 3D Secure\n  -- ======================\n  CASE\n    WHEN fd.ThreeDsAsJson IS NULL AND fd.ThreeDsResponseType IS NULL THEN 'No 3DS'\n    WHEN fd.ThreeDsResponseType = '1' THE…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L40-L50",
+      "scope": "main"
+    },
+    {
+      "column": "ThreeDS_FullJson",
+      "formula": "ThreeDsAsJson",
+      "expression_raw": "fd.ThreeDsAsJson                                 AS ThreeDS_FullJson",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L51-L51",
+      "scope": "main"
+    },
+    {
+      "column": "PSP_Name",
+      "formula": "-- ====================== -- PSP / Provider -- ====================== Name",
+      "expression_raw": "-- ======================\n  -- PSP / Provider\n  -- ======================\n  depot.Name                                       AS PSP_Name",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_billingdepot"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L52-L56",
+      "scope": "main"
+    },
+    {
+      "column": "MerchantAccountID",
+      "formula": "MerchantAccountID",
+      "expression_raw": "fd.MerchantAccountID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L57-L57",
+      "scope": "main"
+    },
+    {
+      "column": "MID_SettingsID",
+      "formula": "ProtocolMIDSettingsID",
+      "expression_raw": "fd.ProtocolMIDSettingsID                         AS MID_SettingsID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L58-L58",
+      "scope": "main"
+    },
+    {
+      "column": "CardBrand_Visa_MC_Amex",
+      "formula": "-- ====================== -- Card - Brand (Visa / MasterCard / Amex / Diners) -- ====================== Name",
+      "expression_raw": "-- ======================\n  -- Card - Brand (Visa / MasterCard / Amex / Diners)\n  -- ======================\n  ct.Name                                          AS CardBrand_Visa_MC_Amex",
+      "inputs": [
+        "main.general.bronze_etoro_dictionary_cardtype"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L59-L63",
+      "scope": "main"
+    },
+    {
+      "column": "CardCategory_Tier_And_Product",
+      "formula": "-- ====================== -- Card - Category / Tier (Classic / Gold / Platinum / Debit / Prepaid / Business) -- ====================== CardCategory AS CardCat…",
+      "expression_raw": "-- ======================\n  -- Card - Category / Tier (Classic / Gold / Platinum / Debit / Prepaid / Business)\n  -- ======================\n  fd.CardCategory                                  AS CardCat…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L64-L68",
+      "scope": "main"
+    },
+    {
+      "column": "BIN_Code",
+      "formula": "-- ====================== -- Card - BIN & issuing bank -- ====================== BinCodeAsString",
+      "expression_raw": "-- ======================\n  -- Card - BIN & issuing bank\n  -- ======================\n  fd.BinCodeAsString                               AS BIN_Code",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L69-L73",
+      "scope": "main"
+    },
+    {
+      "column": "IssuingBank",
+      "formula": "BankNameAsString",
+      "expression_raw": "fd.BankNameAsString                              AS IssuingBank",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L74-L74",
+      "scope": "main"
+    },
+    {
+      "column": "CardIssuingCountry_BIN",
+      "formula": "Name",
+      "expression_raw": "cntry.Name                                       AS CardIssuingCountry_BIN",
+      "inputs": [
+        "main.general.bronze_etoro_dictionary_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L75-L75",
+      "scope": "main"
+    },
+    {
+      "column": "AFT_Supported",
+      "formula": "-- ====================== -- AFT (Account Funding Transaction) -- ====================== CASE WHEN IsAftSupportedAsBool = true THEN 'Yes' ELSE 'No' END",
+      "expression_raw": "-- ======================\n  -- AFT (Account Funding Transaction)\n  -- ======================\n  CASE WHEN fd.IsAftSupportedAsBool = true THEN 'Yes' ELSE 'No' END  AS AFT_Supported",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L76-L80",
+      "scope": "main"
+    },
+    {
+      "column": "AFT_Eligible",
+      "formula": "CASE WHEN IsAftEligibleAsBool = true THEN 'Yes' ELSE 'No' END",
+      "expression_raw": "CASE WHEN fd.IsAftEligibleAsBool = true THEN 'Yes' ELSE 'No' END   AS AFT_Eligible",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L81-L81",
+      "scope": "main"
+    },
+    {
+      "column": "AFT_Processed",
+      "formula": "CASE WHEN IsAftProcessedAsBool = true THEN 'Yes' ELSE 'No' END",
+      "expression_raw": "CASE WHEN fd.IsAftProcessedAsBool = true THEN 'Yes' ELSE 'No' END  AS AFT_Processed",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L82-L82",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": "-- ====================== -- Regulation -- ====================== Name",
+      "expression_raw": "-- ======================\n  -- Regulation\n  -- ======================\n  reg.Name                                         AS Regulation",
+      "inputs": [
+        "main.general.bronze_etoro_dictionary_regulation"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L83-L87",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_factbillingdeposit_transactionsandattributes.sql"
+}

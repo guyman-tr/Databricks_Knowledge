@@ -1,0 +1,164 @@
+{
+  "object_fqn": "main.bi_output.vg_payments_mimo_allplatformddr_genienew",
+  "generated_at": "2026-05-19T15:01:22Z",
+  "concept_count": 6,
+  "concepts": [
+    {
+      "id": "case_flag_fundingtype_txtype_7",
+      "name": "Fundingtype_Txtype_7 computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "Fundingtype_Txtype_7"
+      ],
+      "predicates": [
+        {
+          "col": "IsInternalTransfer",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "MIMOPlatform",
+          "op": "=",
+          "val": "'      '"
+        },
+        {
+          "col": "IsInternalTransfer",
+          "op": "=",
+          "val": "0"
+        },
+        {
+          "col": "IsValidCustomer",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "then_value": "'           '",
+      "else_value": "'            '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.bi_db.bronze_moneytransfer_billing_transfers",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "evidence_lines": "bi_output.sql L19-L52",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_dr",
+      "name": "Dim lookup via dr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "alias": "dr",
+      "join_conditions": [
+        "fsc.DateRangeID = dr.DateRangeID\n      AND bddfmap.DateID BETWEEN dr.FromDateID AND dr.ToDateID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L35",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.DateRangeID = dr.DateRangeID\n      AND bddfmap.DateID BETWEEN dr.FromDateID AND dr.ToDateID"
+    },
+    {
+      "id": "dim_lookup_dc",
+      "name": "Dim lookup via dc",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "alias": "dc",
+      "join_conditions": [
+        "fsc.CountryID = dc.CountryID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L38",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.CountryID = dc.CountryID"
+    },
+    {
+      "id": "dim_lookup_dpl",
+      "name": "Dim lookup via dpl",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "alias": "dpl",
+      "join_conditions": [
+        "fsc.PlayerLevelID = dpl.PlayerLevelID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L40",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.PlayerLevelID = dpl.PlayerLevelID"
+    },
+    {
+      "id": "dim_lookup_dr1",
+      "name": "Dim lookup via dr1",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "alias": "dr1",
+      "join_conditions": [
+        "dr1.DWHRegulationID = fsc.RegulationID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L42",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "dr1.DWHRegulationID = fsc.RegulationID"
+    },
+    {
+      "id": "dim_lookup_dft",
+      "name": "Dim lookup via dft",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype",
+      "alias": "dft",
+      "join_conditions": [
+        "bddfmap.FundingTypeID = dft.FundingTypeID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L44",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "bddfmap.FundingTypeID = dft.FundingTypeID"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_payments_mimo_allplatformddr_genienew.sql"
+}

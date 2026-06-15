@@ -1,0 +1,699 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_duco_eod",
+  "rows": [
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Buy/Sell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "CUSIP",
+      "target_column_name": "CUSIP",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "CUSIP",
+      "target_column_name": "CUSIP",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "IsBuy",
+      "target_column_name": "ClientAmount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "NOP",
+      "target_column_name": "ClientAmount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "ClientAmount",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "ClientUnits",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "IsBuy",
+      "target_column_name": "ClientUnits",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "ClientUnits",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "NOP",
+      "target_column_name": "Clients_NOP_Buy",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Clients_NOP_Buy",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Clients_NOP_Buy",
+      "target_column_name": "Clients_NOP_Buy",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Clients_NOP_Sell",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "NOP",
+      "target_column_name": "Clients_NOP_Sell",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Clients_NOP_Sell",
+      "target_column_name": "Clients_NOP_Sell",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Clients_Units_Buy",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Clients_Units_Buy",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Clients_Units_Buy",
+      "target_column_name": "Clients_Units_Buy",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Clients_Units_Sell",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Clients_Units_Sell",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Clients_Units_Sell",
+      "target_column_name": "Clients_Units_Sell",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Date",
+      "target_column_name": "Date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "FXratetoUSD",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_0",
+      "target_column_name": "FXratetoUSD",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_1",
+      "target_column_name": "FXratetoUSD",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "FXratetoUSD",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "FXratetoUSD",
+      "target_column_name": "FXratetoUSD",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "HedgingPercent",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "HedgingPercent",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "NOP",
+      "target_column_name": "HedgingPercent",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "HedgingPercent",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "HedgingPercent",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "IsBuy",
+      "target_column_name": "HedgingPercent",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "HedgingPercent",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_1",
+      "target_column_name": "HedgingPercent",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_0",
+      "target_column_name": "HedgingPercent",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "HedgingPercent",
+      "target_column_name": "HedgingPercent",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "LiquidityAccountID",
+      "target_column_name": "LiquidityAccountID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "LiquidityAccountID",
+      "target_column_name": "LiquidityAccountID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_hedge_gethedgeserveraccountmapping",
+      "source_column_name": "LiquidityAccountID",
+      "target_column_name": "LiquidityAccountID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "LiquidityAccountID",
+      "target_column_name": "LiquidityAccountID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_liquidityaccounts",
+      "source_column_name": "LiquidityAccountName",
+      "target_column_name": "LiquidityAccountName",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_hedge_gethedgeserveraccountmapping",
+      "source_column_name": "LiquidityAccountName",
+      "target_column_name": "LiquidityAccountName",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "LiquidityAccountName",
+      "target_column_name": "LiquidityAccountName",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "MKTcap",
+      "target_column_name": "MKTcap",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "MKTcap",
+      "target_column_name": "MKTcap",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "SellCurrency",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "SellCurrency",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "UpdateDate",
+      "target_column_name": "UpdateDate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "eToroRate",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "eToroRate",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToroRate",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToroRate",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroRate",
+      "target_column_name": "eToroRate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_0",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_1",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "etr_y",
+      "target_column_name": "etr_y",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "etr_ym",
+      "target_column_name": "etr_ym",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "etr_ymd",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    }
+  ],
+  "generated_at": "2026-05-19T12:24:54Z"
+}

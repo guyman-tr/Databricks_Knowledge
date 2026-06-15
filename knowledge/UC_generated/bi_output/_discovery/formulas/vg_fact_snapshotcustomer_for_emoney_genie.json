@@ -1,0 +1,294 @@
+{
+  "object_fqn": "main.bi_output.vg_fact_snapshotcustomer_for_emoney_genie",
+  "generated_at": "2026-05-19T15:01:28Z",
+  "formula_count": 26,
+  "formulas": [
+    {
+      "column": "FromDateID",
+      "formula": "FromDateID",
+      "expression_raw": "b.FromDateID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "ToDateID",
+      "formula": "ToDateID",
+      "expression_raw": "b.ToDateID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "GCID",
+      "formula": "-- Customer identifiers (valid in snapshot period) GCID",
+      "expression_raw": "-- Customer identifiers (valid in snapshot period)\n    a.GCID      AS GCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L10-L12",
+      "scope": "main"
+    },
+    {
+      "column": "CID",
+      "formula": "RealCID",
+      "expression_raw": "a.RealCID  AS CID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "CountryID_FromDate_ToDate",
+      "formula": "-- Geography & regulation (valid in snapshot period) CountryID",
+      "expression_raw": "-- Geography & regulation (valid in snapshot period)\n    a.CountryID     AS CountryID_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L14-L16",
+      "scope": "main"
+    },
+    {
+      "column": "RegionID_FromDate_ToDate",
+      "formula": "RegionID",
+      "expression_raw": "a.RegionID      AS RegionID_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationID_FromDate_ToDate",
+      "formula": "RegulationID",
+      "expression_raw": "a.RegulationID  AS RegulationID_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "LanguageID_FromDate_ToDate",
+      "formula": "-- Language & communication (valid in snapshot period) LanguageID",
+      "expression_raw": "-- Language & communication (valid in snapshot period)\n    a.LanguageID                AS LanguageID_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L19-L21",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguageID_FromDate_ToDate",
+      "formula": "CommunicationLanguageID",
+      "expression_raw": "a.CommunicationLanguageID   AS CommunicationLanguageID_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevelID_FromDate_ToDate",
+      "formula": "-- Customer status & risk (valid in snapshot period) VerificationLevelID",
+      "expression_raw": "-- Customer status & risk (valid in snapshot period)\n    a.VerificationLevelID   AS VerificationLevelID_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L23-L25",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusID_FromDate_ToDate",
+      "formula": "PlayerStatusID",
+      "expression_raw": "a.PlayerStatusID        AS PlayerStatusID_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "RiskStatusID_FromDate_ToDate",
+      "formula": "RiskStatusID",
+      "expression_raw": "a.RiskStatusID          AS RiskStatusID_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "RiskClassificationID_FromDate_ToDate",
+      "formula": "RiskClassificationID",
+      "expression_raw": "a.RiskClassificationID  AS RiskClassificationID_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusID_FromDate_ToDate",
+      "formula": "AccountStatusID",
+      "expression_raw": "a.AccountStatusID       AS AccountStatusID_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "IsValidCustomer_FromDate_ToDate",
+      "formula": "IsValidCustomer",
+      "expression_raw": "a.IsValidCustomer       AS IsValidCustomer_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "IsEmailVerified_FromDate_ToDate",
+      "formula": "IsEmailVerified",
+      "expression_raw": "a.IsEmailVerified       AS IsEmailVerified_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "IsPhoneVerified_FromDate_ToDate",
+      "formula": "IsPhoneVerified",
+      "expression_raw": "a.IsPhoneVerified       AS IsPhoneVerified_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerLevelID_FromDate_ToDate",
+      "formula": "-- Commercial / segmentation (valid in snapshot period) PlayerLevelID",
+      "expression_raw": "-- Commercial / segmentation (valid in snapshot period)\n    a.PlayerLevelID     AS PlayerLevelID_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L33-L35",
+      "scope": "main"
+    },
+    {
+      "column": "Club_FromDate_ToDate",
+      "formula": "Name",
+      "expression_raw": "c.Name              AS Club_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "AccountTypeID_FromDate_ToDate",
+      "formula": "AccountTypeID",
+      "expression_raw": "a.AccountTypeID     AS AccountTypeID_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L37-L37",
+      "scope": "main"
+    },
+    {
+      "column": "IsDepositor_FromDate_ToDate",
+      "formula": "IsDepositor",
+      "expression_raw": "a.IsDepositor       AS IsDepositor_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusID_FromDate_ToDate",
+      "formula": "GuruStatusID",
+      "expression_raw": "a.GuruStatusID      AS GuruStatusID_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L39-L39",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManagerID_FromDate_ToDate",
+      "formula": "AccountManagerID",
+      "expression_raw": "a.AccountManagerID  AS AccountManagerID_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L40-L40",
+      "scope": "main"
+    },
+    {
+      "column": "City_FromDate_ToDate",
+      "formula": "-- Location (valid in snapshot period) City",
+      "expression_raw": "-- Location (valid in snapshot period)\n    a.City     AS City_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L41-L43",
+      "scope": "main"
+    },
+    {
+      "column": "Address_FromDate_ToDate",
+      "formula": "Address",
+      "expression_raw": "a.Address  AS Address_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L44-L44",
+      "scope": "main"
+    },
+    {
+      "column": "Country_FromDate_ToDate",
+      "formula": "Name",
+      "expression_raw": "d.Name as Country_FromDate_ToDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L45-L45",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_fact_snapshotcustomer_for_emoney_genie.sql"
+}

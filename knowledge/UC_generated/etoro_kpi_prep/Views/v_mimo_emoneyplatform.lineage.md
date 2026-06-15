@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_mimo_emoneyplatform.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_mimo_emoneyplatform.json` (rows: 21, mismatches: 14) |
 | **Primary upstream** | `main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 

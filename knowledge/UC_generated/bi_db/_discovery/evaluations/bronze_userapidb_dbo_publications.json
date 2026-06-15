@@ -1,0 +1,102 @@
+{
+  "object_fqn": "main.bi_db.bronze_userapidb_dbo_publications",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:14:00Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "CID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Tables\\dbo.Publications.md",
+      "upstream_quote": "Primary key. Legacy Customer ID (not GCID). One publication record per user.",
+      "wiki_quote": "Primary key. Legacy Customer ID (not GCID). One publication record per user (Tier 1 — inherited from UserApiDB.dbo.Publi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Sticky",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Tables\\dbo.Publications.md",
+      "upstream_quote": "User's pinned/sticky message shown at top of their profile feed.",
+      "wiki_quote": "User's pinned/sticky message shown at top of their profile feed (Tier 1 — inherited from UserApiDB.dbo.Publications).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AboutMe",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Tables\\dbo.Publications.md",
+      "upstream_quote": "User's \"About Me\" bio text displayed on their profile page.",
+      "wiki_quote": "User's \"About Me\" bio text displayed on their profile page (Tier 1 — inherited from UserApiDB.dbo.Publications).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LanguageCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Tables\\dbo.Publications.md",
+      "upstream_quote": "Language code for the publication content.",
+      "wiki_quote": "Language code for the publication content (Tier 1 — inherited from UserApiDB.dbo.Publications).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StrategyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Tables\\dbo.Publications.md",
+      "upstream_quote": "User's declared trading strategy. Implicit FK to Dictionary.Strategies. See [Strategies](_glossary.md#strategies).",
+      "wiki_quote": "User's declared trading strategy. Implicit FK to Dictionary.Strategies. See [Strategies](_glossary.md#strategies) (Tier ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Trace",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Tables\\dbo.Publications.md",
+      "upstream_quote": "Computed: JSON object with HostName, AppName, SUserName, SPID, DBName, ObjectName. For audit trail.",
+      "wiki_quote": "Computed: JSON object with HostName, AppName, SUserName, SPID, DBName, ObjectName. For audit trail (Tier 1 — inherited f",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidFrom",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Tables\\dbo.Publications.md",
+      "upstream_quote": "System versioning row start (GENERATED ALWAYS AS ROW START).",
+      "wiki_quote": "System versioning row start (GENERATED ALWAYS AS ROW START) (Tier 1 — inherited from UserApiDB.dbo.Publications).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidTo",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Tables\\dbo.Publications.md",
+      "upstream_quote": "System versioning row end (GENERATED ALWAYS AS ROW END).",
+      "wiki_quote": "System versioning row end (GENERATED ALWAYS AS ROW END) (Tier 1 — inherited from UserApiDB.dbo.Publications).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AboutMeShort",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Tables\\dbo.Publications.md",
+      "upstream_quote": "Shortened version of AboutMe for preview/thumbnail display.",
+      "wiki_quote": "Shortened version of AboutMe for preview/thumbnail display (Tier 1 — inherited from UserApiDB.dbo.Publications).",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 9,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 9 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

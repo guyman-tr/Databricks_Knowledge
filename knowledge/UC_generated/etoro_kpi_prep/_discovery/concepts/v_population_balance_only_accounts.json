@@ -1,0 +1,49 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_population_balance_only_accounts",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "dim_lookup_dc",
+      "name": "Dim lookup via dc",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "alias": "dc",
+      "join_conditions": [
+        "op.GCID = dc.GCID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L45",
+      "scopes": [
+        "max_options"
+      ],
+      "scope": "max_options",
+      "join_condition": "op.GCID = dc.GCID"
+    },
+    {
+      "id": "filter_block_maxbalance_tp",
+      "name": "Filter block on maxbalance_tp",
+      "kind": "filter_block",
+      "columns_involved": [
+        "Equity"
+      ],
+      "predicates": [
+        {
+          "col": "Equity",
+          "op": ">",
+          "val": "0"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L24",
+      "scope": "maxbalance_tp",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_balance_only_accounts.sql"
+}

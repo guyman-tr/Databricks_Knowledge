@@ -1,0 +1,50 @@
+{
+  "object_fqn": "main.bi_output.vg_emoney_openbankingdeposit",
+  "generated_at": "2026-05-19T15:01:21Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "case_flag_openbankingdeposit_attempt_status",
+      "name": "OpenBankingDeposit_Attempt_Status computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "OpenBankingDeposit_Attempt_Status"
+      ],
+      "predicates": [
+        {
+          "col": "TransferStatusID",
+          "op": "=",
+          "val": "10"
+        }
+      ],
+      "then_value": "'       '",
+      "else_value": "'                 '",
+      "upstream_enum_decodes": {
+        "TransferStatusID=10": "Received"
+      },
+      "physical_inputs": [
+        "main.bi_db.bronze_moneytransfer_billing_transfers"
+      ],
+      "evidence_lines": "bi_output.sql L11-L15",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_openbankingdeposit_provider",
+      "name": "OpenBankingDeposit_Provider computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "OpenBankingDeposit_Provider"
+      ],
+      "predicates": [],
+      "then_value": "'    '",
+      "else_value": "'     '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.bi_db.bronze_moneytransfer_billing_transfers"
+      ],
+      "evidence_lines": "bi_output.sql L17-L21",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_emoney_openbankingdeposit.sql"
+}

@@ -1,0 +1,272 @@
+{
+  "object_fqn": "main.etoro_kpi.ddr_mimo_v",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 24,
+  "formulas": [
+    {
+      "column": "DateID",
+      "formula": "DateID",
+      "expression_raw": "map.DateID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "Date",
+      "formula": "map.`Date`",
+      "expression_raw": "map.`Date`",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "WeekNumberYear",
+      "formula": "WeekNumberYear",
+      "expression_raw": "dd.WeekNumberYear",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYearMonth",
+      "formula": "CalendarYearMonth",
+      "expression_raw": "dd.CalendarYearMonth",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarQuarter",
+      "formula": "CalendarQuarter",
+      "expression_raw": "dd.CalendarQuarter",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYear",
+      "formula": "CalendarYear",
+      "expression_raw": "dd.CalendarYear",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": "STRING(RealCID)",
+      "expression_raw": "STRING(map.RealCID) AS RealCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "MIMOAction",
+      "formula": "MIMOAction",
+      "expression_raw": "map.MIMOAction",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "OrigIdentifier",
+      "formula": "OrigIdentifier",
+      "expression_raw": "map.OrigIdentifier",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "TransactionID",
+      "formula": "TransactionID",
+      "expression_raw": "map.TransactionID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "AmountUSD",
+      "formula": "AmountUSD",
+      "expression_raw": "map.AmountUSD",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "AmountOrigCurrency",
+      "formula": "AmountOrigCurrency",
+      "expression_raw": "map.AmountOrigCurrency",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "FundingTypeID",
+      "formula": "FundingTypeID",
+      "expression_raw": "map.FundingTypeID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "CurrencyID",
+      "formula": "CurrencyID",
+      "expression_raw": "map.CurrencyID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "Currency",
+      "formula": "Currency",
+      "expression_raw": "map.Currency",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "IsPlatformFTD",
+      "formula": "IsPlatformFTD",
+      "expression_raw": "map.IsPlatformFTD",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "IsInternalTransfer",
+      "formula": "IsInternalTransfer",
+      "expression_raw": "map.IsInternalTransfer",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "IsRedeem",
+      "formula": "IsRedeem",
+      "expression_raw": "map.IsRedeem",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "IsTradeFromIBAN",
+      "formula": "IsTradeFromIBAN",
+      "expression_raw": "map.IsTradeFromIBAN",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "MIMOPlatform",
+      "formula": "MIMOPlatform",
+      "expression_raw": "map.MIMOPlatform",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "IsGlobalFTD",
+      "formula": "IsGlobalFTD",
+      "expression_raw": "map.IsGlobalFTD",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "IsCryptoToFiat",
+      "formula": "IsCryptoToFiat",
+      "expression_raw": "map.IsCryptoToFiat",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "IsRecurring",
+      "formula": "IsRecurring",
+      "expression_raw": "map.IsRecurring",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "IsIBANQuickTransfer",
+      "formula": "IsIBANQuickTransfer",
+      "expression_raw": "map.IsIBANQuickTransfer",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/ddr_mimo_v.sql"
+}

@@ -1,0 +1,74 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_revenue_ticketfee_bypercent",
+  "generated_at": "2026-05-18T16:27:37Z",
+  "formula_count": 6,
+  "formulas": [
+    {
+      "column": "PositionID",
+      "formula": "CAST(PositionID AS BIGINT)",
+      "expression_raw": "CAST(fhc.PositionID AS BIGINT) AS PositionID",
+      "inputs": [
+        "main.general.bronze_historycosts_history_costs"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L11-L11",
+      "scope": "before_20260308_open"
+    },
+    {
+      "column": "RealCID",
+      "formula": "CAST(RealCID AS INT)",
+      "expression_raw": "CAST(fcapd.RealCID AS INT) AS RealCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L12-L12",
+      "scope": "before_20260308_open"
+    },
+    {
+      "column": "Occurred",
+      "formula": "Occurred",
+      "expression_raw": "fhc.Occurred",
+      "inputs": [
+        "main.general.bronze_historycosts_history_costs"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "before_20260308_open"
+    },
+    {
+      "column": "DateID",
+      "formula": "CAST(DATE_FORMAT(Occurred, 'yyyyMMdd') AS INT)",
+      "expression_raw": "CAST(DATE_FORMAT(fhc.Occurred, 'yyyyMMdd') AS INT) AS DateID",
+      "inputs": [
+        "main.general.bronze_historycosts_history_costs"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L14-L14",
+      "scope": "before_20260308_open"
+    },
+    {
+      "column": "TicketFeeByPercent",
+      "formula": "CAST(CASE WHEN CAST(DATE_FORMAT(Occurred, 'yyyyMMdd') AS INT) < 20250525 THEN 0 ELSE ValueInAccountCurrency END AS DECIMAL(38, 6))",
+      "expression_raw": "CAST(CASE WHEN CAST(DATE_FORMAT(fhc.Occurred, 'yyyyMMdd') AS INT) < 20250525 THEN 0\n              ELSE fhc.ValueInAccountCurrency END AS DECIMAL(38, 6)) AS TicketFeeByPercent",
+      "inputs": [
+        "main.general.bronze_historycosts_history_costs"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L15-L16",
+      "scope": "before_20260308_open"
+    },
+    {
+      "column": "ActionType",
+      "formula": "'Open'",
+      "expression_raw": "'Open' AS ActionType",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L17-L17",
+      "scope": "before_20260308_open"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_revenue_ticketfee_bypercent.sql"
+}

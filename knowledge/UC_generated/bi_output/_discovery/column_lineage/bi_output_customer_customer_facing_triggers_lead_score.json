@@ -1,0 +1,167 @@
+{
+  "object": "main.bi_output.bi_output_customer_customer_facing_triggers_lead_score",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "FTD_Date",
+      "entity_type": "JOB",
+      "event_count": 264
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_firstcustomeraction",
+      "source_column_name": "FirstOccurred",
+      "target_column_name": "FirstAction",
+      "entity_type": "JOB",
+      "event_count": 198
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "FirstAction",
+      "entity_type": "JOB",
+      "event_count": 43
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "FirstTimeClub",
+      "entity_type": "JOB",
+      "event_count": 198
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "FirstTimeClub",
+      "entity_type": "JOB",
+      "event_count": 43
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_triggers_lead_score",
+      "source_column_name": "IsControl",
+      "target_column_name": "IsControl",
+      "entity_type": "JOB",
+      "event_count": 198
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "MarketingRegionManualName",
+      "target_column_name": "IsControl",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_kyc_score_cid_level",
+      "source_column_name": "Cluster",
+      "target_column_name": "IsControl",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_triggers_lead_score",
+      "source_column_name": "KYC_Date",
+      "target_column_name": "KYC_Date",
+      "entity_type": "JOB",
+      "event_count": 198
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_kyc_panel",
+      "source_column_name": "KYC_LastUpdateDate",
+      "target_column_name": "KYC_Date",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_triggers_lead_score",
+      "source_column_name": "MarketingRegionManualName",
+      "target_column_name": "MarketingRegionManualName",
+      "entity_type": "JOB",
+      "event_count": 198
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "MarketingRegionManualName",
+      "target_column_name": "MarketingRegionManualName",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_triggers_lead_score",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": "JOB",
+      "event_count": 198
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_kyc_score_cid_level",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "TriggerDate",
+      "entity_type": "JOB",
+      "event_count": 172
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "TriggerName",
+      "entity_type": "JOB",
+      "event_count": 172
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 172
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_y",
+      "entity_type": "JOB",
+      "event_count": 129
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_triggers_lead_score",
+      "source_column_name": "KYC_Date",
+      "target_column_name": "etr_y",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ym",
+      "entity_type": "JOB",
+      "event_count": 129
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_triggers_lead_score",
+      "source_column_name": "KYC_Date",
+      "target_column_name": "etr_ym",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ymd",
+      "entity_type": "JOB",
+      "event_count": 129
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_triggers_lead_score",
+      "source_column_name": "KYC_Date",
+      "target_column_name": "etr_ymd",
+      "entity_type": "JOB",
+      "event_count": 66
+    }
+  ],
+  "generated_at": "2026-05-19T14:19:11Z"
+}

@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_mimo_tradingplatform.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_mimo_tradingplatform.json` (rows: 19, mismatches: 13) |
 | **Primary upstream** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 

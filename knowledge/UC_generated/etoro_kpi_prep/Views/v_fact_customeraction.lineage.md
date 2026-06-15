@@ -7,13 +7,13 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_fact_customeraction.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_fact_customeraction.json` (rows: 79, mismatches: 11) |
 | **Primary upstream** | `main.trading.bronze_etoro_history_positionchangelog` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 
 | Upstream UC Object | Role | Upstream Wiki |
 |--------------------|------|---------------|
-| `main.trading.bronze_etoro_history_positionchangelog` | Primary (FROM) | ✓ `knowledge\ProdSchemas\DB_Schema\etoro\Wiki\History\Views\History.PositionChangeLog.md` |
+| `main.trading.bronze_etoro_history_positionchangelog` | Primary (FROM) | ✓ `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/History/Views/History.PositionChangeLog.md` |
 | `main.dwh.dim_position` | JOIN / referenced | ✗ `(no wiki found)` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\DWH_dbo\Tables\Fact_CustomerAction.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\DWH_dbo\Tables\Fact_CustomerAction.md` |

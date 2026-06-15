@@ -1,0 +1,109 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_price_exchange",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:40Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "ExchangeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.Exchange.md",
+      "upstream_quote": "Primary key. Integer identifier assigned manually (not IDENTITY). Organizes by data-provider context: 1-2 = Xignite virt",
+      "wiki_quote": "Primary key. Integer identifier assigned manually (not IDENTITY). Organizes by data-provider context: 1-2 = Xignite virt",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Name",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.Exchange.md",
+      "upstream_quote": "Short exchange code name (up to 16 chars). Used in operations tooling and GetTickerInfo output. Not always an ISO standa",
+      "wiki_quote": "Short exchange code name (up to 16 chars). Used in operations tooling and GetTickerInfo output. Not always an ISO standa",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Description",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.Exchange.md",
+      "upstream_quote": "Human-readable full exchange name. Some have minor typos from original data entry (e.g., \"Eurpoe CHIX\", \"Exchnage\"). Dis",
+      "wiki_quote": "Human-readable full exchange name. Some have minor typos from original data entry (e.g., \"Eurpoe CHIX\", \"Exchnage\"). Dis",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Mic",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.Exchange.md",
+      "upstream_quote": "Market Identifier Code (ISO 10383). Standard 4-character exchange identifier used by Bloomberg, regulatory reporting, an",
+      "wiki_quote": "Market Identifier Code (ISO 10383). Standard 4-character exchange identifier used by Bloomberg, regulatory reporting, an",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.Exchange.md",
+      "upstream_quote": "FK to Dictionary.Country. Geographic country of the exchange. CountryID=0 for exchanges without a resolved country mappi",
+      "wiki_quote": "FK to Dictionary.Country. Geographic country of the exchange. CountryID=0 for exchanges without a resolved country mappi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DbLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.Exchange.md",
+      "upstream_quote": "Computed: SQL Server login of last row modifier. Auto-set on every DML.",
+      "wiki_quote": "Computed: SQL Server login of last row modifier. Auto-set on every DML (Tier 1 — inherited from etoro.Price.Exchange).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AppLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.Exchange.md",
+      "upstream_quote": "Computed: application identity from context_info(). Populated when the calling service sets context_info before DML.",
+      "wiki_quote": "Computed: application identity from context_info(). Populated when the calling service sets context_info before DML (Tie",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysStartTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.Exchange.md",
+      "upstream_quote": "Temporal row validity start. Auto-managed by SQL Server system versioning.",
+      "wiki_quote": "Temporal row validity start. Auto-managed by SQL Server system versioning (Tier 1 — inherited from etoro.Price.Exchange)",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysEndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.Exchange.md",
+      "upstream_quote": "Temporal row validity end. Historical versions in History.Exchange.",
+      "wiki_quote": "Temporal row validity end. Historical versions in History.Exchange (Tier 1 — inherited from etoro.Price.Exchange).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Ric",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.Exchange.md",
+      "upstream_quote": "Reuters/Refinitiv exchange suffix appended to RIC tickers (e.g., AAPL.N where N = NYSE). NULL for exchanges not availabl",
+      "wiki_quote": "Reuters/Refinitiv exchange suffix appended to RIC tickers (e.g., AAPL.N where N = NYSE). NULL for exchanges not availabl",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 10,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 10 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

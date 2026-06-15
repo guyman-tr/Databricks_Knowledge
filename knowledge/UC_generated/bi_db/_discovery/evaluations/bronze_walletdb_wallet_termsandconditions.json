@@ -1,0 +1,81 @@
+{
+  "object_fqn": "main.bi_db.bronze_walletdb_wallet_termsandconditions",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:14:07Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TermsAndConditions.md",
+      "upstream_quote": "Auto-incrementing surrogate primary key. Referenced by Wallet.CustomerTermsAndConditions to record which version a user ",
+      "wiki_quote": "Auto-incrementing surrogate primary key. Referenced by Wallet.CustomerTermsAndConditions to record which version a user ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Version",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TermsAndConditions.md",
+      "upstream_quote": "Version identifier string (e.g., \"V1\", \"V2\", \"V3\"). Combined with TypeId forms a unique business key. Sequential version",
+      "wiki_quote": "Version identifier string (e.g., \"V1\", \"V2\", \"V3\"). Combined with TypeId forms a unique business key. Sequential version",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Url",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TermsAndConditions.md",
+      "upstream_quote": "URL to the PDF document containing the full T&C text. Hosted on eToro domains (etorox.com, etoro.com). Used to present t",
+      "wiki_quote": "URL to the PDF document containing the full T&C text. Hosted on eToro domains (etorox.com, etoro.com). Used to present t",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occured",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TermsAndConditions.md",
+      "upstream_quote": "Timestamp when this T&C version was published/inserted. Note: column name contains a typo (\"Occured\" instead of \"Occurre",
+      "wiki_quote": "Timestamp when this T&C version was published/inserted. Note: column name contains a typo (\"Occured\" instead of \"Occurre",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TermsAndConditions.md",
+      "upstream_quote": "Legal entity type identifier that scopes this T&C version. Different eToro entities (eToroX, eToroUS, eToroEU, etc.) may",
+      "wiki_quote": "Legal entity type identifier that scopes this T&C version. Different eToro entities (eToroX, eToroUS, eToroEU, etc.) may",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LinksJson",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TermsAndConditions.md",
+      "upstream_quote": "JSON object containing associated legal links: feesAndLimitsUrl, termsOfUseUrl, sendTransactionWarningLink, customerSupp",
+      "wiki_quote": "JSON object containing associated legal links: feesAndLimitsUrl, termsOfUseUrl, sendTransactionWarningLink, customerSupp",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 6,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 6 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

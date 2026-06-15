@@ -1,0 +1,95 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_payments",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:21Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Payments.md",
+      "upstream_quote": "Auto-incrementing primary key. FK target for Wallet.PaymentStatuses, Wallet.PaymentTransactions, and Wallet.Chargebacks.",
+      "wiki_quote": "Auto-incrementing primary key. FK target for Wallet.PaymentStatuses, Wallet.PaymentTransactions, and Wallet.Chargebacks ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Payments.md",
+      "upstream_quote": "The customer's wallet receiving the purchased crypto. FK to Wallet.Wallets.WalletId.",
+      "wiki_quote": "The customer's wallet receiving the purchased crypto. FK to Wallet.Wallets.WalletId (Tier 1 — inherited from WalletDB.Wa",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProviderPaymentId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Payments.md",
+      "upstream_quote": "Payment identifier assigned by the external payment provider. Used for reconciliation and provider API calls.",
+      "wiki_quote": "Payment identifier assigned by the external payment provider. Used for reconciliation and provider API calls (Tier 1 — i",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Payments.md",
+      "upstream_quote": "Fiat amount of the payment. Denominated in the currency specified by FiatId (e.g., 125 EUR).",
+      "wiki_quote": "Fiat amount of the payment. Denominated in the currency specified by FiatId (e.g., 125 EUR) (Tier 1 — inherited from Wal",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FiatId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Payments.md",
+      "upstream_quote": "The fiat currency used for payment: 1=USD, 2=EUR, 3=GBP, 5=AUD. FK to Wallet.FiatTypes.Id.",
+      "wiki_quote": "The fiat currency used for payment: 1=USD, 2=EUR, 3=GBP, 5=AUD. FK to Wallet.FiatTypes.Id (Tier 1 — inherited from Walle",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CorrelationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Payments.md",
+      "upstream_quote": "Links to the parent request in Wallet.Requests.CorrelationId.",
+      "wiki_quote": "Links to the parent request in Wallet.Requests.CorrelationId (Tier 1 — inherited from WalletDB.Wallet.Payments).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Payments.md",
+      "upstream_quote": "Timestamp when the payment was initiated.",
+      "wiki_quote": "Timestamp when the payment was initiated (Tier 1 — inherited from WalletDB.Wallet.Payments).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Payments.md",
+      "upstream_quote": "The cryptocurrency being purchased. FK to Wallet.CryptoTypes.CryptoID.",
+      "wiki_quote": "The cryptocurrency being purchased. FK to Wallet.CryptoTypes.CryptoID (Tier 1 — inherited from WalletDB.Wallet.Payments)",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 8,
+    "B": 0,
+    "C": 6,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 8 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 6 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

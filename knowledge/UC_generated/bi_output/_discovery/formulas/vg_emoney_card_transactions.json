@@ -1,0 +1,107 @@
+{
+  "object_fqn": "main.bi_output.vg_emoney_card_transactions",
+  "generated_at": "2026-05-19T15:01:27Z",
+  "formula_count": 9,
+  "formulas": [
+    {
+      "column": "CID",
+      "formula": "CID",
+      "expression_raw": "CID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "CardTransaction_Time",
+      "formula": "TxStatusModificationTime",
+      "expression_raw": "TxStatusModificationTime      as CardTransaction_Time",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "CardTransaction_Type",
+      "formula": "TxType",
+      "expression_raw": "TxType                        as CardTransaction_Type",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "CardTransaction_USDAmount",
+      "formula": "USDAmountApprox",
+      "expression_raw": "USDAmountApprox               as CardTransaction_USDAmount",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "CardTransaction_Local_Amount",
+      "formula": "LocalAmount",
+      "expression_raw": "LocalAmount                   as CardTransaction_Local_Amount",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "CardTransaction_Local_Currency",
+      "formula": "LocalCurrencyDesc",
+      "expression_raw": "LocalCurrencyDesc             as CardTransaction_Local_Currency",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "CardTransaction_Club_AtTx",
+      "formula": "ClubTxDate",
+      "expression_raw": "ClubTxDate                    as CardTransaction_Club_AtTx",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "CardTransaction_Country_AtTx",
+      "formula": "CountryTxDate",
+      "expression_raw": "CountryTxDate                 as CardTransaction_Country_AtTx",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "CardTransaction_Regulation_AtTx",
+      "formula": "RegulationTxDate",
+      "expression_raw": "RegulationTxDate              as CardTransaction_Regulation_AtTx",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_emoney_card_transactions.sql"
+}

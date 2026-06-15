@@ -1,0 +1,923 @@
+{
+  "object": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu",
+  "rows": [
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "AS",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "AmountRatio",
+      "target_column_name": "ActivityAmountRatio",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "PriceRatio",
+      "target_column_name": "ActivityPriceRatio",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody_resolver",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "CUSIP",
+      "target_column_name": "CUSIP",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "PositionPnL",
+      "target_column_name": "ClosingBalanceOmniUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "ClosingBalanceOmniUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "ClosingBalanceOmniUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "Amount",
+      "target_column_name": "ClosingBalanceOmniUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "ClosingBalanceOmniUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "ClosingBalanceOmniUnits",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "ClosingBalanceOmniUnits",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "PositionPnL",
+      "target_column_name": "ClosingBalanceTotalCustodyUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "Amount",
+      "target_column_name": "ClosingBalanceTotalCustodyUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "ClosingBalanceTotalCustodyUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "ClosingBalanceTotalCustodyUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "ClosingBalanceTotalCustodyUnits",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "ClosingNonFCA",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "Currency",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "CustodyBalanceDelta",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "PriceRatio",
+      "target_column_name": "CustodyBalanceDelta",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "CustodyBalanceDelta",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "CustodyBalanceDelta",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "CustodyIn",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "CustodyIn",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "CustodyInAdjusted",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "CustodyInAdjusted",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "AmountRatio",
+      "target_column_name": "CustodyInAdjusted",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "CustodyNetMove",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "CustodyNetMove",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "AmountRatio",
+      "target_column_name": "CustodyNetMoveAdjusted",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "CustodyNetMoveAdjusted",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "CustodyNetMoveAdjusted",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "CustodyOut",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "CustodyOut",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "CustodyOutAdjusted",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "CustodyOutAdjusted",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "AmountRatio",
+      "target_column_name": "CustodyOutAdjusted",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "Equilendid",
+      "target_column_name": "EquilendID",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "ID",
+      "entity_type": "JOB",
+      "event_count": 63
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody_resolver",
+      "source_column_name": "CID",
+      "target_column_name": "ID",
+      "entity_type": "JOB",
+      "event_count": 63
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu",
+      "source_column_name": "CID",
+      "target_column_name": "ID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu",
+      "source_column_name": "LedgerClosingDate",
+      "target_column_name": "ID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "ID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISIN",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_history_instrumentmetadata",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISIN",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Name",
+      "target_column_name": "InstrumentName",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "IsCreditReportValidCB",
+      "target_column_name": "IsCreditReportValidCB",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "IsGapBalance",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "PriceRatio",
+      "target_column_name": "IsGapBalance",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "IsGapBalance",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "IsGapBalance",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody_resolver",
+      "source_column_name": "CID",
+      "target_column_name": "IsMissingClosing",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody_resolver",
+      "source_column_name": "CID",
+      "target_column_name": "IsMissingOpening",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "PriceRatio",
+      "target_column_name": "IsRatio",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "IsValidCustomer",
+      "target_column_name": "IsValidCustomer",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "IsZeroPrice",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "LedgerClosingDate",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "LedgerOpeningDate",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingAvailiableClosingUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "PositionPnL",
+      "target_column_name": "LendingAvailiableClosingUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "LendingAvailiableClosingUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "Amount",
+      "target_column_name": "LendingAvailiableClosingUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingAvailiableClosingUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingAvailiableClosingUnits",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingAvailiableClosingUnits",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "PositionPnL",
+      "target_column_name": "LendingAvailiableOpeningUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "Amount",
+      "target_column_name": "LendingAvailiableOpeningUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingAvailiableOpeningUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "LendingAvailiableOpeningUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingAvailiableOpeningUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingAvailiableOpeningUnits",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingAvailiableOpeningUnits",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingIn",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingIn",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingNetMove",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingNetMove",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingOut",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingOut",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "LendingTotalClosingBalanceUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingTotalClosingBalanceUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "Amount",
+      "target_column_name": "LendingTotalClosingBalanceUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "PositionPnL",
+      "target_column_name": "LendingTotalClosingBalanceUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingTotalClosingBalanceUnits",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingTotalOpeningBalanceUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "LendingTotalOpeningBalanceUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "PositionPnL",
+      "target_column_name": "LendingTotalOpeningBalanceUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "Amount",
+      "target_column_name": "LendingTotalOpeningBalanceUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "LendingTotalOpeningBalanceUnits",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "CURRENCY_KY",
+      "target_column_name": "LoanCurrency",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "Quantity",
+      "target_column_name": "LoanUnits",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "LoansClosingDate",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "LoansOpeningDate",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "LoansUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "Quantity",
+      "target_column_name": "LoansUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "PositionPnL",
+      "target_column_name": "LoansUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "Amount",
+      "target_column_name": "LoansUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "Quantity",
+      "target_column_name": "LoansUnitsPrev",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "NOP",
+      "target_column_name": "NOP",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "OpeningBalanceOmniUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "OpeningBalanceOmniUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "Amount",
+      "target_column_name": "OpeningBalanceOmniUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "OpeningBalanceOmniUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "PositionPnL",
+      "target_column_name": "OpeningBalanceOmniUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "OpeningBalanceOmniUnits",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "OpeningBalanceOmniUnits",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "Amount",
+      "target_column_name": "OpeningBalanceTotalCustodyUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "OpeningBalanceTotalCustodyUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "PositionPnL",
+      "target_column_name": "OpeningBalanceTotalCustodyUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "OpeningBalanceTotalCustodyUSD",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "OpeningBalanceTotalCustodyUnits",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "OpeningNonFCA",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "OptInClosingDate",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "OptInOpeningDate",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "PositionPnL",
+      "target_column_name": "PriceEstimated",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "Amount",
+      "target_column_name": "PriceEstimated",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "PriceEstimated",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "PriceRatio",
+      "target_column_name": "PriceRatioClosing",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "PriceRatio",
+      "target_column_name": "PriceRatioOpening",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "UnitsWithSplitRatioClosing",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "PriceRatio",
+      "target_column_name": "UnitsWithSplitRatioClosing",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "UnitsWithSplitRatioOpening",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "PriceRatio",
+      "target_column_name": "UnitsWithSplitRatioOpening",
+      "entity_type": "JOB",
+      "event_count": 93
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_y",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ym",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ymd",
+      "entity_type": "JOB",
+      "event_count": 61
+    }
+  ],
+  "generated_at": "2026-05-19T14:33:38Z"
+}

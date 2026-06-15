@@ -1,0 +1,777 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_club_offers",
+  "generated_at": "2026-05-19T15:01:26Z",
+  "formula_count": 64,
+  "formulas": [
+    {
+      "column": "RealCID",
+      "formula": "-- ========================================================================== -- Source: information_schema.views.view_definition -- Object: bi_output.bi_output_vg_club_offers -- Captured: 2026-0…",
+      "expression_raw": "-- ==========================================================================\n-- Source: information_schema.views.view_definition\n-- Object: main.bi_output.bi_output_vg_club_offers\n-- Captured: 2026-0…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L1-L7",
+      "scope": "main"
+    },
+    {
+      "column": "OfferID",
+      "formula": ",OfferID",
+      "expression_raw": ",clb.OfferID",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "OfferName",
+      "formula": ",OfferID ,OfferName",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L9",
+      "scope": "main"
+    },
+    {
+      "column": "Inventorytype",
+      "formula": ",OfferID ,OfferName ,Inventorytype",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L10",
+      "scope": "main"
+    },
+    {
+      "column": "DeliveryMethod",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L11",
+      "scope": "main"
+    },
+    {
+      "column": "Type",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L12",
+      "scope": "main"
+    },
+    {
+      "column": "SubType",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L13",
+      "scope": "main"
+    },
+    {
+      "column": "Category",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L14",
+      "scope": "main"
+    },
+    {
+      "column": "StartDate",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L15",
+      "scope": "main"
+    },
+    {
+      "column": "IsEligble",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L16",
+      "scope": "main"
+    },
+    {
+      "column": "HasOffer",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L17",
+      "scope": "main"
+    },
+    {
+      "column": "CountryCriteria",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L18",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationCriteria",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L19",
+      "scope": "main"
+    },
+    {
+      "column": "ClubCriteria",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L20",
+      "scope": "main"
+    },
+    {
+      "column": "LanguageCriteria",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L21",
+      "scope": "main"
+    },
+    {
+      "column": "ExcludeCountryCriteria",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L22",
+      "scope": "main"
+    },
+    {
+      "column": "ActivationDate",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L23",
+      "scope": "main"
+    },
+    {
+      "column": "CancellationDate",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L24",
+      "scope": "main"
+    },
+    {
+      "column": "CancellationReason",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L25",
+      "scope": "main"
+    },
+    {
+      "column": "ToBeCancelled",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L26",
+      "scope": "main"
+    },
+    {
+      "column": "SendCouponDate",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L27",
+      "scope": "main"
+    },
+    {
+      "column": "AssetStatus",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L28",
+      "scope": "main"
+    },
+    {
+      "column": "ClaimedDate",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L29",
+      "scope": "main"
+    },
+    {
+      "column": "IsEligbleOnRequest",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L30",
+      "scope": "main"
+    },
+    {
+      "column": "RequestedBy",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L31",
+      "scope": "main"
+    },
+    {
+      "column": "Active",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L32",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerLevelID",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L33",
+      "scope": "main"
+    },
+    {
+      "column": "ClubTier",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L34",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationID",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L35",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L36",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevelID",
+      "formula": ",OfferID ,OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCrite…",
+      "expression_raw": ",clb.OfferID\n ,clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L37",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel",
+      "formula": ",OfferName ,Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCriteria ,Club…",
+      "expression_raw": ",clb.OfferName\n ,clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCriteria\n ,clb.Club…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L38",
+      "scope": "main"
+    },
+    {
+      "column": "CountryID",
+      "formula": ",Inventorytype ,DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCriteria ,ClubCriteria ,L…",
+      "expression_raw": ",clb.Inventorytype\n ,clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCriteria\n ,clb.ClubCriteria\n ,clb.L…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L10-L39",
+      "scope": "main"
+    },
+    {
+      "column": "Country",
+      "formula": ",DeliveryMethod ,Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCriteria ,ClubCriteria ,LanguageCriteria ,cl…",
+      "expression_raw": ",clb.DeliveryMethod\n ,clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCriteria\n ,clb.ClubCriteria\n ,clb.LanguageCriteria\n ,cl…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L11-L40",
+      "scope": "main"
+    },
+    {
+      "column": "Region",
+      "formula": ",Type ,SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCriteria ,ClubCriteria ,LanguageCriteria ,ExcludeCountryCrite…",
+      "expression_raw": ",clb.Type\n ,clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCriteria\n ,clb.ClubCriteria\n ,clb.LanguageCriteria\n ,clb.ExcludeCountryCrite…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L12-L41",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManagerID",
+      "formula": ",SubType ,Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCriteria ,ClubCriteria ,LanguageCriteria ,ExcludeCountryCriteria ,A…",
+      "expression_raw": ",clb.SubType\n ,clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCriteria\n ,clb.ClubCriteria\n ,clb.LanguageCriteria\n ,clb.ExcludeCountryCriteria\n ,clb.A…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L13-L42",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManager",
+      "formula": ",Category ,StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCriteria ,ClubCriteria ,LanguageCriteria ,ExcludeCountryCriteria ,ActivationDate …",
+      "expression_raw": ",clb.Category\n ,clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCriteria\n ,clb.ClubCriteria\n ,clb.LanguageCriteria\n ,clb.ExcludeCountryCriteria\n ,clb.ActivationDate\n…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L14-L43",
+      "scope": "main"
+    },
+    {
+      "column": "LanguageID",
+      "formula": ",StartDate ,IsEligble ,HasOffer ,CountryCriteria ,RegulationCriteria ,ClubCriteria ,LanguageCriteria ,ExcludeCountryCriteria ,ActivationDate ,Cancellat…",
+      "expression_raw": ",clb.StartDate\n ,clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCriteria\n ,clb.ClubCriteria\n ,clb.LanguageCriteria\n ,clb.ExcludeCountryCriteria\n ,clb.ActivationDate\n ,clb.Cancellat…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L15-L44",
+      "scope": "main"
+    },
+    {
+      "column": "Language",
+      "formula": ",IsEligble ,HasOffer ,CountryCriteria ,RegulationCriteria ,ClubCriteria ,LanguageCriteria ,ExcludeCountryCriteria ,ActivationDate ,CancellationDate ,Ca…",
+      "expression_raw": ",clb.IsEligble\n ,clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCriteria\n ,clb.ClubCriteria\n ,clb.LanguageCriteria\n ,clb.ExcludeCountryCriteria\n ,clb.ActivationDate\n ,clb.CancellationDate\n ,clb.Ca…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L16-L45",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguageID",
+      "formula": ",HasOffer ,CountryCriteria ,RegulationCriteria ,ClubCriteria ,LanguageCriteria ,ExcludeCountryCriteria ,ActivationDate ,CancellationDate ,CancellationReason…",
+      "expression_raw": ",clb.HasOffer\n ,clb.CountryCriteria\n ,clb.RegulationCriteria\n ,clb.ClubCriteria\n ,clb.LanguageCriteria\n ,clb.ExcludeCountryCriteria\n ,clb.ActivationDate\n ,clb.CancellationDate\n ,clb.CancellationReason…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L17-L46",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguage",
+      "formula": ",CountryCriteria ,RegulationCriteria ,ClubCriteria ,LanguageCriteria ,ExcludeCountryCriteria ,ActivationDate ,CancellationDate ,CancellationReason ,ToBeCanc…",
+      "expression_raw": ",clb.CountryCriteria\n ,clb.RegulationCriteria\n ,clb.ClubCriteria\n ,clb.LanguageCriteria\n ,clb.ExcludeCountryCriteria\n ,clb.ActivationDate\n ,clb.CancellationDate\n ,clb.CancellationReason\n ,clb.ToBeCanc…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L18-L47",
+      "scope": "main"
+    },
+    {
+      "column": "AccountTypeID",
+      "formula": ",RegulationCriteria ,ClubCriteria ,LanguageCriteria ,ExcludeCountryCriteria ,ActivationDate ,CancellationDate ,CancellationReason ,ToBeCancelled ,SendCoupon…",
+      "expression_raw": ",clb.RegulationCriteria\n ,clb.ClubCriteria\n ,clb.LanguageCriteria\n ,clb.ExcludeCountryCriteria\n ,clb.ActivationDate\n ,clb.CancellationDate\n ,clb.CancellationReason\n ,clb.ToBeCancelled\n ,clb.SendCoupon…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L19-L48",
+      "scope": "main"
+    },
+    {
+      "column": "AccountType",
+      "formula": ",ClubCriteria ,LanguageCriteria ,ExcludeCountryCriteria ,ActivationDate ,CancellationDate ,CancellationReason ,ToBeCancelled ,SendCouponDate ,AssetStatus ,…",
+      "expression_raw": ",clb.ClubCriteria\n ,clb.LanguageCriteria\n ,clb.ExcludeCountryCriteria\n ,clb.ActivationDate\n ,clb.CancellationDate\n ,clb.CancellationReason\n ,clb.ToBeCancelled\n ,clb.SendCouponDate\n ,clb.AssetStatus\n ,…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L20-L49",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusID",
+      "formula": ",LanguageCriteria ,ExcludeCountryCriteria ,ActivationDate ,CancellationDate ,CancellationReason ,ToBeCancelled ,SendCouponDate ,AssetStatus ,ClaimedDate ,c…",
+      "expression_raw": ",clb.LanguageCriteria\n ,clb.ExcludeCountryCriteria\n ,clb.ActivationDate\n ,clb.CancellationDate\n ,clb.CancellationReason\n ,clb.ToBeCancelled\n ,clb.SendCouponDate\n ,clb.AssetStatus\n ,clb.ClaimedDate\n ,c…",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L21-L50",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusName",
+      "formula": ",ExcludeCountryCriteria ,ActivationDate ,CancellationDate ,CancellationReason ,ToBeCancelled ,SendCouponDate ,AssetStatus ,ClaimedDate ,IsEligbleOnRequest …",
+      "expression_raw": ",clb.ExcludeCountryCriteria\n ,clb.ActivationDate\n ,clb.CancellationDate\n ,clb.CancellationReason\n ,clb.ToBeCancelled\n ,clb.SendCouponDate\n ,clb.AssetStatus\n ,clb.ClaimedDate\n ,clb.IsEligbleOnRequest\n …",
+      "inputs": [
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L51",
+      "scope": "main"
+    },
+    {
+      "column": "IsPI",
+      "formula": ",ToBeCancelled ,SendCouponDate ,AssetStatus ,ClaimedDate ,IsEligbleOnRequest ,RequestedBy ,Active ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,N…",
+      "expression_raw": ",clb.ToBeCancelled\n ,clb.SendCouponDate\n ,clb.AssetStatus\n ,clb.ClaimedDate\n ,clb.IsEligbleOnRequest\n ,clb.RequestedBy\n ,clb.Active\n ,dc1.PlayerLevelID\n ,dpl.Name AS ClubTier\n ,dc1.RegulationID\n ,dr.N…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L26-L55",
+      "scope": "main"
+    },
+    {
+      "column": "IsPro",
+      "formula": ",ClaimedDate ,IsEligbleOnRequest ,RequestedBy ,Active ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS Ve…",
+      "expression_raw": ",clb.ClaimedDate\n ,clb.IsEligbleOnRequest\n ,clb.RequestedBy\n ,clb.Active\n ,dc1.PlayerLevelID\n ,dpl.Name AS ClubTier\n ,dc1.RegulationID\n ,dr.Name AS Regulation\n ,dc1.VerificationLevelID\n ,dv.Name AS Ve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L29-L58",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusID",
+      "formula": ",IsEligbleOnRequest ,RequestedBy ,Active ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,…",
+      "expression_raw": ",clb.IsEligbleOnRequest\n ,clb.RequestedBy\n ,clb.Active\n ,dc1.PlayerLevelID\n ,dpl.Name AS ClubTier\n ,dc1.RegulationID\n ,dr.Name AS Regulation\n ,dc1.VerificationLevelID\n ,dv.Name AS VerificationLevel\n ,…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L30-L59",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusName",
+      "formula": ",RequestedBy ,Active ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name A…",
+      "expression_raw": ",clb.RequestedBy\n ,clb.Active\n ,dc1.PlayerLevelID\n ,dpl.Name AS ClubTier\n ,dc1.RegulationID\n ,dr.Name AS Regulation\n ,dc1.VerificationLevelID\n ,dv.Name AS VerificationLevel\n ,dc1.CountryID\n ,dc.Name A…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L31-L60",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusID",
+      "formula": ",Active ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,Mar…",
+      "expression_raw": ",clb.Active\n ,dc1.PlayerLevelID\n ,dpl.Name AS ClubTier\n ,dc1.RegulationID\n ,dr.Name AS Regulation\n ,dc1.VerificationLevelID\n ,dv.Name AS VerificationLevel\n ,dc1.CountryID\n ,dc.Name AS Country\n ,dc.Mar…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L32-L61",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusName",
+      "formula": ",PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionM…",
+      "expression_raw": ",dc1.PlayerLevelID\n ,dpl.Name AS ClubTier\n ,dc1.RegulationID\n ,dr.Name AS Regulation\n ,dc1.VerificationLevelID\n ,dv.Name AS VerificationLevel\n ,dc1.CountryID\n ,dc.Name AS Country\n ,dc.MarketingRegionM…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L33-L62",
+      "scope": "main"
+    },
+    {
+      "column": "CanOpenPosition",
+      "formula": ",Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS Region …",
+      "expression_raw": ",dpl.Name AS ClubTier\n ,dc1.RegulationID\n ,dr.Name AS Regulation\n ,dc1.VerificationLevelID\n ,dv.Name AS VerificationLevel\n ,dc1.CountryID\n ,dc.Name AS Country\n ,dc.MarketingRegionManualName AS Region\n…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L34-L63",
+      "scope": "main"
+    },
+    {
+      "column": "CanClosePosition",
+      "formula": ",RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID …",
+      "expression_raw": ",dc1.RegulationID\n ,dr.Name AS Regulation\n ,dc1.VerificationLevelID\n ,dv.Name AS VerificationLevel\n ,dc1.CountryID\n ,dc.Name AS Country\n ,dc.MarketingRegionManualName AS Region\n ,dc1.AccountManagerID\n…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L35-L64",
+      "scope": "main"
+    },
+    {
+      "column": "CanEditPosition",
+      "formula": ",Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(Firs…",
+      "expression_raw": ",dr.Name AS Regulation\n ,dc1.VerificationLevelID\n ,dv.Name AS VerificationLevel\n ,dc1.CountryID\n ,dc.Name AS Country\n ,dc.MarketingRegionManualName AS Region\n ,dc1.AccountManagerID\n ,concat_ws(dm.Firs…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L36-L65",
+      "scope": "main"
+    },
+    {
+      "column": "CanBeCopied",
+      "formula": ",VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(FirstName, '', LastName) …",
+      "expression_raw": ",dc1.VerificationLevelID\n ,dv.Name AS VerificationLevel\n ,dc1.CountryID\n ,dc.Name AS Country\n ,dc.MarketingRegionManualName AS Region\n ,dc1.AccountManagerID\n ,concat_ws(dm.FirstName, '', dm.LastName) …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L37-L66",
+      "scope": "main"
+    },
+    {
+      "column": "CanDeposit",
+      "formula": ",Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(FirstName, '', LastName) AS AccountManager ,La…",
+      "expression_raw": ",dv.Name AS VerificationLevel\n ,dc1.CountryID\n ,dc.Name AS Country\n ,dc.MarketingRegionManualName AS Region\n ,dc1.AccountManagerID\n ,concat_ws(dm.FirstName, '', dm.LastName) AS AccountManager\n ,dc1.La…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L38-L67",
+      "scope": "main"
+    },
+    {
+      "column": "CanRequestWithdraw",
+      "formula": ",CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(FirstName, '', LastName) AS AccountManager ,LanguageID ,Name AS Language …",
+      "expression_raw": ",dc1.CountryID\n ,dc.Name AS Country\n ,dc.MarketingRegionManualName AS Region\n ,dc1.AccountManagerID\n ,concat_ws(dm.FirstName, '', dm.LastName) AS AccountManager\n ,dc1.LanguageID\n ,dl.Name AS Language\n…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L68",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonID",
+      "formula": ",Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(FirstName, '', LastName) AS AccountManager ,LanguageID ,Name AS Language ,Communicat…",
+      "expression_raw": ",dc.Name AS Country\n ,dc.MarketingRegionManualName AS Region\n ,dc1.AccountManagerID\n ,concat_ws(dm.FirstName, '', dm.LastName) AS AccountManager\n ,dc1.LanguageID\n ,dl.Name AS Language\n ,dc1.Communicat…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L40-L69",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonName",
+      "formula": ",MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(FirstName, '', LastName) AS AccountManager ,LanguageID ,Name AS Language ,CommunicationLanguageID ,N…",
+      "expression_raw": ",dc.MarketingRegionManualName AS Region\n ,dc1.AccountManagerID\n ,concat_ws(dm.FirstName, '', dm.LastName) AS AccountManager\n ,dc1.LanguageID\n ,dl.Name AS Language\n ,dc1.CommunicationLanguageID\n ,dcl.N…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L41-L70",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonID",
+      "formula": ",AccountManagerID ,concat_ws(FirstName, '', LastName) AS AccountManager ,LanguageID ,Name AS Language ,CommunicationLanguageID ,Name AS CommunicationLanguage ,Accoun…",
+      "expression_raw": ",dc1.AccountManagerID\n ,concat_ws(dm.FirstName, '', dm.LastName) AS AccountManager\n ,dc1.LanguageID\n ,dl.Name AS Language\n ,dc1.CommunicationLanguageID\n ,dcl.Name AS CommunicationLanguage\n ,dc1.Accoun…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L42-L71",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonName",
+      "formula": ",concat_ws(FirstName, '', LastName) AS AccountManager ,LanguageID ,Name AS Language ,CommunicationLanguageID ,Name AS CommunicationLanguage ,AccountTypeID ,Name AS A…",
+      "expression_raw": ",concat_ws(dm.FirstName, '', dm.LastName) AS AccountManager\n ,dc1.LanguageID\n ,dl.Name AS Language\n ,dc1.CommunicationLanguageID\n ,dcl.Name AS CommunicationLanguage\n ,dc1.AccountTypeID\n ,act.Name AS A…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L43-L72",
+      "scope": "main"
+    },
+    {
+      "column": "CitizenshipCountryID",
+      "formula": ",LanguageID ,Name AS Language ,CommunicationLanguageID ,Name AS CommunicationLanguage ,AccountTypeID ,Name AS AccountType ,GuruStatusID ,GuruStatusName ,CASE …",
+      "expression_raw": ",dc1.LanguageID\n ,dl.Name AS Language\n ,dc1.CommunicationLanguageID\n ,dcl.Name AS CommunicationLanguage\n ,dc1.AccountTypeID\n ,act.Name AS AccountType\n ,dc1.GuruStatusID\n ,gs.GuruStatusName\n ,CASE\n    …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L44-L73",
+      "scope": "main"
+    },
+    {
+      "column": "CitizenshipCountry",
+      "formula": ",Name AS Language ,CommunicationLanguageID ,Name AS CommunicationLanguage ,AccountTypeID ,Name AS AccountType ,GuruStatusID ,GuruStatusName ,CASE WHEN GuruStat…",
+      "expression_raw": ",dl.Name AS Language\n ,dc1.CommunicationLanguageID\n ,dcl.Name AS CommunicationLanguage\n ,dc1.AccountTypeID\n ,act.Name AS AccountType\n ,dc1.GuruStatusID\n ,gs.GuruStatusName\n ,CASE\n    WHEN dc1.GuruStat…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L45-L74",
+      "scope": "main"
+    },
+    {
+      "column": "AffiliateID",
+      "formula": ",CommunicationLanguageID ,Name AS CommunicationLanguage ,AccountTypeID ,Name AS AccountType ,GuruStatusID ,GuruStatusName ,CASE WHEN GuruStatusID > 1 THEN 1 el…",
+      "expression_raw": ",dc1.CommunicationLanguageID\n ,dcl.Name AS CommunicationLanguage\n ,dc1.AccountTypeID\n ,act.Name AS AccountType\n ,dc1.GuruStatusID\n ,gs.GuruStatusName\n ,CASE\n    WHEN dc1.GuruStatusID > 1 THEN 1\n    el…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L46-L75",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_club_offers.sql"
+}

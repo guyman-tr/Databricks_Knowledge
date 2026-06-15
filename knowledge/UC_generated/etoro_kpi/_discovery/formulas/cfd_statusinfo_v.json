@@ -1,0 +1,96 @@
+{
+  "object_fqn": "main.etoro_kpi.cfd_statusinfo_v",
+  "generated_at": "2026-05-19T15:20:30Z",
+  "formula_count": 8,
+  "formulas": [
+    {
+      "column": "RealCID",
+      "formula": "RealCID",
+      "expression_raw": "sanm.RealCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriateness_negative_market"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "GCID",
+      "formula": "GCID",
+      "expression_raw": "sanm.GCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriateness_negative_market"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "CFD_Status",
+      "formula": "CFD_Status",
+      "expression_raw": "sanm.CFD_Status",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriateness_negative_market"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "ApproprietnessScore_Status",
+      "formula": "ApproprietnessScore_Status",
+      "expression_raw": "sanm.ApproprietnessScore_Status",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriateness_negative_market"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "ReleaseReasonDesc",
+      "formula": "ReleaseReasonDesc",
+      "expression_raw": "sanm.ReleaseReasonDesc",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriateness_negative_market"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "ReleaseDate",
+      "formula": "ReleaseDate",
+      "expression_raw": "sanm.ReleaseDate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriateness_negative_market"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "BlockDate",
+      "formula": "BlockDate",
+      "expression_raw": "sanm.BlockDate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriateness_negative_market"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "BlockReasonDesc",
+      "formula": "BlockReasonDesc",
+      "expression_raw": "sanm.BlockReasonDesc",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriateness_negative_market"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/cfd_statusinfo_v.sql"
+}

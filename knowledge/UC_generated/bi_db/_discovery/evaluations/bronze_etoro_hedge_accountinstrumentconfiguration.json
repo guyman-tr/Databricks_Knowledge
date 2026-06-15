@@ -1,0 +1,130 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_hedge_accountinstrumentconfiguration",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:34Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "AccountID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.AccountInstrumentConfiguration.md",
+      "upstream_quote": "The hedge account this configuration applies to. Part of composite PK. Implicit reference to Hedge.Accounts.ID (no FK co",
+      "wiki_quote": "The hedge account this configuration applies to. Part of composite PK. Implicit reference to Hedge.Accounts.ID (no FK co",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.AccountInstrumentConfiguration.md",
+      "upstream_quote": "The instrument this configuration applies to. Part of composite PK. Implicit reference to Trade.Instrument (no FK constr",
+      "wiki_quote": "The instrument this configuration applies to. Part of composite PK. Implicit reference to Trade.Instrument (no FK constr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MaxExecutionUnitsThreshold",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.AccountInstrumentConfiguration.md",
+      "upstream_quote": "Maximum single hedge order size (in execution units) before band-based sizing logic applies. Currently NULL for all rows",
+      "wiki_quote": "Maximum single hedge order size (in execution units) before band-based sizing logic applies. Currently NULL for all rows",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MaxExecutionUnitsUpperBound",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.AccountInstrumentConfiguration.md",
+      "upstream_quote": "Upper bound of the desired execution size band when MaxExecutionUnitsThreshold is exceeded. Currently NULL.",
+      "wiki_quote": "Upper bound of the desired execution size band when MaxExecutionUnitsThreshold is exceeded. Currently NULL (Tier 1 — inh",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MaxExecutionUnitsLowerBound",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.AccountInstrumentConfiguration.md",
+      "upstream_quote": "Lower bound of the desired execution size band when MaxExecutionUnitsThreshold is exceeded. Currently NULL.",
+      "wiki_quote": "Lower bound of the desired execution size band when MaxExecutionUnitsThreshold is exceeded. Currently NULL (Tier 1 — inh",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExecutionUnitsStep",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.AccountInstrumentConfiguration.md",
+      "upstream_quote": "Step granularity for execution unit sizing increments. Currently NULL.",
+      "wiki_quote": "Step granularity for execution unit sizing increments. Currently NULL (Tier 1 — inherited from etoro.Hedge.AccountInstru",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MaxRequestedPerInterval",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.AccountInstrumentConfiguration.md",
+      "upstream_quote": "Rate limit: maximum number of orders allowed within IntervalPeriodSeconds. Currently NULL for all rows - rate limiting n",
+      "wiki_quote": "Rate limit: maximum number of orders allowed within IntervalPeriodSeconds. Currently NULL for all rows - rate limiting n",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IntervalPeriodSeconds",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.AccountInstrumentConfiguration.md",
+      "upstream_quote": "Time window in seconds for the MaxRequestedPerInterval rate limit. Currently NULL.",
+      "wiki_quote": "Time window in seconds for the MaxRequestedPerInterval rate limit. Currently NULL (Tier 1 — inherited from etoro.Hedge.A",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LimitRoundPrecision",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.AccountInstrumentConfiguration.md",
+      "upstream_quote": "Number of decimal places for limit order price rounding for this account/instrument pair. -1=no override (use default). ",
+      "wiki_quote": "Number of decimal places for limit order price rounding for this account/instrument pair. -1=no override (use default). ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysStartTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.AccountInstrumentConfiguration.md",
+      "upstream_quote": "Temporal period start. UTC timestamp when this row version became active.",
+      "wiki_quote": "Temporal period start. UTC timestamp when this row version became active (Tier 1 — inherited from etoro.Hedge.AccountIns",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysEndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.AccountInstrumentConfiguration.md",
+      "upstream_quote": "Temporal period end. 9999-12-31 for current rows. History in History.AccountInstrumentConfiguration.",
+      "wiki_quote": "Temporal period end. 9999-12-31 for current rows. History in History.AccountInstrumentConfiguration (Tier 1 — inherited ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DbLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.AccountInstrumentConfiguration.md",
+      "upstream_quote": "Computed audit column. SQL Server login executing the DML.",
+      "wiki_quote": "Computed audit column. SQL Server login executing the DML (Tier 1 — inherited from etoro.Hedge.AccountInstrumentConfigur",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AppLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.AccountInstrumentConfiguration.md",
+      "upstream_quote": "Computed audit column. Application identity from CONTEXT_INFO(). NULL when not set.",
+      "wiki_quote": "Computed audit column. Application identity from CONTEXT_INFO(). NULL when not set (Tier 1 — inherited from etoro.Hedge.",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 13,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 13 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

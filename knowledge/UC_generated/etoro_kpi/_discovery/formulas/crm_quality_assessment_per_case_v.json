@@ -1,0 +1,99 @@
+{
+  "object_fqn": "main.etoro_kpi.crm_quality_assessment_per_case_v",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 8,
+  "formulas": [
+    {
+      "column": "Case__c",
+      "formula": "SELECT Case__c -- CaseID",
+      "expression_raw": "SELECT Case__c -- CaseID",
+      "inputs": [
+        "main.crm.silver_crm_surveytaker__c"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L8",
+      "scope": "ranked"
+    },
+    {
+      "column": "Survey__c",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.crm.silver_crm_surveytaker__c"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "Survey__c"
+    },
+    {
+      "column": "Agent_Under_Assessment__c",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.crm.silver_crm_surveytaker__c"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "Agent_Under_Assessment__c"
+    },
+    {
+      "column": "Quality_Score__c",
+      "formula": ",Survey__c -- Id of the survey ,Agent_Under_Assessment__c -- CS agent that is under assessment ,TRY_CAST(Quality_Score__c AS DOUBLE) AS Quality_Score__c -- Grade the agent received regarding h…",
+      "expression_raw": ",Survey__c -- Id of the survey\n    ,Agent_Under_Assessment__c -- CS agent that is under assessment\n    ,TRY_CAST(Quality_Score__c AS DOUBLE) AS Quality_Score__c -- Grade the agent received regarding h…",
+      "inputs": [
+        "main.crm.silver_crm_surveytaker__c"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L9-L11",
+      "scope": "ranked"
+    },
+    {
+      "column": "Compliance_a__c",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.crm.silver_crm_surveytaker__c"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "Compliance_a__c"
+    },
+    {
+      "column": "Type_of_Communication__c",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.crm.silver_crm_surveytaker__c"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "Type_of_Communication__c"
+    },
+    {
+      "column": "Team__c",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.crm.silver_crm_surveytaker__c"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "Team__c"
+    },
+    {
+      "column": "CreatedDate",
+      "formula": "SELECT Case__c, Survey__c, Agent_Under_Assessment__c, Quality_Score__c, Compliance_a__c, Type_of_Communication__c, Team__c, CreatedDate",
+      "expression_raw": "SELECT Case__c, Survey__c, Agent_Under_Assessment__c, Quality_Score__c, Compliance_a__c, Type_of_Communication__c, Team__c, CreatedDate",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/crm_quality_assessment_per_case_v.sql"
+}

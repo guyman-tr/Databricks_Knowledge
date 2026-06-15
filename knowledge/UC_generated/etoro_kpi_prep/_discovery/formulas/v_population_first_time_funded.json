@@ -1,0 +1,202 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_population_first_time_funded",
+  "generated_at": "2026-05-18T16:27:37Z",
+  "formula_count": 18,
+  "formulas": [
+    {
+      "column": "RealCID",
+      "formula": "CID",
+      "expression_raw": "CID AS RealCID",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L61-L61",
+      "scope": "Trade"
+    },
+    {
+      "column": "FTDPlatformID",
+      "formula": "FTDPlatformID",
+      "expression_raw": "ftd.FTDPlatformID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_globalftdplatform"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L38-L38",
+      "scope": "DWH_FTD"
+    },
+    {
+      "column": "FTDPlatform",
+      "formula": "Name",
+      "expression_raw": "ftd.Name as FTDPlatform",
+      "inputs": [
+        "main.etoro_kpi_prep.v_globalftdplatform"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L39-L39",
+      "scope": "DWH_FTD"
+    },
+    {
+      "column": "FTDDateID",
+      "formula": "CAST(DATE_FORMAT(FirstDepositDate, 'yyyyMMdd') AS INT)",
+      "expression_raw": "CAST(DATE_FORMAT(dc.FirstDepositDate, 'yyyyMMdd') AS INT) AS FTDDateID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L43-L43",
+      "scope": "DWH_FTD"
+    },
+    {
+      "column": "FTDDate",
+      "formula": "CAST(FirstDepositDate AS DATE)",
+      "expression_raw": "CAST(dc.FirstDepositDate AS DATE) AS FTDDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L42-L42",
+      "scope": "DWH_FTD"
+    },
+    {
+      "column": "FTDTime",
+      "formula": "FirstDepositDate",
+      "expression_raw": "dc.FirstDepositDate AS FTDTime",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L41-L41",
+      "scope": "DWH_FTD"
+    },
+    {
+      "column": "FirstTradeDateID",
+      "formula": "MIN(OpenDateID)",
+      "expression_raw": "MIN(OpenDateID) AS FirstTradeDateID",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L64-L64",
+      "scope": "Trade"
+    },
+    {
+      "column": "FirstTradeDate",
+      "formula": "TO_DATE(CAST(MIN(OpenDateID) AS STRING), 'yyyyMMdd')",
+      "expression_raw": "TO_DATE(CAST(MIN(OpenDateID) AS STRING), 'yyyyMMdd') AS FirstTradeDate",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L63-L63",
+      "scope": "Trade"
+    },
+    {
+      "column": "FirstTradeTime",
+      "formula": "MIN(OpenOccurred)",
+      "expression_raw": "MIN(OpenOccurred) AS FirstTradeTime",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L62-L62",
+      "scope": "Trade"
+    },
+    {
+      "column": "FirstIOBDateID",
+      "formula": "MIN(CAST(DATE_FORMAT(CAST(Occurred AS DATE), 'yyyyMMdd') AS INT))",
+      "expression_raw": "MIN(CAST(DATE_FORMAT(CAST(Occurred AS DATE), 'yyyyMMdd') AS INT)) AS FirstIOBDateID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L12-L12",
+      "scope": "First_IOB"
+    },
+    {
+      "column": "FirstIOBDate",
+      "formula": "CAST(MIN(Occurred) AS DATE)",
+      "expression_raw": "CAST(MIN(Occurred) AS DATE) AS FirstIOBDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L11-L11",
+      "scope": "First_IOB"
+    },
+    {
+      "column": "FirstIOBTime",
+      "formula": "MIN(Occurred)",
+      "expression_raw": "MIN(Occurred) AS FirstIOBTime",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L10-L10",
+      "scope": "First_IOB"
+    },
+    {
+      "column": "FirstOptionsTradeDateID",
+      "formula": "MIN(FirstTradeDateID)",
+      "expression_raw": "MIN(op.FirstTradeDateID) AS FirstOptionsTradeDateID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_revenue_optionsplatform"
+      ],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L73-L73",
+      "scope": "OptionsTrade"
+    },
+    {
+      "column": "FirstOptionsTradeDate",
+      "formula": "MIN(FirstTradeDate)",
+      "expression_raw": "MIN(op.FirstTradeDate) AS FirstOptionsTradeDate",
+      "inputs": [
+        "main.etoro_kpi_prep.v_revenue_optionsplatform"
+      ],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L72-L72",
+      "scope": "OptionsTrade"
+    },
+    {
+      "column": "FirstVerifiedDateID",
+      "formula": "MIN(FromDateID)",
+      "expression_raw": "MIN(fsc.FromDateID) AS FirstVerifiedDateID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L54-L54",
+      "scope": "Verification"
+    },
+    {
+      "column": "FirstVerifiedDate",
+      "formula": "TO_DATE(CAST(MIN(FromDateID) AS STRING), 'yyyyMMdd')",
+      "expression_raw": "TO_DATE(CAST(MIN(fsc.FromDateID) AS STRING), 'yyyyMMdd') AS FirstVerifiedDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L53-L53",
+      "scope": "Verification"
+    },
+    {
+      "column": "FirstFundedDateID",
+      "formula": ")",
+      "expression_raw": ") AS FirstFundedDateID",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L113-L113",
+      "scope": "main"
+    },
+    {
+      "column": "FirstFundedDate",
+      "formula": "'yyyyMMdd' )",
+      "expression_raw": "'yyyyMMdd'\n    ) AS FirstFundedDate",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L130-L131",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_first_time_funded.sql"
+}

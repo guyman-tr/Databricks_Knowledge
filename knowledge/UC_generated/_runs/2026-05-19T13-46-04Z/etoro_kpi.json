@@ -1,0 +1,571 @@
+{
+  "schema": "etoro_kpi",
+  "catalog": "main",
+  "started_at": "2026-05-19T15:02:08Z",
+  "finished_at": "2026-05-19T15:20:49Z",
+  "wall_seconds": 1121.0,
+  "phases": {
+    "1": {
+      "wall_seconds": 0.17301058769226074,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "[discover-schema] phase=0 skip: C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\etoro_kpi\\_schema_card.md exists (pass --force to rebuild)\n[discover-schema] phase=1 skip: C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\etoro_kpi\\_discovery\\uc_inventory.json exists (pass --force to rebuild)"
+    },
+    "2": {
+      "wall_seconds": 1095.4189727306366,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [39/40] vg_dealing_dealingdashboard_cid (VIEW)\n  [40/40] winback_daily_segments (MANAGED)\n[fetch-writer] workspace.get_status failed for 2168358810410994: Path (2168358810410994) doesn't start with '/'\nWARNING:urllib3.connectionpool:Retrying (DatabricksRetryPolicy(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /telemetry-ext\n[fetch-writer] wrote C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\etoro_kpi\\_discovery\\source_code\\_fetch_manifest.json (ok=38, no_lineage=0, errors=0)"
+    },
+    "3": {
+      "wall_seconds": 0.9250414371490479,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [38/40] vg_dealing_clicks_openclose_breakdown → 3 upstream refs\n  [39/40] vg_dealing_dealingdashboard_cid → 1 upstream refs\n  [40/40] winback_daily_segments → 1 upstream refs\n[upstream-bridge] wrote C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_index.json\n[upstream-bridge] stats={'total_upstreams': 99, 'rule1_synapse_mirror': 52, 'rule2_uc_generated': 18, 'rule3_uc_domain': 12, 'rule4_bronze_prod': 2, 'rule5_uc_native_map': 1, 'rule6_no_wiki': 14, 'wikis_cached': 56, 'no_wiki_placeholders': 43, 'blocked_on_upstream': 14}"
+    },
+    "4": {
+      "wall_seconds": 3.2041690349578857,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  wrote knowledge\\UC_generated\\etoro_kpi\\Views\\vg_dealing_clicks_openclose_breakdown.lineage.md\n[build-lineage] main.etoro_kpi.vg_dealing_dealingdashboard_cid (VIEW)\n  wrote knowledge\\UC_generated\\etoro_kpi\\Views\\vg_dealing_dealingdashboard_cid.lineage.md\n[build-lineage] main.etoro_kpi.winback_daily_segments (MANAGED)\n  wrote stub knowledge/UC_generated/etoro_kpi/Tables/winback_daily_segments.lineage.md"
+    },
+    "4.5": {
+      "wall_seconds": 2.1910533905029297,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [OK] vg_customer_monthly_snapshot — concept_count=16\n  [OK] vg_ddr_revenue — concept_count=3\n  [OK] vg_dealing_clicks_openclose_breakdown — concept_count=2\n  [OK] vg_dealing_dealingdashboard_cid — concept_count=0\n  [OK] winback_daily_segments — concept_count=0"
+    },
+    "4.6": {
+      "wall_seconds": 1.5680415630340576,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [OK] vg_customer_monthly_snapshot — 63/63 formulas\n  [OK] vg_ddr_revenue — 30/30 formulas\n  [OK] vg_dealing_clicks_openclose_breakdown — 47/47 formulas\n  [OK] vg_dealing_dealingdashboard_cid — 30/30 formulas\n  [OK] winback_daily_segments — 0/5 formulas"
+    },
+    "5": {
+      "wall_seconds": 13.363544225692749,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [OK] vg_ddr_revenue — tiers={'2': 21, '1': 7, '5': 2}, unverified=0\n  [OK] vg_dealing_clicks_openclose_breakdown — tiers={'2': 36, '1': 7, '3': 4}, unverified=0\n  [OK] vg_dealing_dealingdashboard_cid — tiers={'2': 30}, unverified=0\n  [OK] winback_daily_segments — tiers={'U': 5}, unverified=5\n[generate-wiki] done: 40/40 OK"
+    },
+    "6": {
+      "wall_seconds": 2.3030450344085693,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "[validate-pipeline-wiki] etoro_kpi: 38 objects checked, 0 HARD, 0 WARN issues (assert_no_inference=True)\n\n[validate-pipeline-wiki] PASS",
+      "stderr_tail": ""
+    }
+  },
+  "failures": [],
+  "objects": [
+    {
+      "name": "cfd_statusinfo_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 2,
+        "2": 6
+      }
+    },
+    {
+      "name": "cidfirstdates_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 104,
+        "2": 1
+      }
+    },
+    {
+      "name": "crm_case_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "8 of 57 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 8,
+      "tier_breakdown": {
+        "2": 49,
+        "U": 8
+      }
+    },
+    {
+      "name": "crm_csat_survey_per_case_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 4
+      }
+    },
+    {
+      "name": "crm_quality_assessment_per_case_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "5 of 8 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 5,
+      "tier_breakdown": {
+        "2": 3,
+        "U": 5
+      }
+    },
+    {
+      "name": "crm_user_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 21
+      }
+    },
+    {
+      "name": "customer_exclude_list",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 3,
+        "2": 1
+      }
+    },
+    {
+      "name": "customer_segments_mail_v",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.bi_output.bi_output_marketing_sfmc_sfmc_report",
+      "blocked_on_upstream": "main.bi_output.bi_output_marketing_sfmc_sfmc_report",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "N": 24,
+        "2": 1
+      }
+    },
+    {
+      "name": "customer_segments_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 9,
+        "2": 6
+      }
+    },
+    {
+      "name": "customer_snapshot_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 15,
+        "2": 37
+      }
+    },
+    {
+      "name": "ddr_aum_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 15,
+        "2": 37
+      }
+    },
+    {
+      "name": "ddr_customer_current_flags",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd",
+      "blocked_on_upstream": "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "N": 7
+      }
+    },
+    {
+      "name": "ddr_customer_dailystatus",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd",
+      "blocked_on_upstream": "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "N": 9
+      }
+    },
+    {
+      "name": "ddr_customer_snapshot_scd_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 17,
+        "2": 27
+      }
+    },
+    {
+      "name": "ddr_mimo_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 21,
+        "1": 3
+      }
+    },
+    {
+      "name": "ddr_pnl_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 14,
+        "1": 3,
+        "5": 2
+      }
+    },
+    {
+      "name": "ddr_revenue_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 22,
+        "1": 6,
+        "5": 2
+      }
+    },
+    {
+      "name": "ddr_trading_volumes_and_amounts_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 5,
+        "1": 25,
+        "5": 1
+      }
+    },
+    {
+      "name": "de_output_ftd_click",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "ftd_click_v",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.etoro_kpi.de_output_ftd_click",
+      "blocked_on_upstream": "main.etoro_kpi.de_output_ftd_click",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "N": 8,
+        "2": 1
+      }
+    },
+    {
+      "name": "ftd_click_v_testing_dup_cancle",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.etoro_kpi.de_output_ftd_click",
+      "blocked_on_upstream": "main.etoro_kpi.de_output_ftd_click",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "N": 8,
+        "2": 1
+      }
+    },
+    {
+      "name": "ftd_funnel_kyc",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 1,
+        "2": 2
+      }
+    },
+    {
+      "name": "ftd_funnel_v",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.etoro_kpi.ftd_click_v",
+      "blocked_on_upstream": "main.etoro_kpi.ftd_click_v",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 3,
+        "2": 54,
+        "N": 2
+      }
+    },
+    {
+      "name": "ftd_funnel_v_dev",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.etoro_kpi.ftd_click_v",
+      "blocked_on_upstream": "main.etoro_kpi.ftd_click_v",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 3,
+        "2": 55,
+        "N": 2
+      }
+    },
+    {
+      "name": "kyc_for_compliance_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 7,
+        "1": 1
+      }
+    },
+    {
+      "name": "positions_for_compliance_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 53
+      }
+    },
+    {
+      "name": "v_ddr_non_revenue_actions",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 6
+      }
+    },
+    {
+      "name": "v_raf",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 31
+      }
+    },
+    {
+      "name": "v_raf_config",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 15
+      }
+    },
+    {
+      "name": "v_spaceship_aum",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 13
+      }
+    },
+    {
+      "name": "v_spaceship_fees",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 7
+      }
+    },
+    {
+      "name": "v_spaceship_mimo",
+      "in_pilot_scope": true,
+      "status": "Stub only",
+      "status_detail": "all 15 columns unclassifiable",
+      "blocked_on_upstream": null,
+      "routing_attempts": "no upstream wiki match AND no source-code citation",
+      "n_unverified": 15,
+      "tier_breakdown": {
+        "U": 15
+      }
+    },
+    {
+      "name": "vg_crm_case",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "8 of 57 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 8,
+      "tier_breakdown": {
+        "2": 49,
+        "U": 8
+      }
+    },
+    {
+      "name": "vg_customer_customer_first_dates",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 11,
+        "2": 12
+      }
+    },
+    {
+      "name": "vg_customer_daily_snapshot",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 9,
+        "2": 52,
+        "3": 1
+      }
+    },
+    {
+      "name": "vg_customer_monthly_snapshot",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 9,
+        "2": 53,
+        "3": 1
+      }
+    },
+    {
+      "name": "vg_ddr_revenue",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 21,
+        "1": 7,
+        "5": 2
+      }
+    },
+    {
+      "name": "vg_dealing_clicks_openclose_breakdown",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 36,
+        "1": 7,
+        "3": 4
+      }
+    },
+    {
+      "name": "vg_dealing_dealingdashboard_cid",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 30
+      }
+    },
+    {
+      "name": "winback_daily_segments",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    }
+  ]
+}

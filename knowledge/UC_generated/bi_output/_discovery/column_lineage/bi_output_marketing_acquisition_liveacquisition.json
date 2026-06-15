@@ -1,0 +1,55 @@
+{
+  "object": "main.bi_output.bi_output_marketing_acquisition_liveacquisition",
+  "rows": [
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "Commission",
+      "target_column_name": "Commission",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1978
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_credit",
+      "source_column_name": "Payment",
+      "target_column_name": "Commission",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1978
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "Commission",
+      "target_column_name": "Commission",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1978
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "Occurred",
+      "target_column_name": "LastTime",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1978
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_credit",
+      "source_column_name": "Occurred",
+      "target_column_name": "LastTime",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1978
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "LastTime",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1978
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "Type",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1293
+    }
+  ],
+  "generated_at": "2026-05-19T14:40:39Z"
+}

@@ -1,0 +1,95 @@
+{
+  "object_fqn": "main.bi_db.bronze_moneytransfer_billing_posttransferactions",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:54Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "PostTransferActionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.PostTransferActions.md",
+      "upstream_quote": "Auto-incrementing primary key (NONCLUSTERED). Unique identifier for each post-transfer action. Current values in the ~2.",
+      "wiki_quote": "Auto-incrementing primary key (NONCLUSTERED). Unique identifier for each post-transfer action. Current values in the ~2.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TransferID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.PostTransferActions.md",
+      "upstream_quote": "Foreign key to `Billing.Transfers.TransferID` (implicit, no constraint). Links this action to its parent transfer. Set b",
+      "wiki_quote": "Foreign key to `Billing.Transfers.TransferID` (implicit, no constraint). Links this action to its parent transfer. Set b",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ReferenceID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.PostTransferActions.md",
+      "upstream_quote": "Business reference GUID for this action. Indexed (IX_Billing_PostTransferActions) for lookup performance. Used as the pr",
+      "wiki_quote": "Business reference GUID for this action. Indexed (IX_Billing_PostTransferActions) for lookup performance. Used as the pr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Payload",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.PostTransferActions.md",
+      "upstream_quote": "Masked (Dynamic Data Masking: default()) JSON or structured data containing the action's operational details. Contains P",
+      "wiki_quote": "Masked (Dynamic Data Masking: default()) JSON or structured data containing the action's operational details. Contains P",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundingTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.PostTransferActions.md",
+      "upstream_quote": "Type of funding instrument associated with this action. No lookup table in this database. Sample data consistently shows",
+      "wiki_quote": "Type of funding instrument associated with this action. No lookup table in this database. Sample data consistently shows",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PostTransferStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.PostTransferActions.md",
+      "upstream_quote": "Lifecycle status of this post-transfer action. Implicit reference to Dictionary.PostTransferStatus (currently empty). Ob",
+      "wiki_quote": "Lifecycle status of this post-transfer action. Implicit reference to Dictionary.PostTransferStatus (currently empty). Ob",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreateDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.PostTransferActions.md",
+      "upstream_quote": "UTC timestamp of action creation. Set automatically via DEFAULT constraint. No modification timestamp exists - status ch",
+      "wiki_quote": "UTC timestamp of action creation. Set automatically via DEFAULT constraint. No modification timestamp exists - status ch",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PostTransferActionTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.PostTransferActions.md",
+      "upstream_quote": "Type classification for the post-transfer action. Defaults to 1 via constraint DF_PostTransferActions_PostTransferAction",
+      "wiki_quote": "Type classification for the post-transfer action. Defaults to 1 via constraint DF_PostTransferActions_PostTransferAction",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 8,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 8 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

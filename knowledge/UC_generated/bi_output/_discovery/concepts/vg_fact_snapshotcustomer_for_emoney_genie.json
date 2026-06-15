@@ -1,0 +1,74 @@
+{
+  "object_fqn": "main.bi_output.vg_fact_snapshotcustomer_for_emoney_genie",
+  "generated_at": "2026-05-19T15:01:22Z",
+  "concept_count": 3,
+  "concepts": [
+    {
+      "id": "dim_lookup_b",
+      "name": "Dim lookup via b",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "alias": "b",
+      "join_conditions": [
+        "a.DateRangeID = b.DateRangeID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L48",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "a.DateRangeID = b.DateRangeID"
+    },
+    {
+      "id": "dim_lookup_c",
+      "name": "Dim lookup via c",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "alias": "c",
+      "join_conditions": [
+        "a.PlayerLevelID = c.PlayerLevelID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L50",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "a.PlayerLevelID = c.PlayerLevelID"
+    },
+    {
+      "id": "dim_lookup_d",
+      "name": "Dim lookup via d",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "alias": "d",
+      "join_conditions": [
+        "a.CountryID=d.CountryID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L52",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "a.CountryID=d.CountryID"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_fact_snapshotcustomer_for_emoney_genie.sql"
+}

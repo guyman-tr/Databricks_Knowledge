@@ -1,9 +1,97 @@
 {
   "schema": "de_output",
   "catalog": "main",
-  "generated_at": "2026-05-18T07:34:24Z",
+  "generated_at": "2026-05-19T14:11:54Z",
   "lineage_lookback_days": 90,
   "objects": [
+    {
+      "object": "main.de_output.customer_segments_mail_v",
+      "name": "customer_segments_mail_v",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\customer_segments_mail_v.json",
+      "column_lineage_row_count": 60,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\customer_segments_mail_v.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.de_output.de_output_ddr_fact_mimo_allplatforms",
+      "name": "de_output_ddr_fact_mimo_allplatforms",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_ddr_fact_mimo_allplatforms.json",
+      "column_lineage_row_count": 63,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "404259741876144",
+          "event_count_lookback": 84,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "e98d368f-29f6-4c0f-81f0-667e13302043",
+          "event_count_lookback": 16,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_ddr_fact_mimo_allplatforms.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_ddr_fact_revenue_generating_actions",
+      "name": "de_output_ddr_fact_revenue_generating_actions",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_ddr_fact_revenue_generating_actions.json",
+      "column_lineage_row_count": 25,
+      "writers": [
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "118324841152015",
+          "event_count_lookback": 5,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "471149530839890",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_ddr_fact_revenue_generating_actions.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_etoro_kpi_dim_dataplatform_uuid",
+      "name": "de_output_etoro_kpi_dim_dataplatform_uuid",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_etoro_kpi_dim_dataplatform_uuid.json",
+      "column_lineage_row_count": 7,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "412649002650433",
+          "event_count_lookback": 61,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_etoro_kpi_dim_dataplatform_uuid.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
     {
       "object": "main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics",
       "name": "de_output_etoro_kpi_fact_customeraction_w_metrics",
@@ -14,7 +102,7 @@
         {
           "kind": "JOB",
           "entity_id": "712655402982749",
-          "event_count_lookback": 90,
+          "event_count_lookback": 96,
           "role": "primary",
           "fetched": false,
           "fetch_error": "job has no notebook tasks"
@@ -46,13 +134,1094 @@
       ],
       "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_etoro_kpi_fact_customeraction_w_metrics.json",
       "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_general_datalake_monitoirng_tables_status",
+      "name": "de_output_general_datalake_monitoirng_tables_status",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_general_datalake_monitoirng_tables_status.json",
+      "column_lineage_row_count": 8,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "449184799719926",
+          "event_count_lookback": 3068,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_general_datalake_monitoirng_tables_status.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_gold_dealing_dealingstreaming_dealing_netting_rates_delta_history",
+      "name": "de_output_gold_dealing_dealingstreaming_dealing_netting_rates_delta_history",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_gold_dealing_dealingstreaming_dealing_netting_rates_delta_history.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "604185779355459",
+          "event_count_lookback": 1,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_gold_dealing_dealingstreaming_dealing_netting_rates_delta_history.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_instruments_firsttradedate",
+      "name": "de_output_instruments_firsttradedate",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_instruments_firsttradedate.json",
+      "column_lineage_row_count": 5,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "365296296726561",
+          "event_count_lookback": 112,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_instruments_firsttradedate.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_monitoring_datalake_ddr_monitoring_table",
+      "name": "de_output_monitoring_datalake_ddr_monitoring_table",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_monitoring_datalake_ddr_monitoring_table.json",
+      "column_lineage_row_count": 20,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "989558415029599",
+          "event_count_lookback": 504,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_monitoring_datalake_ddr_monitoring_table.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_monitoring_datalake_history_gaps",
+      "name": "de_output_monitoring_datalake_history_gaps",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_monitoring_datalake_history_gaps.json",
+      "column_lineage_row_count": 11,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "892407812246128",
+          "event_count_lookback": 13,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_monitoring_datalake_history_gaps.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_long_duration",
+      "name": "de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_long_duration",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_long_duration.json",
+      "column_lineage_row_count": 7,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "817016827003716",
+          "event_count_lookback": 69,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_long_duration.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_not_ended",
+      "name": "de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_not_ended",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_not_ended.json",
+      "column_lineage_row_count": 10,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "817016827003716",
+          "event_count_lookback": 69,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_not_ended.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_not_started",
+      "name": "de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_not_started",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_not_started.json",
+      "column_lineage_row_count": 10,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "817016827003716",
+          "event_count_lookback": 69,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_not_started.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_status",
+      "name": "de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_status",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_status.json",
+      "column_lineage_row_count": 7,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "817016827003716",
+          "event_count_lookback": 69,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_status.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_monitoring_datalake_log_analytics_to_datalake_results_databricks_batch_jobs_status",
+      "name": "de_output_monitoring_datalake_log_analytics_to_datalake_results_databricks_batch_jobs_status",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_monitoring_datalake_log_analytics_to_datalake_results_databricks_batch_jobs_status.json",
+      "column_lineage_row_count": 7,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "817016827003716",
+          "event_count_lookback": 69,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_monitoring_datalake_log_analytics_to_datalake_results_databricks_batch_jobs_status.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_monitoring_datalake_quality_gates_completeness_check_etorodb",
+      "name": "de_output_monitoring_datalake_quality_gates_completeness_check_etorodb",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_monitoring_datalake_quality_gates_completeness_check_etorodb.json",
+      "column_lineage_row_count": 16,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "201290813947770",
+          "event_count_lookback": 90,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_monitoring_datalake_quality_gates_completeness_check_etorodb.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_monitoring_datalake_quality_gates_completeness_check_generic_pipeline_etorodb",
+      "name": "de_output_monitoring_datalake_quality_gates_completeness_check_generic_pipeline_etorodb",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_monitoring_datalake_quality_gates_completeness_check_generic_pipeline_etorodb.json",
+      "column_lineage_row_count": 21,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "796679698865421",
+          "event_count_lookback": 91,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_monitoring_datalake_quality_gates_completeness_check_generic_pipeline_etorodb.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_monitoring_datalake_quality_gates_completeness_sumcheck_etorodb",
+      "name": "de_output_monitoring_datalake_quality_gates_completeness_sumcheck_etorodb",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_monitoring_datalake_quality_gates_completeness_sumcheck_etorodb.json",
+      "column_lineage_row_count": 226,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "859199655410779",
+          "event_count_lookback": 2144,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "2985795542970987",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_monitoring_datalake_quality_gates_completeness_sumcheck_etorodb.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_monitoring_datalake_quality_gates_copylaketosynapse_checks_results",
+      "name": "de_output_monitoring_datalake_quality_gates_copylaketosynapse_checks_results",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_monitoring_datalake_quality_gates_copylaketosynapse_checks_results.json",
+      "column_lineage_row_count": 18,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "567448773814962",
+          "event_count_lookback": 90,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_monitoring_datalake_quality_gates_copylaketosynapse_checks_results.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_monitoring_datalake_quality_gates_dwh_daily_checks_results",
+      "name": "de_output_monitoring_datalake_quality_gates_dwh_daily_checks_results",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_monitoring_datalake_quality_gates_dwh_daily_checks_results.json",
+      "column_lineage_row_count": 16,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "808866227312559",
+          "event_count_lookback": 91,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_monitoring_datalake_quality_gates_dwh_daily_checks_results.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_monitoring_datalake_quality_gates_dwh_daily_dict_checks_results",
+      "name": "de_output_monitoring_datalake_quality_gates_dwh_daily_dict_checks_results",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_monitoring_datalake_quality_gates_dwh_daily_dict_checks_results.json",
+      "column_lineage_row_count": 14,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "808866227312559",
+          "event_count_lookback": 91,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_monitoring_datalake_quality_gates_dwh_daily_dict_checks_results.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_monitoring_datalake_quality_gates_generic_pipeline_checks_results",
+      "name": "de_output_monitoring_datalake_quality_gates_generic_pipeline_checks_results",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_monitoring_datalake_quality_gates_generic_pipeline_checks_results.json",
+      "column_lineage_row_count": 21,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "576508095116194",
+          "event_count_lookback": 2155,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_monitoring_datalake_quality_gates_generic_pipeline_checks_results.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_monitoring_datalake_quality_gates_synapse_checks_results",
+      "name": "de_output_monitoring_datalake_quality_gates_synapse_checks_results",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_monitoring_datalake_quality_gates_synapse_checks_results.json",
+      "column_lineage_row_count": 19,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "689456980704271",
+          "event_count_lookback": 90,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_monitoring_datalake_quality_gates_synapse_checks_results.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_monitoring_datalake_quality_gates_synapse_dl_rowcount_results",
+      "name": "de_output_monitoring_datalake_quality_gates_synapse_dl_rowcount_results",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_monitoring_datalake_quality_gates_synapse_dl_rowcount_results.json",
+      "column_lineage_row_count": 17,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1043748250965115",
+          "event_count_lookback": 30,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_monitoring_datalake_quality_gates_synapse_dl_rowcount_results.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_onboarding_ev_cohort_enriched",
+      "name": "de_output_onboarding_ev_cohort_enriched",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_onboarding_ev_cohort_enriched.json",
+      "column_lineage_row_count": 270,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "445677398446495",
+          "event_count_lookback": 630,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "1710813135052309",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "3324965928993987",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_onboarding_ev_cohort_enriched.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_risk_classification",
+      "name": "de_output_risk_classification",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_risk_classification.json",
+      "column_lineage_row_count": 373,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "367713536523386",
+          "event_count_lookback": 355,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "670974923114318",
+          "event_count_lookback": 4,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_risk_classification.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_risk_classification_cysec",
+      "name": "de_output_risk_classification_cysec",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_risk_classification_cysec.json",
+      "column_lineage_row_count": 97,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "903643609683251",
+          "event_count_lookback": 3,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "429866292761680",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "955904690746947",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "368517172397505",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "556141872175535",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_risk_classification_cysec.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_risk_classification_history",
+      "name": "de_output_risk_classification_history",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_risk_classification_history.json",
+      "column_lineage_row_count": 276,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "367713536523386",
+          "event_count_lookback": 335,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_risk_classification_history.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_risk_classification_history_cysec",
+      "name": "de_output_risk_classification_history_cysec",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_risk_classification_history_cysec.json",
+      "column_lineage_row_count": 192,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "368517172397505",
+          "event_count_lookback": 6,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "903643609683251",
+          "event_count_lookback": 6,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "429866292761680",
+          "event_count_lookback": 6,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "955904690746947",
+          "event_count_lookback": 6,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "36547925628748",
+          "event_count_lookback": 6,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_risk_classification_history_cysec.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_risk_classification_scores",
+      "name": "de_output_risk_classification_scores",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_risk_classification_scores.json",
+      "column_lineage_row_count": 9,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "367713536523386",
+          "event_count_lookback": 114,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_risk_classification_scores.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_semantic_column_descriptions_bank",
+      "name": "de_output_semantic_column_descriptions_bank",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_semantic_column_descriptions_bank.json",
+      "column_lineage_row_count": 16,
+      "writers": [
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "2912256059591267",
+          "event_count_lookback": 52,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "448599523609643",
+          "event_count_lookback": 5,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "2527950559640120",
+          "event_count_lookback": 5,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "2912256059591011",
+          "event_count_lookback": 4,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "3853551604280702",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_semantic_column_descriptions_bank.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_semantic_column_descriptions_deploy_log",
+      "name": "de_output_semantic_column_descriptions_deploy_log",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_semantic_column_descriptions_deploy_log.json",
+      "column_lineage_row_count": 9,
+      "writers": [
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "2912256059591267",
+          "event_count_lookback": 27,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_semantic_column_descriptions_deploy_log.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_semantic_column_descriptions_purge_log",
+      "name": "de_output_semantic_column_descriptions_purge_log",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_semantic_column_descriptions_purge_log.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "2912256059591011",
+          "event_count_lookback": 1,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_semantic_column_descriptions_purge_log.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_semantic_column_descriptions_rollback",
+      "name": "de_output_semantic_column_descriptions_rollback",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_semantic_column_descriptions_rollback.json",
+      "column_lineage_row_count": 11,
+      "writers": [
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "2912256059591267",
+          "event_count_lookback": 4,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_semantic_column_descriptions_rollback.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_semantic_column_descriptions_work_queue",
+      "name": "de_output_semantic_column_descriptions_work_queue",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_semantic_column_descriptions_work_queue.json",
+      "column_lineage_row_count": 15,
+      "writers": [
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "2912256059591267",
+          "event_count_lookback": 151,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "448599523609643",
+          "event_count_lookback": 5,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "2527950559640120",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "3853551604280702",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "2912256059591011",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_semantic_column_descriptions_work_queue.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_trading_crypto_volume_fee_tier",
+      "name": "de_output_trading_crypto_volume_fee_tier",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_trading_crypto_volume_fee_tier.json",
+      "column_lineage_row_count": 35,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "760759824197003",
+          "event_count_lookback": 355,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "844382279060709",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_trading_crypto_volume_fee_tier.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_trading_crypto_volume_fee_tier_conf",
+      "name": "de_output_trading_crypto_volume_fee_tier_conf",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_trading_crypto_volume_fee_tier_conf.json",
+      "column_lineage_row_count": 8,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "844382279060709",
+          "event_count_lookback": 7,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "0796e548-4ecb-4869-a8a2-17fa60b2c6d8",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_trading_crypto_volume_fee_tier_conf.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_trading_crypto_volume_fee_tier_log",
+      "name": "de_output_trading_crypto_volume_fee_tier_log",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_trading_crypto_volume_fee_tier_log.json",
+      "column_lineage_row_count": 50,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "760759824197003",
+          "event_count_lookback": 91,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "844382279060709",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_trading_crypto_volume_fee_tier_log.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_voice_of_the_customer_comments",
+      "name": "de_output_voice_of_the_customer_comments",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_voice_of_the_customer_comments.json",
+      "column_lineage_row_count": 23,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "500460526742780",
+          "event_count_lookback": 42,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "41025a96-006f-4e6b-ab93-71b5b34155a3",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "b2419baf-1881-4f58-807a-6264515246fe",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "86ea55f4-5c14-4c52-8950-eefac916cc22",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_voice_of_the_customer_comments.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_voice_of_the_customer_feeds",
+      "name": "de_output_voice_of_the_customer_feeds",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_voice_of_the_customer_feeds.json",
+      "column_lineage_row_count": 14,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "306257206850667",
+          "event_count_lookback": 343,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "41025a96-006f-4e6b-ab93-71b5b34155a3",
+          "event_count_lookback": 9,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_voice_of_the_customer_feeds.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_voice_of_the_customer_messagingsession",
+      "name": "de_output_voice_of_the_customer_messagingsession",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_voice_of_the_customer_messagingsession.json",
+      "column_lineage_row_count": 39,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "3235178432582",
+          "event_count_lookback": 67,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "41025a96-006f-4e6b-ab93-71b5b34155a3",
+          "event_count_lookback": 8,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "a63b988b-2c2e-48b5-a8a9-9d4de59cf1a3",
+          "event_count_lookback": 4,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "123008292481641",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "86ea55f4-5c14-4c52-8950-eefac916cc22",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_voice_of_the_customer_messagingsession.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_voice_of_the_customer_torii",
+      "name": "de_output_voice_of_the_customer_torii",
+      "table_type": "MANAGED",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_voice_of_the_customer_torii.json",
+      "column_lineage_row_count": 12,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "741882925486902",
+          "event_count_lookback": 116,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "41025a96-006f-4e6b-ab93-71b5b34155a3",
+          "event_count_lookback": 7,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_voice_of_the_customer_torii.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.de_output_voice_of_the_customer_torii_new",
+      "name": "de_output_voice_of_the_customer_torii_new",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_voice_of_the_customer_torii_new.json",
+      "column_lineage_row_count": 22,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "597812824003564",
+          "event_count_lookback": 24,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "f4cae702-da72-43cf-b5e1-7ba6ffa21c64",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_voice_of_the_customer_torii_new.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.monitoring_schema_history",
+      "name": "monitoring_schema_history",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\monitoring_schema_history.json",
+      "column_lineage_row_count": 6,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "928786759970333",
+          "event_count_lookback": 5544,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "973601068713167",
+          "event_count_lookback": 5542,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "28a65a86-3183-47c7-993a-9095c484e4da",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\monitoring_schema_history.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.de_output.riskscore_classification_history_v",
+      "name": "riskscore_classification_history_v",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\riskscore_classification_history_v.json",
+      "column_lineage_row_count": 4,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\riskscore_classification_history_v.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.de_output.vw_bronze_failed_public_api_operations_with_errors",
+      "name": "vw_bronze_failed_public_api_operations_with_errors",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\vw_bronze_failed_public_api_operations_with_errors.json",
+      "column_lineage_row_count": 200,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\vw_bronze_failed_public_api_operations_with_errors.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.de_output.vw_bronze_public_api_operations",
+      "name": "vw_bronze_public_api_operations",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\vw_bronze_public_api_operations.json",
+      "column_lineage_row_count": 370,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\vw_bronze_public_api_operations.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.de_output.vw_risk_classification_history_complete",
+      "name": "vw_risk_classification_history_complete",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\vw_risk_classification_history_complete.json",
+      "column_lineage_row_count": 382,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\vw_risk_classification_history_complete.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
     }
   ],
   "stats": {
-    "ok": 0,
+    "ok": 5,
     "no_lineage": 0,
     "no_view_def": 0,
     "errors": 0,
-    "wall_seconds": 21.8
+    "wall_seconds": 1548.8
   }
 }

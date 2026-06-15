@@ -1,0 +1,1075 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_fact_customeraction_w_metrics",
+  "generated_at": "2026-05-18T16:27:36Z",
+  "formula_count": 97,
+  "formulas": [
+    {
+      "column": "GCID",
+      "formula": "GCID",
+      "expression_raw": "fca.GCID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": "RealCID",
+      "expression_raw": "fca.RealCID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "Occurred",
+      "formula": "Occurred",
+      "expression_raw": "fca.Occurred",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "ActionTypeID",
+      "formula": "ActionTypeID",
+      "expression_raw": "fca.ActionTypeID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "PlatformTypeID",
+      "formula": "PlatformTypeID",
+      "expression_raw": "fca.PlatformTypeID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentID",
+      "formula": "InstrumentID",
+      "expression_raw": "fca.InstrumentID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "Amount",
+      "formula": "Amount",
+      "expression_raw": "fca.Amount",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "Leverage",
+      "formula": "Leverage",
+      "expression_raw": "fca.Leverage",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "NetProfit",
+      "formula": "NetProfit",
+      "expression_raw": "fca.NetProfit",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "Commission",
+      "formula": "Commission",
+      "expression_raw": "fca.Commission",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "PositionID",
+      "formula": "PositionID",
+      "expression_raw": "dp.PositionID",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "recurring_positions"
+    },
+    {
+      "column": "FundingTypeID",
+      "formula": "FundingTypeID",
+      "expression_raw": "fca.FundingTypeID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "MirrorID",
+      "formula": "MirrorID",
+      "expression_raw": "fca.MirrorID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "WithdrawID",
+      "formula": "WithdrawID",
+      "expression_raw": "fca.WithdrawID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "DateID",
+      "formula": "DateID",
+      "expression_raw": "fca.DateID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "CompensationReasonID",
+      "formula": "CompensationReasonID",
+      "expression_raw": "fca.CompensationReasonID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "WithdrawPaymentID",
+      "formula": "WithdrawPaymentID",
+      "expression_raw": "fca.WithdrawPaymentID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "CommissionOnClose",
+      "formula": "CommissionOnClose",
+      "expression_raw": "fca.CommissionOnClose",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    },
+    {
+      "column": "DepositID",
+      "formula": "DepositID",
+      "expression_raw": "rpi.DepositID",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "recurring_positions"
+    },
+    {
+      "column": "FullCommission",
+      "formula": "FullCommission",
+      "expression_raw": "fca.FullCommission",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "FullCommissionOnClose",
+      "formula": "FullCommissionOnClose",
+      "expression_raw": "fca.FullCommissionOnClose",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L37-L37",
+      "scope": "main"
+    },
+    {
+      "column": "RedeemID",
+      "formula": "RedeemID",
+      "expression_raw": "fca.RedeemID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "RedeemStatus",
+      "formula": "RedeemStatus",
+      "expression_raw": "fca.RedeemStatus",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L39-L39",
+      "scope": "main"
+    },
+    {
+      "column": "IsRedeem",
+      "formula": "IsRedeem",
+      "expression_raw": "fca.IsRedeem",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L40-L40",
+      "scope": "main"
+    },
+    {
+      "column": "ReopenForPositionID",
+      "formula": "ReopenForPositionID",
+      "expression_raw": "fca.ReopenForPositionID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L41-L41",
+      "scope": "main"
+    },
+    {
+      "column": "IsReOpen",
+      "formula": "IsReOpen",
+      "expression_raw": "fca.IsReOpen",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L42-L42",
+      "scope": "main"
+    },
+    {
+      "column": "CommissionOnCloseOrig",
+      "formula": "CommissionOnCloseOrig",
+      "expression_raw": "fca.CommissionOnCloseOrig",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L43-L43",
+      "scope": "main"
+    },
+    {
+      "column": "FullCommissionOnCloseOrig",
+      "formula": "FullCommissionOnCloseOrig",
+      "expression_raw": "fca.FullCommissionOnCloseOrig",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L44-L44",
+      "scope": "main"
+    },
+    {
+      "column": "OriginalPositionID",
+      "formula": "OriginalPositionID",
+      "expression_raw": "fca.OriginalPositionID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L45-L45",
+      "scope": "main"
+    },
+    {
+      "column": "IsPartialCloseParent",
+      "formula": "IsPartialCloseParent",
+      "expression_raw": "fca.IsPartialCloseParent",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L46-L46",
+      "scope": "main"
+    },
+    {
+      "column": "IsPartialCloseChild",
+      "formula": "IsPartialCloseChild",
+      "expression_raw": "fca.IsPartialCloseChild",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L47-L47",
+      "scope": "main"
+    },
+    {
+      "column": "PaymentStatusID",
+      "formula": "PaymentStatusID",
+      "expression_raw": "fca.PaymentStatusID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L48-L48",
+      "scope": "main"
+    },
+    {
+      "column": "IsDiscounted",
+      "formula": "IsDiscounted",
+      "expression_raw": "fca.IsDiscounted",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L49-L49",
+      "scope": "main"
+    },
+    {
+      "column": "IsSettled",
+      "formula": "IsSettled",
+      "expression_raw": "fca.IsSettled",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L50-L50",
+      "scope": "main"
+    },
+    {
+      "column": "CommissionByUnits",
+      "formula": "CommissionByUnits",
+      "expression_raw": "fca.CommissionByUnits",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L51-L51",
+      "scope": "main"
+    },
+    {
+      "column": "FullCommissionByUnits",
+      "formula": "FullCommissionByUnits",
+      "expression_raw": "fca.FullCommissionByUnits",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L52-L52",
+      "scope": "main"
+    },
+    {
+      "column": "IsFTD",
+      "formula": "IsFTD",
+      "expression_raw": "fca.IsFTD",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L53-L53",
+      "scope": "main"
+    },
+    {
+      "column": "IsFeeDividend",
+      "formula": "IsFeeDividend",
+      "expression_raw": "fca.IsFeeDividend",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L54-L54",
+      "scope": "main"
+    },
+    {
+      "column": "IsAirDrop",
+      "formula": "IsAirDrop",
+      "expression_raw": "fca.IsAirDrop",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L55-L55",
+      "scope": "main"
+    },
+    {
+      "column": "DividendID",
+      "formula": "DividendID",
+      "expression_raw": "fca.DividendID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L56-L56",
+      "scope": "main"
+    },
+    {
+      "column": "MoveMoneyReasonID",
+      "formula": "MoveMoneyReasonID",
+      "expression_raw": "fca.MoveMoneyReasonID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L57-L57",
+      "scope": "main"
+    },
+    {
+      "column": "SettlementTypeID",
+      "formula": "SettlementTypeID",
+      "expression_raw": "fca.SettlementTypeID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L58-L58",
+      "scope": "main"
+    },
+    {
+      "column": "etr_y",
+      "formula": "etr_y",
+      "expression_raw": "fca.etr_y",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L59-L59",
+      "scope": "main"
+    },
+    {
+      "column": "etr_ym",
+      "formula": "etr_ym",
+      "expression_raw": "fca.etr_ym",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L60-L60",
+      "scope": "main"
+    },
+    {
+      "column": "etr_ymd",
+      "formula": "etr_ymd",
+      "expression_raw": "fca.etr_ymd",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L61-L61",
+      "scope": "main"
+    },
+    {
+      "column": "DLTOpen",
+      "formula": "DLTOpen",
+      "expression_raw": "fca.DLTOpen",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L62-L62",
+      "scope": "main"
+    },
+    {
+      "column": "DLTClose",
+      "formula": "DLTClose",
+      "expression_raw": "fca.DLTClose",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L63-L63",
+      "scope": "main"
+    },
+    {
+      "column": "OpenMarkupByUnits",
+      "formula": "OpenMarkupByUnits",
+      "expression_raw": "fca.OpenMarkupByUnits",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L64-L64",
+      "scope": "main"
+    },
+    {
+      "column": "Description",
+      "formula": "Description",
+      "expression_raw": "fca.Description",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L65-L65",
+      "scope": "main"
+    },
+    {
+      "column": "IsBuy",
+      "formula": "IsBuy",
+      "expression_raw": "fca.IsBuy",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L66-L66",
+      "scope": "main"
+    },
+    {
+      "column": "CreditID",
+      "formula": "CreditID",
+      "expression_raw": "fca.CreditID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L67-L67",
+      "scope": "main"
+    },
+    {
+      "column": "OpenDateID",
+      "formula": "OpenDateID",
+      "expression_raw": "fca.OpenDateID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L68-L68",
+      "scope": "main"
+    },
+    {
+      "column": "CloseDateID",
+      "formula": "CloseDateID",
+      "expression_raw": "fca.CloseDateID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L69-L69",
+      "scope": "main"
+    },
+    {
+      "column": "TicketFeeAction",
+      "formula": "TicketFeeAction",
+      "expression_raw": "fca.TicketFeeAction",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L70-L70",
+      "scope": "main"
+    },
+    {
+      "column": "RollOverFee",
+      "formula": "case when actiontypeid = 35 and isfeedividend = 1 then -1 * Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 35 and isfeedividend = 1 then -1 * fca.Amount else 0 end as RollOverFee",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L71-L71",
+      "scope": "main"
+    },
+    {
+      "column": "Dividend",
+      "formula": "case when actiontypeid = 35 and isfeedividend = 2 then Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 35 and isfeedividend = 2 then fca.Amount else 0 end as Dividend",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L72-L72",
+      "scope": "main"
+    },
+    {
+      "column": "SDRT",
+      "formula": "case when actiontypeid = 35 and isfeedividend = 3 then -1 * Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 35 and isfeedividend = 3 then -1 * fca.Amount else 0 end as SDRT",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L73-L73",
+      "scope": "main"
+    },
+    {
+      "column": "AdminFee",
+      "formula": "case when actiontypeid = 36 and CompensationReasonID = 117 then -1 * Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 36 and CompensationReasonID = 117 then -1 * fca.Amount else 0 end as AdminFee",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L74-L74",
+      "scope": "main"
+    },
+    {
+      "column": "SpotAdjustFee",
+      "formula": "case when actiontypeid = 36 and CompensationReasonID = 118 then -1 * Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 36 and CompensationReasonID = 118 then -1 * fca.Amount else 0 end as SpotAdjustFee",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L75-L75",
+      "scope": "main"
+    },
+    {
+      "column": "ConversionFeeDeposit",
+      "formula": "case when actiontypeid IN (7, 44) and DepositID is not null then PIPsCalculation else 0 end",
+      "expression_raw": "case when actiontypeid IN (7, 44) and dwfd.DepositID is not null then dwfd.PIPsCalculation else 0 end as ConversionFeeDeposit",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L76-L76",
+      "scope": "main"
+    },
+    {
+      "column": "ConversionFeeWithdraw",
+      "formula": "case when actiontypeid IN (8, 45) and WithdrawPaymentID is not null then PIPsCalculation else 0 end",
+      "expression_raw": "case when actiontypeid IN (8, 45) and dwfw.WithdrawPaymentID is not null then dwfw.PIPsCalculation else 0 end as ConversionFeeWithdraw",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L77-L77",
+      "scope": "main"
+    },
+    {
+      "column": "ConversionFeeReversal",
+      "formula": "case when depositid is not null then -1 * PIPsCalculation else 0 end",
+      "expression_raw": "case when dwfdr.depositid is not null then -1 * dwfdr.PIPsCalculation else 0 end as ConversionFeeReversal",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_Reversals"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L78-L78",
+      "scope": "main"
+    },
+    {
+      "column": "CashoutFeeExludingRedeem",
+      "formula": "case when actiontypeid = 30 and isredeem = 0 then Commission else 0 end",
+      "expression_raw": "case when actiontypeid = 30 and isredeem = 0 then Commission else 0 end as CashoutFeeExludingRedeem",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L79-L79",
+      "scope": "main"
+    },
+    {
+      "column": "TransferCoinFee",
+      "formula": "case when actiontypeid = 30 and isredeem = 1 then Commission else 0 end",
+      "expression_raw": "case when actiontypeid = 30 and isredeem = 1 then Commission else 0 end as TransferCoinFee",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L80-L80",
+      "scope": "main"
+    },
+    {
+      "column": "DormantFee",
+      "formula": "case when actiontypeid = 36 and CompensationReasonID = 30 then -1 * Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 36 and CompensationReasonID = 30 then -1 * fca.Amount else 0 end as DormantFee",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L81-L81",
+      "scope": "main"
+    },
+    {
+      "column": "ShareLendingFeeEtoroShare",
+      "formula": "case when actiontypeid = 36 and CompensationReasonID = 119 then Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 36 and CompensationReasonID = 119 then fca.Amount else 0 end as ShareLendingFeeEtoroShare",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L82-L82",
+      "scope": "main"
+    },
+    {
+      "column": "ShareLendingFeeUserShare",
+      "formula": "case when actiontypeid = 36 and CompensationReasonID = 119 then Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 36 and CompensationReasonID = 119 then fca.Amount else 0 end as ShareLendingFeeUserShare",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L83-L83",
+      "scope": "main"
+    },
+    {
+      "column": "ShareLendingFeeBrokerShare",
+      "formula": "case when actiontypeid = 36 and CompensationReasonID = 119 then Amount / round(0.425, 1) - 2 * (Amount) else 0 end",
+      "expression_raw": "case when actiontypeid = 36 and CompensationReasonID = 119 then fca.Amount / round(0.425, 1) - 2 * (fca.Amount) else 0 end as ShareLendingFeeBrokerShare",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L84-L84",
+      "scope": "main"
+    },
+    {
+      "column": "ShareLendingGrossAmount",
+      "formula": "case when actiontypeid = 36 and CompensationReasonID = 119 then 2 * Amount + Amount / round(0.425, 1) - 2 * (Amount) else 0 end",
+      "expression_raw": "case when actiontypeid = 36 and CompensationReasonID = 119 then 2 * fca.Amount + fca.Amount / round(0.425, 1) - 2 * (fca.Amount) else 0 end as ShareLendingGrossAmount",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L85-L85",
+      "scope": "main"
+    },
+    {
+      "column": "CashoutAdjustment",
+      "formula": "case when actiontypeid = 36 and CompensationReasonID in (41, 51) then Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 36 and CompensationReasonID in (41, 51) then fca.Amount else 0 end as CashoutAdjustment",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L86-L86",
+      "scope": "main"
+    },
+    {
+      "column": "NewCopyAmount",
+      "formula": "case when actiontypeid = 17 then -1 * Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 17 then -1 * fca.Amount else 0 end as NewCopyAmount",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L87-L87",
+      "scope": "main"
+    },
+    {
+      "column": "StopCopyAmount",
+      "formula": "case when actiontypeid = 18 then Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 18 then fca.Amount else 0 end as StopCopyAmount",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L88-L88",
+      "scope": "main"
+    },
+    {
+      "column": "AddToCopyAmount",
+      "formula": "case when actiontypeid = 15 then -1 * Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 15 then -1 * fca.Amount else 0 end as AddToCopyAmount",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L89-L89",
+      "scope": "main"
+    },
+    {
+      "column": "RemoveFromCopyAmount",
+      "formula": "case when actiontypeid = 16 then Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 16 then fca.Amount else 0 end as RemoveFromCopyAmount",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L90-L90",
+      "scope": "main"
+    },
+    {
+      "column": "CryptoToPosition",
+      "formula": "case when actiontypeid = 36 and CompensationReasonID = 134 then Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 36 and CompensationReasonID = 134 then fca.Amount else 0 end as CryptoToPosition",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L91-L91",
+      "scope": "main"
+    },
+    {
+      "column": "BonusCompensation",
+      "formula": "case when actiontypeid = 9 then Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 9 then fca.Amount else 0 end as BonusCompensation",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L92-L92",
+      "scope": "main"
+    },
+    {
+      "column": "PnLAdjustment",
+      "formula": "case when actiontypeid = 36 and CompensationReasonID = 22 then Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 36 and CompensationReasonID = 22 then fca.Amount else 0 end as PnLAdjustment",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L93-L93",
+      "scope": "main"
+    },
+    {
+      "column": "InvestedAmountIn",
+      "formula": "case when actiontypeid IN (1, 2, 3, 39) THEN Amount else 0 end",
+      "expression_raw": "case when actiontypeid IN (1, 2, 3, 39) THEN fca.Amount else 0 end as InvestedAmountIn",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L94-L94",
+      "scope": "main"
+    },
+    {
+      "column": "InvestedAmountOut",
+      "formula": "case when actiontypeid IN (4, 5, 6, 28, 40) THEN Amount else 0 end",
+      "expression_raw": "case when actiontypeid IN (4, 5, 6, 28, 40) THEN fca.Amount else 0 end as InvestedAmountOut",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L95-L95",
+      "scope": "main"
+    },
+    {
+      "column": "VolumeOpen",
+      "formula": "case when actiontypeid IN (1, 2, 3, 39) THEN VolumeOnOpen else 0 end",
+      "expression_raw": "case when actiontypeid IN (1, 2, 3, 39) THEN fca.VolumeOnOpen else 0 end as VolumeOpen",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L96-L96",
+      "scope": "main"
+    },
+    {
+      "column": "VolumeClose",
+      "formula": "case when actiontypeid IN (4, 5, 6, 28, 40) THEN VolumeOnClose else 0 end",
+      "expression_raw": "case when actiontypeid IN (4, 5, 6, 28, 40) THEN fca.VolumeOnClose else 0 end as VolumeClose",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L97-L97",
+      "scope": "main"
+    },
+    {
+      "column": "TicketFeeOpen",
+      "formula": "case when actiontypeid = 35 and IsFeeDividend = 4 and ticketfeeaction = 'Open' THEN -1 * Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 35 and IsFeeDividend = 4 and ticketfeeaction = 'Open' THEN -1 * fca.Amount else 0 end as TicketFeeOpen",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L98-L98",
+      "scope": "main"
+    },
+    {
+      "column": "TicketFeeClose",
+      "formula": "case when actiontypeid = 35 and IsFeeDividend = 4 and ticketfeeaction = 'Close' THEN -1 * Amount else 0 end",
+      "expression_raw": "case when actiontypeid = 35 and IsFeeDividend = 4 and ticketfeeaction = 'Close' THEN -1 * fca.Amount else 0 end as TicketFeeClose",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L99-L99",
+      "scope": "main"
+    },
+    {
+      "column": "FullCommissionCloseAdjustment",
+      "formula": "case when actiontypeid IN (4, 5, 6, 28, 40) then (FullCommissionOnClose - FullCommissionByUnits) else 0 end",
+      "expression_raw": "case when fca.actiontypeid IN (4, 5, 6, 28, 40) then (fca.FullCommissionOnClose - fca.FullCommissionByUnits) else 0 end as FullCommissionCloseAdjustment",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L100-L100",
+      "scope": "main"
+    },
+    {
+      "column": "CommissionCloseAdjustment",
+      "formula": "case when actiontypeid IN (4, 5, 6, 28, 40) then (CommissionOnClose - CommissionByUnits) else 0 end",
+      "expression_raw": "case when fca.actiontypeid IN (4, 5, 6, 28, 40) then (fca.CommissionOnClose - fca.CommissionByUnits) else 0 end as CommissionCloseAdjustment",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L101-L101",
+      "scope": "main"
+    },
+    {
+      "column": "FullCommissionTotal",
+      "formula": "case when actiontypeid IN (1, 2, 3, 39) then FullCommission when actiontypeid IN (4, 5, 6, 28, 40) then (FullCommissionOnClose - FullCommissionByUnits) else 0 end",
+      "expression_raw": "case when actiontypeid IN (1, 2, 3, 39) then fca.FullCommission when actiontypeid IN (4, 5, 6, 28, 40) then (fca.FullCommissionOnClose - fca.FullCommissionByUnits) else 0 end as FullCommissionTotal",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L102-L102",
+      "scope": "main"
+    },
+    {
+      "column": "CommissionTotal",
+      "formula": "case when actiontypeid IN (1, 2, 3, 39) then Commission when actiontypeid IN (4, 5, 6, 28, 40) then (CommissionOnClose - CommissionByUnits) else 0 end",
+      "expression_raw": "case when actiontypeid IN (1, 2, 3, 39) then fca.Commission when actiontypeid IN (4, 5, 6, 28, 40) then (fca.CommissionOnClose - fca.CommissionByUnits) else 0 end as CommissionTotal",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L103-L103",
+      "scope": "main"
+    },
+    {
+      "column": "IsActiveTrade",
+      "formula": "case when (actiontypeid = 1 and coalesce(IsAirDrop, 0) = 0 and mirrorid = 0) or actiontypeid in (15, 17) then 1 else 0 end",
+      "expression_raw": "case when (fca.actiontypeid = 1 and coalesce(fca.IsAirDrop, 0) = 0 and fca.mirrorid = 0) or actiontypeid in (15, 17) then 1 else 0 end as IsActiveTrade",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L104-L104",
+      "scope": "main"
+    },
+    {
+      "column": "IsSQF",
+      "formula": "case when IsSQF = 1 then 1 else 0 end",
+      "expression_raw": "case when di.IsSQF = 1 then 1 else 0 end as IsSQF",
+      "inputs": [
+        "main.etoro_kpi_prep.v_dim_instrument_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L105-L105",
+      "scope": "main"
+    },
+    {
+      "column": "Is_245_Instrument",
+      "formula": "case when Is_245_Instrument = 1 then 1 else 0 end",
+      "expression_raw": "case when di.Is_245_Instrument = 1 then 1 else 0 end as Is_245_Instrument",
+      "inputs": [
+        "main.etoro_kpi_prep.v_dim_instrument_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L106-L106",
+      "scope": "main"
+    },
+    {
+      "column": "IsCopyFund",
+      "formula": "case when mirrortypeid = 4 then 1 else 0 end",
+      "expression_raw": "case when dm.mirrortypeid = 4 then 1 else 0 end as IsCopyFund",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L107-L107",
+      "scope": "main"
+    },
+    {
+      "column": "ParentCID",
+      "formula": "ParentCID",
+      "expression_raw": "dm.ParentCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L108-L108",
+      "scope": "main"
+    },
+    {
+      "column": "ParentUserName",
+      "formula": "ParentUserName",
+      "expression_raw": "dm.ParentUserName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L109-L109",
+      "scope": "main"
+    },
+    {
+      "column": "IsOpenFromIBAN",
+      "formula": "case when ofi.TreeID is not null then 1 else 0 end",
+      "expression_raw": "case when ofi.TreeID is not null then 1 else 0 end as IsOpenFromIBAN",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L110-L110",
+      "scope": "main"
+    },
+    {
+      "column": "IsClosedToIBAN",
+      "formula": "case when cti.positionid is not null then 1 else 0 end",
+      "expression_raw": "case when cti.positionid is not null then 1 else 0 end as IsClosedToIBAN",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L111-L111",
+      "scope": "main"
+    },
+    {
+      "column": "IsRecurring",
+      "formula": "case when actiontypeid IN (1,2,3,39,4,5,6,28,40,35) and rip.positionid is not null then 1 when actiontypeid = 36 and CompensationReasonID IN (117,118) and rip.positionid is not null then 1 …",
+      "expression_raw": "case when actiontypeid IN (1,2,3,39,4,5,6,28,40,35) and rip.positionid is not null then 1\n       when actiontypeid = 36 and CompensationReasonID IN (117,118) and rip.positionid is not null then 1\n    …",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L112-L115",
+      "scope": "main"
+    },
+    {
+      "column": "IsC2P",
+      "formula": "case when apl.positionid is not null then 1 else 0 end",
+      "expression_raw": "case when apl.positionid is not null then 1 else 0 end as IsC2P",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L116-L116",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_fact_customeraction_w_metrics.sql"
+}

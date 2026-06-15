@@ -1,0 +1,38 @@
+{
+  "object_fqn": "main.etoro_kpi.customer_segments_v",
+  "generated_at": "2026-05-19T15:20:29Z",
+  "concept_count": 1,
+  "concepts": [
+    {
+      "id": "case_flag_equityscore",
+      "name": "EquityScore computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "EquityScore"
+      ],
+      "predicates": [
+        {
+          "col": "FirstDepositDate",
+          "op": "=",
+          "val": "'                             '"
+        },
+        {
+          "col": "EquityGlobal",
+          "op": ">=",
+          "val": "10000"
+        }
+      ],
+      "then_value": "'   '",
+      "else_value": "'         '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "bi_dealing.bi_output_dealing_cidage_data",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.etoro_kpi.ddr_aum_v"
+      ],
+      "evidence_lines": "etoro_kpi.sql L14-L29",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/customer_segments_v.sql"
+}

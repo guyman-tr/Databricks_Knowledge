@@ -1,0 +1,173 @@
+{
+  "object_fqn": "main.etoro_kpi.customer_segments_v",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 15,
+  "formulas": [
+    {
+      "column": "GCID",
+      "formula": "GCID",
+      "expression_raw": "cf.GCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "CID",
+      "formula": "CID",
+      "expression_raw": "cf.CID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "Club",
+      "formula": "Club",
+      "expression_raw": "cf.Club",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "Channel",
+      "formula": "Channel",
+      "expression_raw": "cf.Channel",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "Country",
+      "formula": "Country",
+      "expression_raw": "cf.Country",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "registered",
+      "formula": "registered",
+      "expression_raw": "cf.registered",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "FirstDepositDate",
+      "formula": "Case when FirstDepositDate = '1900-01-01T00:00:00.000+00:00' Then NULL ELSE FirstDepositDate End",
+      "expression_raw": "Case\n    when cf.FirstDepositDate = '1900-01-01T00:00:00.000+00:00' Then NULL\n    ELSE cf.FirstDepositDate\n  End as FirstDepositDate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L14-L17",
+      "scope": "main"
+    },
+    {
+      "column": "FirstCashoutDate",
+      "formula": "FirstCashoutDate",
+      "expression_raw": "cf.FirstCashoutDate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "FirstOpenPositionDate",
+      "formula": "FirstMenualPosOpenDate",
+      "expression_raw": "cf.FirstMenualPosOpenDate as FirstOpenPositionDate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguage",
+      "formula": "CommunicationLanguage",
+      "expression_raw": "cf.CommunicationLanguage",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "CustomerAge",
+      "formula": "Age",
+      "expression_raw": "ca.Age as CustomerAge",
+      "inputs": [
+        "bi_dealing.bi_output_dealing_cidage_data"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "Is_Churn_over_14",
+      "formula": "CASE WHEN LSD IN('Churn 14-30 days' , 'Churn 31-60 days', 'Churn over 60 days' ) Then True else False End Is_Churn_over_14",
+      "expression_raw": "CASE WHEN LSD IN('Churn 14-30 days' , 'Churn 31-60 days', 'Churn over 60 days' ) Then True else False End  Is_Churn_over_14",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "Is_Churn_over_30",
+      "formula": "CASE WHEN LSD IN('Churn 31-60 days', 'Churn over 60 days' ) Then True else False End Is_Churn_over_30",
+      "expression_raw": "CASE WHEN LSD IN('Churn 31-60 days', 'Churn over 60 days' ) Then True else False End  Is_Churn_over_30",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "Is_Churn_over_60",
+      "formula": "CASE WHEN LSD IN('Churn over 60 days' ) Then True else False End Is_Churn_over_60",
+      "expression_raw": "CASE WHEN LSD IN('Churn over 60 days' ) Then True else False End  Is_Churn_over_60",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "EquityScore",
+      "formula": "CASE WHEN EquityGlobal >= 10000 Then 'High' WHEN EquityGlobal Between 150 and 10000 Then 'Medium' WHEN EquityGlobal Between 0.5 and 150 Then 'Low' Else 'No Equity' End as Equi…",
+      "expression_raw": "CASE \n  WHEN aum.EquityGlobal >= 10000 Then 'High' \n  WHEN aum.EquityGlobal Between 150 and 10000  Then 'Medium' \n  WHEN aum.EquityGlobal Between 0.5 and 150  Then 'Low'\n  Else 'No Equity' End as Equi…",
+      "inputs": [
+        "main.etoro_kpi.ddr_aum_v"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L25-L29",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/customer_segments_v.sql"
+}

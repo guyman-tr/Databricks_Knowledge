@@ -7,13 +7,13 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_dim_dataplatform_uuid.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_dim_dataplatform_uuid.json` (rows: 6, mismatches: 6) |
 | **Primary upstream** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 
 | Upstream UC Object | Role | Upstream Wiki |
 |--------------------|------|---------------|
-| `main.bi_db.bronze_sub_accounts_accounts` | JOIN / referenced | ✗ `(no wiki found)` |
+| `main.bi_db.bronze_sub_accounts_accounts` | JOIN / referenced | ✗ `knowledge/UC_generated/bi_db/<Tables|Views>/bronze_sub_accounts_accounts.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | Primary (FROM) | ✓ `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Customer.md` |
 | `main.etoro_kpi.v_spaceship_aum` | JOIN / referenced | ✓ `knowledge/uc_domains/spaceship/schemas/etoro_kpi/Views/v_spaceship_aum.md` |
 

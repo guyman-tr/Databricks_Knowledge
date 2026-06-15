@@ -1,0 +1,95 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_fiattypes",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:21Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.FiatTypes.md",
+      "upstream_quote": "Auto-incrementing surrogate primary key within WalletDB. Used as FK target by Wallet.Payments.",
+      "wiki_quote": "Auto-incrementing surrogate primary key within WalletDB. Used as FK target by Wallet.Payments (Tier 1 — inherited from W",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FiatId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.FiatTypes.md",
+      "upstream_quote": "Business identifier for the fiat currency used across eToro platform systems. Unique constraint (UQ_Wallet_FiatTypes_Fia",
+      "wiki_quote": "Business identifier for the fiat currency used across eToro platform systems. Unique constraint (UQ_Wallet_FiatTypes_Fia",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FiatName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.FiatTypes.md",
+      "upstream_quote": "ISO 4217 three-letter currency code (e.g., USD, EUR, GBP, AUD). Unique constraint enforced. Used for display and API par",
+      "wiki_quote": "ISO 4217 three-letter currency code (e.g., USD, EUR, GBP, AUD). Unique constraint enforced. Used for display and API par",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsActive",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.FiatTypes.md",
+      "upstream_quote": "Whether this fiat currency is currently available for crypto operations. All current entries are active (1). Setting to ",
+      "wiki_quote": "Whether this fiat currency is currently available for crypto operations. All current entries are active (1). Setting to ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AvatarUrl",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.FiatTypes.md",
+      "upstream_quote": "URL to the currency's display icon hosted on S3. Used in the eToro wallet UI for visual identification of fiat currencie",
+      "wiki_quote": "URL to the currency's display icon hosted on S3. Used in the eToro wallet UI for visual identification of fiat currencie",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Precision",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.FiatTypes.md",
+      "upstream_quote": "Number of decimal places used when displaying and calculating amounts in this currency. All current currencies use 5 dec",
+      "wiki_quote": "Number of decimal places used when displaying and calculating amounts in this currency. All current currencies use 5 dec",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.FiatTypes.md",
+      "upstream_quote": "Links to the eToro trading platform instrument representing the exchange rate for this fiat vs USD. NULL for USD (base c",
+      "wiki_quote": "Links to the eToro trading platform instrument representing the exchange rate for this fiat vs USD. NULL for USD (base c",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "NumericCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.FiatTypes.md",
+      "upstream_quote": "ISO 4217 numeric currency code (e.g., 840=USD, 978=EUR, 826=GBP, 36=AUD). Used for standardized integrations with paymen",
+      "wiki_quote": "ISO 4217 numeric currency code (e.g., 840=USD, 978=EUR, 826=GBP, 36=AUD). Used for standardized integrations with paymen",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 8,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 8 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

@@ -7,13 +7,13 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_globalftdplatform.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_globalftdplatform.json` (rows: 2, mismatches: 1) |
 | **Primary upstream** | `main.bi_db.bronze_moneybusdb_dictionary_accounttypes` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 
 | Upstream UC Object | Role | Upstream Wiki |
 |--------------------|------|---------------|
-| `main.bi_db.bronze_moneybusdb_dictionary_accounttypes` | Primary (FROM) | ✓ `knowledge\ProdSchemas\PaymentsDBs\MoneyBusDB\Wiki\Dictionary\Tables\Dictionary.AccountTypes.md` |
+| `main.bi_db.bronze_moneybusdb_dictionary_accounttypes` | Primary (FROM) | ✓ `knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki/Dictionary/Tables/Dictionary.AccountTypes.md` |
 
 ## Lineage Chain
 

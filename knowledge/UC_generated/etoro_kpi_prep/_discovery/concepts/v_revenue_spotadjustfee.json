@@ -1,0 +1,26 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_revenue_spotadjustfee",
+  "generated_at": "2026-05-18T16:27:27Z",
+  "concept_count": 1,
+  "concepts": [
+    {
+      "id": "union_leg_sign_flip_main",
+      "name": "Sign-flip leg (main)",
+      "kind": "union_leg_sign_flip",
+      "columns_involved": [
+        "DECIMAL"
+      ],
+      "predicates": [],
+      "sign": "-1",
+      "expressions": [
+        "Amount"
+      ],
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution"
+      ],
+      "evidence_lines": "L13",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_revenue_spotadjustfee.sql"
+}

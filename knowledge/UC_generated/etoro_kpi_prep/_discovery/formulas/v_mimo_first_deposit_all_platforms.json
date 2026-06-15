@@ -1,0 +1,74 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms",
+  "generated_at": "2026-05-18T16:27:36Z",
+  "formula_count": 6,
+  "formulas": [
+    {
+      "column": "RealCID",
+      "formula": "CID",
+      "expression_raw": "mfts.CID AS RealCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "new_iban"
+    },
+    {
+      "column": "DepositID",
+      "formula": "a.TransactionID",
+      "expression_raw": "a.TransactionID AS DepositID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "new_iban"
+    },
+    {
+      "column": "FirstDepositDate",
+      "formula": "FirstDepositDate",
+      "expression_raw": "dc.FirstDepositDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L70-L71",
+      "scope": "dimcust"
+    },
+    {
+      "column": "FirstDepositAmount",
+      "formula": "FirstDepositAmount",
+      "expression_raw": "dc.FirstDepositAmount",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L72-L72",
+      "scope": "dimcust"
+    },
+    {
+      "column": "FTDPlatform",
+      "formula": "-- FTDPlatform name mapping CASE WHEN FTDPlatformID = 1 THEN 'TradingPlatform' WHEN FTDPlatformID = 2 THEN 'Options' WHEN FTDPlatformID = 3 THEN '…",
+      "expression_raw": "-- FTDPlatform name mapping\n        CASE \n            WHEN dc.FTDPlatformID = 1 THEN 'TradingPlatform'\n            WHEN dc.FTDPlatformID = 2 THEN 'Options'\n            WHEN dc.FTDPlatformID = 3 THEN '…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L73-L81",
+      "scope": "dimcust"
+    },
+    {
+      "column": "FTDPlatformID",
+      "formula": "FTDPlatformID",
+      "expression_raw": "dc.FTDPlatformID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L82-L83",
+      "scope": "dimcust"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_mimo_first_deposit_all_platforms.sql"
+}

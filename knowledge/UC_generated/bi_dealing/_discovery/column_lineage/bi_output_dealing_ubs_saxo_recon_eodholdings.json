@@ -1,0 +1,496 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_ubs_saxo_recon_eodholdings",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_0",
+      "target_column_name": "ConversionRate",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "ConversionRate",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_fxopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "Saxo_Denominator",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_fxopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "Saxo_Numerator",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_fxopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "Saxo_Numerator",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro1",
+      "source_column_name": "Position_Denominator",
+      "target_column_name": "UBS_Denominator",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro3",
+      "source_column_name": "Position_Denominator",
+      "target_column_name": "UBS_Denominator",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro2",
+      "source_column_name": "Position_Denominator",
+      "target_column_name": "UBS_Denominator",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro2",
+      "source_column_name": "Position_Numerator",
+      "target_column_name": "UBS_Numerator",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro1",
+      "source_column_name": "Position_Numerator",
+      "target_column_name": "UBS_Numerator",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro3",
+      "source_column_name": "Position_Numerator",
+      "target_column_name": "UBS_Numerator",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro1",
+      "source_column_name": "Position_Numerator",
+      "target_column_name": "UBS_Saxo_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "UBS_Saxo_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "UBS_Saxo_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "UBS_Saxo_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro1",
+      "source_column_name": "Position_Denominator",
+      "target_column_name": "UBS_Saxo_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro3",
+      "source_column_name": "Position_Numerator",
+      "target_column_name": "UBS_Saxo_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_fxopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "UBS_Saxo_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro3",
+      "source_column_name": "Position_Denominator",
+      "target_column_name": "UBS_Saxo_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro2",
+      "source_column_name": "Position_Numerator",
+      "target_column_name": "UBS_Saxo_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro2",
+      "source_column_name": "Position_Denominator",
+      "target_column_name": "UBS_Saxo_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "isbuy",
+      "target_column_name": "UBS_Saxo_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_fxopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "UBS_Saxo_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "isbuy",
+      "target_column_name": "UBS_Saxo_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro2",
+      "source_column_name": "Position_Numerator",
+      "target_column_name": "UBS_Saxo_eToro_USD",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "UBS_Saxo_eToro_USD",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "UBS_Saxo_eToro_USD",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro3",
+      "source_column_name": "Position_Denominator",
+      "target_column_name": "UBS_Saxo_eToro_USD",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "UBS_Saxo_eToro_USD",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "isbuy",
+      "target_column_name": "UBS_Saxo_eToro_USD",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_fxopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "UBS_Saxo_eToro_USD",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro1",
+      "source_column_name": "Position_Numerator",
+      "target_column_name": "UBS_Saxo_eToro_USD",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro1",
+      "source_column_name": "Position_Denominator",
+      "target_column_name": "UBS_Saxo_eToro_USD",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro2",
+      "source_column_name": "Position_Denominator",
+      "target_column_name": "UBS_Saxo_eToro_USD",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_fxopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "UBS_Saxo_eToro_USD",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_0",
+      "target_column_name": "UBS_Saxo_eToro_USD",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "UBS_Saxo_eToro_USD",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro3",
+      "source_column_name": "Position_Numerator",
+      "target_column_name": "UBS_Saxo_eToro_USD",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "isbuy",
+      "target_column_name": "UBS_Saxo_eToro_USD",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "LiquidityAccountID",
+      "target_column_name": "UBS_Table",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "LiquidityAccountID",
+      "target_column_name": "UBS_Table",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "UBS_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "isbuy",
+      "target_column_name": "UBS_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro3",
+      "source_column_name": "Position_Denominator",
+      "target_column_name": "UBS_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro1",
+      "source_column_name": "Position_Numerator",
+      "target_column_name": "UBS_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro1",
+      "source_column_name": "Position_Denominator",
+      "target_column_name": "UBS_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "UBS_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro3",
+      "source_column_name": "Position_Numerator",
+      "target_column_name": "UBS_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro2",
+      "source_column_name": "Position_Denominator",
+      "target_column_name": "UBS_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro2",
+      "source_column_name": "Position_Numerator",
+      "target_column_name": "UBS_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "UBS_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "isbuy",
+      "target_column_name": "UBS_eToro",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro2",
+      "source_column_name": "Denominator_Product",
+      "target_column_name": "currency",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "currency",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro3",
+      "source_column_name": "Denominator_Product",
+      "target_column_name": "currency",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro1",
+      "source_column_name": "Denominator_Product",
+      "target_column_name": "currency",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro3",
+      "source_column_name": "Numerator_Product",
+      "target_column_name": "currency",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro2",
+      "source_column_name": "Numerator_Product",
+      "target_column_name": "currency",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_fxopenpositions",
+      "source_column_name": "Instrument",
+      "target_column_name": "currency",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "BuyCurrency",
+      "target_column_name": "currency",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.general.gold_ubs_exposureeodetoro1",
+      "source_column_name": "Numerator_Product",
+      "target_column_name": "currency",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "eToro_Second",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "isbuy",
+      "target_column_name": "eToro_Second",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "isbuy",
+      "target_column_name": "eToro_Second",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "eToro_Second",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "eToro_Second",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "eToro_main",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "isbuy",
+      "target_column_name": "eToro_main",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "eToro_main",
+      "entity_type": "JOB",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "isbuy",
+      "target_column_name": "eToro_main",
+      "entity_type": "JOB",
+      "event_count": 67
+    }
+  ],
+  "generated_at": "2026-05-19T12:41:08Z"
+}

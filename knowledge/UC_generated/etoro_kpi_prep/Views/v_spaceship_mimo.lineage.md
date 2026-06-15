@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_spaceship_mimo.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_spaceship_mimo.json` (rows: 15, mismatches: 15) |
 | **Primary upstream** | `main.spaceship.bronze_spaceship_metabase_contact` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 
@@ -19,7 +19,7 @@
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\DWH_dbo\Tables\Fact_CurrencyPriceWithSplit.md` |
 | `main.spaceship.bronze_spaceship_analytics_fct_money_transactions` | JOIN / referenced | ✗ `(no wiki found)` |
 | `main.spaceship.bronze_spaceship_metabase_nova_transactions` | JOIN / referenced | ✗ `(no wiki found)` |
-| `main.bi_db.bronze_sub_accounts_accounts` | JOIN / referenced | ✗ `(no wiki found)` |
+| `main.bi_db.bronze_sub_accounts_accounts` | JOIN / referenced | ✗ `knowledge/UC_generated/bi_db/<Tables|Views>/bronze_sub_accounts_accounts.md` |
 | `main.spaceship.bronze_spaceship_metabase_super_transactions` | JOIN / referenced | ✗ `(no wiki found)` |
 | `main.spaceship.spaceship_metabase_voyager_user_balances` | JOIN / referenced | ✗ `(no wiki found)` |
 

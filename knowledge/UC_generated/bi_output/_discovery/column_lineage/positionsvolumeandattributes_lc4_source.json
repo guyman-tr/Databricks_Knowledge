@@ -1,0 +1,118 @@
+{
+  "object": "main.bi_output.positionsvolumeandattributes_lc4_source",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "AccountTypeID",
+      "target_column_name": "AccountTypeID",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Amount",
+      "target_column_name": "Amount_Total",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet",
+      "source_column_name": "PositionID",
+      "target_column_name": "Amount_lc",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Amount",
+      "target_column_name": "Amount_lc",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban_parquet",
+      "source_column_name": "PositionID",
+      "target_column_name": "Amount_lc",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "Name",
+      "target_column_name": "Club",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "CountryID",
+      "target_column_name": "CountryID",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "Date_",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "Date_",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentType",
+      "target_column_name": "InstrumentType",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsSettled",
+      "target_column_name": "IsSettled",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "SellCurrencyID",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "PositionID",
+      "target_column_name": "num_position_open_lc",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban_parquet",
+      "source_column_name": "PositionID",
+      "target_column_name": "num_position_open_lc",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet",
+      "source_column_name": "PositionID",
+      "target_column_name": "num_position_open_lc",
+      "entity_type": null,
+      "event_count": 4
+    }
+  ],
+  "generated_at": "2026-05-19T14:53:45Z"
+}

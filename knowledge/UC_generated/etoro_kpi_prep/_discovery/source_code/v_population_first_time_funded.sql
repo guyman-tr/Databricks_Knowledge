@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_population_first_time_funded
--- Captured: 2026-05-18T08:08:42Z
+-- Captured: 2026-05-27T14:10:00Z (post-deploy snapshot of REQ-24699 changes)
 -- ==========================================================================
 
 WITH First_IOB AS (
@@ -22,7 +22,10 @@ REMOVE_BAD_FTDS AS (
     WHERE CAST(dc.FirstDepositDate AS DATE) IN (
         TO_DATE('20250818', 'yyyyMMdd'),
         TO_DATE('20250819', 'yyyyMMdd'),
-        TO_DATE('20250820', 'yyyyMMdd')
+        TO_DATE('20250820', 'yyyyMMdd'),
+        TO_DATE('20260522', 'yyyyMMdd'),
+        TO_DATE('20260523', 'yyyyMMdd'),
+        TO_DATE('20260525', 'yyyyMMdd')
     )
     AND dc.FirstDepositAmount = 1
     AND dc.RealCID NOT IN (
@@ -76,15 +79,11 @@ OptionsTrade AS (
 )
 SELECT
     f.RealCID,
-
-    -- FTD
     f.FTDPlatformID,
     f.FTDPlatform,
     f.FTDDateID,
     f.FTDDate,
     f.FTDTime,
-
-    -- Trades & Activities
     t.FirstTradeDateID,
     t.FirstTradeDate,
     t.FirstTradeTime,
@@ -93,43 +92,29 @@ SELECT
     iob.FirstIOBTime,
     ot.FirstOptionsTradeDateID,
     ot.FirstOptionsTradeDate,
-
-    -- Verification
     v.FirstVerifiedDateID,
     v.FirstVerifiedDate,
-
-    -- First Funded (Latest of FTD, Activity, Verification)
     GREATEST(
         f.FTDDateID,
         v.FirstVerifiedDateID,
         COALESCE(
-            LEAST(
-                t.FirstTradeDateID,
-                iob.FirstIOBDateID,
-                ot.FirstOptionsTradeDateID
-            ),
+            LEAST(t.FirstTradeDateID, iob.FirstIOBDateID, ot.FirstOptionsTradeDateID),
             COALESCE(t.FirstTradeDateID, iob.FirstIOBDateID, ot.FirstOptionsTradeDateID)
         )
     ) AS FirstFundedDateID,
-
     TO_DATE(
         CAST(
             GREATEST(
                 f.FTDDateID,
                 v.FirstVerifiedDateID,
                 COALESCE(
-                    LEAST(
-                        t.FirstTradeDateID,
-                        iob.FirstIOBDateID,
-                        ot.FirstOptionsTradeDateID
-                    ),
+                    LEAST(t.FirstTradeDateID, iob.FirstIOBDateID, ot.FirstOptionsTradeDateID),
                     COALESCE(t.FirstTradeDateID, iob.FirstIOBDateID, ot.FirstOptionsTradeDateID)
                 )
             ) AS STRING
         ),
         'yyyyMMdd'
     ) AS FirstFundedDate
-
 FROM DWH_FTD f
 INNER JOIN Verification v
     ON f.RealCID = v.RealCID
@@ -139,8 +124,7 @@ LEFT JOIN First_IOB iob
     ON f.RealCID = iob.RealCID
 LEFT JOIN OptionsTrade ot
     ON f.RealCID = ot.RealCID
-
-WHERE 
+WHERE
     (t.FirstTradeDateID IS NOT NULL
      OR iob.FirstIOBDateID IS NOT NULL
-     OR ot.FirstOptionsTradeDateID IS NOT NULL)
+     OR ot.FirstOptionsTradeDateID IS NOT NULL);

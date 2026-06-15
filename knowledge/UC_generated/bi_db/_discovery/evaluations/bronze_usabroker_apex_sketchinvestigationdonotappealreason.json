@@ -1,0 +1,95 @@
+{
+  "object_fqn": "main.bi_db.bronze_usabroker_apex_sketchinvestigationdonotappealreason",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:57Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "ID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\USABroker\\Wiki\\Apex\\Tables\\Apex.SketchInvestigationDoNotAppealReason.md",
+      "upstream_quote": "Auto-incrementing surrogate primary key. ~42K records to date.",
+      "wiki_quote": "Auto-incrementing surrogate primary key. ~42K records to date (Tier 1 — inherited from USABroker.apex.SketchInvestigatio",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "GCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\USABroker\\Wiki\\Apex\\Tables\\Apex.SketchInvestigationDoNotAppealReason.md",
+      "upstream_quote": "Global Customer ID of the customer whose investigation produced this do-not-appeal reason.",
+      "wiki_quote": "Global Customer ID of the customer whose investigation produced this do-not-appeal reason (Tier 1 — inherited from USABr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ApexID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\USABroker\\Wiki\\Apex\\Tables\\Apex.SketchInvestigationDoNotAppealReason.md",
+      "upstream_quote": "The customer's Apex Clearing account ID. Stored here for direct reference without needing to JOIN to ApexData.",
+      "wiki_quote": "The customer's Apex Clearing account ID. Stored here for direct reference without needing to JOIN to ApexData (Tier 1 — ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SketchID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\USABroker\\Wiki\\Apex\\Tables\\Apex.SketchInvestigationDoNotAppealReason.md",
+      "upstream_quote": "GUID of the Sketch investigation that produced this reason. Multiple reasons can share the same SketchID when the invest",
+      "wiki_quote": "GUID of the Sketch investigation that produced this reason. Multiple reasons can share the same SketchID when the invest",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ReasonTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\USABroker\\Wiki\\Apex\\Tables\\Apex.SketchInvestigationDoNotAppealReason.md",
+      "upstream_quote": "Category of the investigation reason. FK to Dictionary.SketchInvestigationReasonType: 0=None, 1=Indeterminate (inconclus",
+      "wiki_quote": "Category of the investigation reason. FK to Dictionary.SketchInvestigationReasonType: 0=None, 1=Indeterminate (inconclus",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ReasonConstant",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\USABroker\\Wiki\\Apex\\Tables\\Apex.SketchInvestigationDoNotAppealReason.md",
+      "upstream_quote": "Machine-readable constant identifying the specific reason. Maps to constants in the Sketch/Equifax API. Examples: SSN_FR",
+      "wiki_quote": "Machine-readable constant identifying the specific reason. Maps to constants in the Sketch/Equifax API. Examples: SSN_FR",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SketchDataSource",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\USABroker\\Wiki\\Apex\\Tables\\Apex.SketchInvestigationDoNotAppealReason.md",
+      "upstream_quote": "The data bureau that provided this verification result. Observed value: \"Equifax\". Identifies which third-party data sou",
+      "wiki_quote": "The data bureau that provided this verification result. Observed value: \"Equifax\". Identifies which third-party data sou",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ReasonDescription",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\USABroker\\Wiki\\Apex\\Tables\\Apex.SketchInvestigationDoNotAppealReason.md",
+      "upstream_quote": "Human-readable description of the verification failure. Examples: \"Applicant profile contains a fraud victim warning\", \"",
+      "wiki_quote": "Human-readable description of the verification failure. Examples: \"Applicant profile contains a fraud victim warning\", \"",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 8,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 8 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

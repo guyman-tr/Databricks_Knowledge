@@ -1,0 +1,66 @@
+{
+  "object_fqn": "main.etoro_kpi.positions_for_compliance_v",
+  "generated_at": "2026-05-19T15:20:29Z",
+  "concept_count": 3,
+  "concepts": [
+    {
+      "id": "dim_lookup_di",
+      "name": "Dim lookup via di",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "alias": "di",
+      "join_conditions": [
+        "dp.instrumentid = di.instrumentid"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L62",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "dp.instrumentid = di.instrumentid"
+    },
+    {
+      "id": "dim_lookup_dcpr",
+      "name": "Dim lookup via dcpr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason",
+      "alias": "dcpr",
+      "join_conditions": [
+        "dp.closepositionreasonid = dcpr.closepositionreasonid"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L64",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "dp.closepositionreasonid = dcpr.closepositionreasonid"
+    },
+    {
+      "id": "pair_init_end",
+      "name": "Lifecycle pair (open → close)",
+      "kind": "pair_group",
+      "columns_involved": [
+        "inithedgetype",
+        "endhedgetype"
+      ],
+      "predicates": [],
+      "pattern": "Init*/End*",
+      "physical_inputs": [],
+      "evidence_lines": "uc_inventory.json",
+      "scope": "schema"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/positions_for_compliance_v.sql"
+}

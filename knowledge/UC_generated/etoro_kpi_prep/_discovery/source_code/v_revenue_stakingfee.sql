@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_revenue_stakingfee
--- Captured: 2026-05-18T08:14:01Z
+-- Captured: 2026-05-19T12:23:44Z
 -- ==========================================================================
 
 WITH BadMonths AS (

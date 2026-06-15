@@ -1,0 +1,132 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_lp_fees_virtu_stamp_duty",
+  "rows": [
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "Activity",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "Date",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 57
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "source_column_name": "PRIMARY_MIC",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 34
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "source_column_name": "PRIMARY_MIC",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 34
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "PRIMARY_MIC",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 34
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "LP",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "Stamp_Duty",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "Currency",
+      "target_column_name": "Stamp_Duty",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "Stamp_Duty",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "Taxes",
+      "target_column_name": "Stamp_Duty",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "source_column_name": "Currency",
+      "target_column_name": "Stamp_Duty",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "Stamp_Duty",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "Stamp_Duty",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "source_column_name": "Taxes",
+      "target_column_name": "Stamp_Duty",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "source_column_name": "Taxes",
+      "target_column_name": "Stamp_Duty",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "source_column_name": "Currency",
+      "target_column_name": "Stamp_Duty",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 61
+    }
+  ],
+  "generated_at": "2026-05-19T12:30:01Z"
+}

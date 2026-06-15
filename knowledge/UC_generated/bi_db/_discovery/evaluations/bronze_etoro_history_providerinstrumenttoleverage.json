@@ -1,0 +1,95 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_history_providerinstrumenttoleverage",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:40Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "VersionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "Auto-incrementing row version identifier. Clustered PK. NOT FOR REPLICATION prevents identity gaps on replication target",
+      "wiki_quote": "Auto-incrementing row version identifier. Clustered PK. NOT FOR REPLICATION prevents identity gaps on replication target",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "The price/execution provider for which this leverage option applies. Implicit FK to provider lookup (same as Trade.Provi",
+      "wiki_quote": "The price/execution provider for which this leverage option applies. Implicit FK to provider lookup (same as Trade.Provi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "The financial instrument for which this leverage tier is available. Implicit FK to instrument lookup. HPIL_INSTRUMENT in",
+      "wiki_quote": "The financial instrument for which this leverage tier is available. Implicit FK to instrument lookup. HPIL_INSTRUMENT in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LeverageID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "Identifies the leverage tier (e.g., 1:5, 1:10, 1:100). Implicit FK to leverage lookup (Dictionary.Leverage or Trade.Leve",
+      "wiki_quote": "Identifies the leverage tier (e.g., 1:5, 1:10, 1:100). Implicit FK to leverage lookup (Dictionary.Leverage or Trade.Leve",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsDefault",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "1 = this is the default leverage tier presented to customers for this instrument. Only one tier per active (ProviderID, ",
+      "wiki_quote": "1 = this is the default leverage tier presented to customers for this instrument. Only one tier per active (ProviderID, ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Percentage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "Margin percentage associated with this leverage tier. Observed value: 0. May represent a margin override percentage (0 =",
+      "wiki_quote": "Margin percentage associated with this leverage tier. Observed value: 0. May represent a margin override percentage (0 =",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidFrom",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "Application-set timestamp when this leverage tier became available for this provider-instrument pair. Not UTC-guaranteed",
+      "wiki_quote": "Application-set timestamp when this leverage tier became available for this provider-instrument pair. Not UTC-guaranteed",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidTo",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "Application-set timestamp when this leverage tier was deactivated. Sentinel '3000-01-01 00:00:00.000' = currently active",
+      "wiki_quote": "Application-set timestamp when this leverage tier was deactivated. Sentinel '3000-01-01 00:00:00.000' = currently active",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 8,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 8 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

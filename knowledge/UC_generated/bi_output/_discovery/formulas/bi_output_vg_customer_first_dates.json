@@ -1,0 +1,864 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_customer_first_dates",
+  "generated_at": "2026-05-19T15:01:26Z",
+  "formula_count": 67,
+  "formulas": [
+    {
+      "column": "RealCID",
+      "formula": "SELECT RealCID",
+      "expression_raw": "SELECT cds.RealCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L10-L10",
+      "scope": "daily_status_first"
+    },
+    {
+      "column": "GCID",
+      "formula": ",GCID",
+      "expression_raw": ",fsc.GCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L46",
+      "scope": "main"
+    },
+    {
+      "column": "RegistrationDate",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L47",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel1Date",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L48",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel2Date",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L49",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel3Date",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L50",
+      "scope": "main"
+    },
+    {
+      "column": "EmailVerifiedDate",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L51",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevelID",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L52",
+      "scope": "main"
+    },
+    {
+      "column": "Channel",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L53",
+      "scope": "main"
+    },
+    {
+      "column": "SubChannel",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L54",
+      "scope": "main"
+    },
+    {
+      "column": "Global_FTD_Date",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L55",
+      "scope": "main"
+    },
+    {
+      "column": "Global_FTDA",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L56",
+      "scope": "main"
+    },
+    {
+      "column": "IBAN_FTD_Date",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L57",
+      "scope": "main"
+    },
+    {
+      "column": "IBAN_FTDA",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L58",
+      "scope": "main"
+    },
+    {
+      "column": "TP_FTD_Date",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L59",
+      "scope": "main"
+    },
+    {
+      "column": "TP_FTDA",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L60",
+      "scope": "main"
+    },
+    {
+      "column": "Options_FTD_Date",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L61",
+      "scope": "main"
+    },
+    {
+      "column": "Options_FTDA",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L62",
+      "scope": "main"
+    },
+    {
+      "column": "FirstActionType",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L63",
+      "scope": "main"
+    },
+    {
+      "column": "FirstActionDate",
+      "formula": ",Global_FTD_Date ,Global_FTDA ,IBAN_FTD_Date ,IBAN_FTDA ,TP_FTD_Date ,TP_FTDA ,Options_FTD_Date ,Options_FTDA ,FirstActionType ,FullDate AS FirstA…",
+      "expression_raw": ",Global_FTD_Date \n      ,Global_FTDA\n      ,IBAN_FTD_Date\n      ,IBAN_FTDA\n      ,TP_FTD_Date\n      ,TP_FTDA\n      ,Options_FTD_Date\n      ,Options_FTDA\n      ,FirstActionType\n\t,dd1.FullDate AS FirstA…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L11-L20",
+      "scope": "daily_status_first"
+    },
+    {
+      "column": "FirstIOBTime",
+      "formula": ",Global_FTD_Date ,Global_FTDA ,IBAN_FTD_Date ,IBAN_FTDA ,TP_FTD_Date ,TP_FTDA ,Options_FTD_Date ,Options_FTDA ,FirstActionType ,FullDate AS FirstA…",
+      "expression_raw": ",Global_FTD_Date \n      ,Global_FTDA\n      ,IBAN_FTD_Date\n      ,IBAN_FTDA\n      ,TP_FTD_Date\n      ,TP_FTDA\n      ,Options_FTD_Date\n      ,Options_FTDA\n      ,FirstActionType\n\t,dd1.FullDate AS FirstA…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L11-L21",
+      "scope": "daily_status_first"
+    },
+    {
+      "column": "FirstTimeFunded",
+      "formula": ",Global_FTD_Date ,Global_FTDA ,IBAN_FTD_Date ,IBAN_FTDA ,TP_FTD_Date ,TP_FTDA ,Options_FTD_Date ,Options_FTDA ,FirstActionType ,FullDate AS FirstA…",
+      "expression_raw": ",Global_FTD_Date \n      ,Global_FTDA\n      ,IBAN_FTD_Date\n      ,IBAN_FTDA\n      ,TP_FTD_Date\n      ,TP_FTDA\n      ,Options_FTD_Date\n      ,Options_FTDA\n      ,FirstActionType\n\t,dd1.FullDate AS FirstA…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L11-L22",
+      "scope": "daily_status_first"
+    },
+    {
+      "column": "FirstFundedDate",
+      "formula": ",Global_FTD_Date ,Global_FTDA ,IBAN_FTD_Date ,IBAN_FTDA ,TP_FTD_Date ,TP_FTDA ,Options_FTD_Date ,Options_FTDA ,FirstActionType ,FullDate AS FirstA…",
+      "expression_raw": ",Global_FTD_Date \n      ,Global_FTDA\n      ,IBAN_FTD_Date\n      ,IBAN_FTDA\n      ,TP_FTD_Date\n      ,TP_FTDA\n      ,Options_FTD_Date\n      ,Options_FTDA\n      ,FirstActionType\n\t,dd1.FullDate AS FirstA…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L11-L23",
+      "scope": "daily_status_first"
+    },
+    {
+      "column": "IsFunded",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L68",
+      "scope": "main"
+    },
+    {
+      "column": "FirstClub",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L69",
+      "scope": "main"
+    },
+    {
+      "column": "FirstTimeClubDate",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L70",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerLevelID",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L71",
+      "scope": "main"
+    },
+    {
+      "column": "ClubTier",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L72",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationID",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L73",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L74",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel",
+      "formula": ",GCID ,to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,…",
+      "expression_raw": ",fsc.GCID\n      ,to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L46-L75",
+      "scope": "main"
+    },
+    {
+      "column": "CountryID",
+      "formula": ",to_date(RegisteredReal) RegistrationDate ,VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,Verification…",
+      "expression_raw": ",to_date(fsc.RegisteredReal) RegistrationDate\n      ,cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,fsc.Verification…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L47-L76",
+      "scope": "main"
+    },
+    {
+      "column": "Country",
+      "formula": ",VerificationLevel1Date ,VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,VerificationLevelID ,Channel ,SubChannel …",
+      "expression_raw": ",cdf.VerificationLevel1Date\n      ,cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,fsc.VerificationLevelID\n      ,cdf.Channel\n      ,cdf.SubChannel\n   …",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L48-L77",
+      "scope": "main"
+    },
+    {
+      "column": "Region",
+      "formula": ",VerificationLevel2Date ,VerificationLevel3Date ,EmailVerifiedDate ,VerificationLevelID ,Channel ,SubChannel ,Global_FTD_Date ,dsf…",
+      "expression_raw": ",cdf.VerificationLevel2Date\n      ,cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,fsc.VerificationLevelID\n      ,cdf.Channel\n      ,cdf.SubChannel\n      ,dsf.Global_FTD_Date\n      ,dsf…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L49-L78",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManagerID",
+      "formula": ",VerificationLevel3Date ,EmailVerifiedDate ,VerificationLevelID ,Channel ,SubChannel ,Global_FTD_Date ,Global_FTDA ,IBAN_FTD_D…",
+      "expression_raw": ",cdf.VerificationLevel3Date\n      ,cdf.EmailVerifiedDate\n      ,fsc.VerificationLevelID\n      ,cdf.Channel\n      ,cdf.SubChannel\n      ,dsf.Global_FTD_Date\n      ,dsf.Global_FTDA\n      ,dsf.IBAN_FTD_D…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L50-L79",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManager",
+      "formula": ",EmailVerifiedDate ,VerificationLevelID ,Channel ,SubChannel ,Global_FTD_Date ,Global_FTDA ,IBAN_FTD_Date ,IBAN_FTDA ,ds…",
+      "expression_raw": ",cdf.EmailVerifiedDate\n      ,fsc.VerificationLevelID\n      ,cdf.Channel\n      ,cdf.SubChannel\n      ,dsf.Global_FTD_Date\n      ,dsf.Global_FTDA\n      ,dsf.IBAN_FTD_Date\n      ,dsf.IBAN_FTDA\n      ,ds…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L51-L80",
+      "scope": "main"
+    },
+    {
+      "column": "LanguageID",
+      "formula": ",VerificationLevelID ,Channel ,SubChannel ,Global_FTD_Date ,Global_FTDA ,IBAN_FTD_Date ,IBAN_FTDA ,TP_FTD_Date ,TP_F…",
+      "expression_raw": ",fsc.VerificationLevelID\n      ,cdf.Channel\n      ,cdf.SubChannel\n      ,dsf.Global_FTD_Date\n      ,dsf.Global_FTDA\n      ,dsf.IBAN_FTD_Date\n      ,dsf.IBAN_FTDA\n      ,dsf.TP_FTD_Date\n      ,dsf.TP_F…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L52-L81",
+      "scope": "main"
+    },
+    {
+      "column": "Language",
+      "formula": ",Channel ,SubChannel ,Global_FTD_Date ,Global_FTDA ,IBAN_FTD_Date ,IBAN_FTDA ,TP_FTD_Date ,TP_FTDA ,Options_FTD_Date…",
+      "expression_raw": ",cdf.Channel\n      ,cdf.SubChannel\n      ,dsf.Global_FTD_Date\n      ,dsf.Global_FTDA\n      ,dsf.IBAN_FTD_Date\n      ,dsf.IBAN_FTDA\n      ,dsf.TP_FTD_Date\n      ,dsf.TP_FTDA\n      ,dsf.Options_FTD_Date…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L53-L82",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguageID",
+      "formula": ",SubChannel ,Global_FTD_Date ,Global_FTDA ,IBAN_FTD_Date ,IBAN_FTDA ,TP_FTD_Date ,TP_FTDA ,Options_FTD_Date ,Options…",
+      "expression_raw": ",cdf.SubChannel\n      ,dsf.Global_FTD_Date\n      ,dsf.Global_FTDA\n      ,dsf.IBAN_FTD_Date\n      ,dsf.IBAN_FTDA\n      ,dsf.TP_FTD_Date\n      ,dsf.TP_FTDA\n      ,dsf.Options_FTD_Date\n      ,dsf.Options…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L54-L83",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguage",
+      "formula": ",Global_FTD_Date ,Global_FTDA ,IBAN_FTD_Date ,IBAN_FTDA ,TP_FTD_Date ,TP_FTDA ,Options_FTD_Date ,Options_FTDA ,First…",
+      "expression_raw": ",dsf.Global_FTD_Date\n      ,dsf.Global_FTDA\n      ,dsf.IBAN_FTD_Date\n      ,dsf.IBAN_FTDA\n      ,dsf.TP_FTD_Date\n      ,dsf.TP_FTDA\n      ,dsf.Options_FTD_Date\n      ,dsf.Options_FTDA\n      ,dsf.First…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L55-L84",
+      "scope": "main"
+    },
+    {
+      "column": "AccountTypeID",
+      "formula": ",Global_FTDA ,IBAN_FTD_Date ,IBAN_FTDA ,TP_FTD_Date ,TP_FTDA ,Options_FTD_Date ,Options_FTDA ,FirstActionType ,First…",
+      "expression_raw": ",dsf.Global_FTDA\n      ,dsf.IBAN_FTD_Date\n      ,dsf.IBAN_FTDA\n      ,dsf.TP_FTD_Date\n      ,dsf.TP_FTDA\n      ,dsf.Options_FTD_Date\n      ,dsf.Options_FTDA\n      ,dsf.FirstActionType\n      ,dsf.First…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L56-L85",
+      "scope": "main"
+    },
+    {
+      "column": "AccountType",
+      "formula": ",IBAN_FTD_Date ,IBAN_FTDA ,TP_FTD_Date ,TP_FTDA ,Options_FTD_Date ,Options_FTDA ,FirstActionType ,FirstActionDate ,F…",
+      "expression_raw": ",dsf.IBAN_FTD_Date\n      ,dsf.IBAN_FTDA\n      ,dsf.TP_FTD_Date\n      ,dsf.TP_FTDA\n      ,dsf.Options_FTD_Date\n      ,dsf.Options_FTDA\n      ,dsf.FirstActionType\n      ,dsf.FirstActionDate\n      ,dsf.F…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L57-L86",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusID",
+      "formula": ",IBAN_FTDA ,TP_FTD_Date ,TP_FTDA ,Options_FTD_Date ,Options_FTDA ,FirstActionType ,FirstActionDate ,FirstIOBTime ,Fi…",
+      "expression_raw": ",dsf.IBAN_FTDA\n      ,dsf.TP_FTD_Date\n      ,dsf.TP_FTDA\n      ,dsf.Options_FTD_Date\n      ,dsf.Options_FTDA\n      ,dsf.FirstActionType\n      ,dsf.FirstActionDate\n      ,dsf.FirstIOBTime\n      ,dsf.Fi…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L58-L87",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusName",
+      "formula": ",TP_FTD_Date ,TP_FTDA ,Options_FTD_Date ,Options_FTDA ,FirstActionType ,FirstActionDate ,FirstIOBTime ,FirstTimeFunded ,…",
+      "expression_raw": ",dsf.TP_FTD_Date\n      ,dsf.TP_FTDA\n      ,dsf.Options_FTD_Date\n      ,dsf.Options_FTDA\n      ,dsf.FirstActionType\n      ,dsf.FirstActionDate\n      ,dsf.FirstIOBTime\n      ,dsf.FirstTimeFunded\n      ,…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L59-L88",
+      "scope": "main"
+    },
+    {
+      "column": "IsPI",
+      "formula": ",TP_FTDA ,Options_FTD_Date ,Options_FTDA ,FirstActionType ,FirstActionDate ,FirstIOBTime ,FirstTimeFunded ,FirstFundedDate …",
+      "expression_raw": ",dsf.TP_FTDA\n      ,dsf.Options_FTD_Date\n      ,dsf.Options_FTDA\n      ,dsf.FirstActionType\n      ,dsf.FirstActionDate\n      ,dsf.FirstIOBTime\n      ,dsf.FirstTimeFunded\n      ,dsf.FirstFundedDate\n   …",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L60-L89",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusID",
+      "formula": ",Options_FTD_Date ,Options_FTDA ,FirstActionType ,FirstActionDate ,FirstIOBTime ,FirstTimeFunded ,FirstFundedDate ,IsFunded …",
+      "expression_raw": ",dsf.Options_FTD_Date\n      ,dsf.Options_FTDA\n      ,dsf.FirstActionType\n      ,dsf.FirstActionDate\n      ,dsf.FirstIOBTime\n      ,dsf.FirstTimeFunded\n      ,dsf.FirstFundedDate\n      ,dsf.IsFunded\n  …",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L61-L90",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusName",
+      "formula": ",Options_FTDA ,FirstActionType ,FirstActionDate ,FirstIOBTime ,FirstTimeFunded ,FirstFundedDate ,IsFunded ,currentclub FirstClu…",
+      "expression_raw": ",dsf.Options_FTDA\n      ,dsf.FirstActionType\n      ,dsf.FirstActionDate\n      ,dsf.FirstIOBTime\n      ,dsf.FirstTimeFunded\n      ,dsf.FirstFundedDate\n      ,dsf.IsFunded\n      ,fc.currentclub FirstClu…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L91",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusID",
+      "formula": ",FirstActionType ,FirstActionDate ,FirstIOBTime ,FirstTimeFunded ,FirstFundedDate ,IsFunded ,currentclub FirstClub ,date FirstTi…",
+      "expression_raw": ",dsf.FirstActionType\n      ,dsf.FirstActionDate\n      ,dsf.FirstIOBTime\n      ,dsf.FirstTimeFunded\n      ,dsf.FirstFundedDate\n      ,dsf.IsFunded\n      ,fc.currentclub FirstClub\n      ,fc.date FirstTi…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L63-L92",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusName",
+      "formula": ",FirstActionDate ,FirstIOBTime ,FirstTimeFunded ,FirstFundedDate ,IsFunded ,currentclub FirstClub ,date FirstTimeClubDate ,Playe…",
+      "expression_raw": ",dsf.FirstActionDate\n      ,dsf.FirstIOBTime\n      ,dsf.FirstTimeFunded\n      ,dsf.FirstFundedDate\n      ,dsf.IsFunded\n      ,fc.currentclub FirstClub\n      ,fc.date FirstTimeClubDate\n      ,fsc.Playe…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L64-L93",
+      "scope": "main"
+    },
+    {
+      "column": "CanOpenPosition",
+      "formula": ",FirstIOBTime ,FirstTimeFunded ,FirstFundedDate ,IsFunded ,currentclub FirstClub ,date FirstTimeClubDate ,PlayerLevelID ,Name AS…",
+      "expression_raw": ",dsf.FirstIOBTime\n      ,dsf.FirstTimeFunded\n      ,dsf.FirstFundedDate\n      ,dsf.IsFunded\n      ,fc.currentclub FirstClub\n      ,fc.date FirstTimeClubDate\n      ,fsc.PlayerLevelID\n      ,dpl.Name AS…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L65-L94",
+      "scope": "main"
+    },
+    {
+      "column": "CanClosePosition",
+      "formula": ",FirstTimeFunded ,FirstFundedDate ,IsFunded ,currentclub FirstClub ,date FirstTimeClubDate ,PlayerLevelID ,Name AS ClubTier ,Reg…",
+      "expression_raw": ",dsf.FirstTimeFunded\n      ,dsf.FirstFundedDate\n      ,dsf.IsFunded\n      ,fc.currentclub FirstClub\n      ,fc.date FirstTimeClubDate\n      ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.Reg…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L66-L95",
+      "scope": "main"
+    },
+    {
+      "column": "CanEditPosition",
+      "formula": ",FirstFundedDate ,IsFunded ,currentclub FirstClub ,date FirstTimeClubDate ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS…",
+      "expression_raw": ",dsf.FirstFundedDate\n      ,dsf.IsFunded\n      ,fc.currentclub FirstClub\n      ,fc.date FirstTimeClubDate\n      ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L67-L96",
+      "scope": "main"
+    },
+    {
+      "column": "CanBeCopied",
+      "formula": ",IsFunded ,currentclub FirstClub ,date FirstTimeClubDate ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,Name …",
+      "expression_raw": ",dsf.IsFunded\n      ,fc.currentclub FirstClub\n      ,fc.date FirstTimeClubDate\n      ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,dv.Name …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L68-L97",
+      "scope": "main"
+    },
+    {
+      "column": "CanDeposit",
+      "formula": ",currentclub FirstClub ,date FirstTimeClubDate ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,Name AS VerificationLevel…",
+      "expression_raw": ",fc.currentclub FirstClub\n      ,fc.date FirstTimeClubDate\n      ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,dv.Name AS VerificationLevel…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L69-L98",
+      "scope": "main"
+    },
+    {
+      "column": "CanRequestWithdraw",
+      "formula": ",date FirstTimeClubDate ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,Name AS VerificationLevel ,CountryID ,dc.…",
+      "expression_raw": ",fc.date FirstTimeClubDate\n      ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L70-L99",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonID",
+      "formula": ",PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,Name AS VerificationLevel ,CountryID ,Name AS Country ,Marketi…",
+      "expression_raw": ",fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.Marketi…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L71-L100",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonName",
+      "formula": ",Name AS ClubTier ,RegulationID ,Name AS Regulation ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS Reg…",
+      "expression_raw": ",dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.MarketingRegionManualName AS Reg…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L72-L101",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonID",
+      "formula": ",RegulationID ,Name AS Regulation ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,AccountManage…",
+      "expression_raw": ",fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.MarketingRegionManualName AS Region\n      ,fsc.AccountManage…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L73-L102",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonName",
+      "formula": ",Name AS Regulation ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(dm.…",
+      "expression_raw": ",dr.Name AS Regulation\n      ,dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.MarketingRegionManualName AS Region\n      ,fsc.AccountManagerID\n      ,concat_ws(dm.…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L74-L103",
+      "scope": "main"
+    },
+    {
+      "column": "ActiveTraded",
+      "formula": ",Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(FirstName,'',LastName) AS …",
+      "expression_raw": ",dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.MarketingRegionManualName AS Region\n      ,fsc.AccountManagerID\n      ,concat_ws(dm.FirstName,'',dm.LastName) AS …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L75-L104",
+      "scope": "main"
+    },
+    {
+      "column": "BalanceOnlyAccount",
+      "formula": ",CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(FirstName,'',LastName) AS AccountManager ,LanguageID…",
+      "expression_raw": ",fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.MarketingRegionManualName AS Region\n      ,fsc.AccountManagerID\n      ,concat_ws(dm.FirstName,'',dm.LastName) AS AccountManager\n      ,fsc.LanguageID…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L76-L105",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only",
+      "formula": ",Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(FirstName,'',LastName) AS AccountManager ,LanguageID ,Name AS La…",
+      "expression_raw": ",dc.Name AS Country\n      ,dc.MarketingRegionManualName AS Region\n      ,fsc.AccountManagerID\n      ,concat_ws(dm.FirstName,'',dm.LastName) AS AccountManager\n      ,fsc.LanguageID\n      ,dl.Name AS La…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L77-L106",
+      "scope": "main"
+    },
+    {
+      "column": "AccountActive",
+      "formula": ",MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(FirstName,'',LastName) AS AccountManager ,LanguageID ,Name AS Language ,Communic…",
+      "expression_raw": ",dc.MarketingRegionManualName AS Region\n      ,fsc.AccountManagerID\n      ,concat_ws(dm.FirstName,'',dm.LastName) AS AccountManager\n      ,fsc.LanguageID\n      ,dl.Name AS Language\n      ,fsc.Communic…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L78-L107",
+      "scope": "main"
+    },
+    {
+      "column": "AccountInActive",
+      "formula": ",AccountManagerID ,concat_ws(FirstName,'',LastName) AS AccountManager ,LanguageID ,Name AS Language ,CommunicationLanguageID ,Name AS Communicati…",
+      "expression_raw": ",fsc.AccountManagerID\n      ,concat_ws(dm.FirstName,'',dm.LastName) AS AccountManager\n      ,fsc.LanguageID\n      ,dl.Name AS Language\n      ,fsc.CommunicationLanguageID\n      ,dcl.Name AS Communicati…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L79-L108",
+      "scope": "main"
+    },
+    {
+      "column": "CitizenshipCountryID",
+      "formula": ",concat_ws(FirstName,'',LastName) AS AccountManager ,LanguageID ,Name AS Language ,CommunicationLanguageID ,Name AS CommunicationLanguage ,Accoun…",
+      "expression_raw": ",concat_ws(dm.FirstName,'',dm.LastName) AS AccountManager\n      ,fsc.LanguageID\n      ,dl.Name AS Language\n      ,fsc.CommunicationLanguageID\n      ,dcl.Name AS CommunicationLanguage\n      ,fsc.Accoun…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L80-L109",
+      "scope": "main"
+    },
+    {
+      "column": "CitizenshipCountry",
+      "formula": ",LanguageID ,Name AS Language ,CommunicationLanguageID ,Name AS CommunicationLanguage ,AccountTypeID ,Name AS AccountType ,GuruStatusID …",
+      "expression_raw": ",fsc.LanguageID\n      ,dl.Name AS Language\n      ,fsc.CommunicationLanguageID\n      ,dcl.Name AS CommunicationLanguage\n      ,fsc.AccountTypeID\n      ,act.Name AS AccountType\n      ,fsc.GuruStatusID\n …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L81-L110",
+      "scope": "main"
+    },
+    {
+      "column": "AffiliateID",
+      "formula": ",Name AS Language ,CommunicationLanguageID ,Name AS CommunicationLanguage ,AccountTypeID ,Name AS AccountType ,GuruStatusID ,GuruStatusNam…",
+      "expression_raw": ",dl.Name AS Language\n      ,fsc.CommunicationLanguageID\n      ,dcl.Name AS CommunicationLanguage\n      ,fsc.AccountTypeID\n      ,act.Name AS AccountType\n      ,fsc.GuruStatusID\n      ,gs.GuruStatusNam…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L82-L111",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_customer_first_dates.sql"
+}

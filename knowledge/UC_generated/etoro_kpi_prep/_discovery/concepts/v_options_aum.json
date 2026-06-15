@@ -1,0 +1,46 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_options_aum",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "filter_block_first_funding",
+      "name": "Filter block on first_funding",
+      "kind": "filter_block",
+      "columns_involved": [
+        "RN"
+      ],
+      "predicates": [
+        {
+          "col": "RN",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L27",
+      "scope": "first_funding",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_latest_daily_buypower",
+      "name": "Filter block on latest_daily_buypower",
+      "kind": "filter_block",
+      "columns_involved": [
+        "daily_rn"
+      ],
+      "predicates": [
+        {
+          "col": "daily_rn",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L38",
+      "scope": "latest_daily_buypower",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_options_aum.sql"
+}

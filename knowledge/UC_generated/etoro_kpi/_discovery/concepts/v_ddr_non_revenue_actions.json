@@ -1,0 +1,225 @@
+{
+  "object_fqn": "main.etoro_kpi.v_ddr_non_revenue_actions",
+  "generated_at": "2026-05-19T15:20:29Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "case_flag_actiontype",
+      "name": "ActionType computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "ActionType"
+      ],
+      "predicates": [
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "IN",
+          "val": "(53,54)"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "22"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "41"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "50"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "51"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "52"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "134"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "9"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "32"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "IN",
+          "val": "(1,2,3,39)"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "IN",
+          "val": "(4,5,6,28,40)"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "15"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "16"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "17"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "18"
+        }
+      ],
+      "then_value": "'        '",
+      "else_value": null,
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics"
+      ],
+      "evidence_lines": "etoro_kpi.sql L12-L29",
+      "scope": "financial_actions"
+    },
+    {
+      "id": "case_flag_actiontype",
+      "name": "ActionType computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "ActionType"
+      ],
+      "predicates": [
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "9"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "32"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "IN",
+          "val": "(1,2,3,39)"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "IN",
+          "val": "(4,5,6,28,40)"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "15"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "16"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "17"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "18"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "IN",
+          "val": "(1,2,3,4,5,6,9,15,16,17,18,28,32,36,39,40)"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "14"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "14"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "41"
+        }
+      ],
+      "then_value": "'         '",
+      "else_value": null,
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "evidence_lines": "etoro_kpi.sql L30-L54",
+      "scope": "non_financial_actions"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/v_ddr_non_revenue_actions.sql"
+}

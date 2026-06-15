@@ -207,7 +207,7 @@ Of its 76 columns: 14 inherit byte-for-byte from upstream wikis (Tier 1), 62 are
 | 48 | RealizedEquity | DECIMAL | YES | Realized equity (cash + credit + in-process cashouts) on the snapshot date. Direct passthrough from V_Liabilities.RealizedEquity. (Tier 2 — Fact_SnapshotEquity) |
 | 49 | TotalPositionsAmount | DECIMAL | YES | Total invested amount across all open positions on the snapshot date. Direct passthrough from V_Liabilities.TotalPositionsAmount. (Tier 2 — Fact_SnapshotEquity) |
 | 50 | PositionPnL | DECIMAL | YES | Unrealized position profit/loss on the snapshot date. Direct passthrough from V_Liabilities.PositionPnL. (Tier 2 — Fact_CustomerUnrealized_PnL) |
-| 51 | Credit | DECIMAL | YES | Available credit balance on the snapshot date. Direct passthrough from V_Liabilities.Credit. (Tier 2 — Fact_SnapshotEquity) |
+| 51 | Credit | DECIMAL | YES | Outstanding credit/bonus balance from Fact_SnapshotEquity.Credit (last credit event per CID per day from History.ActiveCredit; negative values = outstanding obligations). (Tier 2 — DWH_dbo.Fact_SnapshotEquity) |
 | 52 | NumOfCopiers | INT | YES | Count of valid depositor customers currently copying this PI/Portfolio, from etoroGeneral_History_GuruCopiers where Timestamp = day-after-@date. Only counts IsValidCustomer=1 AND IsDepositor=1 copiers. (Tier 2 — etoroGeneral_History_GuruCopiers) |
 | 53 | CopyAUC | DECIMAL | YES | Total Assets Under Copy -- sum of Cash + Investment + PnL + DetachedPosInvestment + Dit_PnL across all valid copiers of this PI/Portfolio. (Tier 2 — etoroGeneral_History_GuruCopiers) |
 | 54 | CopyPnL | DECIMAL | YES | Total copy PnL -- sum of PnL + DetachedPosInvestment + Dit_PnL across all valid copiers of this PI/Portfolio. (Tier 2 — etoroGeneral_History_GuruCopiers) |

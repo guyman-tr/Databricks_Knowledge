@@ -1,0 +1,63 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_moneyfarm_fees",
+  "generated_at": "2026-05-18T16:27:36Z",
+  "formula_count": 5,
+  "formulas": [
+    {
+      "column": "date",
+      "formula": "-- this is currently a placeholder, no fee logic exists yet CAST(NULL AS DATE)",
+      "expression_raw": "-- this is currently a placeholder, no fee logic exists yet\n  CAST(NULL AS DATE) AS date",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L9",
+      "scope": "main"
+    },
+    {
+      "column": "dateid",
+      "formula": "CAST(NULL AS INT)",
+      "expression_raw": "CAST(NULL AS INT) AS dateid",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "gcid",
+      "formula": "CAST(NULL AS BIGINT)",
+      "expression_raw": "CAST(NULL AS BIGINT) AS gcid",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "total_fees_gbp",
+      "formula": "CAST(NULL AS DOUBLE)",
+      "expression_raw": "CAST(NULL AS DOUBLE) AS total_fees_gbp",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "total_fees_usd",
+      "formula": "CAST(NULL AS DOUBLE)",
+      "expression_raw": "CAST(NULL AS DOUBLE) AS total_fees_usd",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_moneyfarm_fees.sql"
+}

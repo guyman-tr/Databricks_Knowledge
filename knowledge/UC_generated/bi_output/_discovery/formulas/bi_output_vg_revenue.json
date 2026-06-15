@@ -1,0 +1,691 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_revenue",
+  "generated_at": "2026-05-19T15:01:27Z",
+  "formula_count": 52,
+  "formulas": [
+    {
+      "column": "Date",
+      "formula": "-- ========================================================================== -- Source: information_schema.views.view_definition -- Object: bi_output.bi_output_vg_revenue -- Captured: 2026-05-19…",
+      "expression_raw": "-- ==========================================================================\n-- Source: information_schema.views.view_definition\n-- Object: main.bi_output.bi_output_vg_revenue\n-- Captured: 2026-05-19…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L1-L7",
+      "scope": "main"
+    },
+    {
+      "column": "DateID",
+      "formula": ", DateID",
+      "expression_raw": ", dd.DateID",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYearMonth",
+      "formula": ", DateID , CalendarYearMonth",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L9",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarQuarter",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L10",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYear",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L11",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID)",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L12",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L13",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentType",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L14",
+      "scope": "main"
+    },
+    {
+      "column": "IsSettled",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L15",
+      "scope": "main"
+    },
+    {
+      "column": "IsCopy",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L16",
+      "scope": "main"
+    },
+    {
+      "column": "Metric",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L17",
+      "scope": "main"
+    },
+    {
+      "column": "CountAsActiveTrade",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L18",
+      "scope": "main"
+    },
+    {
+      "column": "IncludedInTotalRevenue",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L19",
+      "scope": "main"
+    },
+    {
+      "column": "RevenueMetricCategory",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L20",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerLevelID",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L21",
+      "scope": "main"
+    },
+    {
+      "column": "ClubTier",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L22",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationID",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L23",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L24",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevelID",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L25",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L26",
+      "scope": "main"
+    },
+    {
+      "column": "CountryID",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L27",
+      "scope": "main"
+    },
+    {
+      "column": "Country",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L28",
+      "scope": "main"
+    },
+    {
+      "column": "Region",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L29",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManagerID",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L30",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManager",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L31",
+      "scope": "main"
+    },
+    {
+      "column": "LanguageID",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L32",
+      "scope": "main"
+    },
+    {
+      "column": "Language",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L33",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguageID",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L34",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguage",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L35",
+      "scope": "main"
+    },
+    {
+      "column": "AccountTypeID",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L36",
+      "scope": "main"
+    },
+    {
+      "column": "AccountType",
+      "formula": ", DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …",
+      "expression_raw": ", dd.DateID\n\t   , dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L37",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusID",
+      "formula": ", CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled , IsCop…",
+      "expression_raw": ", dd.CalendarYearMonth \n\t   , dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n     , rga.IsCop…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L38",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusName",
+      "formula": ", CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled , IsCopy , Metric , r…",
+      "expression_raw": ", dd.CalendarQuarter\n\t   , dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n     , rga.IsCopy\n     , rga.Metric\n     , r…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L10-L39",
+      "scope": "main"
+    },
+    {
+      "column": "IsPI",
+      "formula": ", CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled , IsCopy , Metric , CountAsActiveTrade …",
+      "expression_raw": ", dd.CalendarYear\n     , STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n     , rga.IsCopy\n     , rga.Metric\n     , rga.CountAsActiveTrade\n\t\t …",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_output.bi_output_vg_date",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L11-L40",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusID",
+      "formula": ", STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled , IsCopy , Metric , CountAsActiveTrade , IncludedInTotalR…",
+      "expression_raw": ", STRING(rga.RealCID) AS RealCID\n     , rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n     , rga.IsCopy\n     , rga.Metric\n     , rga.CountAsActiveTrade\n\t\t , rmtr.IncludedInTotalR…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+        "main.bi_output.bi_output_customer_ddr_revenue_metrics"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L12-L41",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusName",
+      "formula": ", InstrumentTypeID , InstrumentType , IsSettled , IsCopy , Metric , CountAsActiveTrade , IncludedInTotalRevenue , RevenueMetricCategory…",
+      "expression_raw": ", rga.InstrumentTypeID\n     , ins.InstrumentType\n     , rga.IsSettled\n     , rga.IsCopy\n     , rga.Metric\n     , rga.CountAsActiveTrade\n\t\t , rmtr.IncludedInTotalRevenue\n\t\t , rmtr.RevenueMetricCategory…",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+        "main.bi_output.bi_output_customer_ddr_revenue_metrics"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L13-L42",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusID",
+      "formula": ", InstrumentType , IsSettled , IsCopy , Metric , CountAsActiveTrade , IncludedInTotalRevenue , RevenueMetricCategory ,PlayerLevelID …",
+      "expression_raw": ", ins.InstrumentType\n     , rga.IsSettled\n     , rga.IsCopy\n     , rga.Metric\n     , rga.CountAsActiveTrade\n\t\t , rmtr.IncludedInTotalRevenue\n\t\t , rmtr.RevenueMetricCategory\n     ,fsc.PlayerLevelID\n   …",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_Instrumenttype",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+        "main.bi_output.bi_output_customer_ddr_revenue_metrics"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L14-L43",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusName",
+      "formula": ", IsSettled , IsCopy , Metric , CountAsActiveTrade , IncludedInTotalRevenue , RevenueMetricCategory ,PlayerLevelID ,Name AS ClubTier …",
+      "expression_raw": ", rga.IsSettled\n     , rga.IsCopy\n     , rga.Metric\n     , rga.CountAsActiveTrade\n\t\t , rmtr.IncludedInTotalRevenue\n\t\t , rmtr.RevenueMetricCategory\n     ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+        "main.bi_output.bi_output_customer_ddr_revenue_metrics"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L15-L44",
+      "scope": "main"
+    },
+    {
+      "column": "CanOpenPosition",
+      "formula": ", IsCopy , Metric , CountAsActiveTrade , IncludedInTotalRevenue , RevenueMetricCategory ,PlayerLevelID ,Name AS ClubTier ,RegulationI…",
+      "expression_raw": ", rga.IsCopy\n     , rga.Metric\n     , rga.CountAsActiveTrade\n\t\t , rmtr.IncludedInTotalRevenue\n\t\t , rmtr.RevenueMetricCategory\n     ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationI…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+        "main.bi_output.bi_output_customer_ddr_revenue_metrics"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L16-L45",
+      "scope": "main"
+    },
+    {
+      "column": "CanClosePosition",
+      "formula": ", Metric , CountAsActiveTrade , IncludedInTotalRevenue , RevenueMetricCategory ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name A…",
+      "expression_raw": ", rga.Metric\n     , rga.CountAsActiveTrade\n\t\t , rmtr.IncludedInTotalRevenue\n\t\t , rmtr.RevenueMetricCategory\n     ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name A…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.bi_output.bi_output_customer_ddr_revenue_metrics",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L17-L46",
+      "scope": "main"
+    },
+    {
+      "column": "CanEditPosition",
+      "formula": ", CountAsActiveTrade , IncludedInTotalRevenue , RevenueMetricCategory ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation …",
+      "expression_raw": ", rga.CountAsActiveTrade\n\t\t , rmtr.IncludedInTotalRevenue\n\t\t , rmtr.RevenueMetricCategory\n     ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS Regulation\n     …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.bi_output.bi_output_customer_ddr_revenue_metrics",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L18-L47",
+      "scope": "main"
+    },
+    {
+      "column": "CanBeCopied",
+      "formula": ", IncludedInTotalRevenue , RevenueMetricCategory ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID …",
+      "expression_raw": ", rmtr.IncludedInTotalRevenue\n\t\t , rmtr.RevenueMetricCategory\n     ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,fsc.VerificationLevelID\n  …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.bi_output.bi_output_customer_ddr_revenue_metrics"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L19-L48",
+      "scope": "main"
+    },
+    {
+      "column": "CanDeposit",
+      "formula": ", RevenueMetricCategory ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel…",
+      "expression_raw": ", rmtr.RevenueMetricCategory\n     ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,fsc.VerificationLevelID\n      ,dv.Name AS VerificationLevel…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.bi_output.bi_output_customer_ddr_revenue_metrics",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L20-L49",
+      "scope": "main"
+    },
+    {
+      "column": "CanRequestWithdraw",
+      "formula": ",PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Na…",
+      "expression_raw": ",fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,fsc.VerificationLevelID\n      ,dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Na…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L21-L50",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonID",
+      "formula": ",Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,M…",
+      "expression_raw": ",dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,fsc.VerificationLevelID\n      ,dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.M…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L51",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonName",
+      "formula": ",RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS …",
+      "expression_raw": ",fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,fsc.VerificationLevelID\n      ,dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.MarketingRegionManualName AS …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L23-L52",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonID",
+      "formula": ",Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,Accoun…",
+      "expression_raw": ",dr.Name AS Regulation\n      ,fsc.VerificationLevelID\n      ,dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.MarketingRegionManualName AS Region\n      ,fsc.Accoun…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L24-L53",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonName",
+      "formula": ",VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(d…",
+      "expression_raw": ",fsc.VerificationLevelID\n      ,dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.MarketingRegionManualName AS Region\n      ,fsc.AccountManagerID\n      ,concat_ws(d…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L25-L54",
+      "scope": "main"
+    },
+    {
+      "column": "CitizenshipCountryID",
+      "formula": ",Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(FirstName,'',LastName) AS …",
+      "expression_raw": ",dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.MarketingRegionManualName AS Region\n      ,fsc.AccountManagerID\n      ,concat_ws(dm.FirstName,'',dm.LastName) AS …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L26-L55",
+      "scope": "main"
+    },
+    {
+      "column": "CitizenshipCountry",
+      "formula": ",CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(FirstName,'',LastName) AS AccountManager ,LanguageID…",
+      "expression_raw": ",fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.MarketingRegionManualName AS Region\n      ,fsc.AccountManagerID\n      ,concat_ws(dm.FirstName,'',dm.LastName) AS AccountManager\n      ,fsc.LanguageID…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L27-L56",
+      "scope": "main"
+    },
+    {
+      "column": "Amount",
+      "formula": ",Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(FirstName,'',LastName) AS AccountManager ,LanguageID ,Name AS La…",
+      "expression_raw": ",dc.Name AS Country\n      ,dc.MarketingRegionManualName AS Region\n      ,fsc.AccountManagerID\n      ,concat_ws(dm.FirstName,'',dm.LastName) AS AccountManager\n      ,fsc.LanguageID\n      ,dl.Name AS La…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L28-L57",
+      "scope": "main"
+    },
+    {
+      "column": "AffiliateID",
+      "formula": ",MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(FirstName,'',LastName) AS AccountManager ,LanguageID ,Name AS Language ,Communic…",
+      "expression_raw": ",dc.MarketingRegionManualName AS Region\n      ,fsc.AccountManagerID\n      ,concat_ws(dm.FirstName,'',dm.LastName) AS AccountManager\n      ,fsc.LanguageID\n      ,dl.Name AS Language\n      ,fsc.Communic…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L29-L58",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_revenue.sql"
+}

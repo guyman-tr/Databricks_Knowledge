@@ -1,0 +1,118 @@
+{
+  "object_fqn": "main.bi_output.vg_emoney_txs",
+  "generated_at": "2026-05-19T15:01:28Z",
+  "formula_count": 10,
+  "formulas": [
+    {
+      "column": "CID",
+      "formula": "CID",
+      "expression_raw": "mdt.CID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "GCID",
+      "formula": "GCID",
+      "expression_raw": "mdt.GCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "TxStatusModificationDate",
+      "formula": "TxStatusModificationDate",
+      "expression_raw": "mdt.TxStatusModificationDate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "TxAmountInUSD",
+      "formula": "USDAmountApprox",
+      "expression_raw": "mdt.USDAmountApprox AS TxAmountInUSD",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "TransactionID",
+      "formula": "TransactionID",
+      "expression_raw": "mdt.TransactionID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "IsTxSettled",
+      "formula": "IsTxSettled",
+      "expression_raw": "mdt.IsTxSettled",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "TxType",
+      "formula": "TxType",
+      "expression_raw": "mdt.TxType",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "TxTypeID",
+      "formula": "TxTypeID",
+      "expression_raw": "mdt.TxTypeID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "HolderCurrencyISO",
+      "formula": "HolderCurrencyISO",
+      "expression_raw": "mdt.HolderCurrencyISO",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "LocalCurrencyISO",
+      "formula": "LocalCurrencyISO",
+      "expression_raw": "mdt.LocalCurrencyISO",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_emoney_txs.sql"
+}

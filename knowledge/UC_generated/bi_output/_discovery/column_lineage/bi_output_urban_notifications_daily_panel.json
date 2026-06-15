@@ -1,0 +1,314 @@
+{
+  "object": "main.bi_output.bi_output_urban_notifications_daily_panel",
+  "rows": [
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "AppInstallStatus",
+      "target_column_name": "AppInstallStatus",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "Name",
+      "target_column_name": "Club",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailycluster",
+      "source_column_name": "ClusterDetail",
+      "target_column_name": "ClusterDetail",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "CountSinceLastChangeInPushOptIn",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "Country",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "DeviceType",
+      "target_column_name": "DeviceType",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_push_body",
+      "source_column_name": "EventNumber",
+      "target_column_name": "EventNumber",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_message_send",
+      "source_column_name": "ExternalUserId",
+      "target_column_name": "ExternalUserId",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "AppInstallStatus",
+      "target_column_name": "Get",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "PushOptIn",
+      "target_column_name": "Get",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "LastAppInstallStatus",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "LastNotificationCategory",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "LastNotificationSubCategory",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "LastNotificationtype",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "Max_Login_Date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": "main.urban.gold_push_body",
+      "source_column_name": "NotificationCategory",
+      "target_column_name": "NotificationCategory",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_push_body",
+      "source_column_name": "NotificationSubCategory",
+      "target_column_name": "NotificationSubCategory",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_push_body",
+      "source_column_name": "NotificationType",
+      "target_column_name": "NotificationType",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_push_body",
+      "source_column_name": "Occurred",
+      "target_column_name": "Occurred",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_application_open",
+      "source_column_name": "ExternalUserId",
+      "target_column_name": "Open60Min",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_application_open",
+      "source_column_name": "Occurred_fixed",
+      "target_column_name": "Open60Min",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_application_open",
+      "source_column_name": "Occurred_fixed",
+      "target_column_name": "OpenTrigger",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_application_open",
+      "source_column_name": "ExternalUserId",
+      "target_column_name": "OpenTrigger",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "PushOptIn",
+      "target_column_name": "PushOptIn",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Region",
+      "target_column_name": "Region",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "source_column_name": "Name",
+      "target_column_name": "Regulation",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_message_send",
+      "source_column_name": "Occurred_fixed",
+      "target_column_name": "Send",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_application_open",
+      "source_column_name": "ExternalUserId",
+      "target_column_name": "SessionTime",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_application_open",
+      "source_column_name": "Occurred_fixed",
+      "target_column_name": "SessionTime",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_application_close",
+      "source_column_name": "ExternalUserId",
+      "target_column_name": "SessionTime",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_application_close",
+      "source_column_name": "Occurred_fixed",
+      "target_column_name": "SessionTime",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "Timezone",
+      "target_column_name": "Timezone",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": "main.urban.gold_devices_scd",
+      "source_column_name": "UrbanDeviceId",
+      "target_column_name": "UrbanDeviceId",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_push_body",
+      "source_column_name": "UrbanPushId",
+      "target_column_name": "UrbanPushId",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_web_click",
+      "source_column_name": "Occurred_fixed",
+      "target_column_name": "Web_Click",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_application_close",
+      "source_column_name": "Occurred_fixed",
+      "target_column_name": "close",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_application_close",
+      "source_column_name": "ExternalUserId",
+      "target_column_name": "close",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_push_body",
+      "source_column_name": "etr_y",
+      "target_column_name": "etr_y",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_push_body",
+      "source_column_name": "etr_ym",
+      "target_column_name": "etr_ym",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_push_body",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "etr_ymd",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_push_body",
+      "source_column_name": "notification_alert",
+      "target_column_name": "notification_alert",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.urban.gold_web_session",
+      "source_column_name": "Occurred_fixed",
+      "target_column_name": "web_session",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 91
+    }
+  ],
+  "generated_at": "2026-05-19T14:44:30Z"
+}

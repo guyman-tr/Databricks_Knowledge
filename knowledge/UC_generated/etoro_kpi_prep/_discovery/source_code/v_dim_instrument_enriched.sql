@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_dim_instrument_enriched
--- Captured: 2026-05-18T08:05:06Z
+-- Captured: 2026-05-19T12:12:40Z
 -- ==========================================================================
 
 WITH rth_instruments AS (

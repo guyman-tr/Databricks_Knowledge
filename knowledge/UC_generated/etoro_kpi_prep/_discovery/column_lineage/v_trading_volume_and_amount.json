@@ -12,14 +12,14 @@
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "Amount",
       "target_column_name": "Amount",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "Amount",
       "target_column_name": "Amount",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -66,27 +66,6 @@
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "LastOpConversionRate",
-      "target_column_name": "ComputedVolumeClose",
-      "entity_type": "NOTEBOOK",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "AmountInUnitsDecimal",
-      "target_column_name": "ComputedVolumeClose",
-      "entity_type": "NOTEBOOK",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "EndForexRate",
-      "target_column_name": "ComputedVolumeClose",
-      "entity_type": "NOTEBOOK",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "EndForexRate",
       "target_column_name": "ComputedVolumeClose",
       "entity_type": null,
@@ -109,86 +88,65 @@
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "LastOpConversionRate",
-      "target_column_name": "ComputedVolumeOpen",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 5
+      "target_column_name": "ComputedVolumeClose",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "InitForexRate",
-      "target_column_name": "ComputedVolumeOpen",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 5
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "ComputedVolumeClose",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "InitialUnits",
-      "target_column_name": "ComputedVolumeOpen",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 5
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "IsPartialCloseChild",
-      "target_column_name": "ComputedVolumeOpen",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 5
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "InitForex_USDConversionRate",
-      "target_column_name": "ComputedVolumeOpen",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 5
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "InitConversionRate",
-      "target_column_name": "ComputedVolumeOpen",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 5
+      "source_column_name": "EndForexRate",
+      "target_column_name": "ComputedVolumeClose",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "LastOpConversionRate",
       "target_column_name": "ComputedVolumeOpen",
-      "entity_type": "NOTEBOOK",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "InitialUnits",
-      "target_column_name": "ComputedVolumeOpen",
-      "entity_type": "NOTEBOOK",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "IsPartialCloseChild",
-      "target_column_name": "ComputedVolumeOpen",
-      "entity_type": "NOTEBOOK",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "InitConversionRate",
-      "target_column_name": "ComputedVolumeOpen",
-      "entity_type": "NOTEBOOK",
-      "event_count": 1
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "InitForexRate",
       "target_column_name": "ComputedVolumeOpen",
-      "entity_type": "NOTEBOOK",
-      "event_count": 1
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 5
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitialUnits",
+      "target_column_name": "ComputedVolumeOpen",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 5
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsPartialCloseChild",
+      "target_column_name": "ComputedVolumeOpen",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "InitForex_USDConversionRate",
       "target_column_name": "ComputedVolumeOpen",
-      "entity_type": "NOTEBOOK",
-      "event_count": 1
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 5
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitConversionRate",
+      "target_column_name": "ComputedVolumeOpen",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
@@ -230,6 +188,48 @@
       "source_column_name": "IsPartialCloseChild",
       "target_column_name": "ComputedVolumeOpen",
       "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "LastOpConversionRate",
+      "target_column_name": "ComputedVolumeOpen",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitialUnits",
+      "target_column_name": "ComputedVolumeOpen",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsPartialCloseChild",
+      "target_column_name": "ComputedVolumeOpen",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitConversionRate",
+      "target_column_name": "ComputedVolumeOpen",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitForexRate",
+      "target_column_name": "ComputedVolumeOpen",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitForex_USDConversionRate",
+      "target_column_name": "ComputedVolumeOpen",
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -264,14 +264,14 @@
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsPartialCloseChild",
       "target_column_name": "CountTotalTransactions",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsPartialCloseChild",
       "target_column_name": "CountTotalTransactions",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -290,20 +290,6 @@
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "CloseDateID",
-      "target_column_name": "DateID",
-      "entity_type": "NOTEBOOK",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "OpenDateID",
-      "target_column_name": "DateID",
-      "entity_type": "NOTEBOOK",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "OpenDateID",
       "target_column_name": "DateID",
       "entity_type": null,
@@ -318,6 +304,20 @@
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseDateID",
+      "target_column_name": "DateID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "DateID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "InstrumentID",
       "target_column_name": "InstrumentID",
       "entity_type": "DBSQL_QUERY",
@@ -327,14 +327,14 @@
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "InstrumentID",
       "target_column_name": "InstrumentID",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "InstrumentID",
       "target_column_name": "InstrumentID",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -348,14 +348,14 @@
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "source_column_name": "InstrumentTypeID",
       "target_column_name": "InstrumentTypeID",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "source_column_name": "InstrumentTypeID",
       "target_column_name": "InstrumentTypeID",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -381,13 +381,6 @@
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "NetProfit",
-      "target_column_name": "InvestedAmountClosed",
-      "entity_type": "NOTEBOOK",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "Amount",
       "target_column_name": "InvestedAmountClosed",
       "entity_type": null,
@@ -395,6 +388,13 @@
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "NetProfit",
+      "target_column_name": "InvestedAmountClosed",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "InitialAmountCents",
       "target_column_name": "InvestedAmountOpen",
       "entity_type": "DBSQL_QUERY",
@@ -409,20 +409,6 @@
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "InitialAmountCents",
-      "target_column_name": "InvestedAmountOpen",
-      "entity_type": "NOTEBOOK",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "IsPartialCloseChild",
-      "target_column_name": "InvestedAmountOpen",
-      "entity_type": "NOTEBOOK",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsPartialCloseChild",
       "target_column_name": "InvestedAmountOpen",
       "entity_type": null,
@@ -437,6 +423,20 @@
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitialAmountCents",
+      "target_column_name": "InvestedAmountOpen",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsPartialCloseChild",
+      "target_column_name": "InvestedAmountOpen",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsAirDrop",
       "target_column_name": "IsAirDrop",
       "entity_type": "DBSQL_QUERY",
@@ -446,14 +446,14 @@
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsAirDrop",
       "target_column_name": "IsAirDrop",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsAirDrop",
       "target_column_name": "IsAirDrop",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -467,14 +467,14 @@
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsBuy",
       "target_column_name": "IsBuy",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsBuy",
       "target_column_name": "IsBuy",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -488,14 +488,14 @@
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2p_e2e",
       "source_column_name": "PositionID",
       "target_column_name": "IsC2P",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2p_e2e",
       "source_column_name": "PositionID",
       "target_column_name": "IsC2P",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -509,14 +509,14 @@
       "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_closed_to_iban",
       "source_column_name": "PositionID",
       "target_column_name": "IsClosedToIBAN",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_closed_to_iban",
       "source_column_name": "PositionID",
       "target_column_name": "IsClosedToIBAN",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -530,14 +530,14 @@
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "MirrorID",
       "target_column_name": "IsCopy",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "MirrorID",
       "target_column_name": "IsCopy",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -551,14 +551,14 @@
       "source_table_full_name": "main.etoro_kpi_prep.v_copyfund_positions",
       "source_column_name": "PositionID",
       "target_column_name": "IsCopyFund",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.etoro_kpi_prep.v_copyfund_positions",
       "source_column_name": "PositionID",
       "target_column_name": "IsCopyFund",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -572,14 +572,14 @@
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "source_column_name": "IsFuture",
       "target_column_name": "IsFuture",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "source_column_name": "IsFuture",
       "target_column_name": "IsFuture",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -593,14 +593,14 @@
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "SettlementTypeID",
       "target_column_name": "IsMarginTrade",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "SettlementTypeID",
       "target_column_name": "IsMarginTrade",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -614,14 +614,14 @@
       "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_opened_from_iban",
       "source_column_name": "PositionID",
       "target_column_name": "IsOpenedFromIBAN",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_opened_from_iban",
       "source_column_name": "PositionID",
       "target_column_name": "IsOpenedFromIBAN",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -635,14 +635,14 @@
       "source_table_full_name": null,
       "source_column_name": null,
       "target_column_name": "IsRecurring",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": null,
       "source_column_name": null,
       "target_column_name": "IsRecurring",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -656,14 +656,14 @@
       "source_table_full_name": "main.etoro_kpi_prep.v_dim_instrument_enriched",
       "source_column_name": "InstrumentID",
       "target_column_name": "IsSQF",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.etoro_kpi_prep.v_dim_instrument_enriched",
       "source_column_name": "InstrumentID",
       "target_column_name": "IsSQF",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -677,14 +677,14 @@
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsSettled",
       "target_column_name": "IsSettled",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsSettled",
       "target_column_name": "IsSettled",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -698,14 +698,14 @@
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
       "source_column_name": "IsValidCustomer",
       "target_column_name": "IsValidCustomer",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
       "source_column_name": "IsValidCustomer",
       "target_column_name": "IsValidCustomer",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -719,14 +719,14 @@
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "Leverage",
       "target_column_name": "Leverage",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "Leverage",
       "target_column_name": "Leverage",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -761,6 +761,27 @@
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "Amount",
       "target_column_name": "NetInvestedAmount",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsPartialCloseChild",
+      "target_column_name": "NetInvestedAmount",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitialAmountCents",
+      "target_column_name": "NetInvestedAmount",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Amount",
+      "target_column_name": "NetInvestedAmount",
       "entity_type": "NOTEBOOK",
       "event_count": 1
     },
@@ -787,27 +808,6 @@
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "Amount",
-      "target_column_name": "NetInvestedAmount",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "IsPartialCloseChild",
-      "target_column_name": "NetInvestedAmount",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "InitialAmountCents",
-      "target_column_name": "NetInvestedAmount",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "PositionID",
       "target_column_name": "PositionID",
       "entity_type": "DBSQL_QUERY",
@@ -817,14 +817,14 @@
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "PositionID",
       "target_column_name": "PositionID",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "PositionID",
       "target_column_name": "PositionID",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -838,14 +838,14 @@
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "SettlementTypeID",
       "target_column_name": "SettlementTypeID",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "SettlementTypeID",
       "target_column_name": "SettlementTypeID",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -866,28 +866,28 @@
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "VolumeOnClose",
       "target_column_name": "TotalVolume",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "Volume",
       "target_column_name": "TotalVolume",
-      "entity_type": "NOTEBOOK",
+      "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "VolumeOnClose",
       "target_column_name": "TotalVolume",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "Volume",
       "target_column_name": "TotalVolume",
-      "entity_type": null,
+      "entity_type": "NOTEBOOK",
       "event_count": 1
     },
     {
@@ -940,5 +940,5 @@
       "event_count": 2
     }
   ],
-  "generated_at": "2026-05-18T08:14:57Z"
+  "generated_at": "2026-05-19T12:25:57Z"
 }

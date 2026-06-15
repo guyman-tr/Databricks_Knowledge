@@ -1,0 +1,44 @@
+{
+  "object_fqn": "main.bi_dealing.bi_output_dealing_nixar_beta_dailybetatarget_v",
+  "generated_at": "2026-05-19T12:47:53Z",
+  "formula_count": 3,
+  "formulas": [
+    {
+      "column": "InstrumentID",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_dealing.bi_output_dealing_nixar_beta_dailybetatarget"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "InstrumentID"
+    },
+    {
+      "column": "InstrumentIDToHedge",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_dealing.bi_output_dealing_nixar_beta_dailybetatarget"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "InstrumentIDToHedge"
+    },
+    {
+      "column": "Multiplier",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_dealing.bi_output_dealing_nixar_beta_dailybetatarget"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "Multiplier"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_dealing/_discovery/source_code/bi_output_dealing_nixar_beta_dailybetatarget_v.sql"
+}

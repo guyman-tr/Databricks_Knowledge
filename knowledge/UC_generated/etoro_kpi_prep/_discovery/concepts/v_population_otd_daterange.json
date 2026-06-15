@@ -1,0 +1,64 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_population_otd_daterange",
+  "generated_at": "2026-05-18T16:27:27Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "filter_block_PREP",
+      "name": "Filter block on PREP",
+      "kind": "filter_block",
+      "columns_involved": [
+        "ActionTypeID",
+        "ActionTypeID",
+        "IsFTD"
+      ],
+      "predicates": [
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "7"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "44"
+        },
+        {
+          "col": "IsFTD",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L16",
+      "scope": "PREP",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_FilteredRealCID",
+      "name": "Filter block on FilteredRealCID",
+      "kind": "filter_block",
+      "columns_involved": [
+        "RowNum",
+        "CountDeposits"
+      ],
+      "predicates": [
+        {
+          "col": "RowNum",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "CountDeposits",
+          "op": ">",
+          "val": "1"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L35",
+      "scope": "FilteredRealCID",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_otd_daterange.sql"
+}

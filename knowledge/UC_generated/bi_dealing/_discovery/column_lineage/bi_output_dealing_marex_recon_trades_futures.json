@@ -1,0 +1,1259 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_marex_recon_trades_futures",
+  "rows": [
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "ACCOUNT",
+      "target_column_name": "ACCOUNT",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "ACCOUNT",
+      "target_column_name": "ACCOUNT",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_adj",
+      "source_column_name": "adj",
+      "target_column_name": "ADJ_Value",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "ADJ_Value",
+      "target_column_name": "ADJ_Value",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "CHIT_NUMBER",
+      "target_column_name": "CHIT_NUMBER",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "CHIT_NUMBER",
+      "target_column_name": "CHIT_NUMBER",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "CURRENCY_SYMBOL",
+      "target_column_name": "CURRENCY_SYMBOL",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "CURRENCY_SYMBOL",
+      "target_column_name": "CURRENCY_SYMBOL",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "ClientUnits",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "ClientUnits",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_adj",
+      "source_column_name": "adj",
+      "target_column_name": "ClientsLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitForexRate",
+      "target_column_name": "ClientsLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "ClientsLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "EndForexRate",
+      "target_column_name": "ClientsLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "ClientsLocalAmount",
+      "target_column_name": "ClientsLocalAmount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "ClientsUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "ClientsUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "ClientsUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitForexRate",
+      "target_column_name": "ClientsUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_1",
+      "target_column_name": "ClientsUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_0",
+      "target_column_name": "ClientsUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "ClientsUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "ClientsUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "EndForexRate",
+      "target_column_name": "ClientsUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_adj",
+      "source_column_name": "adj",
+      "target_column_name": "ClientsUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "ClientsUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "ClientsUSDAmount",
+      "target_column_name": "ClientsUSDAmount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "LotCountDecimal",
+      "target_column_name": "Clients_Lots",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Clients_Lots",
+      "target_column_name": "Clients_Lots",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "COMMISSION",
+      "target_column_name": "Commission",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Commission",
+      "target_column_name": "Commission",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "ConversionRate",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "ConversionRate",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "ConversionRate",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_0",
+      "target_column_name": "ConversionRate",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "ConversionRate",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "ConversionRate",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_1",
+      "target_column_name": "ConversionRate",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "ConversionRate",
+      "target_column_name": "ConversionRate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Date",
+      "target_column_name": "Date",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "EndForexRate",
+      "target_column_name": "ForexRate",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "ForexRate",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitForexRate",
+      "target_column_name": "ForexRate",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "ForexRate",
+      "target_column_name": "ForexRate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_adj",
+      "source_column_name": "adj",
+      "target_column_name": "ForexRate_AfterADJ",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitForexRate",
+      "target_column_name": "ForexRate_AfterADJ",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "ForexRate_AfterADJ",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "EndForexRate",
+      "target_column_name": "ForexRate_AfterADJ",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "ForexRate_AfterADJ",
+      "target_column_name": "ForexRate_AfterADJ",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_marex_mapping_table_2",
+      "source_column_name": "instrument_id",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "IsBuy",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "BUY_SELL",
+      "target_column_name": "IsBuy",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "IsBuy",
+      "target_column_name": "IsBuy",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "IsOpen",
+      "target_column_name": "IsOpen",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "LST_TRD_DATE",
+      "target_column_name": "LST_TRD_DATE",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "LST_TRD_DATE",
+      "target_column_name": "LST_TRD_DATE",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "MULTIPLICATION_FACTOR",
+      "target_column_name": "MULTIPLICATION_FACTOR",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "MULTIPLICATION_FACTOR",
+      "target_column_name": "MULTIPLICATION_FACTOR",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "LotCountDecimal",
+      "target_column_name": "Marex-Clients_Lots",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "Marex-Clients_Lots",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Marex_Clients_Lots",
+      "target_column_name": "Marex-Clients_Lots",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitForexRate",
+      "target_column_name": "Marex-Clients_Price",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "EndForexRate",
+      "target_column_name": "Marex-Clients_Price",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "TRADE_PRICE_IN_GMI",
+      "target_column_name": "Marex-Clients_Price",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "Marex-Clients_Price",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_adj",
+      "source_column_name": "adj",
+      "target_column_name": "Marex-Clients_Price",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Marex-Clients_Price",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Marex_Clients_Price",
+      "target_column_name": "Marex-Clients_Price",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "Marex-Clients_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitForexRate",
+      "target_column_name": "Marex-Clients_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_adj",
+      "source_column_name": "adj",
+      "target_column_name": "Marex-Clients_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "Marex-Clients_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Marex-Clients_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "MULTIPLICATION_FACTOR",
+      "target_column_name": "Marex-Clients_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "Marex-Clients_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Marex-Clients_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "Marex-Clients_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "Marex-Clients_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_0",
+      "target_column_name": "Marex-Clients_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "TRADE_PRICE_IN_GMI",
+      "target_column_name": "Marex-Clients_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "EndForexRate",
+      "target_column_name": "Marex-Clients_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_1",
+      "target_column_name": "Marex-Clients_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Marex_Clients_USDAmount",
+      "target_column_name": "Marex-Clients_USDAmount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "MULTIPLICATION_FACTOR",
+      "target_column_name": "Marex-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "Marex-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Marex-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Marex_Clients_Units",
+      "target_column_name": "Marex-Clients_Units",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Marex-eToro_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_1",
+      "target_column_name": "Marex-eToro_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "Units",
+      "target_column_name": "Marex-eToro_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_adj",
+      "source_column_name": "adj",
+      "target_column_name": "Marex-eToro_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "MULTIPLICATION_FACTOR",
+      "target_column_name": "Marex-eToro_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "TRADE_PRICE_IN_GMI",
+      "target_column_name": "Marex-eToro_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "Marex-eToro_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "Marex-eToro_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Marex-eToro_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "Marex-eToro_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "Marex-eToro_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "Marex-eToro_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "ExecutionRate",
+      "target_column_name": "Marex-eToro_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_0",
+      "target_column_name": "Marex-eToro_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Marex_eToro_USDAmount",
+      "target_column_name": "Marex-eToro_USDAmount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Marex-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "Units",
+      "target_column_name": "Marex-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "Marex-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "MULTIPLICATION_FACTOR",
+      "target_column_name": "Marex-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Marex_eToro_Units",
+      "target_column_name": "Marex-eToro_Units",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "TRADE_PRICE_IN_GMI",
+      "target_column_name": "Marex_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "MULTIPLICATION_FACTOR",
+      "target_column_name": "Marex_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "Marex_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Marex_LocalAmount",
+      "target_column_name": "Marex_LocalAmount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "Marex_Lots",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Marex_Lots",
+      "target_column_name": "Marex_Lots",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "Marex_Price",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "TRADE_PRICE_IN_GMI",
+      "target_column_name": "Marex_Price",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Marex_Price",
+      "target_column_name": "Marex_Price",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "Marex_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_1",
+      "target_column_name": "Marex_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "Marex_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "Marex_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "TRADE_PRICE_IN_GMI",
+      "target_column_name": "Marex_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Marex_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "MULTIPLICATION_FACTOR",
+      "target_column_name": "Marex_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "Marex_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_0",
+      "target_column_name": "Marex_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "Marex_USDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Marex_USDAmount",
+      "target_column_name": "Marex_USDAmount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "MULTIPLICATION_FACTOR",
+      "target_column_name": "Marex_Units",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "Marex_Units",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Marex_Units",
+      "target_column_name": "Marex_Units",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_dealing_marex_trader_orderid",
+      "source_column_name": "OrderID",
+      "target_column_name": "OrderID",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OrderID",
+      "target_column_name": "OrderID",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "OrderID",
+      "target_column_name": "OrderID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "SellCurrency",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "SellCurrency",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "UpdateDate",
+      "target_column_name": "UpdateDate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "ExecutionRate",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "Units",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_adj",
+      "source_column_name": "adj",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "ExecutionRate",
+      "target_column_name": "eToroRate",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToroRate",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "Units",
+      "target_column_name": "eToroRate",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "eToroRate",
+      "target_column_name": "eToroRate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_adj",
+      "source_column_name": "adj",
+      "target_column_name": "eToroRate_AfterADJ",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "ExecutionRate",
+      "target_column_name": "eToroRate_AfterADJ",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToroRate_AfterADJ",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "Units",
+      "target_column_name": "eToroRate_AfterADJ",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "eToroRate_AfterADJ",
+      "target_column_name": "eToroRate_AfterADJ",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "ExecutionRate",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_0",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_1",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "Units",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_adj",
+      "source_column_name": "adj",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "eToroUSDAmount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Date",
+      "target_column_name": "etr_y",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Date",
+      "target_column_name": "etr_ym",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "source_column_name": "Date",
+      "target_column_name": "etr_ymd",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    }
+  ],
+  "generated_at": "2026-05-19T12:32:31Z"
+}

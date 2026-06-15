@@ -1,0 +1,2870 @@
+{
+  "schema": "bi_dealing",
+  "catalog": "main",
+  "framework": "uc-pipeline-doc",
+  "generated_at": "2026-05-19T12:47:38Z",
+  "per_object_upstreams": {
+    "bi_output_dealing_015min_alltrades": [
+      "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "main.dealing.bronze_marketmaker_dbo_instruments",
+      "main.dealing.bronze_marketmaker_dbo_hedgeorders",
+      "main.dealing.bronze_marketmaker_dbo_exchanges"
+    ],
+    "bi_output_dealing_245_sessions": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "main.dwh.dim_position",
+      "main.general.bronze_etoro_backoffice_customer",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "main.bi_dealing.bi_output_dealing_premier_customer",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+    ],
+    "bi_output_dealing_abuse_alert_log": [],
+    "bi_output_dealing_abuse_signal_output": [],
+    "bi_output_dealing_alpha_contacts": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "main.bi_output.bi_output_customer_customer_support_agent_user",
+      "main.bi_output.bi_output_customer_customer_facing_agent_engagement"
+    ],
+    "bi_output_dealing_alpha_customer_actions": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+    ],
+    "bi_output_dealing_alpha_detailed_data_fifo": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+    ],
+    "bi_output_dealing_alpha_final_points": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+    ],
+    "bi_output_dealing_apex_recon_eod": [
+      "main.general.gold_apex_ext982_3eu",
+      "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
+      "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "bi_output_dealing_apex_recon_trades": [
+      "main.general.gold_apex_ext872_3eu_217314",
+      "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
+      "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_tradeactivity",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "bi_output_dealing_bloomberg_holdings_pct_of_mktcap": [
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitynamr",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitylamr",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia1",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityeuro",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia2",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia1pricing",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitynamrpricing",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia2pricing",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitylamrpricing",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityeuropricing"
+    ],
+    "bi_output_dealing_bloomberg_holdings_pct_of_mktcap_cids": [
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia1pricing",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitynamrpricing",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia2pricing",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitylamrpricing",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityeuropricing",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitylamr",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia2",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityeuro",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitynamr",
+      "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia1"
+    ],
+    "bi_output_dealing_bmll_nbbo_rates_slippage": [
+      "main.dealing.bi_output_dealing_bestexecution_report",
+      "main.general.gold_bmll_bmll_nbbo_rates",
+      "main.dealing.bronze_pricelog_history_splitratio"
+    ],
+    "bi_output_dealing_bny_recon_eod": [
+      "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "main.bi_dealing.bi_output_dealing_duco_eod",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
+      "main.bi_db.bronze_fivetran_dealing_active_hs_mappings"
+    ],
+    "bi_output_dealing_bny_recon_eod_detailed": [
+      "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "main.bi_dealing.bi_output_dealing_duco_eod",
+      "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings"
+    ],
+    "bi_output_dealing_bny_virtu_recon_trades": [
+      "main.general.gold_bny_custody_security_transactions_custodysecuritytransactions",
+      "main.general.gold_bny_settled_cash_balances_settledcashbalances",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "main.bi_dealing.bi_output_dealing_duco_trades",
+      "main.bi_dealing.bi_output_dealing_bny_virtu_recon_trades",
+      "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "main.general.gold_virtu_etoro_allocations_sheet",
+      "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "main.general.gold_citadel_etoro_confirm",
+      "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
+      "main.bi_db.bronze_fivetran_dealing_active_hs_mappings"
+    ],
+    "bi_output_dealing_bny_virtu_recon_trades_detailed": [
+      "main.general.gold_bny_custody_security_transactions_custodysecuritytransactions",
+      "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "main.general.gold_virtu_etoro_allocations_sheet",
+      "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "main.general.gold_citadel_etoro_confirm",
+      "main.general.gold_bny_settled_cash_balances_settledcashbalances",
+      "main.bi_dealing.bi_output_dealing_duco_trades",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings"
+    ],
+    "bi_output_dealing_cash_recon": [],
+    "bi_output_dealing_cfd_recon_eod": [
+      "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_dealingdashboard_clients",
+      "main.general.gold_jpm_eod_etoro2_report_componentunderlyings",
+      "main.general.gold_apex_ext982_3eu",
+      "main.general.gold_visionet_r010_eod_positionsdetail_et",
+      "main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302320_713860_positionvaluation",
+      "main.general.gold_jpm_eod_etoro_report_componentunderlyings",
+      "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "bi_output_dealing_cidage_data": [
+      "main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer"
+    ],
+    "bi_output_dealing_client_abuse_news_events_calendar": [],
+    "bi_output_dealing_crypto_pricing": [
+      "main.dealing.bronze_pricelog_history_currencyprice",
+      "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "main.dealing.bronze_marketmaker_dbo_instruments",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "bi_output_dealing_crypto_volume_live": [
+      "main.dealing.bronze_dealingstreaming_flowmatrix_dealing_flow_matrix",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "bi_output_dealing_cryptovolume": [
+      "main.trading.bronze_etoro_history_position_datafactory",
+      "main.trading.silver_etoro_trade_position",
+      "main.dealing.bronze_etoro_hedge_executionlog",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades"
+    ],
+    "bi_output_dealing_daily_bmll_slippage_latency_compensation": [
+      "main.general.gold_bmll_bmll_slippage_comp",
+      "main.dealing.bronze_pricelog_history_splitratio"
+    ],
+    "bi_output_dealing_daily_bmll_tca_ng_oil_final": [
+      "main.general.gold_bmll_bmll_clusters_executions_ng_oil_tca_results",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "bi_output_dealing_dailyspreadsaggregated": [
+      "main.dealing.bronze_pricelog_history_currencyprice",
+      "main.dealing.bronze_pricesfromprovider_marketcurrencyprice",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dealing.bronze_fivetran_dealing_aggspreads_instruments_names",
+      "main.dealing.bronze_fivetran_dealing_aggspreads_liquidityaccounts_names"
+    ],
+    "bi_output_dealing_dealing_regime_flags": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_dealingdashboard_clients",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "bi_output_dealing_diffusion_nop": [
+      "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "main.dwh.dim_position",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "bi_output_dealing_duco_eod": [
+      "main.dealing.bronze_etoro_hedge_netting",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "main.dealing.bronze_etoro_history_netting_history",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.bi_db.bronze_etoro_hedge_gethedgeserveraccountmapping",
+      "main.trading.bronze_etoro_trade_liquidityaccounts"
+    ],
+    "bi_output_dealing_duco_trades": [
+      "main.dealing.bronze_etoro_hedge_executionlog",
+      "main.dwh.dim_position",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.bi_db.bronze_etoro_hedge_gethedgeserveraccountmapping",
+      "main.trading.bronze_etoro_trade_liquidityaccounts"
+    ],
+    "bi_output_dealing_employee_accountpnl": [
+      "main.dealing.bronze_etoro_history_netting_history",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.dealing.bronze_etoro_hedge_executionlog",
+      "main.dealing.bronze_etoro_hedge_netting",
+      "main.dealing.bronze_pricelog_history_splitratio",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "bi_output_dealing_employees_info": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.general.bronze_etoro_backoffice_customer",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+    ],
+    "bi_output_dealing_employees_performance": [
+      "main.dwh.dim_position",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+    ],
+    "bi_output_dealing_esmanetloss_final": [],
+    "bi_output_dealing_flowanalysis": [
+      "main.dwh.dim_position",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.general.bronze_calendardb_market_mergeddailyschedules",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "main.general.bronze_etoro_backoffice_customer",
+      "main.dealing.bi_output_dealing_dealingdashboard_cid"
+    ],
+    "bi_output_dealing_gs_recon_eod": [
+      "main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302321_713868_positionvaluationsummary",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon"
+    ],
+    "bi_output_dealing_gs_recon_trades": [
+      "main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302304_712993_sheet1",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon"
+    ],
+    "bi_output_dealing_ib_recon_eod": [
+      "main.general.gold_ib_i3158027_open_positions",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon"
+    ],
+    "bi_output_dealing_ib_recon_trades": [
+      "main.general.gold_ib_i1893329_daily_trades",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon"
+    ],
+    "bi_output_dealing_ig_recon_eod": [
+      "main.general.gold_ig_ps_eodpositions",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "bi_output_dealing_ig_recon_trades": [
+      "main.general.gold_ig_oh_orderhistory",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "main.general.gold_ig_ps_eodpositions",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "bi_output_dealing_jp_recon_eod": [
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "main.general.gold_jpm_eod_etoro_report_componentunderlyings",
+      "main.general.gold_jpm_eod_etoro_report_fxrates"
+    ],
+    "bi_output_dealing_jp_recon_trades": [
+      "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "main.general.gold_jpm_eod_etoro_report_fxrates"
+    ],
+    "bi_output_dealing_lp_fees_saxo": [
+      "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302304_712993_sheet1",
+      "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "main.general.gold_saxo_saxobank_6914282_bookkeepingcash",
+      "main.general.gold_saxo_saxobank_6914282_fxtradesexecuted",
+      "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "main.general.gold_virtu_etoro_allocations_sheet",
+      "main.general.gold_virtu_etoro_allocations_apac_sheet"
+    ],
+    "bi_output_dealing_lp_fees_saxo_real_by_exchange": [
+      "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "bi_output_dealing_lp_fees_saxo_stamp_duty": [
+      "main.general.gold_saxo_saxobank_9121766_bookkeepingcash"
+    ],
+    "bi_output_dealing_lp_fees_virtu_real_by_exchange": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "main.general.gold_virtu_etoro_allocations_sheet",
+      "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "bi_output_dealing_lp_fees_virtu_stamp_duty": [
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "main.general.gold_virtu_etoro_allocations_sheet",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit"
+    ],
+    "bi_output_dealing_lukka_internal_aggregated": [
+      "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "main.general.gold_talos_trades",
+      "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade",
+      "main.dealing.bronze_marketmaker_dbo_instruments",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dealing.bronze_fivetran_google_sheets_mappingsforcryptoreconcilation_tickers",
+      "main.sharepoint.silver_sharepoint_mappingsforcryptoreconcilation_tickers",
+      "main.dealing.bronze_marketmaker_dbo_exchanges",
+      "main.bi_db.bronze_etoro_cryptoliquidity_cryptowallets",
+      "main.dealing.bronze_fivetran_google_sheets_mappingsforcryptoreconcilation_counterparty",
+      "main.sharepoint.silver_sharepoint_mappingsforcryptoreconcilation_counterparty"
+    ],
+    "bi_output_dealing_manipulation_report_real_stocks": [
+      "main.pyspark.sql",
+      "pyspark.sql.functions",
+      "main.experience.vw_silver_xignite_fundamentalsdailyrange_ttm",
+      "main.trading.bronze_etoro_trade_instrumentmetadata",
+      "main.bi_dealing_stg.tmp_instrumentmetadata_snapshot",
+      "main.dealing.candles_get_spreaded_price_candle60min_splitted",
+      "main.dwh.dim_position",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+    ],
+    "bi_output_dealing_manipulation_report_real_stocks_cid": [
+      "main.pyspark.sql",
+      "pyspark.sql.functions",
+      "main.experience.vw_silver_xignite_fundamentalsdailyrange_ttm",
+      "main.trading.bronze_etoro_trade_instrumentmetadata",
+      "main.bi_dealing_stg.tmp_instrumentmetadata_snapshot",
+      "main.dealing.candles_get_spreaded_price_candle60min_splitted",
+      "main.dwh.dim_position",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+    ],
+    "bi_output_dealing_marex_recon_eod": [
+      "main.general.gold_ednf_coreposition",
+      "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.dim_position",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.dealing.bronze_etoro_history_netting_history",
+      "main.dealing.bronze_etoro_hedge_netting",
+      "main.sharepoint.silver_sharepoint_marex_mapping_table_2",
+      "main.general.gold_ednf_corebalance"
+    ],
+    "bi_output_dealing_marex_recon_eod_futures": [
+      "main.general.gold_ednf_coreposition",
+      "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures",
+      "main.sharepoint.silver_sharepoint_adj",
+      "main.dwh.dim_position",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.sharepoint.silver_sharepoint_marex_mapping_table_2",
+      "main.general.gold_dealing_marex_trader_orderid"
+    ],
+    "bi_output_dealing_marex_recon_trades": [
+      "main.general.gold_ednf_coretrades",
+      "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.dim_position",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.dealing.bronze_etoro_hedge_executionlog",
+      "main.sharepoint.silver_sharepoint_marex_mapping_table_2",
+      "main.general.gold_ednf_corebalance"
+    ],
+    "bi_output_dealing_marex_recon_trades_futures": [
+      "main.general.gold_ednf_pfdfst4_custom",
+      "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "main.sharepoint.silver_sharepoint_adj",
+      "main.dwh.dim_position",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.sharepoint.silver_sharepoint_marex_mapping_table_2",
+      "main.dealing.bronze_etoro_hedge_executionlog",
+      "main.general.gold_dealing_marex_trader_orderid"
+    ],
+    "bi_output_dealing_maxnop_report": [
+      "main.trading.bronze_etoro_dictionary_tradinginstrumentgroups",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.trading.bronze_etoro_trade_instrumentgroups"
+    ],
+    "bi_output_dealing_mm_topofbook": [
+      "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "main.dealing.bronze_marketmaker_dbo_configurations",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.dim_position"
+    ],
+    "bi_output_dealing_negativebalances": [
+      "main.general.bronze_etoro_history_credit"
+    ],
+    "bi_output_dealing_nhd_dashboard": [
+      "main.dealing.bronze_pricelog_history_currencyprice",
+      "main.trading.bronze_etoro_trade_currencyprice",
+      "main.trading.silver_etoro_trade_position",
+      "main.trading.bronze_etoro_trade_getinstrument",
+      "main.trading.bronze_etoro_history_position_datafactory",
+      "main.dealing.bronze_etoro_hedge_netting",
+      "main.dealing.bronze_etoro_history_netting_history",
+      "main.trading.bronze_etoro_trade_instrumentmetadata",
+      "main.trading.bronze_etoro_trade_liquidityaccounts"
+    ],
+    "bi_output_dealing_nixar_beta_dailybetaprod_v": [
+      "main.bi_dealing.bi_output_dealing_nixar_beta_dailybetaprod"
+    ],
+    "bi_output_dealing_nixar_beta_dailybetatarget_v": [
+      "main.bi_dealing.bi_output_dealing_nixar_beta_dailybetatarget"
+    ],
+    "bi_output_dealing_nixar_beta_earningscalendar": [],
+    "bi_output_dealing_nixar_delta_diffusionanalysis_v": [
+      "main.bi_dealing.bi_output_dealing_nixar_delta_diffusionanalysis"
+    ],
+    "bi_output_dealing_nop_report": [
+      "main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302321_713868_positionvaluationsummary",
+      "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "main.general.gold_ig_ps_eodpositions",
+      "main.general.gold_saxo_saxobank_9121766_accountstatus",
+      "main.general.gold_saxo_saxobank_6914282_fxopenpositions",
+      "main.general.gold_ednf_coreposition",
+      "main.general.gold_ironbeam_positions",
+      "main.general.gold_saxo_marginaccount",
+      "main.general.gold_ironbeam_balances",
+      "main.general.gold_apex_ext981_3eu",
+      "main.general.gold_ig_cl_activeaccounts",
+      "main.general.gold_ednf_corebalance",
+      "main.general.gold_bny_projected_cash_balances_projectedcashbalances",
+      "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "main.general.gold_ib_u3351394_net_asset_value_394",
+      "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "main.general.gold_visionet_r004_eod_balances_et",
+      "main.general.gold_ib_i1893329_open_positions",
+      "main.general.gold_visionet_r010_eod_positionsdetail_et",
+      "main.general.gold_bny_settled_cash_balances_settledcashbalances",
+      "main.general.gold_ib_i1893329_net_asset_value",
+      "main.general.gold_ib_i3158027_cash_report_33",
+      "main.general.gold_gsnop_gs_etoro_coll_collateral",
+      "main.general.gold_ubs_ubs_limit_1",
+      "main.general.gold_ib_i3158027_cash_report_34",
+      "main.general.gold_jpmvm_200334",
+      "main.general.gold_ib_i3158027_net_asset_value_33",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.general.gold_ib_i3158027_net_asset_value_34",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.general.gold_gsnop_gs_etoro_coll_trades",
+      "main.general.gold_ib_u1059976_net_asset_value_581",
+      "main.general.gold_jpm_eod_etoro4_report_overview",
+      "main.general.gold_jpm_eod_etoro3_report_overview",
+      "main.general.gold_jpm_eod_etoro2_report_overview",
+      "main.general.gold_jpm_eod_etoro5_report_overview",
+      "main.general.gold_jpm_eod_etoro6_report_overview",
+      "main.general.gold_jpm_eod_etoro_report_overview",
+      "main.general.gold_ib_i1893329_margin",
+      "main.general.gold_ib_i3158027_open_positions",
+      "main.general.gold_jpm_eod_etoro3_report_riskamount",
+      "main.general.gold_jpm_eod_etoro4_report_riskamount",
+      "main.general.gold_jpm_eod_etoro_report_riskamount",
+      "main.general.gold_jpm_eod_etoro6_report_riskamount",
+      "main.general.gold_ib_u1059976_open_positions_all",
+      "main.general.gold_jpm_eod_etoro2_report_riskamount",
+      "main.general.gold_jpm_eod_etoro5_report_riskamount"
+    ],
+    "bi_output_dealing_pi_tradinglimitations_clicksize": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "main.trading.silver_etoro_trade_position",
+      "main.trading.bronze_etoro_trade_providertoinstrument",
+      "main.trading.bronze_etoro_trade_currencyprice",
+      "main.bi_db.bronze_etoro_hedge_instrumentconfiguration",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+    ],
+    "bi_output_dealing_premier_clients_2026_positions_report": [
+      "main.dwh.dim_position",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl"
+    ],
+    "bi_output_dealing_premier_clients_report": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.dwh.dim_position",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "main.general.bronze_etoro_history_backofficecustomer",
+      "main.bi_dealing.bi_output_dealing_premier_customer",
+      "main.general.bronze_etoro_backoffice_customer",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "main.dealing.bronze_pricelog_history_currencyprice",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.dealing.bronze_etorologs_real_hedge_emsorders",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+    ],
+    "bi_output_dealing_premier_clinet_info": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "main.general.bronze_etoro_history_backofficecustomer",
+      "main.bi_dealing.bi_output_dealing_premier_customer",
+      "main.general.bronze_etoro_backoffice_customer",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_club",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dwh_gaindaily",
+      "main.data_rooms.vw_mixpanel_login_events",
+      "main.general.bronze_etoro_dictionary_regulation"
+    ],
+    "bi_output_dealing_premier_customer": [
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+    ],
+    "bi_output_dealing_premier_customer_2026": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "main.bi_dealing.bi_output_dealing_premier_customer_2026",
+      "main.dealing.bi_output_dealing_dealingdashboard_cid"
+    ],
+    "bi_output_dealing_premier_customer_2026_info": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_club",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dwh_gaindaily",
+      "main.data_rooms.vw_mixpanel_login_events",
+      "main.general.bronze_etoro_backoffice_customer",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "main.general.bronze_etoro_dictionary_regulation",
+      "main.bi_dealing.bi_output_dealing_premier_customer_2026"
+    ],
+    "bi_output_dealing_pricespreus_open": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dealing.bronze_dealingstreaming_marketrates_dealing_market_feed_rates"
+    ],
+    "bi_output_dealing_saxo_recon_eod": [
+      "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "main.bi_dealing.bi_output_dealing_duco_eod",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "main.dealing.bronze_etoro_hedge_instrumentboundaries"
+    ],
+    "bi_output_dealing_saxo_recon_trades": [
+      "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "main.bi_dealing.bi_output_dealing_duco_trades",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "main.general.gold_saxo_saxobank_6914282_shareopenpositions"
+    ],
+    "bi_output_dealing_slippage": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.dwh.dim_position",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "main.dealing.bronze_pricelog_history_currencyprice",
+      "main.dealing.bronze_etorologs_real_hedge_emsorders",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.dealing.bronze_event_hub_prod_event_streaming_we_oms_pricing_request_data_evh",
+      "main.dealing.bronze_event_hub_prod_event_streaming_we_oms_pricing_completed_evh",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dealing.bronze_etorologs_real_hedge_impricingexecutionlog",
+      "main.dealing.bronze_etoro_hedge_executionlog",
+      "main.bi_db.bronze_etorologs_real_hedge_emsordersstatus",
+      "main.dealing.bronze_pricelog_history_splitratio",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "main.dealing.bronze_pricesfromprovider_marketcurrencyprice",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+    ],
+    "bi_output_dealing_stocklending_balance_and_transactions_check": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.security_lending.gold_de_security_lending_equilend_balance_today_reduced_bny_and_diff",
+      "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance"
+    ],
+    "bi_output_dealing_stocklending_datalend_data": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.general.bronze_etoro_history_interestrate",
+      "main.general.bronze_etoro_dictionary_interestrate",
+      "main.general.gold_datalend_darsx_v6",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit"
+    ],
+    "bi_output_dealing_stocklending_open_loans_recon": [
+      "main.general.gold_bny_gsl108p___detail___loans_by_account_manager__with_pending",
+      "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "main.general.gold_equilendspire_etoro_spire_position",
+      "main.general.gold_datalend_darsx_v6",
+      "main.general.bronze_etoro_history_interestrate",
+      "main.general.bronze_etoro_dictionary_interestrate",
+      "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled"
+    ],
+    "bi_output_dealing_stocklending_optin_optout_bny_holdings": [
+      "main.general.bronze_etoro_history_interestrate",
+      "main.general.bronze_etoro_dictionary_interestrate",
+      "main.general.gold_datalend_darsx_v6",
+      "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "bi_output_dealing_stocklending_optin_optout_nop": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.general.gold_datalend_darsx_v6",
+      "main.general.bronze_etoro_dictionary_interestrate",
+      "main.general.bronze_etoro_history_interestrate",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled"
+    ],
+    "bi_output_dealing_stocklending_optin_optout_percid": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "main.general.bronze_etoro_dictionary_interestrate",
+      "main.general.bronze_etoro_history_interestrate",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.general.gold_datalend_darsx_v6",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+    ],
+    "bi_output_dealing_stocklending_optin_optout_percid_isus": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.general.gold_datalend_darsx_v6",
+      "main.general.bronze_etoro_dictionary_interestrate",
+      "main.general.bronze_etoro_history_interestrate",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+    ],
+    "bi_output_dealing_stocklending_optin_report_per_cid": [
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "main.general.gold_datalend_darsx_v6",
+      "main.general.bronze_etoro_dictionary_interestrate",
+      "main.general.bronze_etoro_history_interestrate",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+    ],
+    "bi_output_dealing_stocklending_revenue": [
+      "main.general.gold_equilendspire_etoro_spire_position",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.general.bronze_etoro_history_interestrate",
+      "main.general.gold_datalend_darsx_v6",
+      "main.general.bronze_etoro_dictionary_interestrate",
+      "main.general.gold_equilendspire_etoro_spire_earningsbyaccountdaily",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+    ],
+    "bi_output_dealing_stocklending_revenue_per_regulation": [
+      "main.general.gold_equilendspire_etoro_spire_position",
+      "main.general.bronze_etoro_history_interestrate",
+      "main.general.gold_datalend_darsx_v6",
+      "main.general.bronze_etoro_dictionary_interestrate",
+      "main.general.gold_equilendspire_etoro_spire_earningsbyaccountdaily",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+    ],
+    "bi_output_dealing_tables_bi_db_h_nonpi_highaum": [
+      "main.billing.bronze_etoro_backoffice_manager",
+      "main.general.bronze_etorogeneral_history_gurucopiers",
+      "main.trading.silver_etoro_trade_position",
+      "main.general.bronze_etoro_dictionary_playerstatus",
+      "main.general.bronze_etoro_dictionary_region",
+      "main.general.bronze_etoro_customer_customerstatic_masked"
+    ],
+    "bi_output_dealing_tables_h_market_manipulation_hourly_report_v": [
+      "main.bi_dealing.bi_output_dealing_tables_h_market_manipulation_hourly"
+    ],
+    "bi_output_dealing_tables_h_pricelocks_hourly": [
+      "main.dealing.bronze_dealinglogs_price_instrumenteventlog",
+      "main.general.bronze_calendardb_market_mergeddailyschedules",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.dealing.bronze_etoro_price_instrumentconfiguration",
+      "main.trading.bronze_etoro_trade_featurethresholdvalues"
+    ],
+    "bi_output_dealing_tables_h_pricelocks_hourly_report_v": [
+      "main.bi_dealing.bi_output_dealing_tables_h_pricelocks_hourly"
+    ],
+    "bi_output_dealing_ubs_saxo_recon_eodholdings": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.general.gold_saxo_saxobank_6914282_fxopenpositions",
+      "main.general.gold_ubs_exposureeodetoro1",
+      "main.general.gold_ubs_exposureeodetoro3",
+      "main.general.gold_ubs_exposureeodetoro2",
+      "main.dealing.bronze_etoro_hedge_netting",
+      "main.dealing.bronze_etoro_history_netting_history",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "bi_output_dealing_vision_recon_eod": [
+      "main.general.gold_visionet_r006_eod_positions_et",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "main.dealing.bronze_etoro_hedge_instrumentboundaries"
+    ],
+    "bi_output_dealing_vision_recon_trades": [
+      "main.general.gold_visionet_r002_eod_trades_et",
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon"
+    ],
+    "bi_output_dealing_volatility_bucket": [
+      "main.dealing.candles_get_spreaded_price_candle1min_splitted",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "gold_dealing_delta_diffusionanalysis": [],
+    "gold_dealing_delta_diffusionanalysis_adhoc_v": [
+      "main.bi_dealing.gold_dealing_delta_diffusionanalysis_adhoc"
+    ],
+    "gold_dealing_delta_diffusionanalysis_v": [
+      "main.bi_dealing.gold_dealing_delta_diffusionanalysis"
+    ],
+    "gold_dealing_delta_diffusionanalysisfx": [],
+    "gold_dealing_delta_diffusionanalysisfx_v": [
+      "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx"
+    ],
+    "gold_dealing_delta_diffusionvolatility": [],
+    "gold_dealing_delta_oms_models_v": [
+      "main.bi_dealing.gold_dealing_delta_oms_diffusion"
+    ],
+    "gold_dealing_libra_hscl": [],
+    "gold_dealing_libra_issettled": [],
+    "gold_dealing_libra_limitrate": [],
+    "gold_dealing_libra_opcl": [],
+    "gold_dealing_libra_parentpositionid": [],
+    "gold_dealing_libra_stoprate": [],
+    "gold_dealing_libra_treeid": [],
+    "gold_dealing_libra_units": [],
+    "gold_dealing_oms_delta_diffusionanalysis_v": [
+      "main.bi_dealing.gold_dealing_delta_diffusionanalysis"
+    ],
+    "gold_dealing_oms_internalmarket_imdynamicbookfutures_v": [
+      "main.bi_dealing.gold_dealing_oms_internalmarket_parameters",
+      "main.dealing.bronze_dealingstreaming_marketrates_dealing_market_feed_rates",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "gold_dealing_oms_internalmarket_multipliers": [],
+    "gold_dealing_oms_internalmarket_multipliershistory": [
+      "main.bi_dealing.gold_dealing_oms_internalmarket_multipliers"
+    ],
+    "gold_dealing_oms_internalmarket_parameters": [],
+    "gold_dealing_oms_internalmarket_parametershistory": [
+      "main.bi_dealing.gold_dealing_oms_internalmarket_parameters"
+    ],
+    "newhedgedash_email_csv": [
+      "main.bi_dealing.bi_output_dealing_nhd_dashboard"
+    ],
+    "v_hschangesummarylog_yesterday_email_csv": [
+      "main.dealing.bronze_etoro_trade_positionshedgeserverchangesummarylog"
+    ]
+  },
+  "upstreams": [
+    {
+      "full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia1",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia1.md"
+    },
+    {
+      "full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia1pricing",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia1pricing.md"
+    },
+    {
+      "full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia2",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia2.md"
+    },
+    {
+      "full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia2pricing",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia2pricing.md"
+    },
+    {
+      "full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityeuro",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.asset_universe.silver_bloomberg_bloomberg_bulck_equityeuro.md"
+    },
+    {
+      "full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityeuropricing",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.asset_universe.silver_bloomberg_bloomberg_bulck_equityeuropricing.md"
+    },
+    {
+      "full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitylamr",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.asset_universe.silver_bloomberg_bloomberg_bulck_equitylamr.md"
+    },
+    {
+      "full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitylamrpricing",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.asset_universe.silver_bloomberg_bloomberg_bulck_equitylamrpricing.md"
+    },
+    {
+      "full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitynamr",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.asset_universe.silver_bloomberg_bloomberg_bulck_equitynamr.md"
+    },
+    {
+      "full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitynamrpricing",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.asset_universe.silver_bloomberg_bloomberg_bulck_equitynamrpricing.md"
+    },
+    {
+      "full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_db/<Tables|Views>/bronze_etoro_cryptoliquidity_cryptotrade.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade.md"
+    },
+    {
+      "full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptowallets",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_db/<Tables|Views>/bronze_etoro_cryptoliquidity_cryptowallets.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_db.bronze_etoro_cryptoliquidity_cryptowallets.md"
+    },
+    {
+      "full_name": "main.bi_db.bronze_etoro_hedge_gethedgeserveraccountmapping",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Hedge/Views/Hedge.GetHedgeServerAccountMapping.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.bi_db.bronze_etoro_hedge_gethedgeserveraccountmapping.md"
+    },
+    {
+      "full_name": "main.bi_db.bronze_etoro_hedge_instrumentconfiguration",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Hedge/Tables/Hedge.InstrumentConfiguration.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.bi_db.bronze_etoro_hedge_instrumentconfiguration.md"
+    },
+    {
+      "full_name": "main.bi_db.bronze_etorologs_real_hedge_emsordersstatus",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_db/<Tables|Views>/bronze_etorologs_real_hedge_emsordersstatus.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_db.bronze_etorologs_real_hedge_emsordersstatus.md"
+    },
+    {
+      "full_name": "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_db/<Tables|Views>/bronze_fivetran_dealing_active_hs_mappings.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_db.bronze_fivetran_dealing_active_hs_mappings.md"
+    },
+    {
+      "full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_db/<Tables|Views>/bronze_marketmaker_dbo_v_hbchedgetrades.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_club",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_cid_dailypanel_club",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_CID_DailyPanel_Club.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_club.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_cidfirstdates_masked",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_CIDFirstDates.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_dailycommisionreport",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DailyCommisionReport.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_ddr_fact_mimo_allplatforms",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DDR_Fact_MIMO_AllPlatforms.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_positionpnl",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_PositionPnL.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dwh_gaindaily",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "dwh_gaindaily",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\DWH_GainDaily.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dwh_gaindaily.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_dealingdashboard_clients",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "Dealing_dbo",
+      "synapse_table_snake": "dealing_dealingdashboard_clients",
+      "wiki_path": "knowledge\\synapse\\Wiki\\Dealing_dbo\\Tables\\Dealing_DealingDashboard_Clients.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_dealingdashboard_clients.md"
+    },
+    {
+      "full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/bi_output_dealing_bny_recon_eod.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.bi_output_dealing_bny_recon_eod.md"
+    },
+    {
+      "full_name": "main.bi_dealing.bi_output_dealing_bny_virtu_recon_trades",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/bi_output_dealing_bny_virtu_recon_trades.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.bi_output_dealing_bny_virtu_recon_trades.md"
+    },
+    {
+      "full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/bi_output_dealing_duco_eod.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.bi_output_dealing_duco_eod.md"
+    },
+    {
+      "full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/bi_output_dealing_duco_trades.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.bi_output_dealing_duco_trades.md"
+    },
+    {
+      "full_name": "main.bi_dealing.bi_output_dealing_nhd_dashboard",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/bi_output_dealing_nhd_dashboard.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.bi_output_dealing_nhd_dashboard.md"
+    },
+    {
+      "full_name": "main.bi_dealing.bi_output_dealing_nixar_beta_dailybetaprod",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/bi_output_dealing_nixar_beta_dailybetaprod.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.bi_output_dealing_nixar_beta_dailybetaprod.md"
+    },
+    {
+      "full_name": "main.bi_dealing.bi_output_dealing_nixar_beta_dailybetatarget",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/bi_output_dealing_nixar_beta_dailybetatarget.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.bi_output_dealing_nixar_beta_dailybetatarget.md"
+    },
+    {
+      "full_name": "main.bi_dealing.bi_output_dealing_nixar_delta_diffusionanalysis",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/bi_output_dealing_nixar_delta_diffusionanalysis.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.bi_output_dealing_nixar_delta_diffusionanalysis.md"
+    },
+    {
+      "full_name": "main.bi_dealing.bi_output_dealing_premier_customer",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/bi_output_dealing_premier_customer.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.bi_output_dealing_premier_customer.md"
+    },
+    {
+      "full_name": "main.bi_dealing.bi_output_dealing_premier_customer_2026",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/bi_output_dealing_premier_customer_2026.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.bi_output_dealing_premier_customer_2026.md"
+    },
+    {
+      "full_name": "main.bi_dealing.bi_output_dealing_tables_h_market_manipulation_hourly",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/bi_output_dealing_tables_h_market_manipulation_hourly.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.bi_output_dealing_tables_h_market_manipulation_hourly.md"
+    },
+    {
+      "full_name": "main.bi_dealing.bi_output_dealing_tables_h_pricelocks_hourly",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/bi_output_dealing_tables_h_pricelocks_hourly.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.bi_output_dealing_tables_h_pricelocks_hourly.md"
+    },
+    {
+      "full_name": "main.bi_dealing.gold_dealing_delta_diffusionanalysis",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/gold_dealing_delta_diffusionanalysis.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.gold_dealing_delta_diffusionanalysis.md"
+    },
+    {
+      "full_name": "main.bi_dealing.gold_dealing_delta_diffusionanalysis_adhoc",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/gold_dealing_delta_diffusionanalysis_adhoc.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.gold_dealing_delta_diffusionanalysis_adhoc.md"
+    },
+    {
+      "full_name": "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/gold_dealing_delta_diffusionanalysisfx.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.gold_dealing_delta_diffusionanalysisfx.md"
+    },
+    {
+      "full_name": "main.bi_dealing.gold_dealing_delta_oms_diffusion",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/gold_dealing_delta_oms_diffusion.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.gold_dealing_delta_oms_diffusion.md"
+    },
+    {
+      "full_name": "main.bi_dealing.gold_dealing_oms_internalmarket_multipliers",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/gold_dealing_oms_internalmarket_multipliers.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.gold_dealing_oms_internalmarket_multipliers.md"
+    },
+    {
+      "full_name": "main.bi_dealing.gold_dealing_oms_internalmarket_parameters",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/gold_dealing_oms_internalmarket_parameters.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.gold_dealing_oms_internalmarket_parameters.md"
+    },
+    {
+      "full_name": "main.bi_dealing_stg.tmp_instrumentmetadata_snapshot",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing_stg.tmp_instrumentmetadata_snapshot.md"
+    },
+    {
+      "full_name": "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_customer_customer_facing_agent_engagement.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_output.bi_output_customer_customer_facing_agent_engagement.md"
+    },
+    {
+      "full_name": "main.bi_output.bi_output_customer_customer_support_agent_user",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_customer_customer_support_agent_user.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_output.bi_output_customer_customer_support_agent_user.md"
+    },
+    {
+      "full_name": "main.billing.bronze_etoro_backoffice_manager",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/billing/Tables/bronze_etoro_backoffice_manager.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.billing.bronze_etoro_backoffice_manager.md"
+    },
+    {
+      "full_name": "main.data_rooms.vw_mixpanel_login_events",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.data_rooms.vw_mixpanel_login_events.md"
+    },
+    {
+      "full_name": "main.dealing.bi_output_dealing_bestexecution_report",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bi_output_dealing_bestexecution_report.md"
+    },
+    {
+      "full_name": "main.dealing.bi_output_dealing_dealingdashboard_cid",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bi_output_dealing_dealingdashboard_cid.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_dealinglogs_price_instrumenteventlog",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "DealingLogs",
+        "schema_name": "Price",
+        "table_name": "InstrumentEventLog",
+        "uc_table": "dealing.bronze_dealinglogs_price_instrumenteventlog"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_dealinglogs_price_instrumenteventlog.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_dealingstreaming_flowmatrix_dealing_flow_matrix",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_dealingstreaming_flowmatrix_dealing_flow_matrix.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_dealingstreaming_marketrates_dealing_market_feed_rates",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_dealingstreaming_marketrates_dealing_market_feed_rates.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Hedge/Tables/Hedge.ExecutionLog.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dealing.bronze_etoro_hedge_executionlog.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_etoro_hedge_instrumentboundaries",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Hedge/Tables/Hedge.InstrumentBoundaries.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dealing.bronze_etoro_hedge_instrumentboundaries.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Hedge/Tables/Hedge.Netting.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dealing.bronze_etoro_hedge_netting.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/History/Tables/History.Netting_History.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dealing.bronze_etoro_history_netting_history.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_etoro_price_instrumentconfiguration",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Price/Tables/Price.InstrumentConfiguration.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dealing.bronze_etoro_price_instrumentconfiguration.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_etoro_trade_positionshedgeserverchangesummarylog",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.PositionsHedgeServerChangeSummaryLog.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dealing.bronze_etoro_trade_positionshedgeserverchangesummarylog.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_etorologs_real_hedge_emsorders",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "eToroLogs_Real",
+        "schema_name": "Hedge",
+        "table_name": "EMSOrders",
+        "uc_table": "dealing.bronze_etorologs_real_hedge_emsorders"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_etorologs_real_hedge_emsorders.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_etorologs_real_hedge_impricingexecutionlog",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "eToroLogs_Real",
+        "schema_name": "Hedge",
+        "table_name": "IMPricingExecutionLog",
+        "uc_table": "dealing.bronze_etorologs_real_hedge_impricingexecutionlog"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_etorologs_real_hedge_impricingexecutionlog.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_event_hub_prod_event_streaming_we_oms_pricing_completed_evh",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_event_hub_prod_event_streaming_we_oms_pricing_completed_evh.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_event_hub_prod_event_streaming_we_oms_pricing_request_data_evh",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_event_hub_prod_event_streaming_we_oms_pricing_request_data_evh.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_fivetran_dealing_aggspreads_instruments_names",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "Fivetran",
+        "schema_name": "dealing",
+        "table_name": "aggspreads_instruments_names",
+        "uc_table": "dealing.bronze_fivetran_dealing_aggspreads_instruments_names"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_fivetran_dealing_aggspreads_instruments_names.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_fivetran_dealing_aggspreads_liquidityaccounts_names",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "Fivetran",
+        "schema_name": "dealing",
+        "table_name": "aggspreads_liquidityaccounts_names",
+        "uc_table": "dealing.bronze_fivetran_dealing_aggspreads_liquidityaccounts_names"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_fivetran_dealing_aggspreads_liquidityaccounts_names.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_fivetran_google_sheets_mappingsforcryptoreconcilation_counterparty",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "Fivetran",
+        "schema_name": "google_sheets",
+        "table_name": "mappingsforcryptoreconcilation_counterparty",
+        "uc_table": "dealing.bronze_fivetran_google_sheets_mappingsforcryptoreconcilation_counterparty"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_fivetran_google_sheets_mappingsforcryptoreconcilation_counterparty.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_fivetran_google_sheets_mappingsforcryptoreconcilation_tickers",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "Fivetran",
+        "schema_name": "google_sheets",
+        "table_name": "mappingsforcryptoreconcilation_tickers",
+        "uc_table": "dealing.bronze_fivetran_google_sheets_mappingsforcryptoreconcilation_tickers"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_fivetran_google_sheets_mappingsforcryptoreconcilation_tickers.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_marketmaker_dbo_configurations",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "MarketMaker",
+        "schema_name": "dbo",
+        "table_name": "Configurations",
+        "uc_table": "dealing.bronze_marketmaker_dbo_configurations"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_marketmaker_dbo_configurations.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_marketmaker_dbo_exchanges",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "MarketMaker",
+        "schema_name": "dbo",
+        "table_name": "Exchanges",
+        "uc_table": "dealing.bronze_marketmaker_dbo_exchanges"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_marketmaker_dbo_exchanges.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_marketmaker_dbo_hedgeorders",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "MarketMaker",
+        "schema_name": "dbo",
+        "table_name": "HedgeOrders",
+        "uc_table": "dealing.bronze_marketmaker_dbo_hedgeorders"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_marketmaker_dbo_hedgeorders.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "MarketMaker",
+        "schema_name": "dbo",
+        "table_name": "HedgeTrades",
+        "uc_table": "dealing.bronze_marketmaker_dbo_hedgetrades"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_marketmaker_dbo_hedgetrades.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_marketmaker_dbo_instruments",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "MarketMaker",
+        "schema_name": "dbo",
+        "table_name": "Instruments",
+        "uc_table": "dealing.bronze_marketmaker_dbo_instruments"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_marketmaker_dbo_instruments.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "MarketMaker",
+        "schema_name": "dbo",
+        "table_name": "ManualHedgeTrades",
+        "uc_table": "dealing.bronze_marketmaker_dbo_manualhedgetrades"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_marketmaker_dbo_manualhedgetrades.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "PriceLog",
+        "schema_name": "History",
+        "table_name": "CurrencyPrice",
+        "uc_table": "dealing.bronze_pricelog_history_currencyprice"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_pricelog_history_currencyprice.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_pricelog_history_splitratio",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "PriceLog",
+        "schema_name": "History",
+        "table_name": "SplitRatio",
+        "uc_table": "dealing.bronze_pricelog_history_splitratio"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_pricelog_history_splitratio.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_pricesfromprovider_marketcurrencyprice",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_pricesfromprovider_marketcurrencyprice.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades.md"
+    },
+    {
+      "full_name": "main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_trades_futures.md"
+    },
+    {
+      "full_name": "main.dealing.candles_get_spreaded_price_candle1min_splitted",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.candles_get_spreaded_price_candle1min_splitted.md"
+    },
+    {
+      "full_name": "main.dealing.candles_get_spreaded_price_candle60min_splitted",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.candles_get_spreaded_price_candle60min_splitted.md"
+    },
+    {
+      "full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "Dealing_dbo",
+      "synapse_table_snake": "dealing_apexrecon_holdings",
+      "wiki_path": "knowledge\\synapse\\Wiki\\Dealing_dbo\\Tables\\Dealing_ApexRecon_Holdings.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings.md"
+    },
+    {
+      "full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_tradeactivity",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "Dealing_dbo",
+      "synapse_table_snake": "dealing_apexrecon_tradeactivity",
+      "wiki_path": "knowledge\\synapse\\Wiki\\Dealing_dbo\\Tables\\Dealing_ApexRecon_TradeActivity.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_tradeactivity.md"
+    },
+    {
+      "full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "Dealing_dbo",
+      "synapse_table_snake": "dealing_duco_activityrecon",
+      "wiki_path": "knowledge\\synapse\\Wiki\\Dealing_dbo\\Tables\\Dealing_Duco_ActivityRecon.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon.md"
+    },
+    {
+      "full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "Dealing_dbo",
+      "synapse_table_snake": "dealing_saxorecon_eodholdings",
+      "wiki_path": "knowledge\\synapse\\Wiki\\Dealing_dbo\\Tables\\Dealing_SAXORecon_EODHoldings.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings.md"
+    },
+    {
+      "full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "Dealing_dbo",
+      "synapse_table_snake": "v_dealing_duco_eodrecon",
+      "wiki_path": "knowledge\\synapse\\Wiki\\Dealing_dbo\\Tables\\Dealing_Duco_EODRecon.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon.md"
+    },
+    {
+      "full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap.md"
+    },
+    {
+      "full_name": "main.dwh.dim_position",
+      "rule_matched": 5,
+      "rule_name": "uc_native_via_map",
+      "uc_target": "main.dwh.dim_position",
+      "wiki_path": null,
+      "wiki_exists": false,
+      "notes": "matched in _uc_object_map.json but no wiki path is encoded there",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.dwh.dim_position.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_closepositionreason",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_ClosePositionReason.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_country",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Country.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_customer_masked",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Customer.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_date",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Date.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_gurustatus",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_GuruStatus.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_instrument",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Instrument.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_manager",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Manager.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_mirror",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Mirror.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_playerlevel",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_PlayerLevel.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_range",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Range.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_regulation",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Regulation.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "fact_currencypricewithsplit",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_CurrencyPriceWithSplit.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "fact_customeraction",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_CustomerAction.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "v_fact_snapshotcustomer_fromdateid_masked",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Views\\V_Fact_SnapshotCustomer_FromDateID.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "v_liabilities",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Views\\V_Liabilities.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities.md"
+    },
+    {
+      "full_name": "main.experience.vw_silver_xignite_fundamentalsdailyrange_ttm",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.experience.vw_silver_xignite_fundamentalsdailyrange_ttm.md"
+    },
+    {
+      "full_name": "main.general.bronze_calendardb_market_mergeddailyschedules",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/CalendarDB/Wiki/Market/Tables/Market.MergedDailySchedules.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.general.bronze_calendardb_market_mergeddailyschedules.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_backoffice_customer",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/BackOffice/Tables/BackOffice.Customer.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.general.bronze_etoro_backoffice_customer.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_customer_customerstatic_masked",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Customer/Tables/Customer.CustomerStatic.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.general.bronze_etoro_customer_customerstatic_masked.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_dictionary_interestrate",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.InterestRate.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.general.bronze_etoro_dictionary_interestrate.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_dictionary_playerstatus",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PlayerStatus.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.general.bronze_etoro_dictionary_playerstatus.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_dictionary_region",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.Region.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.general.bronze_etoro_dictionary_region.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_dictionary_regulation",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.Regulation.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.general.bronze_etoro_dictionary_regulation.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/History/Tables/History.BackOfficeCustomer.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.general.bronze_etoro_history_backofficecustomer.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_history_credit",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/History/Views/History.Credit.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.general.bronze_etoro_history_credit.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_history_interestrate",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/History/Tables/History.InterestRate.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.general.bronze_etoro_history_interestrate.md"
+    },
+    {
+      "full_name": "main.general.bronze_etorogeneral_history_gurucopiers",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/bronze_etorogeneral_history_gurucopiers.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.bronze_etorogeneral_history_gurucopiers.md"
+    },
+    {
+      "full_name": "main.general.gold_apex_ext872_3eu_217314",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_apex_ext872_3eu_217314.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_apex_ext872_3eu_217314.md"
+    },
+    {
+      "full_name": "main.general.gold_apex_ext981_3eu",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_apex_ext981_3eu.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_apex_ext981_3eu.md"
+    },
+    {
+      "full_name": "main.general.gold_apex_ext982_3eu",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_apex_ext982_3eu.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_apex_ext982_3eu.md"
+    },
+    {
+      "full_name": "main.general.gold_bmll_bmll_clusters_executions_ng_oil_tca_results",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_bmll_bmll_clusters_executions_ng_oil_tca_results.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_bmll_bmll_clusters_executions_ng_oil_tca_results.md"
+    },
+    {
+      "full_name": "main.general.gold_bmll_bmll_nbbo_rates",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_bmll_bmll_nbbo_rates.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_bmll_bmll_nbbo_rates.md"
+    },
+    {
+      "full_name": "main.general.gold_bmll_bmll_slippage_comp",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_bmll_bmll_slippage_comp.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_bmll_bmll_slippage_comp.md"
+    },
+    {
+      "full_name": "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_bny_custody_holdings_settled_custodyholdingssettled.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_bny_custody_holdings_settled_custodyholdingssettled.md"
+    },
+    {
+      "full_name": "main.general.gold_bny_custody_security_transactions_custodysecuritytransactions",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_bny_custody_security_transactions_custodysecuritytransactions.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_bny_custody_security_transactions_custodysecuritytransactions.md"
+    },
+    {
+      "full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_bny_custody_valuation_custodyvaluation.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_bny_custody_valuation_custodyvaluation.md"
+    },
+    {
+      "full_name": "main.general.gold_bny_gsl108p___detail___loans_by_account_manager__with_pending",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_bny_gsl108p___detail___loans_by_account_manager__with_pending.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_bny_gsl108p___detail___loans_by_account_manager__with_pending.md"
+    },
+    {
+      "full_name": "main.general.gold_bny_projected_cash_balances_projectedcashbalances",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_bny_projected_cash_balances_projectedcashbalances.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_bny_projected_cash_balances_projectedcashbalances.md"
+    },
+    {
+      "full_name": "main.general.gold_bny_settled_cash_balances_settledcashbalances",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_bny_settled_cash_balances_settledcashbalances.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_bny_settled_cash_balances_settledcashbalances.md"
+    },
+    {
+      "full_name": "main.general.gold_citadel_etoro_confirm",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_citadel_etoro_confirm.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_citadel_etoro_confirm.md"
+    },
+    {
+      "full_name": "main.general.gold_datalend_darsx_v6",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_datalend_darsx_v6.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_datalend_darsx_v6.md"
+    },
+    {
+      "full_name": "main.general.gold_dealing_marex_trader_orderid",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_dealing_marex_trader_orderid.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_dealing_marex_trader_orderid.md"
+    },
+    {
+      "full_name": "main.general.gold_ednf_corebalance",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ednf_corebalance.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ednf_corebalance.md"
+    },
+    {
+      "full_name": "main.general.gold_ednf_coreposition",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ednf_coreposition.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ednf_coreposition.md"
+    },
+    {
+      "full_name": "main.general.gold_ednf_coretrades",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ednf_coretrades.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ednf_coretrades.md"
+    },
+    {
+      "full_name": "main.general.gold_ednf_pfdfst4_custom",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ednf_pfdfst4_custom.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ednf_pfdfst4_custom.md"
+    },
+    {
+      "full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_equilendspire_etoro_spire_collateralbyposition.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_equilendspire_etoro_spire_collateralbyposition.md"
+    },
+    {
+      "full_name": "main.general.gold_equilendspire_etoro_spire_earningsbyaccountdaily",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_equilendspire_etoro_spire_earningsbyaccountdaily.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_equilendspire_etoro_spire_earningsbyaccountdaily.md"
+    },
+    {
+      "full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_equilendspire_etoro_spire_position.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_equilendspire_etoro_spire_position.md"
+    },
+    {
+      "full_name": "main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302304_712993_sheet1",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_gs_srpb_221797_1200626261_equity_synthetic_302304_712993_sheet1.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302304_712993_sheet1.md"
+    },
+    {
+      "full_name": "main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302320_713860_positionvaluation",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_gs_srpb_221797_1200626261_equity_synthetic_302320_713860_positionvaluation.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302320_713860_positionvaluation.md"
+    },
+    {
+      "full_name": "main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302321_713868_positionvaluationsummary",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_gs_srpb_221797_1200626261_equity_synthetic_302321_713868_positionvaluationsummary.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302321_713868_positionvaluationsummary.md"
+    },
+    {
+      "full_name": "main.general.gold_gsnop_gs_etoro_coll_collateral",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_gsnop_gs_etoro_coll_collateral.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_gsnop_gs_etoro_coll_collateral.md"
+    },
+    {
+      "full_name": "main.general.gold_gsnop_gs_etoro_coll_trades",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_gsnop_gs_etoro_coll_trades.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_gsnop_gs_etoro_coll_trades.md"
+    },
+    {
+      "full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ib_i1893329_daily_trades.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ib_i1893329_daily_trades.md"
+    },
+    {
+      "full_name": "main.general.gold_ib_i1893329_margin",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ib_i1893329_margin.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ib_i1893329_margin.md"
+    },
+    {
+      "full_name": "main.general.gold_ib_i1893329_net_asset_value",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ib_i1893329_net_asset_value.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ib_i1893329_net_asset_value.md"
+    },
+    {
+      "full_name": "main.general.gold_ib_i1893329_open_positions",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ib_i1893329_open_positions.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ib_i1893329_open_positions.md"
+    },
+    {
+      "full_name": "main.general.gold_ib_i3158027_cash_report_33",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ib_i3158027_cash_report_33.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ib_i3158027_cash_report_33.md"
+    },
+    {
+      "full_name": "main.general.gold_ib_i3158027_cash_report_34",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ib_i3158027_cash_report_34.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ib_i3158027_cash_report_34.md"
+    },
+    {
+      "full_name": "main.general.gold_ib_i3158027_net_asset_value_33",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ib_i3158027_net_asset_value_33.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ib_i3158027_net_asset_value_33.md"
+    },
+    {
+      "full_name": "main.general.gold_ib_i3158027_net_asset_value_34",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ib_i3158027_net_asset_value_34.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ib_i3158027_net_asset_value_34.md"
+    },
+    {
+      "full_name": "main.general.gold_ib_i3158027_open_positions",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ib_i3158027_open_positions.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ib_i3158027_open_positions.md"
+    },
+    {
+      "full_name": "main.general.gold_ib_u1059976_net_asset_value_581",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ib_u1059976_net_asset_value_581.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ib_u1059976_net_asset_value_581.md"
+    },
+    {
+      "full_name": "main.general.gold_ib_u1059976_open_positions_all",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ib_u1059976_open_positions_all.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ib_u1059976_open_positions_all.md"
+    },
+    {
+      "full_name": "main.general.gold_ib_u3351394_net_asset_value_394",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ib_u3351394_net_asset_value_394.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ib_u3351394_net_asset_value_394.md"
+    },
+    {
+      "full_name": "main.general.gold_ig_cl_activeaccounts",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ig_cl_activeaccounts.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ig_cl_activeaccounts.md"
+    },
+    {
+      "full_name": "main.general.gold_ig_oh_orderhistory",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ig_oh_orderhistory.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ig_oh_orderhistory.md"
+    },
+    {
+      "full_name": "main.general.gold_ig_ps_eodpositions",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ig_ps_eodpositions.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ig_ps_eodpositions.md"
+    },
+    {
+      "full_name": "main.general.gold_ironbeam_balances",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ironbeam_balances.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ironbeam_balances.md"
+    },
+    {
+      "full_name": "main.general.gold_ironbeam_positions",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ironbeam_positions.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ironbeam_positions.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_eod_etoro2_report_componentunderlyings",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_eod_etoro2_report_componentunderlyings.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_eod_etoro2_report_componentunderlyings.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_eod_etoro2_report_overview",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_eod_etoro2_report_overview.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_eod_etoro2_report_overview.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_eod_etoro2_report_riskamount",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_eod_etoro2_report_riskamount.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_eod_etoro2_report_riskamount.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_eod_etoro3_report_overview",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_eod_etoro3_report_overview.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_eod_etoro3_report_overview.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_eod_etoro3_report_riskamount",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_eod_etoro3_report_riskamount.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_eod_etoro3_report_riskamount.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_eod_etoro4_report_overview",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_eod_etoro4_report_overview.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_eod_etoro4_report_overview.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_eod_etoro4_report_riskamount",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_eod_etoro4_report_riskamount.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_eod_etoro4_report_riskamount.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_eod_etoro5_report_overview",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_eod_etoro5_report_overview.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_eod_etoro5_report_overview.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_eod_etoro5_report_riskamount",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_eod_etoro5_report_riskamount.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_eod_etoro5_report_riskamount.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_eod_etoro6_report_overview",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_eod_etoro6_report_overview.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_eod_etoro6_report_overview.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_eod_etoro6_report_riskamount",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_eod_etoro6_report_riskamount.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_eod_etoro6_report_riskamount.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_eod_etoro_report_componentunderlyings",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_eod_etoro_report_componentunderlyings.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_eod_etoro_report_componentunderlyings.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_eod_etoro_report_fxrates",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_eod_etoro_report_fxrates.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_eod_etoro_report_fxrates.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_eod_etoro_report_overview",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_eod_etoro_report_overview.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_eod_etoro_report_overview.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_eod_etoro_report_riskamount",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_eod_etoro_report_riskamount.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_eod_etoro_report_riskamount.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_etoro_asia_trade_summary_tradedata",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_etoro_asia_trade_summary_tradedata.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_etoro_asia_trade_summary_tradedata.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_etoro_emea_trade_summary_tradedata",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_etoro_emea_trade_summary_tradedata.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_etoro_emea_trade_summary_tradedata.md"
+    },
+    {
+      "full_name": "main.general.gold_jpm_etoro_na_trade_summary_tradedata",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpm_etoro_na_trade_summary_tradedata.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpm_etoro_na_trade_summary_tradedata.md"
+    },
+    {
+      "full_name": "main.general.gold_jpmvm_200334",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_jpmvm_200334.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_jpmvm_200334.md"
+    },
+    {
+      "full_name": "main.general.gold_saxo_marginaccount",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_saxo_marginaccount.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_saxo_marginaccount.md"
+    },
+    {
+      "full_name": "main.general.gold_saxo_saxobank_6914282_bookkeepingcash",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_saxo_saxobank_6914282_bookkeepingcash.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_saxo_saxobank_6914282_bookkeepingcash.md"
+    },
+    {
+      "full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_saxo_saxobank_6914282_cfdopenpositions.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_saxo_saxobank_6914282_cfdopenpositions.md"
+    },
+    {
+      "full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_saxo_saxobank_6914282_cfdtradesexecuted.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted.md"
+    },
+    {
+      "full_name": "main.general.gold_saxo_saxobank_6914282_fxopenpositions",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_saxo_saxobank_6914282_fxopenpositions.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_saxo_saxobank_6914282_fxopenpositions.md"
+    },
+    {
+      "full_name": "main.general.gold_saxo_saxobank_6914282_fxtradesexecuted",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_saxo_saxobank_6914282_fxtradesexecuted.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_saxo_saxobank_6914282_fxtradesexecuted.md"
+    },
+    {
+      "full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_saxo_saxobank_6914282_shareopenpositions.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_saxo_saxobank_6914282_shareopenpositions.md"
+    },
+    {
+      "full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_saxo_saxobank_6914282_sharetradesexecuted.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_saxo_saxobank_6914282_sharetradesexecuted.md"
+    },
+    {
+      "full_name": "main.general.gold_saxo_saxobank_9121766_accountstatus",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_saxo_saxobank_9121766_accountstatus.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_saxo_saxobank_9121766_accountstatus.md"
+    },
+    {
+      "full_name": "main.general.gold_saxo_saxobank_9121766_bookkeepingcash",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_saxo_saxobank_9121766_bookkeepingcash.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_saxo_saxobank_9121766_bookkeepingcash.md"
+    },
+    {
+      "full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_saxo_saxobank_9121766_shareopenpositions.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_saxo_saxobank_9121766_shareopenpositions.md"
+    },
+    {
+      "full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_saxo_saxobank_9121766_sharetradesexecuted.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_saxo_saxobank_9121766_sharetradesexecuted.md"
+    },
+    {
+      "full_name": "main.general.gold_talos_trades",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_talos_trades.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_talos_trades.md"
+    },
+    {
+      "full_name": "main.general.gold_ubs_exposureeodetoro1",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ubs_exposureeodetoro1.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ubs_exposureeodetoro1.md"
+    },
+    {
+      "full_name": "main.general.gold_ubs_exposureeodetoro2",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ubs_exposureeodetoro2.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ubs_exposureeodetoro2.md"
+    },
+    {
+      "full_name": "main.general.gold_ubs_exposureeodetoro3",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ubs_exposureeodetoro3.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ubs_exposureeodetoro3.md"
+    },
+    {
+      "full_name": "main.general.gold_ubs_ubs_limit_1",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_ubs_ubs_limit_1.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_ubs_ubs_limit_1.md"
+    },
+    {
+      "full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_virtu_etoro_allocations_apac_sheet.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_virtu_etoro_allocations_apac_sheet.md"
+    },
+    {
+      "full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_virtu_etoro_allocations_sheet.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_virtu_etoro_allocations_sheet.md"
+    },
+    {
+      "full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_virtu_etoro_allocations_us_sheet.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_virtu_etoro_allocations_us_sheet.md"
+    },
+    {
+      "full_name": "main.general.gold_visionet_r002_eod_trades_et",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_visionet_r002_eod_trades_et.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_visionet_r002_eod_trades_et.md"
+    },
+    {
+      "full_name": "main.general.gold_visionet_r004_eod_balances_et",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_visionet_r004_eod_balances_et.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_visionet_r004_eod_balances_et.md"
+    },
+    {
+      "full_name": "main.general.gold_visionet_r006_eod_positions_et",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_visionet_r006_eod_positions_et.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_visionet_r006_eod_positions_et.md"
+    },
+    {
+      "full_name": "main.general.gold_visionet_r010_eod_positionsdetail_et",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/gold_visionet_r010_eod_positionsdetail_et.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.gold_visionet_r010_eod_positionsdetail_et.md"
+    },
+    {
+      "full_name": "main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_customer",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Customer.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer.md"
+    },
+    {
+      "full_name": "main.pyspark.sql",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.pyspark.sql.md"
+    },
+    {
+      "full_name": "main.security_lending.gold_de_security_lending_equilend_balance_today_reduced_bny_and_diff",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.security_lending.gold_de_security_lending_equilend_balance_today_reduced_bny_and_diff.md"
+    },
+    {
+      "full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily.md"
+    },
+    {
+      "full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.security_lending.gold_de_security_lending_equilend_daily_settled_balance.md"
+    },
+    {
+      "full_name": "main.sharepoint.silver_sharepoint_adj",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.sharepoint.silver_sharepoint_adj.md"
+    },
+    {
+      "full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.sharepoint.silver_sharepoint_dealing_active_hs_mappings.md"
+    },
+    {
+      "full_name": "main.sharepoint.silver_sharepoint_mappingsforcryptoreconcilation_counterparty",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.sharepoint.silver_sharepoint_mappingsforcryptoreconcilation_counterparty.md"
+    },
+    {
+      "full_name": "main.sharepoint.silver_sharepoint_mappingsforcryptoreconcilation_tickers",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.sharepoint.silver_sharepoint_mappingsforcryptoreconcilation_tickers.md"
+    },
+    {
+      "full_name": "main.sharepoint.silver_sharepoint_marex_mapping_table_2",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.sharepoint.silver_sharepoint_marex_mapping_table_2.md"
+    },
+    {
+      "full_name": "main.trading.bronze_etoro_dictionary_tradinginstrumentgroups",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.TradingInstrumentGroups.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.trading.bronze_etoro_dictionary_tradinginstrumentgroups.md"
+    },
+    {
+      "full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/History/Views/History.Position_DataFactory.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.trading.bronze_etoro_history_position_datafactory.md"
+    },
+    {
+      "full_name": "main.trading.bronze_etoro_trade_currencyprice",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.CurrencyPrice.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.trading.bronze_etoro_trade_currencyprice.md"
+    },
+    {
+      "full_name": "main.trading.bronze_etoro_trade_featurethresholdvalues",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.FeatureThresholdValues.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.trading.bronze_etoro_trade_featurethresholdvalues.md"
+    },
+    {
+      "full_name": "main.trading.bronze_etoro_trade_getinstrument",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Views/Trade.GetInstrument.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.trading.bronze_etoro_trade_getinstrument.md"
+    },
+    {
+      "full_name": "main.trading.bronze_etoro_trade_instrumentgroups",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.InstrumentGroups.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.trading.bronze_etoro_trade_instrumentgroups.md"
+    },
+    {
+      "full_name": "main.trading.bronze_etoro_trade_instrumentmetadata",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.InstrumentMetaData.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.trading.bronze_etoro_trade_instrumentmetadata.md"
+    },
+    {
+      "full_name": "main.trading.bronze_etoro_trade_liquidityaccounts",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.LiquidityAccounts.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.trading.bronze_etoro_trade_liquidityaccounts.md"
+    },
+    {
+      "full_name": "main.trading.bronze_etoro_trade_providertoinstrument",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.ProviderToInstrument.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\main.trading.bronze_etoro_trade_providertoinstrument.md"
+    },
+    {
+      "full_name": "main.trading.silver_etoro_trade_position",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__main.trading.silver_etoro_trade_position.md"
+    },
+    {
+      "full_name": "pyspark.sql.functions",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_NO_WIKI__pyspark.sql.functions.md"
+    }
+  ],
+  "stats": {
+    "total_upstreams": 224,
+    "rule1_synapse_mirror": 55,
+    "rule2_uc_generated": 114,
+    "rule3_uc_domain": 0,
+    "rule4_bronze_prod": 15,
+    "rule5_uc_native_map": 1,
+    "rule6_no_wiki": 39,
+    "wikis_cached": 56,
+    "no_wiki_placeholders": 168,
+    "blocked_on_upstream": 113
+  }
+}

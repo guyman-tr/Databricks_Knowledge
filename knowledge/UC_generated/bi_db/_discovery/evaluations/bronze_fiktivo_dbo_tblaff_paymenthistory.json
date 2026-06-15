@@ -1,0 +1,242 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiktivo_dbo_tblaff_paymenthistory",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:52Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "PaymentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Auto-incrementing primary key. NOT FOR REPLICATION. Referenced by all _Commissions tables' PaymentID column and tblaff_F",
+      "wiki_quote": "Auto-incrementing primary key. NOT FOR REPLICATION. Referenced by all _Commissions tables' PaymentID column and tblaff_F",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "The affiliate receiving this payment. Trigger enforces RI against tblaff_Affiliates.",
+      "wiki_quote": "The affiliate receiving this payment. Trigger enforces RI against tblaff_Affiliates (Tier 1 — inherited from fiktivo.dbo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "When the payment record was created.",
+      "wiki_quote": "When the payment record was created (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHistory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Total payment amount: sum of all tier commissions + adjustment.",
+      "wiki_quote": "Total payment amount: sum of all tier commissions + adjustment (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHistor",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentAdjustment",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Manual adjustment amount applied by finance. Positive = bonus, negative = deduction.",
+      "wiki_quote": "Manual adjustment amount applied by finance. Positive = bonus, negative = deduction (Tier 1 — inherited from fiktivo.dbo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentDescription",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Short description/label for this payment.",
+      "wiki_quote": "Short description/label for this payment (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHistory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentRange",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Date range label for this payment period.",
+      "wiki_quote": "Date range label for this payment period (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHistory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Comment",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Free-text comment from finance/approver.",
+      "wiki_quote": "Free-text comment from finance/approver (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHistory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerApproved",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "First-level approval by account manager.",
+      "wiki_quote": "First-level approval by account manager (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHistory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Approved",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Final aggregate approval flag.",
+      "wiki_quote": "Final aggregate approval flag (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHistory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ApprovalDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "When the final approval was granted.",
+      "wiki_quote": "When the final approval was granted (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHistory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RequestedBy",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Admin user ID who created/requested this payment.",
+      "wiki_quote": "Admin user ID who created/requested this payment (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHistory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ApprovedBy",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Admin user ID who gave final approval.",
+      "wiki_quote": "Admin user ID who gave final approval (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHistory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "VPMarketingApproved",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Second-level VP Marketing approval.",
+      "wiki_quote": "Second-level VP Marketing approval (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHistory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Payment currency. Default 1 = USD. References Dictionary.Currency.",
+      "wiki_quote": "Payment currency. Default 1 = USD. References Dictionary.Currency (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHis",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LastApprovalDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Timestamp of the most recent approval step.",
+      "wiki_quote": "Timestamp of the most recent approval step (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHistory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tier1eCostCommission",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "eCost commission amount (Tier 1 only - no multi-tier for eCost in this summary).",
+      "wiki_quote": "eCost commission amount (Tier 1 only - no multi-tier for eCost in this summary) (Tier 1 — inherited from fiktivo.dbo.tbl",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentDetailsID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "References the affiliate's payment method/bank details.",
+      "wiki_quote": "References the affiliate's payment method/bank details (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHistory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentDetailsOnApprove",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Snapshot of payment details captured at approval time for audit.",
+      "wiki_quote": "Snapshot of payment details captured at approval time for audit (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHisto",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentMethodOnApprove",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Payment method code captured at approval time.",
+      "wiki_quote": "Payment method code captured at approval time (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHistory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentRowStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Payment processing status. FK to Dictionary.PaymentRowStatus: 1=Pending, 2=Partially Approved, 4=Approved, 8=Processed, ",
+      "wiki_quote": "Payment processing status. FK to Dictionary.PaymentRowStatus: 1=Pending, 2=Partially Approved, 4=Approved, 8=Processed, ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "eCostHistoryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "References tblaff_eCostHistory.eCostHistoryID (explicit FK). Links this payment to an eCost reconciliation record. NULL ",
+      "wiki_quote": "References tblaff_eCostHistory.eCostHistoryID (explicit FK). Links this payment to an eCost reconciliation record. NULL ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FinanceApproved",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Third-level finance team approval.",
+      "wiki_quote": "Third-level finance team approval (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHistory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentPeriod",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "The payment period this batch covers (first day of month). E.g., 2026-02-01 = February 2026 commissions.",
+      "wiki_quote": "The payment period this batch covers (first day of month). E.g., 2026-02-01 = February 2026 commissions (Tier 1 — inheri",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentGroupCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "GUID grouping related payment rows into a single batch for bulk processing.",
+      "wiki_quote": "GUID grouping related payment rows into a single batch for bulk processing (Tier 1 — inherited from fiktivo.dbo.tblaff_P",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AmountInCurrency",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Payment amount converted to the affiliate's preferred currency (per CurrencyID).",
+      "wiki_quote": "Payment amount converted to the affiliate's preferred currency (per CurrencyID) (Tier 1 — inherited from fiktivo.dbo.tbl",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ReferenceNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "External payment reference number (bank transfer reference, wire confirmation, etc.).",
+      "wiki_quote": "External payment reference number (bank transfer reference, wire confirmation, etc.) (Tier 1 — inherited from fiktivo.db",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RowVersion",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Optimistic concurrency control. Auto-incrementing binary value used to detect concurrent updates.",
+      "wiki_quote": "Optimistic concurrency control. Auto-incrementing binary value used to detect concurrent updates (Tier 1 — inherited fro",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FinanceManagerApproved",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_PaymentHistory.md",
+      "upstream_quote": "Fourth-level finance manager approval for high-value payments.",
+      "wiki_quote": "Fourth-level finance manager approval for high-value payments (Tier 1 — inherited from fiktivo.dbo.tblaff_PaymentHistory",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 29,
+    "B": 0,
+    "C": 70,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 29 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 70 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

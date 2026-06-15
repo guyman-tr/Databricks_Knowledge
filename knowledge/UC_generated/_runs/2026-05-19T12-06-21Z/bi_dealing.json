@@ -1,0 +1,863 @@
+{
+  "schema": "bi_dealing",
+  "catalog": "main",
+  "started_at": "2026-05-19T12:06:21Z",
+  "finished_at": "2026-05-19T12:48:18Z",
+  "wall_seconds": 2517.0,
+  "phases": {
+    "1": {
+      "wall_seconds": 0.23301959037780762,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "[discover-schema] phase=0 skip: C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\bi_dealing\\_schema_card.md exists (pass --force to rebuild)\n[discover-schema] phase=1 skip: C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\bi_dealing\\_discovery\\uc_inventory.json exists (pass --force to rebuild)"
+    },
+    "2": {
+      "wall_seconds": 2473.8444526195526,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [115/117] gold_dealing_oms_internalmarket_parametershistory (EXTERNAL)\n[fetch-writer] jobs.get(280567630183) failed: Job 280567630183 does not exist.\n  [116/117] newhedgedash_email_csv (VIEW)\n  [117/117] v_hschangesummarylog_yesterday_email_csv (VIEW)\n[fetch-writer] wrote C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_fetch_manifest.json (ok=15, no_lineage=0, errors=0)"
+    },
+    "3": {
+      "wall_seconds": 3.002133846282959,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [115/117] gold_dealing_oms_internalmarket_parametershistory → 1 upstream refs\n  [116/117] newhedgedash_email_csv → 1 upstream refs\n  [117/117] v_hschangesummarylog_yesterday_email_csv → 1 upstream refs\n[upstream-bridge] wrote C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\bi_dealing\\_discovery\\upstream_wikis\\_index.json\n[upstream-bridge] stats={'total_upstreams': 224, 'rule1_synapse_mirror': 55, 'rule2_uc_generated': 114, 'rule3_uc_domain': 0, 'rule4_bronze_prod': 15, 'rule5_uc_native_map': 1, 'rule6_no_wiki': 39, 'wikis_cached': 56, 'no_wiki_placeholders': 168, 'blocked_on_upstream': 113}"
+    },
+    "4": {
+      "wall_seconds": 2.9501471519470215,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  wrote stub knowledge/UC_generated/bi_dealing/Tables/gold_dealing_oms_internalmarket_parametershistory.lineage.md\n[build-lineage] main.bi_dealing.newhedgedash_email_csv (VIEW)\n  wrote knowledge\\UC_generated\\bi_dealing\\Views\\newhedgedash_email_csv.lineage.md\n[build-lineage] main.bi_dealing.v_hschangesummarylog_yesterday_email_csv (VIEW)\n  wrote knowledge\\UC_generated\\bi_dealing\\Views\\v_hschangesummarylog_yesterday_email_csv.lineage.md"
+    },
+    "4.5": {
+      "wall_seconds": 6.961374759674072,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [OK] gold_dealing_oms_internalmarket_multipliershistory — concept_count=0\n  [OK] gold_dealing_oms_internalmarket_parameters — concept_count=0\n  [OK] gold_dealing_oms_internalmarket_parametershistory — concept_count=0\n  [OK] newhedgedash_email_csv — concept_count=0\n  [OK] v_hschangesummarylog_yesterday_email_csv — concept_count=0"
+    },
+    "4.6": {
+      "wall_seconds": 8.347471952438354,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [OK] gold_dealing_oms_internalmarket_multipliershistory — 0/5 formulas\n  [OK] gold_dealing_oms_internalmarket_parameters — 0/5 formulas\n  [OK] gold_dealing_oms_internalmarket_parametershistory — 0/7 formulas\n  [OK] newhedgedash_email_csv — 21/21 formulas\n  [OK] v_hschangesummarylog_yesterday_email_csv — 6/6 formulas"
+    },
+    "5": {
+      "wall_seconds": 20.83233094215393,
+      "rc": 1,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [OK] gold_dealing_oms_internalmarket_parameters — tiers={'U': 5}, unverified=5\n  [OK] gold_dealing_oms_internalmarket_parametershistory — tiers={'U': 7}, unverified=7\n  [OK] newhedgedash_email_csv — tiers={'N': 21}, unverified=0\n  [OK] v_hschangesummarylog_yesterday_email_csv — tiers={'1': 4, '2': 2}, unverified=0\n[generate-wiki] done: 116/117 OK"
+    }
+  },
+  "failures": [
+    "phase 5 rc=1: [generate-wiki] done: 116/117 OK"
+  ],
+  "objects": [
+    {
+      "name": "bi_output_dealing_015min_alltrades",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_245_sessions",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_abuse_alert_log",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_abuse_signal_output",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_alpha_contacts",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_alpha_customer_actions",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_alpha_detailed_data_fifo",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_alpha_final_points",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_apex_recon_eod",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_apex_recon_trades",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_bloomberg_holdings_pct_of_mktcap",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_bloomberg_holdings_pct_of_mktcap_cids",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_bmll_nbbo_rates_slippage",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_bny_recon_eod",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_bny_recon_eod_detailed",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_bny_virtu_recon_trades",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_bny_virtu_recon_trades_detailed",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_cash_recon",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_cfd_recon_eod",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_cidage_data",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_client_abuse_news_events_calendar",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_crypto_pricing",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_crypto_volume_live",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_cryptovolume",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_daily_bmll_slippage_latency_compensation",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_daily_bmll_tca_ng_oil_final",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_dailyspreadsaggregated",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_dealing_regime_flags",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_diffusion_nop",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_duco_eod",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_duco_trades",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_employee_accountpnl",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_employees_info",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_employees_performance",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_esmanetloss_final",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_flowanalysis",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_gs_recon_eod",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_gs_recon_trades",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_ib_recon_eod",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_ib_recon_trades",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_ig_recon_eod",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_ig_recon_trades",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_jp_recon_eod",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_jp_recon_trades",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_lp_fees_saxo",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_lp_fees_saxo_real_by_exchange",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_lp_fees_saxo_stamp_duty",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_lp_fees_virtu_real_by_exchange",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_lp_fees_virtu_stamp_duty",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_lukka_internal_aggregated",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_manipulation_report_real_stocks",
+      "in_pilot_scope": true,
+      "status": "Stub only",
+      "status_detail": "all 17 columns unclassifiable",
+      "blocked_on_upstream": null,
+      "routing_attempts": "no upstream wiki match AND no source-code citation",
+      "n_unverified": 17,
+      "tier_breakdown": {
+        "U": 17
+      }
+    },
+    {
+      "name": "bi_output_dealing_manipulation_report_real_stocks_cid",
+      "in_pilot_scope": true,
+      "status": "Stub only",
+      "status_detail": "all 21 columns unclassifiable",
+      "blocked_on_upstream": null,
+      "routing_attempts": "no upstream wiki match AND no source-code citation",
+      "n_unverified": 21,
+      "tier_breakdown": {
+        "U": 21
+      }
+    },
+    {
+      "name": "bi_output_dealing_marex_recon_eod",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_marex_recon_eod_futures",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_marex_recon_trades",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_marex_recon_trades_futures",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_maxnop_report",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_mm_topofbook",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_negativebalances",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_nhd_dashboard",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_nixar_beta_dailybetaprod_v",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.bi_dealing.bi_output_dealing_nixar_beta_dailybetaprod",
+      "blocked_on_upstream": "main.bi_dealing.bi_output_dealing_nixar_beta_dailybetaprod",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "N": 20
+      }
+    },
+    {
+      "name": "bi_output_dealing_nixar_beta_dailybetatarget_v",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.bi_dealing.bi_output_dealing_nixar_beta_dailybetatarget",
+      "blocked_on_upstream": "main.bi_dealing.bi_output_dealing_nixar_beta_dailybetatarget",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "N": 3
+      }
+    },
+    {
+      "name": "bi_output_dealing_nixar_beta_earningscalendar",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_nixar_delta_diffusionanalysis_v",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.bi_dealing.bi_output_dealing_nixar_delta_diffusionanalysis",
+      "blocked_on_upstream": "main.bi_dealing.bi_output_dealing_nixar_delta_diffusionanalysis",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 5,
+      "tier_breakdown": {
+        "N": 7,
+        "U": 5
+      }
+    },
+    {
+      "name": "bi_output_dealing_nop_report",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_pi_tradinglimitations_clicksize",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_premier_clients_2026_positions_report",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_premier_clients_report",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_premier_clinet_info",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_premier_customer",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_premier_customer_2026",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_premier_customer_2026_info",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_pricespreus_open",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_saxo_recon_eod",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_saxo_recon_trades",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_slippage",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_stocklending_balance_and_transactions_check",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_stocklending_datalend_data",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_stocklending_open_loans_recon",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_stocklending_optin_optout_bny_holdings",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_stocklending_optin_optout_nop",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_stocklending_optin_optout_percid",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_stocklending_optin_optout_percid_isus",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_stocklending_optin_report_per_cid",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_stocklending_revenue",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_stocklending_revenue_per_regulation",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_tables_bi_db_h_nonpi_highaum",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_tables_h_market_manipulation_hourly_report_v",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.bi_dealing.bi_output_dealing_tables_h_market_manipulation_hourly",
+      "blocked_on_upstream": "main.bi_dealing.bi_output_dealing_tables_h_market_manipulation_hourly",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "N": 12
+      }
+    },
+    {
+      "name": "bi_output_dealing_tables_h_pricelocks_hourly",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_tables_h_pricelocks_hourly_report_v",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.bi_dealing.bi_output_dealing_tables_h_pricelocks_hourly",
+      "blocked_on_upstream": "main.bi_dealing.bi_output_dealing_tables_h_pricelocks_hourly",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "N": 5,
+        "2": 3
+      }
+    },
+    {
+      "name": "bi_output_dealing_ubs_saxo_recon_eodholdings",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_vision_recon_eod",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_vision_recon_trades",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_volatility_bucket",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_dealing_delta_diffusionanalysis",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_dealing_delta_diffusionanalysis_adhoc_v",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.bi_dealing.gold_dealing_delta_diffusionanalysis_adhoc",
+      "blocked_on_upstream": "main.bi_dealing.gold_dealing_delta_diffusionanalysis_adhoc",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 5,
+      "tier_breakdown": {
+        "N": 7,
+        "U": 5
+      }
+    },
+    {
+      "name": "gold_dealing_delta_diffusionanalysis_v",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.bi_dealing.gold_dealing_delta_diffusionanalysis",
+      "blocked_on_upstream": "main.bi_dealing.gold_dealing_delta_diffusionanalysis",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 5,
+      "tier_breakdown": {
+        "N": 7,
+        "U": 5,
+        "2": 1
+      }
+    },
+    {
+      "name": "gold_dealing_delta_diffusionanalysisfx",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_dealing_delta_diffusionanalysisfx_v",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.bi_dealing.gold_dealing_delta_diffusionanalysisfx",
+      "blocked_on_upstream": "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 7,
+      "tier_breakdown": {
+        "N": 7,
+        "U": 7
+      }
+    },
+    {
+      "name": "gold_dealing_delta_diffusionvolatility",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_dealing_delta_oms_models_v",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.bi_dealing.gold_dealing_delta_oms_diffusion",
+      "blocked_on_upstream": "main.bi_dealing.gold_dealing_delta_oms_diffusion",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "N": 8
+      }
+    },
+    {
+      "name": "gold_dealing_libra_hscl",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_dealing_libra_issettled",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_dealing_libra_limitrate",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_dealing_libra_opcl",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_dealing_libra_parentpositionid",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_dealing_libra_stoprate",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_dealing_libra_treeid",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_dealing_libra_units",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_dealing_oms_delta_diffusionanalysis_v",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.bi_dealing.gold_dealing_delta_diffusionanalysis",
+      "blocked_on_upstream": "main.bi_dealing.gold_dealing_delta_diffusionanalysis",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "N": 2,
+        "2": 6
+      }
+    },
+    {
+      "name": "gold_dealing_oms_internalmarket_imdynamicbookfutures_v",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 9
+      }
+    },
+    {
+      "name": "gold_dealing_oms_internalmarket_multipliers",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_dealing_oms_internalmarket_multipliershistory",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_dealing_oms_internalmarket_parameters",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_dealing_oms_internalmarket_parametershistory",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "newhedgedash_email_csv",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.bi_dealing.bi_output_dealing_nhd_dashboard",
+      "blocked_on_upstream": "main.bi_dealing.bi_output_dealing_nhd_dashboard",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "N": 21
+      }
+    },
+    {
+      "name": "v_hschangesummarylog_yesterday_email_csv",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 4,
+        "2": 2
+      }
+    }
+  ]
+}

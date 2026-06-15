@@ -1,0 +1,137 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_history_hedgeinstrumentconfiguration",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:39Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.HedgeInstrumentConfiguration.md",
+      "upstream_quote": "The financial instrument whose hedge configuration is recorded. PK in source (not IDENTITY). FK to Trade.Instrument. One",
+      "wiki_quote": "The financial instrument whose hedge configuration is recorded. PK in source (not IDENTITY). FK to Trade.Instrument. One",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MinOrderSizeForExecutionInEToroUnits",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.HedgeInstrumentConfiguration.md",
+      "upstream_quote": "Minimum order size (in eToro's internal unit denomination) required for this instrument to be routed to a liquidity prov",
+      "wiki_quote": "Minimum order size (in eToro's internal unit denomination) required for this instrument to be routed to a liquidity prov",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "HBCDealSizeThresholdAlertInEToroUnits",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.HedgeInstrumentConfiguration.md",
+      "upstream_quote": "HBC (Hedge Book Control) alert threshold in eToro units. Single hedge orders exceeding this size trigger an operator ale",
+      "wiki_quote": "HBC (Hedge Book Control) alert threshold in eToro units. Single hedge orders exceeding this size trigger an operator ale",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "HBCMaxDealSizeThresholdRejectInEToroUnits",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.HedgeInstrumentConfiguration.md",
+      "upstream_quote": "HBC reject threshold in eToro units. Single hedge orders exceeding this size are automatically rejected by the HBC syste",
+      "wiki_quote": "HBC reject threshold in eToro units. Single hedge orders exceeding this size are automatically rejected by the HBC syste",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManualMaxDealSizeInEToroUnits",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.HedgeInstrumentConfiguration.md",
+      "upstream_quote": "Optional override for maximum deal size on manually-submitted hedge orders. NULL means the standard HBC thresholds apply",
+      "wiki_quote": "Optional override for maximum deal size on manually-submitted hedge orders. NULL means the standard HBC thresholds apply",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SpreadReturnFactor",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.HedgeInstrumentConfiguration.md",
+      "upstream_quote": "Multiplier applied in spread return calculations. Source DEFAULT=1. 1.0 = full market spread applies to the customer; va",
+      "wiki_quote": "Multiplier applied in spread return calculations. Source DEFAULT=1. 1.0 = full market spread applies to the customer; va",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CircuitBreakerLimit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.HedgeInstrumentConfiguration.md",
+      "upstream_quote": "The exposure or deviation threshold at which the circuit breaker trips and hedging is suspended for this instrument. NUL",
+      "wiki_quote": "The exposure or deviation threshold at which the circuit breaker trips and hedging is suspended for this instrument. NUL",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CircuitBreakerWarningLimit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.HedgeInstrumentConfiguration.md",
+      "upstream_quote": "Warning threshold below the full circuit breaker limit. Triggers operator alerts before the circuit breaker trips. NULL ",
+      "wiki_quote": "Warning threshold below the full circuit breaker limit. Triggers operator alerts before the circuit breaker trips. NULL ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DbLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.HedgeInstrumentConfiguration.md",
+      "upstream_quote": "SQL Server login (suser_name()) at time of change. Computed column in source, materialized here. Identifies which servic",
+      "wiki_quote": "SQL Server login (suser_name()) at time of change. Computed column in source, materialized here. Identifies which servic",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AppLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.HedgeInstrumentConfiguration.md",
+      "upstream_quote": "Application context from context_info() at time of change. Computed column in source, materialized here. May identify th",
+      "wiki_quote": "Application context from context_info() at time of change. Computed column in source, materialized here. May identify th",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysStartTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.HedgeInstrumentConfiguration.md",
+      "upstream_quote": "UTC timestamp when this instrument configuration version became active. For INSERT-trigger-captured rows, equals SysEndT",
+      "wiki_quote": "UTC timestamp when this instrument configuration version became active. For INSERT-trigger-captured rows, equals SysEndT",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysEndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.HedgeInstrumentConfiguration.md",
+      "upstream_quote": "UTC timestamp when this version was superseded. CLUSTERED index leading column.",
+      "wiki_quote": "UTC timestamp when this version was superseded. CLUSTERED index leading column (Tier 1 — inherited from etoro.History.He",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RestrictManualActions",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.HedgeInstrumentConfiguration.md",
+      "upstream_quote": "Flag controlling whether manual hedging operations are permitted for this instrument. Source DEFAULT=0 (unrestricted). N",
+      "wiki_quote": "Flag controlling whether manual hedging operations are permitted for this instrument. Source DEFAULT=0 (unrestricted). N",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LotSizeForView",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.HedgeInstrumentConfiguration.md",
+      "upstream_quote": "Display denominator for converting eToro internal units to conventional lot sizes for reporting and UI display. Source D",
+      "wiki_quote": "Display denominator for converting eToro internal units to conventional lot sizes for reporting and UI display. Source D",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 14,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 14 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

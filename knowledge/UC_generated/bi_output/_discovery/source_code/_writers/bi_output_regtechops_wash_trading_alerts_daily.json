@@ -1,0 +1,37 @@
+{
+  "object": "main.bi_output.bi_output_regtechops_wash_trading_alerts_daily",
+  "writers": [
+    {
+      "kind": "JOB",
+      "entity_id": "832857154712514",
+      "event_count_lookback": 32,
+      "role": "primary",
+      "notebooks": [
+        {
+          "task": "notebook_task_RegTech_WashTrading_Daily_Detection",
+          "path": "/Users/matanmo@etoro.com/market-abuse-monitor/RegTech_WashTrading_Daily_Detection",
+          "language": "PYTHON",
+          "fetched": true
+        }
+      ],
+      "fetched": true
+    },
+    {
+      "kind": "NOTEBOOK",
+      "entity_id": "4404603554302505",
+      "event_count_lookback": 7,
+      "role": "secondary",
+      "fetched": false,
+      "fetch_error": "workspace.export failed"
+    },
+    {
+      "kind": "DBSQL_QUERY",
+      "entity_id": "79e27f88-3eac-4a54-8339-4d613a5e90da",
+      "event_count_lookback": 1,
+      "role": "secondary",
+      "fetched": false,
+      "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+    }
+  ],
+  "generated_at": "2026-05-19T14:44:14Z"
+}

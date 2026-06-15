@@ -1,0 +1,206 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_mimo_tradingplatform",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 9,
+  "concepts": [
+    {
+      "id": "case_flag_isftd",
+      "name": "IsFTD computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsFTD"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L18-L18",
+      "scope": "deposits_tp"
+    },
+    {
+      "id": "case_flag_isinternaltransfer",
+      "name": "IsInternalTransfer computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsInternalTransfer"
+      ],
+      "predicates": [
+        {
+          "col": "FundingTypeID",
+          "op": "=",
+          "val": "33"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L19-L19",
+      "scope": "deposits_tp"
+    },
+    {
+      "id": "case_flag_isibantrade",
+      "name": "IsIBANTrade computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsIBANTrade"
+      ],
+      "predicates": [
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "44"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L22-L22",
+      "scope": "deposits_tp"
+    },
+    {
+      "id": "case_flag_isibanquicktransfer",
+      "name": "IsIBANQuickTransfer computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsIBANQuickTransfer"
+      ],
+      "predicates": [
+        {
+          "col": "MoveMoneyReasonID",
+          "op": "=",
+          "val": "6"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L23-L23",
+      "scope": "deposits_tp"
+    },
+    {
+      "id": "case_flag_isinternaltransfer",
+      "name": "IsInternalTransfer computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsInternalTransfer"
+      ],
+      "predicates": [
+        {
+          "col": "FundingTypeID_Funding",
+          "op": "=",
+          "val": "33"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L49-L49",
+      "scope": "cashout_tp"
+    },
+    {
+      "id": "case_flag_isibantrade",
+      "name": "IsIBANTrade computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsIBANTrade"
+      ],
+      "predicates": [
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "45"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L52-L52",
+      "scope": "cashout_tp"
+    },
+    {
+      "id": "dim_lookup_dc",
+      "name": "Dim lookup via dc",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
+      "alias": "dc",
+      "join_conditions": [
+        "fbd.CurrencyID = dc.CurrencyID",
+        "fbw.ProcessCurrencyID = dc.CurrencyID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L27,L57",
+      "scopes": [
+        "deposits_tp",
+        "cashout_tp"
+      ],
+      "scope": "deposits_tp",
+      "join_condition": "fbd.CurrencyID = dc.CurrencyID"
+    },
+    {
+      "id": "dim_lookup_dc1",
+      "name": "Dim lookup via dc1",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "alias": "dc1",
+      "join_conditions": [
+        "fca.RealCID = dc1.RealCID\n    AND dc1.FTDPlatformID = 1"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L29",
+      "scopes": [
+        "deposits_tp"
+      ],
+      "scope": "deposits_tp",
+      "join_condition": "fca.RealCID = dc1.RealCID\n    AND dc1.FTDPlatformID = 1"
+    },
+    {
+      "id": "filter_block_mimo_deduped",
+      "name": "Filter block on mimo_deduped",
+      "kind": "filter_block",
+      "columns_involved": [
+        "rn"
+      ],
+      "predicates": [
+        {
+          "col": "rn",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L88",
+      "scope": "mimo_deduped",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_mimo_tradingplatform.sql"
+}

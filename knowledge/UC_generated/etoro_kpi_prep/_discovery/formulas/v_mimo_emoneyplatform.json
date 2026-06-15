@@ -1,0 +1,241 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_mimo_emoneyplatform",
+  "generated_at": "2026-05-18T16:27:36Z",
+  "formula_count": 21,
+  "formulas": [
+    {
+      "column": "DateID",
+      "formula": "TxStatusModificationDateID",
+      "expression_raw": "mfts.TxStatusModificationDateID AS DateID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "deposits_iban"
+    },
+    {
+      "column": "Date",
+      "formula": "CAST(TxStatusModificationDate AS DATE)",
+      "expression_raw": "CAST(mfts.TxStatusModificationDate AS DATE) AS Date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L25-L25",
+      "scope": "deposits_iban"
+    },
+    {
+      "column": "RealCID",
+      "formula": "CID",
+      "expression_raw": "mfts.CID AS RealCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "deposits_iban"
+    },
+    {
+      "column": "MIMOAction",
+      "formula": "'Deposit'",
+      "expression_raw": "'Deposit' AS MIMOAction",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L27-L27",
+      "scope": "deposits_iban"
+    },
+    {
+      "column": "OrigIdentifier",
+      "formula": "'TransactionID'",
+      "expression_raw": "'TransactionID' AS OrigIdentifier",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L28-L28",
+      "scope": "deposits_iban"
+    },
+    {
+      "column": "TransactionID",
+      "formula": "COALESCE(TransactionID, -1)",
+      "expression_raw": "COALESCE(TransactionID, -1) AS TransactionID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L103-L103",
+      "scope": "main"
+    },
+    {
+      "column": "ReferenceNumber",
+      "formula": "COALESCE(ReferenceNumber, '-1')",
+      "expression_raw": "COALESCE(ReferenceNumber, '-1') AS ReferenceNumber",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L104-L104",
+      "scope": "main"
+    },
+    {
+      "column": "AmountUSD",
+      "formula": "COALESCE(USDAmountApprox, USDAmountApprox)",
+      "expression_raw": "COALESCE(f.USDAmountApprox, mfts.USDAmountApprox) AS AmountUSD",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L31-L31",
+      "scope": "deposits_iban"
+    },
+    {
+      "column": "AmountOrigCurrency",
+      "formula": "LocalAmount",
+      "expression_raw": "mfts.LocalAmount AS AmountOrigCurrency",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "deposits_iban"
+    },
+    {
+      "column": "FundingTypeID",
+      "formula": "CASE WHEN TxTypeID IN (5) THEN 33 ELSE 0 END",
+      "expression_raw": "CASE WHEN mfts.TxTypeID IN (5) THEN 33 ELSE 0 END AS FundingTypeID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L33-L33",
+      "scope": "deposits_iban"
+    },
+    {
+      "column": "CurrencyID",
+      "formula": "CurrencyID",
+      "expression_raw": "dc.CurrencyID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L34-L34",
+      "scope": "deposits_iban"
+    },
+    {
+      "column": "Currency",
+      "formula": "HolderCurrencyDesc",
+      "expression_raw": "mfts.HolderCurrencyDesc AS Currency",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L35-L35",
+      "scope": "deposits_iban"
+    },
+    {
+      "column": "IsFTD",
+      "formula": "CASE WHEN TransactionID IS NOT NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN f.TransactionID IS NOT NULL THEN 1 ELSE 0 END AS IsFTD",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L36-L36",
+      "scope": "deposits_iban"
+    },
+    {
+      "column": "IsInternalTransfer",
+      "formula": "CASE WHEN TxTypeID IN (5) THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN mfts.TxTypeID IN (5) THEN 1 ELSE 0 END AS IsInternalTransfer",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L37-L37",
+      "scope": "deposits_iban"
+    },
+    {
+      "column": "IsRedeem",
+      "formula": "NULL",
+      "expression_raw": "NULL AS IsRedeem",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L38-L38",
+      "scope": "deposits_iban"
+    },
+    {
+      "column": "TxTypeID",
+      "formula": "TxTypeID",
+      "expression_raw": "mfts.TxTypeID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L39-L39",
+      "scope": "deposits_iban"
+    },
+    {
+      "column": "IsTradeFromIBAN",
+      "formula": "CASE WHEN LEFT(ReferenceNumber, 1) != 'P' AND TxStatusModificationDateID >= 20240403 AND TxTypeID = 5 THEN 1 ELSE 0 END",
+      "expression_raw": "CASE\n       WHEN LEFT(ReferenceNumber, 1) != 'P'\n         AND TxStatusModificationDateID >= 20240403\n         AND TxTypeID = 5\n       THEN 1\n       ELSE 0\n     END AS IsTradeFromIBAN",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L40-L46",
+      "scope": "deposits_iban"
+    },
+    {
+      "column": "IsCryptoToFiat",
+      "formula": "CASE WHEN TxTypeID IN (14) THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN mfts.TxTypeID IN (14) THEN 1 ELSE 0 END AS IsCryptoToFiat",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L47-L47",
+      "scope": "deposits_iban"
+    },
+    {
+      "column": "IsRecurring",
+      "formula": "0",
+      "expression_raw": "0 AS IsRecurring",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L112-L112",
+      "scope": "main"
+    },
+    {
+      "column": "IsIBANQuickTransfer",
+      "formula": "0",
+      "expression_raw": "0 AS IsIBANQuickTransfer",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L113-L113",
+      "scope": "main"
+    },
+    {
+      "column": "UpdateDate",
+      "formula": "CURRENT_TIMESTAMP()",
+      "expression_raw": "CURRENT_TIMESTAMP() AS UpdateDate",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L114-L114",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_mimo_emoneyplatform.sql"
+}

@@ -1,0 +1,123 @@
+{
+  "object_fqn": "main.bi_db.bronze_walletconversiondb_c2f_fiattransactions",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:14:03Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.FiatTransactions.md",
+      "upstream_quote": "Auto-incrementing surrogate PK.",
+      "wiki_quote": "Auto-incrementing surrogate PK (Tier 1 — inherited from WalletConversionDB.C2F.FiatTransactions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ConversionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.FiatTransactions.md",
+      "upstream_quote": "FK to C2F.Conversions.Id. 1:1 relationship when present (only completed conversions). Created by InsertFiatTransaction w",
+      "wiki_quote": "FK to C2F.Conversions.Id. 1:1 relationship when present (only completed conversions). Created by InsertFiatTransaction w",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoToFiatRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.FiatTransactions.md",
+      "upstream_quote": "Actual exchange rate from crypto to fiat at execution time. May differ from EstimatedFiatTransactions.CryptoToFiatRate d",
+      "wiki_quote": "Actual exchange rate from crypto to fiat at execution time. May differ from EstimatedFiatTransactions.CryptoToFiatRate d",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FiatToUsdRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.FiatTransactions.md",
+      "upstream_quote": "Actual fiat-to-USD exchange rate at execution time. 1.0 when target currency is USD.",
+      "wiki_quote": "Actual fiat-to-USD exchange rate at execution time. 1.0 when target currency is USD (Tier 1 — inherited from WalletConve",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoToUsdRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.FiatTransactions.md",
+      "upstream_quote": "Actual crypto-to-USD rate at execution time. Primary pricing rate.",
+      "wiki_quote": "Actual crypto-to-USD rate at execution time. Primary pricing rate (Tier 1 — inherited from WalletConversionDB.C2F.FiatTr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FiatAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.FiatTransactions.md",
+      "upstream_quote": "Actual fiat amount credited to the customer in the target currency. This is the post-fee amount the customer receives.",
+      "wiki_quote": "Actual fiat amount credited to the customer in the target currency. This is the post-fee amount the customer receives (T",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "UsdAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.FiatTransactions.md",
+      "upstream_quote": "USD equivalent of the fiat amount. Used for regulatory limit calculations. Preferred over EstimatedFiatTransactions.UsdA",
+      "wiki_quote": "USD equivalent of the fiat amount. Used for regulatory limit calculations. Preferred over EstimatedFiatTransactions.UsdA",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AccountId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.FiatTransactions.md",
+      "upstream_quote": "Customer's fiat account identifier where the funds were credited. Format varies by target platform (IBAN account number,",
+      "wiki_quote": "Customer's fiat account identifier where the funds were credited. Format varies by target platform (IBAN account number,",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Details",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.FiatTransactions.md",
+      "upstream_quote": "Unique client-load reference ID in format \"C2F\" + 8 digits. Generated by GenerateUniqueClientLoadReferenceId. Serves as ",
+      "wiki_quote": "Unique client-load reference ID in format \"C2F\" + 8 digits. Generated by GenerateUniqueClientLoadReferenceId. Serves as ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RateTimestamp",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.FiatTransactions.md",
+      "upstream_quote": "UTC timestamp when the exchange rate was locked for this transaction. May precede the Occurred timestamp if rate was loc",
+      "wiki_quote": "UTC timestamp when the exchange rate was locked for this transaction. May precede the Occurred timestamp if rate was loc",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.FiatTransactions.md",
+      "upstream_quote": "UTC timestamp when the fiat transaction was recorded.",
+      "wiki_quote": "UTC timestamp when the fiat transaction was recorded (Tier 1 — inherited from WalletConversionDB.C2F.FiatTransactions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ConversionFeeAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.FiatTransactions.md",
+      "upstream_quote": "Actual fee amount deducted from the conversion. Derived from Conversions.ConversionFeePercentage. NULL for zero-fee conv",
+      "wiki_quote": "Actual fee amount deducted from the conversion. Derived from Conversions.ConversionFeePercentage. NULL for zero-fee conv",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 12,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 12 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_population_funded",
+  "generated_at": "2026-05-18T16:27:37Z",
+  "formula_count": 3,
+  "formulas": [
+    {
+      "column": "DateID",
+      "formula": "BalanceDateID",
+      "expression_raw": "mcb.BalanceDateID AS DateID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoneyclientbalance"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": "CID",
+      "expression_raw": "cb.CID AS RealCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "Equity",
+      "formula": "SUM(a.Equity)",
+      "expression_raw": "SUM(a.Equity) AS Equity",
+      "inputs": [],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_funded.sql"
+}

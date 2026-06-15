@@ -1,0 +1,622 @@
+{
+  "object": "main.bi_output.bi_output_customer_customer_facing_club_club_equity",
+  "rows": [
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "AmountForUpgrade",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "CurrentTier",
+      "target_column_name": "AmountForUpgrade",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "AmountForUpgrade",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "CurrentTier",
+      "target_column_name": "AmountForUpgrade",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "AmountForUpgrade",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "AmountForUpgrade",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "CurrentTier",
+      "target_column_name": "CurrentTier",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "CurrentTier",
+      "target_column_name": "CurrentTier",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "Date",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "DaysFromFTD",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "DaysFromFTD",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "DaysInClub",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "DaysInClub",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "DaysInCurrentClub",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "DaysInCurrentClub",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "DaysTillFTC",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "DaysTillFTC",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "DaysTillFTC",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "DaysTillFTC",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "FTCDate",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "FTCDate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "FTDDate",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "FTDDate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "GCID",
+      "target_column_name": "GCID",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "GCID",
+      "target_column_name": "GCID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_interest_trade_interestconsent",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "IOB_Date",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_interest_history_interestconsent",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "IOB_Date",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_interest_trade_interestconsent",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "IOB_Date",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_interest_history_interestconsent",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "IOB_Date",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "IsDowngrade",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "PLChangeType",
+      "target_column_name": "IsDowngrade",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "PLChangeType",
+      "target_column_name": "IsDowngrade",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "IsDowngrade",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "IsFTC",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "IsFTC",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "IsFTC",
+      "target_column_name": "IsFTC_Status",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "IsFTC",
+      "target_column_name": "IsFTC_Status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_interest_history_interestconsent",
+      "source_column_name": "ConsentStatusID",
+      "target_column_name": "IsOptInIOB",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_interest_trade_interestconsent",
+      "source_column_name": "ConsentStatusID",
+      "target_column_name": "IsOptInIOB",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_interest_history_interestconsent",
+      "source_column_name": "ConsentStatusID",
+      "target_column_name": "IsOptInIOB",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_interest_trade_interestconsent",
+      "source_column_name": "ConsentStatusID",
+      "target_column_name": "IsOptInIOB",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "PLChangeType",
+      "target_column_name": "IsUpgrade",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "IsUpgrade",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "IsUpgrade",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "PLChangeType",
+      "target_column_name": "IsUpgrade",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "OldTier",
+      "target_column_name": "LastTier",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "OldTier",
+      "target_column_name": "LastTier",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "PlayerLevelID",
+      "target_column_name": "MaxTier",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "PlayerLevelID",
+      "target_column_name": "MaxTier",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "MoneyBalance",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "MoneyBalance",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "MoneyBalance",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "MoneyBalance",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "MoneyFarmBalance",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "MoneyFarmBalance",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "MoneyFarmBalance",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "MoneyFarmBalance",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "PLChangeType",
+      "target_column_name": "PLChangeType",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "PLChangeType",
+      "target_column_name": "PLChangeType",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "PLChangeTypeDate",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "PLChangeTypeDate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "RealizedEquity",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "RealizedEquity",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "RealizedEquity",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "RealizedEquity",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "SpaceShipMoneyBalance",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "SpaceShipMoneyBalance",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "SpaceShipMoneyBalance",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "SpaceShipMoneyBalance",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "SpaceShipNovaBalance",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "SpaceShipNovaBalance",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "SpaceShipNovaBalance",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "SpaceShipNovaBalance",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "SpaceShipVoyagerBalance",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "SpaceShipVoyagerBalance",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "SpaceShipVoyagerBalance",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "SpaceShipVoyagerBalance",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "TotalEquityClub",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "TotalEquityClub",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "TotalEquityClub",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "TotalEquityClub",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "WealthFrance",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "WealthFrance",
+      "entity_type": "JOB",
+      "event_count": 2491
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_dictionary_balancesourcetypes",
+      "source_column_name": "SourceTypeName",
+      "target_column_name": "WealthFrance",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_clubservice_clubs_userbalances",
+      "source_column_name": "Amount",
+      "target_column_name": "WealthFrance",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    }
+  ],
+  "generated_at": "2026-05-19T14:16:22Z"
+}

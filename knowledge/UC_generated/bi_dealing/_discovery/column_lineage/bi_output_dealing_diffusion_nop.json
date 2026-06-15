@@ -1,0 +1,531 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_diffusion_nop",
+  "rows": [
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "ConversionRate",
+      "target_column_name": "ConversionRate_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "ConversionRate",
+      "target_column_name": "ConversionRate_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "RateAsk",
+      "target_column_name": "NOP_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "NOP_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "NOP_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "ConversionRate",
+      "target_column_name": "NOP_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "RateBid",
+      "target_column_name": "NOP_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "NOP_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "NOP_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "RateBid",
+      "target_column_name": "NOP_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "NOP_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "NOP_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "NOP_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "RateAsk",
+      "target_column_name": "NOP_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "NOP_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "ConversionRate",
+      "target_column_name": "NOP_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "NOP_Long_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "NOP_Long_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "ConversionRate",
+      "target_column_name": "NOP_Long_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "NOP_Long_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "RateBid",
+      "target_column_name": "NOP_Long_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "NOP_Long_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "NOP_Long_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "ConversionRate",
+      "target_column_name": "NOP_Long_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "NOP_Long_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "NOP_Long_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "RateBid",
+      "target_column_name": "NOP_Long_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "NOP_Long_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "NOP_Short_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "NOP_Short_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "NOP_Short_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "ConversionRate",
+      "target_column_name": "NOP_Short_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "NOP_Short_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "RateAsk",
+      "target_column_name": "NOP_Short_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "NOP_Short_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "NOP_Short_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "RateAsk",
+      "target_column_name": "NOP_Short_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "NOP_Short_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "NOP_Short_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "ConversionRate",
+      "target_column_name": "NOP_Short_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Name",
+      "target_column_name": "Name",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "ConversionRate",
+      "target_column_name": "USD_Ask_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "RateAsk",
+      "target_column_name": "USD_Ask_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "RateAsk",
+      "target_column_name": "USD_Ask_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "ConversionRate",
+      "target_column_name": "USD_Ask_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "RateBid",
+      "target_column_name": "USD_Bid_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "ConversionRate",
+      "target_column_name": "USD_Bid_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "ConversionRate",
+      "target_column_name": "USD_Bid_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "RateBid",
+      "target_column_name": "USD_Bid_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "Units_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Units_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Units_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "Units_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "Units_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Units_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Units_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "Units_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "Units_Long_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "Units_Long_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Units_Long_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Units_Long_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "Units_Short_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Units_Short_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "Units_Short_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Units_Short_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Units_Short_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Units_Short_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "Units_Short_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "Units_Short_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "RateGenerationTime",
+      "target_column_name": "price_time_00",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_kafka_dealingstreaming_dealing_main_feed_rates",
+      "source_column_name": "RateGenerationTime",
+      "target_column_name": "price_time_10",
+      "entity_type": "JOB",
+      "event_count": 91
+    }
+  ],
+  "generated_at": "2026-05-19T12:24:34Z"
+}

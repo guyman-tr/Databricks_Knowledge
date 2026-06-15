@@ -1,0 +1,204 @@
+{
+  "object_fqn": "main.bi_output.bi_ouput_vg_etoro_emoney",
+  "generated_at": "2026-05-19T15:01:23Z",
+  "formula_count": 18,
+  "formulas": [
+    {
+      "column": "MIMO_Ind",
+      "formula": "aa.Ind",
+      "expression_raw": "aa.Ind AS MIMO_Ind",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": "aa.RealCID",
+      "expression_raw": "aa.RealCID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "MarketingRegionManualName",
+      "formula": "aa.MarketingRegionManualName",
+      "expression_raw": "aa.MarketingRegionManualName",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "Country",
+      "formula": "Name",
+      "expression_raw": "dc.Name AS Country",
+      "inputs": [
+        "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "Club",
+      "formula": "Name",
+      "expression_raw": "dpl.Name AS Club",
+      "inputs": [
+        "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": "Name",
+      "expression_raw": "dr1.Name AS Regulation",
+      "inputs": [
+        "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    },
+    {
+      "column": "Date_MIMO",
+      "formula": "Date",
+      "expression_raw": "bddfmap.Date AS Date_MIMO",
+      "inputs": [
+        "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L35-L35",
+      "scope": "main"
+    },
+    {
+      "column": "EOM_MIMO",
+      "formula": "last_day(Date)",
+      "expression_raw": "last_day(bddfmap.Date) AS EOM_MIMO",
+      "inputs": [
+        "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "MIMOPlatform",
+      "formula": "aa.MIMOPlatform",
+      "expression_raw": "aa.MIMOPlatform",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "EOM_FTD",
+      "formula": "last_day(FirstDepositDate)",
+      "expression_raw": "last_day(dc.FirstDepositDate) AS EOM_FTD",
+      "inputs": [
+        "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "EOM_Reg",
+      "formula": "last_day(RegisteredReal)",
+      "expression_raw": "last_day(dc.RegisteredReal) AS EOM_Reg",
+      "inputs": [
+        "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "IsInternalTransfer",
+      "formula": "aa.IsInternalTransfer",
+      "expression_raw": "aa.IsInternalTransfer",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "IsTradeFromIBAN",
+      "formula": "aa.IsTradeFromIBAN",
+      "expression_raw": "aa.IsTradeFromIBAN",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "Currency",
+      "formula": "Abbreviation",
+      "expression_raw": "dc2.Abbreviation AS Currency",
+      "inputs": [
+        "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L40-L40",
+      "scope": "main"
+    },
+    {
+      "column": "MOP",
+      "formula": "CASE WHEN MIMOPlatform = 'eMoney' AND IsInternalTransfer = 0 AND IsTradeFromIBAN = 0 THEN o.Fundingtype_Txtype_7 …",
+      "expression_raw": "CASE\n        WHEN\n          bddfmap.MIMOPlatform = 'eMoney'\n          AND bddfmap.IsInternalTransfer = 0\n          AND bddfmap.IsTradeFromIBAN = 0\n        THEN\n          o.Fundingtype_Txtype_7\n       …",
+      "inputs": [
+        "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L41-L49",
+      "scope": "main"
+    },
+    {
+      "column": "IsFTD",
+      "formula": "IsPlatformFTD",
+      "expression_raw": "bddfmap.IsPlatformFTD AS IsFTD",
+      "inputs": [
+        "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L50-L50",
+      "scope": "main"
+    },
+    {
+      "column": "AmountUSD_MIMO",
+      "formula": "aa.AmountUSD",
+      "expression_raw": "aa.AmountUSD AS AmountUSD_MIMO",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "Rank_Amount",
+      "formula": "row_number() over (partition by aa.RealCID order by AmountUSD DESC) Rank_Amount",
+      "expression_raw": "row_number() over (partition by aa.RealCID order by AmountUSD DESC) Rank_Amount",
+      "inputs": [],
+      "transform_kind": "window",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_ouput_vg_etoro_emoney.sql"
+}

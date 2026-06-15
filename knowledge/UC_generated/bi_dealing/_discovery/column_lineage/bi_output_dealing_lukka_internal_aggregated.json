@@ -1,0 +1,902 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_lukka_internal_aggregated",
+  "rows": [
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "Date",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "SourceType",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdatDate",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "ExecutedQuantity",
+      "target_column_name": "base_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "Quantity",
+      "target_column_name": "base_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "ApiQuantity",
+      "target_column_name": "base_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "Side",
+      "target_column_name": "base_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "ApiQuantity",
+      "target_column_name": "base_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "Side",
+      "target_column_name": "base_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "ExecutedQuantity",
+      "target_column_name": "base_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "Side",
+      "target_column_name": "base_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade",
+      "source_column_name": "OrderType",
+      "target_column_name": "base_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "Side",
+      "target_column_name": "base_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "ExecutedQuantity",
+      "target_column_name": "base_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "ApiQuantity",
+      "target_column_name": "base_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade",
+      "source_column_name": "Units",
+      "target_column_name": "base_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "Symbol",
+      "target_column_name": "base_asset_code",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_instruments",
+      "source_column_name": "Name",
+      "target_column_name": "base_asset_code",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Symbol",
+      "target_column_name": "base_asset_code",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_fivetran_google_sheets_mappingsforcryptoreconcilation_tickers",
+      "source_column_name": "Lukka_Ticker",
+      "target_column_name": "base_asset_code",
+      "entity_type": "JOB",
+      "event_count": 64
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_mappingsforcryptoreconcilation_tickers",
+      "source_column_name": "Lukka_Ticker",
+      "target_column_name": "base_asset_code",
+      "entity_type": "JOB",
+      "event_count": 36
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade",
+      "source_column_name": "Rate",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "ApiQuantity",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "ApiQuantity",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "ExecutedQuantity",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "Side",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "Price",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "ExecutedPrice",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade",
+      "source_column_name": "OrderType",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "ExecutedQuantity",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "ExecutedQuantity",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "Fee",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "ApiPrice",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "Fee",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "ApiPrice",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "Side",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade",
+      "source_column_name": "Units",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "ApiPrice",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "Side",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "Fee",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "FeeCurrency",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "Side",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "ApiQuantity",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "ExecutedPrice",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "Quantity",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "ExecutedPrice",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "FeeCurrency",
+      "target_column_name": "counter_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "counter_asset_code",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_exchanges",
+      "source_column_name": "Name",
+      "target_column_name": "counterparty",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptowallets",
+      "source_column_name": "Name",
+      "target_column_name": "counterparty",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "Market",
+      "target_column_name": "counterparty",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "fee_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "fee_asset_code",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "FeeCurrency",
+      "target_column_name": "notes",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "Fee",
+      "target_column_name": "notes",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "FeeCurrency",
+      "target_column_name": "notes",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "Price",
+      "target_column_name": "notes",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "ApiPrice",
+      "target_column_name": "notes",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "ApiPrice",
+      "target_column_name": "notes",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "ExecutedPrice",
+      "target_column_name": "notes",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "Fee",
+      "target_column_name": "notes",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade",
+      "source_column_name": "Comments",
+      "target_column_name": "notes",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "ExecutedPrice",
+      "target_column_name": "notes",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "Fee",
+      "target_column_name": "notes",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "FeeCurrency",
+      "target_column_name": "notes",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "Quantity",
+      "target_column_name": "notes",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "OrderId",
+      "target_column_name": "order_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "OrderId",
+      "target_column_name": "order_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "CreationTime",
+      "target_column_name": "order_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "OrderId",
+      "target_column_name": "order_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "ExecutionTime",
+      "target_column_name": "order_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "CreationTime",
+      "target_column_name": "order_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "OrderID",
+      "target_column_name": "order_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade",
+      "source_column_name": "Occurred",
+      "target_column_name": "order_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "TransactTime",
+      "target_column_name": "order_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "Timestamp",
+      "target_column_name": "order_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "ExecutionTime",
+      "target_column_name": "order_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade",
+      "source_column_name": "Units",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "Quantity",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "ApiPrice",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "Fee",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "Side",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "Fee",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "ApiQuantity",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "ApiPrice",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "ExecutedPrice",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "ExecutedQuantity",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "ApiPrice",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "Side",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "Price",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "Side",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade",
+      "source_column_name": "OrderType",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "Side",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "ExecutedQuantity",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "FeeCurrency",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade",
+      "source_column_name": "UserName",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "ApiQuantity",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "ExecutedQuantity",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade",
+      "source_column_name": "Rate",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "ApiQuantity",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "FeeCurrency",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "ExecutedPrice",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "ExecutedPrice",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "Fee",
+      "target_column_name": "rate",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "rebate_asset_amount",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "rebate_asset_code",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "ref_data_exchange",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_fivetran_google_sheets_mappingsforcryptoreconcilation_counterparty",
+      "source_column_name": "tag",
+      "target_column_name": "tags",
+      "entity_type": "JOB",
+      "event_count": 64
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_mappingsforcryptoreconcilation_counterparty",
+      "source_column_name": "tag",
+      "target_column_name": "tags",
+      "entity_type": "JOB",
+      "event_count": 36
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "CreationTime",
+      "target_column_name": "trade_complete_ts",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "ExecutionTime",
+      "target_column_name": "trade_complete_ts",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "Timestamp",
+      "target_column_name": "trade_complete_ts",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "TransactTime",
+      "target_column_name": "trade_complete_ts",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade",
+      "source_column_name": "TradeDate",
+      "target_column_name": "trade_complete_ts",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "ExecutionTime",
+      "target_column_name": "trade_complete_ts",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "CreationTime",
+      "target_column_name": "trade_complete_ts",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "ExecutionTime",
+      "target_column_name": "trade_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "CreationTime",
+      "target_column_name": "trade_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade",
+      "source_column_name": "Occurred",
+      "target_column_name": "trade_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "ExecutionTime",
+      "target_column_name": "trade_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "TransactTime",
+      "target_column_name": "trade_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "CreationTime",
+      "target_column_name": "trade_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "Timestamp",
+      "target_column_name": "trade_id",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_marketmaker_dbo_v_hbchedgetrades",
+      "source_column_name": "Side",
+      "target_column_name": "type",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_cryptoliquidity_cryptotrade",
+      "source_column_name": "OrderType",
+      "target_column_name": "type",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_hedgetrades",
+      "source_column_name": "Side",
+      "target_column_name": "type",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.general.gold_talos_trades",
+      "source_column_name": "Side",
+      "target_column_name": "type",
+      "entity_type": "JOB",
+      "event_count": 100
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_manualhedgetrades",
+      "source_column_name": "Side",
+      "target_column_name": "type",
+      "entity_type": "JOB",
+      "event_count": 100
+    }
+  ],
+  "generated_at": "2026-05-19T12:30:16Z"
+}

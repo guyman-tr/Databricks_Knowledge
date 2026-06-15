@@ -1,0 +1,74 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiktivo_dbo_mediatagbanner",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:47Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "BannerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.MediaTagBanner.md",
+      "upstream_quote": "Foreign key to dbo.tblaff_Banners.BannerID. Identifies the marketing banner being tagged. Part of the composite primary ",
+      "wiki_quote": "Foreign key to dbo.tblaff_Banners.BannerID. Identifies the marketing banner being tagged. Part of the composite primary ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TagID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.MediaTagBanner.md",
+      "upstream_quote": "Foreign key to dbo.MediaTag.TagID. Identifies the media tag applied to the banner. Part of the composite primary key.",
+      "wiki_quote": "Foreign key to dbo.MediaTag.TagID. Identifies the media tag applied to the banner. Part of the composite primary key (Ti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Trace",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.MediaTagBanner.md",
+      "upstream_quote": "Computed column (not persisted). Captures database session context as JSON: HostName, AppName, SUserName, SPID, DBName, ",
+      "wiki_quote": "Computed column (not persisted). Captures database session context as JSON: HostName, AppName, SUserName, SPID, DBName, ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidFrom",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.MediaTagBanner.md",
+      "upstream_quote": "System-versioned temporal column. Timestamp when this tag assignment became effective. Automatically set by SQL Server o",
+      "wiki_quote": "System-versioned temporal column. Timestamp when this tag assignment became effective. Automatically set by SQL Server o",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidTo",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.MediaTagBanner.md",
+      "upstream_quote": "System-versioned temporal column. Timestamp when this tag assignment was superseded or removed. '9999-12-31' for current",
+      "wiki_quote": "System-versioned temporal column. Timestamp when this tag assignment was superseded or removed. '9999-12-31' for current",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 5,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 5 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

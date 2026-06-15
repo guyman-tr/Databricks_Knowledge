@@ -1,0 +1,308 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_revenue_conversionfee_withpositiondata",
+  "generated_at": "2026-05-18T16:27:37Z",
+  "formula_count": 27,
+  "formulas": [
+    {
+      "column": "CID",
+      "formula": "CID",
+      "expression_raw": "fca.CID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "GCID",
+      "formula": "GCID",
+      "expression_raw": "fsc.GCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "DateID",
+      "formula": "DateID",
+      "expression_raw": "fca.DateID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "ConversionFee",
+      "formula": "PIPsCalculation",
+      "expression_raw": "fca.PIPsCalculation AS ConversionFee",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "TransactionType",
+      "formula": "TransactionType",
+      "expression_raw": "fca.TransactionType",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "IsIBANTrade",
+      "formula": "IsIBANTrade",
+      "expression_raw": "fca.IsIBANTrade",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "TransactionID",
+      "formula": "CAST(LEFT(TransactionID, LENGTH(TransactionID) - 1) AS INT)",
+      "expression_raw": "CAST(LEFT(fca.TransactionID, LENGTH(fca.TransactionID) - 1) AS INT) AS TransactionID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "PaymentMethod",
+      "formula": "PaymentMethod",
+      "expression_raw": "fca.PaymentMethod",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "Amount",
+      "formula": "Amount",
+      "expression_raw": "fca.Amount",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "Currency",
+      "formula": "Currency",
+      "expression_raw": "fca.Currency",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "AmountUSD",
+      "formula": "AmountUSD",
+      "expression_raw": "fca.AmountUSD",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "ExchangeRate",
+      "formula": "ExchangeRate",
+      "expression_raw": "fca.ExchangeRate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "BaseExchangeRate",
+      "formula": "BaseExchangeRate",
+      "expression_raw": "fca.BaseExchangeRate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "Depot",
+      "formula": "Depot",
+      "expression_raw": "fca.Depot",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "MIDValue",
+      "formula": "MIDValue",
+      "expression_raw": "fca.MIDValue",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "IsRecurring",
+      "formula": "IsRecurring",
+      "expression_raw": "fbd.IsRecurring",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "PositionID",
+      "formula": "COALESCE(PositionID, PositionID)",
+      "expression_raw": "COALESCE(bdpcti.PositionID, bdpofi.PositionID) AS PositionID",
+      "inputs": [
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_closed_to_iban",
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_opened_from_iban"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "IsSettled",
+      "formula": "IsSettled",
+      "expression_raw": "dp.IsSettled",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "IsBuy",
+      "formula": "IsBuy",
+      "expression_raw": "dp.IsBuy",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "Leverage",
+      "formula": "Leverage",
+      "expression_raw": "dp.Leverage",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "IsAirDrop",
+      "formula": "IsAirDrop",
+      "expression_raw": "dp.IsAirDrop",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "ExecutionIBANTradeSuccess",
+      "formula": "CASE WHEN COALESCE(PositionID, PositionID) IS NULL AND IsIBANTrade = 1 THEN 0 ELSE 1 END",
+      "expression_raw": "CASE WHEN COALESCE(bdpcti.PositionID, bdpofi.PositionID) IS NULL AND fca.IsIBANTrade = 1 THEN 0 ELSE 1 END AS ExecutionIBANTradeSuccess",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee",
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_closed_to_iban",
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_opened_from_iban"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentID",
+      "formula": "InstrumentID",
+      "expression_raw": "di.InstrumentID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "formula": "InstrumentTypeID",
+      "expression_raw": "di.InstrumentTypeID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentType",
+      "formula": "InstrumentType",
+      "expression_raw": "di.InstrumentType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "IsCopy",
+      "formula": "CASE WHEN MirrorID > 0 THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN dp.MirrorID > 0 THEN 1 ELSE 0 END AS IsCopy",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "IsValidCustomer",
+      "formula": "IsValidCustomer",
+      "expression_raw": "fsc.IsValidCustomer",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_revenue_conversionfee_withpositiondata.sql"
+}

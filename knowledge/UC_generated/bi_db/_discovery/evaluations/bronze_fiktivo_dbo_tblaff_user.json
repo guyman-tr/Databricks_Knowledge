@@ -1,0 +1,1005 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiktivo_dbo_tblaff_user",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:52Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "UserID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Primary key. Auto-incrementing identifier for each admin user. Referenced by tblaff_AffiliatesGroups.ManagerUserID, tbla",
+      "wiki_quote": "Primary key. Auto-incrementing identifier for each admin user. Referenced by tblaff_AffiliatesGroups.ManagerUserID, tbla",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliatesGroups",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Comma-separated list of AffiliatesGroupsID values this user can manage. Controls group-level visibility. Empty/whitespac",
+      "wiki_quote": "Comma-separated list of AffiliatesGroupsID values this user can manage. Controls group-level visibility. Empty/whitespac",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Name",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Full display name of the admin user.",
+      "wiki_quote": "Full display name of the admin user (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EmailAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Corporate email address. MASKED (dynamic data masking). Used for login, notifications, and as group manager email in tbl",
+      "wiki_quote": "Corporate email address. MASKED (dynamic data masking). Used for login, notifications, and as group manager email in tbl",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Username for admin portal login. MASKED.",
+      "wiki_quote": "Username for admin portal login. MASKED (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LoginPassword",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Legacy plaintext password field. MASKED. Being replaced by EncryptedLoginPassword. Managed by fiktivo.ChangePassword and",
+      "wiki_quote": "Legacy plaintext password field. MASKED. Being replaced by EncryptedLoginPassword. Managed by fiktivo.ChangePassword and",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateTypes_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view all affiliate type definitions.",
+      "wiki_quote": "Permission: can view all affiliate type definitions (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateTypes_Edit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit existing affiliate type configurations.",
+      "wiki_quote": "Permission: can edit existing affiliate type configurations (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateTypes_AddNew",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can create new affiliate type definitions.",
+      "wiki_quote": "Permission: can create new affiliate type definitions (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateTypes_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can delete affiliate types.",
+      "wiki_quote": "Permission: can delete affiliate types (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Affiliates_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view all affiliate records in assigned groups.",
+      "wiki_quote": "Permission: can view all affiliate records in assigned groups (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Affiliates_Edit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit affiliate profiles, rates, and settings.",
+      "wiki_quote": "Permission: can edit affiliate profiles, rates, and settings (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Affiliates_AddNew",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can onboard new affiliates.",
+      "wiki_quote": "Permission: can onboard new affiliates (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Affiliates_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can remove affiliate records.",
+      "wiki_quote": "Permission: can remove affiliate records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Affiliates_ViewTiers",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view multi-tier affiliate hierarchies and sub-affiliate structures.",
+      "wiki_quote": "Permission: can view multi-tier affiliate hierarchies and sub-affiliate structures (Tier 1 — inherited from fiktivo.dbo.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Affiliates_Import",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can bulk-import affiliate data.",
+      "wiki_quote": "Permission: can bulk-import affiliate data (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Categories_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view banner/media categories.",
+      "wiki_quote": "Permission: can view banner/media categories (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Categories_Edit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit category definitions.",
+      "wiki_quote": "Permission: can edit category definitions (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Categories_AddNew",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can create new categories.",
+      "wiki_quote": "Permission: can create new categories (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Categories_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can delete categories.",
+      "wiki_quote": "Permission: can delete categories (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Banners_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view marketing banner assets.",
+      "wiki_quote": "Permission: can view marketing banner assets (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Banners_Edit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit banner content, URLs, and targeting.",
+      "wiki_quote": "Permission: can edit banner content, URLs, and targeting (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Banners_AddNew",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can create new banner assets.",
+      "wiki_quote": "Permission: can create new banner assets (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Banners_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can remove banners.",
+      "wiki_quote": "Permission: can remove banners (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Banners_Import",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can bulk-import banner data.",
+      "wiki_quote": "Permission: can bulk-import banner data (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Sales_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view sale/deposit commission event records.",
+      "wiki_quote": "Permission: can view sale/deposit commission event records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Sales_Edit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit sale event records.",
+      "wiki_quote": "Permission: can edit sale event records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Sales_AddNew",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can manually create sale events.",
+      "wiki_quote": "Permission: can manually create sale events (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Sales_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can delete sale event records.",
+      "wiki_quote": "Permission: can delete sale event records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Sales_Import",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can bulk-import sale data.",
+      "wiki_quote": "Permission: can bulk-import sale data (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RecurringSales_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view recurring commission records.",
+      "wiki_quote": "Permission: can view recurring commission records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RecurringSales_AddNew",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can create recurring commission entries.",
+      "wiki_quote": "Permission: can create recurring commission entries (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RecurringSales_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can remove recurring commissions.",
+      "wiki_quote": "Permission: can remove recurring commissions (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Leads_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view lead (download/signup) records.",
+      "wiki_quote": "Permission: can view lead (download/signup) records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Leads_Edit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit lead records.",
+      "wiki_quote": "Permission: can edit lead records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Leads_AddNew",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can manually add lead records.",
+      "wiki_quote": "Permission: can manually add lead records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Leads_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can delete lead records.",
+      "wiki_quote": "Permission: can delete lead records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Leads_Import",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can bulk-import leads.",
+      "wiki_quote": "Permission: can bulk-import leads (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TrackingCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can access and manage affiliate tracking code generation.",
+      "wiki_quote": "Permission: can access and manage affiliate tracking code generation (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateSignupPage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can configure the affiliate self-registration page settings.",
+      "wiki_quote": "Permission: can configure the affiliate self-registration page settings (Tier 1 — inherited from fiktivo.dbo.tblaff_User",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SummaryReport",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view the top-level dashboard summary report.",
+      "wiki_quote": "Permission: can view the top-level dashboard summary report (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_ClicksLeadsSalesSummary",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can run the combined clicks/leads/sales summary report.",
+      "wiki_quote": "Permission: can run the combined clicks/leads/sales summary report (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_ClicksLeadsSalesByDay",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can run the daily breakdown clicks/leads/sales report.",
+      "wiki_quote": "Permission: can run the daily breakdown clicks/leads/sales report (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_TrendGraphs",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view trend graph visualizations.",
+      "wiki_quote": "Permission: can view trend graph visualizations (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_PaymentSummary",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view payment summary reports.",
+      "wiki_quote": "Permission: can view payment summary reports (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_AffiliateList",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view the affiliate listing report.",
+      "wiki_quote": "Permission: can view the affiliate listing report (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_SalesSummary",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view sales summary reports.",
+      "wiki_quote": "Permission: can view sales summary reports (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_LeadSummary",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view lead summary reports.",
+      "wiki_quote": "Permission: can view lead summary reports (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_ClickSummary",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view click summary reports.",
+      "wiki_quote": "Permission: can view click summary reports (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_ImpressionsClicks",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view impressions and clicks analytics.",
+      "wiki_quote": "Permission: can view impressions and clicks analytics (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_SaleDetail",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view individual sale detail records.",
+      "wiki_quote": "Permission: can view individual sale detail records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_LeadDetail",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view individual lead detail records.",
+      "wiki_quote": "Permission: can view individual lead detail records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_ClickDetail",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view individual click detail records.",
+      "wiki_quote": "Permission: can view individual click detail records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_InactiveAffiliates",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view the inactive affiliates report.",
+      "wiki_quote": "Permission: can view the inactive affiliates report (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_Banners",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view banner performance reports.",
+      "wiki_quote": "Permission: can view banner performance reports (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tools_PayAffiliates",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can access the affiliate payment tool to initiate payment runs.",
+      "wiki_quote": "Permission: can access the affiliate payment tool to initiate payment runs (Tier 1 — inherited from fiktivo.dbo.tblaff_U",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tools_EmailBroadcast",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can send mass email broadcasts to affiliates.",
+      "wiki_quote": "Permission: can send mass email broadcasts to affiliates (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tools_SendAcceptanceEmail",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can send affiliate acceptance/welcome emails.",
+      "wiki_quote": "Permission: can send affiliate acceptance/welcome emails (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tools_ExportPaymentData",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can export payment data to external files.",
+      "wiki_quote": "Permission: can export payment data to external files (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tools_EmailEarningsSummaries",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can trigger affiliate earnings summary email sends.",
+      "wiki_quote": "Permission: can trigger affiliate earnings summary email sends (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tools_EmailLinks",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can manage email link tracking.",
+      "wiki_quote": "Permission: can manage email link tracking (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Preferences_Setup",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can modify system-level setup preferences.",
+      "wiki_quote": "Permission: can modify system-level setup preferences (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Preferences_EmailMessages",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit system email message templates.",
+      "wiki_quote": "Permission: can edit system email message templates (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Preferences_AffiliateConsole",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can configure the affiliate-facing console settings.",
+      "wiki_quote": "Permission: can configure the affiliate-facing console settings (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Preferences_SpiderIPs",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can manage the spider/bot IP whitelist for traffic filtering.",
+      "wiki_quote": "Permission: can manage the spider/bot IP whitelist for traffic filtering (Tier 1 — inherited from fiktivo.dbo.tblaff_Use",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Preferences_SpiderHeaders",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can manage spider/bot detection header patterns.",
+      "wiki_quote": "Permission: can manage spider/bot detection header patterns (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Preferences_IPBlocking",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can manage IP blocking rules for fraud prevention.",
+      "wiki_quote": "Permission: can manage IP blocking rules for fraud prevention (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Announcements_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view system announcements to affiliates.",
+      "wiki_quote": "Permission: can view system announcements to affiliates (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Announcements_Edit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit announcement content.",
+      "wiki_quote": "Permission: can edit announcement content (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Announcements_AddNew",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can create new announcements.",
+      "wiki_quote": "Permission: can create new announcements (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Announcements_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can remove announcements.",
+      "wiki_quote": "Permission: can remove announcements (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateGroups_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view affiliate group definitions. Default ON - all users can see groups.",
+      "wiki_quote": "Permission: can view affiliate group definitions. Default ON - all users can see groups (Tier 1 — inherited from fiktivo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateGroups_Edit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit affiliate group settings and manager assignment. Default ON.",
+      "wiki_quote": "Permission: can edit affiliate group settings and manager assignment. Default ON (Tier 1 — inherited from fiktivo.dbo.tb",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateGroups_AddNew",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can create new affiliate groups. Default ON.",
+      "wiki_quote": "Permission: can create new affiliate groups. Default ON (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateGroups_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can delete affiliate groups. Default ON.",
+      "wiki_quote": "Permission: can delete affiliate groups. Default ON (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Chargebacks_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view chargeback event records. Default ON.",
+      "wiki_quote": "Permission: can view chargeback event records. Default ON (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Bonuses_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view bonus event records. Default ON.",
+      "wiki_quote": "Permission: can view bonus event records. Default ON (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Deposits_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view deposit event records. Default ON.",
+      "wiki_quote": "Permission: can view deposit event records. Default ON (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Registrations_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view registration event records. Default ON.",
+      "wiki_quote": "Permission: can view registration event records. Default ON (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_DailySummary",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view the daily summary report. Default ON.",
+      "wiki_quote": "Permission: can view the daily summary report. Default ON (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_DailySummaryByAffiliate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view daily summary broken down by affiliate. Default ON.",
+      "wiki_quote": "Permission: can view daily summary broken down by affiliate. Default ON (Tier 1 — inherited from fiktivo.dbo.tblaff_User",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_DownloadsReferrer",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view download referrer analytics. Default ON.",
+      "wiki_quote": "Permission: can view download referrer analytics. Default ON (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_RegistrationSummary",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view registration summary reports. Default ON.",
+      "wiki_quote": "Permission: can view registration summary reports. Default ON (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_CPASummary",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view CPA (cost-per-acquisition) summary reports. Default ON.",
+      "wiki_quote": "Permission: can view CPA (cost-per-acquisition) summary reports. Default ON (Tier 1 — inherited from fiktivo.dbo.tblaff_",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tools_PayAffiliatesApprove",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can approve affiliate payments after review. Part of multi-step payment approval workflow. Default ON.",
+      "wiki_quote": "Permission: can approve affiliate payments after review. Part of multi-step payment approval workflow. Default ON (Tier ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Languages_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view language configurations.",
+      "wiki_quote": "Permission: can view language configurations (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Languages_Edit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit language settings.",
+      "wiki_quote": "Permission: can edit language settings (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Languages_AddNew",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can add new language support.",
+      "wiki_quote": "Permission: can add new language support (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Languages_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can remove language configurations.",
+      "wiki_quote": "Permission: can remove language configurations (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Brands_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view brand definitions.",
+      "wiki_quote": "Permission: can view brand definitions (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Brands_Edit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit brand settings.",
+      "wiki_quote": "Permission: can edit brand settings (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Brands_AddNew",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can create new brands.",
+      "wiki_quote": "Permission: can create new brands (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Brands_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can remove brands.",
+      "wiki_quote": "Permission: can remove brands (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tools_PayAffiliatesReview",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can review pending affiliate payments before approval. Part of multi-step payment workflow.",
+      "wiki_quote": "Permission: can review pending affiliate payments before approval. Part of multi-step payment workflow (Tier 1 — inherit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateManager",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "High-level role flag: user is an Affiliate Manager responsible for onboarding, managing, and supporting affiliates.",
+      "wiki_quote": "High-level role flag: user is an Affiliate Manager responsible for onboarding, managing, and supporting affiliates (Tier",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ChiefMarketingOfficer",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "High-level role flag: user is the CMO with oversight of all marketing operations and affiliate strategy.",
+      "wiki_quote": "High-level role flag: user is the CMO with oversight of all marketing operations and affiliate strategy (Tier 1 — inheri",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AccountingManager",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "High-level role flag: user is an Accounting Manager responsible for financial reconciliation and payment processing.",
+      "wiki_quote": "High-level role flag: user is an Accounting Manager responsible for financial reconciliation and payment processing (Tie",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tools_eCPL",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can access the eCPL (effective cost per lead) tool for lead cost analysis.",
+      "wiki_quote": "Permission: can access the eCPL (effective cost per lead) tool for lead cost analysis (Tier 1 — inherited from fiktivo.d",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tools_eCPR",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can access the eCPR (effective cost per registration) tool for registration cost analysis.",
+      "wiki_quote": "Permission: can access the eCPR (effective cost per registration) tool for registration cost analysis (Tier 1 — inherite",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Chargebacks_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can delete chargeback event records.",
+      "wiki_quote": "Permission: can delete chargeback event records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Deposits_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can delete deposit event records.",
+      "wiki_quote": "Permission: can delete deposit event records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Registrations_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can delete registration event records.",
+      "wiki_quote": "Permission: can delete registration event records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Bonuses_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can delete bonus event records.",
+      "wiki_quote": "Permission: can delete bonus event records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tools_eCost",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can access the eCost (effective cost) reporting and management tool.",
+      "wiki_quote": "Permission: can access the eCost (effective cost) reporting and management tool (Tier 1 — inherited from fiktivo.dbo.tbl",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Countries_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view country configuration and assignment.",
+      "wiki_quote": "Permission: can view country configuration and assignment (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Countries_Edit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit country settings (group/type assignments).",
+      "wiki_quote": "Permission: can edit country settings (group/type assignments) (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Countries_AddNew",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can add new country entries.",
+      "wiki_quote": "Permission: can add new country entries (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Countries_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can remove country entries.",
+      "wiki_quote": "Permission: can remove country entries (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EMailNotifications_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view email notification templates and settings.",
+      "wiki_quote": "Permission: can view email notification templates and settings (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EMailNotifications_Edit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit email notification templates.",
+      "wiki_quote": "Permission: can edit email notification templates (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "GeneratePayment",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can generate payment batches for affiliate payouts. Part of multi-step payment workflow.",
+      "wiki_quote": "Permission: can generate payment batches for affiliate payouts. Part of multi-step payment workflow (Tier 1 — inherited ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tools_eCostHistoryView",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view historical eCost records.",
+      "wiki_quote": "Permission: can view historical eCost records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tools_eCostHistoryEdit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit historical eCost records.",
+      "wiki_quote": "Permission: can edit historical eCost records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tools_eCostHistoryDelete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can delete historical eCost records.",
+      "wiki_quote": "Permission: can delete historical eCost records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Pixels_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view conversion tracking pixel configurations.",
+      "wiki_quote": "Permission: can view conversion tracking pixel configurations (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Pixels_Edit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit pixel tracking settings.",
+      "wiki_quote": "Permission: can edit pixel tracking settings (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Pixels_AddNew",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can create new tracking pixels.",
+      "wiki_quote": "Permission: can create new tracking pixels (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Pixels_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can remove tracking pixels.",
+      "wiki_quote": "Permission: can remove tracking pixels (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PhotoImagePath",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "File path to the user's profile photo/avatar image.",
+      "wiki_quote": "File path to the user's profile photo/avatar image (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateGroups_Edit_UserList",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit the list of users assigned to an affiliate group (viewer assignment).",
+      "wiki_quote": "Permission: can edit the list of users assigned to an affiliate group (viewer assignment) (Tier 1 — inherited from fikti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsSystemAdministrator",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Master role flag: grants full unrestricted access to all platform functions. NULL treated as false. 21 of 110 users have",
+      "wiki_quote": "Master role flag: grants full unrestricted access to all platform functions. NULL treated as false. 21 of 110 users have",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CopyTraders_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view copy trader commission event records. Default ON.",
+      "wiki_quote": "Permission: can view copy trader commission event records. Default ON (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CopyTraders_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can delete copy trader event records.",
+      "wiki_quote": "Permission: can delete copy trader event records (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateGroups_Move",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can move affiliates between groups. Default ON.",
+      "wiki_quote": "Permission: can move affiliates between groups. Default ON (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Audits_View",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view audit log records (dbo.AuditLog/ChangesLog).",
+      "wiki_quote": "Permission: can view audit log records (dbo.AuditLog/ChangesLog) (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EncryptedLoginPassword",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Encrypted version of login password. Replaces the legacy plaintext LoginPassword column. Used by fiktivo.CheckPassword.",
+      "wiki_quote": "Encrypted version of login password. Replaces the legacy plaintext LoginPassword column. Used by fiktivo.CheckPassword (",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ChangedPasswordDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Timestamp of last password change. Used by fiktivo.IsPasswordExpired to enforce password rotation policy.",
+      "wiki_quote": "Timestamp of last password change. Used by fiktivo.IsPasswordExpired to enforce password rotation policy (Tier 1 — inher",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Countries_Move",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can reassign countries between affiliate groups/types.",
+      "wiki_quote": "Permission: can reassign countries between affiliate groups/types (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsDeleted",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Soft-delete flag. 1 = user account is deactivated. Currently all 110 users are active (IsDeleted=0).",
+      "wiki_quote": "Soft-delete flag. 1 = user account is deactivated. Currently all 110 users are active (IsDeleted=0) (Tier 1 — inherited ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MarketingManager",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "High-level role flag: user is a Marketing Manager responsible for campaigns and affiliate marketing operations.",
+      "wiki_quote": "High-level role flag: user is a Marketing Manager responsible for campaigns and affiliate marketing operations (Tier 1 —",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OperationsManager",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "High-level role flag: user is an Operations Manager responsible for day-to-day platform operations.",
+      "wiki_quote": "High-level role flag: user is an Operations Manager responsible for day-to-day platform operations (Tier 1 — inherited f",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FinanceManager",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "High-level role flag: user is a Finance Manager responsible for payment approvals and financial oversight. 19 of 110 use",
+      "wiki_quote": "High-level role flag: user is a Finance Manager responsible for payment approvals and financial oversight. 19 of 110 use",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Pixels_CreateGeneric",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can create generic (non-affiliate-specific) tracking pixels.",
+      "wiki_quote": "Permission: can create generic (non-affiliate-specific) tracking pixels (Tier 1 — inherited from fiktivo.dbo.tblaff_User",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Trace",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Computed audit column. JSON string capturing session metadata: HostName, AppName, SUserName, SPID, DBName, ObjectName. A",
+      "wiki_quote": "Computed audit column. JSON string capturing session metadata: HostName, AppName, SUserName, SPID, DBName, ObjectName. A",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentTypes_ViewAll",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can view instrument type definitions.",
+      "wiki_quote": "Permission: can view instrument type definitions (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentTypes_Edit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can edit instrument type settings.",
+      "wiki_quote": "Permission: can edit instrument type settings (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentTypes_AddNew",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can create new instrument types.",
+      "wiki_quote": "Permission: can create new instrument types (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentTypes_Delete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_User.md",
+      "upstream_quote": "Permission: can delete instrument types.",
+      "wiki_quote": "Permission: can delete instrument types (Tier 1 — inherited from fiktivo.dbo.tblaff_User).",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 138,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 138 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

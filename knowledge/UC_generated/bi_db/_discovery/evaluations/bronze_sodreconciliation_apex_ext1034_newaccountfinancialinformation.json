@@ -1,0 +1,291 @@
+{
+  "object_fqn": "main.bi_db.bronze_sodreconciliation_apex_ext1034_newaccountfinancialinformation",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:56Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Primary key. Auto-generated sequential GUID for each row.",
+      "wiki_quote": "Primary key. Auto-generated sequential GUID for each row (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAcco",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SodFileId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "FK to apex.SodFiles. Links this row to the specific EXT1034 file import. CASCADE DELETE.",
+      "wiki_quote": "FK to apex.SodFiles. Links this row to the specific EXT1034 file import. CASCADE DELETE (Tier 1 — inherited from Sodreco",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Correspondent",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Correspondent firm identifier/name.",
+      "wiki_quote": "Correspondent firm identifier/name (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInformatio",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Branch",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Branch/office code.",
+      "wiki_quote": "Branch/office code (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInformation).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RepCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Registered representative code.",
+      "wiki_quote": "Registered representative code (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInformation).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AccountNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Apex customer account number. MASKED (PII).",
+      "wiki_quote": "Apex customer account number. MASKED (PII) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialIn",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TaxIDNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Federal tax identification number (SSN or EIN). MASKED (PII).",
+      "wiki_quote": "Federal tax identification number (SSN or EIN). MASKED (PII) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_New",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CustomerCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Apex customer classification code.",
+      "wiki_quote": "Apex customer classification code (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInformation",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CodeDescription",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Description of the customer code.",
+      "wiki_quote": "Description of the customer code (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInformation)",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AccountType",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Account type classification.",
+      "wiki_quote": "Account type classification (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInformation).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OpenDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Date the account was opened.",
+      "wiki_quote": "Date the account was opened (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInformation).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DateOfBirth",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Account holder's date of birth. MASKED (PII).",
+      "wiki_quote": "Account holder's date of birth. MASKED (PII) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancial",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AccountName1",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Account holder name. MASKED (PII).",
+      "wiki_quote": "Account holder name. MASKED (PII) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInformation",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AddressLine1",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Primary address line. MASKED (PII).",
+      "wiki_quote": "Primary address line. MASKED (PII) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInformatio",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AddressLine2",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Secondary address line. MASKED (PII).",
+      "wiki_quote": "Secondary address line. MASKED (PII) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInformat",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "City",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "City. MASKED (PII).",
+      "wiki_quote": "City. MASKED (PII) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInformation).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "State",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "State code.",
+      "wiki_quote": "State code (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInformation).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ZipCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "ZIP code. MASKED (PII).",
+      "wiki_quote": "ZIP code. MASKED (PII) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInformation).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LegalAddressindicator",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Indicator for whether the address is the legal/mailing address.",
+      "wiki_quote": "Indicator for whether the address is the legal/mailing address (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_N",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountryCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Country code for the address.",
+      "wiki_quote": "Country code for the address (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInformation).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EmailAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Email address. MASKED (PII).",
+      "wiki_quote": "Email address. MASKED (PII) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInformation).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AnnualIncome",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Self-reported annual income range or amount (stored as string).",
+      "wiki_quote": "Self-reported annual income range or amount (stored as string) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_N",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "NetWorth",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Self-reported total net worth range or amount (stored as string).",
+      "wiki_quote": "Self-reported total net worth range or amount (stored as string) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LiquidNetWorth",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Self-reported liquid net worth range or amount (stored as string).",
+      "wiki_quote": "Self-reported liquid net worth range or amount (stored as string) (Tier 1 — inherited from Sodreconciliation.apex.EXT103",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InvestmentExperience",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Level of investment experience (none, limited, good, extensive).",
+      "wiki_quote": "Level of investment experience (none, limited, good, extensive) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InvestmentObjective",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Primary investment objective (income, growth, speculation, etc.).",
+      "wiki_quote": "Primary investment objective (income, growth, speculation, etc.) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RiskTolerance",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Risk tolerance level (low, medium, high).",
+      "wiki_quote": "Risk tolerance level (low, medium, high) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInfo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LiquidityNeeds",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Liquidity needs (very important, somewhat important, not important).",
+      "wiki_quote": "Liquidity needs (very important, somewhat important, not important) (Tier 1 — inherited from Sodreconciliation.apex.EXT1",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TimeHorizon",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Investment time horizon (short, medium, long).",
+      "wiki_quote": "Investment time horizon (short, medium, long) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancia",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliatedPerson",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Affiliated person disclosure (broker-dealer affiliation).",
+      "wiki_quote": "Affiliated person disclosure (broker-dealer affiliation) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAcco",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliatedPersonDetail",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Details about the affiliated person relationship.",
+      "wiki_quote": "Details about the affiliated person relationship (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinan",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliatedApprovalSnapIDs",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Reference ID for affiliated person approval snapshots.",
+      "wiki_quote": "Reference ID for affiliated person approval snapshots (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccount",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ControlPerson",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Control person disclosure (officer, director, 10%+ shareholder).",
+      "wiki_quote": "Control person disclosure (officer, director, 10%+ shareholder) (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ControlPersonCompany",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Company name for which the account holder is a control person.",
+      "wiki_quote": "Company name for which the account holder is a control person (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_Ne",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Employer",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Account holder's employer name.",
+      "wiki_quote": "Account holder's employer name (Tier 1 — inherited from Sodreconciliation.apex.EXT1034_NewAccountFinancialInformation).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EmploymentStatus",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1034_NewAccountFinancialInformation.md",
+      "upstream_quote": "Employment status (employed, self-employed, retired, student, etc.).",
+      "wiki_quote": "Employment status (employed, self-employed, retired, student, etc.) (Tier 1 — inherited from Sodreconciliation.apex.EXT1",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 36,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 36 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

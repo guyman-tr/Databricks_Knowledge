@@ -1,0 +1,180 @@
+{
+  "object_fqn": "main.bi_output.vg_factbillingdeposit_transactionsandattributes",
+  "generated_at": "2026-05-19T15:01:22Z",
+  "concept_count": 8,
+  "concepts": [
+    {
+      "id": "case_flag_threeds_result",
+      "name": "ThreeDS_Result computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "ThreeDS_Result"
+      ],
+      "predicates": [
+        {
+          "col": "ThreeDsResponseType",
+          "op": "=",
+          "val": "' '"
+        },
+        {
+          "col": "ThreeDsResponseType",
+          "op": "=",
+          "val": "' '"
+        },
+        {
+          "col": "ThreeDsResponseType",
+          "op": "=",
+          "val": "' '"
+        }
+      ],
+      "then_value": "'                      '",
+      "else_value": "'         '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "evidence_lines": "bi_output.sql L44-L50",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_aft_supported",
+      "name": "AFT_Supported computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "AFT_Supported"
+      ],
+      "predicates": [],
+      "then_value": "'   '",
+      "else_value": "'  '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "evidence_lines": "bi_output.sql L80-L80",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_aft_eligible",
+      "name": "AFT_Eligible computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "AFT_Eligible"
+      ],
+      "predicates": [],
+      "then_value": "'   '",
+      "else_value": "'  '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "evidence_lines": "bi_output.sql L81-L81",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_aft_processed",
+      "name": "AFT_Processed computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "AFT_Processed"
+      ],
+      "predicates": [],
+      "then_value": "'   '",
+      "else_value": "'  '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "evidence_lines": "bi_output.sql L82-L82",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_cur",
+      "name": "Dim lookup via cur",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
+      "alias": "cur",
+      "join_conditions": [
+        "fd.CurrencyID = cur.CurrencyID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L90",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fd.CurrencyID = cur.CurrencyID"
+    },
+    {
+      "id": "dim_lookup_ps",
+      "name": "Dim lookup via ps",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_paymentstatus",
+      "alias": "ps",
+      "join_conditions": [
+        "fd.PaymentStatusID = ps.PaymentStatusID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_paymentstatus"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L92",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fd.PaymentStatusID = ps.PaymentStatusID"
+    },
+    {
+      "id": "dim_lookup_depot",
+      "name": "Dim lookup via depot",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_billingdepot",
+      "alias": "depot",
+      "join_conditions": [
+        "fd.DepotID = depot.DepotID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_billingdepot"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L94",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fd.DepotID = depot.DepotID"
+    },
+    {
+      "id": "dim_lookup_x",
+      "name": "Dim lookup via x",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype",
+      "alias": "x",
+      "join_conditions": [
+        "fd.FundingTypeID = x.FundingTypeID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L98",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fd.FundingTypeID = x.FundingTypeID"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_factbillingdeposit_transactionsandattributes.sql"
+}

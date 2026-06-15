@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\mv_revenue_trading.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\mv_revenue_trading.json` (rows: 13, mismatches: 7) |
 | **Primary upstream** | `main.dwh.dim_position` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 
@@ -15,18 +15,18 @@
 |--------------------|------|---------------|
 | `main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban` | JOIN / referenced | ✗ `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_finance_tables_bi_db_positions_closed_to_iban.md` |
 | `main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban` | JOIN / referenced | ✗ `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_finance_tables_bi_db_positions_opened_from_iban.md` |
-| `main.trading.bronze_etoro_trade_instrumentgroups` | JOIN / referenced | ✓ `knowledge\ProdSchemas\DB_Schema\etoro\Wiki\Trade\Tables\Trade.InstrumentGroups.md` |
+| `main.trading.bronze_etoro_trade_instrumentgroups` | JOIN / referenced | ✓ `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.InstrumentGroups.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Instrument.md` |
 | `main.dwh.dim_position` | Primary (FROM) | ✗ `(no wiki found)` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Mirror.md` |
-| `main.etoro_kpi_prep.v_revenue_adminfee` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_adminfee.md` |
-| `main.etoro_kpi_prep.v_revenue_commission` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_commission.md` |
-| `main.etoro_kpi_prep.v_revenue_dividend` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_dividend.md` |
-| `main.etoro_kpi_prep.v_revenue_fullcommission` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_fullcommission.md` |
-| `main.etoro_kpi_prep.v_revenue_rollover` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_rollover.md` |
-| `main.etoro_kpi_prep.v_revenue_spotadjustfee` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_spotadjustfee.md` |
-| `main.etoro_kpi_prep.v_revenue_ticketfee_bypercent` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_ticketfee_bypercent.md` |
-| `main.etoro_kpi_prep.v_revenue_ticketfee_fixed` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_ticketfee_fixed.md` |
+| `main.etoro_kpi_prep.v_revenue_adminfee` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_adminfee.md` |
+| `main.etoro_kpi_prep.v_revenue_commission` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_commission.md` |
+| `main.etoro_kpi_prep.v_revenue_dividend` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_dividend.md` |
+| `main.etoro_kpi_prep.v_revenue_fullcommission` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_fullcommission.md` |
+| `main.etoro_kpi_prep.v_revenue_rollover` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_rollover.md` |
+| `main.etoro_kpi_prep.v_revenue_spotadjustfee` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_spotadjustfee.md` |
+| `main.etoro_kpi_prep.v_revenue_ticketfee_bypercent` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_ticketfee_bypercent.md` |
+| `main.etoro_kpi_prep.v_revenue_ticketfee_fixed` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_ticketfee_fixed.md` |
 
 ## Lineage Chain
 

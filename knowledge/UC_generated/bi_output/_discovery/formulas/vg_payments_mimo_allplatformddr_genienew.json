@@ -1,0 +1,162 @@
+{
+  "object_fqn": "main.bi_output.vg_payments_mimo_allplatformddr_genienew",
+  "generated_at": "2026-05-19T15:01:28Z",
+  "formula_count": 14,
+  "formulas": [
+    {
+      "column": "MIMOAction",
+      "formula": "MIMOAction",
+      "expression_raw": "bddfmap.MIMOAction",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "TransactionID",
+      "formula": "TransactionID",
+      "expression_raw": "bddfmap.TransactionID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": "RealCID",
+      "expression_raw": "bddfmap.RealCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "MarketingRegionManualName",
+      "formula": "MarketingRegionManualName",
+      "expression_raw": "dc.MarketingRegionManualName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "Country",
+      "formula": "Name",
+      "expression_raw": "dc.Name AS Country",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "Club",
+      "formula": "Name",
+      "expression_raw": "dpl.Name AS Club",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": "Name",
+      "expression_raw": "dr1.Name AS Regulation",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "Date_MIMO",
+      "formula": "Date",
+      "expression_raw": "bddfmap.Date AS Date_MIMO",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "MIMOPlatform",
+      "formula": "MIMOPlatform",
+      "expression_raw": "bddfmap.MIMOPlatform",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "IsInternalTransfer",
+      "formula": "IsInternalTransfer",
+      "expression_raw": "bddfmap.IsInternalTransfer",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "Currency",
+      "formula": "Currency",
+      "expression_raw": "bddfmap.Currency",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "FundingType",
+      "formula": "CASE WHEN IsInternalTransfer = 1 THEN 'internal transfer - etoromoney' WHEN MIMOPlatform = 'eMoney' AND IsInternalTransfer = 0 THEN o.Fundingtype_…",
+      "expression_raw": "CASE\n    WHEN bddfmap.IsInternalTransfer = 1 THEN 'internal transfer - etoromoney'\n    WHEN\n      bddfmap.MIMOPlatform = 'eMoney'\n      AND bddfmap.IsInternalTransfer = 0\n    THEN\n      o.Fundingtype_…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L19-L27",
+      "scope": "main"
+    },
+    {
+      "column": "IsGlobalFTD",
+      "formula": "IsGlobalFTD",
+      "expression_raw": "bddfmap.IsGlobalFTD",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "AmountUSD_MIMO",
+      "formula": "AmountUSD",
+      "expression_raw": "bddfmap.AmountUSD AS AmountUSD_MIMO",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_payments_mimo_allplatformddr_genienew.sql"
+}

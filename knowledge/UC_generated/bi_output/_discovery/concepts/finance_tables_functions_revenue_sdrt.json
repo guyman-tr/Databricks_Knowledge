@@ -1,0 +1,73 @@
+{
+  "object_fqn": "main.bi_output.finance_tables_functions_revenue_sdrt",
+  "generated_at": "2026-05-19T15:01:20Z",
+  "concept_count": 3,
+  "concepts": [
+    {
+      "id": "union_leg_sign_flip_SDRTPrep2",
+      "name": "Sign-flip leg (SDRTPrep2)",
+      "kind": "union_leg_sign_flip",
+      "columns_involved": [
+        "SDRT"
+      ],
+      "predicates": [],
+      "sign": "-1",
+      "expressions": [
+        "f.Amount"
+      ],
+      "physical_inputs": [
+        "SDRTPrep"
+      ],
+      "evidence_lines": "L110",
+      "scope": "SDRTPrep2"
+    },
+    {
+      "id": "dim_lookup_dr",
+      "name": "Dim lookup via dr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "alias": "dr",
+      "join_conditions": [
+        "fsc.DateRangeID = dr.DateRangeID AND fca.DateID >= dr.FromDateID AND fca.DateID <= dr.ToDateID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L58",
+      "scopes": [
+        "SDRTPrep"
+      ],
+      "scope": "SDRTPrep",
+      "join_condition": "fsc.DateRangeID = dr.DateRangeID AND fca.DateID >= dr.FromDateID AND fca.DateID <= dr.ToDateID"
+    },
+    {
+      "id": "filter_block_SDRTPrep",
+      "name": "Filter block on SDRTPrep",
+      "kind": "filter_block",
+      "columns_involved": [
+        "ActionTypeID",
+        "IsFeeDividend"
+      ],
+      "predicates": [
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "35"
+        },
+        {
+          "col": "IsFeeDividend",
+          "op": "=",
+          "val": "3"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L59",
+      "scope": "SDRTPrep",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/finance_tables_functions_revenue_sdrt.sql"
+}

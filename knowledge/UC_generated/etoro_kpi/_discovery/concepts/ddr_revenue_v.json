@@ -1,0 +1,30 @@
+{
+  "object_fqn": "main.etoro_kpi.ddr_revenue_v",
+  "generated_at": "2026-05-19T15:20:29Z",
+  "concept_count": 1,
+  "concepts": [
+    {
+      "id": "dim_lookup_ins",
+      "name": "Dim lookup via ins",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.bi_output.bi_ouput_v_dim_instrumenttype",
+      "alias": "ins",
+      "join_conditions": [
+        "rga.InstrumentTypeID = ins.InstrumentTypeID"
+      ],
+      "physical_inputs": [
+        "main.bi_output.bi_ouput_v_dim_instrumenttype"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L42",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "rga.InstrumentTypeID = ins.InstrumentTypeID"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/ddr_revenue_v.sql"
+}

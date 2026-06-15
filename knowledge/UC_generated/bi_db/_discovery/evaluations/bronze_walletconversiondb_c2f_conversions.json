@@ -1,0 +1,102 @@
+{
+  "object_fqn": "main.bi_db.bronze_walletconversiondb_c2f_conversions",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:14:02Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.Conversions.md",
+      "upstream_quote": "Auto-incrementing surrogate primary key. Referenced by all child tables (ConversionStatuses, CryptoTransactions, Estimat",
+      "wiki_quote": "Auto-incrementing surrogate primary key. Referenced by all child tables (ConversionStatuses, CryptoTransactions, Estimat",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Gcid",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.Conversions.md",
+      "upstream_quote": "Global Customer ID identifying the customer who initiated the conversion. Validated NOT NULL by InsertConversion (raises",
+      "wiki_quote": "Global Customer ID identifying the customer who initiated the conversion. Validated NOT NULL by InsertConversion (raises",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TargetPlatformId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.Conversions.md",
+      "upstream_quote": "Fiat destination type. FK to Dictionary.FiatConversionTargets. Values: 1=IbanAccount (77%), 2=EtoroPlatform (6%), 3=Etor",
+      "wiki_quote": "Fiat destination type. FK to Dictionary.FiatConversionTargets. Values: 1=IbanAccount (77%), 2=EtoroPlatform (6%), 3=Etor",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.Conversions.md",
+      "upstream_quote": "Crypto asset identifier (external reference). Identifies which cryptocurrency is being sold. Values observed: 4, 64, 107",
+      "wiki_quote": "Crypto asset identifier (external reference). Identifies which cryptocurrency is being sold. Values observed: 4, 64, 107",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FiatId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.Conversions.md",
+      "upstream_quote": "Fiat currency identifier (external reference). Identifies which fiat currency the customer receives. Values observed: 1,",
+      "wiki_quote": "Fiat currency identifier (external reference). Identifies which fiat currency the customer receives. Values observed: 1,",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.Conversions.md",
+      "upstream_quote": "Quantity of cryptocurrency being converted. High precision (18 decimals) to handle fractional crypto amounts. This is th",
+      "wiki_quote": "Quantity of cryptocurrency being converted. High precision (18 decimals) to handle fractional crypto amounts. This is th",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ConversionFeePercentage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.Conversions.md",
+      "upstream_quote": "Fee rate applied to the conversion as a decimal fraction (0.1 = 10%). Used to calculate ConversionFeeAmount in FiatTrans",
+      "wiki_quote": "Fee rate applied to the conversion as a decimal fraction (0.1 = 10%). Used to calculate ConversionFeeAmount in FiatTrans",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CorrelationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.Conversions.md",
+      "upstream_quote": "Distributed tracing correlation ID linking this conversion to its Saga.SagaRuns orchestration entry and all cross-servic",
+      "wiki_quote": "Distributed tracing correlation ID linking this conversion to its Saga.SagaRuns orchestration entry and all cross-servic",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.Conversions.md",
+      "upstream_quote": "UTC timestamp when the conversion was created. Default constraint provides automatic timestamping. Indexed DESC for rece",
+      "wiki_quote": "UTC timestamp when the conversion was created. Default constraint provides automatic timestamping. Indexed DESC for rece",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 9,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 9 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

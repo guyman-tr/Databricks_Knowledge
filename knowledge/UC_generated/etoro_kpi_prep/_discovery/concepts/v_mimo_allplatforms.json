@@ -1,0 +1,44 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_mimo_allplatforms",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "case_flag_isglobalftd",
+      "name": "IsGlobalFTD computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsGlobalFTD"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L77-L77",
+      "scope": "main"
+    },
+    {
+      "id": "filter_block_moneyfarm_ftds",
+      "name": "Filter block on moneyfarm_ftds",
+      "kind": "filter_block",
+      "columns_involved": [
+        "FTDPlatform"
+      ],
+      "predicates": [
+        {
+          "col": "FTDPlatform",
+          "op": "=",
+          "val": "'         '"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L60",
+      "scope": "moneyfarm_ftds",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_mimo_allplatforms.sql"
+}

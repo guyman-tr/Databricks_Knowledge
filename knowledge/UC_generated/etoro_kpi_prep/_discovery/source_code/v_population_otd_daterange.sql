@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_population_otd_daterange
--- Captured: 2026-05-18T08:10:30Z
+-- Captured: 2026-05-19T12:20:13Z
 -- ==========================================================================
 
 WITH PREP AS (

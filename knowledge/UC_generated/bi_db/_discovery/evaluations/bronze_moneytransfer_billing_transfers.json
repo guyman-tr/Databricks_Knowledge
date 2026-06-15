@@ -1,0 +1,179 @@
+{
+  "object_fqn": "main.bi_db.bronze_moneytransfer_billing_transfers",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:54Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "TransferID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "Auto-incrementing unique identifier for each transfer. NONCLUSTERED PK. Used as a secondary lookup key and in range-base",
+      "wiki_quote": "Auto-incrementing unique identifier for each transfer. NONCLUSTERED PK. Used as a secondary lookup key and in range-base",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ReferenceID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "Application-generated GUID serving as the primary business key for each transfer. UNIQUE CLUSTERED index makes it the ph",
+      "wiki_quote": "Application-generated GUID serving as the primary business key for each transfer. UNIQUE CLUSTERED index makes it the ph",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "Customer identifier - the user who initiated or owns the transfer. Used for customer-scoped queries: `GetTransfersByCID`",
+      "wiki_quote": "Customer identifier - the user who initiated or owns the transfer. Used for customer-scoped queries: `GetTransfersByCID`",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "Currency of the transfer amount. No Dictionary table exists in this database; values are managed externally. Sample data",
+      "wiki_quote": "Currency of the transfer amount. No Dictionary table exists in this database; values are managed externally. Sample data",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OriginFundingTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "Type classification for the source/origin funding instrument. No lookup table in this database; values managed by the Mo",
+      "wiki_quote": "Type classification for the source/origin funding instrument. No lookup table in this database; values managed by the Mo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DestinationFundingTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "Type classification for the destination funding instrument. No lookup table in this database. Sample data shows 33 as th",
+      "wiki_quote": "Type classification for the destination funding instrument. No lookup table in this database. Sample data shows 33 as th",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "Transfer amount in the currency specified by CurrencyID. Set at creation time and not modified afterward. Observed range",
+      "wiki_quote": "Transfer amount in the currency specified by CurrencyID. Set at creation time and not modified afterward. Observed range",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OriginFundingData",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "Masked (Dynamic Data Masking: default()) JSON or structured data containing the origin funding instrument details (bank ",
+      "wiki_quote": "Masked (Dynamic Data Masking: default()) JSON or structured data containing the origin funding instrument details (bank ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DestinationFundingData",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "Masked (Dynamic Data Masking: default()) JSON or structured data containing the destination funding instrument details. ",
+      "wiki_quote": "Masked (Dynamic Data Masking: default()) JSON or structured data containing the destination funding instrument details. ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreateDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "UTC timestamp of transfer creation. Set automatically on INSERT via DEFAULT constraint. Never modified after creation. U",
+      "wiki_quote": "UTC timestamp of transfer creation. Set automatically on INSERT via DEFAULT constraint. Never modified after creation. U",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ModificationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "UTC timestamp of the most recent modification. Initialized to GETUTCDATE() on INSERT, then auto-updated by trigger `TR_T",
+      "wiki_quote": "UTC timestamp of the most recent modification. Initialized to GETUTCDATE() on INSERT, then auto-updated by trigger `TR_T",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TransferStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "Current lifecycle state of the transfer. Implicit FK to Dictionary.TransferStatus: 0=New, 1=Init, 2=Pending, 4=Technical",
+      "wiki_quote": "Current lifecycle state of the transfer. Implicit FK to Dictionary.TransferStatus: 0=New, 1=Init, 2=Pending, 4=Technical",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExReferenceID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "External reference ID - a provider-facing identifier for the transfer. Prefix pattern observed: \"TZ\" and \"TK\" followed b",
+      "wiki_quote": "External reference ID - a provider-facing identifier for the transfer. Prefix pattern observed: \"TZ\" and \"TK\" followed b",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Trace",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "Computed column (not persisted) generating a JSON diagnostic string containing HostName, AppName, SUserName, SPID, DBNam",
+      "wiki_quote": "Computed column (not persisted) generating a JSON diagnostic string containing HostName, AppName, SUserName, SPID, DBNam",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InitFundingId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "Initial funding instrument identifier assigned early in the transfer pipeline, before origin/destination routing is fina",
+      "wiki_quote": "Initial funding instrument identifier assigned early in the transfer pipeline, before origin/destination routing is fina",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OriginFundingId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "Provider-assigned numeric identifier for the origin funding instrument (bank account, card, wallet). Set by `SaveTransfe",
+      "wiki_quote": "Provider-assigned numeric identifier for the origin funding instrument (bank account, card, wallet). Set by `SaveTransfe",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DestinationFundingId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "Provider-assigned numeric identifier for the destination funding instrument. Set by `SaveTransferDestinationFundingId`. ",
+      "wiki_quote": "Provider-assigned numeric identifier for the destination funding instrument. Set by `SaveTransferDestinationFundingId`. ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepotId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "Depot/data center identifier determining which processing infrastructure handles this transfer. Set by `SaveRoutingInfo`",
+      "wiki_quote": "Depot/data center identifier determining which processing infrastructure handles this transfer. Set by `SaveRoutingInfo`",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountryId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "Country identifier for the customer or transfer jurisdiction. Set by `SaveRoutingInfo` alongside DepotId. Observed value",
+      "wiki_quote": "Country identifier for the customer or transfer jurisdiction. Set by `SaveRoutingInfo` alongside DepotId. Observed value",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExtTransactionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyTransfer\\Wiki\\Billing\\Tables\\Billing.Transfers.md",
+      "upstream_quote": "External transaction identifier from the payment provider. Set by `SaveExtTransactionId`. Can be GUID-format (with hyphe",
+      "wiki_quote": "External transaction identifier from the payment provider. Set by `SaveExtTransactionId`. Can be GUID-format (with hyphe",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 20,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 20 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

@@ -1,0 +1,214 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiktivo_dbo_tblaff_leads",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:50Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "LeadID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Primary key. Unique identifier for each lead event. NOT FOR REPLICATION. Referenced by tblaff_Leads_Commissions.LeadID v",
+      "wiki_quote": "Primary key. Unique identifier for each lead event. NOT FOR REPLICATION. Referenced by tblaff_Leads_Commissions.LeadID v",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CUSTOMER_ID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Customer identifier from the trading platform.",
+      "wiki_quote": "Customer identifier from the trading platform (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ORDER_DATE",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Timestamp when the lead was generated. Clustered index column.",
+      "wiki_quote": "Timestamp when the lead was generated. Clustered index column (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateSaleAccepted",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Attribution flag (legacy name from shared codebase). 1=lead attributed to an affiliate, 0=not attributed.",
+      "wiki_quote": "Attribution flag (legacy name from shared codebase). 1=lead attributed to an affiliate, 0=not attributed (Tier 1 — inher",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IPAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Customer's IP address. Fraud detection and geo-verification.",
+      "wiki_quote": "Customer's IP address. Fraud detection and geo-verification (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Browser",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Customer's user agent string.",
+      "wiki_quote": "Customer's user agent string (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Valid",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Validation flag. 1=qualified lead, 0=rejected.",
+      "wiki_quote": "Validation flag. 1=qualified lead, 0=rejected (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reason",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Rejection reason when Valid=0.",
+      "wiki_quote": "Rejection reason when Valid=0 (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BannerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Marketing banner. References dbo.tblaff_Banners [done].",
+      "wiki_quote": "Marketing banner. References dbo.tblaff_Banners [done] (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DaysToConvert",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Days between affiliate click and lead generation.",
+      "wiki_quote": "Days between affiliate click and lead generation (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Optional1",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Sub-affiliate tracking parameter.",
+      "wiki_quote": "Sub-affiliate tracking parameter (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Optional2",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Secondary tracking parameter.",
+      "wiki_quote": "Secondary tracking parameter (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Optional3",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Original CID or extended tracking ID. Has NC index.",
+      "wiki_quote": "Original CID or extended tracking ID. Has NC index (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Real",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Whether the lead is from a real (funded) or demo account. 1=real, NULL/0=demo or unknown.",
+      "wiki_quote": "Whether the lead is from a real (funded) or demo account. 1=real, NULL/0=demo or unknown (Tier 1 — inherited from fiktiv",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DownloadID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "App download event ID.",
+      "wiki_quote": "App download event ID (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Currently attributed affiliate provider.",
+      "wiki_quote": "Currently attributed affiliate provider (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OriginalProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "First affiliate that acquired this customer.",
+      "wiki_quote": "First affiliate that acquired this customer (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Customer's country. References dbo.tblaff_Country [done].",
+      "wiki_quote": "Customer's country. References dbo.tblaff_Country [done] (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Download tracking ID.",
+      "wiki_quote": "Download tracking ID (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Funnel tracking ID.",
+      "wiki_quote": "Funnel tracking ID (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RealProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Leaf-level provider after IB hierarchy resolution.",
+      "wiki_quote": "Leaf-level provider after IB hierarchy resolution (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FunnelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Marketing funnel identifier.",
+      "wiki_quote": "Marketing funnel identifier (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LabelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Marketing label/campaign identifier.",
+      "wiki_quote": "Marketing label/campaign identifier (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PlayerLevelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Customer tier at event time.",
+      "wiki_quote": "Customer tier at event time (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ClubID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads.md",
+      "upstream_quote": "Customer club membership.",
+      "wiki_quote": "Customer club membership (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads).",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 25,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 25 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_dictionary_interestrateoverride",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:33Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "InterestRateOverrideID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.InterestRateOverride.md",
+      "upstream_quote": "Auto-incrementing primary key. Uniquely identifies each override rule. Referenced by Trade.UpdateInterestRateOverride an",
+      "wiki_quote": "Auto-incrementing primary key. Uniquely identifies each override rule. Referenced by Trade.UpdateInterestRateOverride an",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.InterestRateOverride.md",
+      "upstream_quote": "Specific instrument to override (most specific level). NULL when override targets an exchange or type. FK to Dictionary.",
+      "wiki_quote": "Specific instrument to override (most specific level). NULL when override targets an exchange or type. FK to Dictionary.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.InterestRateOverride.md",
+      "upstream_quote": "Exchange to override (mid-level specificity). NULL when override targets a specific instrument or type. FK to Dictionary",
+      "wiki_quote": "Exchange to override (mid-level specificity). NULL when override targets a specific instrument or type. FK to Dictionary",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.InterestRateOverride.md",
+      "upstream_quote": "Instrument type to override (broadest level). NULL when override targets a specific instrument or exchange. FK to Dictio",
+      "wiki_quote": "Instrument type to override (broadest level). NULL when override targets a specific instrument or exchange. FK to Dictio",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "UpdatedByUser",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.InterestRateOverride.md",
+      "upstream_quote": "Username of the operations staff member who created or last modified this override. Used for audit trail and accountabil",
+      "wiki_quote": "Username of the operations staff member who created or last modified this override. Used for audit trail and accountabil",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InterestRateBuy",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.InterestRateOverride.md",
+      "upstream_quote": "Base overnight interest rate for long (buy) positions. Positive = customer pays, negative = customer receives. Combined ",
+      "wiki_quote": "Base overnight interest rate for long (buy) positions. Positive = customer pays, negative = customer receives. Combined ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InterestRateSell",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.InterestRateOverride.md",
+      "upstream_quote": "Base overnight interest rate for short (sell) positions. Positive = customer pays, negative = customer receives. Combine",
+      "wiki_quote": "Base overnight interest rate for short (sell) positions. Positive = customer pays, negative = customer receives. Combine",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MarkupBuy",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.InterestRateOverride.md",
+      "upstream_quote": "eToro's markup percentage on the buy (long) overnight rate. Added to InterestRateBuy to determine the customer-facing ra",
+      "wiki_quote": "eToro's markup percentage on the buy (long) overnight rate. Added to InterestRateBuy to determine the customer-facing ra",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MarkupSell",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.InterestRateOverride.md",
+      "upstream_quote": "eToro's markup percentage on the sell (short) overnight rate. Added to InterestRateSell to determine the customer-facing",
+      "wiki_quote": "eToro's markup percentage on the sell (short) overnight rate. Added to InterestRateSell to determine the customer-facing",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BeginTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.InterestRateOverride.md",
+      "upstream_quote": "System-versioned row start time. Generated automatically by SQL Server. Indicates when this version of the override beca",
+      "wiki_quote": "System-versioned row start time. Generated automatically by SQL Server. Indicates when this version of the override beca",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.InterestRateOverride.md",
+      "upstream_quote": "System-versioned row end time. Generated automatically. Current rows have 9999-12-31 23:59:59.999. Historical rows have ",
+      "wiki_quote": "System-versioned row end time. Generated automatically. Current rows have 9999-12-31 23:59:59.999. Historical rows have ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OverNightFeePatternID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.InterestRateOverride.md",
+      "upstream_quote": "Fee charging pattern for this override. FK to Dictionary.OverNightFeePattern. Determines on which days/how fees are char",
+      "wiki_quote": "Fee charging pattern for this override. FK to Dictionary.OverNightFeePattern. Determines on which days/how fees are char",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SettlementTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.InterestRateOverride.md",
+      "upstream_quote": "Settlement model for this override. FK to Dictionary.SettlementTypes. 0=default/any, 1=CFD, 2=Real, 3=DMA, 4=Indices, 5=",
+      "wiki_quote": "Settlement model for this override. FK to Dictionary.SettlementTypes. 0=default/any, 1=CFD, 2=Real, 3=DMA, 4=Indices, 5=",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 13,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 13 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

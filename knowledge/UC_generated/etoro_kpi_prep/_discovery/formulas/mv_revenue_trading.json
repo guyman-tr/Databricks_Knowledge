@@ -1,0 +1,296 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.mv_revenue_trading",
+  "generated_at": "2026-05-18T16:27:36Z",
+  "formula_count": 24,
+  "formulas": [
+    {
+      "column": "PositionID",
+      "formula": "IBANOPEN AS (SELECT DISTINCT TreeID",
+      "expression_raw": "IBANOPEN AS (SELECT DISTINCT\n    TreeID AS PositionID",
+      "inputs": [
+        "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L151-L152",
+      "scope": "IBANOPEN"
+    },
+    {
+      "column": "RealCID",
+      "formula": "RealCID",
+      "expression_raw": "RealCID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "BASEDATA"
+    },
+    {
+      "column": "DateID",
+      "formula": "DateID",
+      "expression_raw": "DateID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "BASEDATA"
+    },
+    {
+      "column": "Occurred",
+      "formula": "Occurred",
+      "expression_raw": "Occurred",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "BASEDATA"
+    },
+    {
+      "column": "Amount",
+      "formula": "TotalFullCommission",
+      "expression_raw": "TotalFullCommission AS Amount",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "BASEDATA"
+    },
+    {
+      "column": "Metric",
+      "formula": "'FullCommission'",
+      "expression_raw": "'FullCommission' AS Metric",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L14-L14",
+      "scope": "BASEDATA"
+    },
+    {
+      "column": "ActionType",
+      "formula": "ActionType",
+      "expression_raw": "ActionType",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "BASEDATA"
+    },
+    {
+      "column": "IncludedInTotalRevenue",
+      "formula": "1",
+      "expression_raw": "1 AS IncludedInTotalRevenue",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L16-L16",
+      "scope": "BASEDATA"
+    },
+    {
+      "column": "IsActiveTrade",
+      "formula": "NULL",
+      "expression_raw": "NULL AS IsActiveTrade",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L49-L49",
+      "scope": "BASEDATA"
+    },
+    {
+      "column": "IsSettled",
+      "formula": "NULL",
+      "expression_raw": "NULL AS IsSettled",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L50-L50",
+      "scope": "BASEDATA"
+    },
+    {
+      "column": "MirrorID",
+      "formula": "NULL",
+      "expression_raw": "NULL AS MirrorID",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L51-L51",
+      "scope": "BASEDATA"
+    },
+    {
+      "column": "SettlementTypeID",
+      "formula": "NULL",
+      "expression_raw": "NULL AS SettlementTypeID",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L52-L52",
+      "scope": "BASEDATA"
+    },
+    {
+      "column": "IsSettled_Final",
+      "formula": "COALESCE(IsSettled, IsSettled)",
+      "expression_raw": "COALESCE(fca.IsSettled, dp.IsSettled) AS IsSettled_Final",
+      "inputs": [
+        "main.dwh.dim_Position",
+        "main.etoro_kpi_prep.v_revenue_fullcommission",
+        "main.etoro_kpi_prep.v_revenue_commission",
+        "main.etoro_kpi_prep.v_revenue_ticketfee_fixed",
+        "main.etoro_kpi_prep.v_revenue_ticketfee_bypercent",
+        "main.etoro_kpi_prep.v_revenue_rollover",
+        "main.etoro_kpi_prep.v_revenue_dividend",
+        "main.etoro_kpi_prep.v_revenue_adminfee",
+        "main.etoro_kpi_prep.v_revenue_spotadjustfee"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L170-L170",
+      "scope": "main"
+    },
+    {
+      "column": "MirrorID_Final",
+      "formula": "COALESCE(MirrorID, MirrorID)",
+      "expression_raw": "COALESCE(fca.MirrorID, dp.MirrorID) AS MirrorID_Final",
+      "inputs": [
+        "main.dwh.dim_Position",
+        "main.etoro_kpi_prep.v_revenue_fullcommission",
+        "main.etoro_kpi_prep.v_revenue_commission",
+        "main.etoro_kpi_prep.v_revenue_ticketfee_fixed",
+        "main.etoro_kpi_prep.v_revenue_ticketfee_bypercent",
+        "main.etoro_kpi_prep.v_revenue_rollover",
+        "main.etoro_kpi_prep.v_revenue_dividend",
+        "main.etoro_kpi_prep.v_revenue_adminfee",
+        "main.etoro_kpi_prep.v_revenue_spotadjustfee"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L171-L171",
+      "scope": "main"
+    },
+    {
+      "column": "SettlementTypeID_Final",
+      "formula": "COALESCE(SettlementTypeID, SettlementTypeID)",
+      "expression_raw": "COALESCE(fca.SettlementTypeID, dp.SettlementTypeID) AS SettlementTypeID_Final",
+      "inputs": [
+        "main.dwh.dim_Position",
+        "main.etoro_kpi_prep.v_revenue_fullcommission",
+        "main.etoro_kpi_prep.v_revenue_commission",
+        "main.etoro_kpi_prep.v_revenue_ticketfee_fixed",
+        "main.etoro_kpi_prep.v_revenue_ticketfee_bypercent",
+        "main.etoro_kpi_prep.v_revenue_rollover",
+        "main.etoro_kpi_prep.v_revenue_dividend",
+        "main.etoro_kpi_prep.v_revenue_adminfee",
+        "main.etoro_kpi_prep.v_revenue_spotadjustfee"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L172-L172",
+      "scope": "main"
+    },
+    {
+      "column": "IsOpenFromIBAN",
+      "formula": "CASE WHEN PositionID IS NOT NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE\n    WHEN io.PositionID IS NOT NULL THEN 1\n    ELSE 0\n  END AS IsOpenFromIBAN",
+      "inputs": [
+        "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L173-L176",
+      "scope": "main"
+    },
+    {
+      "column": "IsClosedToIBAN",
+      "formula": "CASE WHEN PositionID IS NOT NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE\n    WHEN ic.PositionID IS NOT NULL THEN 1\n    ELSE 0\n  END AS IsClosedToIBAN",
+      "inputs": [
+        "main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L177-L180",
+      "scope": "main"
+    },
+    {
+      "column": "IsCopyFund",
+      "formula": "CASE WHEN MirrorTypeID = 4 THEN 1 ELSE 0 END",
+      "expression_raw": "CASE\n    WHEN dm.MirrorTypeID = 4 THEN 1\n    ELSE 0\n  END AS IsCopyFund",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L181-L184",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentID",
+      "formula": "InstrumentID",
+      "expression_raw": "InstrumentID",
+      "inputs": [
+        "main.dwh.dim_Position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L138-L138",
+      "scope": "DIMPOS"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "formula": "InstrumentTypeID",
+      "expression_raw": "di.InstrumentTypeID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L186-L186",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentType",
+      "formula": "InstrumentType",
+      "expression_raw": "di.InstrumentType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L187-L187",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentName",
+      "formula": "Name",
+      "expression_raw": "di.Name AS InstrumentName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L188-L188",
+      "scope": "main"
+    },
+    {
+      "column": "Symbol",
+      "formula": "Symbol",
+      "expression_raw": "di.Symbol",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L189-L189",
+      "scope": "main"
+    },
+    {
+      "column": "IsSQF",
+      "formula": "CASE WHEN InstrumentID IS NOT NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE\n    WHEN sqf.InstrumentID IS NOT NULL THEN 1\n    ELSE 0\n  END AS IsSQF",
+      "inputs": [
+        "main.trading.bronze_etoro_trade_instrumentgroups"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L190-L193",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/mv_revenue_trading.sql"
+}

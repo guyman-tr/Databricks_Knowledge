@@ -1,0 +1,737 @@
+{
+  "schema": "etoro_kpi_prep",
+  "catalog": "main",
+  "started_at": "2026-05-19T11:58:52Z",
+  "finished_at": "2026-05-19T12:04:56Z",
+  "wall_seconds": 364.0,
+  "phases": {
+    "1": {
+      "wall_seconds": 0.20999526977539062,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "[discover-schema] phase=0 skip: C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\etoro_kpi_prep\\_schema_card.md exists (pass --force to rebuild)\n[discover-schema] phase=1 skip: C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\uc_inventory.json exists (pass --force to rebuild)"
+    },
+    "2": {
+      "wall_seconds": 337.10625648498535,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [53/53] v_trading_volume_positionlevel (VIEW)\nERROR:databricks.sql.backend.thrift_backend:ThriftBackend.attempt_request: Exception: \n[fetch-writer] column_lineage query failed for main.etoro_kpi_prep.v_trading_volume_positionlevel: Error during request to server. \nERROR:databricks.sql.backend.thrift_backend:ThriftBackend.attempt_request: Exception: \n[fetch-writer] wrote C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\_fetch_manifest.json (ok=52, no_lineage=0, errors=0)"
+    },
+    "3": {
+      "wall_seconds": 4.424623250961304,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [51/53] v_spaceship_mimo → 8 upstream refs\n  [52/53] v_trading_volume_and_amount → 9 upstream refs\n  [53/53] v_trading_volume_positionlevel → 9 upstream refs\n[upstream-bridge] wrote C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_index.json\n[upstream-bridge] stats={'total_upstreams': 82, 'rule1_synapse_mirror': 37, 'rule2_uc_generated': 33, 'rule3_uc_domain': 7, 'rule4_bronze_prod': 0, 'rule5_uc_native_map': 1, 'rule6_no_wiki': 4, 'wikis_cached': 64, 'no_wiki_placeholders': 18, 'blocked_on_upstream': 7}"
+    },
+    "4": {
+      "wall_seconds": 2.9063735008239746,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  wrote knowledge\\UC_generated\\etoro_kpi_prep\\Views\\v_spaceship_mimo.lineage.md\n[build-lineage] main.etoro_kpi_prep.v_trading_volume_and_amount (VIEW)\n  wrote knowledge\\UC_generated\\etoro_kpi_prep\\Views\\v_trading_volume_and_amount.lineage.md\n[build-lineage] main.etoro_kpi_prep.v_trading_volume_positionlevel (VIEW)\n  wrote knowledge\\UC_generated\\etoro_kpi_prep\\Views\\v_trading_volume_positionlevel.lineage.md"
+    },
+    "4.5": {
+      "wall_seconds": 0.2390270233154297,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [SKIP] v_revenue_ticketfee_fixed — concept_count=3 (use --force)\n  [SKIP] v_revenue_transfercoinfee — concept_count=1 (use --force)\n  [SKIP] v_spaceship_mimo — concept_count=8 (use --force)\n  [SKIP] v_trading_volume_and_amount — concept_count=12 (use --force)\n  [SKIP] v_trading_volume_positionlevel — concept_count=12 (use --force)"
+    },
+    "4.6": {
+      "wall_seconds": 0.16002488136291504,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [SKIP] v_revenue_ticketfee_fixed — formula_count=6 (use --force)\n  [SKIP] v_revenue_transfercoinfee — formula_count=6 (use --force)\n  [SKIP] v_spaceship_mimo — formula_count=15 (use --force)\n  [SKIP] v_trading_volume_and_amount — formula_count=32 (use --force)\n  [SKIP] v_trading_volume_positionlevel — formula_count=32 (use --force)"
+    },
+    "5": {
+      "wall_seconds": 13.787689447402954,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [OK] v_revenue_transfercoinfee — tiers={'1': 3, '2': 3}, unverified=0\n  [OK] v_spaceship_mimo — tiers={'2': 15}, unverified=0\n  [OK] v_trading_volume_and_amount — tiers={'2': 32}, unverified=0\n  [OK] v_trading_volume_positionlevel — tiers={'2': 32}, unverified=0\n[generate-wiki] done: 53/53 OK"
+    },
+    "6": {
+      "wall_seconds": 3.130369186401367,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "[validate-pipeline-wiki] etoro_kpi_prep: 52 objects checked, 0 HARD, 0 WARN issues (assert_no_inference=True)\n\n[validate-pipeline-wiki] PASS",
+      "stderr_tail": ""
+    }
+  },
+  "failures": [],
+  "objects": [
+    {
+      "name": "gold_de_user_dim_ddr_customer_dailystatus_scd",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "mv_revenue_trading",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 24
+      }
+    },
+    {
+      "name": "v_copyfund_positions",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 4,
+        "1": 5
+      }
+    },
+    {
+      "name": "v_ddr_revenues",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.etoro_kpi_prep.v_revenue_stakingfee",
+      "blocked_on_upstream": "main.etoro_kpi_prep.v_revenue_stakingfee",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 2,
+        "N": 22
+      }
+    },
+    {
+      "name": "v_dim_dataplatform_uuid",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 6
+      }
+    },
+    {
+      "name": "v_dim_ftdplatform",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 1,
+        "2": 1
+      }
+    },
+    {
+      "name": "v_dim_instrument_enriched",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 33,
+        "2": 15,
+        "3": 2
+      }
+    },
+    {
+      "name": "v_fact_customeraction",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "5": 10,
+        "1": 35,
+        "3": 4,
+        "2": 30
+      }
+    },
+    {
+      "name": "v_fact_customeraction_enriched",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "5": 10,
+        "1": 35,
+        "3": 4,
+        "2": 30
+      }
+    },
+    {
+      "name": "v_fact_customeraction_w_metrics",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 25,
+        "3": 1,
+        "2": 68,
+        "5": 3
+      }
+    },
+    {
+      "name": "v_globalftdplatform",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 1,
+        "2": 1
+      }
+    },
+    {
+      "name": "v_instrument_conversion_rates_dwh",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 12
+      }
+    },
+    {
+      "name": "v_mimo_allplatforms",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 21
+      }
+    },
+    {
+      "name": "v_mimo_emoneyplatform",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 21
+      }
+    },
+    {
+      "name": "v_mimo_first_deposit_all_platforms",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 2,
+        "2": 4
+      }
+    },
+    {
+      "name": "v_mimo_options_platform",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 14
+      }
+    },
+    {
+      "name": "v_mimo_optionsplatform",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 15
+      }
+    },
+    {
+      "name": "v_mimo_tradingplatform",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 17,
+        "1": 2
+      }
+    },
+    {
+      "name": "v_moneyfarm_aum",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 7
+      }
+    },
+    {
+      "name": "v_moneyfarm_fees",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 5
+      }
+    },
+    {
+      "name": "v_moneyfarm_mimo",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 12
+      }
+    },
+    {
+      "name": "v_options_aum",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 8
+      }
+    },
+    {
+      "name": "v_population_active_traders",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 15
+      }
+    },
+    {
+      "name": "v_population_active_traders_lite",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 14
+      }
+    },
+    {
+      "name": "v_population_balance_only_accounts",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 3
+      }
+    },
+    {
+      "name": "v_population_first_time_funded",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 18
+      }
+    },
+    {
+      "name": "v_population_first_trading_action",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 20
+      }
+    },
+    {
+      "name": "v_population_funded",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 3
+      }
+    },
+    {
+      "name": "v_population_otd_daterange",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 3
+      }
+    },
+    {
+      "name": "v_population_portfolio_only",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 21
+      }
+    },
+    {
+      "name": "v_revenue_adminfee",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 6,
+        "2": 1,
+        "5": 1
+      }
+    },
+    {
+      "name": "v_revenue_cashoutfee_excluderedeem",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 3,
+        "2": 3
+      }
+    },
+    {
+      "name": "v_revenue_cashoutfee_incredeem",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 3,
+        "2": 3
+      }
+    },
+    {
+      "name": "v_revenue_commission",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 9,
+        "2": 5,
+        "5": 1
+      }
+    },
+    {
+      "name": "v_revenue_conversionfee",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 13,
+        "2": 4
+      }
+    },
+    {
+      "name": "v_revenue_conversionfee_withpositiondata",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 13,
+        "2": 14
+      }
+    },
+    {
+      "name": "v_revenue_cryptotofiat_c2f",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 11,
+        "1": 5
+      }
+    },
+    {
+      "name": "v_revenue_dividend",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 4,
+        "2": 2
+      }
+    },
+    {
+      "name": "v_revenue_dormantfee",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 2,
+        "2": 4
+      }
+    },
+    {
+      "name": "v_revenue_fullcommission",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 9,
+        "2": 5,
+        "5": 1
+      }
+    },
+    {
+      "name": "v_revenue_interestfee",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 3,
+        "2": 2
+      }
+    },
+    {
+      "name": "v_revenue_optionsplatform",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 26
+      }
+    },
+    {
+      "name": "v_revenue_rollover",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 3,
+        "2": 3
+      }
+    },
+    {
+      "name": "v_revenue_sdrt",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 9,
+        "2": 4,
+        "5": 1
+      }
+    },
+    {
+      "name": "v_revenue_share_lending",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 4,
+        "2": 5
+      }
+    },
+    {
+      "name": "v_revenue_spotadjustfee",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 6,
+        "2": 2,
+        "5": 1
+      }
+    },
+    {
+      "name": "v_revenue_stakingfee",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 22
+      }
+    },
+    {
+      "name": "v_revenue_ticketfee_bypercent",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 5,
+        "1": 1
+      }
+    },
+    {
+      "name": "v_revenue_ticketfee_fixed",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 6
+      }
+    },
+    {
+      "name": "v_revenue_transfercoinfee",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 3,
+        "2": 3
+      }
+    },
+    {
+      "name": "v_spaceship_mimo",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 15
+      }
+    },
+    {
+      "name": "v_trading_volume_and_amount",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 32
+      }
+    },
+    {
+      "name": "v_trading_volume_positionlevel",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 32
+      }
+    }
+  ]
+}

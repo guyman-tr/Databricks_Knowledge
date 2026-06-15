@@ -1,0 +1,109 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_wallets",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:27Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Wallets.md",
+      "upstream_quote": "Auto-incrementing surrogate key.",
+      "wiki_quote": "Auto-incrementing surrogate key (Tier 1 — inherited from WalletDB.Wallet.Wallets).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Wallets.md",
+      "upstream_quote": "Internal wallet identifier (GUID). Unique constraint. The universal business key used across the entire system. FK targe",
+      "wiki_quote": "Internal wallet identifier (GUID). Unique constraint. The universal business key used across the entire system. FK targe",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Gcid",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Wallets.md",
+      "upstream_quote": "Global Customer ID of the wallet owner. For system wallets (types 1-4, 6-7), this is a system/service account ID. For cu",
+      "wiki_quote": "Global Customer ID of the wallet owner. For system wallets (types 1-4, 6-7), this is a system/service account ID. For cu",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainCryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Wallets.md",
+      "upstream_quote": "The blockchain network this wallet operates on. FK to Wallet.BlockchainCryptos.Id. Combined with Gcid and WalletTypeId f",
+      "wiki_quote": "The blockchain network this wallet operates on. FK to Wallet.BlockchainCryptos.Id. Combined with Gcid and WalletTypeId f",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Wallets.md",
+      "upstream_quote": "Operational purpose: 1=Redeem, 2=Conversion, 3=Funding, 4=Payment, 5=Customer (99.99%), 6=C2F, 7=StakingRefund. See [Wal",
+      "wiki_quote": "Operational purpose: 1=Redeem, 2=Conversion, 3=Funding, 4=Payment, 5=Customer (99.99%), 6=C2F, 7=StakingRefund. See [Wal",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsActive",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Wallets.md",
+      "upstream_quote": "Whether this wallet is currently operational. 1=active, 0=deactivated (funds locked, no new transactions). Set to 0 by W",
+      "wiki_quote": "Whether this wallet is currently operational. 1=active, 0=deactivated (funds locked, no new transactions). Set to 0 by W",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Wallets.md",
+      "upstream_quote": "Timestamp when this wallet was created/assigned to the customer.",
+      "wiki_quote": "Timestamp when this wallet was created/assigned to the customer (Tier 1 — inherited from WalletDB.Wallet.Wallets).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BeginDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Wallets.md",
+      "upstream_quote": "System-versioned temporal column (ROW START). Tracks when this version of the row became current.",
+      "wiki_quote": "System-versioned temporal column (ROW START). Tracks when this version of the row became current (Tier 1 — inherited fro",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EndDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Wallets.md",
+      "upstream_quote": "System-versioned temporal column (ROW END). Default 9999-12-31 for current rows.",
+      "wiki_quote": "System-versioned temporal column (ROW END). Default 9999-12-31 for current rows (Tier 1 — inherited from WalletDB.Wallet",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsActivated",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Wallets.md",
+      "upstream_quote": "Whether the wallet has completed blockchain activation. 1=fully activated, 0=pending activation (awaiting on-chain confi",
+      "wiki_quote": "Whether the wallet has completed blockchain activation. 1=fully activated, 0=pending activation (awaiting on-chain confi",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 10,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 10 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

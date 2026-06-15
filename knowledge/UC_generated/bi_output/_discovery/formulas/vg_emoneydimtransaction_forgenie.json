@@ -1,0 +1,151 @@
+{
+  "object_fqn": "main.bi_output.vg_emoneydimtransaction_forgenie",
+  "generated_at": "2026-05-19T15:01:28Z",
+  "formula_count": 13,
+  "formulas": [
+    {
+      "column": "CID",
+      "formula": "CID",
+      "expression_raw": "mdt.CID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "GCID",
+      "formula": "GCID",
+      "expression_raw": "mdt.GCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "TxTypeID",
+      "formula": "TxTypeID",
+      "expression_raw": "mdt.TxTypeID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "TxType",
+      "formula": "TxType",
+      "expression_raw": "mdt.TxType",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "TxTypeDescription",
+      "formula": "CASE WHEN TxTypeID IN (1, 2, 3, 4, 13) THEN TxType || ' - eToro Debit Card Transaction' WHEN TxType = 'Payment' THEN 'Payment - IBAN to External (Outgoing Payment)' …",
+      "expression_raw": "CASE \n        WHEN mdt.TxTypeID IN (1, 2, 3, 4, 13) THEN mdt.TxType || ' - eToro Debit Card Transaction'\n        WHEN mdt.TxType = 'Payment' THEN 'Payment - IBAN to External (Outgoing Payment)'\n      …",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L12-L19",
+      "scope": "main"
+    },
+    {
+      "column": "USDAmountApprox",
+      "formula": "USDAmountApprox",
+      "expression_raw": "mdt.USDAmountApprox",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "HolderAmount",
+      "formula": "HolderAmount",
+      "expression_raw": "mdt.HolderAmount",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "HolderCurrencyDesc",
+      "formula": "HolderCurrencyDesc",
+      "expression_raw": "mdt.HolderCurrencyDesc",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "MerchantID",
+      "formula": "MerchantID",
+      "expression_raw": "mdt.MerchantID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "TxStatusModificationTime",
+      "formula": "TxStatusModificationTime",
+      "expression_raw": "mdt.TxStatusModificationTime",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "TxLabel",
+      "formula": "TxLabel",
+      "expression_raw": "mdt.TxLabel",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "MoneyMoveDirection",
+      "formula": "MoneyMoveDirection",
+      "expression_raw": "mdt.MoneyMoveDirection",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "USDRateApprox",
+      "formula": "USDRateApprox",
+      "expression_raw": "mdt.USDRateApprox",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_emoneydimtransaction_forgenie.sql"
+}

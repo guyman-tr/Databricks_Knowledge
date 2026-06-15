@@ -1,0 +1,492 @@
+{
+  "object_fqn": "main.bi_output.vg_emoney_panel_firstdates_em1",
+  "generated_at": "2026-05-19T15:01:28Z",
+  "formula_count": 44,
+  "formulas": [
+    {
+      "column": "CID",
+      "formula": "/* ========================= Identifiers ========================= */ CID",
+      "expression_raw": "/* =========================\n       Identifiers\n       ========================= */\n    CID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L11",
+      "scope": "main"
+    },
+    {
+      "column": "GCID",
+      "formula": "GCID",
+      "expression_raw": "GCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_fmi_date",
+      "formula": "/* ========================= FMI / FMO (eMoney POV) ========================= */ FMI_Date",
+      "expression_raw": "/* =========================\n       FMI / FMO (eMoney POV)\n       ========================= */\n    FMI_Date       AS emoney_fmi_date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L13-L17",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_fmi_source",
+      "formula": "FMI_Source",
+      "expression_raw": "FMI_Source     AS emoney_fmi_source",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "Seniority_FMI",
+      "formula": "Seniority_FMI",
+      "expression_raw": "Seniority_FMI",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_fmo_date",
+      "formula": "FMO_Date",
+      "expression_raw": "FMO_Date       AS emoney_fmo_date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L21",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_fmo_target",
+      "formula": "FMO_Target",
+      "expression_raw": "FMO_Target     AS emoney_fmo_target",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_fmo_mop",
+      "formula": "FMO_MOP",
+      "expression_raw": "FMO_MOP        AS emoney_fmo_mop",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "Seniority_FMO",
+      "formula": "Seniority_FMO",
+      "expression_raw": "Seniority_FMO",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_last_settled_tx_date",
+      "formula": "/* ========================= Settled transaction dates ========================= */ LastSettledTXDate",
+      "expression_raw": "/* =========================\n       Settled transaction dates\n       ========================= */\n    LastSettledTXDate          AS emoney_last_settled_tx_date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L25-L29",
+      "scope": "main"
+    },
+    {
+      "column": "Seniority_LastTXDate",
+      "formula": "Seniority_LastTXDate",
+      "expression_raw": "Seniority_LastTXDate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_first_settled_tx_date",
+      "formula": "FirstIBANSettledTXDate",
+      "expression_raw": "FirstIBANSettledTXDate     AS emoney_first_settled_tx_date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_last_settled_tx_date_iban",
+      "formula": "LastIBANSettledTXDate",
+      "expression_raw": "LastIBANSettledTXDate      AS emoney_last_settled_tx_date_iban",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_1st_action_date",
+      "formula": "/* ========================= Generic action sequence (1–5) ========================= */ 1stActionDate",
+      "expression_raw": "/* =========================\n       Generic action sequence (1–5)\n       ========================= */\n    1stActionDate              AS emoney_1st_action_date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L33-L37",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_1st_action_type",
+      "formula": "1stActionType",
+      "expression_raw": "1stActionType              AS emoney_1st_action_type",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_1st_action_amount_usd",
+      "formula": "1stActionUSDApproxAmount",
+      "expression_raw": "1stActionUSDApproxAmount   AS emoney_1st_action_amount_usd",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L39-L39",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_2nd_action_date",
+      "formula": "2ndActionDate",
+      "expression_raw": "2ndActionDate              AS emoney_2nd_action_date",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L40-L41",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_2nd_action_type",
+      "formula": "2ndActionType",
+      "expression_raw": "2ndActionType              AS emoney_2nd_action_type",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L42-L42",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_2nd_action_amount_usd",
+      "formula": "2ndActionUSDApproxAmount",
+      "expression_raw": "2ndActionUSDApproxAmount   AS emoney_2nd_action_amount_usd",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L43-L43",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_3rd_action_date",
+      "formula": "3rdActionDate",
+      "expression_raw": "3rdActionDate              AS emoney_3rd_action_date",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L44-L45",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_3rd_action_type",
+      "formula": "3rdActionType",
+      "expression_raw": "3rdActionType              AS emoney_3rd_action_type",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L46-L46",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_3rd_action_amount_usd",
+      "formula": "3rdActionUSDApproxAmount",
+      "expression_raw": "3rdActionUSDApproxAmount   AS emoney_3rd_action_amount_usd",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L47-L47",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_4th_action_date",
+      "formula": "4thActionDate",
+      "expression_raw": "4thActionDate              AS emoney_4th_action_date",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L48-L49",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_4th_action_type",
+      "formula": "4thActionType",
+      "expression_raw": "4thActionType              AS emoney_4th_action_type",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L50-L50",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_4th_action_amount_usd",
+      "formula": "4thActionUSDApproxAmount",
+      "expression_raw": "4thActionUSDApproxAmount   AS emoney_4th_action_amount_usd",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L51-L51",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_5th_action_date",
+      "formula": "5thActionDate",
+      "expression_raw": "5thActionDate              AS emoney_5th_action_date",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L52-L53",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_5th_action_type",
+      "formula": "5thActionType",
+      "expression_raw": "5thActionType              AS emoney_5th_action_type",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L54-L54",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_5th_action_amount_usd",
+      "formula": "5thActionUSDApproxAmount",
+      "expression_raw": "5thActionUSDApproxAmount   AS emoney_5th_action_amount_usd",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L55-L55",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_card_activation_date",
+      "formula": "/* ========================= Card lifecycle & actions (1–5) ========================= */ CardActivationTime",
+      "expression_raw": "/* =========================\n       Card lifecycle & actions (1–5)\n       ========================= */\n    CardActivationTime         AS emoney_card_activation_date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L56-L60",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_card_1st_action_date",
+      "formula": "Card1stActionDate",
+      "expression_raw": "Card1stActionDate          AS emoney_card_1st_action_date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L61-L62",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_card_1st_action_type",
+      "formula": "Card1stActionType",
+      "expression_raw": "Card1stActionType          AS emoney_card_1st_action_type",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L63-L63",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_card_1st_action_amount_usd",
+      "formula": "Card1stActionUSDApproxAmount",
+      "expression_raw": "Card1stActionUSDApproxAmount AS emoney_card_1st_action_amount_usd",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L64-L64",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_card_2nd_action_date",
+      "formula": "Card2ndActionDate",
+      "expression_raw": "Card2ndActionDate          AS emoney_card_2nd_action_date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L65-L66",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_card_2nd_action_type",
+      "formula": "Card2ndActionType",
+      "expression_raw": "Card2ndActionType          AS emoney_card_2nd_action_type",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L67-L67",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_card_2nd_action_amount_usd",
+      "formula": "Card2ndActionUSDApproxAmount",
+      "expression_raw": "Card2ndActionUSDApproxAmount AS emoney_card_2nd_action_amount_usd",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L68-L68",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_card_3rd_action_date",
+      "formula": "Card3rdActionDate",
+      "expression_raw": "Card3rdActionDate          AS emoney_card_3rd_action_date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L69-L70",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_card_3rd_action_type",
+      "formula": "Card3rdActionType",
+      "expression_raw": "Card3rdActionType          AS emoney_card_3rd_action_type",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L71-L71",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_card_3rd_action_amount_usd",
+      "formula": "Card3rdActionUSDApproxAmount",
+      "expression_raw": "Card3rdActionUSDApproxAmount AS emoney_card_3rd_action_amount_usd",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L72-L72",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_card_4th_action_date",
+      "formula": "Card4thActionDate",
+      "expression_raw": "Card4thActionDate          AS emoney_card_4th_action_date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L73-L74",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_card_4th_action_type",
+      "formula": "Card4thActionType",
+      "expression_raw": "Card4thActionType          AS emoney_card_4th_action_type",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L75-L75",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_card_4th_action_amount_usd",
+      "formula": "Card4thActionUSDApproxAmount",
+      "expression_raw": "Card4thActionUSDApproxAmount AS emoney_card_4th_action_amount_usd",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L76-L76",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_card_5th_action_date",
+      "formula": "Card5thActionDate",
+      "expression_raw": "Card5thActionDate          AS emoney_card_5th_action_date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L77-L78",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_card_5th_action_type",
+      "formula": "Card5thActionType",
+      "expression_raw": "Card5thActionType          AS emoney_card_5th_action_type",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L79-L79",
+      "scope": "main"
+    },
+    {
+      "column": "emoney_card_5th_action_amount_usd",
+      "formula": "Card5thActionUSDApproxAmount",
+      "expression_raw": "Card5thActionUSDApproxAmount AS emoney_card_5th_action_amount_usd",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L80-L80",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_emoney_panel_firstdates_em1.sql"
+}

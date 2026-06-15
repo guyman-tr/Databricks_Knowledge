@@ -1,0 +1,105 @@
+{
+  "object_fqn": "main.etoro_kpi.ftd_click_v_testing_dup_cancle",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 9,
+  "formulas": [
+    {
+      "column": "gcid",
+      "formula": "gcid",
+      "expression_raw": "gcid",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "realcid",
+      "formula": "SELECT gcid, coalesce(realcid,b.realcid) as realcid, step_key, last_event_time",
+      "expression_raw": "SELECT a.gcid, coalesce(a.realcid,b.realcid) as realcid, a.step_key, a.last_event_time",
+      "inputs": [
+        "main.etoro_kpi.de_output_ftd_click"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L10-L10",
+      "scope": "pivoted"
+    },
+    {
+      "column": "initial_deposit_click",
+      "formula": "PIVOT ( MAX(last_event_time) FOR step_key IN ( 'initial_deposit_click'",
+      "expression_raw": "PIVOT (\n    MAX(last_event_time) FOR step_key IN (\n      'initial_deposit_click' AS initial_deposit_click",
+      "inputs": [],
+      "transform_kind": "function",
+      "evidence_lines": "L14-L16",
+      "scope": "pivoted"
+    },
+    {
+      "column": "ftd_wizard_intro",
+      "formula": "'ftd_wizard_intro'",
+      "expression_raw": "'ftd_wizard_intro' AS ftd_wizard_intro",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L17-L17",
+      "scope": "pivoted"
+    },
+    {
+      "column": "ftd_wizard_amount",
+      "formula": "'ftd_wizard_amount'",
+      "expression_raw": "'ftd_wizard_amount' AS ftd_wizard_amount",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L18-L18",
+      "scope": "pivoted"
+    },
+    {
+      "column": "ftd_wizard_mean_of_payment",
+      "formula": "'ftd_wizard_mean_of_payment'",
+      "expression_raw": "'ftd_wizard_mean_of_payment' AS ftd_wizard_mean_of_payment",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L19-L19",
+      "scope": "pivoted"
+    },
+    {
+      "column": "final_deposit_click",
+      "formula": "'final_deposit_click'",
+      "expression_raw": "'final_deposit_click' AS final_deposit_click",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L20-L20",
+      "scope": "pivoted"
+    },
+    {
+      "column": "initial_deposit_clicks_combined",
+      "formula": "max_time",
+      "expression_raw": "max_time AS initial_deposit_clicks_combined",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L43-L43",
+      "scope": "main"
+    },
+    {
+      "column": "initial_deposit_click_type",
+      "formula": "CASE WHEN max_time IS NULL THEN NULL WHEN max_time = initial_deposit_click THEN 'initial_deposit_click' WHEN max_time = ftd_wizard_intro THEN 'ftd_wizard_intro' WHEN ma…",
+      "expression_raw": "CASE\n    WHEN max_time IS NULL THEN NULL\n    WHEN max_time = initial_deposit_click       THEN 'initial_deposit_click'\n    WHEN max_time = ftd_wizard_intro           THEN 'ftd_wizard_intro'\n    WHEN ma…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L44-L50",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/ftd_click_v_testing_dup_cancle.sql"
+}

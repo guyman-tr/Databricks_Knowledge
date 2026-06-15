@@ -1,0 +1,1182 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_saxo_recon_trades",
+  "rows": [
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "AccountNumber",
+      "target_column_name": "AccountNumber",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "AccountNumber",
+      "target_column_name": "AccountNumber",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "AccountNumber",
+      "target_column_name": "AccountNumber",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "AccountNumber",
+      "target_column_name": "AccountNumber",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "BuySell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "BuySell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "BuySell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "Buy/Sell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Buy/Sell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "Buy/Sell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Clients_AmountUSD",
+      "target_column_name": "Clients_AmountUSD",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Clients_Units",
+      "target_column_name": "Clients_Units",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "CurrencyPrimary",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Date",
+      "target_column_name": "Date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "ExchangeDescription",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "ExchangeDescription",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "ExchangeDescription",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "InstrumentDescription",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "InstrumentDescription",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "InstrumentDescription",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "SAXO-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "SAXO-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "SAXO-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "SAXO-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "SAXO-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "SAXO-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "SAXO-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "SAXO-Clients_AmountUSD",
+      "target_column_name": "SAXO-Clients_AmountUSD",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "SAXO-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "SAXO-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "SAXO-Clients_Units",
+      "target_column_name": "SAXO-Clients_Units",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "SAXO-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "SAXO-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "SAXO-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "SAXO-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "SAXO-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "SAXO-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "SAXO-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "SAXO-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "SAXO-eToro_AmountUSD",
+      "target_column_name": "SAXO-eToro_AmountUSD",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "SAXO-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "SAXO-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "SAXO-eToro_LocalAmount",
+      "target_column_name": "SAXO-eToro_LocalAmount",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "SAXO-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "eToro_AvgRate",
+      "target_column_name": "SAXO-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "SAXO-eToro_Rate",
+      "target_column_name": "SAXO-eToro_Rate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToro_AvgRate",
+      "target_column_name": "SAXO-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "SAXO-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "SAXO-eToro_Units",
+      "target_column_name": "SAXO-eToro_Units",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "SAXO-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "SAXO_AmountUSD",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "SAXO_FX_Rate",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "SAXO_FX_Rate",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "SAXO_FX_Rate",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "SAXO_FX_Rate",
+      "target_column_name": "SAXO_FX_Rate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "SAXO_LocalAmount",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "Price",
+      "target_column_name": "SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "SAXO_Rate",
+      "target_column_name": "SAXO_Rate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO_Units",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO_Units",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "TradedAmount",
+      "target_column_name": "SAXO_Units",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "SAXO_Units",
+      "target_column_name": "SAXO_Units",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "CommissionInstrumentCurrency",
+      "target_column_name": "Total_Commission",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "CommissionInstrumentCurrency",
+      "target_column_name": "Total_Commission",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "CommissionInstrumentCurrency",
+      "target_column_name": "Total_Commission",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Total_Commission",
+      "target_column_name": "Total_Commission",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_sharetradesexecuted",
+      "source_column_name": "CommissionInstrumentCurrency",
+      "target_column_name": "Total_Commission_Dollar",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "Total_Commission_Dollar",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "Total_Commission_Dollar",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "Total_Commission_Dollar",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_sharetradesexecuted",
+      "source_column_name": "CommissionInstrumentCurrency",
+      "target_column_name": "Total_Commission_Dollar",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdtradesexecuted",
+      "source_column_name": "CommissionInstrumentCurrency",
+      "target_column_name": "Total_Commission_Dollar",
+      "entity_type": "JOB",
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Total_Commission_Dollar",
+      "target_column_name": "Total_Commission_Dollar",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "eToro_AmountUSD",
+      "target_column_name": "eToro_AmountUSD",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "FXratetoUSD",
+      "target_column_name": "eToro_FX_Rate",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "eToro_FX_Rate",
+      "target_column_name": "eToro_FX_Rate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "FXratetoUSD",
+      "target_column_name": "eToro_FX_Rate",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "eToro_LocalAmount",
+      "target_column_name": "eToro_LocalAmount",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "eToro_AvgRate",
+      "target_column_name": "eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "eToro_Rate",
+      "target_column_name": "eToro_Rate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToro_AvgRate",
+      "target_column_name": "eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "eToro_Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Date",
+      "target_column_name": "etr_y",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Date",
+      "target_column_name": "etr_ym",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Date",
+      "target_column_name": "etr_ymd",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
+    }
+  ],
+  "generated_at": "2026-05-19T12:37:19Z"
+}

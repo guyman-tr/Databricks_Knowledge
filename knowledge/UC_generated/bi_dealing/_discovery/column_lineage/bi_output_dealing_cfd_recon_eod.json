@@ -1,0 +1,335 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_cfd_recon_eod",
+  "rows": [
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_dealingdashboard_clients",
+      "source_column_name": "UnitsNOP",
+      "target_column_name": "Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro2_report_componentunderlyings",
+      "source_column_name": "Quantity",
+      "target_column_name": "Diff_Clients_LP_Units",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_dealingdashboard_clients",
+      "source_column_name": "UnitsNOP",
+      "target_column_name": "Diff_Clients_LP_Units",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "TradeQuantity",
+      "target_column_name": "Diff_Clients_LP_Units",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_visionet_r010_eod_positionsdetail_et",
+      "source_column_name": "TradeDateQuantity",
+      "target_column_name": "Diff_Clients_LP_Units",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302320_713860_positionvaluation",
+      "source_column_name": "TD_Quantity",
+      "target_column_name": "Diff_Clients_LP_Units",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro_report_componentunderlyings",
+      "source_column_name": "Quantity",
+      "target_column_name": "Diff_Clients_LP_Units",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Units",
+      "target_column_name": "Diff_Clients_LP_Units",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro2_report_componentunderlyings",
+      "source_column_name": "Quantity",
+      "target_column_name": "Diff_Etoro_LP_Units",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "TradeQuantity",
+      "target_column_name": "Diff_Etoro_LP_Units",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_visionet_r010_eod_positionsdetail_et",
+      "source_column_name": "TradeDateQuantity",
+      "target_column_name": "Diff_Etoro_LP_Units",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "Diff_Etoro_LP_Units",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Units",
+      "target_column_name": "Diff_Etoro_LP_Units",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro_report_componentunderlyings",
+      "source_column_name": "Quantity",
+      "target_column_name": "Diff_Etoro_LP_Units",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302320_713860_positionvaluation",
+      "source_column_name": "TD_Quantity",
+      "target_column_name": "Diff_Etoro_LP_Units",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "Etoro_Units",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro2_report_componentunderlyings",
+      "source_column_name": "ISIN_Code",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Name",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "ISIN",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302320_713860_positionvaluation",
+      "source_column_name": "Underlyer_RIC",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302320_713860_positionvaluation",
+      "source_column_name": "Underlyer_ISIN",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro_report_componentunderlyings",
+      "source_column_name": "ISIN_Code",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302320_713860_positionvaluation",
+      "source_column_name": "Current_Price",
+      "target_column_name": "LPs_Price",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_visionet_r010_eod_positionsdetail_et",
+      "source_column_name": "TradeDateQuantity",
+      "target_column_name": "LPs_Price",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro2_report_componentunderlyings",
+      "source_column_name": "Quantity",
+      "target_column_name": "LPs_Price",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_visionet_r010_eod_positionsdetail_et",
+      "source_column_name": "ClosingPrice",
+      "target_column_name": "LPs_Price",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro_report_componentunderlyings",
+      "source_column_name": "Current_Price",
+      "target_column_name": "LPs_Price",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302320_713860_positionvaluation",
+      "source_column_name": "TD_Quantity",
+      "target_column_name": "LPs_Price",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "ClosingPrice",
+      "target_column_name": "LPs_Price",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Units",
+      "target_column_name": "LPs_Price",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro_report_componentunderlyings",
+      "source_column_name": "Quantity",
+      "target_column_name": "LPs_Price",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Local_Price",
+      "target_column_name": "LPs_Price",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro2_report_componentunderlyings",
+      "source_column_name": "Current_Price",
+      "target_column_name": "LPs_Price",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "TradeQuantity",
+      "target_column_name": "LPs_Price",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "TradeQuantity",
+      "target_column_name": "Units_Apex",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Units",
+      "target_column_name": "Units_BNY",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302320_713860_positionvaluation",
+      "source_column_name": "TD_Quantity",
+      "target_column_name": "Units_GS",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro_report_componentunderlyings",
+      "source_column_name": "Quantity",
+      "target_column_name": "Units_JPM",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro2_report_componentunderlyings",
+      "source_column_name": "Quantity",
+      "target_column_name": "Units_JPM",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Units",
+      "target_column_name": "Units_Total",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro2_report_componentunderlyings",
+      "source_column_name": "Quantity",
+      "target_column_name": "Units_Total",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_visionet_r010_eod_positionsdetail_et",
+      "source_column_name": "TradeDateQuantity",
+      "target_column_name": "Units_Total",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_gs_srpb_221797_1200626261_equity_synthetic_302320_713860_positionvaluation",
+      "source_column_name": "TD_Quantity",
+      "target_column_name": "Units_Total",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "TradeQuantity",
+      "target_column_name": "Units_Total",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_jpm_eod_etoro_report_componentunderlyings",
+      "source_column_name": "Quantity",
+      "target_column_name": "Units_Total",
+      "entity_type": "JOB",
+      "event_count": 106
+    },
+    {
+      "source_table_full_name": "main.general.gold_visionet_r010_eod_positionsdetail_et",
+      "source_column_name": "TradeDateQuantity",
+      "target_column_name": "Units_Vision",
+      "entity_type": "JOB",
+      "event_count": 106
+    }
+  ],
+  "generated_at": "2026-05-19T12:20:43Z"
+}

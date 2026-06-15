@@ -1,0 +1,130 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_travelruleaddresses",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:25Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleAddresses.md",
+      "upstream_quote": "Auto-incrementing PK. FK target for Wallet.TravelRuleSends.",
+      "wiki_quote": "Auto-incrementing PK. FK target for Wallet.TravelRuleSends (Tier 1 — inherited from WalletDB.Wallet.TravelRuleAddresses)",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleAddresses.md",
+      "upstream_quote": "Customer wallet this address belongs to. FK to Wallet.WalletPool.WalletId.",
+      "wiki_quote": "Customer wallet this address belongs to. FK to Wallet.WalletPool.WalletId (Tier 1 — inherited from WalletDB.Wallet.Trave",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ToAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleAddresses.md",
+      "upstream_quote": "The whitelisted external blockchain address.",
+      "wiki_quote": "The whitelisted external blockchain address (Tier 1 — inherited from WalletDB.Wallet.TravelRuleAddresses).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TravelRuleAddressTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleAddresses.md",
+      "upstream_quote": "Address type: 1=Private (self-hosted), 2=Hosted (VASP). See [Travel Rule Address Type](../../_glossary.md#travel-rule-ad",
+      "wiki_quote": "Address type: 1=Private (self-hosted), 2=Hosted (VASP). See [Travel Rule Address Type](../../_glossary.md#travel-rule-ad",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SelfAccount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleAddresses.md",
+      "upstream_quote": "Whether the beneficiary is the same person as the sender: 1=self-transfer, 0=third-party transfer. Affects compliance re",
+      "wiki_quote": "Whether the beneficiary is the same person as the sender: 1=self-transfer, 0=third-party transfer. Affects compliance re",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "HostingCompany",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleAddresses.md",
+      "upstream_quote": "Name of the VASP hosting the destination address (from Wallet.HostingCompanies list). NULL for private/self-hosted addre",
+      "wiki_quote": "Name of the VASP hosting the destination address (from Wallet.HostingCompanies list). NULL for private/self-hosted addre",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Name",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleAddresses.md",
+      "upstream_quote": "Beneficiary's full name. MASKED for PII protection. NULL for self-transfers.",
+      "wiki_quote": "Beneficiary's full name. MASKED for PII protection. NULL for self-transfers (Tier 1 — inherited from WalletDB.Wallet.Tra",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountryAlpha3Code",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleAddresses.md",
+      "upstream_quote": "Beneficiary's country (ISO 3166 alpha-3). MASKED.",
+      "wiki_quote": "Beneficiary's country (ISO 3166 alpha-3). MASKED (Tier 1 — inherited from WalletDB.Wallet.TravelRuleAddresses).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "State",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleAddresses.md",
+      "upstream_quote": "Beneficiary's state/province. MASKED.",
+      "wiki_quote": "Beneficiary's state/province. MASKED (Tier 1 — inherited from WalletDB.Wallet.TravelRuleAddresses).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "City",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleAddresses.md",
+      "upstream_quote": "Beneficiary's city. MASKED.",
+      "wiki_quote": "Beneficiary's city. MASKED (Tier 1 — inherited from WalletDB.Wallet.TravelRuleAddresses).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Address",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleAddresses.md",
+      "upstream_quote": "Beneficiary's street address. MASKED.",
+      "wiki_quote": "Beneficiary's street address. MASKED (Tier 1 — inherited from WalletDB.Wallet.TravelRuleAddresses).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Zipcode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleAddresses.md",
+      "upstream_quote": "Beneficiary's postal code. MASKED.",
+      "wiki_quote": "Beneficiary's postal code. MASKED (Tier 1 — inherited from WalletDB.Wallet.TravelRuleAddresses).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Created",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleAddresses.md",
+      "upstream_quote": "Timestamp when this address was whitelisted.",
+      "wiki_quote": "Timestamp when this address was whitelisted (Tier 1 — inherited from WalletDB.Wallet.TravelRuleAddresses).",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 13,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 13 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

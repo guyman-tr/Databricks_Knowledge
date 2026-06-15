@@ -1,0 +1,95 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiktivo_dbo_tblaff_languages",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:50Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "LanguageID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Languages.md",
+      "upstream_quote": "Primary key. Auto-incrementing identifier for each language entry. Referenced by tblaff_Groups.LanguageID, tblaff_Banner",
+      "wiki_quote": "Primary key. Auto-incrementing identifier for each language entry. Referenced by tblaff_Groups.LanguageID, tblaff_Banner",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LanguageName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Languages.md",
+      "upstream_quote": "English name of the language (e.g., \"English\", \"Spanish\", \"German\"). Used in admin UI dropdowns and reports.",
+      "wiki_quote": "English name of the language (e.g., \"English\", \"Spanish\", \"German\"). Used in admin UI dropdowns and reports (Tier 1 — in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsCommunicationLanguage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Languages.md",
+      "upstream_quote": "Whether this language is available for affiliate email communications. 1 = can be selected as an affiliate's communicati",
+      "wiki_quote": "Whether this language is available for affiliate email communications. 1 = can be selected as an affiliate's communicati",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LanguageNaturalName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Languages.md",
+      "upstream_quote": "Native-script name of the language (e.g., \"Deutsch\", \"Francais\", \"Arabic script\"). Displayed in locale selectors. NULL/b",
+      "wiki_quote": "Native-script name of the language (e.g., \"Deutsch\", \"Francais\", \"Arabic script\"). Displayed in locale selectors. NULL/b",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TLDURL",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Languages.md",
+      "upstream_quote": "Base top-level domain URL for this locale. Routes affiliate tracking links to the correct regional site (e.g., etoro.it ",
+      "wiki_quote": "Base top-level domain URL for this locale. Routes affiliate tracking links to the correct regional site (e.g., etoro.it ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DefaultLandingPage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Languages.md",
+      "upstream_quote": "Custom landing page URL for affiliate traffic in this language. When set, overrides the TLDURL for campaign-specific rou",
+      "wiki_quote": "Custom landing page URL for affiliate traffic in this language. When set, overrides the TLDURL for campaign-specific rou",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TierTwoLandingPage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Languages.md",
+      "upstream_quote": "Alternate landing page URL for tier-2 (sub-affiliate) traffic. Allows different conversion funnels for direct vs sub-aff",
+      "wiki_quote": "Alternate landing page URL for tier-2 (sub-affiliate) traffic. Allows different conversion funnels for direct vs sub-aff",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Code",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Languages.md",
+      "upstream_quote": "BCP 47/IETF language tag (e.g., \"en-gb\", \"es-es\", \"zh-cn\"). Used for locale matching in tracking URLs and API integratio",
+      "wiki_quote": "BCP 47/IETF language tag (e.g., \"en-gb\", \"es-es\", \"zh-cn\"). Used for locale matching in tracking URLs and API integratio",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 8,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 8 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

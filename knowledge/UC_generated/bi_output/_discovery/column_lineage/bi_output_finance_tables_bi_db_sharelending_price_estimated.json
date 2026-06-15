@@ -1,0 +1,111 @@
+{
+  "object": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_price_estimated",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISIN",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_history_instrumentmetadata",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISIN",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_gsl108p___detail___loans_by_account_manager__with_pending",
+      "source_column_name": "MarketPrice",
+      "target_column_name": "MarketPriceBNY",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "Amount",
+      "target_column_name": "PriceEstimated",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "PriceEstimated",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "PositionPnL",
+      "target_column_name": "PriceEstimated",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "PositionPnL",
+      "target_column_name": "PriceEstimatedUK",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "Amount",
+      "target_column_name": "PriceEstimatedUK",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "PriceEstimatedUK",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "ReportDate",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_y",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ym",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ymd",
+      "entity_type": "JOB",
+      "event_count": 61
+    }
+  ],
+  "generated_at": "2026-05-19T14:38:22Z"
+}

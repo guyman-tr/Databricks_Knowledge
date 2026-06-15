@@ -7,20 +7,20 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_population_portfolio_only.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_population_portfolio_only.json` (rows: 21, mismatches: 20) |
 | **Primary upstream** | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 
 | Upstream UC Object | Role | Upstream Wiki |
 |--------------------|------|---------------|
-| `main.general.bronze_sodreconciliation_apex_ext981_buypowersummary` | JOIN / referenced | ✓ `knowledge\ProdSchemas\DB_Schema\Sodreconciliation\Wiki\apex\Tables\apex.EXT981_BuyPowerSummary.md` |
+| `main.general.bronze_sodreconciliation_apex_ext981_buypowersummary` | JOIN / referenced | ✓ `knowledge/ProdSchemas/DB_Schema/Sodreconciliation/Wiki/apex/Tables/apex.EXT981_BuyPowerSummary.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Customer.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Instrument.md` |
 | `main.dwh.dim_position` | JOIN / referenced | ✗ `(no wiki found)` |
 | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new` | Primary (FROM) | ✓ `knowledge\synapse\Wiki\BI_DB_dbo\Tables\BI_DB_Client_Balance_CID_Level_New.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Mirror.md` |
-| `main.general.bronze_usabroker_apex_options` | JOIN / referenced | ✓ `knowledge\ProdSchemas\ComplianceDBs\USABroker\Wiki\apex\Tables\apex.Options.md` |
-| `main.etoro_kpi_prep.v_population_active_traders` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_population_active_traders.md` |
+| `main.general.bronze_usabroker_apex_options` | JOIN / referenced | ✓ `knowledge/ProdSchemas/ComplianceDBs/USABroker/Wiki/apex/Tables/apex.Options.md` |
+| `main.etoro_kpi_prep.v_population_active_traders` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_population_active_traders.md` |
 
 ## Lineage Chain
 

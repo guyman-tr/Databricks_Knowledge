@@ -1,0 +1,209 @@
+{
+  "object": "main.bi_output.bi_output_customer_customer_facing_triggers",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 198
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 198
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 132
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "RealCID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 132
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 77
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "RealCID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_fulldata",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "Date",
+      "entity_type": "JOB",
+      "event_count": 570
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "InterestOnBalanceRate",
+      "entity_type": "JOB",
+      "event_count": 84
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Gold",
+      "target_column_name": "InterestOnBalanceRate",
+      "entity_type": "JOB",
+      "event_count": 14
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Bronze",
+      "target_column_name": "InterestOnBalanceRate",
+      "entity_type": "JOB",
+      "event_count": 14
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Silver",
+      "target_column_name": "InterestOnBalanceRate",
+      "entity_type": "JOB",
+      "event_count": 14
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Diamond",
+      "target_column_name": "InterestOnBalanceRate",
+      "entity_type": "JOB",
+      "event_count": 14
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Platinum",
+      "target_column_name": "InterestOnBalanceRate",
+      "entity_type": "JOB",
+      "event_count": 14
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": "Platinum Plus",
+      "target_column_name": "InterestOnBalanceRate",
+      "entity_type": "JOB",
+      "event_count": 14
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "TriggerId",
+      "entity_type": "JOB",
+      "event_count": 556
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_triggers",
+      "source_column_name": "TriggerKey",
+      "target_column_name": "TriggerKey",
+      "entity_type": "JOB",
+      "event_count": 869
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CID",
+      "target_column_name": "TriggerKey",
+      "entity_type": "JOB",
+      "event_count": 198
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "source_column_name": "CID",
+      "target_column_name": "TriggerKey",
+      "entity_type": "JOB",
+      "event_count": 198
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "RealCID",
+      "target_column_name": "TriggerKey",
+      "entity_type": "JOB",
+      "event_count": 132
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "TriggerKey",
+      "entity_type": "JOB",
+      "event_count": 132
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_triggers_filtered",
+      "source_column_name": "TriggerKey",
+      "target_column_name": "TriggerKey",
+      "entity_type": "JOB",
+      "event_count": 98
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "TriggerKey",
+      "entity_type": "JOB",
+      "event_count": 77
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_fulldata",
+      "source_column_name": "CID",
+      "target_column_name": "TriggerKey",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "RealCID",
+      "target_column_name": "TriggerKey",
+      "entity_type": "JOB",
+      "event_count": 66
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 570
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_y",
+      "entity_type": "JOB",
+      "event_count": 570
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ym",
+      "entity_type": "JOB",
+      "event_count": 570
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ymd",
+      "entity_type": "JOB",
+      "event_count": 570
+    }
+  ],
+  "generated_at": "2026-05-19T14:18:38Z"
+}

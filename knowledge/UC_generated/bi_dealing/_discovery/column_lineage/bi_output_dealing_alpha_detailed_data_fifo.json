@@ -1,0 +1,363 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_alpha_detailed_data_fifo",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "LastName",
+      "target_column_name": "AccountManager",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "FirstName",
+      "target_column_name": "AccountManager",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "AccountManagerID",
+      "target_column_name": "AccountManagerID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "AlphaInflowDate60",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "FirstName",
+      "target_column_name": "Before_FIFO_Net_Eligible_Investment",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "LastName",
+      "target_column_name": "Before_FIFO_Net_Eligible_Investment",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "Before_FIFO_Net_Eligible_Investment",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "Before_FIFO_Net_Eligible_Investment",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "Before_FIFO_Net_Eligible_Investment",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "Name",
+      "target_column_name": "Club",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "PlayerLevelID",
+      "target_column_name": "ClubID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "Sort",
+      "target_column_name": "ClubSort",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "Consumed_Amount_By_FIFO",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "LastName",
+      "target_column_name": "Consumed_Amount_By_FIFO",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "Consumed_Amount_By_FIFO",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "FirstName",
+      "target_column_name": "Consumed_Amount_By_FIFO",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "Consumed_Amount_By_FIFO",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "CountryID",
+      "target_column_name": "CountryID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "CountrynName",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "Days_Open",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "FIFO_Net_Eligible_Investment",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "LastName",
+      "target_column_name": "FIFO_Net_Eligible_Investment",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "FirstName",
+      "target_column_name": "FIFO_Net_Eligible_Investment",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "FIFO_Net_Eligible_Investment",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "FIFO_Net_Eligible_Investment",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "Gross_Alpha_Inflow_Amount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "Invested_Within_30D",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "Investment_Date",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "FirstName",
+      "target_column_name": "Investment_Held_60D",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "Investment_Held_60D",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "Investment_Held_60D",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "Investment_Held_60D",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "LastName",
+      "target_column_name": "Investment_Held_60D",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "Investment_Whithin_60D",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "Investment_Whithin_60D",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "FirstName",
+      "target_column_name": "Investment_Whithin_60D",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "Investment_Whithin_60D",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "LastName",
+      "target_column_name": "Investment_Whithin_60D",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "Max_Contact_Date",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "Min_Contact_Date",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "FirstName",
+      "target_column_name": "Money_Out_PI_or_SP",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "Money_Out_PI_or_SP",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "Money_Out_PI_or_SP",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "LastName",
+      "target_column_name": "Money_Out_PI_or_SP",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "Money_Out_PI_or_SP",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "MarketingRegionManualName",
+      "target_column_name": "Region",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RegulationID",
+      "target_column_name": "RegulationID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "source_column_name": "Name",
+      "target_column_name": "RegulationName",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "quarter_label",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "quarter_sort_key",
+      "entity_type": "JOB",
+      "event_count": 78
+    }
+  ],
+  "generated_at": "2026-05-19T12:13:18Z"
+}

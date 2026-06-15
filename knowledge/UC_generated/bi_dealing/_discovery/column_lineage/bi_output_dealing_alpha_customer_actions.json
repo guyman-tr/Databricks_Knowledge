@@ -1,0 +1,181 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_alpha_customer_actions",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "LastName",
+      "target_column_name": "AccountManager",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "FirstName",
+      "target_column_name": "AccountManager",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "AccountManagerID",
+      "target_column_name": "AccountManagerID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ActionTypeID",
+      "target_column_name": "ActionTypeID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "Amount",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "Name",
+      "target_column_name": "Club",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "Sort",
+      "target_column_name": "ClubSort",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "CountryID",
+      "target_column_name": "CountryID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "CountrynName",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "Date",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "DateID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentCID",
+      "target_column_name": "IsAlpha",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "IsAlpha",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "MarketingRegionManualName",
+      "target_column_name": "MarketingRegionManualName",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "Occurred",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "SFManagerID",
+      "target_column_name": "OwnerID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentCID",
+      "target_column_name": "ParentCID_DM",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentUserName",
+      "target_column_name": "ParentUserName",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "PlayerLevelID",
+      "target_column_name": "PlayerLevelID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "RN",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "ParentCID",
+      "target_column_name": "RN",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "RN",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RegulationID",
+      "target_column_name": "RegulationID",
+      "entity_type": "JOB",
+      "event_count": 78
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "source_column_name": "Name",
+      "target_column_name": "RegulationName",
+      "entity_type": "JOB",
+      "event_count": 78
+    }
+  ],
+  "generated_at": "2026-05-19T12:10:36Z"
+}

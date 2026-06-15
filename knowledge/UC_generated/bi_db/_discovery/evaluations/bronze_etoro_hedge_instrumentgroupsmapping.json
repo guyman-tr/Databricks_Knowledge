@@ -1,0 +1,88 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_hedge_instrumentgroupsmapping",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:37Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentGroupsMapping.md",
+      "upstream_quote": "The instrument being assigned to a group. References Trade.Instrument(InstrumentID). Part of the composite PK. Futures i",
+      "wiki_quote": "The instrument being assigned to a group. References Trade.Instrument(InstrumentID). Part of the composite PK. Futures i",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "GroupID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentGroupsMapping.md",
+      "upstream_quote": "The group this instrument belongs to. Explicit FK to Hedge.InstrumentGroups(GroupID). Part of the composite PK. Values c",
+      "wiki_quote": "The group this instrument belongs to. Explicit FK to Hedge.InstrumentGroups(GroupID). Part of the composite PK. Values c",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DbLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentGroupsMapping.md",
+      "upstream_quote": "Computed audit column. SQL Server login executing the DML.",
+      "wiki_quote": "Computed audit column. SQL Server login executing the DML (Tier 1 — inherited from etoro.Hedge.InstrumentGroupsMapping).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AppLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentGroupsMapping.md",
+      "upstream_quote": "Computed audit column. Application identity from CONTEXT_INFO(). NULL when not set.",
+      "wiki_quote": "Computed audit column. Application identity from CONTEXT_INFO(). NULL when not set (Tier 1 — inherited from etoro.Hedge.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysStartTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentGroupsMapping.md",
+      "upstream_quote": "Temporal period start. UTC timestamp when this row version became active.",
+      "wiki_quote": "Temporal period start. UTC timestamp when this row version became active (Tier 1 — inherited from etoro.Hedge.Instrument",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysEndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentGroupsMapping.md",
+      "upstream_quote": "Temporal period end. 9999-12-31 for current rows. History in History.InstrumentGroupsMapping.",
+      "wiki_quote": "Temporal period end. 9999-12-31 for current rows. History in History.InstrumentGroupsMapping (Tier 1 — inherited from et",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsActive",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentGroupsMapping.md",
+      "upstream_quote": "Whether this group membership is currently enforced. 1=active (instrument is in the group, routing rules apply), 0=inact",
+      "wiki_quote": "Whether this group membership is currently enforced. 1=active (instrument is in the group, routing rules apply), 0=inact",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 7,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 7 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

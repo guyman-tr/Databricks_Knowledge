@@ -1,0 +1,105 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_copyfund_positions",
+  "generated_at": "2026-05-18T16:27:36Z",
+  "formula_count": 9,
+  "formulas": [
+    {
+      "column": "PositionID",
+      "formula": "PositionID",
+      "expression_raw": "dp.PositionID",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "copyfund_positions"
+    },
+    {
+      "column": "CID",
+      "formula": "CID",
+      "expression_raw": "dp.CID",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "copyfund_positions"
+    },
+    {
+      "column": "MirrorID",
+      "formula": "MirrorID",
+      "expression_raw": "MirrorID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "copyfund_mirrors"
+    },
+    {
+      "column": "OpenDateID",
+      "formula": "OpenDateID",
+      "expression_raw": "dp.OpenDateID",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "copyfund_positions"
+    },
+    {
+      "column": "CloseDateID",
+      "formula": "MAX(CloseDateID)",
+      "expression_raw": "MAX(CloseDateID) AS CloseDateID",
+      "inputs": [],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "ParentCID",
+      "formula": "ParentCID",
+      "expression_raw": "ParentCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "copyfund_mirrors"
+    },
+    {
+      "column": "ParentUserName",
+      "formula": "ParentUserName",
+      "expression_raw": "ParentUserName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "copyfund_mirrors"
+    },
+    {
+      "column": "MirrorTypeID",
+      "formula": "MirrorTypeID",
+      "expression_raw": "MirrorTypeID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "copyfund_mirrors"
+    },
+    {
+      "column": "IsPartialCloseChild",
+      "formula": "IsPartialCloseChild",
+      "expression_raw": "dp.IsPartialCloseChild",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "copyfund_positions"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_copyfund_positions.sql"
+}

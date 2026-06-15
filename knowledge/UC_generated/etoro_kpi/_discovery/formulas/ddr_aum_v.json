@@ -1,0 +1,580 @@
+{
+  "object_fqn": "main.etoro_kpi.ddr_aum_v",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 52,
+  "formulas": [
+    {
+      "column": "RealCID",
+      "formula": "CAST(RealCID AS STRING)",
+      "expression_raw": "CAST(aum.RealCID AS STRING) AS RealCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "DateID",
+      "formula": "DateID",
+      "expression_raw": "dd.DateID",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "RealizedEquityTradingPlatform",
+      "formula": "RealizedEquityTP",
+      "expression_raw": "aum.RealizedEquityTP AS RealizedEquityTradingPlatform",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "TotalPositionPNL",
+      "formula": "TotalPositionPNL",
+      "expression_raw": "aum.TotalPositionPNL",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "TotalInvestedAmount",
+      "formula": "TotalInvestedAmount",
+      "expression_raw": "aum.TotalInvestedAmount",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "EquityTradingPlatform",
+      "formula": "TotalEquityTP",
+      "expression_raw": "aum.TotalEquityTP AS EquityTradingPlatform",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "CashInCopy",
+      "formula": "CashInCopy",
+      "expression_raw": "aum.CashInCopy",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "InvestedAmountCopy",
+      "formula": "InvestedAmountCopy",
+      "expression_raw": "aum.InvestedAmountCopy",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "EquityCopy",
+      "formula": "EquityCopy",
+      "expression_raw": "aum.EquityCopy",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "EquityStocksManual",
+      "formula": "EquityStocksManual",
+      "expression_raw": "aum.EquityStocksManual",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "InvestedAmountStocksManual",
+      "formula": "InvestedAmountStocksManual",
+      "expression_raw": "aum.InvestedAmountStocksManual",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "InvestedAmountCryptoManual",
+      "formula": "InvestedAmountCryptoManual",
+      "expression_raw": "aum.InvestedAmountCryptoManual",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "BalanceTradingPlatfrom",
+      "formula": "CreditTP",
+      "expression_raw": "aum.CreditTP AS BalanceTradingPlatfrom",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "BalanceIBAN",
+      "formula": "IBANBalance",
+      "expression_raw": "aum.IBANBalance AS BalanceIBAN",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "RealizedEquityGlobal",
+      "formula": "RealizedEquityGlobal",
+      "expression_raw": "aum.RealizedEquityGlobal",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "EquityGlobal",
+      "formula": "EquityGlobal",
+      "expression_raw": "aum.EquityGlobal",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "CreditGlobal",
+      "formula": "CreditGlobal",
+      "expression_raw": "aum.CreditGlobal",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "OptionsTotalEquity",
+      "formula": "OptionsTotalEquity",
+      "expression_raw": "aum.OptionsTotalEquity",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "WeekNumberYear",
+      "formula": "WeekNumberYear",
+      "expression_raw": "dd.WeekNumberYear",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYearMonth",
+      "formula": "CalendarYearMonth",
+      "expression_raw": "dd.CalendarYearMonth",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarQuarter",
+      "formula": "CalendarQuarter",
+      "expression_raw": "dd.CalendarQuarter",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYear",
+      "formula": "CalendarYear",
+      "expression_raw": "dd.CalendarYear",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayWeek",
+      "formula": "IsLastDayWeek",
+      "expression_raw": "dd.IsLastDayWeek",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayMonth",
+      "formula": "IsLastDayMonth",
+      "expression_raw": "dd.IsLastDayMonth",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayQuarter",
+      "formula": "IsLastDayQuarter",
+      "expression_raw": "dd.IsLastDayQuarter",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayYear",
+      "formula": "IsLastDayYear",
+      "expression_raw": "dd.IsLastDayYear",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "SnapshotDate",
+      "formula": "aum.`Date`",
+      "expression_raw": "aum.`Date` AS SnapshotDate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    },
+    {
+      "column": "TotalLiabilityTP",
+      "formula": "TotalLiabilityTP",
+      "expression_raw": "aum.TotalLiabilityTP",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L35-L35",
+      "scope": "main"
+    },
+    {
+      "column": "InProcessCashout",
+      "formula": "InProcessCashout",
+      "expression_raw": "aum.InProcessCashout",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "NOP",
+      "formula": "NOP",
+      "expression_raw": "aum.NOP",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L37-L37",
+      "scope": "main"
+    },
+    {
+      "column": "NOPCrypto",
+      "formula": "NOPCrypto",
+      "expression_raw": "aum.NOPCrypto",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "NOPCryptoCFD",
+      "formula": "NOPCryptoCFD",
+      "expression_raw": "aum.NOPCryptoCFD",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L39-L39",
+      "scope": "main"
+    },
+    {
+      "column": "NOPStocks",
+      "formula": "NOPStocks",
+      "expression_raw": "aum.NOPStocks",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L40-L40",
+      "scope": "main"
+    },
+    {
+      "column": "NOPStocksCFD",
+      "formula": "NOPStocksCFD",
+      "expression_raw": "aum.NOPStocksCFD",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L41-L41",
+      "scope": "main"
+    },
+    {
+      "column": "TotalRealCryptoLoan",
+      "formula": "TotalRealCryptoLoan",
+      "expression_raw": "aum.TotalRealCryptoLoan",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L42-L42",
+      "scope": "main"
+    },
+    {
+      "column": "Bonus",
+      "formula": "Bonus",
+      "expression_raw": "aum.Bonus",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L43-L43",
+      "scope": "main"
+    },
+    {
+      "column": "CopyInvestedAmount",
+      "formula": "CopyInvestedAmount",
+      "expression_raw": "aum.CopyInvestedAmount",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L44-L44",
+      "scope": "main"
+    },
+    {
+      "column": "CopyStockOrders",
+      "formula": "CopyStockOrders",
+      "expression_raw": "aum.CopyStockOrders",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L45-L45",
+      "scope": "main"
+    },
+    {
+      "column": "CopyPositionPnL",
+      "formula": "CopyPositionPnL",
+      "expression_raw": "aum.CopyPositionPnL",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L46-L46",
+      "scope": "main"
+    },
+    {
+      "column": "StockInvestedAmount",
+      "formula": "StockInvestedAmount",
+      "expression_raw": "aum.StockInvestedAmount",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L47-L47",
+      "scope": "main"
+    },
+    {
+      "column": "StockOrders",
+      "formula": "StockOrders",
+      "expression_raw": "aum.StockOrders",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L48-L48",
+      "scope": "main"
+    },
+    {
+      "column": "StocksPositionPnL",
+      "formula": "StocksPositionPnL",
+      "expression_raw": "aum.StocksPositionPnL",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L49-L49",
+      "scope": "main"
+    },
+    {
+      "column": "MirrorStockInvestedAmount",
+      "formula": "MirrorStockInvestedAmount",
+      "expression_raw": "aum.MirrorStockInvestedAmount",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L50-L50",
+      "scope": "main"
+    },
+    {
+      "column": "MirrorStocksPositionPnL",
+      "formula": "MirrorStocksPositionPnL",
+      "expression_raw": "aum.MirrorStocksPositionPnL",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L51-L51",
+      "scope": "main"
+    },
+    {
+      "column": "CryptoManualPositionPnL",
+      "formula": "CryptoManualPositionPnL",
+      "expression_raw": "aum.CryptoManualPositionPnL",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L52-L52",
+      "scope": "main"
+    },
+    {
+      "column": "EquityCryptoManual",
+      "formula": "EquityCryptoManual",
+      "expression_raw": "aum.EquityCryptoManual",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L53-L53",
+      "scope": "main"
+    },
+    {
+      "column": "TotalRealCrypto",
+      "formula": "TotalRealCrypto",
+      "expression_raw": "aum.TotalRealCrypto",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L54-L54",
+      "scope": "main"
+    },
+    {
+      "column": "TotalRealStocks",
+      "formula": "TotalRealStocks",
+      "expression_raw": "aum.TotalRealStocks",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L55-L55",
+      "scope": "main"
+    },
+    {
+      "column": "CreditTP",
+      "formula": "CreditTP",
+      "expression_raw": "aum.CreditTP AS CreditTP",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L56-L56",
+      "scope": "main"
+    },
+    {
+      "column": "ActualNWA",
+      "formula": "ActualNWA",
+      "expression_raw": "aum.ActualNWA",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L57-L57",
+      "scope": "main"
+    },
+    {
+      "column": "TotalLiabilityGlobal",
+      "formula": "TotalLiabilityGlobal",
+      "expression_raw": "aum.TotalLiabilityGlobal",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L58-L58",
+      "scope": "main"
+    },
+    {
+      "column": "UpdateDate",
+      "formula": "UpdateDate",
+      "expression_raw": "aum.UpdateDate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L59-L59",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/ddr_aum_v.sql"
+}

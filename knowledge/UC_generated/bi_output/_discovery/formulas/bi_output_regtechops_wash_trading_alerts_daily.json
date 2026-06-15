@@ -1,0 +1,193 @@
+{
+  "object_fqn": "main.bi_output.bi_output_regtechops_wash_trading_alerts_daily",
+  "generated_at": "2026-05-19T15:01:25Z",
+  "formula_count": 19,
+  "formulas": [
+    {
+      "column": "snapshot_date",
+      "formula": "# MAGIC # MAGIC -- Final combined scoring # MAGIC scored_alerts AS ( # MAGIC SELECT # MAGIC CURRENT_DATE()",
+      "expression_raw": "# MAGIC\n# MAGIC -- Final combined scoring\n# MAGIC scored_alerts AS (\n# MAGIC     SELECT\n# MAGIC         CURRENT_DATE() AS snapshot_date",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L208-L212",
+      "scope": "main"
+    },
+    {
+      "column": "CID",
+      "formula": "# MAGIC COALESCE(w.CID, r.CID)",
+      "expression_raw": "# MAGIC         COALESCE(w.CID, r.CID) AS CID",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L213-L213",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentID",
+      "formula": "# MAGIC COALESCE(w.InstrumentID, r.InstrumentID)",
+      "expression_raw": "# MAGIC         COALESCE(w.InstrumentID, r.InstrumentID) AS InstrumentID",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L214-L214",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentDisplayName",
+      "formula": "# MAGIC MAX(InstrumentDisplayName)",
+      "expression_raw": "# MAGIC         MAX(InstrumentDisplayName) AS InstrumentDisplayName",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L180-L180",
+      "scope": "main"
+    },
+    {
+      "column": "Symbol",
+      "formula": "# MAGIC MAX(Symbol)",
+      "expression_raw": "# MAGIC         MAX(Symbol) AS Symbol",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L181-L181",
+      "scope": "main"
+    },
+    {
+      "column": "wash_pair_count",
+      "formula": "# MAGIC COUNT(*)",
+      "expression_raw": "# MAGIC         COUNT(*) AS wash_pair_count",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L182-L182",
+      "scope": "main"
+    },
+    {
+      "column": "roundtrip_count",
+      "formula": "# MAGIC COUNT(*)",
+      "expression_raw": "# MAGIC         COUNT(*) AS roundtrip_count",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L200-L200",
+      "scope": "main"
+    },
+    {
+      "column": "total_volume",
+      "formula": "# MAGIC SUM(buy_amount + sell_amount)",
+      "expression_raw": "# MAGIC         SUM(buy_amount + sell_amount) AS total_volume",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L183-L183",
+      "scope": "main"
+    },
+    {
+      "column": "avg_time_between_pairs",
+      "formula": "# MAGIC AVG(time_diff_minutes)",
+      "expression_raw": "# MAGIC         AVG(time_diff_minutes) AS avg_time_between_pairs",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L184-L184",
+      "scope": "main"
+    },
+    {
+      "column": "avg_hold_minutes",
+      "formula": "# MAGIC AVG(hold_duration_minutes)",
+      "expression_raw": "# MAGIC         AVG(hold_duration_minutes) AS avg_hold_minutes",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L202-L202",
+      "scope": "main"
+    },
+    {
+      "column": "first_detected",
+      "formula": "# MAGIC MIN(buy_open_time)",
+      "expression_raw": "# MAGIC         MIN(buy_open_time) AS first_detected",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L185-L185",
+      "scope": "main"
+    },
+    {
+      "column": "last_detected",
+      "formula": "# MAGIC MAX(GREATEST(buy_open_time, sell_open_time))",
+      "expression_raw": "# MAGIC         MAX(GREATEST(buy_open_time, sell_open_time)) AS last_detected",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L186-L186",
+      "scope": "main"
+    },
+    {
+      "column": "risk_score",
+      "formula": "# MAGIC CAST(LEAST(100, ROUND( # MAGIC LEAST(40, COALESCE(w.wash_pair_count, 0) * 8) + # MAGIC LEAST(35, COALESCE(r.roundtrip_count, 0) * 5) + # MAGIC LEAST…",
+      "expression_raw": "# MAGIC         CAST(LEAST(100, ROUND(\n# MAGIC             LEAST(40, COALESCE(w.wash_pair_count, 0) * 8) +\n# MAGIC             LEAST(35, COALESCE(r.roundtrip_count, 0) * 5) +\n# MAGIC             LEAST…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L224-L234",
+      "scope": "main"
+    },
+    {
+      "column": "risk_level",
+      "formula": "# MAGIC CASE # MAGIC WHEN LEAST(100, ROUND( # MAGIC LEAST(40, COALESCE(w.wash_pair_count, 0) * 8) + # MAGIC LEAST(35, COALESCE(r.roundtrip_count, 0)…",
+      "expression_raw": "# MAGIC         CASE\n# MAGIC             WHEN LEAST(100, ROUND(\n# MAGIC                 LEAST(40, COALESCE(w.wash_pair_count, 0) * 8) +\n# MAGIC                 LEAST(35, COALESCE(r.roundtrip_count, 0)…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L235-L253",
+      "scope": "main"
+    },
+    {
+      "column": "detection_type",
+      "formula": "# MAGIC CASE # MAGIC WHEN COALESCE(w.wash_pair_count, 0) > 0 AND COALESCE(r.roundtrip_count, 0) > 0 THEN 'Wash Trading + Round-Trip' # MAGIC WHEN COALESCE(w.wash_pair_c…",
+      "expression_raw": "# MAGIC         CASE\n# MAGIC             WHEN COALESCE(w.wash_pair_count, 0) > 0 AND COALESCE(r.roundtrip_count, 0) > 0 THEN 'Wash Trading + Round-Trip'\n# MAGIC             WHEN COALESCE(w.wash_pair_c…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L254-L258",
+      "scope": "main"
+    },
+    {
+      "column": "alert_status",
+      "formula": "# MAGIC 'New'",
+      "expression_raw": "# MAGIC         'New' AS alert_status",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L259-L259",
+      "scope": "main"
+    },
+    {
+      "column": "assigned_to",
+      "formula": "# MAGIC CAST(NULL AS STRING)",
+      "expression_raw": "# MAGIC         CAST(NULL AS STRING) AS assigned_to",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L260-L260",
+      "scope": "main"
+    },
+    {
+      "column": "created_at",
+      "formula": "# MAGIC CURRENT_TIMESTAMP()",
+      "expression_raw": "# MAGIC         CURRENT_TIMESTAMP() AS created_at",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L261-L261",
+      "scope": "main"
+    },
+    {
+      "column": "updated_at",
+      "formula": "# MAGIC CURRENT_TIMESTAMP()",
+      "expression_raw": "# MAGIC         CURRENT_TIMESTAMP() AS updated_at",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L262-L262",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_regtechops_wash_trading_alerts_daily.py"
+}

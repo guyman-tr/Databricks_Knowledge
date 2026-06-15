@@ -1,0 +1,706 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_premier_clients_report",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "LastName",
+      "target_column_name": "AccountManager",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "FirstName",
+      "target_column_name": "AccountManager",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "AccountManagerID",
+      "target_column_name": "AccountManagerID",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Amount",
+      "target_column_name": "Amount",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "Amount",
+      "target_column_name": "Amount",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_premier_customer",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "Price",
+      "target_column_name": "Change_Price",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "CID",
+      "target_column_name": "ClientCategory",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_backoffice_customer",
+      "source_column_name": "SeychellesCategorizationID",
+      "target_column_name": "ClientCategory",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_backoffice_customer",
+      "source_column_name": "RegulationID",
+      "target_column_name": "ClientCategory",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseDateID",
+      "target_column_name": "CloseDateID",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "CloseOccurred",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "ClosePositionReasonID",
+      "target_column_name": "ClosePositionReasonID",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason",
+      "source_column_name": "Name",
+      "target_column_name": "ClosePositionReasonName",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "Name",
+      "target_column_name": "Club",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "USDConversionRate",
+      "target_column_name": "ConversionRate",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "USD_CR",
+      "target_column_name": "ConversionRate",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitConversionRate",
+      "target_column_name": "ConversionRate",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "CountryID",
+      "target_column_name": "CountryID",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "Country_Name",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "DailyPnL",
+      "target_column_name": "DailyPnL",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "DailyPnL",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseDateID",
+      "target_column_name": "DailyPnL",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "PositionPnL",
+      "target_column_name": "DailyPnL",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "NetProfit",
+      "target_column_name": "DailyPnL",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Direction",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseDateID",
+      "target_column_name": "Duration",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "Duration",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "Duration_minutes",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseDateID",
+      "target_column_name": "Duration_minutes",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "Duration_minutes",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "Duration_seconds",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseDateID",
+      "target_column_name": "Duration_seconds",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "Duration_seconds",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "EndExecutionID",
+      "target_column_name": "EndExecutionID",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "EndForexRate",
+      "target_column_name": "EndForexRate",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etorologs_real_hedge_emsorders",
+      "source_column_name": "HedgeExecutionModeID",
+      "target_column_name": "EndHedgingType",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "EndExecutionID",
+      "target_column_name": "EndHedgingType",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "source_column_name": "GuruStatusName",
+      "target_column_name": "GuruStatusName",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitExecutionID",
+      "target_column_name": "InitExecutionID",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "InitForexRate",
+      "target_column_name": "InitForexRate",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InitForexRate",
+      "target_column_name": "InitForexRate",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etorologs_real_hedge_emsorders",
+      "source_column_name": "HedgeExecutionModeID",
+      "target_column_name": "InitHedgingType",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Volume",
+      "target_column_name": "Initial_InvestedAmount",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Leverage",
+      "target_column_name": "Initial_InvestedAmount",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentType",
+      "target_column_name": "InstrumentType",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsPartialCloseChild",
+      "target_column_name": "IsChild",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "MirrorID",
+      "target_column_name": "IsMirror",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsPartialCloseParent",
+      "target_column_name": "IsParent",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_premier_customer",
+      "source_column_name": "CID",
+      "target_column_name": "IsPremier",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "CID",
+      "target_column_name": "IsPro",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Leverage",
+      "target_column_name": "Leverage",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "MirrorID",
+      "target_column_name": "MirrorID",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "NOP",
+      "target_column_name": "NOP",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "NetProfit",
+      "target_column_name": "NetProfit",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "OpenDateID",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "OpenOccurred",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "PositionID",
+      "target_column_name": "OriginalPositionID",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OriginalPositionID",
+      "target_column_name": "OriginalPositionID",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "OverNightFee",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "IsFeeDividend",
+      "target_column_name": "OverNightFee",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "PlayerLevelID",
+      "target_column_name": "PlayerLevelID",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "PositionID",
+      "target_column_name": "PositionID",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "PositionPnL",
+      "target_column_name": "PositionPnL",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "RateAsk",
+      "target_column_name": "PreviousAsk",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "RateBid",
+      "target_column_name": "PreviousBid",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "Amount",
+      "target_column_name": "Previous_Amount",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "Price",
+      "target_column_name": "Previous_Change_Price",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "DailyPnL",
+      "target_column_name": "Previous_DailyPnL",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "Price",
+      "target_column_name": "Previous_Price",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "InitForexRate",
+      "target_column_name": "Previous_Price",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Previous_Units",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "Price",
+      "target_column_name": "Price",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "InitForexRate",
+      "target_column_name": "Price",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "RateAsk",
+      "target_column_name": "RateAsk",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "RateBid",
+      "target_column_name": "RateBid",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsSettled",
+      "target_column_name": "ReaL_CFD",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Region",
+      "target_column_name": "Region",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "StopRate",
+      "target_column_name": "StopRate",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Amount",
+      "target_column_name": "TicketFees",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "IsFeeDividend",
+      "target_column_name": "TicketFees",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "Total_Daily_Commission",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "FullCommissionOnClose",
+      "target_column_name": "Total_Daily_Commission",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "FullCommissionByUnits",
+      "target_column_name": "Total_Daily_Commission",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Volume",
+      "target_column_name": "Total_daily_Volume",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "VolumeOnClose",
+      "target_column_name": "Total_daily_Volume",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "Total_daily_Volume",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsPartialCloseChild",
+      "target_column_name": "Total_daily_clicks",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "Total_daily_clicks",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 63
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Volume",
+      "target_column_name": "Volume",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "VolumeOnClose",
+      "target_column_name": "VolumeOnClose",
+      "entity_type": "JOB",
+      "event_count": 94
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "PositionPnL",
+      "target_column_name": "previous_Position_PnL",
+      "entity_type": "JOB",
+      "event_count": 94
+    }
+  ],
+  "generated_at": "2026-05-19T12:35:19Z"
+}

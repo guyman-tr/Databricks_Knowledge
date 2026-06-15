@@ -1,0 +1,338 @@
+{
+  "object_fqn": "main.etoro_kpi.vg_dealing_dealingdashboard_cid",
+  "generated_at": "2026-05-19T15:20:32Z",
+  "formula_count": 30,
+  "formulas": [
+    {
+      "column": "Date",
+      "formula": "-- ========================================================================== -- Source: information_schema.views.view_definition -- Object: etoro_kpi.vg_dealing_dealingdashboard_cid -- Captured:…",
+      "expression_raw": "-- ==========================================================================\n-- Source: information_schema.views.view_definition\n-- Object: main.etoro_kpi.vg_dealing_dealingdashboard_cid\n-- Captured:…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L1-L7",
+      "scope": "main"
+    },
+    {
+      "column": "HedgeServerID",
+      "formula": ", HedgeServerID",
+      "expression_raw": ", HedgeServerID",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentType",
+      "formula": ", HedgeServerID , InstrumentType",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L9",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentID",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L10",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentDisplayName",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L11",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentName",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L12",
+      "scope": "main"
+    },
+    {
+      "column": "Symbol",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L13",
+      "scope": "main"
+    },
+    {
+      "column": "SellCurrency",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L14",
+      "scope": "main"
+    },
+    {
+      "column": "Exchange",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L15",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L16",
+      "scope": "main"
+    },
+    {
+      "column": "Country",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L17",
+      "scope": "main"
+    },
+    {
+      "column": "Region",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L18",
+      "scope": "main"
+    },
+    {
+      "column": "Mifid",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L19",
+      "scope": "main"
+    },
+    {
+      "column": "IsCopy",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L20",
+      "scope": "main"
+    },
+    {
+      "column": "IsCFD",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy ,…",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy\n\t ,…",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L21",
+      "scope": "main"
+    },
+    {
+      "column": "Leverage",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy ,…",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy\n\t ,…",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L22",
+      "scope": "main"
+    },
+    {
+      "column": "NOP",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy ,…",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy\n\t ,…",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L23",
+      "scope": "main"
+    },
+    {
+      "column": "LongOpenPositions",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy ,…",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy\n\t ,…",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L24",
+      "scope": "main"
+    },
+    {
+      "column": "ShortOpenPositions",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy ,…",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy\n\t ,…",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L25",
+      "scope": "main"
+    },
+    {
+      "column": "UnitsNOP",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy ,…",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy\n\t ,…",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L26",
+      "scope": "main"
+    },
+    {
+      "column": "UnitsBuy",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy ,…",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy\n\t ,…",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L27",
+      "scope": "main"
+    },
+    {
+      "column": "UnitsSell",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy ,…",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy\n\t ,…",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L28",
+      "scope": "main"
+    },
+    {
+      "column": "RealizedZero",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy ,…",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy\n\t ,…",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L29",
+      "scope": "main"
+    },
+    {
+      "column": "ChangeInUnrealizedZero",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy ,…",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy\n\t ,…",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L30",
+      "scope": "main"
+    },
+    {
+      "column": "TotalZero",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy ,…",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy\n\t ,…",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L31",
+      "scope": "main"
+    },
+    {
+      "column": "VariableSpread",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy ,…",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy\n\t ,…",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L32",
+      "scope": "main"
+    },
+    {
+      "column": "OverNightFee",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy ,…",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy\n\t ,…",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L33",
+      "scope": "main"
+    },
+    {
+      "column": "Dividend",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy ,…",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy\n\t ,…",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L34",
+      "scope": "main"
+    },
+    {
+      "column": "OverNightFee_Long",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy ,…",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy\n\t ,…",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L35",
+      "scope": "main"
+    },
+    {
+      "column": "OverNightFee_Short",
+      "formula": ", HedgeServerID , InstrumentType , InstrumentID , InstrumentDisplayName , InstrumentName , Symbol , SellCurrency , Exchange , Regulation , Country , Region , Mifid , IsCopy ,…",
+      "expression_raw": ", HedgeServerID\n\t , InstrumentType\n\t , InstrumentID\n\t , InstrumentDisplayName\n\t , InstrumentName\n\t , Symbol\n\t , SellCurrency\n\t , Exchange\n\t , Regulation\n\t , Country\n\t , Region\n\t , Mifid\n\t , IsCopy\n\t ,…",
+      "inputs": [
+        "main.dealing.bi_output_dealing_dealingdashboard_cid"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L36",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/vg_dealing_dealingdashboard_cid.sql"
+}

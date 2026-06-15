@@ -1,0 +1,156 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_revenue_optionsplatform",
+  "generated_at": "2026-05-18T16:27:27Z",
+  "concept_count": 6,
+  "concepts": [
+    {
+      "id": "case_flag_actiontypeid",
+      "name": "ActionTypeID computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "ActionTypeID"
+      ],
+      "predicates": [
+        {
+          "col": "Side",
+          "op": "=",
+          "val": "' '"
+        },
+        {
+          "col": "Side",
+          "op": "=",
+          "val": "' '"
+        }
+      ],
+      "then_value": "4",
+      "else_value": null,
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L22-L22",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_actiontype",
+      "name": "ActionType computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "ActionType"
+      ],
+      "predicates": [
+        {
+          "col": "Side",
+          "op": "=",
+          "val": "' '"
+        },
+        {
+          "col": "Side",
+          "op": "=",
+          "val": "' '"
+        }
+      ],
+      "then_value": "'                   '",
+      "else_value": null,
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L23-L23",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_instrumenttypeid",
+      "name": "InstrumentTypeID computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "InstrumentTypeID"
+      ],
+      "predicates": [
+        {
+          "col": "InstrumentType",
+          "op": "=",
+          "val": "'      '"
+        },
+        {
+          "col": "InstrumentType",
+          "op": "=",
+          "val": "'      '"
+        }
+      ],
+      "then_value": "5",
+      "else_value": null,
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L24-L24",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_countasactivetrade",
+      "name": "CountAsActiveTrade computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "CountAsActiveTrade"
+      ],
+      "predicates": [
+        {
+          "col": "Side",
+          "op": "=",
+          "val": "' '"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L31-L31",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_dc",
+      "name": "Dim lookup via dc",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "alias": "dc",
+      "join_conditions": [
+        "op.GCID = dc.GCID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L50",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "op.GCID = dc.GCID"
+    },
+    {
+      "id": "filter_block_FIRSTTRADE",
+      "name": "Filter block on FIRSTTRADE",
+      "kind": "filter_block",
+      "columns_involved": [
+        "RN"
+      ],
+      "predicates": [
+        {
+          "col": "RN",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L16",
+      "scope": "FIRSTTRADE",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_revenue_optionsplatform.sql"
+}

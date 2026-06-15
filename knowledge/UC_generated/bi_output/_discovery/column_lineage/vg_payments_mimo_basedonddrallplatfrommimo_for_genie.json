@@ -1,0 +1,237 @@
+{
+  "object": "main.bi_output.vg_payments_mimo_basedonddrallplatfrommimo_for_genie",
+  "rows": [
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "AmountUSD",
+      "target_column_name": "AmountUSD_MIMO",
+      "entity_type": null,
+      "event_count": 44
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "Name",
+      "target_column_name": "Club",
+      "entity_type": null,
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "Country",
+      "entity_type": null,
+      "event_count": 17
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
+      "source_column_name": "Abbreviation",
+      "target_column_name": "Currency",
+      "entity_type": null,
+      "event_count": 9
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "Date",
+      "target_column_name": "Date_MIMO",
+      "entity_type": null,
+      "event_count": 19
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "EOM_FTD",
+      "entity_type": null,
+      "event_count": 8
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "Date",
+      "target_column_name": "EOM_MIMO",
+      "entity_type": null,
+      "event_count": 5
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RegisteredReal",
+      "target_column_name": "EOM_Reg",
+      "entity_type": null,
+      "event_count": 8
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "IsPlatformFTD",
+      "target_column_name": "IsFTD",
+      "entity_type": null,
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "IsInternalTransfer",
+      "target_column_name": "IsInternalTransfer",
+      "entity_type": null,
+      "event_count": 5
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "IsTradeFromIBAN",
+      "target_column_name": "IsTradeFromIBAN",
+      "entity_type": null,
+      "event_count": 5
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "IsTradeFromIBAN",
+      "target_column_name": "IsTradeFromIBAN",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "MIMOPlatform",
+      "target_column_name": "MIMOPlatform",
+      "entity_type": null,
+      "event_count": 10
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "MIMOPlatform",
+      "target_column_name": "MIMOPlatform",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "MIMO_Ind",
+      "entity_type": null,
+      "event_count": 17
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "MIMO_Ind",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_moneytransfer_billing_transfers",
+      "source_column_name": "CID",
+      "target_column_name": "MOP",
+      "entity_type": null,
+      "event_count": 11
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "MIMOPlatform",
+      "target_column_name": "MOP",
+      "entity_type": null,
+      "event_count": 11
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype",
+      "source_column_name": "Name",
+      "target_column_name": "MOP",
+      "entity_type": null,
+      "event_count": 11
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "IsTradeFromIBAN",
+      "target_column_name": "MOP",
+      "entity_type": null,
+      "event_count": 11
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "IsInternalTransfer",
+      "target_column_name": "MOP",
+      "entity_type": null,
+      "event_count": 11
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "IsInternalTransfer",
+      "target_column_name": "MOP",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_moneytransfer_billing_transfers",
+      "source_column_name": "CID",
+      "target_column_name": "MOP",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "MIMOPlatform",
+      "target_column_name": "MOP",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype",
+      "source_column_name": "Name",
+      "target_column_name": "MOP",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "IsTradeFromIBAN",
+      "target_column_name": "MOP",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "MarketingRegionManualName",
+      "target_column_name": "MarketingRegionManualName",
+      "entity_type": null,
+      "event_count": 10
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "MarketingRegionManualName",
+      "target_column_name": "MarketingRegionManualName",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "AmountUSD",
+      "target_column_name": "Rank_Amount",
+      "entity_type": null,
+      "event_count": 5
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "RealCID",
+      "target_column_name": "Rank_Amount",
+      "entity_type": null,
+      "event_count": 5
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": null,
+      "event_count": 27
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "source_column_name": "Name",
+      "target_column_name": "Regulation",
+      "entity_type": null,
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "TransactionID",
+      "target_column_name": "TransactionID",
+      "entity_type": null,
+      "event_count": 38
+    }
+  ],
+  "generated_at": "2026-05-19T15:00:22Z"
+}

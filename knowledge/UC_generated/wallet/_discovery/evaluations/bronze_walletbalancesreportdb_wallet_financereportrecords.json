@@ -1,0 +1,179 @@
+{
+  "object_fqn": "main.wallet.bronze_walletbalancesreportdb_wallet_financereportrecords",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:12Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "Auto-incrementing primary key. Part of unique index IX_FinanceReportRecords__ReportId_WalletId_CryptoId for efficient lo",
+      "wiki_quote": "Auto-incrementing primary key. Part of unique index IX_FinanceReportRecords__ReportId_WalletId_CryptoId for efficient lo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ReportId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "FK to Wallet.FinanceReportRuns.Id identifying which reconciliation run produced this record. Constraint: FK__FinanceRepo",
+      "wiki_quote": "FK to Wallet.FinanceReportRuns.Id identifying which reconciliation run produced this record. Constraint: FK__FinanceRepo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "Crypto wallet identifier (GUID). Part of the composite business key (ReportId, WalletId, CryptoId). Used in CROSS APPLY ",
+      "wiki_quote": "Crypto wallet identifier (GUID). Part of the composite business key (ReportId, WalletId, CryptoId). Used in CROSS APPLY ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Gcid",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "Global Customer ID -- identifies the wallet owner. Carried from the external table for denormalized customer-level query",
+      "wiki_quote": "Global Customer ID -- identifies the wallet owner. Carried from the external table for denormalized customer-level query",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "Cryptocurrency asset identifier. Completes the composite business key. Same CryptoId may appear multiple times per run i",
+      "wiki_quote": "Cryptocurrency asset identifier. Completes the composite business key. Same CryptoId may appear multiple times per run i",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Address",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "Blockchain address associated with this wallet-crypto pair. Passed through from the external table for traceability duri",
+      "wiki_quote": "Blockchain address associated with this wallet-crypto pair. Passed through from the external table for traceability duri",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BitgoWalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "BitGo custody platform's wallet identifier. Enables cross-referencing with BitGo's API for discrepancy investigation. Al",
+      "wiki_quote": "BitGo custody platform's wallet identifier. Enables cross-referencing with BitGo's API for discrepancy investigation. Al",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BloxAccountId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "Blox portfolio tracker's account identifier. Always NULL in production data -- the current reconciliation system (Create",
+      "wiki_quote": "Blox portfolio tracker's account identifier. Always NULL in production data -- the current reconciliation system (Create",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalReceive",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "Total amount received into this wallet-crypto pair. Sourced from vu_GetWalletBalanceReport.TotalRecive (note: mapped fro",
+      "wiki_quote": "Total amount received into this wallet-crypto pair. Sourced from vu_GetWalletBalanceReport.TotalRecive (note: mapped fro",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalSend",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "Total amount sent from this wallet-crypto pair. Sourced from vu_GetWalletBalanceReport.TotalSend. Represents the cumulat",
+      "wiki_quote": "Total amount sent from this wallet-crypto pair. Sourced from vu_GetWalletBalanceReport.TotalSend. Represents the cumulat",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BloxBalance",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "Blockchain-reported net balance (TotalReceive - TotalSend). Despite the name suggesting \"Blox balance,\" this is actually",
+      "wiki_quote": "Blockchain-reported net balance (TotalReceive - TotalSend). Despite the name suggesting \"Blox balance,\" this is actually",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ComputedAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "Internally computed expected balance from eToro's ledger system. Sourced from vu_GetWalletBalanceReport.TotalAmount. The",
+      "wiki_quote": "Internally computed expected balance from eToro's ledger system. Sourced from vu_GetWalletBalanceReport.TotalAmount. The",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FindDiscrepancy",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "Whether the final reconciliation result found a balance mismatch: 0 = no discrepancy (or not yet verified), 1 = confirme",
+      "wiki_quote": "Whether the final reconciliation result found a balance mismatch: 0 = no discrepancy (or not yet verified), 1 = confirme",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BitgoValue",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "Balance amount reported by BitGo custody provider during the verification phase. Initially 0 (set by CreateNewReportRun)",
+      "wiki_quote": "Balance amount reported by BitGo custody provider during the verification phase. Initially 0 (set by CreateNewReportRun)",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BloxValue",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "Balance amount reported by Blox portfolio tracker during the verification phase. Initially 0 (set by CreateNewReportRun)",
+      "wiki_quote": "Balance amount reported by Blox portfolio tracker during the verification phase. Initially 0 (set by CreateNewReportRun)",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ErrorMsg",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "Error message from the reconciliation verification phase. Contains API error details from BitGo or Blox when their endpo",
+      "wiki_quote": "Error message from the reconciliation verification phase. Contains API error details from BitGo or Blox when their endpo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LevelId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "FK to Dictionary.FinanceReportLevel classifying the reconciliation outcome. Initially set to 100 (InitialDiscrepancy) if",
+      "wiki_quote": "FK to Dictionary.FinanceReportLevel classifying the reconciliation outcome. Initially set to 100 (InitialDiscrepancy) if",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Created",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "UTC timestamp when this record was inserted by CreateNewReportRun. Default constraint DF_FinanceReportRecords_Created. I",
+      "wiki_quote": "UTC timestamp when this record was inserted by CreateNewReportRun. Default constraint DF_FinanceReportRecords_Created. I",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LastChecked",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "UTC timestamp of the most recent verification check for this record. NULL until the record is processed by UpdateReportR",
+      "wiki_quote": "UTC timestamp of the most recent verification check for this record. NULL until the record is processed by UpdateReportR",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Retries",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReportRecords.md",
+      "upstream_quote": "Number of times this wallet-crypto pair has been re-verified. Set by UpdateReportRecords via the BalanceType TVP. NULL o",
+      "wiki_quote": "Number of times this wallet-crypto pair has been re-verified. Set by UpdateReportRecords via the BalanceType TVP. NULL o",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 20,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 20 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

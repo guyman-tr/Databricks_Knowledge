@@ -1,0 +1,44 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_dim_dataplatform_uuid",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "case_flag_source_platform",
+      "name": "source_platform computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "source_platform"
+      ],
+      "predicates": [],
+      "then_value": "'         '",
+      "else_value": "'          '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.bi_db.bronze_sub_accounts_accounts"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L43-L43",
+      "scope": "main"
+    },
+    {
+      "id": "filter_block_sps_cross",
+      "name": "Filter block on sps_cross",
+      "kind": "filter_block",
+      "columns_involved": [
+        "providerName"
+      ],
+      "predicates": [
+        {
+          "col": "providerName",
+          "op": "=",
+          "val": "'         '"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L23",
+      "scope": "sps_cross",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_dim_dataplatform_uuid.sql"
+}

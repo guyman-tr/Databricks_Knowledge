@@ -7,16 +7,16 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_mimo_allplatforms.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_mimo_allplatforms.json` (rows: 21, mismatches: 21) |
 | **Primary upstream** | `main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 
 | Upstream UC Object | Role | Upstream Wiki |
 |--------------------|------|---------------|
-| `main.etoro_kpi_prep.v_mimo_emoneyplatform` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_mimo_emoneyplatform.md` |
-| `main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms` | Primary (FROM) | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_mimo_first_deposit_all_platforms.md` |
-| `main.etoro_kpi_prep.v_mimo_optionsplatform` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_mimo_optionsplatform.md` |
-| `main.etoro_kpi_prep.v_mimo_tradingplatform` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_mimo_tradingplatform.md` |
+| `main.etoro_kpi_prep.v_mimo_emoneyplatform` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_mimo_emoneyplatform.md` |
+| `main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms` | Primary (FROM) | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_mimo_first_deposit_all_platforms.md` |
+| `main.etoro_kpi_prep.v_mimo_optionsplatform` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_mimo_optionsplatform.md` |
+| `main.etoro_kpi_prep.v_mimo_tradingplatform` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_mimo_tradingplatform.md` |
 
 ## Lineage Chain
 

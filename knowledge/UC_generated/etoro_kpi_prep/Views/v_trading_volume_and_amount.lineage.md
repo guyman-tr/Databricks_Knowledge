@@ -7,13 +7,13 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_trading_volume_and_amount.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_trading_volume_and_amount.json` (rows: 32, mismatches: 27) |
 | **Primary upstream** | `main.dwh.dim_position` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 
 | Upstream UC Object | Role | Upstream Wiki |
 |--------------------|------|---------------|
-| `main.etoro_kpi_prep.v_copyfund_positions` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_copyfund_positions.md` |
+| `main.etoro_kpi_prep.v_copyfund_positions` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_copyfund_positions.md` |
 | `main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_closed_to_iban` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\BI_DB_dbo\Tables\BI_DB_Positions_Closed_To_IBAN.md` |
 | `main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_opened_from_iban` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\BI_DB_dbo\Tables\BI_DB_Positions_Opened_From_IBAN.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Instrument.md` |
@@ -21,7 +21,7 @@
 | `main.dwh.dim_position` | Primary (FROM) | ✗ `(no wiki found)` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\DWH_dbo\Views\V_Fact_SnapshotCustomer_FromDateID.md` |
 | `main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2p_e2e` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\EXW_dbo\Tables\EXW_C2P_E2E.md` |
-| `main.etoro_kpi_prep.v_dim_instrument_enriched` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_dim_instrument_enriched.md` |
+| `main.etoro_kpi_prep.v_dim_instrument_enriched` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_dim_instrument_enriched.md` |
 
 ## Lineage Chain
 

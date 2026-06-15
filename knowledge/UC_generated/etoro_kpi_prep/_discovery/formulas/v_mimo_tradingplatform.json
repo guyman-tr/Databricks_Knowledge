@@ -1,0 +1,212 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_mimo_tradingplatform",
+  "generated_at": "2026-05-18T16:27:36Z",
+  "formula_count": 19,
+  "formulas": [
+    {
+      "column": "DateID",
+      "formula": "DateID",
+      "expression_raw": "fca.DateID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "deposits_tp"
+    },
+    {
+      "column": "Date",
+      "formula": "to_date(CAST(DateID AS STRING), 'yyyyMMdd')",
+      "expression_raw": "to_date(CAST(fca.DateID AS STRING), 'yyyyMMdd') AS Date",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L10-L10",
+      "scope": "deposits_tp"
+    },
+    {
+      "column": "RealCID",
+      "formula": "RealCID",
+      "expression_raw": "fca.RealCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "deposits_tp"
+    },
+    {
+      "column": "MIMOAction",
+      "formula": "'Deposit' AS MIMOAction, 'DepositID' AS OrigIdentifier, DepositID",
+      "expression_raw": "'Deposit' AS MIMOAction, 'DepositID' AS OrigIdentifier, DepositID AS TransactionID",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L68-L68",
+      "scope": "mimo_combined"
+    },
+    {
+      "column": "OrigIdentifier",
+      "formula": "'Deposit' AS MIMOAction, 'DepositID' AS OrigIdentifier, DepositID",
+      "expression_raw": "'Deposit' AS MIMOAction, 'DepositID' AS OrigIdentifier, DepositID AS TransactionID",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L68-L68",
+      "scope": "mimo_combined"
+    },
+    {
+      "column": "TransactionID",
+      "formula": "'Deposit' AS MIMOAction, 'DepositID' AS OrigIdentifier, DepositID",
+      "expression_raw": "'Deposit' AS MIMOAction, 'DepositID' AS OrigIdentifier, DepositID AS TransactionID",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L68-L68",
+      "scope": "mimo_combined"
+    },
+    {
+      "column": "AmountUSD",
+      "formula": "Amount",
+      "expression_raw": "fca.Amount AS AmountUSD",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "deposits_tp"
+    },
+    {
+      "column": "AmountOrigCurrency",
+      "formula": "Amount",
+      "expression_raw": "fbd.Amount AS AmountOrigCurrency",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "deposits_tp"
+    },
+    {
+      "column": "FundingTypeID",
+      "formula": "FundingTypeID_Funding",
+      "expression_raw": "fbw.FundingTypeID_Funding AS FundingTypeID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L45-L45",
+      "scope": "cashout_tp"
+    },
+    {
+      "column": "CurrencyID",
+      "formula": "ProcessCurrencyID",
+      "expression_raw": "fbw.ProcessCurrencyID AS CurrencyID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L46-L46",
+      "scope": "cashout_tp"
+    },
+    {
+      "column": "Currency",
+      "formula": "Abbreviation",
+      "expression_raw": "dc.Abbreviation AS Currency",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "deposits_tp"
+    },
+    {
+      "column": "IsFTD",
+      "formula": "CASE WHEN FTDTransactionID = DepositID THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN dc1.FTDTransactionID = fca.DepositID THEN 1 ELSE 0 END AS IsFTD",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L18-L18",
+      "scope": "deposits_tp"
+    },
+    {
+      "column": "IsInternalTransfer",
+      "formula": "CASE WHEN FundingTypeID = 33 THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN fbd.FundingTypeID = 33 THEN 1 ELSE 0 END AS IsInternalTransfer",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L19-L19",
+      "scope": "deposits_tp"
+    },
+    {
+      "column": "IsRedeem",
+      "formula": "NULL",
+      "expression_raw": "NULL AS IsRedeem",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L20-L20",
+      "scope": "deposits_tp"
+    },
+    {
+      "column": "IsRecurring",
+      "formula": "NULL",
+      "expression_raw": "NULL AS IsRecurring",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L51-L51",
+      "scope": "cashout_tp"
+    },
+    {
+      "column": "IsIBANTrade",
+      "formula": "CASE WHEN ActionTypeID = 44 THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN fca.ActionTypeID = 44 THEN 1 ELSE 0 END AS IsIBANTrade",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L22-L22",
+      "scope": "deposits_tp"
+    },
+    {
+      "column": "IsCryptoToFiat",
+      "formula": "0",
+      "expression_raw": "0 AS IsCryptoToFiat",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L98-L98",
+      "scope": "main"
+    },
+    {
+      "column": "IsIBANQuickTransfer",
+      "formula": "CASE WHEN MoveMoneyReasonID = 6 THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN fca.MoveMoneyReasonID = 6 THEN 1 ELSE 0 END AS IsIBANQuickTransfer",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L23-L23",
+      "scope": "deposits_tp"
+    },
+    {
+      "column": "UpdateDate",
+      "formula": "CURRENT_TIMESTAMP()",
+      "expression_raw": "CURRENT_TIMESTAMP() AS UpdateDate",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L100-L100",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_mimo_tradingplatform.sql"
+}

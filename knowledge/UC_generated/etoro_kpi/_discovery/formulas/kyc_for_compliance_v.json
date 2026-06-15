@@ -1,0 +1,100 @@
+{
+  "object_fqn": "main.etoro_kpi.kyc_for_compliance_v",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 8,
+  "formulas": [
+    {
+      "column": "GCID",
+      "formula": "-- ========================================================================== -- Source: information_schema.views.view_definition -- Object: etoro_kpi.kyc_for_compliance_v -- Captured: 2026-05-19…",
+      "expression_raw": "-- ==========================================================================\n-- Source: information_schema.views.view_definition\n-- Object: main.etoro_kpi.kyc_for_compliance_v\n-- Captured: 2026-05-19…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L1-L7",
+      "scope": "main"
+    },
+    {
+      "column": "CID",
+      "formula": ",CID",
+      "expression_raw": ",c.CID",
+      "inputs": [
+        "main.compliance.bronze_userapidb_kyc_customeranswers"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "OccurredAt",
+      "formula": "union all select GCID, OccurredAt_InSource AS OccurredAt, QuestionId, AnswerId, 0",
+      "expression_raw": "union all \n      select h.GCID, h.OccurredAt_InSource AS OccurredAt, h.QuestionId, h.AnswerId, 0 as Is_Current",
+      "inputs": [
+        "main.compliance.bronze_userapidb_history_customeranswers"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L17-L18",
+      "scope": "main"
+    },
+    {
+      "column": "QuestionId",
+      "formula": ",CID ,aa.OccurredAt ,aa.QuestionId",
+      "expression_raw": ",c.CID\n      ,aa.OccurredAt\n      ,aa.QuestionId",
+      "inputs": [
+        "main.compliance.bronze_userapidb_kyc_customeranswers"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L10",
+      "scope": "main"
+    },
+    {
+      "column": "QuestionText",
+      "formula": ",CID ,aa.OccurredAt ,aa.QuestionId ,QuestionText",
+      "expression_raw": ",c.CID\n      ,aa.OccurredAt\n      ,aa.QuestionId\n      ,q.QuestionText",
+      "inputs": [
+        "compliance.bronze_userapidb_kyc_questions",
+        "main.compliance.bronze_userapidb_kyc_customeranswers"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L11",
+      "scope": "main"
+    },
+    {
+      "column": "AnswerId",
+      "formula": ",CID ,aa.OccurredAt ,aa.QuestionId ,QuestionText ,aa.AnswerId",
+      "expression_raw": ",c.CID\n      ,aa.OccurredAt\n      ,aa.QuestionId\n      ,q.QuestionText\n      ,aa.AnswerId",
+      "inputs": [
+        "compliance.bronze_userapidb_kyc_questions",
+        "main.compliance.bronze_userapidb_kyc_customeranswers"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L12",
+      "scope": "main"
+    },
+    {
+      "column": "AnswerText",
+      "formula": ",CID ,aa.OccurredAt ,aa.QuestionId ,QuestionText ,aa.AnswerId ,AnswerText",
+      "expression_raw": ",c.CID\n      ,aa.OccurredAt\n      ,aa.QuestionId\n      ,q.QuestionText\n      ,aa.AnswerId\n      ,a.AnswerText",
+      "inputs": [
+        "compliance.bronze_userapidb_kyc_answers",
+        "compliance.bronze_userapidb_kyc_questions",
+        "main.compliance.bronze_userapidb_kyc_customeranswers"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L13",
+      "scope": "main"
+    },
+    {
+      "column": "Is_Current",
+      "formula": "union all select GCID, OccurredAt_InSource AS OccurredAt, QuestionId, AnswerId, 0",
+      "expression_raw": "union all \n      select h.GCID, h.OccurredAt_InSource AS OccurredAt, h.QuestionId, h.AnswerId, 0 as Is_Current",
+      "inputs": [
+        "main.compliance.bronze_userapidb_history_customeranswers"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L17-L18",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/kyc_for_compliance_v.sql"
+}

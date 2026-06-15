@@ -1,0 +1,294 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_revenue_optionsplatform",
+  "generated_at": "2026-05-18T16:27:37Z",
+  "formula_count": 26,
+  "formulas": [
+    {
+      "column": "DateID",
+      "formula": "CAST(DATE_FORMAT(TradeDate, 'yyyyMMdd') AS INT)",
+      "expression_raw": "CAST(DATE_FORMAT(rev.TradeDate, 'yyyyMMdd') AS INT) AS DateID",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "Date",
+      "formula": "CAST(TradeDate AS DATE)",
+      "expression_raw": "CAST(rev.TradeDate AS DATE) AS Date",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": "RealCID",
+      "expression_raw": "dc.RealCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "ActionTypeID",
+      "formula": "CASE WHEN Side = 'B' THEN 1 WHEN Side = 'S' THEN 4 END",
+      "expression_raw": "CASE WHEN rev.Side = 'B' THEN 1 WHEN rev.Side = 'S' THEN 4 END AS ActionTypeID",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "ActionType",
+      "formula": "CASE WHEN Side = 'B' THEN 'ManualPositionOpen' WHEN Side = 'S' THEN 'ManualPositionClose' END",
+      "expression_raw": "CASE WHEN rev.Side = 'B' THEN 'ManualPositionOpen' WHEN rev.Side = 'S' THEN 'ManualPositionClose' END AS ActionType",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "formula": "CASE WHEN InstrumentType = 'Option' THEN 9 WHEN InstrumentType = 'Equity' THEN 5 END",
+      "expression_raw": "CASE WHEN rev.InstrumentType = 'Option' THEN 9 WHEN rev.InstrumentType = 'Equity' THEN 5 END AS InstrumentTypeID",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "IsSettled",
+      "formula": "1",
+      "expression_raw": "1 AS IsSettled",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "IsCopy",
+      "formula": "0",
+      "expression_raw": "0 AS IsCopy",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "Metric",
+      "formula": "'Options_PFOF'",
+      "expression_raw": "'Options_PFOF' AS Metric",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "Amount",
+      "formula": "SUM(ABS(CustomerPFOFPayback))",
+      "expression_raw": "SUM(ABS(rev.CustomerPFOFPayback)) AS Amount",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports"
+      ],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "CountTransactions",
+      "formula": "COUNT(OrderID)",
+      "expression_raw": "COUNT(rev.OrderID) AS CountTransactions",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports"
+      ],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "IncludedInTotalRevenue",
+      "formula": "1",
+      "expression_raw": "1 AS IncludedInTotalRevenue",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "CountAsActiveTrade",
+      "formula": "CASE WHEN Side = 'B' THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN rev.Side = 'B' THEN 1 ELSE 0 END AS CountAsActiveTrade",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "UpdateDate",
+      "formula": "CURRENT_TIMESTAMP()",
+      "expression_raw": "CURRENT_TIMESTAMP() AS UpdateDate",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "IsBuy",
+      "formula": "1",
+      "expression_raw": "1 AS IsBuy",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "IsLeveraged",
+      "formula": "0",
+      "expression_raw": "0 AS IsLeveraged",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    },
+    {
+      "column": "IsFuture",
+      "formula": "0",
+      "expression_raw": "0 AS IsFuture",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L35-L35",
+      "scope": "main"
+    },
+    {
+      "column": "IsCopyFund",
+      "formula": "0",
+      "expression_raw": "0 AS IsCopyFund",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "IsOpenedFromIBAN",
+      "formula": "0",
+      "expression_raw": "0 AS IsOpenedFromIBAN",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L37-L37",
+      "scope": "main"
+    },
+    {
+      "column": "IsClosedToIBAN",
+      "formula": "0",
+      "expression_raw": "0 AS IsClosedToIBAN",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "IsRecurring",
+      "formula": "0",
+      "expression_raw": "0 AS IsRecurring",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L39-L39",
+      "scope": "main"
+    },
+    {
+      "column": "IsAirDrop",
+      "formula": "0",
+      "expression_raw": "0 AS IsAirDrop",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L40-L40",
+      "scope": "main"
+    },
+    {
+      "column": "IsValidCustomer",
+      "formula": "IsValidCustomer",
+      "expression_raw": "dc.IsValidCustomer",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L41-L41",
+      "scope": "main"
+    },
+    {
+      "column": "IsCreditReportValidCB",
+      "formula": "IsCreditReportValidCB",
+      "expression_raw": "dc.IsCreditReportValidCB",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L42-L42",
+      "scope": "main"
+    },
+    {
+      "column": "FirstTradeDate",
+      "formula": "CAST(TradeDate AS DATE)",
+      "expression_raw": "CAST(ft.TradeDate AS DATE) AS FirstTradeDate",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L43-L43",
+      "scope": "main"
+    },
+    {
+      "column": "FirstTradeDateID",
+      "formula": "CAST(DATE_FORMAT(CAST(TradeDate AS DATE), 'yyyyMMdd') AS INT)",
+      "expression_raw": "CAST(DATE_FORMAT(CAST(ft.TradeDate AS DATE), 'yyyyMMdd') AS INT) AS FirstTradeDateID",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L44-L44",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_revenue_optionsplatform.sql"
+}

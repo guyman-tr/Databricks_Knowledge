@@ -1,0 +1,1546 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_saxo_recon_eod",
+  "rows": [
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "AccountNumber",
+      "target_column_name": "AccountNumber",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "AccountNumber",
+      "target_column_name": "AccountNumber",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "AccountNumber",
+      "target_column_name": "AccountNumber",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "AccountNumber",
+      "target_column_name": "AccountNumber",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "AccountNumber",
+      "target_column_name": "AccountNumber",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "BuySell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "BuySell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "BuySell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "Buy/Sell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Buy/Sell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "Buy/Sell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "Buy/Sell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "ClientAmountUSD",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "ClientUnits",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "Clients_AmountUSD",
+      "target_column_name": "Clients_AmountUSD",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "Clients_AmountUSD",
+      "target_column_name": "Clients_AmountUSD",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "Clients_Units",
+      "target_column_name": "Clients_Units",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "Clients_Units",
+      "target_column_name": "Clients_Units",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "CurrencyPrimary",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "CurrencyPrimary",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "Date",
+      "target_column_name": "Date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "Date",
+      "target_column_name": "Date",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "ExchangeDescription",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "ExchangeDescription",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "ExchangeDescription",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "FX_Rate",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "FX_Rate",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "FX_Rate",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "FXratetoUSD",
+      "target_column_name": "FX_Rate",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "FXratetoUSD",
+      "target_column_name": "FX_Rate",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "FX_Rate",
+      "target_column_name": "FX_Rate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "FX_Rate",
+      "target_column_name": "FX_Rate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "InstrumentDescription",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "Description",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "Description",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_instrumentboundaries",
+      "source_column_name": "OpenThresholdUSD",
+      "target_column_name": "LowerBoundary",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "LowerBoundary",
+      "target_column_name": "LowerBoundary",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "LowerBoundary",
+      "target_column_name": "LowerBoundary",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "TradeDate",
+      "target_column_name": "MAXTradeDate",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "TradeDate",
+      "target_column_name": "MAXTradeDate",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "TradeDate",
+      "target_column_name": "MAXTradeDate",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "TradeDate",
+      "target_column_name": "MaxTradeDate",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "TradeDate",
+      "target_column_name": "MaxTradeDate",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "TradeDate",
+      "target_column_name": "MaxTradeDate",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "MaxTradeDate",
+      "target_column_name": "MaxTradeDate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "MaxTradeDate",
+      "target_column_name": "MaxTradeDate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "FigureSize",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "FigureSize",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "FigureSize",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "Reality-Client",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "Reality-Client",
+      "target_column_name": "Reality-Client",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "Reality-Client",
+      "target_column_name": "Reality-Client",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "FigureSize",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "FigureSize",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "FigureSize",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "Reality-Supposed",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "Reality-Supposed",
+      "target_column_name": "Reality-Supposed",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "SAXO-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "SAXO-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "SAXO-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "SAXO-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "SAXO-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "SAXO-Clients_Units",
+      "target_column_name": "SAXO-Clients_Units",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "SAXO-Clients_Units",
+      "target_column_name": "SAXO-Clients_Units",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "SAXO-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "SAXO-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "SAXO-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "SAXO-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "SAXO-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "SAXO-eToro_Units",
+      "target_column_name": "SAXO-eToro_Units",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "SAXO-eToro_Units",
+      "target_column_name": "SAXO-eToro_Units",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "FigureSize",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "FigureSize",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "InstrumentToAccountRate",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "FigureSize",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "SAXO_AmountUSD",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "SAXO_AmountUSD",
+      "target_column_name": "SAXO_AmountUSD",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "FigureSize",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "FigureSize",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "FigureSize",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "SAXO_LocalAmount",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "SAXO_LocalAmount",
+      "target_column_name": "SAXO_LocalAmount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "SAXO_Rate",
+      "target_column_name": "SAXO_Rate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "SAXO_Rate",
+      "target_column_name": "SAXO_Rate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "SAXO_Units",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "SAXO_Units",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "Amount",
+      "target_column_name": "SAXO_Units",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "SAXO_Units",
+      "target_column_name": "SAXO_Units",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "SAXO_Units",
+      "target_column_name": "SAXO_Units",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "UnrealisedPLAccount",
+      "target_column_name": "UnrealisedValueAccount",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "UnrealisedValueAccount",
+      "target_column_name": "UnrealisedValueAccount",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "UnrealisedValueAccount",
+      "target_column_name": "UnrealisedValueAccount",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "UnrealisedValueAccount",
+      "target_column_name": "UnrealisedValueAccount",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "UnrealisedValueAccount",
+      "target_column_name": "UnrealisedValueAccount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_instrumentboundaries",
+      "source_column_name": "HedgeRiskLimitUSD",
+      "target_column_name": "UpperBoundary",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "UpperBoundary",
+      "target_column_name": "UpperBoundary",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "UpperBoundary",
+      "target_column_name": "UpperBoundary",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "eToro-SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "eToro-SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_cfdopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "eToro-SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "InstrumentCurrency",
+      "target_column_name": "eToro-SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_9121766_shareopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "eToro-SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.general.gold_saxo_saxobank_6914282_shareopenpositions",
+      "source_column_name": "EODRate",
+      "target_column_name": "eToro-SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToro-SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "eToroRate",
+      "target_column_name": "eToro-SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroRate",
+      "target_column_name": "eToro-SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToro-SAXO_Rate",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "eToro-SAXO_Rate",
+      "target_column_name": "eToro-SAXO_Rate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "eToro-SAXO_Rate",
+      "target_column_name": "eToro-SAXO_Rate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "eToroAmountUSD",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroRate",
+      "target_column_name": "eToroRate",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToroRate",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "eToro_AmounUSD",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "eToro_AmounUSD",
+      "entity_type": "JOB",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "eToro_AmounUSD",
+      "target_column_name": "eToro_AmounUSD",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "eToro_AmounUSD",
+      "target_column_name": "eToro_AmounUSD",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "eToro_LocalAmount",
+      "target_column_name": "eToro_LocalAmount",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "eToro_LocalAmount",
+      "target_column_name": "eToro_LocalAmount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "eToroRate",
+      "target_column_name": "eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroRate",
+      "target_column_name": "eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "eToro_Rate",
+      "target_column_name": "eToro_Rate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "eToro_Rate",
+      "target_column_name": "eToro_Rate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "etr_y",
+      "target_column_name": "etr_y",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "etr_y",
+      "target_column_name": "etr_y",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "etr_ym",
+      "target_column_name": "etr_ym",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "etr_ym",
+      "target_column_name": "etr_ym",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "etr_ymd",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "etr_ymd",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_instrumentboundaries",
+      "source_column_name": "OpenThresholdUSD",
+      "target_column_name": "illiquid/liquid",
+      "entity_type": "JOB",
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "illiquid/liquid",
+      "target_column_name": "illiquid/liquid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
+      "source_column_name": "illiquid/liquid",
+      "target_column_name": "illiquid/liquid",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    }
+  ],
+  "generated_at": "2026-05-19T12:37:08Z"
+}

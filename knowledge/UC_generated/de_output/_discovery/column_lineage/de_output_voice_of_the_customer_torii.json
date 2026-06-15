@@ -1,0 +1,90 @@
+{
+  "object": "main.de_output.de_output_voice_of_the_customer_torii",
+  "rows": [
+    {
+      "source_table_full_name": "main.pii_data.gold_torii_logs_prod",
+      "source_column_name": "user_start_timestamp",
+      "target_column_name": "Created",
+      "entity_type": "JOB",
+      "event_count": 116
+    },
+    {
+      "source_table_full_name": "main.de_output_stg.de_output_voice_of_the_customer_torii",
+      "source_column_name": "Created",
+      "target_column_name": "Created",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.pii_data.gold_torii_logs_prod",
+      "source_column_name": "user_gcid",
+      "target_column_name": "GCID",
+      "entity_type": "JOB",
+      "event_count": 116
+    },
+    {
+      "source_table_full_name": "main.de_output_stg.de_output_voice_of_the_customer_torii",
+      "source_column_name": "GCID",
+      "target_column_name": "GCID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.pii_data.gold_torii_logs_prod",
+      "source_column_name": "question",
+      "target_column_name": "Question",
+      "entity_type": "JOB",
+      "event_count": 116
+    },
+    {
+      "source_table_full_name": "main.de_output_stg.de_output_voice_of_the_customer_torii",
+      "source_column_name": "Question",
+      "target_column_name": "Question",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.pii_data.gold_torii_logs_prod",
+      "source_column_name": "question",
+      "target_column_name": "Sentiment",
+      "entity_type": "JOB",
+      "event_count": 116
+    },
+    {
+      "source_table_full_name": "main.de_output_stg.de_output_voice_of_the_customer_torii",
+      "source_column_name": "Sentiment",
+      "target_column_name": "Sentiment",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.pii_data.gold_torii_logs_prod",
+      "source_column_name": "question",
+      "target_column_name": "Sentiment_Classification",
+      "entity_type": "JOB",
+      "event_count": 116
+    },
+    {
+      "source_table_full_name": "main.de_output_stg.de_output_voice_of_the_customer_torii",
+      "source_column_name": "Sentiment_Classification",
+      "target_column_name": "Sentiment_Classification",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.pii_data.gold_torii_logs_prod",
+      "source_column_name": "serial_number",
+      "target_column_name": "Serial_Number",
+      "entity_type": "JOB",
+      "event_count": 116
+    },
+    {
+      "source_table_full_name": "main.de_output_stg.de_output_voice_of_the_customer_torii",
+      "source_column_name": "Serial_Number",
+      "target_column_name": "Serial_Number",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 6
+    }
+  ],
+  "generated_at": "2026-05-19T14:09:33Z"
+}

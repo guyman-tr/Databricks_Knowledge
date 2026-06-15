@@ -1,0 +1,85 @@
+{
+  "object_fqn": "main.bi_output.nmi_by_portfoliopi_new",
+  "generated_at": "2026-05-19T15:01:27Z",
+  "formula_count": 7,
+  "formulas": [
+    {
+      "column": "ParentCID",
+      "formula": "mirror.ParentCID",
+      "expression_raw": "mirror.ParentCID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "CopyType",
+      "formula": "ParentUserName,case when AccountTypeID = 9 then 'Portfolio' else 'PI' END",
+      "expression_raw": "hm.ParentUserName,case\n        when AccountTypeID = 9 then 'Portfolio'\n        else 'PI'\n      END AS CopyType",
+      "inputs": [
+        "main.bi_db.bronze_etoro_dwh_v_historymirrorhourly"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L19-L22",
+      "scope": "main"
+    },
+    {
+      "column": "UserName",
+      "formula": "mirror.ParentUserName",
+      "expression_raw": "mirror.ParentUserName AS UserName",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "Region",
+      "formula": "Region",
+      "expression_raw": "dc.Region AS Region",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "MoneyIn",
+      "formula": "CAST (MoneyIn AS Decimal (12, 2)) MoneyIn",
+      "expression_raw": "CAST (MoneyIn AS Decimal (12, 2)) MoneyIn",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "MoneyOut",
+      "formula": "CAST (MoneyOut AS Decimal (12, 2)) MoneyOut",
+      "expression_raw": "CAST (MoneyOut AS Decimal (12, 2)) MoneyOut",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "NetMoneyIn",
+      "formula": "CAST ((MoneyIn + MoneyOut) AS Decimal (12, 2)) NetMoneyIn",
+      "expression_raw": "CAST ((MoneyIn + MoneyOut) AS Decimal (12, 2)) NetMoneyIn",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/nmi_by_portfoliopi_new.sql"
+}

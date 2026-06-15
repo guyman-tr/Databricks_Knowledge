@@ -1,0 +1,29 @@
+{
+  "object_fqn": "main.de_output.vw_bronze_public_api_operations",
+  "generated_at": "2026-05-19T14:11:57Z",
+  "concept_count": 1,
+  "concepts": [
+    {
+      "id": "case_flag_is_demo",
+      "name": "is_demo computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "is_demo"
+      ],
+      "predicates": [
+        {
+          "col": "eventData_externalPath",
+          "op": "LIKE",
+          "val": "'      '"
+        }
+      ],
+      "then_value": "'    '",
+      "else_value": "'    '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "de_output.sql L32-L32",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/de_output/_discovery/source_code/vw_bronze_public_api_operations.sql"
+}

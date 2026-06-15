@@ -1,0 +1,52 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_fact_customeraction",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "filter_block_passive_actions_enriched",
+      "name": "Filter block on passive_actions_enriched",
+      "kind": "filter_block",
+      "columns_involved": [
+        "ActionTypeID"
+      ],
+      "predicates": [
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "19"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L69",
+      "scope": "passive_actions_enriched",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_active_actions",
+      "name": "Filter block on active_actions",
+      "kind": "filter_block",
+      "columns_involved": [
+        "ActionTypeID",
+        "ActionTypeID"
+      ],
+      "predicates": [
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "35"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "36"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L106",
+      "scope": "active_actions",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_fact_customeraction.sql"
+}

@@ -1,0 +1,702 @@
+{
+  "object_fqn": "main.bi_output.bi_output_v_recurring_investment",
+  "generated_at": "2026-05-19T15:01:25Z",
+  "formula_count": 63,
+  "formulas": [
+    {
+      "column": "ActiveDate",
+      "formula": "DATE(date_trunc('month', NextOrderDate))",
+      "expression_raw": "DATE(date_trunc('month', ipi.NextOrderDate)) AS ActiveDate",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "ActiveMonth",
+      "formula": "date_format(NextOrderDate, 'yyyy-MM')",
+      "expression_raw": "date_format(ipi.NextOrderDate, 'yyyy-MM') AS ActiveMonth",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "ID",
+      "formula": "ID",
+      "expression_raw": "ip.ID",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "PlanType",
+      "formula": "PlanType",
+      "expression_raw": "ip.PlanType",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "PlaneTypeName",
+      "formula": "Name",
+      "expression_raw": "pt.Name as PlaneTypeName",
+      "inputs": [
+        "main.experience.bronze_recurringinvestment_dictionary_plantype"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "GCID",
+      "formula": "GCID",
+      "expression_raw": "ip.GCID",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "CID",
+      "formula": "CID",
+      "expression_raw": "ip.CID",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentID",
+      "formula": "InstrumentID",
+      "expression_raw": "ip.InstrumentID",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L35-L35",
+      "scope": "main"
+    },
+    {
+      "column": "RecurringDepositID",
+      "formula": "RecurringDepositID",
+      "expression_raw": "ip.RecurringDepositID",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "Amount",
+      "formula": "Amount",
+      "expression_raw": "ip.Amount",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L37-L37",
+      "scope": "main"
+    },
+    {
+      "column": "CurrencyID",
+      "formula": "CurrencyID",
+      "expression_raw": "ip.CurrencyID",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "PlanStatusID",
+      "formula": "PlanStatusID",
+      "expression_raw": "ip.PlanStatusID",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L39-L39",
+      "scope": "main"
+    },
+    {
+      "column": "PlanStatusName",
+      "formula": "StatusName",
+      "expression_raw": "ps.StatusName AS PlanStatusName",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_dictionary_planstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L40-L40",
+      "scope": "main"
+    },
+    {
+      "column": "DepositPlanStatusID",
+      "formula": "DepositPlanStatusID",
+      "expression_raw": "ip.DepositPlanStatusID",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L41-L41",
+      "scope": "main"
+    },
+    {
+      "column": "StatusReasonID",
+      "formula": "StatusReasonID",
+      "expression_raw": "ip.StatusReasonID",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L42-L42",
+      "scope": "main"
+    },
+    {
+      "column": "PlanCreationDate",
+      "formula": "CreationDate",
+      "expression_raw": "ip.CreationDate AS PlanCreationDate",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L43-L43",
+      "scope": "main"
+    },
+    {
+      "column": "EndDate",
+      "formula": "EndDate",
+      "expression_raw": "ip.EndDate",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L44-L44",
+      "scope": "main"
+    },
+    {
+      "column": "ValidFrom",
+      "formula": "ValidFrom",
+      "expression_raw": "ip.ValidFrom",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L45-L45",
+      "scope": "main"
+    },
+    {
+      "column": "ValidTo",
+      "formula": "ValidTo",
+      "expression_raw": "ip.ValidTo",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L46-L46",
+      "scope": "main"
+    },
+    {
+      "column": "DepositStartDate",
+      "formula": "DepositStartDate",
+      "expression_raw": "ip.DepositStartDate",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L47-L47",
+      "scope": "main"
+    },
+    {
+      "column": "RepeatsOn",
+      "formula": "RepeatsOn",
+      "expression_raw": "ip.RepeatsOn",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L48-L48",
+      "scope": "main"
+    },
+    {
+      "column": "FrequencyID",
+      "formula": "FrequencyID",
+      "expression_raw": "ip.FrequencyID",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L49-L49",
+      "scope": "main"
+    },
+    {
+      "column": "FundingID",
+      "formula": "FundingID",
+      "expression_raw": "ip.FundingID",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L50-L50",
+      "scope": "main"
+    },
+    {
+      "column": "CopyType",
+      "formula": "CopyType",
+      "expression_raw": "ip.CopyType",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L51-L51",
+      "scope": "main"
+    },
+    {
+      "column": "CopyTypeName",
+      "formula": "Name",
+      "expression_raw": "ct.Name AS CopyTypeName",
+      "inputs": [
+        "main.experience.bronze_recurringinvestment_dictionary_copytype"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L52-L52",
+      "scope": "main"
+    },
+    {
+      "column": "Trace",
+      "formula": "Trace",
+      "expression_raw": "ip.Trace",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L53-L53",
+      "scope": "main"
+    },
+    {
+      "column": "InstanceID",
+      "formula": "InstanceID",
+      "expression_raw": "ipi.InstanceID",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L54-L54",
+      "scope": "main"
+    },
+    {
+      "column": "InstanceStatusID",
+      "formula": "InstanceStatusID",
+      "expression_raw": "ipi.InstanceStatusID",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L55-L55",
+      "scope": "main"
+    },
+    {
+      "column": "InstanceStatusName",
+      "formula": "InstanceStatusID",
+      "expression_raw": "isi.InstanceStatusID AS InstanceStatusName",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_dictionary_instancestatusid"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L56-L56",
+      "scope": "main"
+    },
+    {
+      "column": "InstanceStatusReasonID",
+      "formula": "InstanceStatusReasonID",
+      "expression_raw": "ipi.InstanceStatusReasonID",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L57-L57",
+      "scope": "main"
+    },
+    {
+      "column": "InstanceStatusReasonName",
+      "formula": "EventName",
+      "expression_raw": "pec.EventName AS InstanceStatusReasonName",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_dictionary_planeventcode"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L58-L58",
+      "scope": "main"
+    },
+    {
+      "column": "NextOrderDate",
+      "formula": "date_format(NextOrderDate, 'yyyy-MM')",
+      "expression_raw": "date_format(ipi.NextOrderDate, 'yyyy-MM') AS ActiveMonth",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "CreationDate",
+      "formula": "CreationDate",
+      "expression_raw": "ipi.CreationDate",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L60-L60",
+      "scope": "main"
+    },
+    {
+      "column": "DepositID",
+      "formula": "DepositID",
+      "expression_raw": "ipi.DepositID",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L61-L61",
+      "scope": "main"
+    },
+    {
+      "column": "DepositAmountUsd",
+      "formula": "DepositAmountUsd",
+      "expression_raw": "ipi.DepositAmountUsd",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L62-L62",
+      "scope": "main"
+    },
+    {
+      "column": "DepositDate",
+      "formula": "DepositDate",
+      "expression_raw": "ipi.DepositDate",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L63-L63",
+      "scope": "main"
+    },
+    {
+      "column": "DepositCycleNumber",
+      "formula": "DepositCycleNumber",
+      "expression_raw": "ipi.DepositCycleNumber",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L64-L64",
+      "scope": "main"
+    },
+    {
+      "column": "HighLevelDepositStatusId",
+      "formula": "HighLevelDepositStatusId",
+      "expression_raw": "ipi.HighLevelDepositStatusId",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L65-L65",
+      "scope": "main"
+    },
+    {
+      "column": "DepositStatusID",
+      "formula": "DepositStatusID",
+      "expression_raw": "ipi.DepositStatusID",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L66-L66",
+      "scope": "main"
+    },
+    {
+      "column": "OrderID",
+      "formula": "OrderID",
+      "expression_raw": "ipi.OrderID",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L67-L67",
+      "scope": "main"
+    },
+    {
+      "column": "OrderTradeDate",
+      "formula": "OrderTradeDate",
+      "expression_raw": "ipi.OrderTradeDate",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L68-L68",
+      "scope": "main"
+    },
+    {
+      "column": "OrderStatusId",
+      "formula": "OrderStatusId",
+      "expression_raw": "ipi.OrderStatusId",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L69-L69",
+      "scope": "main"
+    },
+    {
+      "column": "PositionExecutionDate",
+      "formula": "PositionExecutionDate",
+      "expression_raw": "ipi.PositionExecutionDate",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L70-L70",
+      "scope": "main"
+    },
+    {
+      "column": "ValidFromInstance",
+      "formula": "ValidFrom ValidFromInstance",
+      "expression_raw": "ipi.ValidFrom ValidFromInstance",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L71-L71",
+      "scope": "main"
+    },
+    {
+      "column": "ValidToInstance",
+      "formula": "ValidTo ValidToInstance",
+      "expression_raw": "ipi.ValidTo ValidToInstance",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L72-L72",
+      "scope": "main"
+    },
+    {
+      "column": "PositionFailErrorCode",
+      "formula": "PositionFailErrorCode",
+      "expression_raw": "ipi.PositionFailErrorCode",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L73-L73",
+      "scope": "main"
+    },
+    {
+      "column": "MirrorID",
+      "formula": "MirrorID",
+      "expression_raw": "ipi.MirrorID",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L74-L74",
+      "scope": "main"
+    },
+    {
+      "column": "MirrorOrderCreated",
+      "formula": "MirrorOrderCreated",
+      "expression_raw": "ipi.MirrorOrderCreated",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L75-L75",
+      "scope": "main"
+    },
+    {
+      "column": "CopyPositionStatusID",
+      "formula": "CopyPositionStatusID",
+      "expression_raw": "ipi.CopyPositionStatusID",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L76-L76",
+      "scope": "main"
+    },
+    {
+      "column": "CopyFailErrorCode",
+      "formula": "CopyFailErrorCode",
+      "expression_raw": "ipi.CopyFailErrorCode",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L77-L77",
+      "scope": "main"
+    },
+    {
+      "column": "DepositFailReason",
+      "formula": "DepositFailReason",
+      "expression_raw": "ipi.DepositFailReason",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L78-L78",
+      "scope": "main"
+    },
+    {
+      "column": "TraceInstance",
+      "formula": "Trace TraceInstance",
+      "expression_raw": "ipi.Trace TraceInstance",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L79-L79",
+      "scope": "main"
+    },
+    {
+      "column": "CopyParentCID",
+      "formula": "CopyParentCID",
+      "expression_raw": "ip.CopyParentCID",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L80-L80",
+      "scope": "main"
+    },
+    {
+      "column": "CopyparentGCID",
+      "formula": "CopyparentGCID",
+      "expression_raw": "ip.CopyparentGCID",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L81-L81",
+      "scope": "main"
+    },
+    {
+      "column": "HasBackupPayment",
+      "formula": "HasBackupPayment",
+      "expression_raw": "ip.HasBackupPayment",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L82-L82",
+      "scope": "main"
+    },
+    {
+      "column": "PositionStatusID",
+      "formula": "PositionStatus PositionStatusID",
+      "expression_raw": "ipi.PositionStatus PositionStatusID",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L83-L83",
+      "scope": "main"
+    },
+    {
+      "column": "PositionStatusName",
+      "formula": "PositionStatus PositionStatusName",
+      "expression_raw": "ps2.PositionStatus PositionStatusName",
+      "inputs": [
+        "main.experience.bronze_recurringinvestment_dictionary_positionstatus"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L84-L84",
+      "scope": "main"
+    },
+    {
+      "column": "IsSkip",
+      "formula": "CASE WHEN STRING(InstanceStatusID) in ('3', '4') THEN 1 else 0 END IsSkip",
+      "expression_raw": "CASE\n        WHEN STRING(ipi.InstanceStatusID) in ('3', '4') THEN 1\n        else 0\n      END IsSkip",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L85-L88",
+      "scope": "main"
+    },
+    {
+      "column": "ActivePlan",
+      "formula": "CASE WHEN max(DepositID) over (partition by ID order by NextOrderDate ASC) is not null and EndDate is null and DepositStatusID = 2 THEN …",
+      "expression_raw": "CASE\n        WHEN\n          max(DepositID) over (partition by ip.ID order by ipi.NextOrderDate ASC) is not null\n          and ip.EndDate is null\n          and ipi.DepositStatusID = 2\n        THEN\n    …",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances",
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L89-L97",
+      "scope": "main"
+    },
+    {
+      "column": "PositionAmountUSD",
+      "formula": "positionamountusd",
+      "expression_raw": "ipi.positionamountusd as PositionAmountUSD",
+      "inputs": [
+        "main.general.bronze_recurringinvestment_recurringinvestment_planinstances"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L98-L98",
+      "scope": "main"
+    },
+    {
+      "column": "AmountUSD",
+      "formula": "amountusd",
+      "expression_raw": "ip.amountusd AS AmountUSD",
+      "inputs": [
+        "main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L99-L99",
+      "scope": "main"
+    },
+    {
+      "column": "IsChurnPlan",
+      "formula": "CASE WHEN MAX(ActivePlan) over (partition by ID order by NextOrderDate) = 1 and ActivePlan = 0 THEN 1 else 0 END IsChurnPlan",
+      "expression_raw": "CASE\n    WHEN\n      MAX(ActivePlan) over (partition by ID order by NextOrderDate) = 1\n      and ActivePlan = 0\n    THEN\n      1\n    else 0\n  END IsChurnPlan",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L9-L16",
+      "scope": "main"
+    },
+    {
+      "column": "IsActiveUser",
+      "formula": "CASE WHEN sum(ActivePlan) over (partition by CID, activemonth order by NextOrderDate ASC) >= 1 --and ActivePlan = 0 THEN 1 else 0 END IsActiveUser -- isActiveUser = 0 is…",
+      "expression_raw": "CASE\n    WHEN\n      sum(ActivePlan) over (partition by CID, activemonth order by NextOrderDate ASC) >= 1\n    --and ActivePlan = 0\n    THEN\n      1\n    else 0\n  END IsActiveUser --  isActiveUser = 0 is…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L17-L24",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_v_recurring_investment.sql"
+}

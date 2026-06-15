@@ -1,0 +1,50 @@
+{
+  "object_fqn": "main.etoro_kpi.vg_dealing_clicks_openclose_breakdown",
+  "generated_at": "2026-05-19T15:20:30Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "union_leg_sign_flip_main",
+      "name": "Sign-flip leg (main)",
+      "kind": "union_leg_sign_flip",
+      "columns_involved": [
+        "TicketFee"
+      ],
+      "predicates": [],
+      "sign": "-1",
+      "expressions": [
+        "cbd.TicketFee"
+      ],
+      "physical_inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "evidence_lines": "L43",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_di",
+      "name": "Dim lookup via di",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "alias": "di",
+      "join_conditions": [
+        "cbd.InstrumentID = di.InstrumentID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L57",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "cbd.InstrumentID = di.InstrumentID"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/vg_dealing_clicks_openclose_breakdown.sql"
+}

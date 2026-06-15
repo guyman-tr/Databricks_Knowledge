@@ -1,0 +1,52 @@
+{
+  "object_fqn": "main.etoro_kpi.crm_csat_survey_per_case_v",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 4,
+  "formulas": [
+    {
+      "column": "Id",
+      "formula": "SELECT Id",
+      "expression_raw": "SELECT s.Id",
+      "inputs": [
+        "main.crm.silver_crm_csat_survey_entry__c"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "ranked"
+    },
+    {
+      "column": "cSAT_Date",
+      "formula": ",CreatedDate AS cSAT_Date -- Date the survey was taken",
+      "expression_raw": ",s.CreatedDate AS cSAT_Date -- Date the survey was taken",
+      "inputs": [
+        "main.crm.silver_crm_csat_survey_entry__c"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L9-L9",
+      "scope": "ranked"
+    },
+    {
+      "column": "simplesurvey__Case__c",
+      "formula": ",CreatedDate AS cSAT_Date -- Date the survey was taken ,Case__c AS simplesurvey__Case__c -- Case ID",
+      "expression_raw": ",s.CreatedDate AS cSAT_Date -- Date the survey was taken\n    ,s.Case__c AS simplesurvey__Case__c -- Case ID",
+      "inputs": [
+        "main.crm.silver_crm_csat_survey_entry__c"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L9-L10",
+      "scope": "ranked"
+    },
+    {
+      "column": "simplesurvey__Survey_Score__c",
+      "formula": ",CreatedDate AS cSAT_Date -- Date the survey was taken ,Case__c AS simplesurvey__Case__c -- Case ID ,Agent_Service_NumValue__c AS simplesurvey__Survey_Score__c -- Customer satisfaction s…",
+      "expression_raw": ",s.CreatedDate AS cSAT_Date -- Date the survey was taken\n    ,s.Case__c AS simplesurvey__Case__c -- Case ID\n    ,s.Agent_Service_NumValue__c AS simplesurvey__Survey_Score__c -- Customer satisfaction s…",
+      "inputs": [
+        "main.crm.silver_crm_csat_survey_entry__c"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L9-L11",
+      "scope": "ranked"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/crm_csat_survey_per_case_v.sql"
+}

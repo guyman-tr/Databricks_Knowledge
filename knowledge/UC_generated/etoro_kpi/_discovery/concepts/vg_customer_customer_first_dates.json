@@ -1,0 +1,30 @@
+{
+  "object_fqn": "main.etoro_kpi.vg_customer_customer_first_dates",
+  "generated_at": "2026-05-19T15:20:30Z",
+  "concept_count": 1,
+  "concepts": [
+    {
+      "id": "dim_lookup_dc",
+      "name": "Dim lookup via dc",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "alias": "dc",
+      "join_conditions": [
+        "cfd.CID = dc.RealCID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L34",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "cfd.CID = dc.RealCID"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/vg_customer_customer_first_dates.sql"
+}

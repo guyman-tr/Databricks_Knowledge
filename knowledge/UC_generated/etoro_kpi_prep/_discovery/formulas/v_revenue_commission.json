@@ -1,0 +1,171 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_revenue_commission",
+  "generated_at": "2026-05-18T16:27:37Z",
+  "formula_count": 15,
+  "formulas": [
+    {
+      "column": "PositionID",
+      "formula": "CAST(PositionID AS BIGINT)",
+      "expression_raw": "CAST(fca.PositionID AS BIGINT) as PositionID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": "CAST(RealCID AS INT)",
+      "expression_raw": "CAST(fca.RealCID AS INT) as RealCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "DateID",
+      "formula": "CAST(DateID AS INT)",
+      "expression_raw": "CAST(fca.DateID AS INT) as DateID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "Occurred",
+      "formula": "Occurred",
+      "expression_raw": "fca.Occurred",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "etr_ymd",
+      "formula": "etr_ymd",
+      "expression_raw": "fca.etr_ymd",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "Commission",
+      "formula": "CAST(Commission AS DECIMAL(38, 6))",
+      "expression_raw": "CAST(fca.Commission AS DECIMAL(38, 6)) as Commission",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "CommissionOnClose",
+      "formula": "CAST(CommissionOnClose AS DECIMAL(38, 6))",
+      "expression_raw": "CAST(fca.CommissionOnClose AS DECIMAL(38, 6)) as CommissionOnClose",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "CommissionByUnits",
+      "formula": "CAST(CommissionByUnits AS DECIMAL(38, 6))",
+      "expression_raw": "CAST(fca.CommissionByUnits AS DECIMAL(38, 6)) as CommissionByUnits",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "ActionTypeID",
+      "formula": "CAST(ActionTypeID AS INT)",
+      "expression_raw": "CAST(fca.ActionTypeID AS INT) as ActionTypeID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "ActionType",
+      "formula": "CASE WHEN ActionTypeID IN (1, 2, 3, 39) THEN 'Open' ELSE 'Close' END",
+      "expression_raw": "CASE\n    WHEN fca.ActionTypeID IN (1, 2, 3, 39) THEN 'Open'\n    ELSE 'Close'\n  END as ActionType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L17-L20",
+      "scope": "main"
+    },
+    {
+      "column": "IsActiveTrade",
+      "formula": "CASE WHEN MirrorID > 0 AND COALESCE(IsAirdrop, 0) = 0 THEN 1 ELSE 0 END",
+      "expression_raw": "CASE\n    WHEN\n      fca.MirrorID > 0\n      AND COALESCE(fca.IsAirdrop, 0) = 0\n    THEN\n      1\n    ELSE 0\n  END as IsActiveTrade",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L21-L28",
+      "scope": "main"
+    },
+    {
+      "column": "IsSettled",
+      "formula": "CAST(IsSettled AS INT)",
+      "expression_raw": "CAST(fca.IsSettled AS INT) as IsSettled",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "MirrorID",
+      "formula": "CAST(MirrorID AS INT)",
+      "expression_raw": "CAST(fca.MirrorID AS INT) as MirrorID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "SettlementTypeID",
+      "formula": "CAST(SettlementTypeID AS INT)",
+      "expression_raw": "CAST(fca.SettlementTypeID AS INT) as SettlementTypeID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "TotalCommission",
+      "formula": "ELSE 0 END AS DECIMAL(38, 6) )",
+      "expression_raw": "ELSE 0\n    END AS DECIMAL(38, 6)\n  ) AS TotalCommission",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L41",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_revenue_commission.sql"
+}

@@ -1,0 +1,32 @@
+{
+  "object_fqn": "main.bi_output.funded",
+  "generated_at": "2026-05-19T15:01:27Z",
+  "formula_count": 2,
+  "formulas": [
+    {
+      "column": "Year",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_monthlypanel_fulldata"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "CID",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_monthlypanel_fulldata"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "CID"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/funded.sql"
+}

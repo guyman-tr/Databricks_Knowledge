@@ -1,0 +1,88 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_trade_liquidityprovidertype",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:42Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "LiquidityProviderTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.LiquidityProviderType.md",
+      "upstream_quote": "Primary key. Provider type identifier. Value map from live data: 0=eToro, 1=BMFN, 2=FXCM, 3=FD, 4=CNX, 5=XIGNITE, 6=MT_G",
+      "wiki_quote": "Primary key. Provider type identifier. Value map from live data: 0=eToro, 1=BMFN, 2=FXCM, 3=FD, 4=CNX, 5=XIGNITE, 6=MT_G",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Name",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.LiquidityProviderType.md",
+      "upstream_quote": "Human-readable provider type name (e.g., eToro, FXCM, BMFN). Used in views and reports.",
+      "wiki_quote": "Human-readable provider type name (e.g., eToro, FXCM, BMFN). Used in views and reports (Tier 1 — inherited from etoro.Tr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TypeSettingsXML",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.LiquidityProviderType.md",
+      "upstream_quote": "Pluggable configuration: assembly/class for priceClassInfo, PCSClassInfo, executionClassInfo, HedgingProviderClassInfo. ",
+      "wiki_quote": "Pluggable configuration: assembly/class for priceClassInfo, PCSClassInfo, executionClassInfo, HedgingProviderClassInfo. ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DbLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.LiquidityProviderType.md",
+      "upstream_quote": "Computed: suser_name(). SQL login that last modified the row. Audit context.",
+      "wiki_quote": "Computed: suser_name(). SQL login that last modified the row. Audit context (Tier 1 — inherited from etoro.Trade.Liquidi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AppLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.LiquidityProviderType.md",
+      "upstream_quote": "Computed: CONVERT(varchar(500), context_info()). Application context from context_info. Often NULL when not set by calle",
+      "wiki_quote": "Computed: CONVERT(varchar(500), context_info()). Application context from context_info. Often NULL when not set by calle",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysStartTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.LiquidityProviderType.md",
+      "upstream_quote": "System-versioning start. When this row became effective. GENERATED ALWAYS AS ROW START.",
+      "wiki_quote": "System-versioning start. When this row became effective. GENERATED ALWAYS AS ROW START (Tier 1 — inherited from etoro.Tr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysEndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.LiquidityProviderType.md",
+      "upstream_quote": "System-versioning end. When this row was superseded. GENERATED ALWAYS AS ROW END. 9999-12-31 means current.",
+      "wiki_quote": "System-versioning end. When this row was superseded. GENERATED ALWAYS AS ROW END. 9999-12-31 means current (Tier 1 — inh",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 7,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 7 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "object_fqn": "main.bi_db.bronze_walletdb_wallet_transactiontravelrulestatuses",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:14:07Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleStatuses.md",
+      "upstream_quote": "Auto-incrementing event identifier.",
+      "wiki_quote": "Auto-incrementing event identifier (Tier 1 — inherited from WalletDB.Wallet.TransactionTravelRuleStatuses).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TransactionTravelRuleInformationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleStatuses.md",
+      "upstream_quote": "Parent Travel Rule record. FK to Wallet.TransactionTravelRuleInformation.Id.",
+      "wiki_quote": "Parent Travel Rule record. FK to Wallet.TransactionTravelRuleInformation.Id (Tier 1 — inherited from WalletDB.Wallet.Tra",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TravelRuleStatusId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleStatuses.md",
+      "upstream_quote": "Status: 0=PendingManualApproval, 1=Approved, 2=Canceled, 3=PendingMissingInformation, 4=MissingInformationAdded, 5=MustC",
+      "wiki_quote": "Status: 0=PendingManualApproval, 1=Approved, 2=Canceled, 3=PendingMissingInformation, 4=MissingInformationAdded, 5=MustC",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleStatuses.md",
+      "upstream_quote": "Timestamp of status transition.",
+      "wiki_quote": "Timestamp of status transition (Tier 1 — inherited from WalletDB.Wallet.TransactionTravelRuleStatuses).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DetailsJson",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TransactionTravelRuleStatuses.md",
+      "upstream_quote": "JSON with status-specific details (approval notes, missing info details).",
+      "wiki_quote": "JSON with status-specific details (approval notes, missing info details) (Tier 1 — inherited from WalletDB.Wallet.Transa",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 5,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 5 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

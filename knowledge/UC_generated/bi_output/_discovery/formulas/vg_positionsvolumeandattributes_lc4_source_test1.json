@@ -1,0 +1,191 @@
+{
+  "object_fqn": "main.bi_output.vg_positionsvolumeandattributes_lc4_source_test1",
+  "generated_at": "2026-05-19T15:01:28Z",
+  "formula_count": 15,
+  "formulas": [
+    {
+      "column": "AccountTypeID",
+      "formula": "AccountTypeID",
+      "expression_raw": "fsc.AccountTypeID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L38-L38",
+      "scope": "FinalOpen"
+    },
+    {
+      "column": "Region",
+      "formula": "AccountTypeID , Region",
+      "expression_raw": "fsc.AccountTypeID\n        , c.Region",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L38-L39",
+      "scope": "FinalOpen"
+    },
+    {
+      "column": "CountryName",
+      "formula": "AccountTypeID , Region , Name",
+      "expression_raw": "fsc.AccountTypeID\n        , c.Region\n        , c.Name AS CountryName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L38-L40",
+      "scope": "FinalOpen"
+    },
+    {
+      "column": "SellCurrencyID",
+      "formula": "SellCurrencyID",
+      "expression_raw": "di.SellCurrencyID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "BaseOpen"
+    },
+    {
+      "column": "InstrumentType",
+      "formula": "SellCurrencyID , InstrumentType",
+      "expression_raw": "di.SellCurrencyID\n        , di.InstrumentType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L10",
+      "scope": "BaseOpen"
+    },
+    {
+      "column": "IsSettled",
+      "formula": "SellCurrencyID , InstrumentType , IsSettled",
+      "expression_raw": "di.SellCurrencyID\n        , di.InstrumentType\n        , dp.IsSettled",
+      "inputs": [
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L11",
+      "scope": "BaseOpen"
+    },
+    {
+      "column": "CID",
+      "formula": "SellCurrencyID , InstrumentType , IsSettled , CID",
+      "expression_raw": "di.SellCurrencyID\n        , di.InstrumentType\n        , dp.IsSettled\n        , dp.CID",
+      "inputs": [
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L12",
+      "scope": "BaseOpen"
+    },
+    {
+      "column": "Date_",
+      "formula": "SellCurrencyID , InstrumentType , IsSettled , CID , CAST(OpenOccurred AS DATE)",
+      "expression_raw": "di.SellCurrencyID\n        , di.InstrumentType\n        , dp.IsSettled\n        , dp.CID\n        , CAST(dp.OpenOccurred AS DATE) AS Date_",
+      "inputs": [
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L13",
+      "scope": "BaseOpen"
+    },
+    {
+      "column": "position_event_flag",
+      "formula": "SellCurrencyID , InstrumentType , IsSettled , CID , CAST(OpenOccurred AS DATE) AS Date_ , 'OpenDataFlag'",
+      "expression_raw": "di.SellCurrencyID\n        , di.InstrumentType\n        , dp.IsSettled\n        , dp.CID\n        , CAST(dp.OpenOccurred AS DATE) AS Date_\n        , 'OpenDataFlag' AS position_event_flag",
+      "inputs": [
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L14",
+      "scope": "BaseOpen"
+    },
+    {
+      "column": "Amount_Total",
+      "formula": "SellCurrencyID , InstrumentType , IsSettled , CID , CAST(OpenOccurred AS DATE) AS Date_ , 'OpenDataFlag' AS position_event_flag , COALESC…",
+      "expression_raw": "di.SellCurrencyID\n        , di.InstrumentType\n        , dp.IsSettled\n        , dp.CID\n        , CAST(dp.OpenOccurred AS DATE) AS Date_\n        , 'OpenDataFlag' AS position_event_flag\n        , COALESC…",
+      "inputs": [
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L15",
+      "scope": "BaseOpen"
+    },
+    {
+      "column": "Amount_lc",
+      "formula": "SellCurrencyID , InstrumentType , IsSettled , CID , CAST(OpenOccurred AS DATE) AS Date_ , 'OpenDataFlag' AS position_event_flag , COALESC…",
+      "expression_raw": "di.SellCurrencyID\n        , di.InstrumentType\n        , dp.IsSettled\n        , dp.CID\n        , CAST(dp.OpenOccurred AS DATE) AS Date_\n        , 'OpenDataFlag' AS position_event_flag\n        , COALESC…",
+      "inputs": [
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L16",
+      "scope": "BaseOpen"
+    },
+    {
+      "column": "num_positions_total",
+      "formula": "SellCurrencyID , InstrumentType , IsSettled , CID , CAST(OpenOccurred AS DATE) AS Date_ , 'OpenDataFlag' AS position_event_flag , COALESC…",
+      "expression_raw": "di.SellCurrencyID\n        , di.InstrumentType\n        , dp.IsSettled\n        , dp.CID\n        , CAST(dp.OpenOccurred AS DATE) AS Date_\n        , 'OpenDataFlag' AS position_event_flag\n        , COALESC…",
+      "inputs": [
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L17",
+      "scope": "BaseOpen"
+    },
+    {
+      "column": "num_positions_lc",
+      "formula": "SellCurrencyID , InstrumentType , IsSettled , CID , CAST(OpenOccurred AS DATE) AS Date_ , 'OpenDataFlag' AS position_event_flag , COALESC…",
+      "expression_raw": "di.SellCurrencyID\n        , di.InstrumentType\n        , dp.IsSettled\n        , dp.CID\n        , CAST(dp.OpenOccurred AS DATE) AS Date_\n        , 'OpenDataFlag' AS position_event_flag\n        , COALESC…",
+      "inputs": [
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L18",
+      "scope": "BaseOpen"
+    },
+    {
+      "column": "Club",
+      "formula": "AccountTypeID , Region , Name AS CountryName , SellCurrencyID , InstrumentType , IsSettled , CID , Date_ , b…",
+      "expression_raw": "fsc.AccountTypeID\n        , c.Region\n        , c.Name AS CountryName\n        , bse.SellCurrencyID\n        , bse.InstrumentType\n        , bse.IsSettled\n        , bse.CID\n        , bse.Date_\n        , b…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L38-L51",
+      "scope": "FinalOpen"
+    },
+    {
+      "column": "HasEMoneyAccount",
+      "formula": "AccountTypeID , Region , Name AS CountryName , SellCurrencyID , InstrumentType , IsSettled , CID , Date_ , b…",
+      "expression_raw": "fsc.AccountTypeID\n        , c.Region\n        , c.Name AS CountryName\n        , bse.SellCurrencyID\n        , bse.InstrumentType\n        , bse.IsSettled\n        , bse.CID\n        , bse.Date_\n        , b…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L38-L52",
+      "scope": "FinalOpen"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_positionsvolumeandattributes_lc4_source_test1.sql"
+}

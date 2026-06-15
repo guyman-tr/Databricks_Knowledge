@@ -1,0 +1,236 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_mimo_allplatforms",
+  "generated_at": "2026-05-18T16:27:36Z",
+  "formula_count": 21,
+  "formulas": [
+    {
+      "column": "DateID",
+      "formula": "CAST(DATE_FORMAT(FirstDepositDate, 'yyyyMMdd') AS INT)",
+      "expression_raw": "CAST(DATE_FORMAT(FirstDepositDate, 'yyyyMMdd') AS INT) AS DateID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L48-L48",
+      "scope": "moneyfarm_ftds"
+    },
+    {
+      "column": "Date",
+      "formula": "CAST(FirstDepositDate AS DATE)",
+      "expression_raw": "CAST(FirstDepositDate AS DATE) AS Date",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L49-L49",
+      "scope": "moneyfarm_ftds"
+    },
+    {
+      "column": "RealCID",
+      "formula": "DateID, Date, RealCID, MIMOAction, OrigIdentifier, TransactionID",
+      "expression_raw": "DateID, Date, RealCID, MIMOAction, OrigIdentifier, TransactionID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_mimo_tradingplatform"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L13-L13",
+      "scope": "tp_mimo"
+    },
+    {
+      "column": "MIMOAction",
+      "formula": "'Deposit' AS MIMOAction, 'DepositID'",
+      "expression_raw": "'Deposit' AS MIMOAction, 'DepositID' AS OrigIdentifier",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L51-L51",
+      "scope": "moneyfarm_ftds"
+    },
+    {
+      "column": "OrigIdentifier",
+      "formula": "OfficeCode AS OrigIdentifier, TransactionID",
+      "expression_raw": "OfficeCode AS OrigIdentifier, TransactionID",
+      "inputs": [
+        "main.etoro_kpi_prep.v_mimo_optionsplatform"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L35-L35",
+      "scope": "options_mimo"
+    },
+    {
+      "column": "TransactionID",
+      "formula": "CAST(NULL AS BIGINT)",
+      "expression_raw": "CAST(NULL AS BIGINT) AS TransactionID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L52-L52",
+      "scope": "moneyfarm_ftds"
+    },
+    {
+      "column": "AmountUSD",
+      "formula": "FirstDepositAmount AS AmountUSD, FirstDepositAmount",
+      "expression_raw": "FirstDepositAmount AS AmountUSD, FirstDepositAmount AS AmountOrigCurrency",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L53-L53",
+      "scope": "moneyfarm_ftds"
+    },
+    {
+      "column": "AmountOrigCurrency",
+      "formula": "AmountUSD, AmountUSD",
+      "expression_raw": "AmountUSD, AmountUSD AS AmountOrigCurrency",
+      "inputs": [
+        "main.etoro_kpi_prep.v_mimo_optionsplatform"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L36-L36",
+      "scope": "options_mimo"
+    },
+    {
+      "column": "FundingTypeID",
+      "formula": "-1 AS FundingTypeID, 3 AS CurrencyID, 'GBP'",
+      "expression_raw": "-1 AS FundingTypeID, 3 AS CurrencyID, 'GBP' AS Currency",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L54-L54",
+      "scope": "moneyfarm_ftds"
+    },
+    {
+      "column": "CurrencyID",
+      "formula": "1 AS CurrencyID, 'USD'",
+      "expression_raw": "1 AS CurrencyID, 'USD' AS Currency",
+      "inputs": [
+        "main.etoro_kpi_prep.v_mimo_optionsplatform"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L38-L38",
+      "scope": "options_mimo"
+    },
+    {
+      "column": "Currency",
+      "formula": "1 AS CurrencyID, 'USD'",
+      "expression_raw": "1 AS CurrencyID, 'USD' AS Currency",
+      "inputs": [
+        "main.etoro_kpi_prep.v_mimo_optionsplatform"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L38-L38",
+      "scope": "options_mimo"
+    },
+    {
+      "column": "IsPlatformFTD",
+      "formula": "IsFTD AS IsPlatformFTD, IsInternalTransfer, IsRedeem, IsIBANTrade",
+      "expression_raw": "IsFTD AS IsPlatformFTD, IsInternalTransfer, IsRedeem, IsIBANTrade",
+      "inputs": [
+        "main.etoro_kpi_prep.v_mimo_tradingplatform"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L15-L15",
+      "scope": "tp_mimo"
+    },
+    {
+      "column": "IsInternalTransfer",
+      "formula": "1 AS IsPlatformFTD, 0 AS IsInternalTransfer, 0 AS IsRedeem, 0",
+      "expression_raw": "1 AS IsPlatformFTD, 0 AS IsInternalTransfer, 0 AS IsRedeem, 0 AS IsIBANTrade",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L55-L55",
+      "scope": "moneyfarm_ftds"
+    },
+    {
+      "column": "IsRedeem",
+      "formula": "0 AS IsRedeem, 0",
+      "expression_raw": "0 AS IsRedeem, 0 AS IsIBANTrade",
+      "inputs": [
+        "main.etoro_kpi_prep.v_mimo_optionsplatform"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L40-L40",
+      "scope": "options_mimo"
+    },
+    {
+      "column": "IsTradeFromIBAN",
+      "formula": "COALESCE(IsIBANTrade, 0)",
+      "expression_raw": "COALESCE(m.IsIBANTrade, 0) AS IsTradeFromIBAN",
+      "inputs": [
+        "main.etoro_kpi_prep.v_mimo_tradingplatform",
+        "main.etoro_kpi_prep.v_mimo_emoneyplatform",
+        "main.etoro_kpi_prep.v_mimo_optionsplatform",
+        "main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L75-L75",
+      "scope": "main"
+    },
+    {
+      "column": "MIMOPlatform",
+      "formula": "'TradingPlatform'",
+      "expression_raw": "'TradingPlatform' AS MIMOPlatform",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L16-L16",
+      "scope": "tp_mimo"
+    },
+    {
+      "column": "IsGlobalFTD",
+      "formula": "CASE WHEN RealCID IS NOT NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN gf.RealCID IS NOT NULL THEN 1 ELSE 0 END AS IsGlobalFTD",
+      "inputs": [
+        "main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L77-L77",
+      "scope": "main"
+    },
+    {
+      "column": "IsCryptoToFiat",
+      "formula": "0 AS IsCryptoToFiat, 0 AS IsRecurring, 0",
+      "expression_raw": "0 AS IsCryptoToFiat, 0 AS IsRecurring, 0 AS IsIBANQuickTransfer",
+      "inputs": [
+        "main.etoro_kpi_prep.v_mimo_optionsplatform"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L42-L42",
+      "scope": "options_mimo"
+    },
+    {
+      "column": "IsRecurring",
+      "formula": "0 AS IsCryptoToFiat, 0 AS IsRecurring, 0",
+      "expression_raw": "0 AS IsCryptoToFiat, 0 AS IsRecurring, 0 AS IsIBANQuickTransfer",
+      "inputs": [
+        "main.etoro_kpi_prep.v_mimo_optionsplatform"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L42-L42",
+      "scope": "options_mimo"
+    },
+    {
+      "column": "IsIBANQuickTransfer",
+      "formula": "0 AS IsCryptoToFiat, 0 AS IsRecurring, 0",
+      "expression_raw": "0 AS IsCryptoToFiat, 0 AS IsRecurring, 0 AS IsIBANQuickTransfer",
+      "inputs": [
+        "main.etoro_kpi_prep.v_mimo_optionsplatform"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L42-L42",
+      "scope": "options_mimo"
+    },
+    {
+      "column": "UpdateDate",
+      "formula": "CURRENT_TIMESTAMP()",
+      "expression_raw": "CURRENT_TIMESTAMP() AS UpdateDate",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L85-L85",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_mimo_allplatforms.sql"
+}

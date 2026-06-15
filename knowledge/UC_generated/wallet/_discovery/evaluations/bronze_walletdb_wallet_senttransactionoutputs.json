@@ -1,0 +1,116 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_senttransactionoutputs",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:23Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactionOutputs.md",
+      "upstream_quote": "Auto-incrementing key starting at 0.",
+      "wiki_quote": "Auto-incrementing key starting at 0 (Tier 1 — inherited from WalletDB.Wallet.SentTransactionOutputs).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SentTransactionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactionOutputs.md",
+      "upstream_quote": "Parent sent transaction. FK to Wallet.SentTransactions.Id. Multiple outputs per transaction possible.",
+      "wiki_quote": "Parent sent transaction. FK to Wallet.SentTransactions.Id. Multiple outputs per transaction possible (Tier 1 — inherited",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ToAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactionOutputs.md",
+      "upstream_quote": "Destination blockchain address for this output.",
+      "wiki_quote": "Destination blockchain address for this output (Tier 1 — inherited from WalletDB.Wallet.SentTransactionOutputs).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactionOutputs.md",
+      "upstream_quote": "Amount of crypto sent to this output address.",
+      "wiki_quote": "Amount of crypto sent to this output address (Tier 1 — inherited from WalletDB.Wallet.SentTransactionOutputs).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EtoroFees",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactionOutputs.md",
+      "upstream_quote": "eToro service fee allocated to this output.",
+      "wiki_quote": "eToro service fee allocated to this output (Tier 1 — inherited from WalletDB.Wallet.SentTransactionOutputs).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainFees",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactionOutputs.md",
+      "upstream_quote": "Network fee allocated to this output. NULL when fee is at transaction level.",
+      "wiki_quote": "Network fee allocated to this output. NULL when fee is at transaction level (Tier 1 — inherited from WalletDB.Wallet.Sen",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SourceId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactionOutputs.md",
+      "upstream_quote": "Business entity ID this output originated from. For redemptions, this is the PositionId.",
+      "wiki_quote": "Business entity ID this output originated from. For redemptions, this is the PositionId (Tier 1 — inherited from WalletD",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SourceIdType",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactionOutputs.md",
+      "upstream_quote": "Type of SourceId: 0=PositionId. See [Transaction Output Source ID Type](../../_glossary.md#transaction-output-source-id-",
+      "wiki_quote": "Type of SourceId: 0=PositionId. See [Transaction Output Source ID Type](../../_glossary.md#transaction-output-source-id-",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactionOutputs.md",
+      "upstream_quote": "Timestamp of this output record creation.",
+      "wiki_quote": "Timestamp of this output record creation (Tier 1 — inherited from WalletDB.Wallet.SentTransactionOutputs).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsEtoroFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactionOutputs.md",
+      "upstream_quote": "Whether this output represents an eToro fee payment rather than a value transfer. 1=fee output, 0/NULL=value output.",
+      "wiki_quote": "Whether this output represents an eToro fee payment rather than a value transfer. 1=fee output, 0/NULL=value output (Tie",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "NormalizedToAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactionOutputs.md",
+      "upstream_quote": "Computed PERSISTED column stripping protocol prefix and query parameters from ToAddress.",
+      "wiki_quote": "Computed PERSISTED column stripping protocol prefix and query parameters from ToAddress (Tier 1 — inherited from WalletD",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 11,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 11 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

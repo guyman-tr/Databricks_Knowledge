@@ -1,0 +1,62 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_maxnop_report",
+  "rows": [
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_dictionary_tradinginstrumentgroups",
+      "source_column_name": "GroupID",
+      "target_column_name": "GroupID",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_dictionary_tradinginstrumentgroups",
+      "source_column_name": "GroupName",
+      "target_column_name": "GroupName",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_instrumentgroups",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Name",
+      "target_column_name": "Name",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Tradable",
+      "target_column_name": "Tradable",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "VisibleInternallyOnly",
+      "target_column_name": "VisibleInternallyOnly",
+      "entity_type": "JOB",
+      "event_count": 91
+    }
+  ],
+  "generated_at": "2026-05-19T12:32:54Z"
+}

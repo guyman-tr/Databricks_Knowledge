@@ -1,0 +1,202 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_stocklending_optin_report_per_cid",
+  "rows": [
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "Name",
+      "target_column_name": "Club",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "source_column_name": "ActionType",
+      "target_column_name": "Contact_Status_Last_30_Days",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "Contact_Status_Last_30_Days",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_datalend_darsx_v6",
+      "source_column_name": "dataLendRateRebate",
+      "target_column_name": "DailyProjectedRevenue",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_dictionary_interestrate",
+      "source_column_name": "InterestRateBuy",
+      "target_column_name": "DailyProjectedRevenue",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_interestrate",
+      "source_column_name": "InterestRateBuy",
+      "target_column_name": "DailyProjectedRevenue",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "NOP",
+      "target_column_name": "DailyProjectedRevenue",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_datalend_darsx_v6",
+      "source_column_name": "utilization",
+      "target_column_name": "DailyProjectedRevenue",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "Date",
+      "target_column_name": "Date",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "source_column_name": "ActionType",
+      "target_column_name": "Last_Activity_Date",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "Last_Activity_Date",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "NOP",
+      "target_column_name": "NOP",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_dictionary_interestrate",
+      "source_column_name": "InterestRateBuy",
+      "target_column_name": "Rate_Datalend_Adjusted",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_interestrate",
+      "source_column_name": "InterestRateBuy",
+      "target_column_name": "Rate_Datalend_Adjusted",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_datalend_darsx_v6",
+      "source_column_name": "dataLendRateRebate",
+      "target_column_name": "Rate_Datalend_Adjusted",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "source_column_name": "Name",
+      "target_column_name": "Regulation",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_datalend_darsx_v6",
+      "source_column_name": "utilization",
+      "target_column_name": "Utilization_Datalend",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_y",
+      "entity_type": "JOB",
+      "event_count": 104
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ym",
+      "entity_type": "JOB",
+      "event_count": 104
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ymd",
+      "entity_type": "JOB",
+      "event_count": 104
+    }
+  ],
+  "generated_at": "2026-05-19T12:39:42Z"
+}

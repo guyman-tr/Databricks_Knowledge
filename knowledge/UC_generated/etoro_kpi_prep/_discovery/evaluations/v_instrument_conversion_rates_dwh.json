@@ -3,20 +3,21 @@
   "evaluator_attempt": 1,
   "scores": {
     "inheritance_fidelity": 7.0,
-    "source_code_narration_accuracy": 10.0,
+    "source_code_narration_accuracy": 7.0,
     "null_with_provenance_correctness": 7.0,
-    "completeness": 8.0,
+    "completeness": 10.0,
     "shape_fidelity": 10.0,
-    "lineage_coherence": 10.0
+    "lineage_coherence": 10.0,
+    "concept_coverage": 10.0
   },
-  "weighted_score": 8.3,
+  "weighted_score": 8.2,
   "hard_gates": {
     "inheritance_fidelity_table_present": true,
     "no_unanchored_inferred_descriptions": true
   },
   "verdict": "PASS",
   "regeneration_feedback": null,
-  "evaluated_at": "2026-05-18T10:49:46Z",
+  "evaluated_at": "2026-05-19T11:33:31Z",
   "model_used": "mechanical-v1",
   "fidelity_table": [],
   "bucket_counts": {
@@ -27,10 +28,11 @@
   },
   "dimension_notes": {
     "inheritance_fidelity": "no inherited columns to fidelity-check (neutral)",
-    "source_code_narration_accuracy": "spot-check 3/3 accurate",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
     "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
-    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "completeness": "10/10 structural checks pass",
     "shape_fidelity": "matches golden skeleton",
-    "lineage_coherence": "all elements coherent with lineage"
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "§2 has 2 subsection(s) for 2 concept(s) (100% coverage); 12/12 Tier-2 rows cite their formula"
   }
 }

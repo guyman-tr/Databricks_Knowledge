@@ -1,0 +1,129 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_customer_assignment",
+  "generated_at": "2026-05-19T15:01:26Z",
+  "formula_count": 11,
+  "formulas": [
+    {
+      "column": "RealCID",
+      "formula": "RealCID",
+      "expression_raw": "dcu.RealCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "SalesForceAccountID",
+      "formula": "AccountId",
+      "expression_raw": "am.AccountId            AS SalesForceAccountID",
+      "inputs": [
+        "main.crm.gold_crm_accountsmanager"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "AM_CID",
+      "formula": "BO_User_ID",
+      "expression_raw": "u.BO_User_ID          AS AM_CID",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "AM_ID",
+      "formula": "OwnerId",
+      "expression_raw": "am.OwnerId              AS AM_ID",
+      "inputs": [
+        "main.crm.gold_crm_accountsmanager"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "AM_FullName",
+      "formula": "FullName",
+      "expression_raw": "u.FullName              AS AM_FullName",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "AM_Department",
+      "formula": "Department",
+      "expression_raw": "u.Department            AS AM_Department",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "AM_Position",
+      "formula": "Position",
+      "expression_raw": "u.Position              AS AM_Position",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "AssignmentCreatedDate",
+      "formula": "CreatedDate",
+      "expression_raw": "am.CreatedDate          AS AssignmentCreatedDate",
+      "inputs": [
+        "main.crm.gold_crm_accountsmanager"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "AssignmentStartAt",
+      "formula": "__START_AT",
+      "expression_raw": "am.__START_AT           AS AssignmentStartAt",
+      "inputs": [
+        "main.crm.gold_crm_accountsmanager"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "AssignmentEndAt",
+      "formula": "__END_AT",
+      "expression_raw": "am.__END_AT             AS AssignmentEndAt",
+      "inputs": [
+        "main.crm.gold_crm_accountsmanager"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "IsCurrentAssignment",
+      "formula": "CASE WHEN __END_AT IS NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE\n    WHEN am.__END_AT IS NULL  THEN 1\n    ELSE 0\n  END AS IsCurrentAssignment",
+      "inputs": [
+        "main.crm.gold_crm_accountsmanager"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L18-L21",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_customer_assignment.sql"
+}

@@ -1,0 +1,762 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_bny_virtu_recon_trades_detailed",
+  "rows": [
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_security_transactions_custodysecuritytransactions",
+      "source_column_name": "Account_Number",
+      "target_column_name": "Account_Number",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "source_column_name": "Side",
+      "target_column_name": "AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "source_column_name": "USD_Gross_Notional",
+      "target_column_name": "AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "Side",
+      "target_column_name": "AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "source_column_name": "Side",
+      "target_column_name": "AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_security_transactions_custodysecuritytransactions",
+      "source_column_name": "Local_Net_Amount",
+      "target_column_name": "AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "USD_Gross_Notional",
+      "target_column_name": "AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_citadel_etoro_confirm",
+      "source_column_name": "PRINCIPAL",
+      "target_column_name": "AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "source_column_name": "Gross_Consideration",
+      "target_column_name": "AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_settled_cash_balances_settledcashbalances",
+      "source_column_name": "Exchange_Rate",
+      "target_column_name": "AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_citadel_etoro_confirm",
+      "source_column_name": "TRADE_TYPE",
+      "target_column_name": "AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.general.gold_citadel_etoro_confirm",
+      "source_column_name": "TRADE_TYPE",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_security_transactions_custodysecuritytransactions",
+      "source_column_name": "Transaction_Name",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "source_column_name": "Side",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "Side",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "source_column_name": "Side",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "Buy/Sell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "Buy/Sell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "ClientAmountUSD",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "ClientAmountUSD",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "ClientUnits",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "ClientUnits",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "source_column_name": "Currency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "Currency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_security_transactions_custodysecuritytransactions",
+      "source_column_name": "Local_Currency_Code",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "source_column_name": "Currency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_citadel_etoro_confirm",
+      "source_column_name": "CURRENCY",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "USD_Gross_Notional",
+      "target_column_name": "FXRate",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "source_column_name": "Side",
+      "target_column_name": "FXRate",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "Side",
+      "target_column_name": "FXRate",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "Gross_Consideration",
+      "target_column_name": "FXRate",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "source_column_name": "USD_Gross_Notional",
+      "target_column_name": "FXRate",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_settled_cash_balances_settledcashbalances",
+      "source_column_name": "Exchange_Rate",
+      "target_column_name": "FXRate",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "source_column_name": "Side",
+      "target_column_name": "FXRate",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_security_transactions_custodysecuritytransactions",
+      "source_column_name": "Local_Net_Amount",
+      "target_column_name": "FXRate",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "source_column_name": "Gross_Consideration",
+      "target_column_name": "FXRate",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "FXRate",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "FXratetoUSD",
+      "target_column_name": "FXRate",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "FXRate",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "FXRate",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "FXRate",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "FXratetoUSD",
+      "target_column_name": "FXRate",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "Isin",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_security_transactions_custodysecuritytransactions",
+      "source_column_name": "ISIN",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "source_column_name": "Isin",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_citadel_etoro_confirm",
+      "source_column_name": "SECURITY_ID",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "source_column_name": "Isin",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_security_transactions_custodysecuritytransactions",
+      "source_column_name": "Security_Short_Description",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "LiquidityAccountID",
+      "target_column_name": "LiquidityAccountID",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "LiquidityAccountID",
+      "target_column_name": "LiquidityAccountID",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_security_transactions_custodysecuritytransactions",
+      "source_column_name": "Local_Net_Amount",
+      "target_column_name": "LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "Side",
+      "target_column_name": "LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "source_column_name": "Side",
+      "target_column_name": "LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_citadel_etoro_confirm",
+      "source_column_name": "TRADE_TYPE",
+      "target_column_name": "LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "source_column_name": "Gross_Consideration",
+      "target_column_name": "LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "Gross_Consideration",
+      "target_column_name": "LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_citadel_etoro_confirm",
+      "source_column_name": "PRINCIPAL",
+      "target_column_name": "LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "source_column_name": "Gross_Consideration",
+      "target_column_name": "LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "source_column_name": "Side",
+      "target_column_name": "LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_security_transactions_custodysecuritytransactions",
+      "source_column_name": "Local_Net_Amount",
+      "target_column_name": "Rate",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_citadel_etoro_confirm",
+      "source_column_name": "PRICE",
+      "target_column_name": "Rate",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_security_transactions_custodysecuritytransactions",
+      "source_column_name": "Shares/Par",
+      "target_column_name": "Rate",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "source_column_name": "Price",
+      "target_column_name": "Rate",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "Price",
+      "target_column_name": "Rate",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "source_column_name": "Price",
+      "target_column_name": "Rate",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "Rate",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "eToro_AvgRate",
+      "target_column_name": "Rate",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToro_AvgRate",
+      "target_column_name": "Rate",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "Rate",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_security_transactions_custodysecuritytransactions",
+      "source_column_name": "TICKER",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.general.gold_citadel_etoro_confirm",
+      "source_column_name": "TRADE_TYPE",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "source_column_name": "Side",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_us_sheet",
+      "source_column_name": "Qty/Shares",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_security_transactions_custodysecuritytransactions",
+      "source_column_name": "Shares/Par",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "Side",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "source_column_name": "Side",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_sheet",
+      "source_column_name": "Qty/Shares",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_citadel_etoro_confirm",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.general.gold_virtu_etoro_allocations_apac_sheet",
+      "source_column_name": "Qty/Shares",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 123
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 111
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
+      "source_column_name": "activity",
+      "target_column_name": "activity",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_y",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ym",
+      "entity_type": "JOB",
+      "event_count": 234
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ymd",
+      "entity_type": "JOB",
+      "event_count": 234
+    }
+  ],
+  "generated_at": "2026-05-19T12:19:35Z"
+}

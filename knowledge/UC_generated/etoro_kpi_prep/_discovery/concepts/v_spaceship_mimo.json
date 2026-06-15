@@ -1,0 +1,192 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_spaceship_mimo",
+  "generated_at": "2026-05-18T16:27:27Z",
+  "concept_count": 8,
+  "concepts": [
+    {
+      "id": "case_flag_is_deposit",
+      "name": "is_deposit computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "is_deposit"
+      ],
+      "predicates": [
+        {
+          "col": "type",
+          "op": "=",
+          "val": "'             '"
+        },
+        {
+          "col": "description",
+          "op": "=",
+          "val": "'                 '"
+        },
+        {
+          "col": "type",
+          "op": "=",
+          "val": "'             '"
+        },
+        {
+          "col": "description",
+          "op": "=",
+          "val": "'                 '"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_transactions"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L34-L50",
+      "scope": "super_mimo"
+    },
+    {
+      "id": "case_flag_is_withdrawal",
+      "name": "is_withdrawal computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "is_withdrawal"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_transactions"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L51-L55",
+      "scope": "super_mimo"
+    },
+    {
+      "id": "case_flag_is_deposit",
+      "name": "is_deposit computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "is_deposit"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.spaceship.bronze_spaceship_analytics_fct_money_transactions",
+        "main.spaceship.bronze_spaceship_metabase_contact"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L67-L105",
+      "scope": "money_mimo"
+    },
+    {
+      "id": "case_flag_is_deposit",
+      "name": "is_deposit computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "is_deposit"
+      ],
+      "predicates": [
+        {
+          "col": "order_direction",
+          "op": "=",
+          "val": "'   '"
+        },
+        {
+          "col": "order_direction",
+          "op": "=",
+          "val": "'    '"
+        },
+        {
+          "col": "order_direction",
+          "op": "=",
+          "val": "'   '"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.spaceship.bronze_spaceship_metabase_nova_transactions"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L153-L161",
+      "scope": "nova_mimo"
+    },
+    {
+      "id": "case_flag_is_withdrawal",
+      "name": "is_withdrawal computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "is_withdrawal"
+      ],
+      "predicates": [
+        {
+          "col": "order_direction",
+          "op": "=",
+          "val": "'    '"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.spaceship.bronze_spaceship_metabase_nova_transactions"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L162-L162",
+      "scope": "nova_mimo"
+    },
+    {
+      "id": "case_flag_ftd_product",
+      "name": "ftd_product computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "ftd_product"
+      ],
+      "predicates": [],
+      "then_value": "'    '",
+      "else_value": null,
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.spaceship.bronze_spaceship_metabase_user_beta"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L199-L203",
+      "scope": "first_deposit_dates"
+    },
+    {
+      "id": "filter_block_user_gcid",
+      "name": "Filter block on user_gcid",
+      "kind": "filter_block",
+      "columns_involved": [
+        "providerName"
+      ],
+      "predicates": [
+        {
+          "col": "providerName",
+          "op": "=",
+          "val": "'         '"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L254",
+      "scope": "user_gcid",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_aud_usd_rates",
+      "name": "Filter block on aud_usd_rates",
+      "kind": "filter_block",
+      "columns_involved": [
+        "InstrumentID"
+      ],
+      "predicates": [
+        {
+          "col": "InstrumentID",
+          "op": "=",
+          "val": "7"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L263",
+      "scope": "aud_usd_rates",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_spaceship_mimo.sql"
+}

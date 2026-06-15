@@ -1,0 +1,166 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_mimo_options_platform",
+  "generated_at": "2026-05-18T16:27:36Z",
+  "formula_count": 14,
+  "formulas": [
+    {
+      "column": "OfficeCode",
+      "formula": "OfficeCode",
+      "expression_raw": "ca.OfficeCode",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "MIMORecords"
+    },
+    {
+      "column": "RegisteredRepCode",
+      "formula": "RegisteredRepCode",
+      "expression_raw": "ca.RegisteredRepCode",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "MIMORecords"
+    },
+    {
+      "column": "AccountNumber",
+      "formula": "AccountNumber",
+      "expression_raw": "ca.AccountNumber",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "MIMORecords"
+    },
+    {
+      "column": "DateID",
+      "formula": "CAST(DATE_FORMAT(ProcessDate, 'yyyyMMdd') AS INT)",
+      "expression_raw": "CAST(DATE_FORMAT(ca.ProcessDate, 'yyyyMMdd') AS INT) AS DateID",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L12-L12",
+      "scope": "MIMORecords"
+    },
+    {
+      "column": "Date",
+      "formula": "ProcessDate",
+      "expression_raw": "ca.ProcessDate AS Date",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "MIMORecords"
+    },
+    {
+      "column": "RealCID",
+      "formula": "RealCID",
+      "expression_raw": "dc.RealCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "MIMORecords"
+    },
+    {
+      "column": "MIMOAction",
+      "formula": "CASE WHEN PayTypeCode = 'C' THEN 'Deposit' WHEN PayTypeCode = 'D' THEN 'Withdraw' END",
+      "expression_raw": "CASE\n    WHEN mr.PayTypeCode = 'C' THEN 'Deposit'\n    WHEN mr.PayTypeCode = 'D' THEN 'Withdraw'\n  END AS MIMOAction",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L197-L200",
+      "scope": "main"
+    },
+    {
+      "column": "AmountUSD",
+      "formula": "ABS(CAST(Amount AS DECIMAL(19, 4)))",
+      "expression_raw": "ABS(CAST(ca.Amount AS DECIMAL(19, 4))) AS AmountUSD",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L17-L17",
+      "scope": "MIMORecords"
+    },
+    {
+      "column": "IsFTD",
+      "formula": "CASE WHEN TransactionID IS NOT NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE\n    WHEN f.TransactionID IS NOT NULL THEN 1\n    ELSE 0\n  END AS IsFTD",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L202-L205",
+      "scope": "main"
+    },
+    {
+      "column": "IsInternalTransfer",
+      "formula": "CASE WHEN TerminalID = 'OMJNL' THEN 1 ELSE 0 END",
+      "expression_raw": "CASE\n      WHEN ca.TerminalID = 'OMJNL' THEN 1\n      ELSE 0\n    END AS IsInternalTransfer",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L23-L26",
+      "scope": "MIMORecords"
+    },
+    {
+      "column": "TransactionID",
+      "formula": "ACATSControlNumber",
+      "expression_raw": "ca.ACATSControlNumber AS TransactionID",
+      "inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "MIMORecords"
+    },
+    {
+      "column": "IsGlobalFTD",
+      "formula": "CASE WHEN dc_ftd.RealCID IS NOT NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE\n      WHEN dc_ftd.RealCID IS NOT NULL THEN 1\n      ELSE 0\n    END AS IsGlobalFTD",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L69-L72",
+      "scope": "GLOBAL_FTD"
+    },
+    {
+      "column": "IsValidCustomer",
+      "formula": "IsValidCustomer",
+      "expression_raw": "dc.IsValidCustomer",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L209-L209",
+      "scope": "main"
+    },
+    {
+      "column": "IsCreditReportValidCB",
+      "formula": "IsCreditReportValidCB",
+      "expression_raw": "dc.IsCreditReportValidCB",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L210-L210",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_mimo_options_platform.sql"
+}

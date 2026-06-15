@@ -1,0 +1,102 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiatdwhdb_dbo_fiatcardinstances",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:43Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.FiatCardInstances.md",
+      "upstream_quote": "Auto-incrementing surrogate PK. Referenced by FiatCardStatuses.CardInstanceId.",
+      "wiki_quote": "Auto-incrementing surrogate PK. Referenced by FiatCardStatuses.CardInstanceId (Tier 1 — inherited from FiatDwhDB.dbo.Fia",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CardId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.FiatCardInstances.md",
+      "upstream_quote": "Implicit FK to dbo.FiatCards.Id. The logical card this instance belongs to. No explicit FK constraint in DDL.",
+      "wiki_quote": "Implicit FK to dbo.FiatCards.Id. The logical card this instance belongs to. No explicit FK constraint in DDL (Tier 1 — i",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MaskedPAN",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.FiatCardInstances.md",
+      "upstream_quote": "Masked card number showing only last digits. Dynamic data masking protects the full PAN.",
+      "wiki_quote": "Masked card number showing only last digits. Dynamic data masking protects the full PAN (Tier 1 — inherited from FiatDwh",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsVirtual",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.FiatCardInstances.md",
+      "upstream_quote": "Whether this is a virtual (digital wallet) card: 1=virtual, 0=physical plastic card.",
+      "wiki_quote": "Whether this is a virtual (digital wallet) card: 1=virtual, 0=physical plastic card (Tier 1 — inherited from FiatDwhDB.d",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Created",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.FiatCardInstances.md",
+      "upstream_quote": "UTC timestamp when this instance was recorded.",
+      "wiki_quote": "UTC timestamp when this instance was recorded (Tier 1 — inherited from FiatDwhDB.dbo.FiatCardInstances).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CorrelationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.FiatCardInstances.md",
+      "upstream_quote": "Links this instance creation to the triggering business operation for distributed tracing.",
+      "wiki_quote": "Links this instance creation to the triggering business operation for distributed tracing (Tier 1 — inherited from FiatD",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Name",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.FiatCardInstances.md",
+      "upstream_quote": "Cardholder name printed on the card. Masked for PII protection.",
+      "wiki_quote": "Cardholder name printed on the card. Masked for PII protection (Tier 1 — inherited from FiatDwhDB.dbo.FiatCardInstances)",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CardExpirationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.FiatCardInstances.md",
+      "upstream_quote": "Expiration date of this card instance. NULL for instances where expiration is not yet set.",
+      "wiki_quote": "Expiration date of this card instance. NULL for instances where expiration is not yet set (Tier 1 — inherited from FiatD",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CardInstanceGuid",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.FiatCardInstances.md",
+      "upstream_quote": "External-facing GUID for this card instance. Used in API interactions. Nullable for legacy instances created before this",
+      "wiki_quote": "External-facing GUID for this card instance. Used in API interactions. Nullable for legacy instances created before this",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 9,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 9 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

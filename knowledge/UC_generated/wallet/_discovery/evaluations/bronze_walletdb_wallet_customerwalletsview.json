@@ -1,0 +1,130 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_customerwalletsview",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:20Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.CustomerWalletsView.md",
+      "upstream_quote": "The wallet's universal business key (aliased from Wallets.WalletId). Used as the primary identifier across the entire wa",
+      "wiki_quote": "The wallet's universal business key (aliased from Wallets.WalletId). Used as the primary identifier across the entire wa",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Gcid",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.CustomerWalletsView.md",
+      "upstream_quote": "Global Customer ID of the wallet owner. For customer wallets (type 5, 99.99% of rows), this is the real user. For system",
+      "wiki_quote": "Global Customer ID of the wallet owner. For customer wallets (type 5, 99.99% of rows), this is the real user. For system",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.CustomerWalletsView.md",
+      "upstream_quote": "The cryptocurrency asset visible in this wallet. FK to Wallet.CryptoTypes.CryptoID. Combined with Gcid for the standard ",
+      "wiki_quote": "The cryptocurrency asset visible in this wallet. FK to Wallet.CryptoTypes.CryptoID. Combined with Gcid for the standard ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Address",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.CustomerWalletsView.md",
+      "upstream_quote": "Blockchain public address associated with this wallet. Users send/receive crypto at this address. Format varies by block",
+      "wiki_quote": "Blockchain public address associated with this wallet. Users send/receive crypto at this address. Format varies by block",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainProviderWalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.CustomerWalletsView.md",
+      "upstream_quote": "External wallet identifier assigned by the custody provider (BitGo or CUG). Used for all API interactions with the provi",
+      "wiki_quote": "External wallet identifier assigned by the custody provider (BitGo or CUG). Used for all API interactions with the provi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.CustomerWalletsView.md",
+      "upstream_quote": "Timestamp when this crypto asset was first added to the wallet (when the user first acquired this crypto). From Wallet.W",
+      "wiki_quote": "Timestamp when this crypto asset was first added to the wallet (when the user first acquired this crypto). From Wallet.W",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.CustomerWalletsView.md",
+      "upstream_quote": "Operational purpose of the wallet: 1=Redeem, 2=Conversion, 3=Funding, 4=Payment, 5=Customer (99.99%), 6=C2F, 7=StakingRe",
+      "wiki_quote": "Operational purpose of the wallet: 1=Redeem, 2=Conversion, 3=Funding, 4=Payment, 5=Customer (99.99%), 6=C2F, 7=StakingRe",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsActive",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.CustomerWalletsView.md",
+      "upstream_quote": "Whether this wallet is currently operational. Always 1 in this view (WHERE filter), but included for schema compatibilit",
+      "wiki_quote": "Whether this wallet is currently operational. Always 1 in this view (WHERE filter), but included for schema compatibilit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Status",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.CustomerWalletsView.md",
+      "upstream_quote": "Computed activation status: 0=Created/Active (wallet fully operational, IsActivated=1), 5=Pending activation (awaiting b",
+      "wiki_quote": "Computed activation status: 0=Created/Active (wallet fully operational, IsActivated=1), 5=Pending activation (awaiting b",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletRecordId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.CustomerWalletsView.md",
+      "upstream_quote": "Auto-incrementing surrogate key from the base Wallets table. Aliased from Wallet.Wallets.Id. Useful for ordering by crea",
+      "wiki_quote": "Auto-incrementing surrogate key from the base Wallets table. Aliased from Wallet.Wallets.Id. Useful for ordering by crea",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainCryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.CustomerWalletsView.md",
+      "upstream_quote": "The blockchain network this wallet operates on. FK to Wallet.BlockchainCryptos.Id. Determines which blockchain the Addre",
+      "wiki_quote": "The blockchain network this wallet operates on. FK to Wallet.BlockchainCryptos.Id. Determines which blockchain the Addre",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletProviderId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.CustomerWalletsView.md",
+      "upstream_quote": "Custody provider: 1=BitGo (97.5% of wallets, multi-sig), 2=CUG (2.5%, MPC-based, newer blockchains like SOL). See [Walle",
+      "wiki_quote": "Custody provider: 1=BitGo (97.5% of wallets, multi-sig), 2=CUG (2.5%, MPC-based, newer blockchains like SOL). See [Walle",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsActivated",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Views\\Wallet.CustomerWalletsView.md",
+      "upstream_quote": "Whether the wallet has completed initial blockchain activation. 1=activated (fully operational), 0=pending activation. T",
+      "wiki_quote": "Whether the wallet has completed initial blockchain activation. 1=activated (fully operational), 0=pending activation. T",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 13,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 13 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

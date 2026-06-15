@@ -1,0 +1,109 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_conversions",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:19Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Conversions.md",
+      "upstream_quote": "Auto-incrementing primary key. FK target for Wallet.ConversionStatuses and Wallet.ConversionTransactions.",
+      "wiki_quote": "Auto-incrementing primary key. FK target for Wallet.ConversionStatuses and Wallet.ConversionTransactions (Tier 1 — inher",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FromWalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Conversions.md",
+      "upstream_quote": "The source wallet from which crypto is sold. FK to Wallet.Wallets.WalletId.",
+      "wiki_quote": "The source wallet from which crypto is sold. FK to Wallet.Wallets.WalletId (Tier 1 — inherited from WalletDB.Wallet.Conv",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ToWalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Conversions.md",
+      "upstream_quote": "The destination wallet into which the purchased crypto arrives. FK to Wallet.Wallets.WalletId.",
+      "wiki_quote": "The destination wallet into which the purchased crypto arrives. FK to Wallet.Wallets.WalletId (Tier 1 — inherited from W",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ConversionTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Conversions.md",
+      "upstream_quote": "Determines pricing direction: 1=FixedFrom (sell amount fixed), 2=FixedTo (buy amount fixed). See [Conversion Type](../..",
+      "wiki_quote": "Determines pricing direction: 1=FixedFrom (sell amount fixed), 2=FixedTo (buy amount fixed). See [Conversion Type](../..",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FromAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Conversions.md",
+      "upstream_quote": "Amount of source crypto being sold. In native units of FromCryptoId.",
+      "wiki_quote": "Amount of source crypto being sold. In native units of FromCryptoId (Tier 1 — inherited from WalletDB.Wallet.Conversions",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ToAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Conversions.md",
+      "upstream_quote": "Amount of destination crypto being purchased. In native units of ToCryptoId.",
+      "wiki_quote": "Amount of destination crypto being purchased. In native units of ToCryptoId (Tier 1 — inherited from WalletDB.Wallet.Con",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CorrelationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Conversions.md",
+      "upstream_quote": "Links to the parent request in Wallet.Requests.CorrelationId.",
+      "wiki_quote": "Links to the parent request in Wallet.Requests.CorrelationId (Tier 1 — inherited from WalletDB.Wallet.Conversions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Conversions.md",
+      "upstream_quote": "Timestamp when the conversion was initiated.",
+      "wiki_quote": "Timestamp when the conversion was initiated (Tier 1 — inherited from WalletDB.Wallet.Conversions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FromCryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Conversions.md",
+      "upstream_quote": "Source cryptocurrency being sold. FK to Wallet.CryptoTypes.CryptoID.",
+      "wiki_quote": "Source cryptocurrency being sold. FK to Wallet.CryptoTypes.CryptoID (Tier 1 — inherited from WalletDB.Wallet.Conversions",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ToCryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Conversions.md",
+      "upstream_quote": "Destination cryptocurrency being purchased. FK to Wallet.CryptoTypes.CryptoID.",
+      "wiki_quote": "Destination cryptocurrency being purchased. FK to Wallet.CryptoTypes.CryptoID (Tier 1 — inherited from WalletDB.Wallet.C",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 10,
+    "B": 0,
+    "C": 6,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 10 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 6 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

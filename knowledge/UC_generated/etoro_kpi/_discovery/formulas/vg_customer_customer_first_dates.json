@@ -1,0 +1,300 @@
+{
+  "object_fqn": "main.etoro_kpi.vg_customer_customer_first_dates",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 23,
+  "formulas": [
+    {
+      "column": "RealCID",
+      "formula": "-- ========================================================================== -- Source: information_schema.views.view_definition -- Object: etoro_kpi.vg_customer_customer_first_dates -- Captured…",
+      "expression_raw": "-- ==========================================================================\n-- Source: information_schema.views.view_definition\n-- Object: main.etoro_kpi.vg_customer_customer_first_dates\n-- Captured…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L1-L7",
+      "scope": "main"
+    },
+    {
+      "column": "GCID",
+      "formula": ", GCID",
+      "expression_raw": ", cfd.GCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "RegistrationDate",
+      "formula": ", GCID , RegisteredReal",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L9",
+      "scope": "main"
+    },
+    {
+      "column": "FirstDepositDate",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L10",
+      "scope": "main"
+    },
+    {
+      "column": "FirstDepositAmount",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L11",
+      "scope": "main"
+    },
+    {
+      "column": "FTDPlatformID",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L12",
+      "scope": "main"
+    },
+    {
+      "column": "FTDPlatformName",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L16",
+      "scope": "main"
+    },
+    {
+      "column": "FirstPosOpenDate",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L17",
+      "scope": "main"
+    },
+    {
+      "column": "LastDepositDate",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L18",
+      "scope": "main"
+    },
+    {
+      "column": "LastDepositAmount",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L19",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel1Date",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L20",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel2Date",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L21",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel3Date",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L22",
+      "scope": "main"
+    },
+    {
+      "column": "FirstFundedDate",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L23",
+      "scope": "main"
+    },
+    {
+      "column": "LastNewFundedDate",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L24",
+      "scope": "main"
+    },
+    {
+      "column": "LastCashoutDate",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L25",
+      "scope": "main"
+    },
+    {
+      "column": "FirstAction",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L26",
+      "scope": "main"
+    },
+    {
+      "column": "FirstActionDate",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L27",
+      "scope": "main"
+    },
+    {
+      "column": "FirstInstrument",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L28",
+      "scope": "main"
+    },
+    {
+      "column": "FirstCross",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L29",
+      "scope": "main"
+    },
+    {
+      "column": "FirstCrossDate",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L30",
+      "scope": "main"
+    },
+    {
+      "column": "FirstClub",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L31",
+      "scope": "main"
+    },
+    {
+      "column": "FirstClubDate",
+      "formula": ", GCID , RegisteredReal AS RegistrationDate , FirstDepositDate , FirstDepositAmount , ID AS FTDPlatformID , CASE WHEN Name = 'Trading' THEN 'TradingPlatform…",
+      "expression_raw": ", cfd.GCID\n     , dc.RegisteredReal AS RegistrationDate\n     , dc.FirstDepositDate\n     , dc.FirstDepositAmount\n     , df.ID AS FTDPlatformID\n     , CASE WHEN df.Name = 'Trading' THEN 'TradingPlatform…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L32",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/vg_customer_customer_first_dates.sql"
+}

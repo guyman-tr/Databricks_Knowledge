@@ -1,0 +1,690 @@
+{
+  "object_fqn": "main.etoro_kpi.vg_customer_daily_snapshot",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 62,
+  "formulas": [
+    {
+      "column": "DateID",
+      "formula": "DateKey",
+      "expression_raw": "dd.DateKey AS DateID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "Date",
+      "formula": "FullDate",
+      "expression_raw": "dd.FullDate AS Date",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "MonthNumberOfYear",
+      "formula": "MonthNumberOfYear",
+      "expression_raw": "dd.MonthNumberOfYear",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "ISOYearAndWeekNumber",
+      "formula": "ISOYearAndWeekNumber",
+      "expression_raw": "dd.ISOYearAndWeekNumber",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "DayNumberOfWeek_Sun_Start",
+      "formula": "DayNumberOfWeek_Sun_Start",
+      "expression_raw": "dd.DayNumberOfWeek_Sun_Start",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "MonthName",
+      "formula": "MonthName",
+      "expression_raw": "dd.MonthName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "MonthNameAbbreviation",
+      "formula": "MonthNameAbbreviation",
+      "expression_raw": "dd.MonthNameAbbreviation",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "DayName",
+      "formula": "DayName",
+      "expression_raw": "dd.DayName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "DayNameAbbreviation",
+      "formula": "DayNameAbbreviation",
+      "expression_raw": "dd.DayNameAbbreviation",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYear",
+      "formula": "CalendarYear",
+      "expression_raw": "dd.CalendarYear",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYearMonth",
+      "formula": "CalendarYearMonth",
+      "expression_raw": "dd.CalendarYearMonth",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYearQtr",
+      "formula": "CalendarYearQtr",
+      "expression_raw": "dd.CalendarYearQtr",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayOfMonth",
+      "formula": "IsLastDayOfMonth",
+      "expression_raw": "dd.IsLastDayOfMonth",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "IsWeekday",
+      "formula": "IsWeekday",
+      "expression_raw": "dd.IsWeekday",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "IsWeekend",
+      "formula": "IsWeekend",
+      "expression_raw": "dd.IsWeekend",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": "RealCID",
+      "expression_raw": "dps.RealCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "IsFunded",
+      "formula": "IsFunded",
+      "expression_raw": "dps.IsFunded",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "ActiveTraded",
+      "formula": "ActiveTraded",
+      "expression_raw": "dps.ActiveTraded",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only",
+      "formula": "Portfolio_Only",
+      "expression_raw": "dps.Portfolio_Only",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "BalanceOnlyAccount",
+      "formula": "BalanceOnlyAccount",
+      "expression_raw": "dps.BalanceOnlyAccount",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "GlobalDeposited",
+      "formula": "GlobalDeposited",
+      "expression_raw": "dps.GlobalDeposited",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "GlobalRedeposited",
+      "formula": "GlobalRedeposited",
+      "expression_raw": "dps.GlobalRedeposited",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "GlobalCashedOut",
+      "formula": "GlobalCashedOut",
+      "expression_raw": "dps.GlobalCashedOut",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "Redeemed",
+      "formula": "Redeemed",
+      "expression_raw": "dps.Redeemed",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationID",
+      "formula": "RegulationID",
+      "expression_raw": "fsc.RegulationID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerLevelID",
+      "formula": "PlayerLevelID",
+      "expression_raw": "fsc.PlayerLevelID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "CountryID",
+      "formula": "CountryID",
+      "expression_raw": "fsc.CountryID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    },
+    {
+      "column": "MifidCategorizationID",
+      "formula": "MifidCategorizationID",
+      "expression_raw": "fsc.MifidCategorizationID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L35-L35",
+      "scope": "main"
+    },
+    {
+      "column": "IsValidCustomer",
+      "formula": "IsValidCustomer",
+      "expression_raw": "fsc.IsValidCustomer",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "IsCreditReportValidCB",
+      "formula": "IsCreditReportValidCB",
+      "expression_raw": "fsc.IsCreditReportValidCB",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L37-L37",
+      "scope": "main"
+    },
+    {
+      "column": "Region",
+      "formula": "MarketingRegionManualName",
+      "expression_raw": "dc.MarketingRegionManualName AS Region",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": "Name",
+      "expression_raw": "dr1.Name AS Regulation",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L39-L39",
+      "scope": "main"
+    },
+    {
+      "column": "Country",
+      "formula": "Name",
+      "expression_raw": "dc.Name AS Country",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L40-L40",
+      "scope": "main"
+    },
+    {
+      "column": "ClubTier",
+      "formula": "Name",
+      "expression_raw": "dpl.Name AS ClubTier",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L41-L41",
+      "scope": "main"
+    },
+    {
+      "column": "MifidCategory",
+      "formula": "Name",
+      "expression_raw": "dmc.Name AS MifidCategory",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L42-L42",
+      "scope": "main"
+    },
+    {
+      "column": "MifidType",
+      "formula": "CASE WHEN MifidCategorizationID IN (2,3) THEN 'Professional' ELSE 'Retail' END",
+      "expression_raw": "CASE \n        WHEN dmc.MifidCategorizationID IN (2,3) THEN 'Professional' \n        ELSE 'Retail' \n    END AS MifidType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L43-L46",
+      "scope": "main"
+    },
+    {
+      "column": "CitizenshipCountry",
+      "formula": "Name",
+      "expression_raw": "dc2.Name AS CitizenshipCountry",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L47-L47",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusID",
+      "formula": "GuruStatusID",
+      "expression_raw": "fsc.GuruStatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L48-L48",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusName",
+      "formula": "GuruStatusName",
+      "expression_raw": "dgs.GuruStatusName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L49-L49",
+      "scope": "main"
+    },
+    {
+      "column": "IsPI",
+      "formula": "CASE WHEN GuruStatusID > 1 THEN 1 ELSE 0 END",
+      "expression_raw": "CASE\n        WHEN fsc.GuruStatusID > 1 THEN 1\n        ELSE 0\n    END AS IsPI",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L50-L53",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusID",
+      "formula": "AccountStatusID",
+      "expression_raw": "fsc.AccountStatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L54-L54",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusName",
+      "formula": "AccountStatusName",
+      "expression_raw": "ast.AccountStatusName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L55-L55",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusID",
+      "formula": "PlayerStatusID",
+      "expression_raw": "fsc.PlayerStatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L56-L56",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusName",
+      "formula": "Name",
+      "expression_raw": "pst.Name AS PlayerStatusName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L57-L57",
+      "scope": "main"
+    },
+    {
+      "column": "CanOpenPosition",
+      "formula": "CanOpenPosition",
+      "expression_raw": "pst.CanOpenPosition",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L58-L58",
+      "scope": "main"
+    },
+    {
+      "column": "CanClosePosition",
+      "formula": "CanClosePosition",
+      "expression_raw": "pst.CanClosePosition",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L59-L59",
+      "scope": "main"
+    },
+    {
+      "column": "CanEditPosition",
+      "formula": "CanEditPosition",
+      "expression_raw": "pst.CanEditPosition",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L60-L60",
+      "scope": "main"
+    },
+    {
+      "column": "CanBeCopied",
+      "formula": "CanBeCopied",
+      "expression_raw": "pst.CanBeCopied",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L61-L61",
+      "scope": "main"
+    },
+    {
+      "column": "CanDeposit",
+      "formula": "CanDeposit",
+      "expression_raw": "pst.CanDeposit",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L62-L62",
+      "scope": "main"
+    },
+    {
+      "column": "CanRequestWithdraw",
+      "formula": "CanRequestWithdraw",
+      "expression_raw": "pst.CanRequestWithdraw",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L63-L63",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonID",
+      "formula": "PlayerStatusReasonID",
+      "expression_raw": "fsc.PlayerStatusReasonID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L64-L64",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonName",
+      "formula": "Name",
+      "expression_raw": "psr.Name AS PlayerStatusReasonName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L65-L65",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonID",
+      "formula": "PlayerStatusSubReasonID",
+      "expression_raw": "fsc.PlayerStatusSubReasonID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L66-L66",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonName",
+      "formula": "PlayerStatusSubReasonName",
+      "expression_raw": "pssr.PlayerStatusSubReasonName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L67-L67",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManagerID",
+      "formula": "AccountManagerID",
+      "expression_raw": "fsc.AccountManagerID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L68-L68",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManager",
+      "formula": "concat(FirstName, ' ', LastName)",
+      "expression_raw": "concat(dm.FirstName, ' ', dm.LastName) AS AccountManager",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L69-L69",
+      "scope": "main"
+    },
+    {
+      "column": "LanguageID",
+      "formula": "LanguageID",
+      "expression_raw": "fsc.LanguageID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L70-L70",
+      "scope": "main"
+    },
+    {
+      "column": "Language",
+      "formula": "Name",
+      "expression_raw": "dl.Name AS Language",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L71-L71",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguageID",
+      "formula": "CommunicationLanguageID",
+      "expression_raw": "fsc.CommunicationLanguageID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L72-L72",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguage",
+      "formula": "Name",
+      "expression_raw": "dcl.Name AS CommunicationLanguage",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L73-L73",
+      "scope": "main"
+    },
+    {
+      "column": "AccountTypeID",
+      "formula": "AccountTypeID",
+      "expression_raw": "fsc.AccountTypeID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L74-L74",
+      "scope": "main"
+    },
+    {
+      "column": "AccountType",
+      "formula": "Name",
+      "expression_raw": "act.Name AS AccountType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L75-L75",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/vg_customer_daily_snapshot.sql"
+}

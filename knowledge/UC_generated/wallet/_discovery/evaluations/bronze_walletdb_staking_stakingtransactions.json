@@ -1,0 +1,81 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_staking_stakingtransactions",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:18Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingTransactions.md",
+      "upstream_quote": "Auto-incrementing surrogate key.",
+      "wiki_quote": "Auto-incrementing surrogate key (Tier 1 — inherited from WalletDB.Staking.StakingTransactions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExternalStakingAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingTransactions.md",
+      "upstream_quote": "The blockchain address of the staking pool where assets were sent. For ETH, an Ethereum address (0x-prefixed). Denormali",
+      "wiki_quote": "The blockchain address of the staking pool where assets were sent. For ETH, an Ethereum address (0x-prefixed). Denormali",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StakingId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingTransactions.md",
+      "upstream_quote": "The staking operation this transaction belongs to. FK to Staking.Staking.Id. 1:1 relationship - each staking operation h",
+      "wiki_quote": "The staking operation this transaction belongs to. FK to Staking.Staking.Id. 1:1 relationship - each staking operation h",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EtoroFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingTransactions.md",
+      "upstream_quote": "eToro's service fee for processing the staking delegation, in the staked crypto's units. Currently 0 across all records ",
+      "wiki_quote": "eToro's service fee for processing the staking delegation, in the staked crypto's units. Currently 0 across all records ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainEstFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingTransactions.md",
+      "upstream_quote": "Estimated blockchain network fee (gas fee) for the staking transaction, in the staked crypto's units. Currently 0 across",
+      "wiki_quote": "Estimated blockchain network fee (gas fee) for the staking transaction, in the staked crypto's units. Currently 0 across",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingTransactions.md",
+      "upstream_quote": "Timestamp when this transaction record was created. Closely follows the Staking.Staking.Occurred timestamp (typically wi",
+      "wiki_quote": "Timestamp when this transaction record was created. Closely follows the Staking.Staking.Occurred timestamp (typically wi",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 6,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 6 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

@@ -1,0 +1,277 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_mimo_options_platform",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 11,
+  "concepts": [
+    {
+      "id": "case_flag_fundingtypeid",
+      "name": "FundingTypeID computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "FundingTypeID"
+      ],
+      "predicates": [
+        {
+          "col": "TerminalID",
+          "op": "=",
+          "val": "'     '"
+        },
+        {
+          "col": "EnteredBy",
+          "op": "=",
+          "val": "'   '"
+        },
+        {
+          "col": "EnteredBy",
+          "op": "=",
+          "val": "'   '"
+        }
+      ],
+      "then_value": "2",
+      "else_value": null,
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L18-L22",
+      "scope": "MIMORecords"
+    },
+    {
+      "id": "case_flag_isinternaltransfer",
+      "name": "IsInternalTransfer computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsInternalTransfer"
+      ],
+      "predicates": [
+        {
+          "col": "TerminalID",
+          "op": "=",
+          "val": "'     '"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L23-L26",
+      "scope": "MIMORecords"
+    },
+    {
+      "id": "case_flag_isglobalftd",
+      "name": "IsGlobalFTD computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsGlobalFTD"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "etoro_kpi_prep.sql L69-L72",
+      "scope": "GLOBAL_FTD"
+    },
+    {
+      "id": "case_flag_mimoaction",
+      "name": "MIMOAction computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "MIMOAction"
+      ],
+      "predicates": [
+        {
+          "col": "PayTypeCode",
+          "op": "=",
+          "val": "' '"
+        },
+        {
+          "col": "PayTypeCode",
+          "op": "=",
+          "val": "' '"
+        }
+      ],
+      "then_value": "'        '",
+      "else_value": null,
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L197-L200",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_isftd",
+      "name": "IsFTD computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsFTD"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L202-L205",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_dc",
+      "name": "Dim lookup via dc",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "alias": "dc",
+      "join_conditions": [
+        "op.GCID = dc.GCID",
+        "op.GCID = dc.GCID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L31,L215",
+      "scopes": [
+        "MIMORecords",
+        "main"
+      ],
+      "scope": "MIMORecords",
+      "join_condition": "op.GCID = dc.GCID"
+    },
+    {
+      "id": "filter_block_DEPOSIT_UNIQUE_FOR_FTDJOIN",
+      "name": "Filter block on DEPOSIT_UNIQUE_FOR_FTDJOIN",
+      "kind": "filter_block",
+      "columns_involved": [
+        "PayTypeCode",
+        "IsInternalTransfer"
+      ],
+      "predicates": [
+        {
+          "col": "PayTypeCode",
+          "op": "=",
+          "val": "' '"
+        },
+        {
+          "col": "IsInternalTransfer",
+          "op": "=",
+          "val": "0"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L58",
+      "scope": "DEPOSIT_UNIQUE_FOR_FTDJOIN",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_GLOBAL_FTD",
+      "name": "Filter block on GLOBAL_FTD",
+      "kind": "filter_block",
+      "columns_involved": [
+        "FirstDepositDate",
+        "FTDPlatformID"
+      ],
+      "predicates": [
+        {
+          "col": "FirstDepositDate",
+          "op": ">=",
+          "val": "'          '"
+        },
+        {
+          "col": "FTDPlatformID",
+          "op": "=",
+          "val": "' '"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L82",
+      "scope": "GLOBAL_FTD",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_FINRAONLY_ftd_date",
+      "name": "Filter block on FINRAONLY_ftd_date",
+      "kind": "filter_block",
+      "columns_involved": [
+        "PayTypeCode",
+        "IsInternalTransfer",
+        "RegisteredRepCode"
+      ],
+      "predicates": [
+        {
+          "col": "PayTypeCode",
+          "op": "=",
+          "val": "' '"
+        },
+        {
+          "col": "IsInternalTransfer",
+          "op": "=",
+          "val": "0"
+        },
+        {
+          "col": "RegisteredRepCode",
+          "op": "=",
+          "val": "'   '"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L97",
+      "scope": "FINRAONLY_ftd_date",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_FINRAONLY_FTD_records",
+      "name": "Filter block on FINRAONLY_FTD_records",
+      "kind": "filter_block",
+      "columns_involved": [
+        "PayTypeCode",
+        "IsInternalTransfer"
+      ],
+      "predicates": [
+        {
+          "col": "PayTypeCode",
+          "op": "=",
+          "val": "' '"
+        },
+        {
+          "col": "IsInternalTransfer",
+          "op": "=",
+          "val": "0"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L116",
+      "scope": "FINRAONLY_FTD_records",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_FinalFTD",
+      "name": "Filter block on FinalFTD",
+      "kind": "filter_block",
+      "columns_involved": [
+        "rn"
+      ],
+      "predicates": [
+        {
+          "col": "rn",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L181",
+      "scope": "FinalFTD",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_mimo_options_platform.sql"
+}

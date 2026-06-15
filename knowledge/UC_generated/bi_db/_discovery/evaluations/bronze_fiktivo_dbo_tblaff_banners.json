@@ -1,0 +1,186 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiktivo_dbo_tblaff_banners",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:48Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "BannerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "Primary key. Referenced by tblaff_GroupBanners, tblaff_MediaTagBanner, and commission event tables (tblaff_Sales.BannerI",
+      "wiki_quote": "Primary key. Referenced by tblaff_GroupBanners, tblaff_MediaTagBanner, and commission event tables (tblaff_Sales.BannerI",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CategoryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "References [dbo.tblaff_Categories](dbo.tblaff_Categories.md).CategoryID. Content category of the banner.",
+      "wiki_quote": "References [dbo.tblaff_Categories](dbo.tblaff_Categories.md).CategoryID. Content category of the banner (Tier 1 — inheri",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Type",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "References [dbo.tblaff_BannerTypes](dbo.tblaff_BannerTypes.md).BannerTypeID. Media format: 1=GIF, 2=Flash, 3=Text, 4=Rot",
+      "wiki_quote": "References [dbo.tblaff_BannerTypes](dbo.tblaff_BannerTypes.md).BannerTypeID. Media format: 1=GIF, 2=Flash, 3=Text, 4=Rot",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BannerName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "Display name of the banner asset for admin and affiliate portal listing.",
+      "wiki_quote": "Display name of the banner asset for admin and affiliate portal listing (Tier 1 — inherited from fiktivo.dbo.tblaff_Bann",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ImageURL",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "URL to the banner image/asset file. For GIF/Flash banners, points to the creative file.",
+      "wiki_quote": "URL to the banner image/asset file. For GIF/Flash banners, points to the creative file (Tier 1 — inherited from fiktivo.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TargetURL",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "Click-through URL. Where users are directed when they click the banner. Typically includes tracking parameters.",
+      "wiki_quote": "Click-through URL. Where users are directed when they click the banner. Typically includes tracking parameters (Tier 1 —",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AltText",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "HTML alt text for the banner image. Used for accessibility and SEO.",
+      "wiki_quote": "HTML alt text for the banner image. Used for accessibility and SEO (Tier 1 — inherited from fiktivo.dbo.tblaff_Banners).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Width",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "Banner width in pixels. Standard IAB sizes (728, 300, 160, etc.). 0 = variable/responsive.",
+      "wiki_quote": "Banner width in pixels. Standard IAB sizes (728, 300, 160, etc.). 0 = variable/responsive (Tier 1 — inherited from fikti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Height",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "Banner height in pixels. 0 = variable/responsive.",
+      "wiki_quote": "Banner height in pixels. 0 = variable/responsive (Tier 1 — inherited from fiktivo.dbo.tblaff_Banners).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PerSale",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "Banner optimized for sale/deposit conversion tracking.",
+      "wiki_quote": "Banner optimized for sale/deposit conversion tracking (Tier 1 — inherited from fiktivo.dbo.tblaff_Banners).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PerLead",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "Banner optimized for lead generation tracking.",
+      "wiki_quote": "Banner optimized for lead generation tracking (Tier 1 — inherited from fiktivo.dbo.tblaff_Banners).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PerClick",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "Banner optimized for click-based tracking.",
+      "wiki_quote": "Banner optimized for click-based tracking (Tier 1 — inherited from fiktivo.dbo.tblaff_Banners).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "NotesToAffiliate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "Instructions or notes for affiliates about how to best use this banner.",
+      "wiki_quote": "Instructions or notes for affiliates about how to best use this banner (Tier 1 — inherited from fiktivo.dbo.tblaff_Banne",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AdvancedBanner",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "Whether this banner uses advanced/custom HTML instead of a standard image. 1 = custom AdCode content.",
+      "wiki_quote": "Whether this banner uses advanced/custom HTML instead of a standard image. 1 = custom AdCode content (Tier 1 — inherited",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AdCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "Custom HTML/JavaScript ad code for advanced banners (AdvancedBanner=1). Affiliates paste this code directly into their s",
+      "wiki_quote": "Custom HTML/JavaScript ad code for advanced banners (AdvancedBanner=1). Affiliates paste this code directly into their s",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TargetWindow",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "HTML target window for the click-through link (e.g., \"_blank\", \"_self\", \"_top\").",
+      "wiki_quote": "HTML target window for the click-through link (e.g., \"_blank\", \"_self\", \"_top\") (Tier 1 — inherited from fiktivo.dbo.tbl",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LanguageID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "References [dbo.tblaff_Languages](dbo.tblaff_Languages.md).LanguageID. Locale of the banner content. Default 1 (English)",
+      "wiki_quote": "References [dbo.tblaff_Languages](dbo.tblaff_Languages.md).LanguageID. Locale of the banner content. Default 1 (English)",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BrandID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "References [dbo.tblaff_Brands](dbo.tblaff_Brands.md).BrandID. Brand/entity for regulatory targeting.",
+      "wiki_quote": "References [dbo.tblaff_Brands](dbo.tblaff_Brands.md).BrandID. Brand/entity for regulatory targeting (Tier 1 — inherited ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Priority",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "Display priority/sort order for banners within the same category. Lower values may appear first.",
+      "wiki_quote": "Display priority/sort order for banners within the same category. Lower values may appear first (Tier 1 — inherited from",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsArchived",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "Archive flag. 1 = hidden from affiliate selection. 0 = active.",
+      "wiki_quote": "Archive flag. 1 = hidden from affiliate selection. 0 = active (Tier 1 — inherited from fiktivo.dbo.tblaff_Banners).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Trace",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Banners.md",
+      "upstream_quote": "Computed audit column. JSON with session metadata.",
+      "wiki_quote": "Computed audit column. JSON with session metadata (Tier 1 — inherited from fiktivo.dbo.tblaff_Banners).",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 21,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 21 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

@@ -1,0 +1,533 @@
+{
+  "object_fqn": "main.bi_output.finance_tables_functions_revenue_sdrt",
+  "generated_at": "2026-05-19T15:01:27Z",
+  "formula_count": 45,
+  "formulas": [
+    {
+      "column": "RealCID",
+      "formula": "RealCID",
+      "expression_raw": "fca.RealCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "Occurred",
+      "formula": "RealCID , Occurred",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L10",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "DateID",
+      "formula": "RealCID , Occurred , Amount , DateID",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L12",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "GCID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L13",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "CountryID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L14",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "LabelID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L15",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "LanguageID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L16",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "VerificationLevelID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L17",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "DocsOK",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L18",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "PlayerStatusID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L19",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "Bankruptcy",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L20",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "RiskStatusID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L21",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "RiskClassificationID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L22",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "CommunicationLanguageID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L23",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "PremiumAccount",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L24",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "Evangelist",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L25",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "GuruStatusID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L26",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "RegulationID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L28",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "AccountStatusID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L29",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "AccountManagerID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L30",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "PlayerLevelID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L31",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "AccountTypeID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L32",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "DateRangeID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L33",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "IsDepositor",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L34",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "PendingClosureStatusID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L35",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "DocumentStatusID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L36",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "SuitabilityTestStatusID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L37",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "MifidCategorizationID",
+      "formula": "RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…",
+      "expression_raw": "fca.RealCID\n  , fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.B…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L38",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "IsEmailVerified",
+      "formula": ", Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , Bankruptcy , …",
+      "expression_raw": ", fca.Occurred\n  , fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L10-L39",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "IsValidCustomer",
+      "formula": ", Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , Bankruptcy , RiskStatusID …",
+      "expression_raw": ", fca.Amount\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L11-L40",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "DesignatedRegulationID",
+      "formula": ", DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , Bankruptcy , RiskStatusID , RiskCla…",
+      "expression_raw": ", fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskCla…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L12-L41",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "EvMatchStatus",
+      "formula": ", GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , Bankruptcy , RiskStatusID , RiskClassificationID …",
+      "expression_raw": ", fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskClassificationID\n …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L13-L42",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "RegionID",
+      "formula": ", CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , Bankruptcy , RiskStatusID , RiskClassificationID , Commun…",
+      "expression_raw": ", fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskClassificationID\n  , fsc.Commun…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L14-L43",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "PlayerStatusReasonID",
+      "formula": ", LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , Bankruptcy , RiskStatusID , RiskClassificationID , CommunicationLanguageID …",
+      "expression_raw": ", fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskClassificationID\n  , fsc.CommunicationLanguageID\n…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L15-L44",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "IsCreditReportValidCB",
+      "formula": ", LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , Bankruptcy , RiskStatusID , RiskClassificationID , CommunicationLanguageID , PremiumA…",
+      "expression_raw": ", fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskClassificationID\n  , fsc.CommunicationLanguageID\n  , fsc.PremiumA…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L16-L45",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "AffiliateID",
+      "formula": ", VerificationLevelID , DocsOK , PlayerStatusID , Bankruptcy , RiskStatusID , RiskClassificationID , CommunicationLanguageID , PremiumAccount , Evan…",
+      "expression_raw": ", fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskClassificationID\n  , fsc.CommunicationLanguageID\n  , fsc.PremiumAccount\n  , fsc.Evan…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L17-L46",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "Email",
+      "formula": ", DocsOK , PlayerStatusID , Bankruptcy , RiskStatusID , RiskClassificationID , CommunicationLanguageID , PremiumAccount , Evangelist , GuruStatusID …",
+      "expression_raw": ", fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskClassificationID\n  , fsc.CommunicationLanguageID\n  , fsc.PremiumAccount\n  , fsc.Evangelist\n  , fsc.GuruStatusID\n…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L18-L47",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "City",
+      "formula": ", PlayerStatusID , Bankruptcy , RiskStatusID , RiskClassificationID , CommunicationLanguageID , PremiumAccount , Evangelist , GuruStatusID , UpdateD…",
+      "expression_raw": ", fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskClassificationID\n  , fsc.CommunicationLanguageID\n  , fsc.PremiumAccount\n  , fsc.Evangelist\n  , fsc.GuruStatusID\n  , fsc.UpdateD…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L19-L48",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "Address",
+      "formula": ", Bankruptcy , RiskStatusID , RiskClassificationID , CommunicationLanguageID , PremiumAccount , Evangelist , GuruStatusID , UpdateDate , RegulationI…",
+      "expression_raw": ", fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskClassificationID\n  , fsc.CommunicationLanguageID\n  , fsc.PremiumAccount\n  , fsc.Evangelist\n  , fsc.GuruStatusID\n  , fsc.UpdateDate\n  , fsc.RegulationI…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L20-L49",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "Zip",
+      "formula": ", RiskStatusID , RiskClassificationID , CommunicationLanguageID , PremiumAccount , Evangelist , GuruStatusID , UpdateDate , RegulationID , AccountSt…",
+      "expression_raw": ", fsc.RiskStatusID\n  , fsc.RiskClassificationID\n  , fsc.CommunicationLanguageID\n  , fsc.PremiumAccount\n  , fsc.Evangelist\n  , fsc.GuruStatusID\n  , fsc.UpdateDate\n  , fsc.RegulationID\n  , fsc.AccountSt…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L21-L50",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "PhoneNumber",
+      "formula": ", RiskClassificationID , CommunicationLanguageID , PremiumAccount , Evangelist , GuruStatusID , UpdateDate , RegulationID , AccountStatusID , Accoun…",
+      "expression_raw": ", fsc.RiskClassificationID\n  , fsc.CommunicationLanguageID\n  , fsc.PremiumAccount\n  , fsc.Evangelist\n  , fsc.GuruStatusID\n  , fsc.UpdateDate\n  , fsc.RegulationID\n  , fsc.AccountStatusID\n  , fsc.Accoun…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L51",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "IsPhoneVerified",
+      "formula": ", CommunicationLanguageID , PremiumAccount , Evangelist , GuruStatusID , UpdateDate , RegulationID , AccountStatusID , AccountManagerID , PlayerLeve…",
+      "expression_raw": ", fsc.CommunicationLanguageID\n  , fsc.PremiumAccount\n  , fsc.Evangelist\n  , fsc.GuruStatusID\n  , fsc.UpdateDate\n  , fsc.RegulationID\n  , fsc.AccountStatusID\n  , fsc.AccountManagerID\n  , fsc.PlayerLeve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L23-L52",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "PhoneVerificationDateID",
+      "formula": ", PremiumAccount , Evangelist , GuruStatusID , UpdateDate , RegulationID , AccountStatusID , AccountManagerID , PlayerLevelID , AccountTypeID , fs…",
+      "expression_raw": ", fsc.PremiumAccount\n  , fsc.Evangelist\n  , fsc.GuruStatusID\n  , fsc.UpdateDate\n  , fsc.RegulationID\n  , fsc.AccountStatusID\n  , fsc.AccountManagerID\n  , fsc.PlayerLevelID\n  , fsc.AccountTypeID\n  , fs…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L24-L53",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "PlayerStatusSubReasonID",
+      "formula": ", Evangelist , GuruStatusID , UpdateDate , RegulationID , AccountStatusID , AccountManagerID , PlayerLevelID , AccountTypeID , DateRangeID , I…",
+      "expression_raw": ", fsc.Evangelist\n  , fsc.GuruStatusID\n  , fsc.UpdateDate\n  , fsc.RegulationID\n  , fsc.AccountStatusID\n  , fsc.AccountManagerID\n  , fsc.PlayerLevelID\n  , fsc.AccountTypeID\n  , fsc.DateRangeID\n  , fsc.I…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L25-L54",
+      "scope": "SDRTPrep"
+    },
+    {
+      "column": "SDRT",
+      "formula": ", Evangelist , GuruStatusID , RegulationID , AccountStatusID , AccountManagerID , PlayerLevelID , AccountTypeID , DateRangeID , IsDepositor , PendingClosureStatusID , D…",
+      "expression_raw": ", f.Evangelist\n\t, f.GuruStatusID\n\t, f.RegulationID\n\t, f.AccountStatusID\n\t, f.AccountManagerID\n\t, f.PlayerLevelID\n\t, f.AccountTypeID\n\t, f.DateRangeID\n\t, f.IsDepositor\n\t, f.PendingClosureStatusID\n\t, f.D…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L81-L110",
+      "scope": "SDRTPrep2"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/finance_tables_functions_revenue_sdrt.sql"
+}

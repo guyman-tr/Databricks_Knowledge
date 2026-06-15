@@ -1,0 +1,228 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_trade_adminpositionlog",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:41Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "AdminPositionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Auto-generated surrogate key. IDENTITY seed 3747184 indicates this table was re-seeded after data migration from AdminPo",
+      "wiki_quote": "Auto-generated surrogate key. IDENTITY seed 3747184 indicates this table was re-seeded after data migration from AdminPo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AdminPositionRequestID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Correlation GUID grouping multiple admin position entries from the same batch request. Used for deduplication (CID + Req",
+      "wiki_quote": "Correlation GUID grouping multiple admin position entries from the same batch request. Used for deduplication (CID + Req",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Customer identifier for the account receiving the admin position. Implicit FK to Customer.CustomerStatic. Indexed for lo",
+      "wiki_quote": "Customer identifier for the account receiving the admin position. Implicit FK to Customer.CustomerStatic. Indexed for lo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Financial instrument for the position. Implicit FK to Trade.Instrument.",
+      "wiki_quote": "Financial instrument for the position. Implicit FK to Trade.Instrument (Tier 1 — inherited from etoro.Trade.AdminPositio",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OpenActionType",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Why this admin position was created. Maps to Dictionary.OpenPositionActionType: 0=Customer, 1=Hierarchical Open, 2=Reope",
+      "wiki_quote": "Why this admin position was created. Maps to Dictionary.OpenPositionActionType: 0=Customer, 1=Hierarchical Open, 2=Reope",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AdminPositionEventID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Event correlation ID for the position creation event in the distributed system. Indexed for event-based lookups.",
+      "wiki_quote": "Event correlation ID for the position creation event in the distributed system. Indexed for event-based lookups (Tier 1 ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AmountInUnits",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Number of units/shares for the position. NULL when amount is specified in monetary terms instead.",
+      "wiki_quote": "Number of units/shares for the position. NULL when amount is specified in monetary terms instead (Tier 1 — inherited fro",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Monetary amount for the position. NULL when amount is specified in units instead. Mutually exclusive with AmountInUnits ",
+      "wiki_quote": "Monetary amount for the position. NULL when amount is specified in units instead. Mutually exclusive with AmountInUnits ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "HedgeServerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Hedge server assigned to execute this position. Implicit FK to Trade.HedgeServer. NULL for positions that don't require ",
+      "wiki_quote": "Hedge server assigned to execute this position. Implicit FK to Trade.HedgeServer. NULL for positions that don't require ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RequestOccurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "UTC timestamp when the admin position request was created. Indexed for time-range queries and monitoring.",
+      "wiki_quote": "UTC timestamp when the admin position request was created. Indexed for time-range queries and monitoring (Tier 1 — inher",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "UserName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Username of the operator who initiated the request. For automated processes, often contains the CID as a string.",
+      "wiki_quote": "Username of the operator who initiated the request. For automated processes, often contains the CID as a string (Tier 1 ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExecutionOccurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "UTC timestamp when the position was actually executed (filled). NULL for pending or rejected requests. Indexed for execu",
+      "wiki_quote": "UTC timestamp when the position was actually executed (filled). NULL for pending or rejected requests. Indexed for execu",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PositionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "The resulting position ID in Trade.PositionTbl after successful execution. NULL until State=3 (Filled). Indexed for reve",
+      "wiki_quote": "The resulting position ID in Trade.PositionTbl after successful execution. NULL until State=3 (Filled). Indexed for reve",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "State",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Current lifecycle state: 1=Pending (created), 2=Placed (sent to execution), 3=Filled (succeeded), 4=Rejected (failed). S",
+      "wiki_quote": "Current lifecycle state: 1=Pending (created), 2=Placed (sent to execution), 3=Filled (succeeded), 4=Rejected (failed). S",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FailReason",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Human-readable error description when State=4 (Rejected). Set by `SetAdminPositionFailInfo`. NULL for non-failed request",
+      "wiki_quote": "Human-readable error description when State=4 (Rejected). Set by `SetAdminPositionFailInfo`. NULL for non-failed request",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ErrorCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Numeric error code when State=4 (Rejected). Set by `SetAdminPositionState` or `SetAdminPositionFailInfo`. NULL for non-f",
+      "wiki_quote": "Numeric error code when State=4 (Rejected). Set by `SetAdminPositionState` or `SetAdminPositionFailInfo`. NULL for non-f",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Cusip",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "CUSIP identifier for US securities. Used for ACATS transfers and US regulatory reporting.",
+      "wiki_quote": "CUSIP identifier for US securities. Used for ACATS transfers and US regulatory reporting (Tier 1 — inherited from etoro.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ApexID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Apex Clearing account/transaction identifier for US brokerage integration.",
+      "wiki_quote": "Apex Clearing account/transaction identifier for US brokerage integration (Tier 1 — inherited from etoro.Trade.AdminPosi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Rate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Execution rate/price for the position. NULL until execution occurs.",
+      "wiki_quote": "Execution rate/price for the position. NULL until execution occurs (Tier 1 — inherited from etoro.Trade.AdminPositionLog",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RateTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Timestamp of the rate used for execution. May differ from ExecutionOccurred if rate was captured earlier.",
+      "wiki_quote": "Timestamp of the rate used for execution. May differ from ExecutionOccurred if rate was captured earlier (Tier 1 — inher",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CheckBalance",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Whether to validate the customer has sufficient balance before opening the position. 0=Skip balance check (common for co",
+      "wiki_quote": "Whether to validate the customer has sufficient balance before opening the position. 0=Skip balance check (common for co",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsComputeForHedge",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Whether this position should be included in hedge exposure calculations. 0=Exclude from hedging, 1=Include in hedging.",
+      "wiki_quote": "Whether this position should be included in hedge exposure calculations. 0=Exclude from hedging, 1=Include in hedging (T",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsFunded",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Whether this is a funded (real asset) position vs a CFD. 1=Funded/real, 0=CFD.",
+      "wiki_quote": "Whether this is a funded (real asset) position vs a CFD. 1=Funded/real, 0=CFD (Tier 1 — inherited from etoro.Trade.Admin",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CompensationReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Reason code for the compensation or admin action. Sourced from Dictionary.CorporateAction.CompensationReasonID in airdro",
+      "wiki_quote": "Reason code for the compensation or admin action. Sourced from Dictionary.CorporateAction.CompensationReasonID in airdro",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidatePositionWorth",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Whether to validate minimum position value before opening. 0=Skip validation, 1=Enforce minimum worth check.",
+      "wiki_quote": "Whether to validate minimum position value before opening. 0=Skip validation, 1=Enforce minimum worth check (Tier 1 — in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CompensationCreditID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Credit entry ID linking this admin position to a compensation credit record. Added after AdminPositionLogOLD was archive",
+      "wiki_quote": "Credit entry ID linking this admin position to a compensation credit record. Added after AdminPositionLogOLD was archive",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OrderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "upstream_quote": "Associated order ID in Trade.Orders for this admin position. Added after AdminPositionLogOLD was archived. Indexed for o",
+      "wiki_quote": "Associated order ID in Trade.Orders for this admin position. Added after AdminPositionLogOLD was archived. Indexed for o",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 27,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 27 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

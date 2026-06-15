@@ -1,0 +1,53 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiktivo_dbo_tblaff_bannertypes",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:48Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "BannerTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_BannerTypes.md",
+      "upstream_quote": "Primary key. Auto-incrementing identifier. Referenced by tblaff_Banners.Type to classify each banner by its media format",
+      "wiki_quote": "Primary key. Auto-incrementing identifier. Referenced by tblaff_Banners.Type to classify each banner by its media format",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BannerTypeName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_BannerTypes.md",
+      "upstream_quote": "Display name for the banner type. Shown in admin UI and affiliate banner selection filters.",
+      "wiki_quote": "Display name for the banner type. Shown in admin UI and affiliate banner selection filters (Tier 1 — inherited from fikt",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 2,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 2 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

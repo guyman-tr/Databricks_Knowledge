@@ -1,0 +1,100 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_revenue_conversionfee_withpositiondata",
+  "generated_at": "2026-05-18T16:27:27Z",
+  "concept_count": 4,
+  "concepts": [
+    {
+      "id": "case_flag_executionibantradesuccess",
+      "name": "ExecutionIBANTradeSuccess computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "ExecutionIBANTradeSuccess"
+      ],
+      "predicates": [
+        {
+          "col": "IsIBANTrade",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "then_value": "0",
+      "else_value": "1",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_opened_from_iban",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee",
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_closed_to_iban"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L29-L29",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_iscopy",
+      "name": "IsCopy computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsCopy"
+      ],
+      "predicates": [
+        {
+          "col": "MirrorID",
+          "op": ">",
+          "val": "0"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.dim_position"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L33-L33",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_dr",
+      "name": "Dim lookup via dr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "alias": "dr",
+      "join_conditions": [
+        "fsc.DateRangeID = dr.DateRangeID\n    AND fca.DateID BETWEEN dr.FromDateID AND dr.ToDateID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L38",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.DateRangeID = dr.DateRangeID\n    AND fca.DateID BETWEEN dr.FromDateID AND dr.ToDateID"
+    },
+    {
+      "id": "dim_lookup_di",
+      "name": "Dim lookup via di",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "alias": "di",
+      "join_conditions": [
+        "dp.InstrumentID = di.InstrumentID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L53",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "dp.InstrumentID = di.InstrumentID"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_revenue_conversionfee_withpositiondata.sql"
+}

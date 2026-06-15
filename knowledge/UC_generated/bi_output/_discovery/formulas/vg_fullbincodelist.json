@@ -1,0 +1,85 @@
+{
+  "object_fqn": "main.bi_output.vg_fullbincodelist",
+  "generated_at": "2026-05-19T15:01:28Z",
+  "formula_count": 7,
+  "formulas": [
+    {
+      "column": "bin_code",
+      "formula": "BinCode",
+      "expression_raw": "b.BinCode AS bin_code",
+      "inputs": [
+        "main.general.bronze_etoro_dictionary_countrybin"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "issuing_country",
+      "formula": "Name",
+      "expression_raw": "c.Name AS issuing_country",
+      "inputs": [
+        "main.general.bronze_etoro_dictionary_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "issuer_name",
+      "formula": "IssuingBank",
+      "expression_raw": "b.IssuingBank AS issuer_name",
+      "inputs": [
+        "main.general.bronze_etoro_dictionary_countrybin"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "card_type",
+      "formula": "Name",
+      "expression_raw": "ct.Name AS card_type",
+      "inputs": [
+        "main.general.bronze_etoro_dictionary_cardtype"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "card_subtype",
+      "formula": "CardSubType",
+      "expression_raw": "b.CardSubType AS card_subtype",
+      "inputs": [
+        "main.general.bronze_etoro_dictionary_countrybin"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "aft_support",
+      "formula": "SupportsAFT",
+      "expression_raw": "b.SupportsAFT AS aft_support",
+      "inputs": [
+        "main.general.bronze_etoro_dictionary_countrybin"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "is_bad_bin",
+      "formula": "CASE WHEN BinFrom IS NOT NULL THEN TRUE ELSE FALSE END",
+      "expression_raw": "CASE WHEN x.BinFrom IS NOT NULL THEN TRUE ELSE FALSE END AS is_bad_bin",
+      "inputs": [
+        "main.billing.bronze_etoro_billing_badbin"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_fullbincodelist.sql"
+}

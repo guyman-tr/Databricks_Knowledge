@@ -1,0 +1,240 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 9,
+  "concepts": [
+    {
+      "id": "case_flag_isibantrade",
+      "name": "IsIBANTrade computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsIBANTrade"
+      ],
+      "predicates": [
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "44"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L14-L14",
+      "scope": "new_tp"
+    },
+    {
+      "id": "case_flag_isibanquicktransfer",
+      "name": "IsIBANQuickTransfer computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsIBANQuickTransfer"
+      ],
+      "predicates": [
+        {
+          "col": "MoveMoneyReasonID",
+          "op": "=",
+          "val": "6"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L15-L15",
+      "scope": "new_tp"
+    },
+    {
+      "id": "case_flag_iscryptotofiat",
+      "name": "IsCryptoToFiat computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsCryptoToFiat"
+      ],
+      "predicates": [
+        {
+          "col": "TxTypeID",
+          "op": "=",
+          "val": "14"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {
+        "TxTypeID=14": "CryptoToFiat"
+      },
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L37-L37",
+      "scope": "new_iban"
+    },
+    {
+      "id": "case_flag_ftdplatform",
+      "name": "FTDPlatform computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "FTDPlatform"
+      ],
+      "predicates": [
+        {
+          "col": "FTDPlatformID",
+          "op": "=",
+          "val": "3"
+        },
+        {
+          "col": "FTDPlatformID",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "FTDPlatformID",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "FTDPlatformID",
+          "op": "=",
+          "val": "2"
+        },
+        {
+          "col": "FTDPlatformID",
+          "op": "=",
+          "val": "3"
+        },
+        {
+          "col": "FTDPlatformID",
+          "op": "=",
+          "val": "4"
+        }
+      ],
+      "then_value": "'         '",
+      "else_value": "'  '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+        "main.emoney.bronze_fiatdwhdb_dbo_fiattransactions",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L65-L81",
+      "scope": "dimcust"
+    },
+    {
+      "id": "case_flag_isc2usd",
+      "name": "IsC2USD computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsC2USD"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L88-L88",
+      "scope": "dimcust"
+    },
+    {
+      "id": "filter_block_new_tp",
+      "name": "Filter block on new_tp",
+      "kind": "filter_block",
+      "columns_involved": [
+        "ActionTypeID",
+        "IsFTD"
+      ],
+      "predicates": [
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "7"
+        },
+        {
+          "col": "IsFTD",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L17",
+      "scope": "new_tp",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_new_iban",
+      "name": "Filter block on new_iban",
+      "kind": "filter_block",
+      "columns_involved": [
+        "MoneyMoveDirection",
+        "TxStatusID"
+      ],
+      "predicates": [
+        {
+          "col": "MoneyMoveDirection",
+          "op": "=",
+          "val": "'       '"
+        },
+        {
+          "col": "TxStatusID",
+          "op": "=",
+          "val": "2"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L44",
+      "scope": "new_iban",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_c2usd",
+      "name": "Filter block on c2usd",
+      "kind": "filter_block",
+      "columns_involved": [
+        "IsFTD",
+        "FundingTypeID"
+      ],
+      "predicates": [
+        {
+          "col": "IsFTD",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "FundingTypeID",
+          "op": "=",
+          "val": "27"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L55",
+      "scope": "c2usd",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_dimcust",
+      "name": "Filter block on dimcust",
+      "kind": "filter_block",
+      "columns_involved": [
+        "FirstDepositDate"
+      ],
+      "predicates": [
+        {
+          "col": "FirstDepositDate",
+          "op": ">=",
+          "val": "'          '"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L101",
+      "scope": "dimcust",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_mimo_first_deposit_all_platforms.sql"
+}

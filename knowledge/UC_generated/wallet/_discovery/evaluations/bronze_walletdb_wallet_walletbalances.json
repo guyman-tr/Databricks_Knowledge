@@ -1,0 +1,88 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_walletbalances",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:26Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletBalances.md",
+      "upstream_quote": "Auto-incrementing surrogate key for row identification. Not used as FK by other tables - the composite PK is the busines",
+      "wiki_quote": "Auto-incrementing surrogate key for row identification. Not used as FK by other tables - the composite PK is the busines",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletBalances.md",
+      "upstream_quote": "The wallet this balance belongs to. Part of composite clustered PK. Implicit reference to Wallet.WalletPool.WalletId.",
+      "wiki_quote": "The wallet this balance belongs to. Part of composite clustered PK. Implicit reference to Wallet.WalletPool.WalletId (Ti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletBalances.md",
+      "upstream_quote": "The cryptocurrency this balance measures. FK to Wallet.CryptoTypes.CryptoID. Part of composite clustered PK.",
+      "wiki_quote": "The cryptocurrency this balance measures. FK to Wallet.CryptoTypes.CryptoID. Part of composite clustered PK (Tier 1 — in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DateFrom",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletBalances.md",
+      "upstream_quote": "Start of this balance snapshot's validity window. Set to the time the balance was confirmed by the provider.",
+      "wiki_quote": "Start of this balance snapshot's validity window. Set to the time the balance was confirmed by the provider (Tier 1 — in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DateTo",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletBalances.md",
+      "upstream_quote": "End of this balance snapshot's validity window. 3000-01-01 = current/open balance. Updated to the next snapshot's DateFr",
+      "wiki_quote": "End of this balance snapshot's validity window. 3000-01-01 = current/open balance. Updated to the next snapshot's DateFr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Balance",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletBalances.md",
+      "upstream_quote": "The confirmed crypto balance in native units (e.g., BTC, ETH). NULL is possible but rare - indicates the balance could n",
+      "wiki_quote": "The confirmed crypto balance in native units (e.g., BTC, ETH). NULL is possible but rare - indicates the balance could n",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletBalances.md",
+      "upstream_quote": "Timestamp when this balance record was created/updated in the database. May differ from DateFrom if there was processing",
+      "wiki_quote": "Timestamp when this balance record was created/updated in the database. May differ from DateFrom if there was processing",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 7,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 7 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

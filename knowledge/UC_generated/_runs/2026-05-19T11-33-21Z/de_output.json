@@ -1,0 +1,346 @@
+{
+  "schema": "de_output",
+  "catalog": "main",
+  "started_at": "2026-05-19T11:33:22Z",
+  "finished_at": "2026-05-19T11:33:29Z",
+  "wall_seconds": 7.0,
+  "phases": {
+    "1": {
+      "wall_seconds": 0.1870121955871582,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "[discover-schema] phase=0 skip: C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\de_output\\_schema_card.md exists (pass --force to rebuild)\n[discover-schema] phase=1 skip: C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\de_output\\_discovery\\uc_inventory.json exists (pass --force to rebuild)"
+    },
+    "2": {
+      "wall_seconds": 5.700435400009155,
+      "rc": 1,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "       ^^^^^^^^^\n  File \"C:\\Python311\\Lib\\site-packages\\databricks\\sql\\client.py\", line 477, in open\n    return self.session.is_open\n           ^^^^^^^^^^^^\nAttributeError: 'Connection' object has no attribute 'session'"
+    },
+    "7": {
+      "wall_seconds": 0.8130602836608887,
+      "rc": 0,
+      "rows": 1,
+      "first_pass_pass": 0,
+      "regen_pass": 0,
+      "final_fail": 1,
+      "dimension_averages": {
+        "inheritance_fidelity": 10.0,
+        "source_code_narration_accuracy": 7.0,
+        "null_with_provenance_correctness": 7.0,
+        "completeness": 4.0,
+        "shape_fidelity": 3.0,
+        "lineage_coherence": 10.0,
+        "concept_coverage": 7.5
+      },
+      "per_object": {
+        "de_output_etoro_kpi_fact_customeraction_w_metrics": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.43,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        }
+      }
+    }
+  },
+  "failures": [
+    "phase 2 rc=1: AttributeError: 'Connection' object has no attribute 'session'"
+  ],
+  "objects": [
+    {
+      "name": "customer_segments_mail_v",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_ddr_fact_mimo_allplatforms",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_ddr_fact_revenue_generating_actions",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_etoro_kpi_dim_dataplatform_uuid",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_etoro_kpi_fact_customeraction_w_metrics",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0,
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.43
+    },
+    {
+      "name": "de_output_general_datalake_monitoirng_tables_status",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_gold_dealing_dealingstreaming_dealing_netting_rates_delta_history",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_instruments_firsttradedate",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_monitoring_datalake_ddr_monitoring_table",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_monitoring_datalake_history_gaps",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_long_duration",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_not_ended",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_not_started",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_monitoring_datalake_log_analytics_to_datalake_results_adf_internal_pipelines_status",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_monitoring_datalake_log_analytics_to_datalake_results_databricks_batch_jobs_status",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_monitoring_datalake_quality_gates_completeness_check_etorodb",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_monitoring_datalake_quality_gates_completeness_check_generic_pipeline_etorodb",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_monitoring_datalake_quality_gates_completeness_sumcheck_etorodb",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_monitoring_datalake_quality_gates_copylaketosynapse_checks_results",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_monitoring_datalake_quality_gates_dwh_daily_checks_results",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_monitoring_datalake_quality_gates_dwh_daily_dict_checks_results",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_monitoring_datalake_quality_gates_generic_pipeline_checks_results",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_monitoring_datalake_quality_gates_synapse_checks_results",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_monitoring_datalake_quality_gates_synapse_dl_rowcount_results",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_onboarding_ev_cohort_enriched",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_risk_classification",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_risk_classification_cysec",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_risk_classification_history",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_risk_classification_history_cysec",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_risk_classification_scores",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_semantic_column_descriptions_bank",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_semantic_column_descriptions_deploy_log",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_semantic_column_descriptions_purge_log",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_semantic_column_descriptions_rollback",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_semantic_column_descriptions_work_queue",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_trading_crypto_volume_fee_tier",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_trading_crypto_volume_fee_tier_conf",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_trading_crypto_volume_fee_tier_log",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_voice_of_the_customer_comments",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_voice_of_the_customer_feeds",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_voice_of_the_customer_messagingsession",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_voice_of_the_customer_torii",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "de_output_voice_of_the_customer_torii_new",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "monitoring_schema_history",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "riskscore_classification_history_v",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vw_bronze_failed_public_api_operations_with_errors",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vw_bronze_public_api_operations",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vw_risk_classification_history_complete",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=1)",
+      "n_unverified": 0
+    }
+  ]
+}

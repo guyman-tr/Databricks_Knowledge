@@ -1,0 +1,102 @@
+{
+  "object_fqn": "main.bi_dealing.gold_dealing_oms_internalmarket_imdynamicbookfutures_v",
+  "generated_at": "2026-05-19T12:47:56Z",
+  "formula_count": 9,
+  "formulas": [
+    {
+      "column": "InstrumentID",
+      "formula": "InstrumentID",
+      "expression_raw": "mp.InstrumentID",
+      "inputs": [
+        "main.dealing.bronze_dealingstreaming_marketrates_dealing_market_feed_rates"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "oms"
+    },
+    {
+      "column": "Model",
+      "formula": ",'IMDynamicBook'",
+      "expression_raw": ",'IMDynamicBook' as Model",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L56-L56",
+      "scope": "main"
+    },
+    {
+      "column": "ModelParameter",
+      "formula": ",'IMDynamicBook' as Model ,'askLegs'",
+      "expression_raw": ",'IMDynamicBook' as Model\n,'askLegs' as ModelParameter",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L56-L57",
+      "scope": "main"
+    },
+    {
+      "column": "Value",
+      "formula": ",'IMDynamicBook' as Model ,'askLegs' as ModelParameter , cast(10 as string)",
+      "expression_raw": ",'IMDynamicBook' as Model\n,'askLegs' as ModelParameter\n, cast(10 as string)  AS Value",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L56-L58",
+      "scope": "main"
+    },
+    {
+      "column": "UpdateTime",
+      "formula": "cast ((etoro - oms)*(10 ^ Precision) as int ) Mid2MidDiff_Tick, current_timestamp()",
+      "expression_raw": "cast ((aa.etoro - aa.oms)*(10 ^ di.Precision) as int ) Mid2MidDiff_Tick, current_timestamp() as UpdateTime",
+      "inputs": [
+        "main.dealing.bronze_dealingstreaming_marketrates_dealing_market_feed_rates",
+        "main.bi_dealing.gold_dealing_oms_internalmarket_parameters",
+        "valid_parameters",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L51-L51",
+      "scope": "final"
+    },
+    {
+      "column": "ModelVersion",
+      "formula": ",'IMDynamicBook' as Model ,'askLegs' as ModelParameter , cast(10 as string) AS Value ,UpdateTime ,1",
+      "expression_raw": ",'IMDynamicBook' as Model\n,'askLegs' as ModelParameter\n, cast(10 as string)  AS Value \n,UpdateTime\n,1 as ModelVersion",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L56-L60",
+      "scope": "main"
+    },
+    {
+      "column": "URL",
+      "formula": ",'IMDynamicBook' as Model ,'askLegs' as ModelParameter , cast(10 as string) AS Value ,UpdateTime ,1 as ModelVersion ,'/api/db/table/Automaton'",
+      "expression_raw": ",'IMDynamicBook' as Model\n,'askLegs' as ModelParameter\n, cast(10 as string)  AS Value \n,UpdateTime\n,1 as ModelVersion\n,'/api/db/table/Automaton' as URL",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L56-L61",
+      "scope": "main"
+    },
+    {
+      "column": "OmsParam",
+      "formula": ",'IMDynamicBook' as Model ,'askLegs' as ModelParameter , cast(10 as string) AS Value ,UpdateTime ,1 as ModelVersion ,'/api/db/table/Automaton' as URL ,'askLegs'",
+      "expression_raw": ",'IMDynamicBook' as Model\n,'askLegs' as ModelParameter\n, cast(10 as string)  AS Value \n,UpdateTime\n,1 as ModelVersion\n,'/api/db/table/Automaton' as URL\n,'askLegs' as OmsParam",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L56-L62",
+      "scope": "main"
+    },
+    {
+      "column": "etr_ymd",
+      "formula": ",'IMDynamicBook' as Model ,'askLegs' as ModelParameter , cast(10 as string) AS Value ,UpdateTime ,1 as ModelVersion ,'/api/db/table/Automaton' as URL ,'askLegs' as OmsParam ,date(UpdateTime) etr_ymd",
+      "expression_raw": ",'IMDynamicBook' as Model\n,'askLegs' as ModelParameter\n, cast(10 as string)  AS Value \n,UpdateTime\n,1 as ModelVersion\n,'/api/db/table/Automaton' as URL\n,'askLegs' as OmsParam\n,date(UpdateTime) etr_ymd",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L56-L63",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_dealing/_discovery/source_code/gold_dealing_oms_internalmarket_imdynamicbookfutures_v.sql"
+}

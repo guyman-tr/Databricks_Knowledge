@@ -1,0 +1,2578 @@
+{
+  "schema": "bi_dealing",
+  "catalog": "main",
+  "generated_at": "2026-05-19T12:47:35Z",
+  "lineage_lookback_days": 90,
+  "objects": [
+    {
+      "object": "main.bi_dealing.bi_output_dealing_015min_alltrades",
+      "name": "bi_output_dealing_015min_alltrades",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_015min_alltrades.json",
+      "column_lineage_row_count": 29,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "779425168824714",
+          "event_count_lookback": 34668,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_015min_alltrades.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_245_sessions",
+      "name": "bi_output_dealing_245_sessions",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_245_sessions.json",
+      "column_lineage_row_count": 43,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "379903601145478",
+          "event_count_lookback": 1226,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_245_sessions.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_abuse_alert_log",
+      "name": "bi_output_dealing_abuse_alert_log",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_abuse_alert_log.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "844382279060709",
+          "event_count_lookback": 1,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_abuse_alert_log.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_abuse_signal_output",
+      "name": "bi_output_dealing_abuse_signal_output",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_abuse_signal_output.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "844382279060709",
+          "event_count_lookback": 1,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_abuse_signal_output.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_alpha_contacts",
+      "name": "bi_output_dealing_alpha_contacts",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_alpha_contacts.json",
+      "column_lineage_row_count": 11,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "996129058529134",
+          "event_count_lookback": 320,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_alpha_contacts.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_alpha_customer_actions",
+      "name": "bi_output_dealing_alpha_customer_actions",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_alpha_customer_actions.json",
+      "column_lineage_row_count": 25,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "996129058529134",
+          "event_count_lookback": 780,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_alpha_customer_actions.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_alpha_detailed_data_fifo",
+      "name": "bi_output_dealing_alpha_detailed_data_fifo",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_alpha_detailed_data_fifo.json",
+      "column_lineage_row_count": 51,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "996129058529134",
+          "event_count_lookback": 858,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_alpha_detailed_data_fifo.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_alpha_final_points",
+      "name": "bi_output_dealing_alpha_final_points",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_alpha_final_points.json",
+      "column_lineage_row_count": 62,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "996129058529134",
+          "event_count_lookback": 858,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_alpha_final_points.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_apex_recon_eod",
+      "name": "bi_output_dealing_apex_recon_eod",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_apex_recon_eod.json",
+      "column_lineage_row_count": 69,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "260621278292538",
+          "event_count_lookback": 348,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "4404603554225332",
+          "event_count_lookback": 4,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "695083017622210",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "fed14316-68d9-4f49-8bfe-e4e432d5340a",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "30f11136-56e3-420c-9208-fbeae3babde5",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_apex_recon_eod.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_apex_recon_trades",
+      "name": "bi_output_dealing_apex_recon_trades",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_apex_recon_trades.json",
+      "column_lineage_row_count": 39,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "260621278292538",
+          "event_count_lookback": 224,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "611b3e0c-effb-4918-9ddb-90d702ed3fd8",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_apex_recon_trades.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_bloomberg_holdings_pct_of_mktcap",
+      "name": "bi_output_dealing_bloomberg_holdings_pct_of_mktcap",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_bloomberg_holdings_pct_of_mktcap.json",
+      "column_lineage_row_count": 76,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "877304087329371",
+          "event_count_lookback": 994,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_bloomberg_holdings_pct_of_mktcap.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_bloomberg_holdings_pct_of_mktcap_cids",
+      "name": "bi_output_dealing_bloomberg_holdings_pct_of_mktcap_cids",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_bloomberg_holdings_pct_of_mktcap_cids.json",
+      "column_lineage_row_count": 47,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "877304087329371",
+          "event_count_lookback": 966,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_bloomberg_holdings_pct_of_mktcap_cids.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_bmll_nbbo_rates_slippage",
+      "name": "bi_output_dealing_bmll_nbbo_rates_slippage",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_bmll_nbbo_rates_slippage.json",
+      "column_lineage_row_count": 135,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1119288627500033",
+          "event_count_lookback": 248,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "4468635177170706",
+          "event_count_lookback": 16,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_bmll_nbbo_rates_slippage.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "name": "bi_output_dealing_bny_recon_eod",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_bny_recon_eod.json",
+      "column_lineage_row_count": 79,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1073017698300732",
+          "event_count_lookback": 1020,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "844382279060709",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_bny_recon_eod.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_bny_recon_eod_detailed",
+      "name": "bi_output_dealing_bny_recon_eod_detailed",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_bny_recon_eod_detailed.json",
+      "column_lineage_row_count": 36,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1073017698300732",
+          "event_count_lookback": 702,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_bny_recon_eod_detailed.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_bny_virtu_recon_trades",
+      "name": "bi_output_dealing_bny_virtu_recon_trades",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_bny_virtu_recon_trades.json",
+      "column_lineage_row_count": 254,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1073017698300732",
+          "event_count_lookback": 2448,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "844382279060709",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_bny_virtu_recon_trades.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_bny_virtu_recon_trades_detailed",
+      "name": "bi_output_dealing_bny_virtu_recon_trades_detailed",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_bny_virtu_recon_trades_detailed.json",
+      "column_lineage_row_count": 108,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1073017698300732",
+          "event_count_lookback": 1872,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_bny_virtu_recon_trades_detailed.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_cash_recon",
+      "name": "bi_output_dealing_cash_recon",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_cash_recon.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "03c644c9-4472-4429-b6f1-d4a0f6b70f92",
+          "event_count_lookback": 1,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_cash_recon.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_cfd_recon_eod",
+      "name": "bi_output_dealing_cfd_recon_eod",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_cfd_recon_eod.json",
+      "column_lineage_row_count": 47,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1046813050681297",
+          "event_count_lookback": 1060,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_cfd_recon_eod.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_cidage_data",
+      "name": "bi_output_dealing_cidage_data",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_cidage_data.json",
+      "column_lineage_row_count": 4,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1117593627031179",
+          "event_count_lookback": 91,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_cidage_data.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_client_abuse_news_events_calendar",
+      "name": "bi_output_dealing_client_abuse_news_events_calendar",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_client_abuse_news_events_calendar.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "844382279060709",
+          "event_count_lookback": 1,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_client_abuse_news_events_calendar.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_crypto_pricing",
+      "name": "bi_output_dealing_crypto_pricing",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_crypto_pricing.json",
+      "column_lineage_row_count": 104,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "863519614150361",
+          "event_count_lookback": 455,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_crypto_pricing.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_crypto_volume_live",
+      "name": "bi_output_dealing_crypto_volume_live",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_crypto_volume_live.json",
+      "column_lineage_row_count": 14,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "755063691363415",
+          "event_count_lookback": 32420,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_crypto_volume_live.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_cryptovolume",
+      "name": "bi_output_dealing_cryptovolume",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_cryptovolume.json",
+      "column_lineage_row_count": 47,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "459736547958571",
+          "event_count_lookback": 21258,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_cryptovolume.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_daily_bmll_slippage_latency_compensation",
+      "name": "bi_output_dealing_daily_bmll_slippage_latency_compensation",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_daily_bmll_slippage_latency_compensation.json",
+      "column_lineage_row_count": 88,
+      "writers": [
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "ae226d85-8b7a-457d-9303-38223c4f721e",
+          "event_count_lookback": 123,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_daily_bmll_slippage_latency_compensation.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_daily_bmll_tca_ng_oil_final",
+      "name": "bi_output_dealing_daily_bmll_tca_ng_oil_final",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_daily_bmll_tca_ng_oil_final.json",
+      "column_lineage_row_count": 67,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "453106205505337",
+          "event_count_lookback": 240,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_daily_bmll_tca_ng_oil_final.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_dailyspreadsaggregated",
+      "name": "bi_output_dealing_dailyspreadsaggregated",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_dailyspreadsaggregated.json",
+      "column_lineage_row_count": 227,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "674748125962988",
+          "event_count_lookback": 546,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_dailyspreadsaggregated.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_dealing_regime_flags",
+      "name": "bi_output_dealing_dealing_regime_flags",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_dealing_regime_flags.json",
+      "column_lineage_row_count": 92,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "164081535369475",
+          "event_count_lookback": 364,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_dealing_regime_flags.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_diffusion_nop",
+      "name": "bi_output_dealing_diffusion_nop",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_diffusion_nop.json",
+      "column_lineage_row_count": 75,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "408480035940269",
+          "event_count_lookback": 455,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_diffusion_nop.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "name": "bi_output_dealing_duco_eod",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_duco_eod.json",
+      "column_lineage_row_count": 99,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "377435624789100",
+          "event_count_lookback": 702,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "cac21f9d-72c7-4714-ae2a-8ca7e92b7e9d",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "825d3157-44f7-4dac-a021-cc2ddb4e4efb",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "1e6ab6a9-5601-47d7-9846-ccdb50719445",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "a7018a40-cda9-4582-beb9-cb946b57eaaf",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_duco_eod.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_duco_trades",
+      "name": "bi_output_dealing_duco_trades",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_duco_trades.json",
+      "column_lineage_row_count": 106,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "377435624789100",
+          "event_count_lookback": 624,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "d0e2890f-c790-4f84-a11e-9a5a396152c8",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "21343df5-e8ba-41fa-a0f0-312d179d4adc",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "882615bb-f45b-4ee3-bd6b-b165479c4593",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "1e6ab6a9-5601-47d7-9846-ccdb50719445",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_duco_trades.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_employee_accountpnl",
+      "name": "bi_output_dealing_employee_accountpnl",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_employee_accountpnl.json",
+      "column_lineage_row_count": 60,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "709482236388754",
+          "event_count_lookback": 645,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_employee_accountpnl.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_employees_info",
+      "name": "bi_output_dealing_employees_info",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_employees_info.json",
+      "column_lineage_row_count": 49,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "640700677404306",
+          "event_count_lookback": 728,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_employees_info.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_employees_performance",
+      "name": "bi_output_dealing_employees_performance",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_employees_performance.json",
+      "column_lineage_row_count": 85,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "915959240471122",
+          "event_count_lookback": 730,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_employees_performance.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_esmanetloss_final",
+      "name": "bi_output_dealing_esmanetloss_final",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_esmanetloss_final.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "686361548289639",
+          "event_count_lookback": 99,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_esmanetloss_final.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_flowanalysis",
+      "name": "bi_output_dealing_flowanalysis",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_flowanalysis.json",
+      "column_lineage_row_count": 58,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "525675434480547",
+          "event_count_lookback": 1122,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_flowanalysis.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_gs_recon_eod",
+      "name": "bi_output_dealing_gs_recon_eod",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_gs_recon_eod.json",
+      "column_lineage_row_count": 43,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "130370228044191",
+          "event_count_lookback": 141,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_gs_recon_eod.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_gs_recon_trades",
+      "name": "bi_output_dealing_gs_recon_trades",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_gs_recon_trades.json",
+      "column_lineage_row_count": 47,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "130370228044191",
+          "event_count_lookback": 141,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_gs_recon_trades.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_ib_recon_eod",
+      "name": "bi_output_dealing_ib_recon_eod",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_ib_recon_eod.json",
+      "column_lineage_row_count": 40,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1088343917751476",
+          "event_count_lookback": 96,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_ib_recon_eod.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_ib_recon_trades",
+      "name": "bi_output_dealing_ib_recon_trades",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_ib_recon_trades.json",
+      "column_lineage_row_count": 49,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1088343917751476",
+          "event_count_lookback": 8,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_ib_recon_trades.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_ig_recon_eod",
+      "name": "bi_output_dealing_ig_recon_eod",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_ig_recon_eod.json",
+      "column_lineage_row_count": 48,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "195291034938394",
+          "event_count_lookback": 125,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_ig_recon_eod.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_ig_recon_trades",
+      "name": "bi_output_dealing_ig_recon_trades",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_ig_recon_trades.json",
+      "column_lineage_row_count": 67,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "195291034938394",
+          "event_count_lookback": 125,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_ig_recon_trades.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_jp_recon_eod",
+      "name": "bi_output_dealing_jp_recon_eod",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_jp_recon_eod.json",
+      "column_lineage_row_count": 38,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "31974637527720",
+          "event_count_lookback": 75,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_jp_recon_eod.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_jp_recon_trades",
+      "name": "bi_output_dealing_jp_recon_trades",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_jp_recon_trades.json",
+      "column_lineage_row_count": 98,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "31974637527720",
+          "event_count_lookback": 125,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_jp_recon_trades.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_lp_fees_saxo",
+      "name": "bi_output_dealing_lp_fees_saxo",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_lp_fees_saxo.json",
+      "column_lineage_row_count": 59,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "85559052527245",
+          "event_count_lookback": 1274,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_lp_fees_saxo.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_lp_fees_saxo_real_by_exchange",
+      "name": "bi_output_dealing_lp_fees_saxo_real_by_exchange",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_lp_fees_saxo_real_by_exchange.json",
+      "column_lineage_row_count": 21,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "85559052527245",
+          "event_count_lookback": 364,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_lp_fees_saxo_real_by_exchange.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_lp_fees_saxo_stamp_duty",
+      "name": "bi_output_dealing_lp_fees_saxo_stamp_duty",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_lp_fees_saxo_stamp_duty.json",
+      "column_lineage_row_count": 6,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "85559052527245",
+          "event_count_lookback": 182,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_lp_fees_saxo_stamp_duty.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_lp_fees_virtu_real_by_exchange",
+      "name": "bi_output_dealing_lp_fees_virtu_real_by_exchange",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_lp_fees_virtu_real_by_exchange.json",
+      "column_lineage_row_count": 34,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "85559052527245",
+          "event_count_lookback": 546,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_lp_fees_virtu_real_by_exchange.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_lp_fees_virtu_stamp_duty",
+      "name": "bi_output_dealing_lp_fees_virtu_stamp_duty",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_lp_fees_virtu_stamp_duty.json",
+      "column_lineage_row_count": 18,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "85559052527245",
+          "event_count_lookback": 603,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_lp_fees_virtu_stamp_duty.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_lukka_internal_aggregated",
+      "name": "bi_output_dealing_lukka_internal_aggregated",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_lukka_internal_aggregated.json",
+      "column_lineage_row_count": 128,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1120995915349000",
+          "event_count_lookback": 1303,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_lukka_internal_aggregated.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_manipulation_report_real_stocks",
+      "name": "bi_output_dealing_manipulation_report_real_stocks",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_manipulation_report_real_stocks.json",
+      "column_lineage_row_count": 37,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "890035936646942",
+          "event_count_lookback": 273,
+          "role": "primary",
+          "notebooks": [
+            {
+              "task": "SP_ManipulationReport_RealStock",
+              "path": "/Workspace/Users/sarahbe@etoro.com/SP_ManipulationReport_RealStocks/SP_ManipulationReport_RealStocks 2026 01 21",
+              "language": "PYTHON",
+              "fetched": true
+            }
+          ],
+          "fetched": true
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_manipulation_report_real_stocks.json",
+      "source_code": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\bi_output_dealing_manipulation_report_real_stocks.py",
+      "status": "OK"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_manipulation_report_real_stocks_cid",
+      "name": "bi_output_dealing_manipulation_report_real_stocks_cid",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_manipulation_report_real_stocks_cid.json",
+      "column_lineage_row_count": 27,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "890035936646942",
+          "event_count_lookback": 13,
+          "role": "primary",
+          "notebooks": [
+            {
+              "task": "SP_ManipulationReport_RealStock",
+              "path": "/Workspace/Users/sarahbe@etoro.com/SP_ManipulationReport_RealStocks/SP_ManipulationReport_RealStocks 2026 01 21",
+              "language": "PYTHON",
+              "fetched": true
+            }
+          ],
+          "fetched": true
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_manipulation_report_real_stocks_cid.json",
+      "source_code": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\bi_output_dealing_manipulation_report_real_stocks_cid.py",
+      "status": "OK"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_marex_recon_eod",
+      "name": "bi_output_dealing_marex_recon_eod",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_marex_recon_eod.json",
+      "column_lineage_row_count": 158,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "586693656542297",
+          "event_count_lookback": 180,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "40133143330575",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_marex_recon_eod.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_marex_recon_eod_futures",
+      "name": "bi_output_dealing_marex_recon_eod_futures",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_marex_recon_eod_futures.json",
+      "column_lineage_row_count": 126,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "586693656542297",
+          "event_count_lookback": 144,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "40133143330575",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_marex_recon_eod_futures.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_marex_recon_trades",
+      "name": "bi_output_dealing_marex_recon_trades",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_marex_recon_trades.json",
+      "column_lineage_row_count": 143,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "586693656542297",
+          "event_count_lookback": 144,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "40133143330575",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_marex_recon_trades.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_marex_recon_trades_futures",
+      "name": "bi_output_dealing_marex_recon_trades_futures",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_marex_recon_trades_futures.json",
+      "column_lineage_row_count": 179,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "586693656542297",
+          "event_count_lookback": 150,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "40133143330575",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_marex_recon_trades_futures.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_maxnop_report",
+      "name": "bi_output_dealing_maxnop_report",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_maxnop_report.json",
+      "column_lineage_row_count": 8,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "541548373598410",
+          "event_count_lookback": 364,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_maxnop_report.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_mm_topofbook",
+      "name": "bi_output_dealing_mm_topofbook",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_mm_topofbook.json",
+      "column_lineage_row_count": 96,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "869276191161776",
+          "event_count_lookback": 631,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_mm_topofbook.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_negativebalances",
+      "name": "bi_output_dealing_negativebalances",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_negativebalances.json",
+      "column_lineage_row_count": 4,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "919983786356022",
+          "event_count_lookback": 91,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_negativebalances.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_nhd_dashboard",
+      "name": "bi_output_dealing_nhd_dashboard",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_nhd_dashboard.json",
+      "column_lineage_row_count": 96,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "960051081323166",
+          "event_count_lookback": 1156,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "950337154720822",
+          "event_count_lookback": 1110,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1003481349953041",
+          "event_count_lookback": 1081,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1028192576722845",
+          "event_count_lookback": 1080,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "1001761468586193",
+          "event_count_lookback": 1070,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_nhd_dashboard.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_nixar_beta_dailybetaprod_v",
+      "name": "bi_output_dealing_nixar_beta_dailybetaprod_v",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_nixar_beta_dailybetaprod_v.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\bi_output_dealing_nixar_beta_dailybetaprod_v.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_nixar_beta_dailybetatarget_v",
+      "name": "bi_output_dealing_nixar_beta_dailybetatarget_v",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_nixar_beta_dailybetatarget_v.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\bi_output_dealing_nixar_beta_dailybetatarget_v.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_nixar_beta_earningscalendar",
+      "name": "bi_output_dealing_nixar_beta_earningscalendar",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_nixar_beta_earningscalendar.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "507885409047840",
+          "event_count_lookback": 3,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_nixar_beta_earningscalendar.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_nixar_delta_diffusionanalysis_v",
+      "name": "bi_output_dealing_nixar_delta_diffusionanalysis_v",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_nixar_delta_diffusionanalysis_v.json",
+      "column_lineage_row_count": 14,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\bi_output_dealing_nixar_delta_diffusionanalysis_v.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_nop_report",
+      "name": "bi_output_dealing_nop_report",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_nop_report.json",
+      "column_lineage_row_count": 181,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "729868208506264",
+          "event_count_lookback": 6192,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_nop_report.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_pi_tradinglimitations_clicksize",
+      "name": "bi_output_dealing_pi_tradinglimitations_clicksize",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_pi_tradinglimitations_clicksize.json",
+      "column_lineage_row_count": 27,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "346494508027063",
+          "event_count_lookback": 728,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_pi_tradinglimitations_clicksize.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_premier_clients_2026_positions_report",
+      "name": "bi_output_dealing_premier_clients_2026_positions_report",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_premier_clients_2026_positions_report.json",
+      "column_lineage_row_count": 110,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "738479020331210",
+          "event_count_lookback": 2144,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "3613685500402297",
+          "event_count_lookback": 1043,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "227497734484650",
+          "event_count_lookback": 24,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "1473927744120150",
+          "event_count_lookback": 10,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "909263548530787",
+          "event_count_lookback": 9,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_premier_clients_2026_positions_report.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_premier_clients_report",
+      "name": "bi_output_dealing_premier_clients_report",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_premier_clients_report.json",
+      "column_lineage_row_count": 100,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "276911169105228",
+          "event_count_lookback": 1603,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_premier_clients_report.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_premier_clinet_info",
+      "name": "bi_output_dealing_premier_clinet_info",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_premier_clinet_info.json",
+      "column_lineage_row_count": 55,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "195242211459611",
+          "event_count_lookback": 1092,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_premier_clinet_info.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_premier_customer",
+      "name": "bi_output_dealing_premier_customer",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_premier_customer.json",
+      "column_lineage_row_count": 2,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "57159445514501",
+          "event_count_lookback": 6,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_premier_customer.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_premier_customer_2026",
+      "name": "bi_output_dealing_premier_customer_2026",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_premier_customer_2026.json",
+      "column_lineage_row_count": 11,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1058822233960557",
+          "event_count_lookback": 137,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "738479020331210",
+          "event_count_lookback": 51,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "3046013432662029",
+          "event_count_lookback": 20,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "3613685500402297",
+          "event_count_lookback": 19,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "227497734484650",
+          "event_count_lookback": 6,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_premier_customer_2026.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_premier_customer_2026_info",
+      "name": "bi_output_dealing_premier_customer_2026_info",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_premier_customer_2026_info.json",
+      "column_lineage_row_count": 100,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "738479020331210",
+          "event_count_lookback": 2539,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "3613685500402297",
+          "event_count_lookback": 1800,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "1651184793673588",
+          "event_count_lookback": 60,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "977513096326758",
+          "event_count_lookback": 12,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "4303963729699742",
+          "event_count_lookback": 11,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_premier_customer_2026_info.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_pricespreus_open",
+      "name": "bi_output_dealing_pricespreus_open",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_pricespreus_open.json",
+      "column_lineage_row_count": 28,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "191497761331299",
+          "event_count_lookback": 1825,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_pricespreus_open.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_saxo_recon_eod",
+      "name": "bi_output_dealing_saxo_recon_eod",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_saxo_recon_eod.json",
+      "column_lineage_row_count": 220,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "674979673626499",
+          "event_count_lookback": 132,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "a562f215-b020-4168-9d0d-80e4b78f1d81",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "687ae84e-c75f-44f4-b9a4-fcc0b9aadd29",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "1597429388951543",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "46ea0a8a-ca16-4e19-9c08-8aa0c42021aa",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_saxo_recon_eod.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_saxo_recon_trades",
+      "name": "bi_output_dealing_saxo_recon_trades",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_saxo_recon_trades.json",
+      "column_lineage_row_count": 168,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "674979673626499",
+          "event_count_lookback": 160,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "882615bb-f45b-4ee3-bd6b-b165479c4593",
+          "event_count_lookback": 4,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "63d0279a-a4fe-4176-91da-e6a451ea49df",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "a562f215-b020-4168-9d0d-80e4b78f1d81",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_saxo_recon_trades.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_slippage",
+      "name": "bi_output_dealing_slippage",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_slippage.json",
+      "column_lineage_row_count": 858,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "1120154298329634",
+          "event_count_lookback": 2606,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "3883677945330819",
+          "event_count_lookback": 18,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_slippage.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_stocklending_balance_and_transactions_check",
+      "name": "bi_output_dealing_stocklending_balance_and_transactions_check",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_stocklending_balance_and_transactions_check.json",
+      "column_lineage_row_count": 41,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "498315245794462",
+          "event_count_lookback": 1072,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_stocklending_balance_and_transactions_check.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_stocklending_datalend_data",
+      "name": "bi_output_dealing_stocklending_datalend_data",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_stocklending_datalend_data.json",
+      "column_lineage_row_count": 19,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "498315245794462",
+          "event_count_lookback": 804,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_stocklending_datalend_data.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_stocklending_open_loans_recon",
+      "name": "bi_output_dealing_stocklending_open_loans_recon",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_stocklending_open_loans_recon.json",
+      "column_lineage_row_count": 58,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "498315245794462",
+          "event_count_lookback": 1340,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_stocklending_open_loans_recon.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_stocklending_optin_optout_bny_holdings",
+      "name": "bi_output_dealing_stocklending_optin_optout_bny_holdings",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_stocklending_optin_optout_bny_holdings.json",
+      "column_lineage_row_count": 109,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "498315245794462",
+          "event_count_lookback": 798,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_stocklending_optin_optout_bny_holdings.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_stocklending_optin_optout_nop",
+      "name": "bi_output_dealing_stocklending_optin_optout_nop",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_stocklending_optin_optout_nop.json",
+      "column_lineage_row_count": 60,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "498315245794462",
+          "event_count_lookback": 1608,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_stocklending_optin_optout_nop.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_stocklending_optin_optout_percid",
+      "name": "bi_output_dealing_stocklending_optin_optout_percid",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_stocklending_optin_optout_percid.json",
+      "column_lineage_row_count": 68,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "498315245794462",
+          "event_count_lookback": 1862,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_stocklending_optin_optout_percid.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_stocklending_optin_optout_percid_isus",
+      "name": "bi_output_dealing_stocklending_optin_optout_percid_isus",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_stocklending_optin_optout_percid_isus.json",
+      "column_lineage_row_count": 52,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "498315245794462",
+          "event_count_lookback": 1862,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_stocklending_optin_optout_percid_isus.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_stocklending_optin_report_per_cid",
+      "name": "bi_output_dealing_stocklending_optin_report_per_cid",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_stocklending_optin_report_per_cid.json",
+      "column_lineage_row_count": 28,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "498315245794462",
+          "event_count_lookback": 1608,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_stocklending_optin_report_per_cid.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_stocklending_revenue",
+      "name": "bi_output_dealing_stocklending_revenue",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_stocklending_revenue.json",
+      "column_lineage_row_count": 19,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "498315245794462",
+          "event_count_lookback": 1330,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_stocklending_revenue.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_stocklending_revenue_per_regulation",
+      "name": "bi_output_dealing_stocklending_revenue_per_regulation",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_stocklending_revenue_per_regulation.json",
+      "column_lineage_row_count": 19,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "498315245794462",
+          "event_count_lookback": 1330,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_stocklending_revenue_per_regulation.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_tables_bi_db_h_nonpi_highaum",
+      "name": "bi_output_dealing_tables_bi_db_h_nonpi_highaum",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_tables_bi_db_h_nonpi_highaum.json",
+      "column_lineage_row_count": 12,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "792028385571594",
+          "event_count_lookback": 21610,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_tables_bi_db_h_nonpi_highaum.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_tables_h_market_manipulation_hourly_report_v",
+      "name": "bi_output_dealing_tables_h_market_manipulation_hourly_report_v",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_tables_h_market_manipulation_hourly_report_v.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\bi_output_dealing_tables_h_market_manipulation_hourly_report_v.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_tables_h_pricelocks_hourly",
+      "name": "bi_output_dealing_tables_h_pricelocks_hourly",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_tables_h_pricelocks_hourly.json",
+      "column_lineage_row_count": 22,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "574133612426560",
+          "event_count_lookback": 17139,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_tables_h_pricelocks_hourly.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_tables_h_pricelocks_hourly_report_v",
+      "name": "bi_output_dealing_tables_h_pricelocks_hourly_report_v",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_tables_h_pricelocks_hourly_report_v.json",
+      "column_lineage_row_count": 8,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\bi_output_dealing_tables_h_pricelocks_hourly_report_v.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_ubs_saxo_recon_eodholdings",
+      "name": "bi_output_dealing_ubs_saxo_recon_eodholdings",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_ubs_saxo_recon_eodholdings.json",
+      "column_lineage_row_count": 70,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "166451544565030",
+          "event_count_lookback": 702,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_ubs_saxo_recon_eodholdings.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_vision_recon_eod",
+      "name": "bi_output_dealing_vision_recon_eod",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_vision_recon_eod.json",
+      "column_lineage_row_count": 31,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "286367739951792",
+          "event_count_lookback": 444,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_vision_recon_eod.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_vision_recon_trades",
+      "name": "bi_output_dealing_vision_recon_trades",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_vision_recon_trades.json",
+      "column_lineage_row_count": 37,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "286367739951792",
+          "event_count_lookback": 333,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_vision_recon_trades.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.bi_output_dealing_volatility_bucket",
+      "name": "bi_output_dealing_volatility_bucket",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\bi_output_dealing_volatility_bucket.json",
+      "column_lineage_row_count": 10,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "284833408776571",
+          "event_count_lookback": 14,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\bi_output_dealing_volatility_bucket.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_delta_diffusionanalysis",
+      "name": "gold_dealing_delta_diffusionanalysis",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_delta_diffusionanalysis.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "729784718724350",
+          "event_count_lookback": 2137,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\gold_dealing_delta_diffusionanalysis.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_delta_diffusionanalysis_adhoc_v",
+      "name": "gold_dealing_delta_diffusionanalysis_adhoc_v",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_delta_diffusionanalysis_adhoc_v.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\gold_dealing_delta_diffusionanalysis_adhoc_v.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_delta_diffusionanalysis_v",
+      "name": "gold_dealing_delta_diffusionanalysis_v",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_delta_diffusionanalysis_v.json",
+      "column_lineage_row_count": 73,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\gold_dealing_delta_diffusionanalysis_v.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx",
+      "name": "gold_dealing_delta_diffusionanalysisfx",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_delta_diffusionanalysisfx.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "729784718724350",
+          "event_count_lookback": 2137,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\gold_dealing_delta_diffusionanalysisfx.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx_v",
+      "name": "gold_dealing_delta_diffusionanalysisfx_v",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_delta_diffusionanalysisfx_v.json",
+      "column_lineage_row_count": 27,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\gold_dealing_delta_diffusionanalysisfx_v.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_delta_diffusionvolatility",
+      "name": "gold_dealing_delta_diffusionvolatility",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_delta_diffusionvolatility.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "527900172329274",
+          "event_count_lookback": 167,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\gold_dealing_delta_diffusionvolatility.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_delta_oms_models_v",
+      "name": "gold_dealing_delta_oms_models_v",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_delta_oms_models_v.json",
+      "column_lineage_row_count": 0,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\gold_dealing_delta_oms_models_v.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_libra_hscl",
+      "name": "gold_dealing_libra_hscl",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_libra_hscl.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "475617116052460",
+          "event_count_lookback": 91,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\gold_dealing_libra_hscl.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_libra_issettled",
+      "name": "gold_dealing_libra_issettled",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_libra_issettled.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "475617116052460",
+          "event_count_lookback": 23,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\gold_dealing_libra_issettled.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_libra_limitrate",
+      "name": "gold_dealing_libra_limitrate",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_libra_limitrate.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "475617116052460",
+          "event_count_lookback": 23,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\gold_dealing_libra_limitrate.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_libra_opcl",
+      "name": "gold_dealing_libra_opcl",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_libra_opcl.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "475617116052460",
+          "event_count_lookback": 68,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\gold_dealing_libra_opcl.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_libra_parentpositionid",
+      "name": "gold_dealing_libra_parentpositionid",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_libra_parentpositionid.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "475617116052460",
+          "event_count_lookback": 23,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\gold_dealing_libra_parentpositionid.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_libra_stoprate",
+      "name": "gold_dealing_libra_stoprate",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_libra_stoprate.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "475617116052460",
+          "event_count_lookback": 23,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\gold_dealing_libra_stoprate.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_libra_treeid",
+      "name": "gold_dealing_libra_treeid",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_libra_treeid.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "475617116052460",
+          "event_count_lookback": 23,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\gold_dealing_libra_treeid.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_libra_units",
+      "name": "gold_dealing_libra_units",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_libra_units.json",
+      "column_lineage_row_count": 0,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "475617116052460",
+          "event_count_lookback": 23,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\gold_dealing_libra_units.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_oms_delta_diffusionanalysis_v",
+      "name": "gold_dealing_oms_delta_diffusionanalysis_v",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_oms_delta_diffusionanalysis_v.json",
+      "column_lineage_row_count": 13,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\gold_dealing_oms_delta_diffusionanalysis_v.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_oms_internalmarket_imdynamicbookfutures_v",
+      "name": "gold_dealing_oms_internalmarket_imdynamicbookfutures_v",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_oms_internalmarket_imdynamicbookfutures_v.json",
+      "column_lineage_row_count": 20,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\gold_dealing_oms_internalmarket_imdynamicbookfutures_v.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_oms_internalmarket_multipliers",
+      "name": "gold_dealing_oms_internalmarket_multipliers",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_oms_internalmarket_multipliers.json",
+      "column_lineage_row_count": 3,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "940047629092362",
+          "event_count_lookback": 4,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "280567630183",
+          "event_count_lookback": 3,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\gold_dealing_oms_internalmarket_multipliers.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_oms_internalmarket_multipliershistory",
+      "name": "gold_dealing_oms_internalmarket_multipliershistory",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_oms_internalmarket_multipliershistory.json",
+      "column_lineage_row_count": 5,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "940047629092362",
+          "event_count_lookback": 3,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "280567630183",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\gold_dealing_oms_internalmarket_multipliershistory.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_oms_internalmarket_parameters",
+      "name": "gold_dealing_oms_internalmarket_parameters",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_oms_internalmarket_parameters.json",
+      "column_lineage_row_count": 5,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "280567630183",
+          "event_count_lookback": 13,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "844382279060709",
+          "event_count_lookback": 1,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\gold_dealing_oms_internalmarket_parameters.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.gold_dealing_oms_internalmarket_parametershistory",
+      "name": "gold_dealing_oms_internalmarket_parametershistory",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\gold_dealing_oms_internalmarket_parametershistory.json",
+      "column_lineage_row_count": 7,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "280567630183",
+          "event_count_lookback": 9,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\_writers\\gold_dealing_oms_internalmarket_parametershistory.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.bi_dealing.newhedgedash_email_csv",
+      "name": "newhedgedash_email_csv",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\newhedgedash_email_csv.json",
+      "column_lineage_row_count": 5,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\newhedgedash_email_csv.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.bi_dealing.v_hschangesummarylog_yesterday_email_csv",
+      "name": "v_hschangesummarylog_yesterday_email_csv",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_dealing\\_discovery\\column_lineage\\v_hschangesummarylog_yesterday_email_csv.json",
+      "column_lineage_row_count": 6,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_dealing\\_discovery\\source_code\\v_hschangesummarylog_yesterday_email_csv.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "ok": 15,
+    "no_lineage": 0,
+    "no_view_def": 0,
+    "errors": 0,
+    "wall_seconds": 2473.2
+  }
+}

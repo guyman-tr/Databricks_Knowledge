@@ -1,0 +1,67 @@
+{
+  "object_fqn": "main.bi_db.bronze_userapidb_customer_extendeduserfieldvalidation",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:14:00Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "GCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\Customer\\Tables\\Customer.ExtendedUserFieldValidation.md",
+      "upstream_quote": "Part of composite PK. Global Customer ID.",
+      "wiki_quote": "Part of composite PK. Global Customer ID (Tier 1 — inherited from UserApiDB.Customer.ExtendedUserFieldValidation).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\Customer\\Tables\\Customer.ExtendedUserFieldValidation.md",
+      "upstream_quote": "Part of composite PK. Country context for validation.",
+      "wiki_quote": "Part of composite PK. Country context for validation (Tier 1 — inherited from UserApiDB.Customer.ExtendedUserFieldValida",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FieldID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\Customer\\Tables\\Customer.ExtendedUserFieldValidation.md",
+      "upstream_quote": "Part of composite PK. Extended field identifier. Maps to Dictionary.ExtendedUserField.",
+      "wiki_quote": "Part of composite PK. Extended field identifier. Maps to Dictionary.ExtendedUserField (Tier 1 — inherited from UserApiDB",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsValid",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\Customer\\Tables\\Customer.ExtendedUserFieldValidation.md",
+      "upstream_quote": "Whether the field value passed validation. NULL=not yet validated, 1=valid, 0=invalid.",
+      "wiki_quote": "Whether the field value passed validation. NULL=not yet validated, 1=valid, 0=invalid (Tier 1 — inherited from UserApiDB",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 4,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 4 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

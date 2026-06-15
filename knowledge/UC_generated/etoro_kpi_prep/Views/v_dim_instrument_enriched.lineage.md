@@ -7,17 +7,17 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_dim_instrument_enriched.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_dim_instrument_enriched.json` (rows: 50, mismatches: 3) |
 | **Primary upstream** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 
 | Upstream UC Object | Role | Upstream Wiki |
 |--------------------|------|---------------|
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument` | Primary (FROM) | ✓ `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Instrument.md` |
-| `main.trading.bronze_etoro_trade_instrumentmetadata_daily` | JOIN / referenced | ✓ `knowledge\ProdSchemas\DB_Schema\etoro\Wiki\Trade\Views\Trade.InstrumentMetaData_Daily.md` |
-| `main.trading.bronze_etoro_trade_instrumentgroups` | JOIN / referenced | ✓ `knowledge\ProdSchemas\DB_Schema\etoro\Wiki\Trade\Tables\Trade.InstrumentGroups.md` |
-| `main.trading.bronze_etoro_trade_instrumentmetadata_daily` | JOIN / referenced | ✓ `knowledge\ProdSchemas\DB_Schema\etoro\Wiki\Trade\Views\Trade.InstrumentMetaData_Daily.md` |
-| `main.trading.bronze_etoro_trade_providertoinstrument` | JOIN / referenced | ✓ `knowledge\ProdSchemas\DB_Schema\etoro\Wiki\Trade\Tables\Trade.ProviderToInstrument.md` |
+| `main.trading.bronze_etoro_trade_instrumentmetadata_daily` | JOIN / referenced | ✓ `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Views/Trade.InstrumentMetaData_Daily.md` |
+| `main.trading.bronze_etoro_trade_instrumentgroups` | JOIN / referenced | ✓ `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.InstrumentGroups.md` |
+| `main.trading.bronze_etoro_trade_instrumentmetadata_daily` | JOIN / referenced | ✓ `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Views/Trade.InstrumentMetaData_Daily.md` |
+| `main.trading.bronze_etoro_trade_providertoinstrument` | JOIN / referenced | ✓ `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.ProviderToInstrument.md` |
 
 ## Lineage Chain
 

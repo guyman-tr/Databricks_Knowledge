@@ -1,0 +1,1209 @@
+{
+  "schema": "etoro_kpi",
+  "catalog": "main",
+  "framework": "uc-pipeline-doc",
+  "generated_at": "2026-05-19T15:20:25Z",
+  "per_object_upstreams": {
+    "cfd_statusinfo_v": [
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriateness_negative_market"
+    ],
+    "cidfirstdates_v": [
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "main.general.bronze_etoro_dictionary_regulation"
+    ],
+    "crm_case_v": [
+      "main.crm.gold_crm_case_tiny",
+      "main.crm.gold_crm_web_chat_sessions",
+      "main.crm.gold_crm_bot_eligible_chats",
+      "main.crm.gold_crm_case_deescalation",
+      "main.bi_output.bi_output_vg_case_event",
+      "main.crm.silver_crm_case"
+    ],
+    "crm_csat_survey_per_case_v": [
+      "main.crm.silver_crm_csat_survey_entry__c",
+      "main.crm.silver_crm_medallia_xm__medallia_feedback__c"
+    ],
+    "crm_quality_assessment_per_case_v": [
+      "main.crm.silver_crm_surveytaker__c"
+    ],
+    "crm_user_v": [
+      "main.crm.silver_crm_user"
+    ],
+    "customer_exclude_list": [
+      "main.general.bronze_etoro_customer_customer_masked"
+    ],
+    "customer_segments_mail_v": [
+      "main.bi_output.bi_output_marketing_sfmc_sfmc_report",
+      "main.mixpanel.login_events"
+    ],
+    "customer_segments_v": [
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "main.bi_dealing.bi_output_dealing_cidage_data",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_lifestagedefinition",
+      "main.etoro_kpi.ddr_aum_v",
+      "main.etoro_kpi_stg.bi_output_vg_aum_slim"
+    ],
+    "customer_snapshot_v": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "main.bi_output.bi_output_vg_date",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+      "main.general.bronze_etoro_dictionary_mifidcategorization"
+    ],
+    "ddr_aum_v": [
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum",
+      "main.bi_output.bi_output_vg_date"
+    ],
+    "ddr_customer_current_flags": [
+      "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd"
+    ],
+    "ddr_customer_dailystatus": [
+      "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd"
+    ],
+    "ddr_customer_snapshot_scd_v": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+      "main.general.bronze_etoro_dictionary_mifidcategorization"
+    ],
+    "ddr_mimo_v": [
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "main.bi_output.bi_output_vg_date",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+    ],
+    "ddr_pnl_v": [
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl",
+      "main.bi_output.bi_output_vg_date",
+      "main.bi_output.bi_ouput_v_dim_instrumenttype"
+    ],
+    "ddr_revenue_v": [
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+      "main.bi_output.bi_output_vg_date",
+      "main.bi_output.bi_ouput_v_dim_instrumenttype",
+      "main.bi_output.bi_output_customer_ddr_revenue_metrics",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+    ],
+    "ddr_trading_volumes_and_amounts_v": [
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_trading_volumes_and_amounts",
+      "main.bi_output.bi_output_vg_date",
+      "main.bi_output.bi_ouput_v_dim_instrumenttype"
+    ],
+    "de_output_ftd_click": [
+      "main.mixpanel.silver",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+    ],
+    "ftd_click_v": [
+      "main.etoro_kpi.de_output_ftd_click"
+    ],
+    "ftd_click_v_testing_dup_cancle": [
+      "main.etoro_kpi.de_output_ftd_click"
+    ],
+    "ftd_funnel_kyc": [
+      "main.compliance.bronze_userapidb_kyc_customeranswers"
+    ],
+    "ftd_funnel_v": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.general.bronze_etoro_customer_customer_masked",
+      "main.general.bronze_etoro_dictionary_platform",
+      "main.general.bronze_etoro_dictionary_country",
+      "main.bi_dealing.bi_output_dealing_cidage_data",
+      "main.general.bronze_etoro_dictionary_playerstatus",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis",
+      "main.etoro_kpi.ftd_funnel_kyc",
+      "main.etoro_kpi.customer_exclude_list",
+      "main.etoro_kpi.ftd_click_v",
+      "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions"
+    ],
+    "ftd_funnel_v_dev": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.general.bronze_etoro_customer_customer_masked",
+      "main.general.bronze_etoro_dictionary_platform",
+      "main.general.bronze_etoro_dictionary_country",
+      "main.bi_dealing.bi_output_dealing_cidage_data",
+      "main.general.bronze_etoro_dictionary_playerstatus",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis",
+      "main.etoro_kpi.ftd_funnel_kyc",
+      "main.etoro_kpi.customer_exclude_list",
+      "main.etoro_kpi.ftd_click_v"
+    ],
+    "kyc_for_compliance_v": [
+      "main.compliance.bronze_userapidb_kyc_customeranswers",
+      "main.compliance.bronze_userapidb_history_customeranswers",
+      "main.compliance.bronze_userapidb_kyc_questions",
+      "main.compliance.bronze_userapidb_kyc_answers",
+      "main.general.bronze_etoro_customer_customer_masked"
+    ],
+    "positions_for_compliance_v": [
+      "main.dwh.dim_position",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+    ],
+    "v_ddr_non_revenue_actions": [
+      "main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd"
+    ],
+    "v_raf": [
+      "main.experience.bronze_rafcompensations_customer_raftrackingprocessed",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.general.bronze_etoro_dictionary_playerlevel",
+      "main.general.bronze_etoro_dictionary_gurustatus",
+      "main.general.bronze_etoro_dictionary_country",
+      "main.general.bronze_etoro_dictionary_regulation",
+      "main.bi_db.bronze_etoro_customer_customermoney",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "main.etoro_kpi.ddr_aum_v"
+    ],
+    "v_raf_config": [
+      "main.experience.bronze_rafcompensations_config_viewconfig",
+      "main.general.bronze_etoro_dictionary_regulation"
+    ],
+    "v_spaceship_aum": [
+      "main.spaceship.bronze_spaceship_metabase_user_beta",
+      "main.spaceship.bronze_spaceship_metabase_super_user_balances",
+      "main.spaceship.spaceship_metabase_voyager_user_balances",
+      "main.spaceship.bronze_spaceship_metabase_nova_user_balances",
+      "main.bi_db.bronze_sub_accounts_accounts",
+      "main.spaceship.bronze_spaceship_metabase_contact",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.etoro_kpi_prep.v_spaceship_aum"
+    ],
+    "v_spaceship_fees": [
+      "main.spaceship.bronze_spaceship_metabase_user_beta",
+      "main.spaceship.bronze_spaceship_metabase_super_transactions",
+      "main.spaceship.bronze_spaceship_metabase_voyager_account_fees",
+      "main.spaceship.bronze_spaceship_metabase_voyager_management_fees",
+      "main.spaceship.spaceship_metabase_voyager_product_balances",
+      "main.spaceship.bronze_spaceship_metabase_nova_fees",
+      "main.spaceship.bronze_spaceship_metabase_nova_transactions",
+      "main.bi_db.bronze_sub_accounts_accounts",
+      "main.spaceship.bronze_spaceship_metabase_contact",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.etoro_kpi_prep.v_spaceship_fees"
+    ],
+    "v_spaceship_mimo": [
+      "main.etoro_kpi_prep.v_spaceship_mimo",
+      "main.spaceship.bronze_spaceship_analytics_fct_money_transactions",
+      "main.spaceship.bronze_spaceship_metabase_nova_transactions",
+      "main.spaceship.bronze_spaceship_metabase_super_transactions",
+      "main.spaceship.spaceship_metabase_voyager_user_balances",
+      "main.spaceship.bronze_spaceship_metabase_user_beta",
+      "main.bi_db.bronze_sub_accounts_accounts",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "main.spaceship.bronze_spaceship_metabase_contact"
+    ],
+    "vg_crm_case": [
+      "main.crm.gold_crm_case_tiny_for_genie",
+      "main.crm.gold_crm_web_chat_sessions",
+      "main.crm.gold_crm_bot_eligible_chats",
+      "main.crm.gold_crm_case_deescalation",
+      "main.bi_output.bi_output_vg_case_event",
+      "main.crm.silver_crm_case"
+    ],
+    "vg_customer_customer_first_dates": [
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions",
+      "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct"
+    ],
+    "vg_customer_daily_snapshot": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager"
+    ],
+    "vg_customer_monthly_snapshot": [
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailycluster",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager"
+    ],
+    "vg_ddr_revenue": [
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dim_revenue_metrics",
+      "main.bi_output.bi_ouput_v_dim_instrumenttype"
+    ],
+    "vg_dealing_clicks_openclose_breakdown": [
+      "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown",
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+    ],
+    "vg_dealing_dealingdashboard_cid": [
+      "main.dealing.bi_output_dealing_dealingdashboard_cid"
+    ],
+    "winback_daily_segments": [
+      "main.etoro_kpi.customer_segments_v"
+    ]
+  },
+  "upstreams": [
+    {
+      "full_name": "main.bi_db.bronze_etoro_customer_customermoney",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Customer/Tables/Customer.CustomerMoney.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_db.bronze_etoro_customer_customermoney.md"
+    },
+    {
+      "full_name": "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki/Dictionary/Tables/Dictionary.AccountTypes.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_db.bronze_moneybusdb_dictionary_accounttypes.md"
+    },
+    {
+      "full_name": "main.bi_db.bronze_sub_accounts_accounts",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_db/<Tables|Views>/bronze_sub_accounts_accounts.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_db.bronze_sub_accounts_accounts.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailycluster",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_cid_dailycluster",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_CID_DailyCluster.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailycluster.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_lifestagedefinition",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_cid_lifestagedefinition",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_CID_LifeStageDefinition.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_lifestagedefinition.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_cidfirstdates_masked",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_CIDFirstDates.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_ddr_customer_daily_status",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DDR_Customer_Daily_Status.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_ddr_customer_periodic_status",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DDR_Customer_Periodic_Status.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_ddr_fact_aum",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DDR_Fact_AUM.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_ddr_fact_mimo_allplatforms",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DDR_Fact_MIMO_AllPlatforms.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_ddr_fact_pnl",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DDR_Fact_PnL.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_ddr_fact_revenue_generating_actions",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DDR_Fact_Revenue_Generating_Actions.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_trading_volumes_and_amounts",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_ddr_fact_trading_volumes_and_amounts",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DDR_Fact_Trading_Volumes_And_Amounts.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_trading_volumes_and_amounts.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_first5actions",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_First5Actions.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_operations_onboarding_flow_userkpis",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_Operations_Onboarding_Flow_UserKPIs.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriateness_negative_market",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_scored_appropriateness_negative_market",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_Scored_Appropriateness_Negative_Market.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriateness_negative_market.md"
+    },
+    {
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dim_revenue_metrics",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "dim_revenue_metrics",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\Dim_Revenue_Metrics.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dim_revenue_metrics.md"
+    },
+    {
+      "full_name": "main.bi_dealing.bi_output_dealing_cidage_data",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_dealing/<Tables|Views>/bi_output_dealing_cidage_data.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_dealing.bi_output_dealing_cidage_data.md"
+    },
+    {
+      "full_name": "main.bi_output.bi_ouput_v_dim_instrumenttype",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge\\UC_generated\\bi_output\\Views\\bi_ouput_v_dim_instrumenttype.md",
+      "wiki_exists": true,
+      "blocked_on_upstream": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_output.bi_ouput_v_dim_instrumenttype.md"
+    },
+    {
+      "full_name": "main.bi_output.bi_output_customer_ddr_revenue_metrics",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_customer_ddr_revenue_metrics.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_output.bi_output_customer_ddr_revenue_metrics.md"
+    },
+    {
+      "full_name": "main.bi_output.bi_output_marketing_sfmc_sfmc_report",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_marketing_sfmc_sfmc_report.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_output.bi_output_marketing_sfmc_sfmc_report.md"
+    },
+    {
+      "full_name": "main.bi_output.bi_output_vg_case_event",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge\\UC_generated\\bi_output\\Views\\bi_output_vg_case_event.md",
+      "wiki_exists": true,
+      "blocked_on_upstream": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_output.bi_output_vg_case_event.md"
+    },
+    {
+      "full_name": "main.bi_output.bi_output_vg_date",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge\\UC_generated\\bi_output\\Views\\bi_output_vg_date.md",
+      "wiki_exists": true,
+      "blocked_on_upstream": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.bi_output.bi_output_vg_date.md"
+    },
+    {
+      "full_name": "main.compliance.bronze_userapidb_history_customeranswers",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/UserApiDB/Wiki/History/Tables/History.CustomerAnswers.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.compliance.bronze_userapidb_history_customeranswers.md"
+    },
+    {
+      "full_name": "main.compliance.bronze_userapidb_kyc_answers",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/UserApiDB/Wiki/KYC/Tables/KYC.Answers.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.compliance.bronze_userapidb_kyc_answers.md"
+    },
+    {
+      "full_name": "main.compliance.bronze_userapidb_kyc_customeranswers",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/UserApiDB/Wiki/KYC/Tables/KYC.CustomerAnswers.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.compliance.bronze_userapidb_kyc_customeranswers.md"
+    },
+    {
+      "full_name": "main.compliance.bronze_userapidb_kyc_questions",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/UserApiDB/Wiki/KYC/Tables/KYC.Questions.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.compliance.bronze_userapidb_kyc_questions.md"
+    },
+    {
+      "full_name": "main.crm.gold_crm_bot_eligible_chats",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.crm.gold_crm_bot_eligible_chats.md"
+    },
+    {
+      "full_name": "main.crm.gold_crm_case_deescalation",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.crm.gold_crm_case_deescalation.md"
+    },
+    {
+      "full_name": "main.crm.gold_crm_case_tiny",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.crm.gold_crm_case_tiny.md"
+    },
+    {
+      "full_name": "main.crm.gold_crm_case_tiny_for_genie",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.crm.gold_crm_case_tiny_for_genie.md"
+    },
+    {
+      "full_name": "main.crm.gold_crm_web_chat_sessions",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.crm.gold_crm_web_chat_sessions.md"
+    },
+    {
+      "full_name": "main.crm.silver_crm_case",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.crm.silver_crm_case.md"
+    },
+    {
+      "full_name": "main.crm.silver_crm_csat_survey_entry__c",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.crm.silver_crm_csat_survey_entry__c.md"
+    },
+    {
+      "full_name": "main.crm.silver_crm_medallia_xm__medallia_feedback__c",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.crm.silver_crm_medallia_xm__medallia_feedback__c.md"
+    },
+    {
+      "full_name": "main.crm.silver_crm_surveytaker__c",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.crm.silver_crm_surveytaker__c.md"
+    },
+    {
+      "full_name": "main.crm.silver_crm_user",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.crm.silver_crm_user.md"
+    },
+    {
+      "full_name": "main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/de_output/<Tables|Views>/de_output_etoro_kpi_fact_customeraction_w_metrics.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics.md"
+    },
+    {
+      "full_name": "main.dealing.bi_output_dealing_dealingdashboard_cid",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bi_output_dealing_dealingdashboard_cid.md"
+    },
+    {
+      "full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "Dealing_dbo",
+      "synapse_table_snake": "dealing_clicks_openclose_breakdown",
+      "wiki_path": "knowledge\\synapse\\Wiki\\Dealing_dbo\\Tables\\Dealing_Clicks_OpenClose_Breakdown.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown.md"
+    },
+    {
+      "full_name": "main.dwh.dim_position",
+      "rule_matched": 5,
+      "rule_name": "uc_native_via_map",
+      "uc_target": "main.dwh.dim_position",
+      "wiki_path": null,
+      "wiki_exists": false,
+      "notes": "matched in _uc_object_map.json but no wiki path is encoded there",
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.dwh.dim_position.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_accountstatus",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_AccountStatus.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_accounttype",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_AccountType.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_closepositionreason",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_ClosePositionReason.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_country",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Country.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_customer_masked",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Customer.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_date",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Date.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_gurustatus",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_GuruStatus.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_instrument",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Instrument.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_language",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Language.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_manager",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Manager.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_mifidcategorization",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_MifidCategorization.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_playerlevel",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_PlayerLevel.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_playerstatus",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_PlayerStatus.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_playerstatusreasons",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_PlayerStatusReasons.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_playerstatussubreasons",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_PlayerStatusSubReasons.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_range",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Range.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_regulation",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Regulation.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "dim_verificationlevel",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_VerificationLevel.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "fact_currencypricewithsplit",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_CurrencyPriceWithSplit.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "fact_customeraction",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_CustomerAction.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "v_fact_snapshotcustomer_fromdateid_masked",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Views\\V_Fact_SnapshotCustomer_FromDateID.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked.md"
+    },
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "DWH_dbo",
+      "synapse_table_snake": "v_liabilities",
+      "wiki_path": "knowledge\\synapse\\Wiki\\DWH_dbo\\Views\\V_Liabilities.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities.md"
+    },
+    {
+      "full_name": "main.etoro_kpi.customer_exclude_list",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/etoro_kpi/<Tables|Views>/customer_exclude_list.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi.customer_exclude_list.md"
+    },
+    {
+      "full_name": "main.etoro_kpi.customer_segments_v",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/etoro_kpi/<Tables|Views>/customer_segments_v.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi.customer_segments_v.md"
+    },
+    {
+      "full_name": "main.etoro_kpi.ddr_aum_v",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/etoro_kpi/<Tables|Views>/ddr_aum_v.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi.ddr_aum_v.md"
+    },
+    {
+      "full_name": "main.etoro_kpi.de_output_ftd_click",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/etoro_kpi/<Tables|Views>/de_output_ftd_click.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi.de_output_ftd_click.md"
+    },
+    {
+      "full_name": "main.etoro_kpi.ftd_click_v",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/etoro_kpi/<Tables|Views>/ftd_click_v.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi.ftd_click_v.md"
+    },
+    {
+      "full_name": "main.etoro_kpi.ftd_funnel_kyc",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/etoro_kpi/<Tables|Views>/ftd_funnel_kyc.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi.ftd_funnel_kyc.md"
+    },
+    {
+      "full_name": "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/gold_de_user_dim_ddr_customer_dailystatus_scd.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd.md"
+    },
+    {
+      "full_name": "main.etoro_kpi_prep.v_spaceship_aum",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_spaceship_aum.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_spaceship_aum.md"
+    },
+    {
+      "full_name": "main.etoro_kpi_prep.v_spaceship_fees",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_spaceship_fees.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_spaceship_fees.md"
+    },
+    {
+      "full_name": "main.etoro_kpi_prep.v_spaceship_mimo",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_spaceship_mimo.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_spaceship_mimo.md"
+    },
+    {
+      "full_name": "main.etoro_kpi_stg.bi_output_vg_aum_slim",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_stg.bi_output_vg_aum_slim.md"
+    },
+    {
+      "full_name": "main.experience.bronze_rafcompensations_config_viewconfig",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "rafcompensations",
+        "schema_name": "Config",
+        "table_name": "ViewConfig",
+        "uc_table": "experience.bronze_rafcompensations_config_viewconfig"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.experience.bronze_rafcompensations_config_viewconfig.md"
+    },
+    {
+      "full_name": "main.experience.bronze_rafcompensations_customer_raftrackingprocessed",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": {
+        "database_name": "rafcompensations",
+        "schema_name": "Customer",
+        "table_name": "RafTrackingProcessed",
+        "uc_table": "experience.bronze_rafcompensations_customer_raftrackingprocessed"
+      },
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.experience.bronze_rafcompensations_customer_raftrackingprocessed.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_customer_customer_masked",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Customer/Views/Customer.Customer.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.general.bronze_etoro_customer_customer_masked.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_dictionary_country",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.Country.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.general.bronze_etoro_dictionary_country.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_dictionary_gurustatus",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.GuruStatus.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.general.bronze_etoro_dictionary_gurustatus.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_dictionary_mifidcategorization",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.MifidCategorization.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.general.bronze_etoro_dictionary_mifidcategorization.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_dictionary_platform",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.Platform.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.general.bronze_etoro_dictionary_platform.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_dictionary_playerlevel",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PlayerLevel.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.general.bronze_etoro_dictionary_playerlevel.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_dictionary_playerstatus",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PlayerStatus.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.general.bronze_etoro_dictionary_playerstatus.md"
+    },
+    {
+      "full_name": "main.general.bronze_etoro_dictionary_regulation",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.Regulation.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.general.bronze_etoro_dictionary_regulation.md"
+    },
+    {
+      "full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "synapse_schema": "BI_DB_dbo",
+      "synapse_table_snake": "bi_db_clubchangelogproduct",
+      "wiki_path": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_ClubChangeLogProduct.md",
+      "wiki_exists": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct.md"
+    },
+    {
+      "full_name": "main.mixpanel.login_events",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.mixpanel.login_events.md"
+    },
+    {
+      "full_name": "main.mixpanel.silver",
+      "rule_matched": 6,
+      "rule_name": "no_wiki",
+      "reason": "no rule matched",
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.mixpanel.silver.md"
+    },
+    {
+      "full_name": "main.spaceship.bronze_spaceship_analytics_fct_money_transactions",
+      "rule_matched": 3,
+      "rule_name": "uc_domain",
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.spaceship.bronze_spaceship_analytics_fct_money_transactions.md"
+    },
+    {
+      "full_name": "main.spaceship.bronze_spaceship_metabase_contact",
+      "rule_matched": 3,
+      "rule_name": "uc_domain",
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.spaceship.bronze_spaceship_metabase_contact.md"
+    },
+    {
+      "full_name": "main.spaceship.bronze_spaceship_metabase_nova_fees",
+      "rule_matched": 3,
+      "rule_name": "uc_domain",
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.spaceship.bronze_spaceship_metabase_nova_fees.md"
+    },
+    {
+      "full_name": "main.spaceship.bronze_spaceship_metabase_nova_transactions",
+      "rule_matched": 3,
+      "rule_name": "uc_domain",
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.spaceship.bronze_spaceship_metabase_nova_transactions.md"
+    },
+    {
+      "full_name": "main.spaceship.bronze_spaceship_metabase_nova_user_balances",
+      "rule_matched": 3,
+      "rule_name": "uc_domain",
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.spaceship.bronze_spaceship_metabase_nova_user_balances.md"
+    },
+    {
+      "full_name": "main.spaceship.bronze_spaceship_metabase_super_transactions",
+      "rule_matched": 3,
+      "rule_name": "uc_domain",
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.spaceship.bronze_spaceship_metabase_super_transactions.md"
+    },
+    {
+      "full_name": "main.spaceship.bronze_spaceship_metabase_super_user_balances",
+      "rule_matched": 3,
+      "rule_name": "uc_domain",
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.spaceship.bronze_spaceship_metabase_super_user_balances.md"
+    },
+    {
+      "full_name": "main.spaceship.bronze_spaceship_metabase_user_beta",
+      "rule_matched": 3,
+      "rule_name": "uc_domain",
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.spaceship.bronze_spaceship_metabase_user_beta.md"
+    },
+    {
+      "full_name": "main.spaceship.bronze_spaceship_metabase_voyager_account_fees",
+      "rule_matched": 3,
+      "rule_name": "uc_domain",
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.spaceship.bronze_spaceship_metabase_voyager_account_fees.md"
+    },
+    {
+      "full_name": "main.spaceship.bronze_spaceship_metabase_voyager_management_fees",
+      "rule_matched": 3,
+      "rule_name": "uc_domain",
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.spaceship.bronze_spaceship_metabase_voyager_management_fees.md"
+    },
+    {
+      "full_name": "main.spaceship.spaceship_metabase_voyager_product_balances",
+      "rule_matched": 3,
+      "rule_name": "uc_domain",
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.spaceship.spaceship_metabase_voyager_product_balances.md"
+    },
+    {
+      "full_name": "main.spaceship.spaceship_metabase_voyager_user_balances",
+      "rule_matched": 3,
+      "rule_name": "uc_domain",
+      "wiki_path": null,
+      "wiki_exists": false,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi\\_discovery\\upstream_wikis\\_NO_WIKI__main.spaceship.spaceship_metabase_voyager_user_balances.md"
+    }
+  ],
+  "stats": {
+    "total_upstreams": 99,
+    "rule1_synapse_mirror": 52,
+    "rule2_uc_generated": 18,
+    "rule3_uc_domain": 12,
+    "rule4_bronze_prod": 2,
+    "rule5_uc_native_map": 1,
+    "rule6_no_wiki": 14,
+    "wikis_cached": 56,
+    "no_wiki_placeholders": 43,
+    "blocked_on_upstream": 14
+  }
+}

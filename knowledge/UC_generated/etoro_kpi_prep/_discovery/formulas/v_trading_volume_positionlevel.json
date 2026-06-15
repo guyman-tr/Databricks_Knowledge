@@ -1,0 +1,360 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_trading_volume_positionlevel",
+  "generated_at": "2026-05-18T16:27:37Z",
+  "formula_count": 32,
+  "formulas": [
+    {
+      "column": "CID",
+      "formula": "CID",
+      "expression_raw": "fca.CID",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "volume_open"
+    },
+    {
+      "column": "PositionID",
+      "formula": "PositionID",
+      "expression_raw": "fca.PositionID",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "volume_open"
+    },
+    {
+      "column": "InstrumentID",
+      "formula": "InstrumentID",
+      "expression_raw": "fca.InstrumentID",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "volume_open"
+    },
+    {
+      "column": "Amount",
+      "formula": "Amount",
+      "expression_raw": "fca.Amount",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "volume_open"
+    },
+    {
+      "column": "Leverage",
+      "formula": "Leverage",
+      "expression_raw": "fca.Leverage",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "volume_open"
+    },
+    {
+      "column": "DateID",
+      "formula": "OpenDateID",
+      "expression_raw": "fca.OpenDateID AS DateID",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "volume_open"
+    },
+    {
+      "column": "VolumeOpen",
+      "formula": "COALESCE(CAST(Volume AS BIGINT), CAST(0 AS BIGINT))",
+      "expression_raw": "COALESCE(CAST(fca.Volume AS BIGINT), CAST(0 AS BIGINT)) AS VolumeOpen",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L15-L15",
+      "scope": "volume_open"
+    },
+    {
+      "column": "VolumeClose",
+      "formula": "CAST(0 AS BIGINT)",
+      "expression_raw": "CAST(0 AS BIGINT) AS VolumeClose",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L16-L16",
+      "scope": "volume_open"
+    },
+    {
+      "column": "InvestedAmountOpen",
+      "formula": "CASE WHEN COALESCE(IsPartialCloseChild, 0) = 1 THEN 0 ELSE CAST(InitialAmountCents / 100.0 AS DOUBLE) END",
+      "expression_raw": "CASE WHEN COALESCE(fca.IsPartialCloseChild, 0) = 1 THEN 0 ELSE CAST(fca.InitialAmountCents / 100.0 AS DOUBLE) END AS InvestedAmountOpen",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L19-L19",
+      "scope": "volume_open"
+    },
+    {
+      "column": "InvestedAmountClosed",
+      "formula": "CAST(0.0 AS DOUBLE)",
+      "expression_raw": "CAST(0.0 AS DOUBLE) AS InvestedAmountClosed",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L20-L20",
+      "scope": "volume_open"
+    },
+    {
+      "column": "TotalVolume",
+      "formula": "(COALESCE(VolumeOpen, 0) + COALESCE(VolumeClose, 0))",
+      "expression_raw": "(COALESCE(VolumeOpen, 0) + COALESCE(VolumeClose, 0)) AS TotalVolume",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L79-L79",
+      "scope": "all_volumes"
+    },
+    {
+      "column": "NetInvestedAmount",
+      "formula": "(COALESCE(InvestedAmountOpen, 0) - COALESCE(InvestedAmountClosed, 0))",
+      "expression_raw": "(COALESCE(InvestedAmountOpen, 0) - COALESCE(InvestedAmountClosed, 0)) AS NetInvestedAmount",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L80-L80",
+      "scope": "all_volumes"
+    },
+    {
+      "column": "CountOpenTransactions",
+      "formula": "CASE WHEN COALESCE(IsPartialCloseChild, 0) = 1 THEN 0 ELSE 1 END",
+      "expression_raw": "CASE WHEN COALESCE(fca.IsPartialCloseChild, 0) = 1 THEN 0 ELSE 1 END AS CountOpenTransactions",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L17-L17",
+      "scope": "volume_open"
+    },
+    {
+      "column": "CountCloseTransactions",
+      "formula": "0",
+      "expression_raw": "0 AS CountCloseTransactions",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L18-L18",
+      "scope": "volume_open"
+    },
+    {
+      "column": "CountTotalTransactions",
+      "formula": "(CountOpenTransactions + CountCloseTransactions)",
+      "expression_raw": "(CountOpenTransactions + CountCloseTransactions) AS CountTotalTransactions",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L83-L83",
+      "scope": "all_volumes"
+    },
+    {
+      "column": "IsSettled",
+      "formula": "IsSettled",
+      "expression_raw": "fca.IsSettled",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "volume_open"
+    },
+    {
+      "column": "IsAirDrop",
+      "formula": "IsAirDrop",
+      "expression_raw": "fca.IsAirDrop",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "volume_open"
+    },
+    {
+      "column": "IsBuy",
+      "formula": "CAST(COALESCE(IsBuy, false) AS INT)",
+      "expression_raw": "CAST(COALESCE(fca.IsBuy, false) AS INT) AS IsBuy",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L24-L24",
+      "scope": "volume_open"
+    },
+    {
+      "column": "SettlementTypeID",
+      "formula": "SettlementTypeID",
+      "expression_raw": "fca.SettlementTypeID",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "volume_open"
+    },
+    {
+      "column": "ComputedVolumeOpen",
+      "formula": "END",
+      "expression_raw": "END AS ComputedVolumeOpen",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L36-L36",
+      "scope": "volume_open"
+    },
+    {
+      "column": "ComputedVolumeClose",
+      "formula": "CAST(0.0 AS DOUBLE)",
+      "expression_raw": "CAST(0.0 AS DOUBLE) AS ComputedVolumeClose",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L37-L37",
+      "scope": "volume_open"
+    },
+    {
+      "column": "IsCopy",
+      "formula": "CASE WHEN MirrorID > 0 THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN v.MirrorID > 0 THEN 1 ELSE 0 END AS IsCopy",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L129-L129",
+      "scope": "main"
+    },
+    {
+      "column": "IsMarginTrade",
+      "formula": "CASE WHEN SettlementTypeID = 5 THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN v.SettlementTypeID = 5 THEN 1 ELSE 0 END AS IsMarginTrade",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L130-L130",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "formula": "InstrumentTypeID",
+      "expression_raw": "di.InstrumentTypeID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L131-L131",
+      "scope": "main"
+    },
+    {
+      "column": "IsFuture",
+      "formula": "IsFuture",
+      "expression_raw": "di.IsFuture",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L132-L132",
+      "scope": "main"
+    },
+    {
+      "column": "IsSQF",
+      "formula": "CASE WHEN InstrumentID IS NOT NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN sqf.InstrumentID IS NOT NULL THEN 1 ELSE 0 END AS IsSQF",
+      "inputs": [
+        "main.etoro_kpi_prep.v_dim_instrument_enriched"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L133-L133",
+      "scope": "main"
+    },
+    {
+      "column": "IsC2P",
+      "formula": "CASE WHEN PositionID IS NOT NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN c2p.PositionID IS NOT NULL THEN 1 ELSE 0 END AS IsC2P",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2p_e2e"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L134-L134",
+      "scope": "main"
+    },
+    {
+      "column": "IsCopyFund",
+      "formula": "CASE WHEN PositionID IS NOT NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN bdcfp.PositionID IS NOT NULL THEN 1 ELSE 0 END AS IsCopyFund",
+      "inputs": [
+        "main.etoro_kpi_prep.v_copyfund_positions"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L135-L135",
+      "scope": "main"
+    },
+    {
+      "column": "IsRecurring",
+      "formula": "CAST(0 AS INT)",
+      "expression_raw": "CAST(0 AS INT) AS IsRecurring",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L136-L136",
+      "scope": "main"
+    },
+    {
+      "column": "IsOpenedFromIBAN",
+      "formula": "CASE WHEN PositionID IS NOT NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN bdpofi.PositionID IS NOT NULL THEN 1 ELSE 0 END AS IsOpenedFromIBAN",
+      "inputs": [
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_opened_from_iban"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L137-L137",
+      "scope": "main"
+    },
+    {
+      "column": "IsClosedToIBAN",
+      "formula": "CASE WHEN PositionID IS NOT NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN bdpcti.PositionID IS NOT NULL THEN 1 ELSE 0 END AS IsClosedToIBAN",
+      "inputs": [
+        "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_closed_to_iban"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L138-L138",
+      "scope": "main"
+    },
+    {
+      "column": "IsValidCustomer",
+      "formula": "IsValidCustomer",
+      "expression_raw": "fsc.IsValidCustomer",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L139-L139",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_trading_volume_positionlevel.sql"
+}

@@ -1,0 +1,678 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_nhd_dashboard",
+  "rows": [
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "AskSpreaded",
+      "target_column_name": "Ask",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "Ask",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "Bid",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "Bid",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Clients_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_getinstrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "Clients_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Clients_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "Clients_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Clients_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_getinstrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "Clients_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Clients_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "AskSpreaded",
+      "target_column_name": "Clients_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "Clients_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "Clients_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_getinstrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "Clients_NOPUSD_Buy",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Clients_NOPUSD_Buy",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Clients_NOPUSD_Buy",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Clients_NOPUSD_Buy",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "Clients_NOPUSD_Buy",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Clients_NOPUSD_Buy",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "AskSpreaded",
+      "target_column_name": "Clients_NOPUSD_Buy",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "Clients_NOPUSD_Buy",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "Clients_NOPUSD_Buy",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_getinstrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "Clients_NOPUSD_Buy",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Clients_NOPUSD_Sell",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_getinstrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "Clients_NOPUSD_Sell",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "Clients_NOPUSD_Sell",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Clients_NOPUSD_Sell",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Clients_NOPUSD_Sell",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Clients_NOPUSD_Sell",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_getinstrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "Clients_NOPUSD_Sell",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "Clients_NOPUSD_Sell",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "Clients_NOPUSD_Sell",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "AskSpreaded",
+      "target_column_name": "Clients_NOPUSD_Sell",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Clients_Units_Buy",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Clients_Units_Buy",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Clients_Units_Buy",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Clients_Units_Buy",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Clients_Units_Sell",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Clients_Units_Sell",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Clients_Units_Sell",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Clients_Units_Sell",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Diff_Units",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Diff_Units",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "Diff_Units",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Diff_Units",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Diff_Units",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "Diff_Units",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Diff_Units",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Diff_Units",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HS",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HS",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HS",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HS",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "INS",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "INS",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "INS",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "INS",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_instrumentmetadata",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "LiquidityAccountID",
+      "target_column_name": "LiquidityAccountID",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "LiquidityAccountID",
+      "target_column_name": "LiquidityAccountID",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_liquidityaccounts",
+      "source_column_name": "LiquidityAccountName",
+      "target_column_name": "LiquidityAccountName",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_instrumentmetadata",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_getinstrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "Uncovered_NOP",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Uncovered_NOP",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Uncovered_NOP",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "Uncovered_NOP",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_getinstrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "Uncovered_NOP",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "Uncovered_NOP",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "Uncovered_NOP",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "Uncovered_NOP",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "Uncovered_NOP",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "AskSpreaded",
+      "target_column_name": "Uncovered_NOP",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Uncovered_NOP",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Uncovered_NOP",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Uncovered_NOP",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Uncovered_NOP",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 298
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "eToro_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "eToro_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "eToro_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_getinstrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "eToro_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "eToro_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "eToro_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToro_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToro_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_getinstrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "eToro_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "AskSpreaded",
+      "target_column_name": "eToro_NOPUSD",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 451
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 451
+    }
+  ],
+  "generated_at": "2026-05-19T12:33:36Z"
+}

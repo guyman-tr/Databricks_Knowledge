@@ -1,0 +1,121 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_date",
+  "generated_at": "2026-05-19T15:01:26Z",
+  "formula_count": 10,
+  "formulas": [
+    {
+      "column": "DateID",
+      "formula": "-- ========================================================================== -- Source: information_schema.views.view_definition -- Object: bi_output.bi_output_vg_date -- Captured: 2026-05-19T14…",
+      "expression_raw": "-- ==========================================================================\n-- Source: information_schema.views.view_definition\n-- Object: main.bi_output.bi_output_vg_date\n-- Captured: 2026-05-19T14…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L1-L7",
+      "scope": "main"
+    },
+    {
+      "column": "Date",
+      "formula": ",FullDate",
+      "expression_raw": ",FullDate AS Date",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "WeekNumberYear",
+      "formula": ",FullDate AS Date ,SSWeekNumberOfYear WeekNumberYear",
+      "expression_raw": ",FullDate AS Date\n\t\t\t,SSWeekNumberOfYear WeekNumberYear",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L9",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYearMonth",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "CalendarYearMonth"
+    },
+    {
+      "column": "CalendarQuarter",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "CalendarQuarter"
+    },
+    {
+      "column": "CalendarYear",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "CalendarYear"
+    },
+    {
+      "column": "IsLastDayWeek",
+      "formula": ",FullDate AS Date ,SSWeekNumberOfYear WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,CASE WHEN DateKey = MAX(DateKey) over (Partition by CalendarYear,SSWeekNumberOfYe…",
+      "expression_raw": ",FullDate AS Date\n\t\t\t,SSWeekNumberOfYear WeekNumberYear\n\t\t\t,CalendarYearMonth\n\t\t\t,CalendarQuarter\n\t\t\t,CalendarYear\n\t\t\t,CASE WHEN DateKey = MAX(DateKey) over (Partition by CalendarYear,SSWeekNumberOfYe…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L13",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayQuarter",
+      "formula": ",FullDate AS Date ,SSWeekNumberOfYear WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,CASE WHEN DateKey = MAX(DateKey) over (Partition by CalendarYear,SSWeekNumberOfYe…",
+      "expression_raw": ",FullDate AS Date\n\t\t\t,SSWeekNumberOfYear WeekNumberYear\n\t\t\t,CalendarYearMonth\n\t\t\t,CalendarQuarter\n\t\t\t,CalendarYear\n\t\t\t,CASE WHEN DateKey = MAX(DateKey) over (Partition by CalendarYear,SSWeekNumberOfYe…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L14",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayMonth",
+      "formula": ",FullDate AS Date ,SSWeekNumberOfYear WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,CASE WHEN DateKey = MAX(DateKey) over (Partition by CalendarYear,SSWeekNumberOfYe…",
+      "expression_raw": ",FullDate AS Date\n\t\t\t,SSWeekNumberOfYear WeekNumberYear\n\t\t\t,CalendarYearMonth\n\t\t\t,CalendarQuarter\n\t\t\t,CalendarYear\n\t\t\t,CASE WHEN DateKey = MAX(DateKey) over (Partition by CalendarYear,SSWeekNumberOfYe…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L15",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayYear",
+      "formula": ",FullDate AS Date ,SSWeekNumberOfYear WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,CASE WHEN DateKey = MAX(DateKey) over (Partition by CalendarYear,SSWeekNumberOfYe…",
+      "expression_raw": ",FullDate AS Date\n\t\t\t,SSWeekNumberOfYear WeekNumberYear\n\t\t\t,CalendarYearMonth\n\t\t\t,CalendarQuarter\n\t\t\t,CalendarYear\n\t\t\t,CASE WHEN DateKey = MAX(DateKey) over (Partition by CalendarYear,SSWeekNumberOfYe…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L16",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_date.sql"
+}

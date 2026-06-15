@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_mimo_allplatforms
--- Captured: 2026-05-18T08:06:04Z
+-- Captured: 2026-05-19T12:13:37Z
 -- ==========================================================================
 
 WITH global_ftds AS (

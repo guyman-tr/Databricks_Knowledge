@@ -1,0 +1,123 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_history_liquidityprovidercontracts",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:40Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "ContractID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.LiquidityProviderContracts.md",
+      "upstream_quote": "Auto-incremented contract identifier (IDENTITY in active table). Each new contract gets a unique sequential ID. Used in ",
+      "wiki_quote": "Auto-incremented contract identifier (IDENTITY in active table). Each new contract gets a unique sequential ID. Used in ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LiquidityProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.LiquidityProviderContracts.md",
+      "upstream_quote": "ID of the liquidity provider. FK to Trade.LiquidityProviderType in active table. Identifies which external LP (broker, e",
+      "wiki_quote": "ID of the liquidity provider. FK to Trade.LiquidityProviderType in active table. Identifies which external LP (broker, e",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.LiquidityProviderContracts.md",
+      "upstream_quote": "Financial instrument ID. FK to Trade.Instrument in active table. Identifies which financial instrument this LP-exchange ",
+      "wiki_quote": "Financial instrument ID. FK to Trade.Instrument in active table. Identifies which financial instrument this LP-exchange ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FromDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.LiquidityProviderContracts.md",
+      "upstream_quote": "Start date of the LP-instrument contract. When the contract became effective. FromDate = ToDate on many rows indicates a",
+      "wiki_quote": "Start date of the LP-instrument contract. When the contract became effective. FromDate = ToDate on many rows indicates a",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ToDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.LiquidityProviderContracts.md",
+      "upstream_quote": "End date of the LP-instrument contract. When the contract was replaced or terminated. ToDate = 2100-01-01 00:00:00 = ope",
+      "wiki_quote": "End date of the LP-instrument contract. When the contract was replaced or terminated. ToDate = 2100-01-01 00:00:00 = ope",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Ticker",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.LiquidityProviderContracts.md",
+      "upstream_quote": "The LP's symbol/ticker for this instrument. Used to map eToro instrument IDs to the LP's own identifiers in price feeds ",
+      "wiki_quote": "The LP's symbol/ticker for this instrument. Used to map eToro instrument IDs to the LP's own identifiers in price feeds ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.LiquidityProviderContracts.md",
+      "upstream_quote": "Exchange through which this LP contract routes. FK to Price.Exchange in active table. DEFAULT 1 (the primary/default exc",
+      "wiki_quote": "Exchange through which this LP contract routes. FK to Price.Exchange in active table. DEFAULT 1 (the primary/default exc",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RateConversionFactor",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.LiquidityProviderContracts.md",
+      "upstream_quote": "Multiplicative factor applied to prices from this LP for this instrument. DEFAULT 1.0 (no conversion). Non-1 values indi",
+      "wiki_quote": "Multiplicative factor applied to prices from this LP for this instrument. DEFAULT 1.0 (no conversion). Non-1 values indi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DbLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.LiquidityProviderContracts.md",
+      "upstream_quote": "Materialized SQL Server login name (suser_name()) at the time this row version was closed. In active table this is a com",
+      "wiki_quote": "Materialized SQL Server login name (suser_name()) at the time this row version was closed. In active table this is a com",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AppLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.LiquidityProviderContracts.md",
+      "upstream_quote": "Materialized application identity (context_info()) at version close time. Stored here as a snapshot. NULL if not set by ",
+      "wiki_quote": "Materialized application identity (context_info()) at version close time. Stored here as a snapshot. NULL if not set by ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysStartTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.LiquidityProviderContracts.md",
+      "upstream_quote": "Start of the validity window for this history row. Set by SQL Server temporal engine. For INSERT artifacts: SysStartTime",
+      "wiki_quote": "Start of the validity window for this history row. Set by SQL Server temporal engine. For INSERT artifacts: SysStartTime",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysEndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.LiquidityProviderContracts.md",
+      "upstream_quote": "End of the validity window for this history row. Set to the UTC time of the UPDATE/DELETE that closed this version. CLUS",
+      "wiki_quote": "End of the validity window for this history row. Set to the UTC time of the UPDATE/DELETE that closed this version. CLUS",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 12,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 12 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

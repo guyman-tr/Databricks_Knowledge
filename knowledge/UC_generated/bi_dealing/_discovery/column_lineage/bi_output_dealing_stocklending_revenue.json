@@ -1,0 +1,139 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_stocklending_revenue",
+  "rows": [
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "RATE",
+      "target_column_name": "Blended_Rate",
+      "entity_type": "JOB",
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "MARKET_AMOUNT",
+      "target_column_name": "Blended_Rate",
+      "entity_type": "JOB",
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "Country",
+      "entity_type": "JOB",
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "Date",
+      "entity_type": "JOB",
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_interestrate",
+      "source_column_name": "InterestRateBuy",
+      "target_column_name": "ETB_USD_Lent",
+      "entity_type": "JOB",
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": "main.general.gold_datalend_darsx_v6",
+      "source_column_name": "dataLendRateRebate",
+      "target_column_name": "ETB_USD_Lent",
+      "entity_type": "JOB",
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "MARKET_AMOUNT",
+      "target_column_name": "ETB_USD_Lent",
+      "entity_type": "JOB",
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_dictionary_interestrate",
+      "source_column_name": "InterestRateBuy",
+      "target_column_name": "ETB_USD_Lent",
+      "entity_type": "JOB",
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_earningsbyaccountdaily",
+      "source_column_name": "Platform_Broker_Earnings",
+      "target_column_name": "Etoro_Revenues",
+      "entity_type": "JOB",
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_earningsbyaccountdaily",
+      "source_column_name": "Earnings",
+      "target_column_name": "Gross_Revenues",
+      "entity_type": "JOB",
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": "main.general.gold_datalend_darsx_v6",
+      "source_column_name": "dataLendRateRebate",
+      "target_column_name": "HTB_USD_Lent",
+      "entity_type": "JOB",
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_interestrate",
+      "source_column_name": "InterestRateBuy",
+      "target_column_name": "HTB_USD_Lent",
+      "entity_type": "JOB",
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "MARKET_AMOUNT",
+      "target_column_name": "HTB_USD_Lent",
+      "entity_type": "JOB",
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_dictionary_interestrate",
+      "source_column_name": "InterestRateBuy",
+      "target_column_name": "HTB_USD_Lent",
+      "entity_type": "JOB",
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "Total_CIDs",
+      "entity_type": "JOB",
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "MARKET_AMOUNT",
+      "target_column_name": "Total_USD_Value_On_Lent",
+      "entity_type": "JOB",
+      "event_count": 133
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_y",
+      "entity_type": "JOB",
+      "event_count": 103
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ym",
+      "entity_type": "JOB",
+      "event_count": 103
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ymd",
+      "entity_type": "JOB",
+      "event_count": 103
+    }
+  ],
+  "generated_at": "2026-05-19T12:39:56Z"
+}

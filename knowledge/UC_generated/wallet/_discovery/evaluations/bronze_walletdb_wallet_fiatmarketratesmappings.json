@@ -1,0 +1,67 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_fiatmarketratesmappings",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:20Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.FiatMarketRatesMappings.md",
+      "upstream_quote": "Auto-incrementing surrogate primary key.",
+      "wiki_quote": "Auto-incrementing surrogate primary key (Tier 1 — inherited from WalletDB.Wallet.FiatMarketRatesMappings).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FiatId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.FiatMarketRatesMappings.md",
+      "upstream_quote": "References the fiat currency being mapped. FK to Wallet.FiatTypes.FiatId. Unique constraint ensures each fiat has exactl",
+      "wiki_quote": "References the fiat currency being mapped. FK to Wallet.FiatTypes.FiatId. Unique constraint ensures each fiat has exactl",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MarketRatesCurrencySymbol",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.FiatMarketRatesMappings.md",
+      "upstream_quote": "The symbol used to query the market rate feed for this fiat currency. Typically matches the ISO 4217 code (USD, EUR, GBP",
+      "wiki_quote": "The symbol used to query the market rate feed for this fiat currency. Typically matches the ISO 4217 code (USD, EUR, GBP",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.FiatMarketRatesMappings.md",
+      "upstream_quote": "Timestamp when this mapping was created. Original 3 currencies share 2019-11-26; AUD added 2025-11-09.",
+      "wiki_quote": "Timestamp when this mapping was created. Original 3 currencies share 2019-11-26; AUD added 2025-11-09 (Tier 1 — inherite",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 4,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 4 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

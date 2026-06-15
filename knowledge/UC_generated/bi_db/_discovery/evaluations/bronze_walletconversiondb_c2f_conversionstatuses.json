@@ -1,0 +1,74 @@
+{
+  "object_fqn": "main.bi_db.bronze_walletconversiondb_c2f_conversionstatuses",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:14:02Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.ConversionStatuses.md",
+      "upstream_quote": "Auto-incrementing PK. Used in correlated subqueries to find the most recent status (ORDER BY Id DESC). Higher Id = more ",
+      "wiki_quote": "Auto-incrementing PK. Used in correlated subqueries to find the most recent status (ORDER BY Id DESC). Higher Id = more ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ConversionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.ConversionStatuses.md",
+      "upstream_quote": "FK to C2F.Conversions.Id. Links each status entry to its parent conversion. Multiple rows per ConversionId (one per tran",
+      "wiki_quote": "FK to C2F.Conversions.Id. Links each status entry to its parent conversion. Multiple rows per ConversionId (one per tran",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StatusId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.ConversionStatuses.md",
+      "upstream_quote": "FK to Dictionary.ConversionToFiatStatuses. Current status in this transition. Values: 1=Pending, 2=Failed, 3=Completed, ",
+      "wiki_quote": "FK to Dictionary.ConversionToFiatStatuses. Current status in this transition. Values: 1=Pending, 2=Failed, 3=Completed, ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DetailsJson",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.ConversionStatuses.md",
+      "upstream_quote": "JSON payload with additional context for this transition. Populated for Failed statuses with error details (e.g., `{\"Err",
+      "wiki_quote": "JSON payload with additional context for this transition. Populated for Failed statuses with error details (e.g., `{\"Err",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletConversionDB\\Wiki\\C2F\\Tables\\C2F.ConversionStatuses.md",
+      "upstream_quote": "UTC timestamp of the status transition. Default constraint auto-sets on insert. Indexed DESC for recency queries. Used b",
+      "wiki_quote": "UTC timestamp of the status transition. Default constraint auto-sets on insert. Indexed DESC for recency queries. Used b",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 5,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 5 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

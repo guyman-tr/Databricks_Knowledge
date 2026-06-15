@@ -1,0 +1,27 @@
+{
+  "object_fqn": "main.etoro_kpi.crm_user_v",
+  "generated_at": "2026-05-19T15:20:28Z",
+  "concept_count": 1,
+  "concepts": [
+    {
+      "id": "filter_block_rm_choice",
+      "name": "Filter block on rm_choice",
+      "kind": "filter_block",
+      "columns_involved": [
+        "Position__c"
+      ],
+      "predicates": [
+        {
+          "col": "Position__c",
+          "op": "=",
+          "val": "'  '"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L48",
+      "scope": "rm_choice",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/crm_user_v.sql"
+}

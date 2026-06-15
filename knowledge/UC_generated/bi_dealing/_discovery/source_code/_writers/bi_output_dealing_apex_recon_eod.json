@@ -1,0 +1,46 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_apex_recon_eod",
+  "writers": [
+    {
+      "kind": "JOB",
+      "entity_id": "260621278292538",
+      "event_count_lookback": 348,
+      "role": "primary",
+      "fetched": false,
+      "fetch_error": "job has no notebook tasks"
+    },
+    {
+      "kind": "NOTEBOOK",
+      "entity_id": "4404603554225332",
+      "event_count_lookback": 4,
+      "role": "secondary",
+      "fetched": false,
+      "fetch_error": "workspace.export failed"
+    },
+    {
+      "kind": "NOTEBOOK",
+      "entity_id": "695083017622210",
+      "event_count_lookback": 3,
+      "role": "secondary",
+      "fetched": false,
+      "fetch_error": "workspace.export failed"
+    },
+    {
+      "kind": "DBSQL_QUERY",
+      "entity_id": "fed14316-68d9-4f49-8bfe-e4e432d5340a",
+      "event_count_lookback": 3,
+      "role": "secondary",
+      "fetched": false,
+      "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+    },
+    {
+      "kind": "DBSQL_QUERY",
+      "entity_id": "30f11136-56e3-420c-9208-fbeae3babde5",
+      "event_count_lookback": 2,
+      "role": "secondary",
+      "fetched": false,
+      "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+    }
+  ],
+  "generated_at": "2026-05-19T12:14:04Z"
+}

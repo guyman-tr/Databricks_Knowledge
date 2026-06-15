@@ -1,0 +1,525 @@
+{
+  "object_fqn": "main.etoro_kpi.vg_dealing_clicks_openclose_breakdown",
+  "generated_at": "2026-05-19T15:20:32Z",
+  "formula_count": 47,
+  "formulas": [
+    {
+      "column": "Date",
+      "formula": "Date",
+      "expression_raw": "cbd.Date",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "DateID",
+      "formula": "DateID",
+      "expression_raw": "cbd.DateID",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "SellCurrency",
+      "formula": "SellCurrency",
+      "expression_raw": "cbd.SellCurrency",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "Club",
+      "formula": "Club",
+      "expression_raw": "cbd.Club",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "CID",
+      "formula": "CID",
+      "expression_raw": "cbd.CID",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "IsBuy",
+      "formula": "IsBuy",
+      "expression_raw": "cbd.IsBuy",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "HeldOnReportDate",
+      "formula": "HeldOnReportDate",
+      "expression_raw": "cbd.HeldOnReportDate",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "HedgeServerID",
+      "formula": "HedgeServerID",
+      "expression_raw": "cbd.HedgeServerID",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentID",
+      "formula": "InstrumentID",
+      "expression_raw": "cbd.InstrumentID",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentDisplayName",
+      "formula": "InstrumentDisplayName",
+      "expression_raw": "cbd.InstrumentDisplayName",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentName",
+      "formula": "InstrumentName",
+      "expression_raw": "cbd.InstrumentName",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "formula": "InstrumentTypeID",
+      "expression_raw": "cbd.InstrumentTypeID",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentType",
+      "formula": "InstrumentType",
+      "expression_raw": "cbd.InstrumentType",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "IsCopy",
+      "formula": "IsCopy",
+      "expression_raw": "cbd.IsCopy",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "IsCFD",
+      "formula": "IsCFD",
+      "expression_raw": "cbd.IsCFD",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "Symbol",
+      "formula": "Symbol",
+      "expression_raw": "cbd.Symbol",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "Leverage",
+      "formula": "Leverage",
+      "expression_raw": "cbd.Leverage",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "Exchange",
+      "formula": "Exchange",
+      "expression_raw": "cbd.Exchange",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "CountryID",
+      "formula": "CountryID",
+      "expression_raw": "cbd.CountryID",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "Country",
+      "formula": "Country",
+      "expression_raw": "cbd.Country",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "Region",
+      "formula": "Region",
+      "expression_raw": "cbd.Region",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationID",
+      "formula": "RegulationID",
+      "expression_raw": "cbd.RegulationID",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": "Regulation",
+      "expression_raw": "cbd.Regulation",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "IsIslamic",
+      "formula": "IsIslamic",
+      "expression_raw": "cbd.IsIslamic",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "Size_of_Tickets",
+      "formula": "Size_of_Tickets",
+      "expression_raw": "cbd.Size_of_Tickets",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "OpenOrClose",
+      "formula": "OpenOrClose",
+      "expression_raw": "cbd.OpenOrClose",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "OpenOrCloseID",
+      "formula": "OpenOrCloseID",
+      "expression_raw": "cbd.OpenOrCloseID",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    },
+    {
+      "column": "Click",
+      "formula": "Click",
+      "expression_raw": "cbd.Click",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L35-L35",
+      "scope": "main"
+    },
+    {
+      "column": "Volume",
+      "formula": "Volume",
+      "expression_raw": "cbd.Volume",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "Units",
+      "formula": "Units",
+      "expression_raw": "cbd.Units",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L37-L37",
+      "scope": "main"
+    },
+    {
+      "column": "FullCommission",
+      "formula": "FullCommission",
+      "expression_raw": "cbd.FullCommission",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "InitialAmountUSDOnOpen",
+      "formula": "InitialAmountUSDOnOpen",
+      "expression_raw": "cbd.InitialAmountUSDOnOpen",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L39-L39",
+      "scope": "main"
+    },
+    {
+      "column": "UpdateDate",
+      "formula": "UpdateDate",
+      "expression_raw": "cbd.UpdateDate",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L40-L40",
+      "scope": "main"
+    },
+    {
+      "column": "IsPI",
+      "formula": "IsPI",
+      "expression_raw": "cbd.IsPI",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L41-L41",
+      "scope": "main"
+    },
+    {
+      "column": "IsTicketFee",
+      "formula": "IsTicketFee",
+      "expression_raw": "cbd.IsTicketFee",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L42-L42",
+      "scope": "main"
+    },
+    {
+      "column": "TicketFee",
+      "formula": "-1 * TicketFee",
+      "expression_raw": "-1 * cbd.TicketFee as TicketFee",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L43-L43",
+      "scope": "main"
+    },
+    {
+      "column": "IsAirDrop",
+      "formula": "IsAirDrop",
+      "expression_raw": "cbd.IsAirDrop",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L44-L44",
+      "scope": "main"
+    },
+    {
+      "column": "IsFuture",
+      "formula": "IsFuture",
+      "expression_raw": "cbd.IsFuture",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L45-L45",
+      "scope": "main"
+    },
+    {
+      "column": "etr_y",
+      "formula": "etr_y",
+      "expression_raw": "cbd.etr_y",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L46-L46",
+      "scope": "main"
+    },
+    {
+      "column": "etr_ym",
+      "formula": "etr_ym",
+      "expression_raw": "cbd.etr_ym",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L47-L47",
+      "scope": "main"
+    },
+    {
+      "column": "etr_ymd",
+      "formula": "etr_ymd",
+      "expression_raw": "cbd.etr_ymd",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L48-L48",
+      "scope": "main"
+    },
+    {
+      "column": "HaseMoneyAccount",
+      "formula": "HaseMoneyAccount",
+      "expression_raw": "cbd.HaseMoneyAccount",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L49-L49",
+      "scope": "main"
+    },
+    {
+      "column": "IsIBANClick",
+      "formula": "IsIBANClick",
+      "expression_raw": "cbd.IsIBANClick",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L50-L50",
+      "scope": "main"
+    },
+    {
+      "column": "IsFTDClick",
+      "formula": "IsFTDClick",
+      "expression_raw": "cbd.IsFTDClick",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L51-L51",
+      "scope": "main"
+    },
+    {
+      "column": "IsLowTouch",
+      "formula": "IsLowTouch",
+      "expression_raw": "cbd.IsLowTouch",
+      "inputs": [
+        "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L52-L52",
+      "scope": "main"
+    },
+    {
+      "column": "Multiplier",
+      "formula": "Multiplier",
+      "expression_raw": "di.Multiplier",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L53-L53",
+      "scope": "main"
+    },
+    {
+      "column": "Manager",
+      "formula": "Manager",
+      "expression_raw": "cfd.Manager",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L54-L54",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/vg_dealing_clicks_openclose_breakdown.sql"
+}

@@ -1,0 +1,212 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_population_active_traders_lite",
+  "generated_at": "2026-05-18T16:27:37Z",
+  "formula_count": 14,
+  "formulas": [
+    {
+      "column": "GCID",
+      "formula": "GCID",
+      "expression_raw": "fca.GCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "actionsprep"
+    },
+    {
+      "column": "RealCID",
+      "formula": "RealCID",
+      "expression_raw": "fca.RealCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "actionsprep"
+    },
+    {
+      "column": "DateID",
+      "formula": "DateID",
+      "expression_raw": "fca.DateID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "actionsprep"
+    },
+    {
+      "column": "ActiveTraded",
+      "formula": "1",
+      "expression_raw": "1 AS ActiveTraded",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L56-L56",
+      "scope": "activetypes"
+    },
+    {
+      "column": "ActiveTradedManual",
+      "formula": "MAX(CASE WHEN MirrorID = 0 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN f.MirrorID = 0 THEN 1 ELSE 0 END) AS ActiveTradedManual",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.etoro_kpi_prep.v_revenue_optionsplatform",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L57-L57",
+      "scope": "activetypes"
+    },
+    {
+      "column": "ActiveTradedCFD",
+      "formula": "MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (1, 2, 4) THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN f.MirrorID = 0 AND f.InstrumentTypeID IN (1, 2, 4) THEN 1 ELSE 0 END) AS ActiveTradedCFD",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.etoro_kpi_prep.v_revenue_optionsplatform",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L58-L58",
+      "scope": "activetypes"
+    },
+    {
+      "column": "ActiveTradedCryptoCFD",
+      "formula": "MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (10) AND IsSettled = 0 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN f.MirrorID = 0 AND f.InstrumentTypeID IN (10) AND f.IsSettled = 0 THEN 1 ELSE 0 END) AS ActiveTradedCryptoCFD",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.etoro_kpi_prep.v_revenue_optionsplatform",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L59-L59",
+      "scope": "activetypes"
+    },
+    {
+      "column": "ActiveTradedCryptoReal",
+      "formula": "MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (10) AND IsSettled = 1 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN f.MirrorID = 0 AND f.InstrumentTypeID IN (10) AND f.IsSettled = 1 THEN 1 ELSE 0 END) AS ActiveTradedCryptoReal",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.etoro_kpi_prep.v_revenue_optionsplatform",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L60-L60",
+      "scope": "activetypes"
+    },
+    {
+      "column": "ActiveTradedStocksCFD",
+      "formula": "MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (5) AND IsSettled = 0 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN f.MirrorID = 0 AND f.InstrumentTypeID IN (5) AND f.IsSettled = 0 THEN 1 ELSE 0 END) AS ActiveTradedStocksCFD",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.etoro_kpi_prep.v_revenue_optionsplatform",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L61-L61",
+      "scope": "activetypes"
+    },
+    {
+      "column": "ActiveTradedStocksReal",
+      "formula": "MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (5) AND IsSettled = 1 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN f.MirrorID = 0 AND f.InstrumentTypeID IN (5) AND f.IsSettled = 1 THEN 1 ELSE 0 END) AS ActiveTradedStocksReal",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.etoro_kpi_prep.v_revenue_optionsplatform",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L62-L62",
+      "scope": "activetypes"
+    },
+    {
+      "column": "ActiveTradedETFCFD",
+      "formula": "MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (6) AND IsSettled = 0 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN f.MirrorID = 0 AND f.InstrumentTypeID IN (6) AND f.IsSettled = 0 THEN 1 ELSE 0 END) AS ActiveTradedETFCFD",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.etoro_kpi_prep.v_revenue_optionsplatform",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L63-L63",
+      "scope": "activetypes"
+    },
+    {
+      "column": "ActiveTradedETFReal",
+      "formula": "MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (6) AND IsSettled = 1 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN f.MirrorID = 0 AND f.InstrumentTypeID IN (6) AND f.IsSettled = 1 THEN 1 ELSE 0 END) AS ActiveTradedETFReal",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.etoro_kpi_prep.v_revenue_optionsplatform",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L64-L64",
+      "scope": "activetypes"
+    },
+    {
+      "column": "ActiveTradedCopy",
+      "formula": "MAX(CASE WHEN MirrorID > 0 AND ActionTypeID IN (15, 17) THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN f.MirrorID > 0 AND f.ActionTypeID IN (15, 17) THEN 1 ELSE 0 END) AS ActiveTradedCopy",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.etoro_kpi_prep.v_revenue_optionsplatform",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L65-L65",
+      "scope": "activetypes"
+    },
+    {
+      "column": "ActiveTradedOptions",
+      "formula": "MAX(CASE WHEN InstrumentTypeID = 9 THEN 1 ELSE 0 END)",
+      "expression_raw": "MAX(CASE WHEN f.InstrumentTypeID = 9 THEN 1 ELSE 0 END) AS ActiveTradedOptions",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.etoro_kpi_prep.v_revenue_optionsplatform",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L66-L66",
+      "scope": "activetypes"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_active_traders_lite.sql"
+}

@@ -1,0 +1,559 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_case",
+  "generated_at": "2026-05-19T15:01:25Z",
+  "formula_count": 50,
+  "formulas": [
+    {
+      "column": "CaseNumber",
+      "formula": "-- ========================================================================== -- Source: information_schema.views.view_definition -- Object: bi_output.bi_output_vg_case -- Captured: 2026-05-19T14…",
+      "expression_raw": "-- ==========================================================================\n-- Source: information_schema.views.view_definition\n-- Object: main.bi_output.bi_output_vg_case\n-- Captured: 2026-05-19T14…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L1-L7",
+      "scope": "main"
+    },
+    {
+      "column": "CaseID",
+      "formula": ",Id",
+      "expression_raw": ",Id AS CaseID",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "CreatedDate",
+      "formula": ",Id AS CaseID ,CreatedDate",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L9",
+      "scope": "main"
+    },
+    {
+      "column": "CreatedById",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L10",
+      "scope": "main"
+    },
+    {
+      "column": "LastModifiedDate",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L11",
+      "scope": "main"
+    },
+    {
+      "column": "LastModifiedByID",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L12",
+      "scope": "main"
+    },
+    {
+      "column": "OwnerID",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L13",
+      "scope": "main"
+    },
+    {
+      "column": "OwnerCSDesk",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L14",
+      "scope": "main"
+    },
+    {
+      "column": "OwnerSubRole",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L15",
+      "scope": "main"
+    },
+    {
+      "column": "OwnerTeam",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L16",
+      "scope": "main"
+    },
+    {
+      "column": "AccountID",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L17",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L18",
+      "scope": "main"
+    },
+    {
+      "column": "Origin",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L19",
+      "scope": "main"
+    },
+    {
+      "column": "CurrentStatus",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L20",
+      "scope": "main"
+    },
+    {
+      "column": "Priority",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L21",
+      "scope": "main"
+    },
+    {
+      "column": "Subject",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L22",
+      "scope": "main"
+    },
+    {
+      "column": "Description",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L23",
+      "scope": "main"
+    },
+    {
+      "column": "IsClosedOnCreate",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L24",
+      "scope": "main"
+    },
+    {
+      "column": "Product",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L25",
+      "scope": "main"
+    },
+    {
+      "column": "CASS_Impact",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L26",
+      "scope": "main"
+    },
+    {
+      "column": "AML_status",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L27",
+      "scope": "main"
+    },
+    {
+      "column": "Type",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L28",
+      "scope": "main"
+    },
+    {
+      "column": "SubType",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L29",
+      "scope": "main"
+    },
+    {
+      "column": "SubType2",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L30",
+      "scope": "main"
+    },
+    {
+      "column": "NumberOfTouches",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L31",
+      "scope": "main"
+    },
+    {
+      "column": "NumberOfOutboundEmailMessages",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L32",
+      "scope": "main"
+    },
+    {
+      "column": "NumberOfIncomingEmailMessages",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L33",
+      "scope": "main"
+    },
+    {
+      "column": "NumberOfInternalCaseComments",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L34",
+      "scope": "main"
+    },
+    {
+      "column": "IsReopened",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L35",
+      "scope": "main"
+    },
+    {
+      "column": "IsPP_Report",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L36",
+      "scope": "main"
+    },
+    {
+      "column": "IsPlatform",
+      "formula": ",Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …",
+      "expression_raw": ",Id AS CaseID\n      ,CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L37",
+      "scope": "main"
+    },
+    {
+      "column": "Phase",
+      "formula": ",CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID ,Owner_CS_Desk__c …",
+      "expression_raw": ",CreatedDate AS CreatedDate\n      ,CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n      ,Owner_CS_Desk__c …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L38",
+      "scope": "main"
+    },
+    {
+      "column": "DepositID",
+      "formula": ",CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID ,Owner_CS_Desk__c AS OwnerCSDesk ,Owner_Sub_Ro…",
+      "expression_raw": ",CreatedById AS CreatedById\n      ,LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n      ,Owner_CS_Desk__c AS OwnerCSDesk\n      ,Owner_Sub_Ro…",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L10-L39",
+      "scope": "main"
+    },
+    {
+      "column": "WithdrawalID",
+      "formula": ",LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID ,Owner_CS_Desk__c AS OwnerCSDesk ,Owner_Sub_Role__c AS OwnerSubRole ,Owner…",
+      "expression_raw": ",LastModifiedDate AS LastModifiedDate\n      ,LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n      ,Owner_CS_Desk__c AS OwnerCSDesk\n      ,Owner_Sub_Role__c AS OwnerSubRole\n      ,Owner…",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L11-L40",
+      "scope": "main"
+    },
+    {
+      "column": "ServiceLanguage",
+      "formula": ",LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID ,Owner_CS_Desk__c AS OwnerCSDesk ,Owner_Sub_Role__c AS OwnerSubRole ,Owner_Team__c AS OwnerTeam ,AccountId AS Ac…",
+      "expression_raw": ",LastModifiedById AS LastModifiedByID\n      ,OwnerId AS OwnerID\n      ,Owner_CS_Desk__c AS OwnerCSDesk\n      ,Owner_Sub_Role__c AS OwnerSubRole\n      ,Owner_Team__c AS OwnerTeam\n      ,AccountId AS Ac…",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L12-L41",
+      "scope": "main"
+    },
+    {
+      "column": "IsDuplicate",
+      "formula": ",OwnerId AS OwnerID ,Owner_CS_Desk__c AS OwnerCSDesk ,Owner_Sub_Role__c AS OwnerSubRole ,Owner_Team__c AS OwnerTeam ,AccountId AS AccountID ,CID__c AS RealCID ,Orig…",
+      "expression_raw": ",OwnerId AS OwnerID\n      ,Owner_CS_Desk__c AS OwnerCSDesk\n      ,Owner_Sub_Role__c AS OwnerSubRole\n      ,Owner_Team__c AS OwnerTeam\n      ,AccountId AS AccountID\n      ,CID__c AS RealCID\n      ,Orig…",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L13-L42",
+      "scope": "main"
+    },
+    {
+      "column": "IsOneTouch",
+      "formula": ",Owner_CS_Desk__c AS OwnerCSDesk ,Owner_Sub_Role__c AS OwnerSubRole ,Owner_Team__c AS OwnerTeam ,AccountId AS AccountID ,CID__c AS RealCID ,Origin AS Origin ,Status…",
+      "expression_raw": ",Owner_CS_Desk__c AS OwnerCSDesk\n      ,Owner_Sub_Role__c AS OwnerSubRole\n      ,Owner_Team__c AS OwnerTeam\n      ,AccountId AS AccountID\n      ,CID__c AS RealCID\n      ,Origin AS Origin\n      ,Status…",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L14-L43",
+      "scope": "main"
+    },
+    {
+      "column": "ClosedByAutomation",
+      "formula": ",Owner_Sub_Role__c AS OwnerSubRole ,Owner_Team__c AS OwnerTeam ,AccountId AS AccountID ,CID__c AS RealCID ,Origin AS Origin ,Status AS CurrentStatus ,Priority AS Pr…",
+      "expression_raw": ",Owner_Sub_Role__c AS OwnerSubRole\n      ,Owner_Team__c AS OwnerTeam\n      ,AccountId AS AccountID\n      ,CID__c AS RealCID\n      ,Origin AS Origin\n      ,Status AS CurrentStatus\n      ,Priority AS Pr…",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L15-L44",
+      "scope": "main"
+    },
+    {
+      "column": "UpdatedByAutomaticProcess",
+      "formula": ",Owner_Team__c AS OwnerTeam ,AccountId AS AccountID ,CID__c AS RealCID ,Origin AS Origin ,Status AS CurrentStatus ,Priority AS Priority ,Subject AS Subject ,D…",
+      "expression_raw": ",Owner_Team__c AS OwnerTeam\n      ,AccountId AS AccountID\n      ,CID__c AS RealCID\n      ,Origin AS Origin\n      ,Status AS CurrentStatus\n      ,Priority AS Priority\n      ,Subject AS Subject\n      ,D…",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L16-L45",
+      "scope": "main"
+    },
+    {
+      "column": "InternalCase",
+      "formula": ",AccountId AS AccountID ,CID__c AS RealCID ,Origin AS Origin ,Status AS CurrentStatus ,Priority AS Priority ,Subject AS Subject ,Description AS Description ,I…",
+      "expression_raw": ",AccountId AS AccountID\n      ,CID__c AS RealCID\n      ,Origin AS Origin\n      ,Status AS CurrentStatus\n      ,Priority AS Priority\n      ,Subject AS Subject\n      ,Description AS Description\n      ,I…",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L17-L46",
+      "scope": "main"
+    },
+    {
+      "column": "EscalatedBy",
+      "formula": ",CID__c AS RealCID ,Origin AS Origin ,Status AS CurrentStatus ,Priority AS Priority ,Subject AS Subject ,Description AS Description ,IsClosedOnCreate AS IsClosedOnC…",
+      "expression_raw": ",CID__c AS RealCID\n      ,Origin AS Origin\n      ,Status AS CurrentStatus\n      ,Priority AS Priority\n      ,Subject AS Subject\n      ,Description AS Description\n      ,IsClosedOnCreate AS IsClosedOnC…",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L18-L47",
+      "scope": "main"
+    },
+    {
+      "column": "EscalationStatus",
+      "formula": ",Origin AS Origin ,Status AS CurrentStatus ,Priority AS Priority ,Subject AS Subject ,Description AS Description ,IsClosedOnCreate AS IsClosedOnCreate ,Product__c A…",
+      "expression_raw": ",Origin AS Origin\n      ,Status AS CurrentStatus\n      ,Priority AS Priority\n      ,Subject AS Subject\n      ,Description AS Description\n      ,IsClosedOnCreate AS IsClosedOnCreate\n      ,Product__c A…",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L19-L48",
+      "scope": "main"
+    },
+    {
+      "column": "EscalationDate",
+      "formula": ",Status AS CurrentStatus ,Priority AS Priority ,Subject AS Subject ,Description AS Description ,IsClosedOnCreate AS IsClosedOnCreate ,Product__c AS Product ,CASS_Im…",
+      "expression_raw": ",Status AS CurrentStatus\n      ,Priority AS Priority\n      ,Subject AS Subject\n      ,Description AS Description\n      ,IsClosedOnCreate AS IsClosedOnCreate\n      ,Product__c AS Product\n      ,CASS_Im…",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L20-L49",
+      "scope": "main"
+    },
+    {
+      "column": "EscalatedByBot",
+      "formula": ",Priority AS Priority ,Subject AS Subject ,Description AS Description ,IsClosedOnCreate AS IsClosedOnCreate ,Product__c AS Product ,CASS_Impact__c AS CASS_Impact ,A…",
+      "expression_raw": ",Priority AS Priority\n      ,Subject AS Subject\n      ,Description AS Description\n      ,IsClosedOnCreate AS IsClosedOnCreate\n      ,Product__c AS Product\n      ,CASS_Impact__c AS CASS_Impact\n      ,A…",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L21-L50",
+      "scope": "main"
+    },
+    {
+      "column": "FinalEscalationResponseDate",
+      "formula": ",Subject AS Subject ,Description AS Description ,IsClosedOnCreate AS IsClosedOnCreate ,Product__c AS Product ,CASS_Impact__c AS CASS_Impact ,AML_Status__c as AML_status …",
+      "expression_raw": ",Subject AS Subject\n      ,Description AS Description\n      ,IsClosedOnCreate AS IsClosedOnCreate\n      ,Product__c AS Product\n      ,CASS_Impact__c AS CASS_Impact\n      ,AML_Status__c as AML_status\n …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L51",
+      "scope": "main"
+    },
+    {
+      "column": "IsEscalated",
+      "formula": ",Description AS Description ,IsClosedOnCreate AS IsClosedOnCreate ,Product__c AS Product ,CASS_Impact__c AS CASS_Impact ,AML_Status__c as AML_status ,Type__c AS Type …",
+      "expression_raw": ",Description AS Description\n      ,IsClosedOnCreate AS IsClosedOnCreate\n      ,Product__c AS Product\n      ,CASS_Impact__c AS CASS_Impact\n      ,AML_Status__c as AML_status\n      ,Type__c AS Type\n    …",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L23-L52",
+      "scope": "main"
+    },
+    {
+      "column": "ElapsedTimeFromEscalation",
+      "formula": ",IsClosedOnCreate AS IsClosedOnCreate ,Product__c AS Product ,CASS_Impact__c AS CASS_Impact ,AML_Status__c as AML_status ,Type__c AS Type ,Sub_Type__c AS SubType ,S…",
+      "expression_raw": ",IsClosedOnCreate AS IsClosedOnCreate\n      ,Product__c AS Product\n      ,CASS_Impact__c AS CASS_Impact\n      ,AML_Status__c as AML_status\n      ,Type__c AS Type\n      ,Sub_Type__c AS SubType\n      ,S…",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L24-L53",
+      "scope": "main"
+    },
+    {
+      "column": "FirstResponseDateTime",
+      "formula": ",Product__c AS Product ,CASS_Impact__c AS CASS_Impact ,AML_Status__c as AML_status ,Type__c AS Type ,Sub_Type__c AS SubType ,Sub_Type_2__c AS SubType2 ,Number_of_to…",
+      "expression_raw": ",Product__c AS Product\n      ,CASS_Impact__c AS CASS_Impact\n      ,AML_Status__c as AML_status\n      ,Type__c AS Type\n      ,Sub_Type__c AS SubType\n      ,Sub_Type_2__c AS SubType2\n      ,Number_of_to…",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L25-L54",
+      "scope": "main"
+    },
+    {
+      "column": "ClosedDate",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "ClosedDate"
+    },
+    {
+      "column": "ChatSkill",
+      "formula": ",Withdrawal_ID__c AS WithdrawalID ,Service_Language__c AS ServiceLanguage ,CASE WHEN Duplicate__c = true and Origin = 'Chat' and Status = 'Closed' THEN 1 else 0 END AS IsDuplicate ,O…",
+      "expression_raw": ",Withdrawal_ID__c AS WithdrawalID\n      ,Service_Language__c AS ServiceLanguage\n      ,CASE WHEN Duplicate__c = true and Origin = 'Chat' and Status = 'Closed' THEN 1 else 0 END AS IsDuplicate\n      ,O…",
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L40-L69",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_case.sql"
+}

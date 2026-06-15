@@ -1,0 +1,335 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_bloomberg_holdings_pct_of_mktcap_cids",
+  "rows": [
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "MktCap",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia1pricing",
+      "source_column_name": "curMktCap",
+      "target_column_name": "MktCap",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "MktCap",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitynamrpricing",
+      "source_column_name": "curMktCap",
+      "target_column_name": "MktCap",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "MktCap",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia2pricing",
+      "source_column_name": "curMktCap",
+      "target_column_name": "MktCap",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitylamrpricing",
+      "source_column_name": "curMktCap",
+      "target_column_name": "MktCap",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityeuropricing",
+      "source_column_name": "curMktCap",
+      "target_column_name": "MktCap",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitylamr",
+      "source_column_name": "idBbCompany",
+      "target_column_name": "NOP_CID",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "CID",
+      "target_column_name": "NOP_CID",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia2",
+      "source_column_name": "idBbCompany",
+      "target_column_name": "NOP_CID",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "NOP",
+      "target_column_name": "NOP_CID",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityeuro",
+      "source_column_name": "idBbCompany",
+      "target_column_name": "NOP_CID",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitynamr",
+      "source_column_name": "idBbCompany",
+      "target_column_name": "NOP_CID",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia1",
+      "source_column_name": "idBbCompany",
+      "target_column_name": "NOP_CID",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "NOP",
+      "target_column_name": "NOP_CID_Inst",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitylamr",
+      "source_column_name": "idBbCompany",
+      "target_column_name": "Perc",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia1",
+      "source_column_name": "idBbCompany",
+      "target_column_name": "Perc",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "CID",
+      "target_column_name": "Perc",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia2",
+      "source_column_name": "idBbCompany",
+      "target_column_name": "Perc",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitylamrpricing",
+      "source_column_name": "curMktCap",
+      "target_column_name": "Perc",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "Perc",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "NOP",
+      "target_column_name": "Perc",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia2pricing",
+      "source_column_name": "curMktCap",
+      "target_column_name": "Perc",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia1pricing",
+      "source_column_name": "curMktCap",
+      "target_column_name": "Perc",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitynamr",
+      "source_column_name": "idBbCompany",
+      "target_column_name": "Perc",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityeuro",
+      "source_column_name": "idBbCompany",
+      "target_column_name": "Perc",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitynamrpricing",
+      "source_column_name": "curMktCap",
+      "target_column_name": "Perc",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityeuropricing",
+      "source_column_name": "curMktCap",
+      "target_column_name": "Perc",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "Perc",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "Perc",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_y",
+      "entity_type": "JOB",
+      "event_count": 44
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ym",
+      "entity_type": "JOB",
+      "event_count": 44
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ymd",
+      "entity_type": "JOB",
+      "event_count": 44
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia2",
+      "source_column_name": "idBbCompany",
+      "target_column_name": "idBbCompany",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityeuro",
+      "source_column_name": "idBbCompany",
+      "target_column_name": "idBbCompany",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitynamr",
+      "source_column_name": "idBbCompany",
+      "target_column_name": "idBbCompany",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia1",
+      "source_column_name": "idBbCompany",
+      "target_column_name": "idBbCompany",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitylamr",
+      "source_column_name": "idBbCompany",
+      "target_column_name": "idBbCompany",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitylamr",
+      "source_column_name": "idBbGlobalCompanyName",
+      "target_column_name": "idBbGlobalCompanyName",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia2",
+      "source_column_name": "idBbGlobalCompanyName",
+      "target_column_name": "idBbGlobalCompanyName",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityeuro",
+      "source_column_name": "idBbGlobalCompanyName",
+      "target_column_name": "idBbGlobalCompanyName",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equitynamr",
+      "source_column_name": "idBbGlobalCompanyName",
+      "target_column_name": "idBbGlobalCompanyName",
+      "entity_type": "JOB",
+      "event_count": 69
+    },
+    {
+      "source_table_full_name": "main.asset_universe.silver_bloomberg_bloomberg_bulck_equityasia1",
+      "source_column_name": "idBbGlobalCompanyName",
+      "target_column_name": "idBbGlobalCompanyName",
+      "entity_type": "JOB",
+      "event_count": 69
+    }
+  ],
+  "generated_at": "2026-05-19T12:14:44Z"
+}

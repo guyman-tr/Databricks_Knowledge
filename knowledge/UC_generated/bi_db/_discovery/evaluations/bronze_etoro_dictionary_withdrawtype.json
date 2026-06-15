@@ -1,0 +1,60 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_dictionary_withdrawtype",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:34Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "WithdrawTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.WithdrawType.md",
+      "upstream_quote": "Unique identifier for the withdrawal classification: 0=Default (standard cashout), 1=Transfer (internal), 2=ApprovedForC",
+      "wiki_quote": "Unique identifier for the withdrawal classification: 0=Default (standard cashout), 1=Transfer (internal), 2=ApprovedForC",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WithdrawType",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.WithdrawType.md",
+      "upstream_quote": "Short code name for the type: \"Default\", \"Transfer\", \"ApprovedForClosure\". Used as a programmatic identifier in applicat",
+      "wiki_quote": "Short code name for the type: \"Default\", \"Transfer\", \"ApprovedForClosure\". Used as a programmatic identifier in applicat",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Description",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.WithdrawType.md",
+      "upstream_quote": "Human-readable description of the type. Empty for Default (0), \"Internal Transfer\" for Transfer (1), \"Approved for closu",
+      "wiki_quote": "Human-readable description of the type. Empty for Default (0), \"Internal Transfer\" for Transfer (1), \"Approved for closu",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 3,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 3 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

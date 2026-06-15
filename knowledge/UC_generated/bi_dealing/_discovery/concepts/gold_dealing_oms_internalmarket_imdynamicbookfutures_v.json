@@ -1,0 +1,30 @@
+{
+  "object_fqn": "main.bi_dealing.gold_dealing_oms_internalmarket_imdynamicbookfutures_v",
+  "generated_at": "2026-05-19T12:47:48Z",
+  "concept_count": 1,
+  "concepts": [
+    {
+      "id": "dim_lookup_di",
+      "name": "Dim lookup via di",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "alias": "di",
+      "join_conditions": [
+        ",'                       ' as URL\n,'       ' as OmsParam\n,date(UpdateTime"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L53",
+      "scopes": [
+        "final"
+      ],
+      "scope": "final",
+      "join_condition": ",'                       ' as URL\n,'       ' as OmsParam\n,date(UpdateTime"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_dealing/_discovery/source_code/gold_dealing_oms_internalmarket_imdynamicbookfutures_v.sql"
+}

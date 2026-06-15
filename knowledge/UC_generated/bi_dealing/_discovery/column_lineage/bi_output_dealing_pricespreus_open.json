@@ -1,0 +1,202 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_pricespreus_open",
+  "rows": [
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "Date",
+      "entity_type": "JOB",
+      "event_count": 235
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "EOD_Ask",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "EOD_Bid",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "EOD_NOP",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "IsBuy",
+      "target_column_name": "EOD_NOP",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "EOD_NOP",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "EOD_NOP",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "IsBuy",
+      "target_column_name": "IsBuy",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "IsSettled",
+      "target_column_name": "IsSettled",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "Percentage_Change",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "Percentage_Change",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_marketrates_dealing_market_feed_rates",
+      "source_column_name": "ReceivedTime",
+      "target_column_name": "Percentage_Change",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_marketrates_dealing_market_feed_rates",
+      "source_column_name": "Ask",
+      "target_column_name": "Percentage_Change",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Percentage_Change",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_marketrates_dealing_market_feed_rates",
+      "source_column_name": "Bid",
+      "target_column_name": "Percentage_Change",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_marketrates_dealing_market_feed_rates",
+      "source_column_name": "ReceivedTime",
+      "target_column_name": "PreOpenAsk",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_marketrates_dealing_market_feed_rates",
+      "source_column_name": "Ask",
+      "target_column_name": "PreOpenAsk",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_marketrates_dealing_market_feed_rates",
+      "source_column_name": "ReceivedTime",
+      "target_column_name": "PreOpenBid",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_marketrates_dealing_market_feed_rates",
+      "source_column_name": "Bid",
+      "target_column_name": "PreOpenBid",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_marketrates_dealing_market_feed_rates",
+      "source_column_name": "Bid",
+      "target_column_name": "Pre_MarketNOP",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_marketrates_dealing_market_feed_rates",
+      "source_column_name": "ReceivedTime",
+      "target_column_name": "Pre_MarketNOP",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_marketrates_dealing_market_feed_rates",
+      "source_column_name": "Ask",
+      "target_column_name": "Pre_MarketNOP",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Pre_MarketNOP",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Pre_MarketNOP",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 365
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 235
+    }
+  ],
+  "generated_at": "2026-05-19T12:36:52Z"
+}

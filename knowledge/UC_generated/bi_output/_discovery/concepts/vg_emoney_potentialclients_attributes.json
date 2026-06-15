@@ -1,0 +1,161 @@
+{
+  "object_fqn": "main.bi_output.vg_emoney_potentialclients_attributes",
+  "generated_at": "2026-05-19T15:01:21Z",
+  "concept_count": 5,
+  "concepts": [
+    {
+      "id": "case_flag_iseligible_au",
+      "name": "IsEligible_AU computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsEligible_AU"
+      ],
+      "predicates": [
+        {
+          "col": "CountryID",
+          "op": "=",
+          "val": "12"
+        },
+        {
+          "col": "IsValidCustomer",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "RegulationID",
+          "op": "=",
+          "val": "10"
+        },
+        {
+          "col": "PlayerStatusID",
+          "op": "IN",
+          "val": "(1,12,5)"
+        },
+        {
+          "col": "VerificationLevelID",
+          "op": "=",
+          "val": "3"
+        },
+        {
+          "col": "ScreeningStatusID",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "AccountTypeID",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "PhoneVerifiedID",
+          "op": "IN",
+          "val": "(1,2)"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "bi_output.sql L38-L49",
+      "scope": "eligibility_au_only"
+    },
+    {
+      "id": "dim_lookup_dpl",
+      "name": "Dim lookup via dpl",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "alias": "dpl",
+      "join_conditions": [
+        "dc.PlayerLevelID = dpl.PlayerLevelID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L23",
+      "scopes": [
+        "base_customers"
+      ],
+      "scope": "base_customers",
+      "join_condition": "dc.PlayerLevelID = dpl.PlayerLevelID"
+    },
+    {
+      "id": "dim_lookup_co",
+      "name": "Dim lookup via co",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "alias": "co",
+      "join_conditions": [
+        "dc.CountryID = co.CountryID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L25",
+      "scopes": [
+        "base_customers"
+      ],
+      "scope": "base_customers",
+      "join_condition": "dc.CountryID = co.CountryID"
+    },
+    {
+      "id": "dim_lookup_dr",
+      "name": "Dim lookup via dr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "alias": "dr",
+      "join_conditions": [
+        "dr.DateRangeID = fsc.DateRangeID\n       AND mda.AccountCreateDateID BETWEEN dr.FromDateID AND dr.ToDateID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L63",
+      "scopes": [
+        "etm_accounts"
+      ],
+      "scope": "etm_accounts",
+      "join_condition": "dr.DateRangeID = fsc.DateRangeID\n       AND mda.AccountCreateDateID BETWEEN dr.FromDateID AND dr.ToDateID"
+    },
+    {
+      "id": "filter_block_etm_accounts",
+      "name": "Filter block on etm_accounts",
+      "kind": "filter_block",
+      "columns_involved": [
+        "GCID_Unique_Count",
+        "IsValidETM",
+        "IsTestAccount"
+      ],
+      "predicates": [
+        {
+          "col": "GCID_Unique_Count",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "IsValidETM",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "IsTestAccount",
+          "op": "=",
+          "val": "0"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L66",
+      "scope": "etm_accounts",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_emoney_potentialclients_attributes.sql"
+}

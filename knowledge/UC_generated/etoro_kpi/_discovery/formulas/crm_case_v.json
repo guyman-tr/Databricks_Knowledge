@@ -1,0 +1,549 @@
+{
+  "object_fqn": "main.etoro_kpi.crm_case_v",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 57,
+  "formulas": [
+    {
+      "column": "CaseID",
+      "formula": "Case_Id_18__c",
+      "expression_raw": "c.Case_Id_18__c                   AS CaseId",
+      "inputs": [
+        "main.crm.gold_crm_case_tiny"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "deflection"
+    },
+    {
+      "column": "CID",
+      "formula": ",CID__c",
+      "expression_raw": ",CID__c                                AS CID",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L62",
+      "scope": "main"
+    },
+    {
+      "column": "CreatedDate",
+      "formula": "WHERE CID__c = CID__c AND Category__c = Category__c AND CreatedDate > CreatedDate",
+      "expression_raw": "WHERE f.CID__c      = c.CID__c\n            AND f.Category__c  = c.Category__c\n            AND f.CreatedDate  > c.CreatedDate",
+      "inputs": [
+        "main.crm.gold_crm_case_tiny"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L33-L35",
+      "scope": "deflection"
+    },
+    {
+      "column": "CaseNumber",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "CaseNumber"
+    },
+    {
+      "column": "Status",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "Status"
+    },
+    {
+      "column": "Origin",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "Origin"
+    },
+    {
+      "column": "Subject",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "Subject"
+    },
+    {
+      "column": "Priority",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "Priority"
+    },
+    {
+      "column": "OwnerId",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "OwnerId"
+    },
+    {
+      "column": "CaseOwnerTitle",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L70",
+      "scope": "main"
+    },
+    {
+      "column": "IsSolved",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L71",
+      "scope": "main"
+    },
+    {
+      "column": "ClosedDate",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "ClosedDate"
+    },
+    {
+      "column": "IsClosedOnCreate",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "IsClosedOnCreate"
+    },
+    {
+      "column": "ServiceLanguage",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L74",
+      "scope": "main"
+    },
+    {
+      "column": "Product",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L75",
+      "scope": "main"
+    },
+    {
+      "column": "Category",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L76",
+      "scope": "main"
+    },
+    {
+      "column": "CaseType",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L77",
+      "scope": "main"
+    },
+    {
+      "column": "SubType",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L78",
+      "scope": "main"
+    },
+    {
+      "column": "SubType2",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L79",
+      "scope": "main"
+    },
+    {
+      "column": "WithdrawalID",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L80",
+      "scope": "main"
+    },
+    {
+      "column": "DepositID",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L81",
+      "scope": "main"
+    },
+    {
+      "column": "PositionID",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L82",
+      "scope": "main"
+    },
+    {
+      "column": "MirrorID",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L83",
+      "scope": "main"
+    },
+    {
+      "column": "Phase",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L84",
+      "scope": "main"
+    },
+    {
+      "column": "IsOfficialComplaint",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L85",
+      "scope": "main"
+    },
+    {
+      "column": "IsReOpened",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L86",
+      "scope": "main"
+    },
+    {
+      "column": "CaseCreatedByRole",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L87",
+      "scope": "main"
+    },
+    {
+      "column": "IncomingEmailCount",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L88",
+      "scope": "main"
+    },
+    {
+      "column": "OutboundEmailCount",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L89",
+      "scope": "main"
+    },
+    {
+      "column": "InternalCommentCount",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L90",
+      "scope": "main"
+    },
+    {
+      "column": "FirstResponseDateTime",
+      "formula": ",CID__c AS CID ,CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c …",
+      "expression_raw": ",CID__c                                AS CID\n      ,CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L62-L91",
+      "scope": "main"
+    },
+    {
+      "column": "TimeToFirstResponse",
+      "formula": ",CreatedDate ,CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c AS CaseOwnerTitle ,Solved__c …",
+      "expression_raw": ",CreatedDate\n      ,CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                   AS CaseOwnerTitle\n      ,Solved__c                …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L63-L92",
+      "scope": "main"
+    },
+    {
+      "column": "ResolutionTimeFromFirstResponse",
+      "formula": ",CaseNumber ,Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c AS CaseOwnerTitle ,Solved__c AS IsS…",
+      "expression_raw": ",CaseNumber\n      ,Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                   AS CaseOwnerTitle\n      ,Solved__c                             AS IsS…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L64-L93",
+      "scope": "main"
+    },
+    {
+      "column": "TotalTimeToResolve",
+      "formula": ",Status ,Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c AS CaseOwnerTitle ,Solved__c AS IsSolved ,Close…",
+      "expression_raw": ",Status\n      ,Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                   AS CaseOwnerTitle\n      ,Solved__c                             AS IsSolved\n      ,Close…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L65-L94",
+      "scope": "main"
+    },
+    {
+      "column": "TouchCount",
+      "formula": ",Origin ,Subject ,Priority ,OwnerId ,Case_Owner_Title__c AS CaseOwnerTitle ,Solved__c AS IsSolved ,ClosedDate ,I…",
+      "expression_raw": ",Origin\n      ,Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                   AS CaseOwnerTitle\n      ,Solved__c                             AS IsSolved\n      ,ClosedDate\n      ,I…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L66-L95",
+      "scope": "main"
+    },
+    {
+      "column": "TechnicalRefund",
+      "formula": ",Subject ,Priority ,OwnerId ,Case_Owner_Title__c AS CaseOwnerTitle ,Solved__c AS IsSolved ,ClosedDate ,IsClosedOnCreat…",
+      "expression_raw": ",Subject\n      ,Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                   AS CaseOwnerTitle\n      ,Solved__c                             AS IsSolved\n      ,ClosedDate\n      ,IsClosedOnCreat…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L67-L96",
+      "scope": "main"
+    },
+    {
+      "column": "OwnerSubRole",
+      "formula": ",Priority ,OwnerId ,Case_Owner_Title__c AS CaseOwnerTitle ,Solved__c AS IsSolved ,ClosedDate ,IsClosedOnCreate ,Servic…",
+      "expression_raw": ",Priority\n      ,OwnerId\n      ,Case_Owner_Title__c                   AS CaseOwnerTitle\n      ,Solved__c                             AS IsSolved\n      ,ClosedDate\n      ,IsClosedOnCreate\n      ,Servic…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L68-L97",
+      "scope": "main"
+    },
+    {
+      "column": "JiraID",
+      "formula": ",OwnerId ,Case_Owner_Title__c AS CaseOwnerTitle ,Solved__c AS IsSolved ,ClosedDate ,IsClosedOnCreate ,Service_Language__c …",
+      "expression_raw": ",OwnerId\n      ,Case_Owner_Title__c                   AS CaseOwnerTitle\n      ,Solved__c                             AS IsSolved\n      ,ClosedDate\n      ,IsClosedOnCreate\n      ,Service_Language__c   …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L69-L98",
+      "scope": "main"
+    },
+    {
+      "column": "GoodwillGesture",
+      "formula": ",Case_Owner_Title__c AS CaseOwnerTitle ,Solved__c AS IsSolved ,ClosedDate ,IsClosedOnCreate ,Service_Language__c …",
+      "expression_raw": ",Case_Owner_Title__c                   AS CaseOwnerTitle\n      ,Solved__c                             AS IsSolved\n      ,ClosedDate\n      ,IsClosedOnCreate\n      ,Service_Language__c                  …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L70-L99",
+      "scope": "main"
+    },
+    {
+      "column": "AMLState",
+      "formula": ",Solved__c AS IsSolved ,ClosedDate ,IsClosedOnCreate ,Service_Language__c AS ServiceLanguage ,Product__c …",
+      "expression_raw": ",Solved__c                             AS IsSolved\n      ,ClosedDate\n      ,IsClosedOnCreate\n      ,Service_Language__c                   AS ServiceLanguage\n      ,Product__c                          …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L71-L100",
+      "scope": "main"
+    },
+    {
+      "column": "QCSurvey",
+      "formula": ",ClosedDate ,IsClosedOnCreate ,Service_Language__c AS ServiceLanguage ,Product__c AS Product ,Category__c …",
+      "expression_raw": ",ClosedDate\n      ,IsClosedOnCreate\n      ,Service_Language__c                   AS ServiceLanguage\n      ,Product__c                            AS Product\n      ,Category__c                          …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L72-L101",
+      "scope": "main"
+    },
+    {
+      "column": "CaseSkillSet",
+      "formula": ",IsClosedOnCreate ,Service_Language__c AS ServiceLanguage ,Product__c AS Product ,Category__c AS Category …",
+      "expression_raw": ",IsClosedOnCreate\n      ,Service_Language__c                   AS ServiceLanguage\n      ,Product__c                            AS Product\n      ,Category__c                           AS Category\n     …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L73-L102",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": ",Service_Language__c AS ServiceLanguage ,Product__c AS Product ,Category__c AS Category ,Type__c …",
+      "expression_raw": ",Service_Language__c                   AS ServiceLanguage\n      ,Product__c                            AS Product\n      ,Category__c                           AS Category\n      ,Type__c               …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L74-L103",
+      "scope": "main"
+    },
+    {
+      "column": "ClubLevel",
+      "formula": ",Product__c AS Product ,Category__c AS Category ,Type__c AS CaseType ,Sub_Type__c …",
+      "expression_raw": ",Product__c                            AS Product\n      ,Category__c                           AS Category\n      ,Type__c                               AS CaseType\n      ,Sub_Type__c                  …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L75-L104",
+      "scope": "main"
+    },
+    {
+      "column": "EscalatedBy",
+      "formula": ",Category__c AS Category ,Type__c AS CaseType ,Sub_Type__c AS SubType ,Sub_Type_2__c …",
+      "expression_raw": ",Category__c                           AS Category\n      ,Type__c                               AS CaseType\n      ,Sub_Type__c                           AS SubType\n      ,Sub_Type_2__c                …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L76-L105",
+      "scope": "main"
+    },
+    {
+      "column": "EscalationDate",
+      "formula": ",Type__c AS CaseType ,Sub_Type__c AS SubType ,Sub_Type_2__c AS SubType2 ,Withdrawal_ID__c …",
+      "expression_raw": ",Type__c                               AS CaseType\n      ,Sub_Type__c                           AS SubType\n      ,Sub_Type_2__c                         AS SubType2\n      ,Withdrawal_ID__c             …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L77-L106",
+      "scope": "main"
+    },
+    {
+      "column": "IsEscalated",
+      "formula": ",Deposit_ID__c AS DepositID ,Position_ID__c AS PositionID ,Mirror_ID__c AS MirrorID ,Phase__c …",
+      "expression_raw": ",Deposit_ID__c                         AS DepositID\n      ,Position_ID__c                        AS PositionID\n      ,Mirror_ID__c                          AS MirrorID\n      ,Phase__c                 …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L81-L110",
+      "scope": "main"
+    },
+    {
+      "column": "EscalationStatus",
+      "formula": ",Position_ID__c AS PositionID ,Mirror_ID__c AS MirrorID ,Phase__c AS Phase ,Official_Complaint__c …",
+      "expression_raw": ",Position_ID__c                        AS PositionID\n      ,Mirror_ID__c                          AS MirrorID\n      ,Phase__c                              AS Phase\n      ,Official_Complaint__c        …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L82-L111",
+      "scope": "main"
+    },
+    {
+      "column": "FinalEscalationResponseDate",
+      "formula": ",Mirror_ID__c AS MirrorID ,Phase__c AS Phase ,Official_Complaint__c AS IsOfficialComplaint ,Re_Opened__c …",
+      "expression_raw": ",Mirror_ID__c                          AS MirrorID\n      ,Phase__c                              AS Phase\n      ,Official_Complaint__c                 AS IsOfficialComplaint\n      ,Re_Opened__c        …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L83-L112",
+      "scope": "main"
+    },
+    {
+      "column": "CS_OPS",
+      "formula": ",Phase__c AS Phase ,Official_Complaint__c AS IsOfficialComplaint ,Re_Opened__c AS IsReOpened ,Case_Created_By_Ro…",
+      "expression_raw": ",Phase__c                              AS Phase\n      ,Official_Complaint__c                 AS IsOfficialComplaint\n      ,Re_Opened__c                          AS IsReOpened\n      ,Case_Created_By_Ro…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L84-L113",
+      "scope": "main"
+    },
+    {
+      "column": "IsDeflected",
+      "formula": ",Official_Complaint__c AS IsOfficialComplaint ,Re_Opened__c AS IsReOpened ,Case_Created_By_Role__c AS CaseCreatedByRole ,Number…",
+      "expression_raw": ",Official_Complaint__c                 AS IsOfficialComplaint\n      ,Re_Opened__c                          AS IsReOpened\n      ,Case_Created_By_Role__c               AS CaseCreatedByRole\n      ,Number…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L85-L114",
+      "scope": "main"
+    },
+    {
+      "column": "IsDeEscalated",
+      "formula": ",Re_Opened__c AS IsReOpened ,Case_Created_By_Role__c AS CaseCreatedByRole ,Number_of_Incoming_Email_Messages__c AS IncomingEmailCount ,Number_…",
+      "expression_raw": ",Re_Opened__c                          AS IsReOpened\n      ,Case_Created_By_Role__c               AS CaseCreatedByRole\n      ,Number_of_Incoming_Email_Messages__c  AS IncomingEmailCount\n      ,Number_…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L86-L115",
+      "scope": "main"
+    },
+    {
+      "column": "ClosedBy",
+      "formula": ",Case_Created_By_Role__c AS CaseCreatedByRole ,Number_of_Incoming_Email_Messages__c AS IncomingEmailCount ,Number_of_Outbound_Email_Messages__c AS OutboundEmailCount …",
+      "expression_raw": ",Case_Created_By_Role__c               AS CaseCreatedByRole\n      ,Number_of_Incoming_Email_Messages__c  AS IncomingEmailCount\n      ,Number_of_Outbound_Email_Messages__c  AS OutboundEmailCount\n      …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L87-L116",
+      "scope": "main"
+    },
+    {
+      "column": "EventID",
+      "formula": ",Number_of_Incoming_Email_Messages__c AS IncomingEmailCount ,Number_of_Outbound_Email_Messages__c AS OutboundEmailCount ,Number_of_Internal_Case_Comments__c AS InternalCommentCount …",
+      "expression_raw": ",Number_of_Incoming_Email_Messages__c  AS IncomingEmailCount\n      ,Number_of_Outbound_Email_Messages__c  AS OutboundEmailCount\n      ,Number_of_Internal_Case_Comments__c   AS InternalCommentCount\n   …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L88-L117",
+      "scope": "main"
+    },
+    {
+      "column": "DoneBy",
+      "formula": ",Number_of_Outbound_Email_Messages__c AS OutboundEmailCount ,Number_of_Internal_Case_Comments__c AS InternalCommentCount ,X1st_Response_Date_Time__c AS FirstResponseDateTime …",
+      "expression_raw": ",Number_of_Outbound_Email_Messages__c  AS OutboundEmailCount\n      ,Number_of_Internal_Case_Comments__c   AS InternalCommentCount\n      ,X1st_Response_Date_Time__c            AS FirstResponseDateTime\n…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L89-L118",
+      "scope": "main"
+    },
+    {
+      "column": "Touches",
+      "formula": ",Number_of_Internal_Case_Comments__c AS InternalCommentCount ,X1st_Response_Date_Time__c AS FirstResponseDateTime ,Time_to_1st_Response__c AS TimeToFirstResponse…",
+      "expression_raw": ",Number_of_Internal_Case_Comments__c   AS InternalCommentCount\n      ,X1st_Response_Date_Time__c            AS FirstResponseDateTime\n      ,Time_to_1st_Response__c               AS TimeToFirstResponse…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L90-L119",
+      "scope": "main"
+    },
+    {
+      "column": "SolvedDate",
+      "formula": ",X1st_Response_Date_Time__c AS FirstResponseDateTime ,Time_to_1st_Response__c AS TimeToFirstResponse ,Resolution_Time_From_1st_Response__c AS ResolutionTimeFromFi…",
+      "expression_raw": ",X1st_Response_Date_Time__c            AS FirstResponseDateTime\n      ,Time_to_1st_Response__c               AS TimeToFirstResponse\n      ,Resolution_Time_From_1st_Response__c  AS ResolutionTimeFromFi…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L91-L120",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/crm_case_v.sql"
+}

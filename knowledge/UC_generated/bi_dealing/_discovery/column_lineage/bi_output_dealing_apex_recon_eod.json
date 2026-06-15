@@ -1,0 +1,489 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_apex_recon_eod",
+  "rows": [
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "AccountNumber",
+      "target_column_name": "AccountNumber",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
+      "source_column_name": "lp_accounts",
+      "target_column_name": "AccountNumber",
+      "entity_type": "JOB",
+      "event_count": 55
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
+      "source_column_name": "lp_accounts",
+      "target_column_name": "AccountNumber",
+      "entity_type": "JOB",
+      "event_count": 32
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "AccountNumber",
+      "target_column_name": "AccountNumber",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "AccountNumber",
+      "target_column_name": "AccountNumber",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
+      "source_column_name": "lp_accounts",
+      "target_column_name": "AccountNumber",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "MarketValue",
+      "target_column_name": "Apex_Amount",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "Apex_Amount",
+      "target_column_name": "Apex_Amount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "MarketValue",
+      "target_column_name": "Apex_Amount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "ClosingPrice",
+      "target_column_name": "Apex_Rate",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "Apex_Rate",
+      "target_column_name": "Apex_Rate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "ClosingPrice",
+      "target_column_name": "Apex_Rate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "TradeQuantity",
+      "target_column_name": "Apex_Units",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "Apex_Units",
+      "target_column_name": "Apex_Units",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "TradeQuantity",
+      "target_column_name": "Apex_Units",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "CUSIP",
+      "target_column_name": "CUSIP",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "CUSIP",
+      "target_column_name": "CUSIP",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "CUSIP",
+      "target_column_name": "CUSIP",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "CUSIP",
+      "target_column_name": "CUSIP",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "CUSIP",
+      "target_column_name": "CUSIP",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "Client_NOP",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "Client_NOP",
+      "target_column_name": "Client_NOP",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "Client_NOP",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "Client_NOP_Units",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "Client_NOP_Units",
+      "target_column_name": "Client_NOP_Units",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "Client_NOP_Units",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "Date",
+      "target_column_name": "Date",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "Etoro_Amount",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "Etoro_Amount",
+      "target_column_name": "Etoro_Amount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "Etoro_Amount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroRate",
+      "target_column_name": "Etoro_Rate",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "Etoro_Rate",
+      "target_column_name": "Etoro_Rate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroRate",
+      "target_column_name": "Etoro_Rate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "Etoro_Units",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "Etoro_Units",
+      "target_column_name": "Etoro_Units",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "Etoro_Units",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
+      "source_column_name": "hs_dealing_desk",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 55
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
+      "source_column_name": "hs_dealing_desk",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 32
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
+      "source_column_name": "hs_dealing_desk",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 87
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_apex_ext982_3eu",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "UpdateDate",
+      "target_column_name": "UpdateDate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "etr_y",
+      "target_column_name": "etr_y",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "etr_ym",
+      "target_column_name": "etr_ym",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "etr_ymd",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    }
+  ],
+  "generated_at": "2026-05-19T12:13:56Z"
+}

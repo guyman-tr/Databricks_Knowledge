@@ -1,0 +1,338 @@
+{
+  "object_fqn": "main.etoro_kpi.ddr_revenue_v",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 30,
+  "formulas": [
+    {
+      "column": "DateID",
+      "formula": "DateID",
+      "expression_raw": "dd.DateID",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "Date",
+      "formula": "Date",
+      "expression_raw": "rga.Date AS `Date`",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYearMonth",
+      "formula": "CalendarYearMonth",
+      "expression_raw": "dd.CalendarYearMonth",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarQuarter",
+      "formula": "CalendarQuarter",
+      "expression_raw": "dd.CalendarQuarter",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYear",
+      "formula": "CalendarYear",
+      "expression_raw": "dd.CalendarYear",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": "STRING(RealCID)",
+      "expression_raw": "STRING(rga.RealCID) AS RealCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "ActionTypeID",
+      "formula": "ActionTypeID",
+      "expression_raw": "rga.ActionTypeID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "ActionType",
+      "formula": "ActionType",
+      "expression_raw": "rga.ActionType",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "formula": "InstrumentTypeID",
+      "expression_raw": "rga.InstrumentTypeID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentType",
+      "formula": "InstrumentType",
+      "expression_raw": "ins.InstrumentType",
+      "inputs": [
+        "main.bi_output.bi_ouput_v_dim_instrumenttype"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "IsSettled",
+      "formula": "IsSettled",
+      "expression_raw": "rga.IsSettled",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "IsCopy",
+      "formula": "IsCopy",
+      "expression_raw": "rga.IsCopy",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "Metric",
+      "formula": "Metric",
+      "expression_raw": "rga.Metric",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "CountAsActiveTrade",
+      "formula": "CountAsActiveTrade",
+      "expression_raw": "rga.CountAsActiveTrade",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "IncludedInTotalRevenue",
+      "formula": "IncludedInTotalRevenue",
+      "expression_raw": "rga.IncludedInTotalRevenue",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "RevenueMetricCategory",
+      "formula": "RevenueMetricCategory",
+      "expression_raw": "rmtr.RevenueMetricCategory",
+      "inputs": [
+        "main.bi_output.bi_output_customer_ddr_revenue_metrics"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "RevenueMetricCategoryID",
+      "formula": "RevenueMetricCategoryID",
+      "expression_raw": "rga.RevenueMetricCategoryID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "IsBuy",
+      "formula": "IsBuy",
+      "expression_raw": "rga.IsBuy",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "IsLeveraged",
+      "formula": "IsLeveraged",
+      "expression_raw": "rga.IsLeveraged",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "IsFuture",
+      "formula": "IsFuture",
+      "expression_raw": "rga.IsFuture",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "IsCopyFund",
+      "formula": "IsCopyFund",
+      "expression_raw": "rga.IsCopyFund",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "IsOpenedFromIBAN",
+      "formula": "IsOpenedFromIBAN",
+      "expression_raw": "rga.IsOpenedFromIBAN",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "IsClosedToIBAN",
+      "formula": "IsClosedToIBAN",
+      "expression_raw": "rga.IsClosedToIBAN",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "IsRecurring",
+      "formula": "IsRecurring",
+      "expression_raw": "rga.IsRecurring",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "IsAirDrop",
+      "formula": "IsAirDrop",
+      "expression_raw": "rga.IsAirDrop",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "IsSQF",
+      "formula": "IsSQF",
+      "expression_raw": "rga.IsSQF",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "IsMarginTrade",
+      "formula": "IsMarginTrade",
+      "expression_raw": "rga.IsMarginTrade",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    },
+    {
+      "column": "IsC2P",
+      "formula": "IsC2P",
+      "expression_raw": "rga.IsC2P",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L35-L35",
+      "scope": "main"
+    },
+    {
+      "column": "CountTransactions",
+      "formula": "SUM(CountTransactions)",
+      "expression_raw": "SUM(rga.CountTransactions) AS CountTransactions",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "RevenueAmount",
+      "formula": "SUM(Amount)",
+      "expression_raw": "SUM(rga.Amount) AS RevenueAmount",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions"
+      ],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L37-L37",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/ddr_revenue_v.sql"
+}

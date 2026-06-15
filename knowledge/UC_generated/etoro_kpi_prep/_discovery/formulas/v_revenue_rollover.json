@@ -1,0 +1,74 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_revenue_rollover",
+  "generated_at": "2026-05-18T16:27:37Z",
+  "formula_count": 6,
+  "formulas": [
+    {
+      "column": "PositionID",
+      "formula": "CAST(PositionID AS BIGINT)",
+      "expression_raw": "CAST(PositionID AS BIGINT) as PositionID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": "CAST(RealCID AS INT)",
+      "expression_raw": "CAST(RealCID AS INT) as RealCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "Occurred",
+      "formula": "Occurred",
+      "expression_raw": "fca.Occurred",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "DateID",
+      "formula": "CAST(DateID AS INT)",
+      "expression_raw": "CAST(DateID AS INT) as DateID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "etr_ymd",
+      "formula": "etr_ymd",
+      "expression_raw": "fca.etr_ymd",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "RolloverFee",
+      "formula": "CAST(-1 * Amount AS DECIMAL(38, 6))",
+      "expression_raw": "CAST(-1 * Amount AS DECIMAL(38, 6)) AS RolloverFee",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_revenue_rollover.sql"
+}

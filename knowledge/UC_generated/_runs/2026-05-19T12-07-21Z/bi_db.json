@@ -1,0 +1,3416 @@
+{
+  "schema": "bi_db",
+  "catalog": "main",
+  "started_at": "2026-05-19T12:08:27Z",
+  "finished_at": "2026-05-19T12:14:09Z",
+  "wall_seconds": 342.0,
+  "phases": {
+    "1": {
+      "wall_seconds": 244.4370985031128,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [145/148] gold_fivetran_google_sheets_real_future_fees (EXTERNAL)\n  [146/148] gold_opsdb_dbo_sedricfilelog (EXTERNAL)\n  [147/148] gold_prarsed_data (EXTERNAL)\n  [148/148] gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingclouddaily_v (VIEW)\n[discover-schema] wrote C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\bi_db\\_discovery\\uc_inventory.json (854,766 bytes; 148 objects, 1975 columns)"
+    },
+    "3": {
+      "wall_seconds": 3.285189390182495,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [146/148] gold_opsdb_dbo_sedricfilelog → 0 upstream refs\n  [147/148] gold_prarsed_data → 0 upstream refs\n  [148/148] gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingclouddaily_v → 0 upstream refs\n[upstream-bridge] wrote C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\bi_db\\_discovery\\upstream_wikis\\_index.json\n[upstream-bridge] stats={'total_upstreams': 0, 'rule1_synapse_mirror': 0, 'rule2_uc_generated': 0, 'rule3_uc_domain': 0, 'rule4_bronze_prod': 0, 'rule5_uc_native_map': 0, 'rule6_no_wiki': 0, 'wikis_cached': 0, 'no_wiki_placeholders': 0, 'blocked_on_upstream': 0}"
+    },
+    "4": {
+      "wall_seconds": 4.904294967651367,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  wrote stub knowledge/UC_generated/bi_db/Tables/gold_opsdb_dbo_sedricfilelog.lineage.md\n[build-lineage] main.bi_db.gold_prarsed_data (EXTERNAL)\n  wrote stub knowledge/UC_generated/bi_db/Tables/gold_prarsed_data.lineage.md\n[build-lineage] main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingclouddaily_v (VIEW)\n  wrote stub knowledge/UC_generated/bi_db/Views/gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingclouddaily_v.lineage.md"
+    },
+    "5": {
+      "wall_seconds": 33.77909278869629,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [OK] gold_fivetran_google_sheets_real_future_fees — tiers={'U': 15}, unverified=15\n  [OK] gold_opsdb_dbo_sedricfilelog — tiers={'U': 8}, unverified=8\n  [OK] gold_prarsed_data — tiers={'U': 14}, unverified=14\n  [OK] gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingclouddaily_v — tiers={'U': 100}, unverified=100\n[generate-wiki] done: 148/148 OK"
+    },
+    "6": {
+      "wall_seconds": 13.428432703018188,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "[validate-pipeline-wiki] bi_db: 145 objects checked, 0 HARD, 0 WARN issues (assert_no_inference=True)\n\n[validate-pipeline-wiki] PASS",
+      "stderr_tail": ""
+    },
+    "7": {
+      "wall_seconds": 39.9894654750824,
+      "rc": 0,
+      "rows": 145,
+      "first_pass_pass": 145,
+      "regen_pass": 0,
+      "final_fail": 0,
+      "dimension_averages": {
+        "inheritance_fidelity": 9.83,
+        "source_code_narration_accuracy": 7.0,
+        "null_with_provenance_correctness": 7.74,
+        "completeness": 8.01,
+        "shape_fidelity": 10.0,
+        "lineage_coherence": 10.0,
+        "concept_coverage": 7.5
+      },
+      "per_object": {
+        "bronze_etoro_backoffice_bonustype": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_backoffice_documentauthenticationreasons": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_backoffice_managertopermission": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_backoffice_tncdocument": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_billing_currencysettings": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_billing_depositamount": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_billing_mapmerchantcodetomid": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_billing_merchantaccountrouting": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 7.92
+        },
+        "bronze_etoro_billing_withdrawpaymentmethods": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_customer_address_masked": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_customer_customermoney": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_dictionary_adminpositionstate": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_dictionary_depositdrstatus": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_dictionary_depositstatusreason": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_dictionary_feedefinition": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_dictionary_hedgemanualrequesttype": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_dictionary_interestrateoverride": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_dictionary_openpositionactiontype": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_dictionary_riskclassificationparameter": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_dictionary_riskclassificationregulation": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_dictionary_withdrawtype": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_hedge_accountinstrumentconfiguration": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_hedge_exposurecircuitbreakerthresholds": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_hedge_gethedgeserveraccountmapping": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 7.92
+        },
+        "bronze_etoro_hedge_hbcaccountconfiguration": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_etoro_hedge_hedgeservertoliquidityaccount": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_hedge_instrumentconfiguration": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_hedge_instrumentgroups": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_hedge_instrumentgroupsmapping": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_hedge_providerunitconversionratio": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_history_currencypricemaxdatewithsplitview": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_history_deposit_datafactory": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_etoro_history_exposurecircuitbreakerthresholds": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_history_hedgeinstrumentconfiguration": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_history_hedgeservertoliquidityaccount": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_history_instrumentmetadata": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_etoro_history_interestrateoverride": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_history_liquidityprovidercontracts": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_history_providerinstrumenttoleverage": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_price_accountratesource": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_price_exchange": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_price_liquidityaccounttoinstrument": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_trade_adminpositionlog": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_trade_copytradesettlementrestrictions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_etoro_trade_fund": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_trade_getliquidityproviders": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_trade_instrumentcusip": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_trade_liquidityprovidertype": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_etoro_trade_providerinstrumenttoleverage": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiatdwhdb_dbo_eligibilityrules": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiatdwhdb_dbo_fiatcardinstances": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_fiatdwhdb_dbo_programtransitionseligibility": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_fiatdwhdb_dbo_programtransitionseligibilitystatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_fiatdwhdb_dictionary_programtransitioneligibilitysources": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiatdwhdb_dictionary_programtransitioneligibilitystatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_affiliatecommission_closedpositioncommissionvw": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_affiliatecommission_closedpositionvw": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_fiktivo_affiliatecommission_creditcommissionvw": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_affiliatecommission_creditvw": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_fiktivo_affiliatecommission_registrationcommissionvw": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_affiliatecommission_registrationvw": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_fiktivo_affiliateconfiguration_traderfirstassetposition": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_fiktivo_dbo_channels": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_mediatag": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_mediatagbanner": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_affiliates": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_affiliates_masked": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_affiliatesgroups": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_affiliatesgroups_masked": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_banners": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_bannertypes": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_country": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_ecost": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_ecost_commissions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_firstpositions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_firstpositions_commissions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_languages": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_leads": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_leads_commissions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_marketingexpense": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_paymentdetails": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_paymentdetails_masked": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_paymenthistory": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_fiktivo_dbo_tblaff_user": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dbo_tblaff_user_masked": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dictionary_paymentmethods": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_fiktivo_dictionary_positionassettype": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_moneybusdb_dictionary_accounttypes": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_moneytransfer_billing_posttransferactions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_moneytransfer_billing_transfers": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_recurringinvestment_dictionary_instancestatusid": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_recurringinvestment_dictionary_planeventcode": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_recurringinvestment_dictionary_planstatus": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_recurringinvestment_history_recurringinvestmentplans": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_riskclassification_dbo_v_riskclassificationdatalake": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_riskclassification_dictionary_cysecriskclassificationparameter": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_riskclassification_riskclassification_customeronboardingriskclassification": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_riskclassification_riskclassification_cysecriskclassificationparameter": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_sodreconciliation_apex_ext1034_newaccountfinancialinformation": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_sodreconciliation_apex_ext538_closedaccounts": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_usabroker_apex_optionsreasoningform": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_usabroker_apex_optionsreasoningformquestionsanswers": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_usabroker_apex_sketchinvestigationdonotappealreason": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_usabroker_dictionary_appropriatenessproduct": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 7.92
+        },
+        "bronze_usabroker_dictionary_appropriatenesstestresult": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 7.92
+        },
+        "bronze_usabroker_dictionary_eligibilitystatus": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 7.92
+        },
+        "bronze_usabroker_dictionary_optionsstatus": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 7.92
+        },
+        "bronze_usabroker_dictionary_reasoningstatus": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 7.92
+        },
+        "bronze_userapidb_asic_customeranswers": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_userapidb_asic_testresults": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_userapidb_customer_additionalcitizenship": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_userapidb_customer_extendeduserfieldvalidation": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_userapidb_dbo_publications": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_userapidb_dbo_v_customeranswers": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_userapidb_dbo_v_customeranswers_masked": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_userapidb_dictionary_evstatus": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_userapidb_dictionary_nationalpinvaluetypetoreporttype": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_userapidb_dictionary_tanganystatus": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_userapidb_dwh_questions_answers_v": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_userapidb_kyc_cryptoassessmentanswers": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletconversiondb_c2f_conversions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletconversiondb_c2f_conversionstatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletconversiondb_c2f_cryptotransactions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletconversiondb_c2f_estimatedfiattransactions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletconversiondb_c2f_fiattransactions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletconversiondb_dictionary_conversiontofiatstatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletconversiondb_dictionary_fiatconversiontargets": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_addressownershipproofoption": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_addressownershipprooftype": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_correlatedrequeststypes": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_customervalueeligibilitychangingsource": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_eligibilitystatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_etorolegalentities": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_travelruleaddresstype": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_travelrulecomplianceoptions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_travelrulestatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_eligibility_statusmap": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_eligibility_travelrulewhitelistedaddresses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_wallet_correlatedrequests": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_customertermsandconditions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_termsandconditions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_wallet_transactiontravelruleinformation": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_transactiontravelrulestatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_walletpoolattributes": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingclouddaily_v": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 7.83
+        }
+      }
+    }
+  },
+  "failures": [],
+  "objects": [
+    {
+      "name": "bronze_etoro_backoffice_bonustype",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 9,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_backoffice_documentauthenticationreasons",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 3,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_backoffice_managertopermission",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 3,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_backoffice_tncdocument",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 12,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_billing_currencysettings",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 6,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_billing_depositamount",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 12,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_billing_mapmerchantcodetomid",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 4,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_billing_merchantaccountrouting",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 0,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 10,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.92
+    },
+    {
+      "name": "bronze_etoro_billing_withdrawpaymentmethods",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 3,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_customer_address_masked",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 11,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_customer_customermoney",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 7,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_dictionary_adminpositionstate",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_dictionary_depositdrstatus",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_dictionary_depositstatusreason",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_dictionary_feedefinition",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_dictionary_hedgemanualrequesttype",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_dictionary_interestrateoverride",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 13,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_dictionary_openpositionactiontype",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_dictionary_riskclassificationparameter",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 4,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_dictionary_riskclassificationregulation",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 3,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_dictionary_withdrawtype",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 3,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_hedge_accountinstrumentconfiguration",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 13,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_hedge_exposurecircuitbreakerthresholds",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_hedge_gethedgeserveraccountmapping",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 0,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 5,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.92
+    },
+    {
+      "name": "bronze_etoro_hedge_hbcaccountconfiguration",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 9,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 4,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_etoro_hedge_hedgeservertoliquidityaccount",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 7,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_hedge_instrumentconfiguration",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 14,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_hedge_instrumentgroups",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 7,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_hedge_instrumentgroupsmapping",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 7,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_hedge_providerunitconversionratio",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 4,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_history_currencypricemaxdatewithsplitview",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 7,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_history_deposit_datafactory",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 43,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_etoro_history_exposurecircuitbreakerthresholds",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_history_hedgeinstrumentconfiguration",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 14,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_history_hedgeservertoliquidityaccount",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 7,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_history_instrumentmetadata",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 37,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_etoro_history_interestrateoverride",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 13,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_history_liquidityprovidercontracts",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 12,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_history_providerinstrumenttoleverage",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_price_accountratesource",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 6,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_price_exchange",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 10,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_price_liquidityaccounttoinstrument",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 7,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_trade_adminpositionlog",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 27,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_trade_copytradesettlementrestrictions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 15,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_etoro_trade_fund",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 11,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_trade_getliquidityproviders",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 6,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_trade_instrumentcusip",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 3,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_trade_liquidityprovidertype",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 7,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_etoro_trade_providerinstrumenttoleverage",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 10,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiatdwhdb_dbo_eligibilityrules",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 11,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiatdwhdb_dbo_fiatcardinstances",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 9,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_fiatdwhdb_dbo_programtransitionseligibility",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 9,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_fiatdwhdb_dbo_programtransitionseligibilitystatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 4,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_fiatdwhdb_dictionary_programtransitioneligibilitysources",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiatdwhdb_dictionary_programtransitioneligibilitystatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_affiliatecommission_closedpositioncommissionvw",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 7,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_affiliatecommission_closedpositionvw",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 25,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_fiktivo_affiliatecommission_creditcommissionvw",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_affiliatecommission_creditvw",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 26,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_fiktivo_affiliatecommission_registrationcommissionvw",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 7,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_affiliatecommission_registrationvw",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 21,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_fiktivo_affiliateconfiguration_traderfirstassetposition",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 1,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_fiktivo_dbo_channels",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_mediatag",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 6,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_mediatagbanner",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_affiliates",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 71,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_affiliates_masked",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 71,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_affiliatesgroups",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 6,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_affiliatesgroups_masked",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 6,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_banners",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 21,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_bannertypes",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_country",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 6,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_ecost",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 25,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_ecost_commissions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 9,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_firstpositions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 18,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_firstpositions_commissions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_languages",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_leads",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 25,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_leads_commissions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 9,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_marketingexpense",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_paymentdetails",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 36,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_paymentdetails_masked",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 36,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_paymenthistory",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 29,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 70,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_user",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 138,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dbo_tblaff_user_masked",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 138,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dictionary_paymentmethods",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_fiktivo_dictionary_positionassettype",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_moneybusdb_dictionary_accounttypes",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_moneytransfer_billing_posttransferactions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_moneytransfer_billing_transfers",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 20,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_recurringinvestment_dictionary_instancestatusid",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_recurringinvestment_dictionary_planeventcode",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_recurringinvestment_dictionary_planstatus",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_recurringinvestment_history_recurringinvestmentplans",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 26,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_riskclassification_dbo_v_riskclassificationdatalake",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 12,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 88,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_riskclassification_dictionary_cysecriskclassificationparameter",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 4,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 2,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_riskclassification_riskclassification_customeronboardingriskclassification",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 4,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 1,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_riskclassification_riskclassification_cysecriskclassificationparameter",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_sodreconciliation_apex_ext1034_newaccountfinancialinformation",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 36,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_sodreconciliation_apex_ext538_closedaccounts",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 9,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_usabroker_apex_optionsreasoningform",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_usabroker_apex_optionsreasoningformquestionsanswers",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 4,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_usabroker_apex_sketchinvestigationdonotappealreason",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_usabroker_dictionary_appropriatenessproduct",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 0,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 2,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.92
+    },
+    {
+      "name": "bronze_usabroker_dictionary_appropriatenesstestresult",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 0,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 2,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.92
+    },
+    {
+      "name": "bronze_usabroker_dictionary_eligibilitystatus",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 0,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 2,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.92
+    },
+    {
+      "name": "bronze_usabroker_dictionary_optionsstatus",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 0,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 2,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.92
+    },
+    {
+      "name": "bronze_usabroker_dictionary_reasoningstatus",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 0,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 2,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.92
+    },
+    {
+      "name": "bronze_userapidb_asic_customeranswers",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_userapidb_asic_testresults",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 6,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_userapidb_customer_additionalcitizenship",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_userapidb_customer_extendeduserfieldvalidation",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 4,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_userapidb_dbo_publications",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 9,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_userapidb_dbo_v_customeranswers",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 10,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_userapidb_dbo_v_customeranswers_masked",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 10,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_userapidb_dictionary_evstatus",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_userapidb_dictionary_nationalpinvaluetypetoreporttype",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_userapidb_dictionary_tanganystatus",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_userapidb_dwh_questions_answers_v",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_userapidb_kyc_cryptoassessmentanswers",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletconversiondb_c2f_conversions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 9,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletconversiondb_c2f_conversionstatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletconversiondb_c2f_cryptotransactions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 7,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletconversiondb_c2f_estimatedfiattransactions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletconversiondb_c2f_fiattransactions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 12,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletconversiondb_dictionary_conversiontofiatstatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletconversiondb_dictionary_fiatconversiontargets",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_addressownershipproofoption",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_addressownershipprooftype",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_correlatedrequeststypes",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_customervalueeligibilitychangingsource",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_eligibilitystatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_etorolegalentities",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 3,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_travelruleaddresstype",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 3,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_travelrulecomplianceoptions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_travelrulestatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_eligibility_statusmap",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 4,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_eligibility_travelrulewhitelistedaddresses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 7,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_wallet_correlatedrequests",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_customertermsandconditions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 4,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_termsandconditions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 6,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_wallet_transactiontravelruleinformation",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 12,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_transactiontravelrulestatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_walletpoolattributes",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "gold_fivetran_google_sheets_real_future_fees",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_opsdb_dbo_sedricfilelog",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_prarsed_data",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingclouddaily_v",
+      "in_pilot_scope": true,
+      "status": "Stub only",
+      "status_detail": "all 100 columns unclassifiable",
+      "blocked_on_upstream": null,
+      "routing_attempts": "no upstream wiki match AND no source-code citation",
+      "n_unverified": 100,
+      "tier_breakdown": {
+        "U": 100
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.83
+    }
+  ]
+}

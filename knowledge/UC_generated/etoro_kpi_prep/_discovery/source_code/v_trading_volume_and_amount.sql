@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_trading_volume_and_amount
--- Captured: 2026-05-18T08:14:57Z
+-- Captured: 2026-05-19T12:25:57Z
 -- ==========================================================================
 
 WITH volume_open AS (

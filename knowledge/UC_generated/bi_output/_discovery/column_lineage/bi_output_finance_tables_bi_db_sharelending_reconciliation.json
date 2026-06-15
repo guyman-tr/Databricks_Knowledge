@@ -1,0 +1,412 @@
+{
+  "object": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_reconciliation",
+  "rows": [
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Units",
+      "target_column_name": "BNYClosingLendingOptIn",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Units",
+      "target_column_name": "BNYOpeningLendingOptIn",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "CUSIP",
+      "target_column_name": "CUSIP",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "CUSIP_CINS",
+      "target_column_name": "CUSIP",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "ClosedLoans",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "ClosingLendingCalcBny",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Quantity",
+      "target_column_name": "ClosingLendingCalcBny",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Units",
+      "target_column_name": "ClosingLendingCalcBny",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity_",
+      "target_column_name": "ClosingLendingCalcBny",
+      "entity_type": "JOB",
+      "event_count": 49
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
+      "source_column_name": "from_account",
+      "target_column_name": "ClosingLendingCalcBny",
+      "entity_type": "JOB",
+      "event_count": 49
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "source_column_name": "from_account",
+      "target_column_name": "ClosingLendingCalcBny",
+      "entity_type": "JOB",
+      "event_count": 16
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity",
+      "target_column_name": "ClosingLendingCalcBny",
+      "entity_type": "JOB",
+      "event_count": 16
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Quantity",
+      "target_column_name": "ClosingLendingCalcEtoro",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "ClosingLendingCalcEtoro",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "ClosingLendingCalcEtoro",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity_",
+      "target_column_name": "ClosingLendingCalcEtoro",
+      "entity_type": "JOB",
+      "event_count": 49
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
+      "source_column_name": "from_account",
+      "target_column_name": "ClosingLendingCalcEtoro",
+      "entity_type": "JOB",
+      "event_count": 49
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "source_column_name": "from_account",
+      "target_column_name": "ClosingLendingCalcEtoro",
+      "entity_type": "JOB",
+      "event_count": 16
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity",
+      "target_column_name": "ClosingLendingCalcEtoro",
+      "entity_type": "JOB",
+      "event_count": 16
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "DateToCallClosingBalance",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "DateToCallOpeningBalance",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "ExistingLoans",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Security_Id",
+      "target_column_name": "ISIN",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Isin",
+      "target_column_name": "ISIN",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "ISIN",
+      "target_column_name": "ISIN",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "ISIN",
+      "target_column_name": "ISIN",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "IsGapClosingVsCalc",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Quantity",
+      "target_column_name": "IsGapClosingVsCalc",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "IsGapClosingVsCalc",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
+      "source_column_name": "from_account",
+      "target_column_name": "IsGapClosingVsCalc",
+      "entity_type": "JOB",
+      "event_count": 49
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity_",
+      "target_column_name": "IsGapClosingVsCalc",
+      "entity_type": "JOB",
+      "event_count": 49
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "source_column_name": "from_account",
+      "target_column_name": "IsGapClosingVsCalc",
+      "entity_type": "JOB",
+      "event_count": 16
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity",
+      "target_column_name": "IsGapClosingVsCalc",
+      "entity_type": "JOB",
+      "event_count": 16
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Units",
+      "target_column_name": "IsGapLoansBNYvsEquilend",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "IsGapLoansBNYvsEquilend",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "IsGapOpeningBalance",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "IsGapOpeningBalance",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_reconciliation",
+      "source_column_name": "eToroLendingClosingBalance",
+      "target_column_name": "IsGapOpeningBalance",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "IsGapOptInBNYvsEtoro",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Units",
+      "target_column_name": "IsGapOptInBNYvsEtoro",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Units",
+      "target_column_name": "LoansBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity_",
+      "target_column_name": "ManualMovement",
+      "entity_type": "JOB",
+      "event_count": 49
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
+      "source_column_name": "from_account",
+      "target_column_name": "ManualMovement",
+      "entity_type": "JOB",
+      "event_count": 49
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "source_column_name": "from_account",
+      "target_column_name": "ManualMovement",
+      "entity_type": "JOB",
+      "event_count": 16
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity",
+      "target_column_name": "ManualMovement",
+      "entity_type": "JOB",
+      "event_count": 16
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "NewLoans",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "PartialClosure",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "PartialOpening",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Quantity",
+      "target_column_name": "QuantityIn",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
+      "source_column_name": "Quantity",
+      "target_column_name": "QuantityOut",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "TICKER",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "TICKER",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "TotalLoans",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "eToroLendingClosingBalance",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "eToroLendingClosingBalance",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "eToroLendingOpeningBalance",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "eToroLendingOpeningBalance",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
+      "source_column_name": "Quantity",
+      "target_column_name": "eToroOptInClosingPool",
+      "entity_type": "JOB",
+      "event_count": 65
+    }
+  ],
+  "generated_at": "2026-05-19T14:38:35Z"
+}

@@ -1,0 +1,665 @@
+{
+  "object_fqn": "main.etoro_kpi.ftd_funnel_v_dev",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 60,
+  "formulas": [
+    {
+      "column": "GCID",
+      "formula": "GCID",
+      "expression_raw": "dc.GCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "CID",
+      "formula": "RealCID",
+      "expression_raw": "dc.RealCID as CID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": "/*User Dimensions*/ Name",
+      "expression_raw": "/*User Dimensions*/\n  reg_1.Name as Regulation",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L10-L11",
+      "scope": "main"
+    },
+    {
+      "column": "DesignatedRegulation",
+      "formula": "Name",
+      "expression_raw": "reg_2.Name as DesignatedRegulation",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "Club",
+      "formula": "Club",
+      "expression_raw": "cfd.Club",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "Country",
+      "formula": "Country",
+      "expression_raw": "cfd.Country as Country",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "MarketingRegion",
+      "formula": "NewMarketingRegion",
+      "expression_raw": "cfd.NewMarketingRegion as MarketingRegion",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "CustomerAge",
+      "formula": "Age",
+      "expression_raw": "ca.Age as CustomerAge",
+      "inputs": [
+        "bi_dealing.bi_output_dealing_cidage_data"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "IsPopularInvestor",
+      "formula": "case when GuruStatusID IN (2, 3, 4, 5, 6) then TRUE else FALSE end",
+      "expression_raw": "case\n    when dc.GuruStatusID IN (2, 3, 4, 5, 6) then TRUE\n    else FALSE\n  end as IsPopularInvestor",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L17-L20",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatus",
+      "formula": "/*User Dimensions: Player Status*/ Name",
+      "expression_raw": "/*User Dimensions: Player Status*/\n  dps.Name as PlayerStatus",
+      "inputs": [
+        "main.general.bronze_etoro_dictionary_playerstatus"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L21-L22",
+      "scope": "main"
+    },
+    {
+      "column": "Channel",
+      "formula": "/*User Acquisition Info*/ Channel",
+      "expression_raw": "/*User Acquisition Info*/\n  cfd.Channel",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L23-L24",
+      "scope": "main"
+    },
+    {
+      "column": "SubChannel",
+      "formula": "SubChannel",
+      "expression_raw": "cfd.SubChannel",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "BannerID",
+      "formula": "BannerID",
+      "expression_raw": "cfd.BannerID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "SerialID",
+      "formula": "SerialID",
+      "expression_raw": "cfd.SerialID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "Language",
+      "formula": "Language",
+      "expression_raw": "cfd.Language",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "CurrentVerificationLevel",
+      "formula": "/*User Dates & FTD Amount*/ VerificationLevelID",
+      "expression_raw": "/*User Dates & FTD Amount*/\n  dc.VerificationLevelID as CurrentVerificationLevel",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L29-L30",
+      "scope": "main"
+    },
+    {
+      "column": "Registration_Date",
+      "formula": "-- Registration CAST(RegisteredReal AS DATE)",
+      "expression_raw": "-- Registration\n  CAST(dc.RegisteredReal AS DATE) AS Registration_Date",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L31-L32",
+      "scope": "main"
+    },
+    {
+      "column": "Registration_Time",
+      "formula": "date_format(RegisteredReal, 'HH:mm:ss')",
+      "expression_raw": "date_format(dc.RegisteredReal, 'HH:mm:ss') AS Registration_Time",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel1_Date",
+      "formula": "-- Verification Level 1 CAST(coalesce(DateTime_VL1, VerificationLevel1Date) AS DATE)",
+      "expression_raw": "-- Verification Level 1\n  CAST(coalesce(kpi.DateTime_VL1, cfd.VerificationLevel1Date) AS DATE) AS VerificationLevel1_Date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L34-L35",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel1_Time",
+      "formula": "'HH:mm:ss' )",
+      "expression_raw": "'HH:mm:ss'\n  ) AS VerificationLevel1_Time",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L38-L39",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel2_Date",
+      "formula": "-- Verification Level 2 CAST(coalesce(DateTime_VL2, VerificationLevel2Date) AS DATE)",
+      "expression_raw": "-- Verification Level 2\n  CAST(coalesce(kpi.DateTime_VL2, cfd.VerificationLevel2Date) AS DATE) AS VerificationLevel2_Date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L40-L41",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel2_Time",
+      "formula": "'HH:mm:ss' )",
+      "expression_raw": "'HH:mm:ss'\n  ) AS VerificationLevel2_Time",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L44-L45",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel3_Date",
+      "formula": "-- Verification Level 3 CAST(coalesce(DateTime_VL3, VerificationLevel3Date) AS DATE)",
+      "expression_raw": "-- Verification Level 3\n  CAST(coalesce(kpi.DateTime_VL3, cfd.VerificationLevel3Date) AS DATE) AS VerificationLevel3_Date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L46-L47",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel3_Time",
+      "formula": "'HH:mm:ss' )",
+      "expression_raw": "'HH:mm:ss'\n  ) AS VerificationLevel3_Time",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L50-L51",
+      "scope": "main"
+    },
+    {
+      "column": "FirstTimeDeposit_Date",
+      "formula": "-- First Time Deposit CASE WHEN FirstDepositDate = '1900-01-01T00:00:00.000+00:00' THEN NULL ELSE CAST(FirstDepositDate AS DATE) END",
+      "expression_raw": "-- First Time Deposit\n  CASE\n    WHEN dc.FirstDepositDate = '1900-01-01T00:00:00.000+00:00' THEN NULL\n    ELSE CAST(dc.FirstDepositDate AS DATE)\n  END AS FirstTimeDeposit_Date",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L52-L56",
+      "scope": "main"
+    },
+    {
+      "column": "FirstTimeDeposit_Time",
+      "formula": "CASE WHEN FirstDepositDate = '1900-01-01T00:00:00.000+00:00' THEN NULL ELSE date_format(FirstDepositDate, 'HH:mm:ss') END",
+      "expression_raw": "CASE\n    WHEN dc.FirstDepositDate = '1900-01-01T00:00:00.000+00:00' THEN NULL\n    ELSE date_format(dc.FirstDepositDate, 'HH:mm:ss')\n  END AS FirstTimeDeposit_Time",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L57-L60",
+      "scope": "main"
+    },
+    {
+      "column": "FirstTimeDepositAmountUSD",
+      "formula": "FirstDepositAmount",
+      "expression_raw": "dc.FirstDepositAmount as FirstTimeDepositAmountUSD",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L61-L61",
+      "scope": "main"
+    },
+    {
+      "column": "FundingType",
+      "formula": "FirstDepositFundingType",
+      "expression_raw": "cfd.FirstDepositFundingType as FundingType",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L62-L62",
+      "scope": "main"
+    },
+    {
+      "column": "KYCFlow",
+      "formula": "/*Onboarding Details*/ KYCFlow",
+      "expression_raw": "/*Onboarding Details*/\n  kpi.KYCFlow",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L63-L64",
+      "scope": "main"
+    },
+    {
+      "column": "UserScreening_Status",
+      "formula": "/*User Screening*/ US_ScreeningStatus",
+      "expression_raw": "/*User Screening*/\n  kpi.US_ScreeningStatus as UserScreening_Status",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L65-L66",
+      "scope": "main"
+    },
+    {
+      "column": "UserScreening_StartTime",
+      "formula": "US_StartTime",
+      "expression_raw": "kpi.US_StartTime as UserScreening_StartTime",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L67-L67",
+      "scope": "main"
+    },
+    {
+      "column": "UserScreening_EndTime",
+      "formula": "US_EndTime",
+      "expression_raw": "kpi.US_EndTime as UserScreening_EndTime",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L68-L68",
+      "scope": "main"
+    },
+    {
+      "column": "ElectronicVerification_IsCountryEligible",
+      "formula": "/*Electronic Verification*/ case when EV_IsCountryEligible = 1 then true else false end",
+      "expression_raw": "/*Electronic Verification*/\n  case\n    when kpi.EV_IsCountryEligible = 1 then true\n    else false\n  end as ElectronicVerification_IsCountryEligible",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L69-L73",
+      "scope": "main"
+    },
+    {
+      "column": "ElectronicVerification_MatchStatusDateTime",
+      "formula": "EV_MatchStatusDateTime",
+      "expression_raw": "kpi.EV_MatchStatusDateTime as ElectronicVerification_MatchStatusDateTime",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L74-L74",
+      "scope": "main"
+    },
+    {
+      "column": "ElectronicVerification_MatchStatus",
+      "formula": "EV_MatchStatus",
+      "expression_raw": "kpi.EV_MatchStatus as ElectronicVerification_MatchStatus",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L75-L75",
+      "scope": "main"
+    },
+    {
+      "column": "VD_HasDocuments",
+      "formula": "/*Proof of Identify*/ case when VD_HasDocuments = 1 then 'Yes' when VD_HasDocuments = 0 then 'No' else 'No Indication' end",
+      "expression_raw": "/*Proof of Identify*/\n  case\n    when kpi.VD_HasDocuments = 1 then 'Yes'\n    when kpi.VD_HasDocuments = 0 then 'No'\n    else 'No Indication'\n  end as VD_HasDocuments",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L76-L81",
+      "scope": "main"
+    },
+    {
+      "column": "ProofOfIdentity_IsApproved",
+      "formula": "case when POI_IsApproved = 1 then 'Yes' when POI_IsApproved = 0 then 'No' else 'No Indication' end",
+      "expression_raw": "case\n    when kpi.POI_IsApproved = 1 then 'Yes'\n    when kpi.POI_IsApproved = 0 then 'No'\n    else 'No Indication'\n  end as ProofOfIdentity_IsApproved",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L82-L86",
+      "scope": "main"
+    },
+    {
+      "column": "ProofOfIdentity_UploadDateTime",
+      "formula": "POI_UploadDateTime",
+      "expression_raw": "kpi.POI_UploadDateTime as ProofOfIdentity_UploadDateTime",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L87-L87",
+      "scope": "main"
+    },
+    {
+      "column": "ProofOfIdentity_ResponseDateTime",
+      "formula": "POI_ResponseDateTime",
+      "expression_raw": "kpi.POI_ResponseDateTime as ProofOfIdentity_ResponseDateTime",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L88-L88",
+      "scope": "main"
+    },
+    {
+      "column": "ProofOfAddress_IsApproved",
+      "formula": "/*Proof of Address*/ case when POA_IsApproved = 1 then 'Yes' when POA_IsApproved = 0 then 'No' else 'No Indication' end",
+      "expression_raw": "/*Proof of Address*/\n  case\n    when kpi.POA_IsApproved = 1 then 'Yes'\n    when kpi.POA_IsApproved = 0 then 'No'\n    else 'No Indication'\n  end as ProofOfAddress_IsApproved",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L89-L94",
+      "scope": "main"
+    },
+    {
+      "column": "ProofOfAddress_UploadDateTime",
+      "formula": "POA_UploadDateTime",
+      "expression_raw": "kpi.POA_UploadDateTime as ProofOfAddress_UploadDateTime",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L95-L95",
+      "scope": "main"
+    },
+    {
+      "column": "ProofOfAddress_ResponseDateTime",
+      "formula": "POA_ResponseDateTime",
+      "expression_raw": "kpi.POA_ResponseDateTime as ProofOfAddress_ResponseDateTime",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L96-L96",
+      "scope": "main"
+    },
+    {
+      "column": "IsEmailVerified",
+      "formula": "/*Email Verification*/ case when EmailVerification = 1 then 'Yes' when EmailVerification = 0 then 'No' else 'No Indication' end",
+      "expression_raw": "/*Email Verification*/\n  case\n    when kpi.EmailVerification = 1 then 'Yes'\n    when kpi.EmailVerification = 0 then 'No'\n    else 'No Indication'\n  end as IsEmailVerified",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L97-L102",
+      "scope": "main"
+    },
+    {
+      "column": "IsPhoneVerified",
+      "formula": "/*Phone Verification*/ case when IsPhoneVerified = true then 'Yes' when IsPhoneVerified = false then 'No' else 'No Indication' end",
+      "expression_raw": "/*Phone Verification*/\n  case\n    when dc.IsPhoneVerified = true then 'Yes'\n    when dc.IsPhoneVerified = false then 'No'\n    else 'No Indication'\n  end as IsPhoneVerified",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L103-L108",
+      "scope": "main"
+    },
+    {
+      "column": "PhoneVerificationDate",
+      "formula": "PhoneVerificationDate",
+      "expression_raw": "dc.PhoneVerificationDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L109-L109",
+      "scope": "main"
+    },
+    {
+      "column": "IsExcludeUser",
+      "formula": "Case When GCID IS NOT NULL then True Else False End",
+      "expression_raw": "Case\n    When exl.GCID IS NOT NULL then True\n    Else False\n  End as IsExcludeUser",
+      "inputs": [
+        "main.etoro_kpi.customer_exclude_list"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L110-L113",
+      "scope": "main"
+    },
+    {
+      "column": "ExcludeReason",
+      "formula": "excludeReason",
+      "expression_raw": "exl.excludeReason as ExcludeReason",
+      "inputs": [
+        "main.etoro_kpi.customer_exclude_list"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L114-L114",
+      "scope": "main"
+    },
+    {
+      "column": "First_KYC_Answer_Input_DateTime",
+      "formula": "/*KYC*/ First_KYC_Answer",
+      "expression_raw": "/*KYC*/\n  kyc.First_KYC_Answer as First_KYC_Answer_Input_DateTime",
+      "inputs": [
+        "main.etoro_kpi.ftd_funnel_kyc"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L115-L116",
+      "scope": "main"
+    },
+    {
+      "column": "Last_KYC_Answer_Input_DateTime",
+      "formula": "Last_KYC_Answer",
+      "expression_raw": "kyc.Last_KYC_Answer as Last_KYC_Answer_Input_DateTime",
+      "inputs": [
+        "main.etoro_kpi.ftd_funnel_kyc"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L117-L117",
+      "scope": "main"
+    },
+    {
+      "column": "Initial_DepositClick_Date",
+      "formula": "/*Mixpanel Deposit Clicks*/ cast(initial_deposit_clicks_combined as date)",
+      "expression_raw": "/*Mixpanel Deposit Clicks*/\n  cast(ftdc.initial_deposit_clicks_combined as date) as Initial_DepositClick_Date",
+      "inputs": [
+        "main.etoro_kpi.ftd_click_v"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L118-L119",
+      "scope": "main"
+    },
+    {
+      "column": "Initial_DepositClick_Time",
+      "formula": "date_format(initial_deposit_clicks_combined, 'HH:mm:ss')",
+      "expression_raw": "date_format(ftdc.initial_deposit_clicks_combined, 'HH:mm:ss') as Initial_DepositClick_Time",
+      "inputs": [
+        "main.etoro_kpi.ftd_click_v"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L120-L120",
+      "scope": "main"
+    },
+    {
+      "column": "Initial_DepositClick_Type",
+      "formula": "initial_deposit_click_type",
+      "expression_raw": "ftdc.initial_deposit_click_type as Initial_DepositClick_Type",
+      "inputs": [
+        "main.etoro_kpi.ftd_click_v"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L121-L121",
+      "scope": "main"
+    },
+    {
+      "column": "Final_DepositClick_Date",
+      "formula": "cast(final_deposit_click as date)",
+      "expression_raw": "cast(ftdc.final_deposit_click as date) as Final_DepositClick_Date",
+      "inputs": [
+        "main.etoro_kpi.ftd_click_v"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L122-L122",
+      "scope": "main"
+    },
+    {
+      "column": "Final_DepositClick_Time",
+      "formula": "date_format(final_deposit_click, 'HH:mm:ss')",
+      "expression_raw": "date_format(ftdc.final_deposit_click, 'HH:mm:ss') as Final_DepositClick_Time",
+      "inputs": [
+        "main.etoro_kpi.ftd_click_v"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L123-L123",
+      "scope": "main"
+    },
+    {
+      "column": "RegistrationPlatform",
+      "formula": "/*Reg Platform*/ Platform",
+      "expression_raw": "/*Reg Platform*/\n  p.Platform as RegistrationPlatform",
+      "inputs": [
+        "main.general.bronze_etoro_dictionary_platform"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L124-L125",
+      "scope": "main"
+    },
+    {
+      "column": "FirstPosOpenDate",
+      "formula": "cast(FirstPosOpenDate as date)",
+      "expression_raw": "cast(cfd.FirstPosOpenDate as date) as FirstPosOpenDate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L126-L126",
+      "scope": "main"
+    },
+    {
+      "column": "FirstPosOpenTime",
+      "formula": "date_format(FirstPosOpenDate, 'HH:mm:ss')",
+      "expression_raw": "date_format(cfd.FirstPosOpenDate, 'HH:mm:ss') as FirstPosOpenTime",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L127-L127",
+      "scope": "main"
+    },
+    {
+      "column": "FirstAction",
+      "formula": "FirstAction",
+      "expression_raw": "f5a.FirstAction",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L128-L128",
+      "scope": "main"
+    },
+    {
+      "column": "FirstInstrument",
+      "formula": "FirstInstrument",
+      "expression_raw": "f5a.FirstInstrument",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L129-L129",
+      "scope": "main"
+    },
+    {
+      "column": "FirstActionDate",
+      "formula": "FirstActionDate",
+      "expression_raw": "f5a.FirstActionDate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L130-L130",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/ftd_funnel_v_dev.sql"
+}

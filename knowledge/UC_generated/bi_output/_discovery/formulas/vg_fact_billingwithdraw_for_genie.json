@@ -1,0 +1,239 @@
+{
+  "object_fqn": "main.bi_output.vg_fact_billingwithdraw_for_genie",
+  "generated_at": "2026-05-19T15:01:28Z",
+  "formula_count": 21,
+  "formulas": [
+    {
+      "column": "CID",
+      "formula": "/* ===== Identity ===== */ CID",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L9",
+      "scope": "main"
+    },
+    {
+      "column": "WithdrawID",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L10",
+      "scope": "main"
+    },
+    {
+      "column": "FundingID",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L11",
+      "scope": "main"
+    },
+    {
+      "column": "Amount_Withdraw",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L14",
+      "scope": "main"
+    },
+    {
+      "column": "ExchangeRate",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L15",
+      "scope": "main"
+    },
+    {
+      "column": "BaseExchangeRate",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate , BaseExchan…",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate\n  , bw.BaseExchan…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L16",
+      "scope": "main"
+    },
+    {
+      "column": "Fee",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate , BaseExchan…",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate\n  , bw.BaseExchan…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L17",
+      "scope": "main"
+    },
+    {
+      "column": "CashoutStatusID_Withdraw",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate , BaseExchan…",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate\n  , bw.BaseExchan…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L20",
+      "scope": "main"
+    },
+    {
+      "column": "CashoutReasonID",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate , BaseExchan…",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate\n  , bw.BaseExchan…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L21",
+      "scope": "main"
+    },
+    {
+      "column": "ErrorCodeAsString",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate , BaseExchan…",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate\n  , bw.BaseExchan…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L22",
+      "scope": "main"
+    },
+    {
+      "column": "ResponseMessageAsString",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate , BaseExchan…",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate\n  , bw.BaseExchan…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L23",
+      "scope": "main"
+    },
+    {
+      "column": "ModificationDate",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate , BaseExchan…",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate\n  , bw.BaseExchan…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L26",
+      "scope": "main"
+    },
+    {
+      "column": "FundingType",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate , BaseExchan…",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate\n  , bw.BaseExchan…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L29",
+      "scope": "main"
+    },
+    {
+      "column": "WithdrawType",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate , BaseExchan…",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate\n  , bw.BaseExchan…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L30",
+      "scope": "main"
+    },
+    {
+      "column": "DepotName",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate , BaseExchan…",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate\n  , bw.BaseExchan…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L31",
+      "scope": "main"
+    },
+    {
+      "column": "BankNameAsString",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate , BaseExchan…",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate\n  , bw.BaseExchan…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L32",
+      "scope": "main"
+    },
+    {
+      "column": "ProtocolMIDSettingsID",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate , BaseExchan…",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate\n  , bw.BaseExchan…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L33",
+      "scope": "main"
+    },
+    {
+      "column": "BinCodeAsString",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate , BaseExchan…",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate\n  , bw.BaseExchan…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L36",
+      "scope": "main"
+    },
+    {
+      "column": "BinCountryIDAsInteger",
+      "formula": "/* ===== Identity ===== */ CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate , BaseExchan…",
+      "expression_raw": "/* ===== Identity ===== */\n    bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate\n  , bw.BaseExchan…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L37",
+      "scope": "main"
+    },
+    {
+      "column": "CardTypeIDAsInteger",
+      "formula": "CID , WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate , BaseExchangeRate , Fee /* =====…",
+      "expression_raw": "bw.CID\n  , bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate\n  , bw.BaseExchangeRate\n  , bw.Fee\n\n    /* =====…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L9-L38",
+      "scope": "main"
+    },
+    {
+      "column": "CardCategory",
+      "formula": ", WithdrawID , FundingID /* ===== Amount & Currency ===== */ , Amount_Withdraw -- Amount , ExchangeRate , BaseExchangeRate , Fee /* ===== Status /…",
+      "expression_raw": ", bw.WithdrawID\n  , bw.FundingID\n\n    /* ===== Amount & Currency ===== */\n  , bw.Amount_Withdraw                 -- Amount\n  , bw.ExchangeRate\n  , bw.BaseExchangeRate\n  , bw.Fee\n\n    /* ===== Status /…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L10-L39",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_fact_billingwithdraw_for_genie.sql"
+}

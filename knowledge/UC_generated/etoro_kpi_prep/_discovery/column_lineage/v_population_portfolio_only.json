@@ -2,20 +2,6 @@
   "object": "main.etoro_kpi_prep.v_population_portfolio_only",
   "rows": [
     {
-      "source_table_full_name": "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
-      "source_column_name": "ProcessDate",
-      "target_column_name": "DateID",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
-      "source_column_name": "DateID",
-      "target_column_name": "DateID",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
       "source_column_name": "DateID",
       "target_column_name": "DateID",
@@ -27,6 +13,20 @@
       "source_column_name": "ProcessDate",
       "target_column_name": "DateID",
       "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+      "source_column_name": "ProcessDate",
+      "target_column_name": "DateID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+      "source_column_name": "DateID",
+      "target_column_name": "DateID",
+      "entity_type": null,
       "event_count": 1
     },
     {
@@ -47,20 +47,6 @@
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "source_column_name": "InstrumentTypeID",
       "target_column_name": "Portfolio_Only_CFD_Copy",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_CFD_Copy",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
-      "source_column_name": "InstrumentTypeID",
-      "target_column_name": "Portfolio_Only_CFD_Copy",
       "entity_type": "DBSQL_QUERY",
       "event_count": 1
     },
@@ -74,14 +60,14 @@
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "source_column_name": "InstrumentTypeID",
-      "target_column_name": "Portfolio_Only_CFD_Manual",
+      "target_column_name": "Portfolio_Only_CFD_Copy",
       "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_CFD_Manual",
+      "target_column_name": "Portfolio_Only_CFD_Copy",
       "entity_type": null,
       "event_count": 1
     },
@@ -100,9 +86,16 @@
       "event_count": 1
     },
     {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentTypeID",
+      "target_column_name": "Portfolio_Only_CFD_Manual",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_Copy",
+      "target_column_name": "Portfolio_Only_CFD_Manual",
       "entity_type": null,
       "event_count": 1
     },
@@ -116,14 +109,7 @@
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_CopyFund",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
-      "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_CopyFund",
+      "target_column_name": "Portfolio_Only_Copy",
       "entity_type": null,
       "event_count": 1
     },
@@ -144,21 +130,14 @@
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_CryptoCFD_Copy",
+      "target_column_name": "Portfolio_Only_CopyFund",
       "entity_type": null,
       "event_count": 1
     },
     {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "IsSettled",
-      "target_column_name": "Portfolio_Only_CryptoCFD_Copy",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
-      "source_column_name": "InstrumentTypeID",
-      "target_column_name": "Portfolio_Only_CryptoCFD_Copy",
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "source_column_name": "MirrorID",
+      "target_column_name": "Portfolio_Only_CopyFund",
       "entity_type": null,
       "event_count": 1
     },
@@ -186,21 +165,21 @@
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_CryptoCFD_Manual",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
-      "source_column_name": "InstrumentTypeID",
-      "target_column_name": "Portfolio_Only_CryptoCFD_Manual",
+      "target_column_name": "Portfolio_Only_CryptoCFD_Copy",
       "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsSettled",
-      "target_column_name": "Portfolio_Only_CryptoCFD_Manual",
+      "target_column_name": "Portfolio_Only_CryptoCFD_Copy",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentTypeID",
+      "target_column_name": "Portfolio_Only_CryptoCFD_Copy",
       "entity_type": null,
       "event_count": 1
     },
@@ -228,21 +207,21 @@
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_CryptoReal_Copy",
+      "target_column_name": "Portfolio_Only_CryptoCFD_Manual",
       "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "source_column_name": "InstrumentTypeID",
-      "target_column_name": "Portfolio_Only_CryptoReal_Copy",
+      "target_column_name": "Portfolio_Only_CryptoCFD_Manual",
       "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsSettled",
-      "target_column_name": "Portfolio_Only_CryptoReal_Copy",
+      "target_column_name": "Portfolio_Only_CryptoCFD_Manual",
       "entity_type": null,
       "event_count": 1
     },
@@ -264,6 +243,48 @@
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsSettled",
       "target_column_name": "Portfolio_Only_CryptoReal_Copy",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "MirrorID",
+      "target_column_name": "Portfolio_Only_CryptoReal_Copy",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentTypeID",
+      "target_column_name": "Portfolio_Only_CryptoReal_Copy",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsSettled",
+      "target_column_name": "Portfolio_Only_CryptoReal_Copy",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsSettled",
+      "target_column_name": "Portfolio_Only_CryptoReal_Manual",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "MirrorID",
+      "target_column_name": "Portfolio_Only_CryptoReal_Manual",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentTypeID",
+      "target_column_name": "Portfolio_Only_CryptoReal_Manual",
       "entity_type": "DBSQL_QUERY",
       "event_count": 1
     },
@@ -291,21 +312,21 @@
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsSettled",
-      "target_column_name": "Portfolio_Only_CryptoReal_Manual",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_CryptoReal_Manual",
+      "target_column_name": "Portfolio_Only_ETFCFD_Copy",
       "entity_type": "DBSQL_QUERY",
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "source_column_name": "InstrumentTypeID",
-      "target_column_name": "Portfolio_Only_CryptoReal_Manual",
+      "target_column_name": "Portfolio_Only_ETFCFD_Copy",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "MirrorID",
+      "target_column_name": "Portfolio_Only_ETFCFD_Copy",
       "entity_type": "DBSQL_QUERY",
       "event_count": 1
     },
@@ -332,48 +353,6 @@
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "IsSettled",
-      "target_column_name": "Portfolio_Only_ETFCFD_Copy",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
-      "source_column_name": "InstrumentTypeID",
-      "target_column_name": "Portfolio_Only_ETFCFD_Copy",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_ETFCFD_Copy",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
-      "source_column_name": "InstrumentTypeID",
-      "target_column_name": "Portfolio_Only_ETFCFD_Manual",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "IsSettled",
-      "target_column_name": "Portfolio_Only_ETFCFD_Manual",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_ETFCFD_Manual",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "MirrorID",
       "target_column_name": "Portfolio_Only_ETFCFD_Manual",
       "entity_type": "DBSQL_QUERY",
@@ -394,23 +373,23 @@
       "event_count": 1
     },
     {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "IsSettled",
-      "target_column_name": "Portfolio_Only_ETFReal_Copy",
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentTypeID",
+      "target_column_name": "Portfolio_Only_ETFCFD_Manual",
       "entity_type": null,
       "event_count": 1
     },
     {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
-      "source_column_name": "InstrumentTypeID",
-      "target_column_name": "Portfolio_Only_ETFReal_Copy",
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsSettled",
+      "target_column_name": "Portfolio_Only_ETFCFD_Manual",
       "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_ETFReal_Copy",
+      "target_column_name": "Portfolio_Only_ETFCFD_Manual",
       "entity_type": null,
       "event_count": 1
     },
@@ -432,6 +411,48 @@
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "MirrorID",
       "target_column_name": "Portfolio_Only_ETFReal_Copy",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsSettled",
+      "target_column_name": "Portfolio_Only_ETFReal_Copy",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentTypeID",
+      "target_column_name": "Portfolio_Only_ETFReal_Copy",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "MirrorID",
+      "target_column_name": "Portfolio_Only_ETFReal_Copy",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsSettled",
+      "target_column_name": "Portfolio_Only_ETFReal_Manual",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "MirrorID",
+      "target_column_name": "Portfolio_Only_ETFReal_Manual",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentTypeID",
+      "target_column_name": "Portfolio_Only_ETFReal_Manual",
       "entity_type": "DBSQL_QUERY",
       "event_count": 1
     },
@@ -458,22 +479,8 @@
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "IsSettled",
-      "target_column_name": "Portfolio_Only_ETFReal_Manual",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_ETFReal_Manual",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
-      "source_column_name": "InstrumentTypeID",
-      "target_column_name": "Portfolio_Only_ETFReal_Manual",
+      "target_column_name": "Portfolio_Only_Manual",
       "entity_type": "DBSQL_QUERY",
       "event_count": 1
     },
@@ -485,9 +492,9 @@
       "event_count": 1
     },
     {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_Manual",
+      "source_table_full_name": "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+      "source_column_name": "PositionMarketValue",
+      "target_column_name": "Portfolio_Only_Options",
       "entity_type": "DBSQL_QUERY",
       "event_count": 1
     },
@@ -499,9 +506,23 @@
       "event_count": 1
     },
     {
-      "source_table_full_name": "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
-      "source_column_name": "PositionMarketValue",
-      "target_column_name": "Portfolio_Only_Options",
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "MirrorID",
+      "target_column_name": "Portfolio_Only_StocksCFD_Copy",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsSettled",
+      "target_column_name": "Portfolio_Only_StocksCFD_Copy",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentTypeID",
+      "target_column_name": "Portfolio_Only_StocksCFD_Copy",
       "entity_type": "DBSQL_QUERY",
       "event_count": 1
     },
@@ -529,21 +550,21 @@
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_StocksCFD_Copy",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "IsSettled",
-      "target_column_name": "Portfolio_Only_StocksCFD_Copy",
+      "target_column_name": "Portfolio_Only_StocksCFD_Manual",
       "entity_type": "DBSQL_QUERY",
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "source_column_name": "InstrumentTypeID",
-      "target_column_name": "Portfolio_Only_StocksCFD_Copy",
+      "target_column_name": "Portfolio_Only_StocksCFD_Manual",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsSettled",
+      "target_column_name": "Portfolio_Only_StocksCFD_Manual",
       "entity_type": "DBSQL_QUERY",
       "event_count": 1
     },
@@ -570,48 +591,6 @@
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_StocksCFD_Manual",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
-      "source_column_name": "InstrumentTypeID",
-      "target_column_name": "Portfolio_Only_StocksCFD_Manual",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "IsSettled",
-      "target_column_name": "Portfolio_Only_StocksCFD_Manual",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_StocksReal_Copy",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
-      "source_column_name": "InstrumentTypeID",
-      "target_column_name": "Portfolio_Only_StocksReal_Copy",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "IsSettled",
-      "target_column_name": "Portfolio_Only_StocksReal_Copy",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsSettled",
       "target_column_name": "Portfolio_Only_StocksReal_Copy",
       "entity_type": "DBSQL_QUERY",
@@ -633,22 +612,22 @@
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "IsSettled",
-      "target_column_name": "Portfolio_Only_StocksReal_Manual",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "MirrorID",
-      "target_column_name": "Portfolio_Only_StocksReal_Manual",
+      "target_column_name": "Portfolio_Only_StocksReal_Copy",
       "entity_type": null,
       "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "source_column_name": "InstrumentTypeID",
-      "target_column_name": "Portfolio_Only_StocksReal_Manual",
+      "target_column_name": "Portfolio_Only_StocksReal_Copy",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsSettled",
+      "target_column_name": "Portfolio_Only_StocksReal_Copy",
       "entity_type": null,
       "event_count": 1
     },
@@ -671,6 +650,27 @@
       "source_column_name": "MirrorID",
       "target_column_name": "Portfolio_Only_StocksReal_Manual",
       "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsSettled",
+      "target_column_name": "Portfolio_Only_StocksReal_Manual",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "MirrorID",
+      "target_column_name": "Portfolio_Only_StocksReal_Manual",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentTypeID",
+      "target_column_name": "Portfolio_Only_StocksReal_Manual",
+      "entity_type": null,
       "event_count": 1
     },
     {
@@ -702,5 +702,5 @@
       "event_count": 1
     }
   ],
-  "generated_at": "2026-05-18T08:10:45Z"
+  "generated_at": "2026-05-19T12:20:19Z"
 }

@@ -1,0 +1,144 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_instrument_conversion_rates_dwh",
+  "generated_at": "2026-05-18T16:27:36Z",
+  "formula_count": 12,
+  "formulas": [
+    {
+      "column": "DateID",
+      "formula": "-- FIX: shift DateID forward by 1 day to align with Synapse convention -- End-of-day-N price is assigned to DateID N+1 CAST(DATE_FORMAT(DATE_ADD(etr_ymd, 1), 'yyyyMMdd') AS INT) AS Dat…",
+      "expression_raw": "-- FIX: shift DateID forward by 1 day to align with Synapse convention\n        -- End-of-day-N price is assigned to DateID N+1\n        CAST(DATE_FORMAT(DATE_ADD(etr_ymd, 1), 'yyyyMMdd') AS INT) AS Dat…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L10-L12",
+      "scope": "LatestDailyPrices"
+    },
+    {
+      "column": "etr_ymd",
+      "formula": "DATE_ADD(etr_ymd, 1)",
+      "expression_raw": "DATE_ADD(etr_ymd, 1) AS etr_ymd",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L13-L13",
+      "scope": "LatestDailyPrices"
+    },
+    {
+      "column": "InstrumentID",
+      "formula": "InstrumentID",
+      "expression_raw": "InstrumentID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "LatestDailyPrices"
+    },
+    {
+      "column": "SellCurrency",
+      "formula": "SellCurrency",
+      "expression_raw": "Pair.SellCurrency",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L40-L40",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "formula": "InstrumentTypeID",
+      "expression_raw": "Pair.InstrumentTypeID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L41-L41",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentType",
+      "formula": "InstrumentType",
+      "expression_raw": "Pair.InstrumentType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L42-L42",
+      "scope": "main"
+    },
+    {
+      "column": "Name",
+      "formula": "Name",
+      "expression_raw": "Pair.Name",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L43-L43",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentDisplayName",
+      "formula": "InstrumentDisplayName",
+      "expression_raw": "Pair.InstrumentDisplayName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L44-L44",
+      "scope": "main"
+    },
+    {
+      "column": "ConversionRate_Buy_Spreaded",
+      "formula": "CAST(CASE WHEN SellCurrencyID = 1 THEN 1.00 WHEN BuyCurrencyID = 1 THEN 1.00 / RateBidSpreaded WHEN (BuyCurrencyID != 1 AND SellCurrencyID != 1) …",
+      "expression_raw": "CAST(CASE\n        WHEN Pair.SellCurrencyID = 1 THEN 1.00\n        WHEN Pair.BuyCurrencyID = 1 THEN 1.00 / LatestP.RateBidSpreaded\n        WHEN (Pair.BuyCurrencyID != 1 AND Pair.SellCurrencyID != 1)\n   …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L45-L52",
+      "scope": "main"
+    },
+    {
+      "column": "ConversionRate_Sell_Spreaded",
+      "formula": "CAST(CASE WHEN SellCurrencyID = 1 THEN 1.00 WHEN BuyCurrencyID = 1 THEN 1.00 / RateAskSpreaded WHEN (BuyCurrencyID != 1 AND SellCurrencyID != 1) …",
+      "expression_raw": "CAST(CASE\n        WHEN Pair.SellCurrencyID = 1 THEN 1.00\n        WHEN Pair.BuyCurrencyID = 1 THEN 1.00 / LatestP.RateAskSpreaded\n        WHEN (Pair.BuyCurrencyID != 1 AND Pair.SellCurrencyID != 1)\n   …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L53-L60",
+      "scope": "main"
+    },
+    {
+      "column": "ConversionRate_Buy",
+      "formula": "CAST(CASE WHEN SellCurrencyID = 1 THEN 1.00 WHEN BuyCurrencyID = 1 THEN 1.00 / RateBid WHEN (BuyCurrencyID != 1 AND SellCurrencyID != 1) …",
+      "expression_raw": "CAST(CASE\n        WHEN Pair.SellCurrencyID = 1 THEN 1.00\n        WHEN Pair.BuyCurrencyID = 1 THEN 1.00 / LatestP.RateBid\n        WHEN (Pair.BuyCurrencyID != 1 AND Pair.SellCurrencyID != 1)\n           …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L61-L68",
+      "scope": "main"
+    },
+    {
+      "column": "ConversionRate_Sell",
+      "formula": "CAST(CASE WHEN SellCurrencyID = 1 THEN 1.00 WHEN BuyCurrencyID = 1 THEN 1.00 / RateAsk WHEN (BuyCurrencyID != 1 AND SellCurrencyID != 1) …",
+      "expression_raw": "CAST(CASE\n        WHEN Pair.SellCurrencyID = 1 THEN 1.00\n        WHEN Pair.BuyCurrencyID = 1 THEN 1.00 / LatestP.RateAsk\n        WHEN (Pair.BuyCurrencyID != 1 AND Pair.SellCurrencyID != 1)\n           …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L69-L76",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_instrument_conversion_rates_dwh.sql"
+}

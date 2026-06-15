@@ -1,0 +1,560 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_dim_instrument_enriched",
+  "generated_at": "2026-05-18T16:27:36Z",
+  "formula_count": 50,
+  "formulas": [
+    {
+      "column": "InstrumentID",
+      "formula": "InstrumentID",
+      "expression_raw": "imd.InstrumentID",
+      "inputs": [
+        "main.trading.bronze_etoro_trade_instrumentmetadata_daily"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "rth_instruments"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "formula": "InstrumentTypeID",
+      "expression_raw": "cc.InstrumentTypeID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentType",
+      "formula": "InstrumentType",
+      "expression_raw": "cc.InstrumentType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "Name",
+      "formula": "Name",
+      "expression_raw": "cc.Name",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    },
+    {
+      "column": "DWHInstrumentID",
+      "formula": "DWHInstrumentID",
+      "expression_raw": "cc.DWHInstrumentID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L35-L35",
+      "scope": "main"
+    },
+    {
+      "column": "StatusID",
+      "formula": "StatusID",
+      "expression_raw": "cc.StatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "BuyCurrencyID",
+      "formula": "BuyCurrencyID",
+      "expression_raw": "cc.BuyCurrencyID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L37-L37",
+      "scope": "main"
+    },
+    {
+      "column": "SellCurrencyID",
+      "formula": "SellCurrencyID",
+      "expression_raw": "cc.SellCurrencyID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "BuyCurrency",
+      "formula": "BuyCurrency",
+      "expression_raw": "cc.BuyCurrency",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L39-L39",
+      "scope": "main"
+    },
+    {
+      "column": "SellCurrency",
+      "formula": "SellCurrency",
+      "expression_raw": "cc.SellCurrency",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L40-L40",
+      "scope": "main"
+    },
+    {
+      "column": "TradeRange",
+      "formula": "TradeRange",
+      "expression_raw": "cc.TradeRange",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L41-L41",
+      "scope": "main"
+    },
+    {
+      "column": "DollarRatio",
+      "formula": "DollarRatio",
+      "expression_raw": "cc.DollarRatio",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L42-L42",
+      "scope": "main"
+    },
+    {
+      "column": "PipDifferenceThreshold",
+      "formula": "PipDifferenceThreshold",
+      "expression_raw": "cc.PipDifferenceThreshold",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L43-L43",
+      "scope": "main"
+    },
+    {
+      "column": "IsMajorID",
+      "formula": "IsMajorID",
+      "expression_raw": "cc.IsMajorID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L44-L44",
+      "scope": "main"
+    },
+    {
+      "column": "IsMajor",
+      "formula": "IsMajor",
+      "expression_raw": "cc.IsMajor",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L45-L45",
+      "scope": "main"
+    },
+    {
+      "column": "UpdateDate",
+      "formula": "UpdateDate",
+      "expression_raw": "cc.UpdateDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L46-L46",
+      "scope": "main"
+    },
+    {
+      "column": "InsertDate",
+      "formula": "InsertDate",
+      "expression_raw": "cc.InsertDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L47-L47",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentDisplayName",
+      "formula": "InstrumentDisplayName",
+      "expression_raw": "cc.InstrumentDisplayName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L48-L48",
+      "scope": "main"
+    },
+    {
+      "column": "Industry",
+      "formula": "Industry",
+      "expression_raw": "cc.Industry",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L49-L49",
+      "scope": "main"
+    },
+    {
+      "column": "CompanyInfo",
+      "formula": "CompanyInfo",
+      "expression_raw": "cc.CompanyInfo",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L50-L50",
+      "scope": "main"
+    },
+    {
+      "column": "Exchange",
+      "formula": "Exchange",
+      "expression_raw": "cc.Exchange",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L51-L51",
+      "scope": "main"
+    },
+    {
+      "column": "ISINCode",
+      "formula": "ISINCode",
+      "expression_raw": "imd.ISINCode",
+      "inputs": [
+        "main.trading.bronze_etoro_trade_instrumentmetadata_daily"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "rth_instruments"
+    },
+    {
+      "column": "ISINCountryCode",
+      "formula": "ISINCountryCode",
+      "expression_raw": "cc.ISINCountryCode",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L53-L53",
+      "scope": "main"
+    },
+    {
+      "column": "Tradable",
+      "formula": "Tradable",
+      "expression_raw": "cc.Tradable",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L54-L54",
+      "scope": "main"
+    },
+    {
+      "column": "Symbol",
+      "formula": "Symbol",
+      "expression_raw": "imd.Symbol",
+      "inputs": [
+        "main.trading.bronze_etoro_trade_instrumentmetadata_daily"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "rth_instruments"
+    },
+    {
+      "column": "ReceivedOnPriceServer",
+      "formula": "ReceivedOnPriceServer",
+      "expression_raw": "cc.ReceivedOnPriceServer",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L56-L56",
+      "scope": "main"
+    },
+    {
+      "column": "BonusCreditUsePercent",
+      "formula": "BonusCreditUsePercent",
+      "expression_raw": "cc.BonusCreditUsePercent",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L57-L57",
+      "scope": "main"
+    },
+    {
+      "column": "SymbolFull",
+      "formula": "SymbolFull",
+      "expression_raw": "cc.SymbolFull",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L58-L58",
+      "scope": "main"
+    },
+    {
+      "column": "CUSIP",
+      "formula": "CUSIP",
+      "expression_raw": "cc.CUSIP",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L59-L59",
+      "scope": "main"
+    },
+    {
+      "column": "Precision",
+      "formula": "Precision",
+      "expression_raw": "cc.Precision",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L60-L60",
+      "scope": "main"
+    },
+    {
+      "column": "AllowBuy",
+      "formula": "AllowBuy",
+      "expression_raw": "cc.AllowBuy",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L61-L61",
+      "scope": "main"
+    },
+    {
+      "column": "AllowSell",
+      "formula": "AllowSell",
+      "expression_raw": "cc.AllowSell",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L62-L62",
+      "scope": "main"
+    },
+    {
+      "column": "AssetClass",
+      "formula": "AssetClass",
+      "expression_raw": "cc.AssetClass",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L63-L63",
+      "scope": "main"
+    },
+    {
+      "column": "IndustryGroup",
+      "formula": "IndustryGroup",
+      "expression_raw": "cc.IndustryGroup",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L64-L64",
+      "scope": "main"
+    },
+    {
+      "column": "ADV_Last3Months",
+      "formula": "ADV_Last3Months",
+      "expression_raw": "cc.ADV_Last3Months",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L65-L65",
+      "scope": "main"
+    },
+    {
+      "column": "MKTcap",
+      "formula": "MKTcap",
+      "expression_raw": "cc.MKTcap",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L66-L66",
+      "scope": "main"
+    },
+    {
+      "column": "SharesOutStanding",
+      "formula": "SharesOutStanding",
+      "expression_raw": "cc.SharesOutStanding",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L67-L67",
+      "scope": "main"
+    },
+    {
+      "column": "VisibleInternallyOnly",
+      "formula": "VisibleInternallyOnly",
+      "expression_raw": "cc.VisibleInternallyOnly",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L68-L68",
+      "scope": "main"
+    },
+    {
+      "column": "PlatformSector",
+      "formula": "PlatformSector",
+      "expression_raw": "cc.PlatformSector",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L69-L69",
+      "scope": "main"
+    },
+    {
+      "column": "PlatformIndustry",
+      "formula": "PlatformIndustry",
+      "expression_raw": "cc.PlatformIndustry",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L70-L70",
+      "scope": "main"
+    },
+    {
+      "column": "IsFuture",
+      "formula": "IsFuture",
+      "expression_raw": "cc.IsFuture",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L71-L71",
+      "scope": "main"
+    },
+    {
+      "column": "Multiplier",
+      "formula": "Multiplier",
+      "expression_raw": "cc.Multiplier",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L72-L72",
+      "scope": "main"
+    },
+    {
+      "column": "ProviderID",
+      "formula": "ProviderID",
+      "expression_raw": "cc.ProviderID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L73-L73",
+      "scope": "main"
+    },
+    {
+      "column": "ProviderMarginPerLot",
+      "formula": "ProviderMarginPerLot",
+      "expression_raw": "cc.ProviderMarginPerLot",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L74-L74",
+      "scope": "main"
+    },
+    {
+      "column": "eToroMarginPerLot",
+      "formula": "eToroMarginPerLot",
+      "expression_raw": "cc.eToroMarginPerLot",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L75-L75",
+      "scope": "main"
+    },
+    {
+      "column": "SettlementTime",
+      "formula": "SettlementTime",
+      "expression_raw": "cc.SettlementTime",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L76-L76",
+      "scope": "main"
+    },
+    {
+      "column": "OperationMode",
+      "formula": "OperationMode",
+      "expression_raw": "cc.OperationMode",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L77-L77",
+      "scope": "main"
+    },
+    {
+      "column": "Tradeable",
+      "formula": "CASE WHEN VisibleInternallyOnly = 0 AND Tradable = 1 AND InstrumentVisible = 1 THEN 1 ELSE 0 END",
+      "expression_raw": "CASE\n    WHEN cc.VisibleInternallyOnly = 0\n      AND cc.Tradable = 1\n      AND dd.InstrumentVisible = 1\n    THEN 1\n    ELSE 0\n  END AS Tradeable",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.trading.bronze_etoro_trade_instrumentmetadata_daily"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L78-L84",
+      "scope": "main"
+    },
+    {
+      "column": "IsSQF",
+      "formula": "CASE WHEN InstrumentID IS NOT NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE \n    WHEN etig.InstrumentID IS NOT NULL THEN 1 \n    ELSE 0 \n  END AS IsSQF",
+      "inputs": [
+        "main.trading.bronze_etoro_trade_instrumentgroups"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L85-L88",
+      "scope": "main"
+    },
+    {
+      "column": "Is_245_Instrument",
+      "formula": "CASE WHEN InstrumentID IS NOT NULL THEN 1 ELSE 0 END",
+      "expression_raw": "CASE \n    WHEN i245.InstrumentID IS NOT NULL THEN 1 \n    ELSE 0 \n  END AS Is_245_Instrument",
+      "inputs": [
+        "main.trading.bronze_etoro_trade_instrumentmetadata_daily",
+        "main.trading.bronze_etoro_trade_providertoinstrument"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L89-L92",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_dim_instrument_enriched.sql"
+}

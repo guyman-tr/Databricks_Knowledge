@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_population_portfolio_only
--- Captured: 2026-05-18T08:10:45Z
+-- Captured: 2026-05-19T12:20:19Z
 -- ==========================================================================
 
 WITH snapshot_dates AS (

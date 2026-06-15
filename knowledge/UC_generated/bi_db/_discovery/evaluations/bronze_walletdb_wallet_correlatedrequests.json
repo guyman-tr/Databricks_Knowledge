@@ -1,0 +1,74 @@
+{
+  "object_fqn": "main.bi_db.bronze_walletdb_wallet_correlatedrequests",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:14:06Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CorrelatedRequests.md",
+      "upstream_quote": "Auto-incrementing surrogate primary key.",
+      "wiki_quote": "Auto-incrementing surrogate primary key (Tier 1 — inherited from WalletDB.Wallet.CorrelatedRequests).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CorrelatedRequestsTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CorrelatedRequests.md",
+      "upstream_quote": "Type of correlation: 1=Bounceback (only type currently used). See [Correlated Request Type](../../_glossary.md#correlate",
+      "wiki_quote": "Type of correlation: 1=Bounceback (only type currently used). See [Correlated Request Type](../../_glossary.md#correlate",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ParentRequestCorrelationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CorrelatedRequests.md",
+      "upstream_quote": "CorrelationId of the original (parent) request that triggered the child. For bouncebacks, this is the received transacti",
+      "wiki_quote": "CorrelationId of the original (parent) request that triggered the child. For bouncebacks, this is the received transacti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ChildRequestCorrelationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CorrelatedRequests.md",
+      "upstream_quote": "CorrelationId of the triggered (child) request. For bouncebacks, this is the send-back transaction's CorrelationId from ",
+      "wiki_quote": "CorrelationId of the triggered (child) request. For bouncebacks, this is the send-back transaction's CorrelationId from ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Created",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CorrelatedRequests.md",
+      "upstream_quote": "Timestamp when this correlation was established.",
+      "wiki_quote": "Timestamp when this correlation was established (Tier 1 — inherited from WalletDB.Wallet.CorrelatedRequests).",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 5,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 5 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

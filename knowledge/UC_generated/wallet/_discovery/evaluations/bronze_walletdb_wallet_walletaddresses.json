@@ -1,0 +1,102 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_walletaddresses",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:25Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletAddresses.md",
+      "upstream_quote": "Auto-incrementing surrogate primary key.",
+      "wiki_quote": "Auto-incrementing surrogate primary key (Tier 1 — inherited from WalletDB.Wallet.WalletAddresses).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletAddresses.md",
+      "upstream_quote": "The parent wallet this address belongs to. FK to Wallet.WalletPool.WalletId. Multiple addresses can share the same Walle",
+      "wiki_quote": "The parent wallet this address belongs to. FK to Wallet.WalletPool.WalletId. Multiple addresses can share the same Walle",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Address",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletAddresses.md",
+      "upstream_quote": "The raw blockchain address string as provided by the wallet provider. May include protocol prefixes or query parameters.",
+      "wiki_quote": "The raw blockchain address string as provided by the wallet provider. May include protocol prefixes or query parameters.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsMain",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletAddresses.md",
+      "upstream_quote": "Whether this is the wallet's primary address. 1=main address (used for receiving), NULL/0=secondary address. Most wallet",
+      "wiki_quote": "Whether this is the wallet's primary address. 1=main address (used for receiving), NULL/0=secondary address. Most wallet",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainProviderWalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletAddresses.md",
+      "upstream_quote": "Provider-side wallet identifier (BitGo or CUG wallet ID). Used for API calls to the custody provider.",
+      "wiki_quote": "Provider-side wallet identifier (BitGo or CUG wallet ID). Used for API calls to the custody provider (Tier 1 — inherited",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CustomerWalletStatusId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletAddresses.md",
+      "upstream_quote": "Activation state: 0=Pending (awaiting blockchain confirmation), 1=Active (ready for transactions). See [Customer Wallet ",
+      "wiki_quote": "Activation state: 0=Pending (awaiting blockchain confirmation), 1=Active (ready for transactions). See [Customer Wallet ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletAddresses.md",
+      "upstream_quote": "Timestamp when this address record was created.",
+      "wiki_quote": "Timestamp when this address record was created (Tier 1 — inherited from WalletDB.Wallet.WalletAddresses).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BalanceAccountID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletAddresses.md",
+      "upstream_quote": "External balance account identifier used by the provider for balance tracking. NULL for wallets without provider-side ba",
+      "wiki_quote": "External balance account identifier used by the provider for balance tracking. NULL for wallets without provider-side ba",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "NormalizedAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.WalletAddresses.md",
+      "upstream_quote": "Computed PERSISTED column that strips protocol prefixes (before ':') and query parameters (after '?') from the Address. ",
+      "wiki_quote": "Computed PERSISTED column that strips protocol prefixes (before ':') and query parameters (after '?') from the Address. ",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 9,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 9 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

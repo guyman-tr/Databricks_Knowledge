@@ -1,0 +1,119 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_case",
+  "generated_at": "2026-05-19T15:01:18Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "case_flag_isduplicate",
+      "name": "IsDuplicate computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsDuplicate"
+      ],
+      "predicates": [
+        {
+          "col": "Origin",
+          "op": "=",
+          "val": "'    '"
+        },
+        {
+          "col": "Status",
+          "op": "=",
+          "val": "'      '"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "evidence_lines": "bi_output.sql L42-L42",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_chatskill",
+      "name": "ChatSkill computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "ChatSkill"
+      ],
+      "predicates": [
+        {
+          "col": "Original_Skillset__c",
+          "op": "LIKE",
+          "val": "'    '"
+        },
+        {
+          "col": "Original_Skillset__c",
+          "op": "LIKE",
+          "val": "'                 '"
+        },
+        {
+          "col": "Original_Skillset__c",
+          "op": "LIKE",
+          "val": "'                    '"
+        },
+        {
+          "col": "Original_Skillset__c",
+          "op": "LIKE",
+          "val": "'             '"
+        },
+        {
+          "col": "Original_Skillset__c",
+          "op": "LIKE",
+          "val": "'        '"
+        },
+        {
+          "col": "Original_Skillset__c",
+          "op": "LIKE",
+          "val": "'      '"
+        },
+        {
+          "col": "Original_Skillset__c",
+          "op": "LIKE",
+          "val": "'         '"
+        },
+        {
+          "col": "Original_Skillset__c",
+          "op": "LIKE",
+          "val": "'             '"
+        },
+        {
+          "col": "Original_Skillset__c",
+          "op": "LIKE",
+          "val": "'                    '"
+        },
+        {
+          "col": "Original_Skillset__c",
+          "op": "LIKE",
+          "val": "'           '"
+        },
+        {
+          "col": "Original_Skillset__c",
+          "op": "LIKE",
+          "val": "'              '"
+        },
+        {
+          "col": "Original_Skillset__c",
+          "op": "LIKE",
+          "val": "'    '"
+        },
+        {
+          "col": "Original_Skillset__c",
+          "op": "LIKE",
+          "val": "'        '"
+        }
+      ],
+      "then_value": "'                 '",
+      "else_value": "'     '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.crm.silver_crm_case"
+      ],
+      "evidence_lines": "bi_output.sql L54-L69",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_case.sql"
+}

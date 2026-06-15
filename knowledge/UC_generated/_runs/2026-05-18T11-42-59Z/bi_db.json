@@ -1,0 +1,30 @@
+{
+  "schema": "bi_db",
+  "catalog": "main",
+  "started_at": "2026-05-18T11:43:59Z",
+  "finished_at": "2026-05-18T11:46:02Z",
+  "wall_seconds": 123.0,
+  "phases": {
+    "1": {
+      "wall_seconds": 123.1722662448883,
+      "rc": 4294967295,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "[connect] SDK profile auth failed (default auth: databricks-cli: cannot get access token: Error: A new access token could not be retrieved because the refresh token is invalid. To reauthenticate, run the following command:\n  $ databricks auth login --profile name-of-profile. Config: host=https://adb-5142916747090026.6.azuredatabricks.net, profile=name-of-profile, auth_type=databricks-cli. Env: DATABRICKS_CONFIG_PROFILE); falling back to U2M OAuth"
+    },
+    "7": {
+      "wall_seconds": 0.0,
+      "rc": 0,
+      "rows": 0,
+      "first_pass_pass": 0,
+      "regen_pass": 0,
+      "final_fail": 0,
+      "dimension_averages": {},
+      "per_object": {}
+    }
+  },
+  "failures": [
+    "phase 1 rc=4294967295:   $ databricks auth login --profile name-of-profile. Config: host=https://adb-5142916747090026.6.azuredatabricks.net, profile=name-of-profile, auth_type=databricks-cli. Env: DATABRICKS_CONFIG_PROFILE); falling back to U2M OAuth"
+  ],
+  "objects": []
+}

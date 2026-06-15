@@ -1,0 +1,426 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_stocklending_optin_optout_nop",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "AllowBuy",
+      "target_column_name": "AllowBuy",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "Name",
+      "target_column_name": "Club",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "EquiLendID",
+      "target_column_name": "Count_CIDs_OptIn",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "CID",
+      "target_column_name": "Count_CIDs_OptIn",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "StocksLendingStatusID",
+      "target_column_name": "Count_CIDs_OptIn",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "CID",
+      "target_column_name": "Count_CIDs_OptOut",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "StocksLendingStatusID",
+      "target_column_name": "Count_CIDs_OptOut",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "EquiLendID",
+      "target_column_name": "Count_CIDs_OptOut",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "Country",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_datalend_darsx_v6",
+      "source_column_name": "dataLendRateRebate",
+      "target_column_name": "DailyProjectedRevenue_OptIn",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "NOP",
+      "target_column_name": "DailyProjectedRevenue_OptIn",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_datalend_darsx_v6",
+      "source_column_name": "utilization",
+      "target_column_name": "DailyProjectedRevenue_OptIn",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "StocksLendingStatusID",
+      "target_column_name": "DailyProjectedRevenue_OptIn",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "EquiLendID",
+      "target_column_name": "DailyProjectedRevenue_OptIn",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_dictionary_interestrate",
+      "source_column_name": "InterestRateBuy",
+      "target_column_name": "DailyProjectedRevenue_OptIn",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_interestrate",
+      "source_column_name": "InterestRateBuy",
+      "target_column_name": "DailyProjectedRevenue_OptIn",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_interestrate",
+      "source_column_name": "InterestRateBuy",
+      "target_column_name": "DailyProjectedRevenue_Total",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_datalend_darsx_v6",
+      "source_column_name": "dataLendRateRebate",
+      "target_column_name": "DailyProjectedRevenue_Total",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_datalend_darsx_v6",
+      "source_column_name": "utilization",
+      "target_column_name": "DailyProjectedRevenue_Total",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_dictionary_interestrate",
+      "source_column_name": "InterestRateBuy",
+      "target_column_name": "DailyProjectedRevenue_Total",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "NOP",
+      "target_column_name": "DailyProjectedRevenue_Total",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "Date",
+      "target_column_name": "Date",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "MidPrice",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "MidPrice",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "StocksLendingStatusID",
+      "target_column_name": "NOP_OptIn",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "EquiLendID",
+      "target_column_name": "NOP_OptIn",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "NOP",
+      "target_column_name": "NOP_OptIn",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "EquiLendID",
+      "target_column_name": "NOP_OptOut",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "StocksLendingStatusID",
+      "target_column_name": "NOP_OptOut",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "NOP",
+      "target_column_name": "NOP_OptOut",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "NOP",
+      "target_column_name": "NOP_Total",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_dictionary_interestrate",
+      "source_column_name": "InterestRateBuy",
+      "target_column_name": "Rate_Datalend_Adjusted",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_interestrate",
+      "source_column_name": "InterestRateBuy",
+      "target_column_name": "Rate_Datalend_Adjusted",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_datalend_darsx_v6",
+      "source_column_name": "dataLendRateRebate",
+      "target_column_name": "Rate_Datalend_Adjusted",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "source_column_name": "Name",
+      "target_column_name": "Regulation",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "EquiLendID",
+      "target_column_name": "Units_OptIn",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "StocksLendingStatusID",
+      "target_column_name": "Units_OptIn",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Units_OptIn",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "StocksLendingStatusID",
+      "target_column_name": "Units_OptOut",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Units_OptOut",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "EquiLendID",
+      "target_column_name": "Units_OptOut",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "source_column_name": "Units_-_Settled_Basis",
+      "target_column_name": "Units_Settled_BNY_Lending",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "source_column_name": "Account_-_GSP",
+      "target_column_name": "Units_Settled_BNY_Lending",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "source_column_name": "Units_-_Settled_Basis",
+      "target_column_name": "Units_Settled_BNY_Total",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Units_Total",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_datalend_darsx_v6",
+      "source_column_name": "utilization",
+      "target_column_name": "Utilization_Datalend",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "source_column_name": "Units_-_Settled_Basis",
+      "target_column_name": "Utilization_Etoro",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "source_column_name": "Account_-_GSP",
+      "target_column_name": "Utilization_Etoro",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "source_column_name": "Accr_Mkt_Val_Rpting_Ccy-Settled_Basis",
+      "target_column_name": "Value_USD_Settled_BNY_Lending",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "source_column_name": "Account_-_GSP",
+      "target_column_name": "Value_USD_Settled_BNY_Lending",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_holdings_settled_custodyholdingssettled",
+      "source_column_name": "Accr_Mkt_Val_Rpting_Ccy-Settled_Basis",
+      "target_column_name": "Value_USD_Settled_BNY_Total",
+      "entity_type": "JOB",
+      "event_count": 134
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_y",
+      "entity_type": "JOB",
+      "event_count": 104
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ym",
+      "entity_type": "JOB",
+      "event_count": 104
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ymd",
+      "entity_type": "JOB",
+      "event_count": 104
+    }
+  ],
+  "generated_at": "2026-05-19T12:39:04Z"
+}

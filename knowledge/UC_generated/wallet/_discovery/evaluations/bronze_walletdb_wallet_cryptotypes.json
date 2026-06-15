@@ -1,0 +1,256 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_cryptotypes",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:20Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "CryptoID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Unique identifier for this crypto asset. Manually assigned (not IDENTITY). Referenced as FK by Wallet.SentTransactions, ",
+      "wiki_quote": "Unique identifier for this crypto asset. Manually assigned (not IDENTITY). Referenced as FK by Wallet.SentTransactions, ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Name",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Ticker symbol (e.g., BTC, ETH, USDT, LINK). Used for API parameter matching and internal identification.",
+      "wiki_quote": "Ticker symbol (e.g., BTC, ETH, USDT, LINK). Used for API parameter matching and internal identification (Tier 1 — inheri",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MinReqAccounts",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Minimum number of accounts/signers required for wallet operations on this crypto. Related to multi-signature wallet conf",
+      "wiki_quote": "Minimum number of accounts/signers required for wallet operations on this crypto. Related to multi-signature wallet conf",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MinUnit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Minimum transferable unit (satoshi-equivalent) for this crypto. Defines the smallest amount that can be sent.",
+      "wiki_quote": "Minimum transferable unit (satoshi-equivalent) for this crypto. Defines the smallest amount that can be sent (Tier 1 — i",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Status",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Legacy status field. Superseded by CryptoActivityStatus for business logic. Maintained for backward compatibility.",
+      "wiki_quote": "Legacy status field. Superseded by CryptoActivityStatus for business logic. Maintained for backward compatibility (Tier ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MinReqVerifications",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Minimum number of blockchain confirmations required before a received transaction is considered confirmed. Varies by blo",
+      "wiki_quote": "Minimum number of blockchain confirmations required before a received transaction is considered confirmed. Varies by blo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MaxVerificationTimeMinutes",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Maximum time in minutes to wait for blockchain confirmations before timing out a transaction. Used for monitoring stuck ",
+      "wiki_quote": "Maximum time in minutes to wait for blockchain confirmations before timing out a transaction. Used for monitoring stuck ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Timestamp when this crypto asset was added to the system.",
+      "wiki_quote": "Timestamp when this crypto asset was added to the system (Tier 1 — inherited from WalletDB.Wallet.CryptoTypes).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsActive",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Secondary activation toggle. 1=active, 0=disabled. Works alongside CryptoActivityStatus to control asset availability. M",
+      "wiki_quote": "Secondary activation toggle. 1=active, 0=disabled. Works alongside CryptoActivityStatus to control asset availability. M",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoActivityStatus",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Availability level for wallet operations: 0=NotActive, 1=ComingSoon, 2=Available (173 assets), 3=AvailableRedeemOnly (XR",
+      "wiki_quote": "Availability level for wallet operations: 0=NotActive, 1=ComingSoon, 2=Available (173 assets), 3=AvailableRedeemOnly (XR",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BalanceAssetName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Asset name as known by the balance/custody provider (e.g., BitGo's internal asset identifier). May differ from the displ",
+      "wiki_quote": "Asset name as known by the balance/custody provider (e.g., BitGo's internal asset identifier). May differ from the displ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WebHookVerifications",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Number of webhook-based verification callbacks required from the blockchain provider before confirming a transaction.",
+      "wiki_quote": "Number of webhook-based verification callbacks required from the blockchain provider before confirming a transaction (Ti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StartMonitoringDelaySeconds",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Delay in seconds before starting to monitor a newly submitted transaction. Default 120s allows the blockchain network to",
+      "wiki_quote": "Delay in seconds before starting to monitor a newly submitted transaction. Default 120s allows the blockchain network to",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BalanceThreshold",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Minimum balance threshold below which a wallet is considered effectively empty. Used for balance checks and dust amount ",
+      "wiki_quote": "Minimum balance threshold below which a wallet is considered effectively empty. Used for balance checks and dust amount ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InitialFeeUnits",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Base fee units charged per transaction for this crypto. 0 means no initial fee (blockchain fee only).",
+      "wiki_quote": "Base fee units charged per transaction for this crypto. 0 means no initial fee (blockchain fee only) (Tier 1 — inherited",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainExplorerFormat",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "URL format string for generating blockchain explorer links (e.g., \"https://blockchain.com/btc/tx/{txId}\"). Used in UI to",
+      "wiki_quote": "URL format string for generating blockchain explorer links (e.g., \"https://blockchain.com/btc/tx/{txId}\"). Used in UI to",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsEtoroHandlingFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Whether eToro charges an additional handling fee on top of blockchain network fees for this crypto. 1=yes, 0/NULL=no.",
+      "wiki_quote": "Whether eToro charges an additional handling fee on top of blockchain network fees for this crypto. 1=yes, 0/NULL=no (Ti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainCryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "The blockchain network this crypto asset runs on. For native coins, maps 1:1 (BTC->1, ETH->2). For ERC-20 tokens, all po",
+      "wiki_quote": "The blockchain network this crypto asset runs on. For native coins, maps 1:1 (BTC->1, ETH->2). For ERC-20 tokens, all po",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AssetTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Asset classification: 1=Coin (12 native blockchain coins), 2=ERC20 (162 Ethereum tokens). See [Asset Type](../../_glossa",
+      "wiki_quote": "Asset classification: 1=Coin (12 native blockchain coins), 2=ERC20 (162 Ethereum tokens). See [Asset Type](../../_glossa",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SymbolFull",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Full ticker symbol used in API responses and market data integration. Usually identical to Name.",
+      "wiki_quote": "Full ticker symbol used in API responses and market data integration. Usually identical to Name (Tier 1 — inherited from",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DisplayName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Human-readable asset name shown in the UI (e.g., \"Bitcoin\", \"Ethereum\", \"Cardano\"). More descriptive than the ticker sym",
+      "wiki_quote": "Human-readable asset name shown in the UI (e.g., \"Bitcoin\", \"Ethereum\", \"Cardano\"). More descriptive than the ticker sym",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AvatarUrl",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "URL to the crypto asset's logo/icon image. Used in the wallet UI for visual identification.",
+      "wiki_quote": "URL to the crypto asset's logo/icon image. Used in the wallet UI for visual identification (Tier 1 — inherited from Wall",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Precision",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Number of decimal places used when displaying amounts of this crypto. BTC/ETH=6, XLM=7, EOS=4. Controls UI formatting.",
+      "wiki_quote": "Number of decimal places used when displaying amounts of this crypto. BTC/ETH=6, XLM=7, EOS=4. Controls UI formatting (T",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TagName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Name of the secondary address field required by some blockchains (e.g., \"Destination Tag\" for XRP, \"Memo\" for XLM). NULL",
+      "wiki_quote": "Name of the secondary address field required by some blockchains (e.g., \"Destination Tag\" for XRP, \"Memo\" for XLM). NULL",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Links to the eToro trading platform's instrument for this crypto (e.g., BTC=100000, ETH=100001). Used for market rate lo",
+      "wiki_quote": "Links to the eToro trading platform's instrument for this crypto (e.g., BTC=100000, ETH=100001). Used for market rate lo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AssetBlockchainAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Smart contract address for ERC-20 tokens on the Ethereum blockchain. NULL for native coins. Used to identify the token w",
+      "wiki_quote": "Smart contract address for ERC-20 tokens on the Ethereum blockchain. NULL for native coins. Used to identify the token w",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OrderIndex",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Controls display order in the wallet UI. Lower values appear first.",
+      "wiki_quote": "Controls display order in the wallet UI. Lower values appear first (Tier 1 — inherited from WalletDB.Wallet.CryptoTypes)",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoCategoryName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Category classification for the crypto asset (e.g., \"DeFi\", \"Payment\", \"Meme\"). Used for UI grouping and filtering.",
+      "wiki_quote": "Category classification for the crypto asset (e.g., \"DeFi\", \"Payment\", \"Meme\"). Used for UI grouping and filtering (Tier",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StakingDisplayName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Display name specifically for staking context (e.g., \"Cardano Staking\"). NULL for non-stakeable assets.",
+      "wiki_quote": "Display name specifically for staking context (e.g., \"Cardano Staking\"). NULL for non-stakeable assets (Tier 1 — inherit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StakingAvatarUrl",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Logo URL for the staking variant. May differ from the regular avatar.",
+      "wiki_quote": "Logo URL for the staking variant. May differ from the regular avatar (Tier 1 — inherited from WalletDB.Wallet.CryptoType",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StakingSymbolFull",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.CryptoTypes.md",
+      "upstream_quote": "Ticker symbol for staking context. NULL for non-stakeable assets.",
+      "wiki_quote": "Ticker symbol for staking context. NULL for non-stakeable assets (Tier 1 — inherited from WalletDB.Wallet.CryptoTypes).",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 31,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 31 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

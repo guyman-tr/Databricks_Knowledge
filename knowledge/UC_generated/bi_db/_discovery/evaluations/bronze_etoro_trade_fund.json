@@ -1,0 +1,116 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_trade_fund",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:41Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "FundID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.Fund.md",
+      "upstream_quote": "Primary key. Surrogate identifier for the fund. Referenced by Trade.FundInterval, Trade.FundIntervalAllocation, and fee/",
+      "wiki_quote": "Primary key. Surrogate identifier for the fund. Referenced by Trade.FundInterval, Trade.FundIntervalAllocation, and fee/",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.Fund.md",
+      "upstream_quote": "Display name of the fund. Set from Customer.CustomerStatic.UserName when Job_GenerateFundAllocation creates a fund. Show",
+      "wiki_quote": "Display name of the fund. Set from Customer.CustomerStatic.UserName when Job_GenerateFundAllocation creates a fund. Show",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundAccountID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.Fund.md",
+      "upstream_quote": "FK to Customer.CustomerStatic.CID. The customer account that holds the fund's positions. Used to check \"is CID a fund?\" ",
+      "wiki_quote": "FK to Customer.CustomerStatic.CID. The customer account that holds the fund's positions. Used to check \"is CID a fund?\" ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundOwnerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.Fund.md",
+      "upstream_quote": "FK to Customer.CustomerStatic.CID. The entity that owns/manages the fund. Job_GenerateFundAllocation looks up FundID by ",
+      "wiki_quote": "FK to Customer.CustomerStatic.CID. The entity that owns/manages the fund. Job_GenerateFundAllocation looks up FundID by ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsPublic",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.Fund.md",
+      "upstream_quote": "1 = fund is publicly discoverable; 0 = private. Returned by GetFundMetaData. Controls visibility in fund listing and cop",
+      "wiki_quote": "1 = fund is publicly discoverable; 0 = private. Returned by GetFundMetaData. Controls visibility in fund listing and cop",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MinCopyAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.Fund.md",
+      "upstream_quote": "Minimum investment amount (in account currency) required to copy into this fund. Job_GenerateFundAllocation uses 5000 fo",
+      "wiki_quote": "Minimum investment amount (in account currency) required to copy into this fund. Job_GenerateFundAllocation uses 5000 fo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RefreshIntervalMonths",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.Fund.md",
+      "upstream_quote": "Rebalance interval in months. Job_GenerateFundAllocation uses this to compute Trade.FundInterval.PlannedEnd: adds this m",
+      "wiki_quote": "Rebalance interval in months. Job_GenerateFundAllocation uses this to compute Trade.FundInterval.PlannedEnd: adds this m",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreateDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.Fund.md",
+      "upstream_quote": "When the fund row was created. Set by default.",
+      "wiki_quote": "When the fund row was created. Set by default (Tier 1 — inherited from etoro.Trade.Fund).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LastUpdateDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.Fund.md",
+      "upstream_quote": "Last modification timestamp. Updated by application or procedures when fund config changes.",
+      "wiki_quote": "Last modification timestamp. Updated by application or procedures when fund config changes (Tier 1 — inherited from etor",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundType",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.Fund.md",
+      "upstream_quote": "FK to Dictionary.FundType.FundTypeID. 1=TopTraders (copy-based), 2=Partners (external strategist), 3=Market (thematic in",
+      "wiki_quote": "FK to Dictionary.FundType.FundTypeID. 1=TopTraders (copy-based), 2=Partners (external strategist), 3=Market (thematic in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "HasCrypto",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.Fund.md",
+      "upstream_quote": "1 = fund may hold crypto instruments; 0 = fund excludes crypto. Default 1. Returned by GetFundMetaData. Used for instrum",
+      "wiki_quote": "1 = fund may hold crypto instruments; 0 = fund excludes crypto. Default 1. Returned by GetFundMetaData. Used for instrum",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 11,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 11 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

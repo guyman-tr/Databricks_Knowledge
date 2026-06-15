@@ -1,0 +1,195 @@
+{
+  "object_fqn": "main.bi_output.vg_factbillingwithdraw_transactionsandattributes",
+  "generated_at": "2026-05-19T15:01:28Z",
+  "formula_count": 17,
+  "formulas": [
+    {
+      "column": "CID",
+      "formula": "-- ====================== -- Core identifiers -- ====================== CID",
+      "expression_raw": "-- ======================\n  -- Core identifiers\n  -- ======================\n  fw.CID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L11",
+      "scope": "main"
+    },
+    {
+      "column": "WithdrawPaymentID",
+      "formula": "WithdrawPaymentID",
+      "expression_raw": "fw.WithdrawPaymentID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "FundingType",
+      "formula": "Name",
+      "expression_raw": "x.Name AS FundingType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "ModificationDate",
+      "formula": "-- ====================== -- Dates -- ====================== ModificationDate",
+      "expression_raw": "-- ======================\n  -- Dates\n  -- ======================\n  fw.ModificationDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L14-L17",
+      "scope": "main"
+    },
+    {
+      "column": "Amount_OriginalCurrency",
+      "formula": "-- ====================== -- Amounts & currency -- ====================== Amount_Withdraw",
+      "expression_raw": "-- ======================\n  -- Amounts & currency\n  -- ======================\n  fw.Amount_Withdraw AS Amount_OriginalCurrency",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L18-L21",
+      "scope": "main"
+    },
+    {
+      "column": "Currency",
+      "formula": "Abbreviation",
+      "expression_raw": "cur.Abbreviation AS Currency",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "BaseExchangeRate",
+      "formula": "BaseExchangeRate",
+      "expression_raw": "fw.BaseExchangeRate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "ExchangeFee",
+      "formula": "ExchangeFee",
+      "expression_raw": "fw.ExchangeFee",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "WithdrawStatus",
+      "formula": "-- ====================== -- Status -- ====================== Name",
+      "expression_raw": "-- ======================\n  -- Status\n  -- ======================\n  cs.Name AS WithdrawStatus",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L25-L28",
+      "scope": "main"
+    },
+    {
+      "column": "CashoutReason",
+      "formula": "Name",
+      "expression_raw": "cr.Name AS CashoutReason",
+      "inputs": [
+        "main.general.bronze_etoro_dictionary_cashoutreason"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "PSP_Name",
+      "formula": "-- ====================== -- PSP / Provider -- ====================== Name",
+      "expression_raw": "-- ======================\n  -- PSP / Provider\n  -- ======================\n  depot.Name AS PSP_Name",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_billingdepot"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L30-L33",
+      "scope": "main"
+    },
+    {
+      "column": "MID_SettingsID",
+      "formula": "ProtocolMIDSettingsID",
+      "expression_raw": "fw.ProtocolMIDSettingsID AS MID_SettingsID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    },
+    {
+      "column": "CardBrand_Visa_MC_Amex",
+      "formula": "-- ====================== -- Card - Brand (Visa / MasterCard / Amex / Diners) -- ====================== Name",
+      "expression_raw": "-- ======================\n  -- Card - Brand (Visa / MasterCard / Amex / Diners)\n  -- ======================\n  ct.Name AS CardBrand_Visa_MC_Amex",
+      "inputs": [
+        "main.general.bronze_etoro_dictionary_cardtype"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L35-L38",
+      "scope": "main"
+    },
+    {
+      "column": "CardCategory_Tier_And_Product",
+      "formula": "-- ====================== -- Card - Category / Tier (Classic / Gold / Platinum / Debit / Prepaid / Business) -- ====================== CardCategory",
+      "expression_raw": "-- ======================\n  -- Card - Category / Tier (Classic / Gold / Platinum / Debit / Prepaid / Business)\n  -- ======================\n  fw.CardCategory AS CardCategory_Tier_And_Product",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L39-L42",
+      "scope": "main"
+    },
+    {
+      "column": "BIN_Code",
+      "formula": "-- ====================== -- Card - BIN & issuing bank -- ====================== BinCodeAsString",
+      "expression_raw": "-- ======================\n  -- Card - BIN & issuing bank\n  -- ======================\n  fw.BinCodeAsString AS BIN_Code",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L43-L46",
+      "scope": "main"
+    },
+    {
+      "column": "IssuingBank",
+      "formula": "BankNameAsString",
+      "expression_raw": "fw.BankNameAsString AS IssuingBank",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L47-L47",
+      "scope": "main"
+    },
+    {
+      "column": "CardIssuingCountry_BIN",
+      "formula": "Name",
+      "expression_raw": "cntry.Name AS CardIssuingCountry_BIN",
+      "inputs": [
+        "main.general.bronze_etoro_dictionary_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L48-L48",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_factbillingwithdraw_transactionsandattributes.sql"
+}

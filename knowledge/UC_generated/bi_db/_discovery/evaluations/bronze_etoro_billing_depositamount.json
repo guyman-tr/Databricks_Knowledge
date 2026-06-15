@@ -1,0 +1,123 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_billing_depositamount",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:29Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "CountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositAmount.md",
+      "upstream_quote": "Country for which these deposit limits apply. Implicit FK to Dictionary.Country(CountryID). CountryID=0 is the global fa",
+      "wiki_quote": "Country for which these deposit limits apply. Implicit FK to Dictionary.Country(CountryID). CountryID=0 is the global fa",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MinAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositAmount.md",
+      "upstream_quote": "Minimum deposit amount in USD. The smallest amount a customer in this country can deposit (or globally, $50 for the fall",
+      "wiki_quote": "Minimum deposit amount in USD. The smallest amount a customer in this country can deposit (or globally, $50 for the fall",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Package1Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositAmount.md",
+      "upstream_quote": "First suggested deposit amount shown as a quick-select button. NULL if not applicable. Default value is $200.00 across m",
+      "wiki_quote": "First suggested deposit amount shown as a quick-select button. NULL if not applicable. Default value is $200.00 across m",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Package2Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositAmount.md",
+      "upstream_quote": "Second suggested deposit amount. NULL if not applicable. Default value is $400.00. Only displayed when IsPackageVisible=",
+      "wiki_quote": "Second suggested deposit amount. NULL if not applicable. Default value is $400.00. Only displayed when IsPackageVisible=",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Package3Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositAmount.md",
+      "upstream_quote": "Third suggested deposit amount. NULL if not applicable. Default value is $1,000.00. Only displayed when IsPackageVisible",
+      "wiki_quote": "Third suggested deposit amount. NULL if not applicable. Default value is $1,000.00. Only displayed when IsPackageVisible",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FTD",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositAmount.md",
+      "upstream_quote": "First Time Deposit flag. 1=this row applies to customers making their FIRST approved deposit (no prior PaymentStatusID=2",
+      "wiki_quote": "First Time Deposit flag. 1=this row applies to customers making their FIRST approved deposit (no prior PaymentStatusID=2",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositAmount.md",
+      "upstream_quote": "Surrogate PK. Auto-incremented row identifier. Not the natural business key - lookups are by (CountryID, FTD).",
+      "wiki_quote": "Surrogate PK. Auto-incremented row identifier. Not the natural business key - lookups are by (CountryID, FTD) (Tier 1 — ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsPackageVisible",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositAmount.md",
+      "upstream_quote": "Whether the Package1/2/3 suggested amounts should be displayed in the deposit UI. 1=show package buttons (8 rows, all FT",
+      "wiki_quote": "Whether the Package1/2/3 suggested amounts should be displayed in the deposit UI. 1=show package buttons (8 rows, all FT",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Trace",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositAmount.md",
+      "upstream_quote": "Non-persisted JSON audit string (HostName, AppName, SUserName, SPID, DBName, ObjectName). Computed at query time for dia",
+      "wiki_quote": "Non-persisted JSON audit string (HostName, AppName, SUserName, SPID, DBName, ObjectName). Computed at query time for dia",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidFrom",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositAmount.md",
+      "upstream_quote": "System-time start: row became current at this timestamp. GENERATED ALWAYS AS ROW START.",
+      "wiki_quote": "System-time start: row became current at this timestamp. GENERATED ALWAYS AS ROW START (Tier 1 — inherited from etoro.Bi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidTo",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositAmount.md",
+      "upstream_quote": "System-time end: row was superseded at this timestamp (9999-12-31 for current rows). GENERATED ALWAYS AS ROW END.",
+      "wiki_quote": "System-time end: row was superseded at this timestamp (9999-12-31 for current rows). GENERATED ALWAYS AS ROW END (Tier 1",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MaxAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositAmount.md",
+      "upstream_quote": "Maximum deposit amount in USD. NULL means no upper limit. When set (e.g., MaxAmount=50 for CountryID=1), enforces a cap ",
+      "wiki_quote": "Maximum deposit amount in USD. NULL means no upper limit. When set (e.g., MaxAmount=50 for CountryID=1), enforces a cap ",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 12,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 12 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

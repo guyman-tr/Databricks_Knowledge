@@ -1,0 +1,195 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_pi_tradinglimitations_clicksize",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "LastName",
+      "target_column_name": "AccountManager",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "FirstName",
+      "target_column_name": "AccountManager",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "AllowBuy",
+      "target_column_name": "CloseOnly/BuyOpen",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "Date",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "source_column_name": "GuruStatusID",
+      "target_column_name": "GuruStatusID",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "source_column_name": "GuruStatusName",
+      "target_column_name": "GuruStatusName",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentType",
+      "target_column_name": "InstrumentType",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentTypeID",
+      "target_column_name": "InstrumentTypeID",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "IsBuy",
+      "target_column_name": "IsBuy",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_providertoinstrument",
+      "source_column_name": "MaxPositionUnits",
+      "target_column_name": "MaxPosition$Value",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_currencyprice",
+      "source_column_name": "UnitMargin",
+      "target_column_name": "MaxPosition$Value",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_currencyprice",
+      "source_column_name": "UnitMargin",
+      "target_column_name": "MaxTreeSize$Value",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_hedge_instrumentconfiguration",
+      "source_column_name": "HBCMaxDealSizeThresholdRejectInEToroUnits",
+      "target_column_name": "MaxTreeSize$Value",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_hedge_instrumentconfiguration",
+      "source_column_name": "HBCMaxDealSizeThresholdRejectInEToroUnits",
+      "target_column_name": "MaxTreeSizeUnits",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Name",
+      "target_column_name": "Name",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "PositionID",
+      "target_column_name": "NumberOfPositions",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "CID",
+      "target_column_name": "ParentCID",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "TreeID",
+      "target_column_name": "TreeID",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "TreeUnits",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_currencyprice",
+      "source_column_name": "UnitMargin",
+      "target_column_name": "UnitMargin",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_hedge_instrumentconfiguration",
+      "source_column_name": "HBCMaxDealSizeThresholdRejectInEToroUnits",
+      "target_column_name": "UnitsToMaxTreeSizeRatio",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "UnitsToMaxTreeSizeRatio",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "UserName",
+      "target_column_name": "UserName",
+      "entity_type": "JOB",
+      "event_count": 91
+    }
+  ],
+  "generated_at": "2026-05-19T12:34:46Z"
+}

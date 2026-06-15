@@ -1,0 +1,734 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_crypto_pricing",
+  "rows": [
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "B2C2_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "B2C2_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "B2C2_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Bids",
+      "target_column_name": "B2C2_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Asks",
+      "target_column_name": "B2C2_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "B2C2_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "exchange",
+      "target_column_name": "B2C2_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "exchange",
+      "target_column_name": "B2C2_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "B2C2_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "B2C2_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Bids",
+      "target_column_name": "B2C2_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "B2C2_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "B2C2_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Asks",
+      "target_column_name": "B2C2_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "exchange",
+      "target_column_name": "Binance_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "Binance_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "Binance_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "Binance_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Asks",
+      "target_column_name": "Binance_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Bids",
+      "target_column_name": "Binance_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "Binance_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "Binance_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "Binance_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "exchange",
+      "target_column_name": "Binance_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Bids",
+      "target_column_name": "Binance_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Asks",
+      "target_column_name": "Binance_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "Binance_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "Binance_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "exchange",
+      "target_column_name": "GDAX_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "GDAX_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "GDAX_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "GDAX_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "GDAX_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Asks",
+      "target_column_name": "GDAX_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Bids",
+      "target_column_name": "GDAX_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "GDAX_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Asks",
+      "target_column_name": "GDAX_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "GDAX_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "exchange",
+      "target_column_name": "GDAX_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "GDAX_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Bids",
+      "target_column_name": "GDAX_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "GDAX_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_instruments",
+      "source_column_name": "EtoroInstrumentId",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Name",
+      "target_column_name": "Instrument_name",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "Kraken_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "Kraken_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "Kraken_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "Kraken_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Bids",
+      "target_column_name": "Kraken_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "exchange",
+      "target_column_name": "Kraken_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Asks",
+      "target_column_name": "Kraken_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "exchange",
+      "target_column_name": "Kraken_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Bids",
+      "target_column_name": "Kraken_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "Kraken_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Asks",
+      "target_column_name": "Kraken_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "Kraken_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "Kraken_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "Kraken_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "OKX_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "OKX_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "OKX_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "OKX_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Asks",
+      "target_column_name": "OKX_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "exchange",
+      "target_column_name": "OKX_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Bids",
+      "target_column_name": "OKX_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "OKX_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "OKX_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "OKX_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Bids",
+      "target_column_name": "OKX_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Asks",
+      "target_column_name": "OKX_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "exchange",
+      "target_column_name": "OKX_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "OKX_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Bids",
+      "target_column_name": "eToro_GDAX_Kraken",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "eToro_GDAX_Kraken",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "eToro_GDAX_Kraken",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Asks",
+      "target_column_name": "eToro_GDAX_Kraken",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "exchange",
+      "target_column_name": "eToro_GDAX_Kraken",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "eToro_GDAX_Kraken",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "eToro_GDAX_Kraken",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "eToro_Rank",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "eToro_Rank",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "eToro_Rank",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Asks",
+      "target_column_name": "eToro_Rank",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Bids",
+      "target_column_name": "eToro_Rank",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_marketmaker_dbo_instruments",
+      "source_column_name": "EtoroInstrumentId",
+      "target_column_name": "eToro_Rank",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "eToro_Rank",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "eToro_Rank",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "eToro_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "eToro_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "eToro_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Asks",
+      "target_column_name": "eToro_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "exchange",
+      "target_column_name": "eToro_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "eToro_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Bids",
+      "target_column_name": "eToro_Spread",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "eToro_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "exchange",
+      "target_column_name": "eToro_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "eToro_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Bids",
+      "target_column_name": "eToro_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Ask",
+      "target_column_name": "eToro_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "Bid",
+      "target_column_name": "eToro_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "Asks",
+      "target_column_name": "eToro_Spread_Dollar",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.silver_dealingstreaming_marketmaker_dealing_market_maker_raw_order_book_data_vwap",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "etr_ymd",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_currencyprice",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "etr_ymd",
+      "entity_type": "JOB",
+      "event_count": 91
+    }
+  ],
+  "generated_at": "2026-05-19T12:21:46Z"
+}

@@ -1,0 +1,1400 @@
+{
+  "schema": "wallet",
+  "catalog": "main",
+  "started_at": "2026-05-19T12:07:27Z",
+  "finished_at": "2026-05-19T12:08:27Z",
+  "wall_seconds": 60.0,
+  "phases": {
+    "1": {
+      "wall_seconds": 32.60032820701599,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [55/58] bronze_walletdb_wallet_walletbalances (EXTERNAL)\n  [56/58] bronze_walletdb_wallet_walletpool (EXTERNAL)\n  [57/58] bronze_walletdb_wallet_walletpoolstatuses (EXTERNAL)\n  [58/58] bronze_walletdb_wallet_wallets (EXTERNAL)\n[discover-schema] wrote C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\wallet\\_discovery\\uc_inventory.json (263,666 bytes; 58 objects, 519 columns)"
+    },
+    "3": {
+      "wall_seconds": 0.3330235481262207,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [56/58] bronze_walletdb_wallet_walletpool → 0 upstream refs\n  [57/58] bronze_walletdb_wallet_walletpoolstatuses → 0 upstream refs\n  [58/58] bronze_walletdb_wallet_wallets → 0 upstream refs\n[upstream-bridge] wrote C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\wallet\\_discovery\\upstream_wikis\\_index.json\n[upstream-bridge] stats={'total_upstreams': 0, 'rule1_synapse_mirror': 0, 'rule2_uc_generated': 0, 'rule3_uc_domain': 0, 'rule4_bronze_prod': 0, 'rule5_uc_native_map': 0, 'rule6_no_wiki': 0, 'wikis_cached': 0, 'no_wiki_placeholders': 0, 'blocked_on_upstream': 0}"
+    },
+    "4": {
+      "wall_seconds": 0.657041072845459,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  wrote stub knowledge/UC_generated/wallet/Tables/bronze_walletdb_wallet_walletpool.lineage.md\n[build-lineage] main.wallet.bronze_walletdb_wallet_walletpoolstatuses (EXTERNAL)\n  wrote stub knowledge/UC_generated/wallet/Tables/bronze_walletdb_wallet_walletpoolstatuses.lineage.md\n[build-lineage] main.wallet.bronze_walletdb_wallet_wallets (EXTERNAL)\n  wrote stub knowledge/UC_generated/wallet/Tables/bronze_walletdb_wallet_wallets.lineage.md"
+    },
+    "5": {
+      "wall_seconds": 7.932528734207153,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [OK] bronze_walletdb_wallet_walletbalances — tiers={'1': 7, 'N': 3}, unverified=0\n  [OK] bronze_walletdb_wallet_walletpool — tiers={'1': 7, 'N': 3}, unverified=0\n  [OK] bronze_walletdb_wallet_walletpoolstatuses — tiers={'1': 8, 'N': 3}, unverified=0\n  [OK] bronze_walletdb_wallet_wallets — tiers={'1': 10}, unverified=0\n[generate-wiki] done: 58/58 OK"
+    },
+    "6": {
+      "wall_seconds": 3.368248462677002,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "[validate-pipeline-wiki] wallet: 58 objects checked, 0 HARD, 0 WARN issues (assert_no_inference=True)\n\n[validate-pipeline-wiki] PASS",
+      "stderr_tail": ""
+    },
+    "7": {
+      "wall_seconds": 14.68408727645874,
+      "rc": 0,
+      "rows": 58,
+      "first_pass_pass": 58,
+      "regen_pass": 0,
+      "final_fail": 0,
+      "dimension_averages": {
+        "inheritance_fidelity": 10.0,
+        "source_code_narration_accuracy": 7.0,
+        "null_with_provenance_correctness": 8.24,
+        "completeness": 8.0,
+        "shape_fidelity": 10.0,
+        "lineage_coherence": 10.0,
+        "concept_coverage": 7.5
+      },
+      "per_object": {
+        "bronze_walletbalancesreportdb_wallet_financereportrecords": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletbalancesreportdb_wallet_financereportruns": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletbalancesreportdb_wallet_financereports": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletbalancesreportdb_wallet_financereportsbalances": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_dictionary_checksumtypes": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_conversionstatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_cryptocoinproviders": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_manualapprovetransactionstatus": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_paymentstatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_receivedtransactiontypes": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_requeststatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_requesttypes": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_stakingstatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_transactionstatus": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_transactiontypes": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_walletpoolstatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_walletprovider": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_dictionary_wallettypes": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_staking_staking": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_staking_stakingexternaladdress": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_staking_stakingrewards": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_staking_stakingstatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_staking_stakingtransactions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_wallet_amlproviderusers": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_amlvalidations": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_blockchaincryptoproviders": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_wallet_blockchaincryptos": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_wallet_conversions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_conversionstatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_conversiontransactions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_cryptomarketratesmappings": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_wallet_cryptotypes": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_wallet_customerwalletsview": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_wallet_fiatmarketratesmappings": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_wallet_fiattypes": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_wallet_limitationsdefinitions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_wallet_payments": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_paymentstatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_paymenttransactions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_receivedtransactions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_receivedtransactionstatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_redemptions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_requests": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_requeststatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_senttransactionoutputs": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_senttransactionreplaces": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_wallet_senttransactions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_senttransactionstatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_transactionsview": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_wallet_travelruleaddresses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_wallet_travelrulesends": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        },
+        "bronze_walletdb_wallet_vw_walletbalanaces": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_walletaddresses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_walletassets": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_walletbalances": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_walletpool": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_walletpoolstatuses": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.82
+        },
+        "bronze_walletdb_wallet_wallets": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.53
+        }
+      }
+    }
+  },
+  "failures": [],
+  "objects": [
+    {
+      "name": "bronze_walletbalancesreportdb_wallet_financereportrecords",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 20,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletbalancesreportdb_wallet_financereportruns",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 4,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletbalancesreportdb_wallet_financereports",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 3,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletbalancesreportdb_wallet_financereportsbalances",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 19,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_dictionary_checksumtypes",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_conversionstatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_cryptocoinproviders",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 3,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_manualapprovetransactionstatus",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_paymentstatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_receivedtransactiontypes",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_requeststatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_requesttypes",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_stakingstatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_transactionstatus",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_transactiontypes",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_walletpoolstatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_walletprovider",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_dictionary_wallettypes",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_staking_staking",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 6,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_staking_stakingexternaladdress",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_staking_stakingrewards",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 10,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_staking_stakingstatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_staking_stakingtransactions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 6,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_wallet_amlproviderusers",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_amlvalidations",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 14,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_blockchaincryptoproviders",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_wallet_blockchaincryptos",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_wallet_conversions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 10,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 6,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_conversionstatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 4,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 6,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_conversiontransactions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 11,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 6,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_cryptomarketratesmappings",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 4,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_wallet_cryptotypes",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 31,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_wallet_customerwalletsview",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 13,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_wallet_fiatmarketratesmappings",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 4,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_wallet_fiattypes",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_wallet_limitationsdefinitions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 13,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_wallet_payments",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 6,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_paymentstatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 6,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_paymenttransactions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 11,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 6,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_receivedtransactions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 16,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_receivedtransactionstatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_redemptions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 17,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_requests",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_requeststatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_senttransactionoutputs",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 11,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_senttransactionreplaces",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_wallet_senttransactions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_senttransactionstatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 4,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_transactionsview",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 22,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_wallet_travelruleaddresses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 13,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_wallet_travelrulesends",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    },
+    {
+      "name": "bronze_walletdb_wallet_vw_walletbalanaces",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 6,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_walletaddresses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 9,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_walletassets",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_walletbalances",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 7,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_walletpool",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 7,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_walletpoolstatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.82
+    },
+    {
+      "name": "bronze_walletdb_wallet_wallets",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 10,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "tier_null_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.53
+    }
+  ]
+}

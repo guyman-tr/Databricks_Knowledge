@@ -1,0 +1,71 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_population_first_time_funded",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 3,
+  "concepts": [
+    {
+      "id": "filter_block_First_IOB",
+      "name": "Filter block on First_IOB",
+      "kind": "filter_block",
+      "columns_involved": [
+        "ActionTypeID",
+        "CompensationReasonID"
+      ],
+      "predicates": [
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "57"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L14",
+      "scope": "First_IOB",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_DWH_FTD",
+      "name": "Filter block on DWH_FTD",
+      "kind": "filter_block",
+      "columns_involved": [
+        "IsDepositor"
+      ],
+      "predicates": [
+        {
+          "col": "IsDepositor",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L47",
+      "scope": "DWH_FTD",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_Verification",
+      "name": "Filter block on Verification",
+      "kind": "filter_block",
+      "columns_involved": [
+        "VerificationLevelID"
+      ],
+      "predicates": [
+        {
+          "col": "VerificationLevelID",
+          "op": "=",
+          "val": "3"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L56",
+      "scope": "Verification",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_first_time_funded.sql"
+}

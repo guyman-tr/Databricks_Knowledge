@@ -1,0 +1,191 @@
+{
+  "object_fqn": "main.bi_output.vg_positionsvolumeandattributes_lc4_source",
+  "generated_at": "2026-05-19T15:01:22Z",
+  "concept_count": 7,
+  "concepts": [
+    {
+      "id": "case_flag_hasemoneyaccount",
+      "name": "HasEMoneyAccount computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "HasEMoneyAccount"
+      ],
+      "predicates": [
+        {
+          "col": "IsPartialCloseChild",
+          "op": "=",
+          "val": "0"
+        },
+        {
+          "col": "MirrorID",
+          "op": "=",
+          "val": "0"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "evidence_lines": "bi_output.sql L16-L52",
+      "scope": "FinalOpen"
+    },
+    {
+      "id": "case_flag_hasemoneyaccount",
+      "name": "HasEMoneyAccount computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "HasEMoneyAccount"
+      ],
+      "predicates": [
+        {
+          "col": "MirrorID",
+          "op": "=",
+          "val": "0"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.bi_output.BI_OUTPUT_Finance_Tables_bi_db_positions_closed_to_iban_parquet",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "evidence_lines": "bi_output.sql L82-L117",
+      "scope": "FinalClose"
+    },
+    {
+      "id": "dim_lookup_di",
+      "name": "Dim lookup via di",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "alias": "di",
+      "join_conditions": [
+        "dp.InstrumentID = di.InstrumentID",
+        "dp.InstrumentID = di.InstrumentID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L20,L86",
+      "scopes": [
+        "BaseOpen",
+        "BaseClose"
+      ],
+      "scope": "BaseOpen",
+      "join_condition": "dp.InstrumentID = di.InstrumentID"
+    },
+    {
+      "id": "dim_lookup_dr",
+      "name": "Dim lookup via dr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "alias": "dr",
+      "join_conditions": [
+        "dr.DateRangeID = fsc.DateRangeID\n       AND CAST(date_format(bse.Date_, '        '",
+        "dr.DateRangeID = fsc.DateRangeID\n       AND CAST(date_format(bse.Date_, '        '"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L56,L121",
+      "scopes": [
+        "FinalOpen",
+        "FinalClose"
+      ],
+      "scope": "FinalOpen",
+      "join_condition": "dr.DateRangeID = fsc.DateRangeID\n       AND CAST(date_format(bse.Date_, '        '"
+    },
+    {
+      "id": "dim_lookup_dpl",
+      "name": "Dim lookup via dpl",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "alias": "dpl",
+      "join_conditions": [
+        "fsc.PlayerLevelID = dpl.PlayerLevelID",
+        "fsc.PlayerLevelID = dpl.PlayerLevelID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L60,L125",
+      "scopes": [
+        "FinalOpen",
+        "FinalClose"
+      ],
+      "scope": "FinalOpen",
+      "join_condition": "fsc.PlayerLevelID = dpl.PlayerLevelID"
+    },
+    {
+      "id": "dim_lookup_c",
+      "name": "Dim lookup via c",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "alias": "c",
+      "join_conditions": [
+        "fsc.CountryID = c.CountryID",
+        "fsc.CountryID = c.CountryID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L62,L127",
+      "scopes": [
+        "FinalOpen",
+        "FinalClose"
+      ],
+      "scope": "FinalOpen",
+      "join_condition": "fsc.CountryID = c.CountryID"
+    },
+    {
+      "id": "dim_lookup_ema",
+      "name": "Dim lookup via ema",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account",
+      "alias": "ema",
+      "join_conditions": [
+        "bse.CID = ema.CID\n       AND ema.GCID_Unique_Count = 1\n       AND ema.IsValidCustomer = 1",
+        "bse.CID = ema.CID\n       AND ema.GCID_Unique_Count = 1\n       AND ema.IsValidCustomer = 1"
+      ],
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L64,L129",
+      "scopes": [
+        "FinalOpen",
+        "FinalClose"
+      ],
+      "scope": "FinalOpen",
+      "join_condition": "bse.CID = ema.CID\n       AND ema.GCID_Unique_Count = 1\n       AND ema.IsValidCustomer = 1"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_positionsvolumeandattributes_lc4_source.sql"
+}

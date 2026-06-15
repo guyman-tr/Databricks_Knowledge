@@ -1,0 +1,447 @@
+{
+  "object": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_collateraldetailesuk",
+  "rows": [
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "ACCOUNT_NO",
+      "target_column_name": "AccountEquilend",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Client_Short_Name",
+      "target_column_name": "AccountEquilend",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_gsl113p___client___non_cash_collateral_report__with_pending",
+      "source_column_name": "BaseCurr",
+      "target_column_name": "BaseCurrencyBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Borrower_Name",
+      "target_column_name": "Borrower",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Client_Sec_ID",
+      "target_column_name": "Client_Sec_ID",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_gsl113p___client___non_cash_collateral_report__with_pending",
+      "source_column_name": "CollSecurityId",
+      "target_column_name": "CollSecurityIdBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Collateral_%",
+      "target_column_name": "CollateralPercent",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_gsl114___detail_non_cash_collateral_by_collateral_type",
+      "source_column_name": "CollateralSubType",
+      "target_column_name": "CollateralSubTypeBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Current_Collateral_Value_",
+      "target_column_name": "Collateral_PriceCalc",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Quantity",
+      "target_column_name": "Collateral_PriceCalc",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Collateral_Type",
+      "target_column_name": "Collateral_Type",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Current_Collateral_Value_",
+      "target_column_name": "Collateral_Value_USD",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "ISIN",
+      "target_column_name": "ISIN",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "ISIN",
+      "target_column_name": "ISIN",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_raw_setteled_balance",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "CURRENCY_KY",
+      "target_column_name": "LoanCurrency",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Loan_Currency",
+      "target_column_name": "LoanCurrency",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "LoanQuantity",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Quantity",
+      "target_column_name": "LoanQuantityCollateralFile",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Ticker",
+      "target_column_name": "LoanTICKER",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "TICKER",
+      "target_column_name": "LoanTICKER",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_gsl113p___client___non_cash_collateral_report__with_pending",
+      "source_column_name": "LoanToSettle_FX_Rate",
+      "target_column_name": "LoanToSettleFXRateBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Current_Market_Value_USD",
+      "target_column_name": "Loan_PriceCalc",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Quantity",
+      "target_column_name": "Loan_PriceCalc",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Current_Market_Value_USD",
+      "target_column_name": "Loan_Value_USD_CollateralFile",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_gsl113p___client___non_cash_collateral_report__with_pending",
+      "source_column_name": "MarketValueBaseCurrency",
+      "target_column_name": "MarketValueBaseCurrencyBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_gsl113p___client___non_cash_collateral_report__with_pending",
+      "source_column_name": "MarketValueSettleCurrency",
+      "target_column_name": "MarketValueSettleCurrencyBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Current_Collateral_Value_",
+      "target_column_name": "PercPosVsBorrowerTotal",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Borrower_Name",
+      "target_column_name": "PercPosVsBorrowerTotal",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Pooled_Position_ID",
+      "target_column_name": "Pooled_Position_ID",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Position_ID",
+      "target_column_name": "Position_ID",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "POSITION_ID",
+      "target_column_name": "Position_ID",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Position_Type",
+      "target_column_name": "Position_Type",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "Amount",
+      "target_column_name": "PriceEstimated",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "PriceEstimated",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "source_column_name": "PositionPnL",
+      "target_column_name": "PriceEstimated",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Borrower_Name",
+      "target_column_name": "QuantityPerPosBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Current_Collateral_Value_",
+      "target_column_name": "QuantityPerPosBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_gsl113p___client___non_cash_collateral_report__with_pending",
+      "source_column_name": "Quantity",
+      "target_column_name": "QuantityPerPosBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "ReportDate",
+      "entity_type": "JOB",
+      "event_count": 43
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_gsl113p___client___non_cash_collateral_report__with_pending",
+      "source_column_name": "SecurityDescription",
+      "target_column_name": "SecurityDescriptionBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_gsl113p___client___non_cash_collateral_report__with_pending",
+      "source_column_name": "MarketPrice",
+      "target_column_name": "SecurityMarketPriceBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_gsl113p___client___non_cash_collateral_report__with_pending",
+      "source_column_name": "Quantity",
+      "target_column_name": "SecurityQuantityBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Security_Description",
+      "target_column_name": "Security_Description",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Security_Type",
+      "target_column_name": "Security_Type",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_gsl113p___client___non_cash_collateral_report__with_pending",
+      "source_column_name": "SettleCurrency",
+      "target_column_name": "SettleCurrencyBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Settlement_Date",
+      "target_column_name": "Settlement_Date",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_gsl114___detail_non_cash_collateral_by_collateral_type",
+      "source_column_name": "CollateralSubType",
+      "target_column_name": "SplitRatio",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Current_Collateral_Value_",
+      "target_column_name": "TotalCollateralPerBorrower",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Borrower_Name",
+      "target_column_name": "TotalCollateralPerBorrower",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Trade_Date",
+      "target_column_name": "Trade_Date",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 43
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Borrower_Name",
+      "target_column_name": "ValuePerPosBaseCurrBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_gsl113p___client___non_cash_collateral_report__with_pending",
+      "source_column_name": "MarketValueBaseCurrency",
+      "target_column_name": "ValuePerPosBaseCurrBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Current_Collateral_Value_",
+      "target_column_name": "ValuePerPosBaseCurrBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_gsl113p___client___non_cash_collateral_report__with_pending",
+      "source_column_name": "MarketValueSettleCurrency",
+      "target_column_name": "ValuePerPosSettleCurrencyBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Current_Collateral_Value_",
+      "target_column_name": "ValuePerPosSettleCurrencyBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Borrower_Name",
+      "target_column_name": "ValuePerPosSettleCurrencyBNY",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_y",
+      "entity_type": "JOB",
+      "event_count": 43
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ym",
+      "entity_type": "JOB",
+      "event_count": 43
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ymd",
+      "entity_type": "JOB",
+      "event_count": 43
+    }
+  ],
+  "generated_at": "2026-05-19T14:33:11Z"
+}

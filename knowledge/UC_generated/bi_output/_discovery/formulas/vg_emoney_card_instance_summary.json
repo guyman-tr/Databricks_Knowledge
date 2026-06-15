@@ -1,0 +1,74 @@
+{
+  "object_fqn": "main.bi_output.vg_emoney_card_instance_summary",
+  "generated_at": "2026-05-19T15:01:27Z",
+  "formula_count": 6,
+  "formulas": [
+    {
+      "column": "CID",
+      "formula": "-- ========================================================================== -- Source: information_schema.views.view_definition -- Object: bi_output.vg_emoney_card_instance_summary -- Captured:…",
+      "expression_raw": "-- ==========================================================================\n-- Source: information_schema.views.view_definition\n-- Object: main.bi_output.vg_emoney_card_instance_summary\n-- Captured:…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L1-L7",
+      "scope": "main"
+    },
+    {
+      "column": "Customer_Card_ID",
+      "formula": "-- ========================================================================== -- Source: information_schema.views.view_definition -- Object: bi_output.vg_emoney_card_instance_summary -- Captured:…",
+      "expression_raw": "-- ==========================================================================\n-- Source: information_schema.views.view_definition\n-- Object: main.bi_output.vg_emoney_card_instance_summary\n-- Captured:…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L1-L7",
+      "scope": "main"
+    },
+    {
+      "column": "Customer_Card_Status",
+      "formula": "-- ========================================================================== -- Source: information_schema.views.view_definition -- Object: bi_output.vg_emoney_card_instance_summary -- Captured:…",
+      "expression_raw": "-- ==========================================================================\n-- Source: information_schema.views.view_definition\n-- Object: main.bi_output.vg_emoney_card_instance_summary\n-- Captured:…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L1-L7",
+      "scope": "main"
+    },
+    {
+      "column": "Customer_Card_Order_Date",
+      "formula": "InstanceCreatedDate",
+      "expression_raw": "InstanceCreatedDate as Customer_Card_Order_Date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_card_instance_summary"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "Customer_Card_Activation_Date",
+      "formula": "InstanceActivationDate",
+      "expression_raw": "InstanceActivationDate as Customer_Card_Activation_Date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_card_instance_summary"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "Customer_Card_Expiration_Date",
+      "formula": "InstanceActivationDate as Customer_Card_Activation_Date , InstanceExpirationDate",
+      "expression_raw": "InstanceActivationDate as Customer_Card_Activation_Date\n , InstanceExpirationDate as Customer_Card_Expiration_Date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_card_instance_summary"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L10",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_emoney_card_instance_summary.sql"
+}

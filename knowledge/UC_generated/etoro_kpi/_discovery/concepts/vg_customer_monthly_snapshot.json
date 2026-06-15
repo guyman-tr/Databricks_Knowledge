@@ -1,0 +1,369 @@
+{
+  "object_fqn": "main.etoro_kpi.vg_customer_monthly_snapshot",
+  "generated_at": "2026-05-19T15:20:30Z",
+  "concept_count": 16,
+  "concepts": [
+    {
+      "id": "case_flag_mifidtype",
+      "name": "MifidType computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "MifidType"
+      ],
+      "predicates": [
+        {
+          "col": "MifidCategorizationID",
+          "op": "IN",
+          "val": "(2,3)"
+        }
+      ],
+      "then_value": "'            '",
+      "else_value": "'      '",
+      "upstream_enum_decodes": {
+        "MifidCategorizationID=2": "Professional",
+        "MifidCategorizationID=3": "Elective Professional"
+      },
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization"
+      ],
+      "evidence_lines": "etoro_kpi.sql L44-L47",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_ispi",
+      "name": "IsPI computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsPI"
+      ],
+      "predicates": [
+        {
+          "col": "GuruStatusID",
+          "op": ">",
+          "val": "1"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "evidence_lines": "etoro_kpi.sql L60-L63",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_dr",
+      "name": "Dim lookup via dr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "alias": "dr",
+      "join_conditions": [
+        "fsc.DateRangeID = dr.DateRangeID \n    AND dd.DateKey BETWEEN dr.FromDateID AND dr.ToDateID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L91",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.DateRangeID = dr.DateRangeID \n    AND dd.DateKey BETWEEN dr.FromDateID AND dr.ToDateID"
+    },
+    {
+      "id": "dim_lookup_dc",
+      "name": "Dim lookup via dc",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "alias": "dc",
+      "join_conditions": [
+        "fsc.CountryID = dc.CountryID",
+        "dc1.CitizenshipCountryID = dc2.CountryID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L94,L123",
+      "scopes": [
+        "main",
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.CountryID = dc.CountryID"
+    },
+    {
+      "id": "dim_lookup_dpl",
+      "name": "Dim lookup via dpl",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "alias": "dpl",
+      "join_conditions": [
+        "fsc.PlayerLevelID = dpl.PlayerLevelID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L96",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.PlayerLevelID = dpl.PlayerLevelID"
+    },
+    {
+      "id": "dim_lookup_dmc",
+      "name": "Dim lookup via dmc",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization",
+      "alias": "dmc",
+      "join_conditions": [
+        "fsc.MifidCategorizationID = dmc.MifidCategorizationID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L98",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.MifidCategorizationID = dmc.MifidCategorizationID"
+    },
+    {
+      "id": "dim_lookup_dr1",
+      "name": "Dim lookup via dr1",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "alias": "dr1",
+      "join_conditions": [
+        "fsc.RegulationID = dr1.DWHRegulationID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L100",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.RegulationID = dr1.DWHRegulationID"
+    },
+    {
+      "id": "dim_lookup_dc1",
+      "name": "Dim lookup via dc1",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "alias": "dc1",
+      "join_conditions": [
+        "fsc.RealCID = dc1.RealCID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L121",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.RealCID = dc1.RealCID"
+    },
+    {
+      "id": "dim_lookup_dgs",
+      "name": "Dim lookup via dgs",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "alias": "dgs",
+      "join_conditions": [
+        "fsc.GuruStatusID = dgs.GuruStatusID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L125",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.GuruStatusID = dgs.GuruStatusID"
+    },
+    {
+      "id": "dim_lookup_ast",
+      "name": "Dim lookup via ast",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus",
+      "alias": "ast",
+      "join_conditions": [
+        "fsc.AccountStatusID = ast.AccountStatusID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L127",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.AccountStatusID = ast.AccountStatusID"
+    },
+    {
+      "id": "dim_lookup_act",
+      "name": "Dim lookup via act",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+      "alias": "act",
+      "join_conditions": [
+        "fsc.AccountTypeID = act.AccountTypeID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L129",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.AccountTypeID = act.AccountTypeID"
+    },
+    {
+      "id": "dim_lookup_pst",
+      "name": "Dim lookup via pst",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "alias": "pst",
+      "join_conditions": [
+        "fsc.PlayerStatusID = pst.PlayerStatusID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L131",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.PlayerStatusID = pst.PlayerStatusID"
+    },
+    {
+      "id": "dim_lookup_psr",
+      "name": "Dim lookup via psr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+      "alias": "psr",
+      "join_conditions": [
+        "fsc.PlayerStatusReasonID = psr.PlayerStatusReasonID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L133",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.PlayerStatusReasonID = psr.PlayerStatusReasonID"
+    },
+    {
+      "id": "dim_lookup_pssr",
+      "name": "Dim lookup via pssr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+      "alias": "pssr",
+      "join_conditions": [
+        "fsc.PlayerStatusSubReasonID = pssr.PlayerStatusSubReasonID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L135",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.PlayerStatusSubReasonID = pssr.PlayerStatusSubReasonID"
+    },
+    {
+      "id": "dim_lookup_dl",
+      "name": "Dim lookup via dl",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+      "alias": "dl",
+      "join_conditions": [
+        "fsc.LanguageID = dl.LanguageID",
+        "fsc.CommunicationLanguageID = dcl.LanguageID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L137,L139",
+      "scopes": [
+        "main",
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.LanguageID = dl.LanguageID"
+    },
+    {
+      "id": "dim_lookup_dm",
+      "name": "Dim lookup via dm",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "alias": "dm",
+      "join_conditions": [
+        "fsc.AccountManagerID = dm.ManagerID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L141",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.AccountManagerID = dm.ManagerID"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/vg_customer_monthly_snapshot.sql"
+}

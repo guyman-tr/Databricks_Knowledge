@@ -1,0 +1,184 @@
+{
+  "object_fqn": "main.etoro_kpi.ftd_funnel_v",
+  "generated_at": "2026-05-19T15:20:29Z",
+  "concept_count": 6,
+  "concepts": [
+    {
+      "id": "case_flag_vd_hasdocuments",
+      "name": "VD_HasDocuments computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "VD_HasDocuments"
+      ],
+      "predicates": [
+        {
+          "col": "GuruStatusID",
+          "op": "IN",
+          "val": "(2, 3, 4, 5, 6)"
+        },
+        {
+          "col": "FirstDepositDate",
+          "op": "=",
+          "val": "'                             '"
+        },
+        {
+          "col": "FirstDepositDate",
+          "op": "=",
+          "val": "'                             '"
+        },
+        {
+          "col": "EV_IsCountryEligible",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "VD_HasDocuments",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "VD_HasDocuments",
+          "op": "=",
+          "val": "0"
+        }
+      ],
+      "then_value": "'  '",
+      "else_value": "'             '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.general.bronze_etoro_dictionary_playerstatus",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "evidence_lines": "etoro_kpi.sql L17-L81",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_proofofidentity_isapproved",
+      "name": "ProofOfIdentity_IsApproved computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "ProofOfIdentity_IsApproved"
+      ],
+      "predicates": [
+        {
+          "col": "POI_IsApproved",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "POI_IsApproved",
+          "op": "=",
+          "val": "0"
+        }
+      ],
+      "then_value": "'  '",
+      "else_value": "'             '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "evidence_lines": "etoro_kpi.sql L82-L86",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_proofofaddress_isapproved",
+      "name": "ProofOfAddress_IsApproved computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "ProofOfAddress_IsApproved"
+      ],
+      "predicates": [
+        {
+          "col": "POA_IsApproved",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "POA_IsApproved",
+          "op": "=",
+          "val": "0"
+        }
+      ],
+      "then_value": "'  '",
+      "else_value": "'             '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "evidence_lines": "etoro_kpi.sql L90-L94",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_isemailverified",
+      "name": "IsEmailVerified computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsEmailVerified"
+      ],
+      "predicates": [
+        {
+          "col": "EmailVerification",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "EmailVerification",
+          "op": "=",
+          "val": "0"
+        }
+      ],
+      "then_value": "'  '",
+      "else_value": "'             '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis"
+      ],
+      "evidence_lines": "etoro_kpi.sql L98-L102",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_isphoneverified",
+      "name": "IsPhoneVerified computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsPhoneVerified"
+      ],
+      "predicates": [],
+      "then_value": "'  '",
+      "else_value": "'             '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "evidence_lines": "etoro_kpi.sql L104-L108",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_reg_1",
+      "name": "Dim lookup via reg_1",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "alias": "reg_1",
+      "join_conditions": [
+        "dc.RegulationID = reg_1.DWHRegulationID",
+        "dc.DesignatedRegulationID = reg_2.DWHRegulationID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L143,L145",
+      "scopes": [
+        "main",
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "dc.RegulationID = reg_1.DWHRegulationID"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/ftd_funnel_v.sql"
+}

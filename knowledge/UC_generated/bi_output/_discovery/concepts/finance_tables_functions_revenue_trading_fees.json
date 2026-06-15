@@ -1,0 +1,98 @@
+{
+  "object_fqn": "main.bi_output.finance_tables_functions_revenue_trading_fees",
+  "generated_at": "2026-05-19T15:01:20Z",
+  "concept_count": 3,
+  "concepts": [
+    {
+      "id": "case_flag_tradingfeetype",
+      "name": "TradingFeeType computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "TradingFeeType"
+      ],
+      "predicates": [
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "117"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "118"
+        },
+        {
+          "col": "ActionTypeID",
+          "op": "=",
+          "val": "35"
+        },
+        {
+          "col": "IsFeeDividend",
+          "op": "=",
+          "val": "4"
+        }
+      ],
+      "then_value": "'         '",
+      "else_value": "'  '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "evidence_lines": "bi_output.sql L10-L13",
+      "scope": "main"
+    },
+    {
+      "id": "union_leg_sign_flip_main",
+      "name": "Sign-flip leg (main)",
+      "kind": "union_leg_sign_flip",
+      "columns_involved": [
+        "TradingFee"
+      ],
+      "predicates": [],
+      "sign": "-1",
+      "expressions": [
+        "fca.Amount"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+      ],
+      "evidence_lines": "L9",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_dr",
+      "name": "Dim lookup via dr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "alias": "dr",
+      "join_conditions": [
+        "fsc.DateRangeID = dr.DateRangeID AND fca.DateID >= dr.FromDateID AND fca.DateID <= dr.ToDateID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L60",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fsc.DateRangeID = dr.DateRangeID AND fca.DateID >= dr.FromDateID AND fca.DateID <= dr.ToDateID"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/finance_tables_functions_revenue_trading_fees.sql"
+}

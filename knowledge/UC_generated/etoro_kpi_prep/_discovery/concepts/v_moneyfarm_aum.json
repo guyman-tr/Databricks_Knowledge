@@ -1,0 +1,27 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_moneyfarm_aum",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 1,
+  "concepts": [
+    {
+      "id": "filter_block_gbp_usd_rates",
+      "name": "Filter block on gbp_usd_rates",
+      "kind": "filter_block",
+      "columns_involved": [
+        "InstrumentID"
+      ],
+      "predicates": [
+        {
+          "col": "InstrumentID",
+          "op": "=",
+          "val": "2"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L23",
+      "scope": "gbp_usd_rates",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_moneyfarm_aum.sql"
+}

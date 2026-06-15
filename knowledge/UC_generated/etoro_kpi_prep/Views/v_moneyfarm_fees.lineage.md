@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_moneyfarm_fees.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_moneyfarm_fees.json` (rows: 5, mismatches: 0) |
 | **Primary upstream** | `main.etoro_kpi_prep.v_moneyfarm_fees` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 

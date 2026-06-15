@@ -183,30 +183,30 @@ All transaction flow columns use ISNULL(..., 0) — never NULL; zero for account
 
 All RepCur columns are `{source_column} * CrossExchangeRate2`. `CrossExchangeRate2 = 1/ExchangeRate`. Same-currency accounts have CrossExchangeRate2=1 (no conversion applied). **NULL for rows loaded before 2026-01-20** when the ALTER TABLE additions were not yet in place.
 
-| Column | Source Column | Tier |
-|--------|---------------|------|
-| ClosingBalanceBORepCur | ClosingBalanceBO | T2 |
-| OpeningBalanceRepCur | OpeningBalance | T2 |
-| OpeningPositiveBalanceRepCur | OpeningPositiveBalance | T2 |
-| BankPayInsRepCur | BankPayIns | T2 |
-| BankPayOutsRepCur | BankPayOuts | T2 |
-| Card_POSRepCur | Card_POS | T2 |
-| Card_ATMRepCur | Card_ATM | T2 |
-| EtoroDepositsRepCur | EtoroDeposits | T2 |
-| EtoroCashoutsRepCur | EtoroCashouts | T2 |
-| EtoroC2FDepositsRepCur | EtoroC2FDeposits | T2 |
-| BalanceAdjustmentsRepCur | BalanceAdjustments | T2 |
-| ChargeBackAdjustmentsRepCur | ChargeBackAdjustments | T2 |
-| ATMFeeRepCur | ATMFee | T2 |
-| FxFeeRepCur | FxFee | T2 |
-| OtherFeeRepCur | OtherFee | T2 |
-| ClosingBalanceCalcRepCur | ClosingBalanceCalc | T2 |
-| ClosingBalanceGAPRepCur | ClosingBalanceGAP | T2 |
-| ClosingNegativeBalanceBORepCur | ClosingNegativeBalanceBO | T2 |
-| NegativeBalanceMovementRepCur | NegativeBalanceMovement | T2 |
-| ClosingPositiveBalanceBORepCur | ClosingPositiveBalanceBO | T2 |
-| ClosingPositiveBalanceCalcRepCur | ClosingPositiveBalanceCalc | T2 |
-| ClosingPositiveBalanceGAPRepCur | ClosingPositiveBalanceGAP | T2 |
+| Column | Type | Description | Tier |
+|--------|------|-------------|------|
+| ClosingBalanceBORepCur | decimal(24,12) | Reporting-currency equivalent of ClosingBalanceBO (Tribe back-office closing balance) in entity reporting currency: ClosingBalanceBO * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| OpeningBalanceRepCur | decimal(24,12) | Reporting-currency equivalent of OpeningBalance (total opening balance) in entity reporting currency: OpeningBalance * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| OpeningPositiveBalanceRepCur | decimal(24,12) | Reporting-currency equivalent of OpeningPositiveBalance (positive-only opening component) in entity reporting currency: OpeningPositiveBalance * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| BankPayInsRepCur | decimal(24,12) | Reporting-currency equivalent of BankPayIns (inbound banking transfers sum) in entity reporting currency: BankPayIns * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| BankPayOutsRepCur | decimal(24,12) | Reporting-currency equivalent of BankPayOuts (outbound banking transfers sum) in entity reporting currency: BankPayOuts * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| Card_POSRepCur | decimal(24,12) | Reporting-currency equivalent of Card_POS (point-of-sale card transactions) in entity reporting currency: Card_POS * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| Card_ATMRepCur | decimal(24,12) | Reporting-currency equivalent of Card_ATM (ATM cash withdrawals) in entity reporting currency: Card_ATM * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| EtoroDepositsRepCur | decimal(24,12) | Reporting-currency equivalent of EtoroDeposits (eToro wallet loads) in entity reporting currency: EtoroDeposits * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| EtoroCashoutsRepCur | decimal(24,12) | Reporting-currency equivalent of EtoroCashouts (eToro wallet unloads) in entity reporting currency: EtoroCashouts * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| EtoroC2FDepositsRepCur | decimal(24,12) | Reporting-currency equivalent of EtoroC2FDeposits (crypto-to-fiat conversion loads) in entity reporting currency: EtoroC2FDeposits * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| BalanceAdjustmentsRepCur | decimal(24,12) | Reporting-currency equivalent of BalanceAdjustments (manual/API credit and debit adjustments) in entity reporting currency: BalanceAdjustments * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| ChargeBackAdjustmentsRepCur | decimal(24,12) | Reporting-currency equivalent of ChargeBackAdjustments (chargeback dispute credits) in entity reporting currency: ChargeBackAdjustments * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| ATMFeeRepCur | decimal(24,12) | Reporting-currency equivalent of ATMFee in entity reporting currency: ATMFee * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| FxFeeRepCur | decimal(24,12) | Reporting-currency equivalent of FxFee (FX conversion fees) in entity reporting currency: FxFee * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| OtherFeeRepCur | decimal(24,12) | Reporting-currency equivalent of OtherFee (non-ATM settlement fees) in entity reporting currency: OtherFee * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| ClosingBalanceCalcRepCur | decimal(24,12) | Reporting-currency equivalent of ClosingBalanceCalc (DWH-computed closing balance) in entity reporting currency: ClosingBalanceCalc * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| ClosingBalanceGAPRepCur | decimal(24,12) | Reporting-currency equivalent of ClosingBalanceGAP (calc-vs-BO reconciliation residual) in entity reporting currency: ClosingBalanceGAP * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| ClosingNegativeBalanceBORepCur | decimal(24,12) | Reporting-currency equivalent of ClosingNegativeBalanceBO (negative-only closing component from BO) in entity reporting currency: ClosingNegativeBalanceBO * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| NegativeBalanceMovementRepCur | decimal(24,12) | Reporting-currency equivalent of NegativeBalanceMovement (day-over-day change in negative balance) in entity reporting currency: NegativeBalanceMovement * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| ClosingPositiveBalanceBORepCur | decimal(24,12) | Reporting-currency equivalent of ClosingPositiveBalanceBO (positive-only closing component from BO) in entity reporting currency: ClosingPositiveBalanceBO * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| ClosingPositiveBalanceCalcRepCur | decimal(24,12) | Reporting-currency equivalent of ClosingPositiveBalanceCalc (DWH-computed positive closing) in entity reporting currency: ClosingPositiveBalanceCalc * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
+| ClosingPositiveBalanceGAPRepCur | decimal(24,12) | Reporting-currency equivalent of ClosingPositiveBalanceGAP (positive reconciliation residual) in entity reporting currency: ClosingPositiveBalanceGAP * CrossExchangeRate2. NULL for rows loaded before 2026-01-20. | T2 |
 
 ---
 

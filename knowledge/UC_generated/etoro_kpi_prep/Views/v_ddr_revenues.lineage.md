@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_ddr_revenues.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_ddr_revenues.json` (rows: 24, mismatches: 24) |
 | **Primary upstream** | `main.etoro_kpi_prep.v_revenue_stakingfee` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 
@@ -16,10 +16,10 @@
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_ActionType.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Instrument.md` |
 | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_w_metrics.md` |
-| `main.etoro_kpi_prep.v_revenue_cryptotofiat_c2f` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_cryptotofiat_c2f.md` |
-| `main.etoro_kpi_prep.v_revenue_interestfee` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_interestfee.md` |
-| `main.etoro_kpi_prep.v_revenue_optionsplatform` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_optionsplatform.md` |
-| `main.etoro_kpi_prep.v_revenue_stakingfee` | Primary (FROM) | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_stakingfee.md` |
+| `main.etoro_kpi_prep.v_revenue_cryptotofiat_c2f` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_cryptotofiat_c2f.md` |
+| `main.etoro_kpi_prep.v_revenue_interestfee` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_interestfee.md` |
+| `main.etoro_kpi_prep.v_revenue_optionsplatform` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_optionsplatform.md` |
+| `main.etoro_kpi_prep.v_revenue_stakingfee` | Primary (FROM) | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_stakingfee.md` |
 
 ## Lineage Chain
 
@@ -40,7 +40,7 @@ main.etoro_kpi_prep.v_ddr_revenues   ←── this object
 
 | # | UC Column | Source UC Object | Source Column | Transform | Upstream Tier | Notes |
 |---|-----------|------------------|---------------|-----------|---------------|-------|
-| 1 | `DateID` | `main.etoro_kpi_prep.v_revenue_stakingfee` | `DateID` | `passthrough` | — | DateID |
+| 1 | `DateID` | `main.etoro_kpi_prep.v_revenue_stakingfee` | `DateID` | `passthrough` | (Tier 2 — from `main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results`) | DateID |
 | 2 | `Date` | `main.etoro_kpi_prep.v_revenue_stakingfee` | `—` | `unknown` | — | TO_DATE(CAST(DateID AS STRING), 'yyyyMMdd') AS Date |
 | 3 | `RealCID` | `main.etoro_kpi_prep.v_revenue_stakingfee` | `RealCID` | `passthrough` | — | RealCID |
 | 4 | `ActionTypeID` | `main.etoro_kpi_prep.v_revenue_stakingfee` | `ActionTypeID` | `passthrough` | — | ActionTypeID |

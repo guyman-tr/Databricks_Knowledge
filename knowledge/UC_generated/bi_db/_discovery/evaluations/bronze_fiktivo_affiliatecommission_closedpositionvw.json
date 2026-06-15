@@ -1,0 +1,214 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiktivo_affiliatecommission_closedpositionvw",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:45Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "ClosedPositionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From ClosedPosition. Unique position identifier.",
+      "wiki_quote": "From ClosedPosition. Unique position identifier (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CommissionDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From ClosedPosition. When commission was calculated.",
+      "wiki_quote": "From ClosedPosition. When commission was calculated (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionV",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From ClosedPosition. Gross commission-eligible amount.",
+      "wiki_quote": "From ClosedPosition. Gross commission-eligible amount (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositio",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "HedgeCommission",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From ClosedPosition. Hedge commission component.",
+      "wiki_quote": "From ClosedPosition. Hedge commission component (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From RegistrationMetaData. Customer ID.",
+      "wiki_quote": "From RegistrationMetaData. Customer ID (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OriginalCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From RegistrationMetaData. Original customer in copy-trading.",
+      "wiki_quote": "From RegistrationMetaData. Original customer in copy-trading (Tier 1 — inherited from fiktivo.AffiliateCommission.Closed",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From RegistrationMetaData. Referring affiliate.",
+      "wiki_quote": "From RegistrationMetaData. Referring affiliate (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateCampaign",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From RegistrationMetaData. Campaign tracking string.",
+      "wiki_quote": "From RegistrationMetaData. Campaign tracking string (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionV",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From ClosedPosition. Current provider.",
+      "wiki_quote": "From ClosedPosition. Current provider (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OriginalProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From ClosedPosition. Original provider.",
+      "wiki_quote": "From ClosedPosition. Original provider (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RealProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From ClosedPosition. Execution entity.",
+      "wiki_quote": "From ClosedPosition. Execution entity (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From ClosedPosition. Customer country.",
+      "wiki_quote": "From ClosedPosition. Customer country (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "NetProfit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From ClosedPosition. Position profit/loss.",
+      "wiki_quote": "From ClosedPosition. Position profit/loss (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FunnelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From RegistrationMetaData. Marketing funnel.",
+      "wiki_quote": "From RegistrationMetaData. Marketing funnel (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LabelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "Always NULL. Column preserved for backward compatibility with legacy consumers.",
+      "wiki_quote": "Always NULL. Column preserved for backward compatibility with legacy consumers (Tier 1 — inherited from fiktivo.Affiliat",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PlayerLevelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From RegistrationMetaData. Player level classification.",
+      "wiki_quote": "From RegistrationMetaData. Player level classification (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DownloadID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From RegistrationMetaData. Download tracking.",
+      "wiki_quote": "From RegistrationMetaData. Download tracking (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LotCount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From ClosedPosition. Position size in lots.",
+      "wiki_quote": "From ClosedPosition. Position size in lots (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BannerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From RegistrationMetaData. Banner reference.",
+      "wiki_quote": "From RegistrationMetaData. Banner reference (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Valid",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From ClosedPosition. Commission eligibility.",
+      "wiki_quote": "From ClosedPosition. Commission eligibility (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TrackingDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From ClosedPosition. Tracking system entry time.",
+      "wiki_quote": "From ClosedPosition. Tracking system entry time (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsProcessed",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From ClosedPosition. Processing completion flag.",
+      "wiki_quote": "From ClosedPosition. Processing completion flag (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidFrom",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From RegistrationMetaData. When current attribution became effective.",
+      "wiki_quote": "From RegistrationMetaData. When current attribution became effective (Tier 1 — inherited from fiktivo.AffiliateCommissio",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "UpdateDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "Computed: GREATEST(CommissionDate, ValidFrom). Latest change timestamp for CDC consumers.",
+      "wiki_quote": "Computed: GREATEST(CommissionDate, ValidFrom). Latest change timestamp for CDC consumers (Tier 1 — inherited from fiktiv",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AdditionalData",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\AffiliateCommission\\Views\\AffiliateCommission.ClosedPositionVW.md",
+      "upstream_quote": "From RegistrationMetaData. Extensible metadata.",
+      "wiki_quote": "From RegistrationMetaData. Extensible metadata (Tier 1 — inherited from fiktivo.AffiliateCommission.ClosedPositionVW).",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 25,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 25 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

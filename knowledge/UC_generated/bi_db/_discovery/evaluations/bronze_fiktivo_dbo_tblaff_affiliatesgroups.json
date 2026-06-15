@@ -1,0 +1,81 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiktivo_dbo_tblaff_affiliatesgroups",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:48Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "AffiliatesGroupsID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_AffiliatesGroups.md",
+      "upstream_quote": "Primary key. Referenced by tblaff_Affiliates.AffiliatesGroupsID, tblaff_Country.AffiliatesGroupsID, dbo.Channels.Affilia",
+      "wiki_quote": "Primary key. Referenced by tblaff_Affiliates.AffiliatesGroupsID, tblaff_Country.AffiliatesGroupsID, dbo.Channels.Affilia",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliatesGroupsName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_AffiliatesGroups.md",
+      "upstream_quote": "Display name of the group (e.g., \"Affiliates\", \"Media\", \"SEM\"). Shown in admin UI dropdowns, reports, and affiliate port",
+      "wiki_quote": "Display name of the group (e.g., \"Affiliates\", \"Media\", \"SEM\"). Shown in admin UI dropdowns, reports, and affiliate port",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AccountManagerName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_AffiliatesGroups.md",
+      "upstream_quote": "Display name of the assigned account manager. MASKED. Denormalized from tblaff_User for quick display. May be blank if n",
+      "wiki_quote": "Display name of the assigned account manager. MASKED. Denormalized from tblaff_User for quick display. May be blank if n",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AccountManagerEmail",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_AffiliatesGroups.md",
+      "upstream_quote": "Email of the assigned account manager. MASKED. Used in Dynamics CRM sync trigger for group manager change notifications.",
+      "wiki_quote": "Email of the assigned account manager. MASKED. Used in Dynamics CRM sync trigger for group manager change notifications ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AccountManagerImagePath",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_AffiliatesGroups.md",
+      "upstream_quote": "URL/path to the account manager's profile photo. Displayed in the affiliate portal alongside the group contact informati",
+      "wiki_quote": "URL/path to the account manager's profile photo. Displayed in the affiliate portal alongside the group contact informati",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerUserID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_AffiliatesGroups.md",
+      "upstream_quote": "FK to dbo.tblaff_User.UserID. The admin user responsible for this group. 0 or NULL = no dedicated manager. Used in the D",
+      "wiki_quote": "FK to dbo.tblaff_User.UserID. The admin user responsible for this group. 0 or NULL = no dedicated manager. Used in the D",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 6,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 6 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

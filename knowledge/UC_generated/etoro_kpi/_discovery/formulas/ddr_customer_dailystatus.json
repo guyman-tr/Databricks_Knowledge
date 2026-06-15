@@ -1,0 +1,107 @@
+{
+  "object_fqn": "main.etoro_kpi.ddr_customer_dailystatus",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 9,
+  "formulas": [
+    {
+      "column": "RealCID",
+      "formula": "STRING(RealCID)",
+      "expression_raw": "STRING(s.RealCID) AS RealCID",
+      "inputs": [
+        "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "FromDateID",
+      "formula": "FromDateID",
+      "expression_raw": "s.FromDateID",
+      "inputs": [
+        "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "ToDateID",
+      "formula": "ToDateID",
+      "expression_raw": "s.ToDateID",
+      "inputs": [
+        "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "IsFunded",
+      "formula": "IsFunded",
+      "expression_raw": "s.IsFunded",
+      "inputs": [
+        "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "IsActiveTrade",
+      "formula": "ActiveTraded",
+      "expression_raw": "s.ActiveTraded AS IsActiveTrade",
+      "inputs": [
+        "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "BalanceOnly",
+      "formula": "BalanceOnlyAccount",
+      "expression_raw": "s.BalanceOnlyAccount AS BalanceOnly",
+      "inputs": [
+        "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "PortfolioOnly",
+      "formula": "CAST(Portfolio_Only AS INT)",
+      "expression_raw": "CAST(s.Portfolio_Only AS INT) AS PortfolioOnly",
+      "inputs": [
+        "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "IsChurn",
+      "formula": "IsChurned",
+      "expression_raw": "s.IsChurned AS IsChurn",
+      "inputs": [
+        "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "IsWinback",
+      "formula": "IsWinBack",
+      "expression_raw": "s.IsWinBack AS IsWinback",
+      "inputs": [
+        "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/ddr_customer_dailystatus.sql"
+}

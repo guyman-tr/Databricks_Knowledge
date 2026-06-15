@@ -1,0 +1,1896 @@
+{
+  "object": "main.de_output.de_output_onboarding_ev_cohort_enriched",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "VerificationLevelID",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "VerificationLevelID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "client_country",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "client_country",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "client_country",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "client_country",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "client_country",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "client_country",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "client_real_cid",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "client_real_cid",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "evidence_sources_best_single_vendor",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "evidence_sources_best_single_vendor",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "evidence_sources_chosen_for_decision",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "evidence_sources_chosen_for_decision",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "evidence_sources_sum_across_vendors",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "evidence_sources_sum_across_vendors",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "explainability_bucket",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "explainability_bucket",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "explainability_bucket",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "explainability_bucket",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "explainability_bucket",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "explainability_bucket",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "explainability_bucket",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "explainability_bucket",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "explainability_bucket",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "explainability_bucket",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "explainability_bucket",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "explainability_bucket",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "final_status_current",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "final_status_current",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "final_status_current",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "final_status_current",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "final_status_current",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "final_status_current",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "final_status_current_set_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "final_status_current_set_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "final_status_current_set_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "final_status_current_set_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "final_status_first_verified_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "final_status_first_verified_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "final_status_first_verified_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "final_status_first_verified_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "final_status_last_not_verified_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "final_status_last_not_verified_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "final_status_last_not_verified_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "final_status_last_not_verified_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "final_status_last_partially_verified_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "final_status_last_partially_verified_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "final_status_last_partially_verified_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "final_status_last_partially_verified_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "final_status_last_verified_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "final_status_last_verified_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "final_status_last_verified_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "final_status_last_verified_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "final_verified_but_no_vl3_flag",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "final_verified_but_no_vl3_flag",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "final_verified_but_no_vl3_flag",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "final_verified_but_no_vl3_flag",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "final_verified_but_no_vl3_flag",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "final_verified_but_no_vl3_flag",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "final_verified_but_no_vl3_flag",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "final_verified_but_no_vl3_flag",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "mins_final_status_to_vl3",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "mins_final_status_to_vl3",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "mins_final_status_to_vl3",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "mins_final_status_to_vl3",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "mins_final_status_to_vl3",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "mins_final_status_to_vl3",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "mins_first_ev_to_vl3",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "mins_first_ev_to_vl3",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "mins_first_ev_to_vl3",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "mins_first_ev_to_vl3",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "mins_first_ev_to_vl3",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "mins_first_ev_to_vl3",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "model_computed_status_from_vendor_events",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "model_computed_status_from_vendor_events",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "model_evidence_last_failure_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "model_evidence_last_failure_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "model_evidence_last_failure_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "model_evidence_last_failure_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "model_evidence_last_failure_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "model_evidence_last_failure_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "model_evidence_last_failure_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "model_evidence_last_failure_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "model_evidence_success_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "model_evidence_success_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "model_evidence_success_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "model_evidence_success_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "model_evidence_success_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "model_evidence_success_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "model_evidence_success_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "model_evidence_success_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "model_time_first_attempt_to_last_failure_sec",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "model_time_first_attempt_to_last_failure_sec",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "model_time_first_attempt_to_last_failure_sec",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "model_time_first_attempt_to_last_failure_sec",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "model_time_first_attempt_to_last_failure_sec",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "model_time_first_attempt_to_last_failure_sec",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "model_time_first_attempt_to_last_failure_sec",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "model_time_first_attempt_to_last_failure_sec",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "model_time_first_attempt_to_success_sec",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "model_time_first_attempt_to_success_sec",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "model_time_first_attempt_to_success_sec",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "model_time_first_attempt_to_success_sec",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "model_time_first_attempt_to_success_sec",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "model_time_first_attempt_to_success_sec",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "model_time_first_attempt_to_success_sec",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "model_time_first_attempt_to_success_sec",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "provider_datazoo2_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "provider_datazoo2_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "provider_datazoo2_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "provider_datazoo2_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "provider_datazoo2_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "provider_datazoo2_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "provider_datazoo2_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "provider_datazoo2_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "provider_datazoo_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "provider_datazoo_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "provider_datazoo_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "provider_datazoo_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "provider_datazoo_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "provider_datazoo_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "provider_datazoo_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "provider_datazoo_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "provider_gbg_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "provider_gbg_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "provider_gbg_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "provider_gbg_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "provider_gbg_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "provider_gbg_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "provider_gbg_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "provider_gbg_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "provider_idmerit_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "provider_idmerit_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "provider_idmerit_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "provider_idmerit_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "provider_idmerit_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "provider_idmerit_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "provider_idmerit_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "provider_idmerit_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "provider_melisa_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "provider_melisa_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "provider_melisa_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "provider_melisa_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "provider_melisa_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "provider_melisa_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "provider_melisa_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "provider_melisa_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "provider_prove_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "provider_prove_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "provider_prove_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "provider_prove_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "provider_prove_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "provider_prove_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "provider_prove_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "provider_prove_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "provider_trulioo_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "provider_trulioo_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "provider_trulioo_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "provider_trulioo_latest_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "provider_trulioo_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "provider_trulioo_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "provider_trulioo_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "provider_trulioo_latest_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "registration_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RegisteredReal",
+      "target_column_name": "registration_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "registration_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RegisteredReal",
+      "target_column_name": "registration_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "registration_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "registration_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "routing_expected_but_missing_flag",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "routing_expected_but_missing_flag",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "routing_first_attempt_after_nomatch_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "routing_first_attempt_after_nomatch_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "routing_first_provider1_nomatch_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "routing_first_provider1_nomatch_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "routing_second_attempt_observed_flag",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "routing_second_attempt_observed_flag",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "routing_secs_nomatch_to_next_attempt",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "routing_secs_nomatch_to_next_attempt",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "secs_model_success_to_final_verified",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "secs_model_success_to_final_verified",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "secs_model_success_to_final_verified",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "secs_model_success_to_final_verified",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "secs_model_success_to_final_verified",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "secs_model_success_to_final_verified",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "secs_model_success_to_final_verified",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "secs_model_success_to_final_verified",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "secs_model_success_to_final_verified",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "secs_model_success_to_final_verified",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "secs_model_success_to_final_verified",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "secs_model_success_to_final_verified",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_distinct_providers_tried_count",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_distinct_providers_tried_count",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_distinct_providers_tried_count_v2",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_distinct_providers_tried_count_v2",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "vendor_events_first_attempt_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "vendor_events_first_attempt_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "vendor_events_first_one_source_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_first_one_source_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "vendor_events_first_one_source_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_first_one_source_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_first_two_sources_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "vendor_events_first_two_sources_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "vendor_events_first_two_sources_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_first_two_sources_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "vendor_events_last_attempt_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "vendor_events_last_attempt_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "vendor_events_latest_attempt_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "vendor_events_latest_attempt_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "vendor_events_latest_attempt_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "vendor_events_latest_attempt_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "vendor_events_latest_provider",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_latest_provider",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "vendor_events_latest_provider",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "vendor_events_latest_provider",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "vendor_events_latest_provider",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_latest_provider",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_latest_provider_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "vendor_events_latest_provider_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "vendor_events_latest_provider_status",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "vendor_events_latest_provider_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "vendor_events_latest_provider_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_latest_provider_status",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_one_source_event_count",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_one_source_event_count",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_providers_with_any_evidence_count",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_providers_with_any_evidence_count",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_dictionary_evprovider",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_providers_with_any_evidence_count",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_providers_with_any_evidence_count",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_two_sources_event_count",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_two_sources_event_count",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_zero_source_event_count",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_userapidb_dictionary_evstatus",
+      "source_column_name": "Name",
+      "target_column_name": "vendor_events_zero_source_event_count",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "verification_level_at_final_status_set",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "verification_level_at_final_status_set",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "verification_level_at_final_status_set",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "verification_level_at_final_status_set",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "verification_level_at_final_status_set",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "verification_level_at_final_status_set",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "verification_level_at_first_ev_attempt",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "verification_level_at_first_ev_attempt",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "verification_level_at_first_ev_attempt",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "verification_level_at_first_ev_attempt",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "verification_level_at_first_ev_attempt",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "verification_level_at_first_ev_attempt",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "verification_level_at_last_ev_attempt",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "verification_level_at_last_ev_attempt",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "verification_level_at_last_ev_attempt",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "verification_level_at_last_ev_attempt",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "verification_level_at_last_ev_attempt",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "verification_level_at_last_ev_attempt",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "vl3_before_first_ev_flag",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "vl3_before_first_ev_flag",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "vl3_before_first_ev_flag",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "vl3_before_first_ev_flag",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_userapidb_ev_customerresult",
+      "source_column_name": "TransactionDate",
+      "target_column_name": "vl3_before_first_ev_flag",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "vl3_before_first_ev_flag",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "vl3_but_final_not_verified_flag",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "vl3_but_final_not_verified_flag",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "vl3_but_final_not_verified_flag",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "vl3_but_final_not_verified_flag",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "vl3_but_final_not_verified_flag",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "vl3_but_final_not_verified_flag",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+      "source_column_name": "EvMatchStatusName",
+      "target_column_name": "vl3_but_final_not_verified_flag",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "vl3_but_final_not_verified_flag",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "vl3_first_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "vl3_first_ts",
+      "entity_type": "JOB",
+      "event_count": 90
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "vl3_first_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_history_backofficecustomer",
+      "source_column_name": "ValidFrom",
+      "target_column_name": "vl3_first_ts",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    }
+  ],
+  "generated_at": "2026-05-19T13:57:05Z"
+}

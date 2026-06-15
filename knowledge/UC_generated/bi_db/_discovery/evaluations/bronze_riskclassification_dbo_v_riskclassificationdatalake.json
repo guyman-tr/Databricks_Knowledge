@@ -1,0 +1,123 @@
+{
+  "object_fqn": "main.bi_db.bronze_riskclassification_dbo_v_riskclassificationdatalake",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:55Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "RiskScore_Explanation",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\RiskClassification\\Wiki\\dbo\\Views\\dbo.V_RiskClassificationDataLake.md",
+      "upstream_quote": "Same as V_RiskClassification. Comma-separated non-zero parameter names.",
+      "wiki_quote": "Same as V_RiskClassification. Comma-separated non-zero parameter names (Tier 1 — inherited from RiskClassification.dbo.V",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Regulation",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\RiskClassification\\Wiki\\dbo\\Views\\dbo.V_RiskClassificationDataLake.md",
+      "upstream_quote": "Regulation name from Dictionary.Regulation.",
+      "wiki_quote": "Regulation name from Dictionary.Regulation (Tier 1 — inherited from RiskClassification.dbo.V_RiskClassificationDataLake)",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RiskScoreName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\RiskClassification\\Wiki\\dbo\\Views\\dbo.V_RiskClassificationDataLake.md",
+      "upstream_quote": "Named risk level from Dictionary.RiskClassificationRegulation.",
+      "wiki_quote": "Named risk level from Dictionary.RiskClassificationRegulation (Tier 1 — inherited from RiskClassification.dbo.V_RiskClas",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "GCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\RiskClassification\\Wiki\\dbo\\Views\\dbo.V_RiskClassificationDataLake.md",
+      "upstream_quote": "Global Customer ID.",
+      "wiki_quote": "Global Customer ID (Tier 1 — inherited from RiskClassification.dbo.V_RiskClassificationDataLake).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\RiskClassification\\Wiki\\dbo\\Views\\dbo.V_RiskClassificationDataLake.md",
+      "upstream_quote": "Customer ID.",
+      "wiki_quote": "Customer ID (Tier 1 — inherited from RiskClassification.dbo.V_RiskClassificationDataLake).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RegulationID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\RiskClassification\\Wiki\\dbo\\Views\\dbo.V_RiskClassificationDataLake.md",
+      "upstream_quote": "Regulation ID. See [Regulation](_glossary.md#regulation).",
+      "wiki_quote": "Regulation ID. See [Regulation](_glossary.md#regulation) (Tier 1 — inherited from RiskClassification.dbo.V_RiskClassific",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RiskScore",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\RiskClassification\\Wiki\\dbo\\Views\\dbo.V_RiskClassificationDataLake.md",
+      "upstream_quote": "Final aggregate risk score.",
+      "wiki_quote": "Final aggregate risk score (Tier 1 — inherited from RiskClassification.dbo.V_RiskClassificationDataLake).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RiskScore_Value",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\RiskClassification\\Wiki\\dbo\\Views\\dbo.V_RiskClassificationDataLake.md",
+      "upstream_quote": "Score formula in N*Score format.",
+      "wiki_quote": "Score formula in N*Score format (Tier 1 — inherited from RiskClassification.dbo.V_RiskClassificationDataLake).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BeginTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\RiskClassification\\Wiki\\dbo\\Views\\dbo.V_RiskClassificationDataLake.md",
+      "upstream_quote": "Temporal row start.",
+      "wiki_quote": "Temporal row start (Tier 1 — inherited from RiskClassification.dbo.V_RiskClassificationDataLake).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\RiskClassification\\Wiki\\dbo\\Views\\dbo.V_RiskClassificationDataLake.md",
+      "upstream_quote": "Temporal row end.",
+      "wiki_quote": "Temporal row end (Tier 1 — inherited from RiskClassification.dbo.V_RiskClassificationDataLake).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PreviousRisk",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\RiskClassification\\Wiki\\dbo\\Views\\dbo.V_RiskClassificationDataLake.md",
+      "upstream_quote": "Previous risk score from history CTE.",
+      "wiki_quote": "Previous risk score from history CTE (Tier 1 — inherited from RiskClassification.dbo.V_RiskClassificationDataLake).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PreviousRiskUpdateDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ComplianceDBs\\RiskClassification\\Wiki\\dbo\\Views\\dbo.V_RiskClassificationDataLake.md",
+      "upstream_quote": "When previous risk score was set.",
+      "wiki_quote": "When previous risk score was set (Tier 1 — inherited from RiskClassification.dbo.V_RiskClassificationDataLake).",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 12,
+    "B": 0,
+    "C": 88,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 12 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 88 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

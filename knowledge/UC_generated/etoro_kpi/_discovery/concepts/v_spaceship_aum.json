@@ -1,0 +1,46 @@
+{
+  "object_fqn": "main.etoro_kpi.v_spaceship_aum",
+  "generated_at": "2026-05-19T15:20:30Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "filter_block_user_gcid",
+      "name": "Filter block on user_gcid",
+      "kind": "filter_block",
+      "columns_involved": [
+        "providerName"
+      ],
+      "predicates": [
+        {
+          "col": "providerName",
+          "op": "=",
+          "val": "'         '"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L133",
+      "scope": "user_gcid",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_aud_usd_rates",
+      "name": "Filter block on aud_usd_rates",
+      "kind": "filter_block",
+      "columns_involved": [
+        "InstrumentID"
+      ],
+      "predicates": [
+        {
+          "col": "InstrumentID",
+          "op": "=",
+          "val": "7"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L142",
+      "scope": "aud_usd_rates",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/v_spaceship_aum.sql"
+}

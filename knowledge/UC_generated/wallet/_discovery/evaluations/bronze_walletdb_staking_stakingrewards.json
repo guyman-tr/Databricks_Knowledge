@@ -1,0 +1,109 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_staking_stakingrewards",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:17Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingRewards.md",
+      "upstream_quote": "Auto-incrementing surrogate key.",
+      "wiki_quote": "Auto-incrementing surrogate key (Tier 1 — inherited from WalletDB.Staking.StakingRewards).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StakingIncomeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingRewards.md",
+      "upstream_quote": "External income identifier from the reward calculation system. Used as idempotency key by InsertStakingReward (`EXISTS` ",
+      "wiki_quote": "External income identifier from the reward calculation system. Used as idempotency key by InsertStakingReward (`EXISTS` ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingRewards.md",
+      "upstream_quote": "The cryptocurrency for which the reward was earned. FK to Wallet.CryptoTypes.CryptoID. Currently all records are CryptoI",
+      "wiki_quote": "The cryptocurrency for which the reward was earned. FK to Wallet.CryptoTypes.CryptoID. Currently all records are CryptoI",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingRewards.md",
+      "upstream_quote": "The wallet receiving the staking reward. FK to Wallet.Wallets.WalletId. Part of the unique constraint. Used with Gcid fr",
+      "wiki_quote": "The wallet receiving the staking reward. FK to Wallet.Wallets.WalletId. Part of the unique constraint. Used with Gcid fr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StakingMonthId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingRewards.md",
+      "upstream_quote": "The staking period month in YYYYMM format (e.g., 202306 = June 2023). Part of the unique constraint ensuring one reward ",
+      "wiki_quote": "The staking period month in YYYYMM format (e.g., 202306 = June 2023). Part of the unique constraint ensuring one reward ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MonthlyReward",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingRewards.md",
+      "upstream_quote": "The amount of crypto earned as staking reward for this month, in the asset's native units (e.g., 0.01172 ETH). Summed by",
+      "wiki_quote": "The amount of crypto earned as staking reward for this month, in the asset's native units (e.g., 0.01172 ETH). Summed by",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MonthlyYieldPercentage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingRewards.md",
+      "upstream_quote": "The overall staking pool yield percentage for this month. Recent records show 0, suggesting yield tracking may have been",
+      "wiki_quote": "The overall staking pool yield percentage for this month. Recent records show 0, suggesting yield tracking may have been",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "UserYieldPercentage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingRewards.md",
+      "upstream_quote": "The user's share of the pool yield, based on their eToro club tier. Recent records show 0, suggesting calculation moved ",
+      "wiki_quote": "The user's share of the pool yield, based on their eToro club tier. Recent records show 0, suggesting calculation moved ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IncomeDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingRewards.md",
+      "upstream_quote": "The date/time when the reward was calculated or distributed. Multiple rewards in the same batch share the same IncomeDat",
+      "wiki_quote": "The date/time when the reward was calculated or distributed. Multiple rewards in the same batch share the same IncomeDat",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingRewards.md",
+      "upstream_quote": "Timestamp when this reward record was inserted into the database. Slightly after IncomeDate due to processing time.",
+      "wiki_quote": "Timestamp when this reward record was inserted into the database. Slightly after IncomeDate due to processing time (Tier",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 10,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 10 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

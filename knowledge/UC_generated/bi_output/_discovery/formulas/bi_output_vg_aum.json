@@ -1,0 +1,752 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_aum",
+  "generated_at": "2026-05-19T15:01:25Z",
+  "formula_count": 64,
+  "formulas": [
+    {
+      "column": "RealCID",
+      "formula": "-- ========================================================================== -- Source: information_schema.views.view_definition -- Object: bi_output.bi_output_vg_aum -- Captured: 2026-05-19T14:…",
+      "expression_raw": "-- ==========================================================================\n-- Source: information_schema.views.view_definition\n-- Object: main.bi_output.bi_output_vg_aum\n-- Captured: 2026-05-19T14:…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L1-L7",
+      "scope": "main"
+    },
+    {
+      "column": "DateID",
+      "formula": ",DateID",
+      "expression_raw": ",dd.DateID",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "Date",
+      "formula": ",DateID ,Date",
+      "expression_raw": ",dd.DateID\n    ,dd.Date",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L9",
+      "scope": "main"
+    },
+    {
+      "column": "WeekNumberYear",
+      "formula": ",DateID ,Date ,WeekNumberYear",
+      "expression_raw": ",dd.DateID\n    ,dd.Date\n\t  ,dd.WeekNumberYear",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L10",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYearMonth",
+      "formula": ",DateID ,Date ,WeekNumberYear ,CalendarYearMonth",
+      "expression_raw": ",dd.DateID\n    ,dd.Date\n\t  ,dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L11",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarQuarter",
+      "formula": ",DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter",
+      "expression_raw": ",dd.DateID\n    ,dd.Date\n\t  ,dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L12",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYear",
+      "formula": ",DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear",
+      "expression_raw": ",dd.DateID\n    ,dd.Date\n\t  ,dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter\n\t  ,dd.CalendarYear",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L13",
+      "scope": "main"
+    },
+    {
+      "column": "RealizedEquityTradingPlatform",
+      "formula": ",DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP",
+      "expression_raw": ",dd.DateID\n    ,dd.Date\n\t  ,dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter\n\t  ,dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L14",
+      "scope": "main"
+    },
+    {
+      "column": "TotalPositionPNL",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "TotalPositionPNL"
+    },
+    {
+      "column": "TotalInvestedAmount",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "TotalInvestedAmount"
+    },
+    {
+      "column": "EquityTradingPlatform",
+      "formula": ",DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalI…",
+      "expression_raw": ",dd.DateID\n    ,dd.Date\n\t  ,dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter\n\t  ,dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalI…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L17",
+      "scope": "main"
+    },
+    {
+      "column": "CashInCopy",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "CashInCopy"
+    },
+    {
+      "column": "InvestedAmountCopy",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "InvestedAmountCopy"
+    },
+    {
+      "column": "EquityCopy",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "EquityCopy"
+    },
+    {
+      "column": "EquityStocksManual",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "EquityStocksManual"
+    },
+    {
+      "column": "InvestedAmountStocksManual",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "InvestedAmountStocksManual"
+    },
+    {
+      "column": "InvestedAmountCryptoManual",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "InvestedAmountCryptoManual"
+    },
+    {
+      "column": "BalanceTradingPlatfrom",
+      "formula": ",DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalI…",
+      "expression_raw": ",dd.DateID\n    ,dd.Date\n\t  ,dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter\n\t  ,dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalI…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L24",
+      "scope": "main"
+    },
+    {
+      "column": "BalanceIBAN",
+      "formula": ",DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalI…",
+      "expression_raw": ",dd.DateID\n    ,dd.Date\n\t  ,dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter\n\t  ,dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalI…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L25",
+      "scope": "main"
+    },
+    {
+      "column": "RealizedEquityGlobal",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "RealizedEquityGlobal"
+    },
+    {
+      "column": "EquityGlobal",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "EquityGlobal"
+    },
+    {
+      "column": "CreditGlobal",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "CreditGlobal"
+    },
+    {
+      "column": "OptionsTotalEquity",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "OptionsTotalEquity"
+    },
+    {
+      "column": "IsLastDayWeek",
+      "formula": ",DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalI…",
+      "expression_raw": ",dd.DateID\n    ,dd.Date\n\t  ,dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter\n\t  ,dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalI…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L30",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayMonth",
+      "formula": ",DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalI…",
+      "expression_raw": ",dd.DateID\n    ,dd.Date\n\t  ,dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter\n\t  ,dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalI…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L31",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayQuarter",
+      "formula": ",DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalI…",
+      "expression_raw": ",dd.DateID\n    ,dd.Date\n\t  ,dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter\n\t  ,dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalI…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L32",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayYear",
+      "formula": ",DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalI…",
+      "expression_raw": ",dd.DateID\n    ,dd.Date\n\t  ,dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter\n\t  ,dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalI…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L33",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerLevelID",
+      "formula": ",DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalI…",
+      "expression_raw": ",dd.DateID\n    ,dd.Date\n\t  ,dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter\n\t  ,dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalI…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L34",
+      "scope": "main"
+    },
+    {
+      "column": "ClubTier",
+      "formula": ",DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalI…",
+      "expression_raw": ",dd.DateID\n    ,dd.Date\n\t  ,dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter\n\t  ,dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalI…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L35",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationID",
+      "formula": ",DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalI…",
+      "expression_raw": ",dd.DateID\n    ,dd.Date\n\t  ,dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter\n\t  ,dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalI…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L36",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": ",DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalI…",
+      "expression_raw": ",dd.DateID\n    ,dd.Date\n\t  ,dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter\n\t  ,dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalI…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L8-L37",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevelID",
+      "formula": ",Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalInvestedAmount …",
+      "expression_raw": ",dd.Date\n\t  ,dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter\n\t  ,dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalInvestedAmount\n\t…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L38",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel",
+      "formula": ",WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalInvestedAmount ,TotalEqui…",
+      "expression_raw": ",dd.WeekNumberYear\n\t  ,dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter\n\t  ,dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalInvestedAmount\n\t  ,TotalEqui…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L10-L39",
+      "scope": "main"
+    },
+    {
+      "column": "CountryID",
+      "formula": ",CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalInvestedAmount ,TotalEquityTP AS EquityTradingP…",
+      "expression_raw": ",dd.CalendarYearMonth\n\t  ,dd.CalendarQuarter\n\t  ,dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalInvestedAmount\n\t  ,TotalEquityTP AS EquityTradingP…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L11-L40",
+      "scope": "main"
+    },
+    {
+      "column": "Country",
+      "formula": ",CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalInvestedAmount ,TotalEquityTP AS EquityTradingPlatform ,CashInCopy …",
+      "expression_raw": ",dd.CalendarQuarter\n\t  ,dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalInvestedAmount\n\t  ,TotalEquityTP AS EquityTradingPlatform\n\t  ,CashInCopy\n\t …",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L12-L41",
+      "scope": "main"
+    },
+    {
+      "column": "Region",
+      "formula": ",CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalInvestedAmount ,TotalEquityTP AS EquityTradingPlatform ,CashInCopy ,InvestedAmountCopy …",
+      "expression_raw": ",dd.CalendarYear\n\t  ,RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalInvestedAmount\n\t  ,TotalEquityTP AS EquityTradingPlatform\n\t  ,CashInCopy\n\t  ,InvestedAmountCopy\n  …",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L13-L42",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManagerID",
+      "formula": ",RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalInvestedAmount ,TotalEquityTP AS EquityTradingPlatform ,CashInCopy ,InvestedAmountCopy ,EquityCopy …",
+      "expression_raw": ",RealizedEquityTP AS RealizedEquityTradingPlatform\n\t  ,TotalPositionPNL \n\t  ,TotalInvestedAmount\n\t  ,TotalEquityTP AS EquityTradingPlatform\n\t  ,CashInCopy\n\t  ,InvestedAmountCopy\n        ,EquityCopy\n\t …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L14-L43",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManager",
+      "formula": ",TotalPositionPNL ,TotalInvestedAmount ,TotalEquityTP AS EquityTradingPlatform ,CashInCopy ,InvestedAmountCopy ,EquityCopy ,EquityStocksManual ,InvestedAmountStocksManual …",
+      "expression_raw": ",TotalPositionPNL \n\t  ,TotalInvestedAmount\n\t  ,TotalEquityTP AS EquityTradingPlatform\n\t  ,CashInCopy\n\t  ,InvestedAmountCopy\n        ,EquityCopy\n\t  ,EquityStocksManual\n\t  ,InvestedAmountStocksManual\n\t …",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L15-L44",
+      "scope": "main"
+    },
+    {
+      "column": "LanguageID",
+      "formula": ",TotalInvestedAmount ,TotalEquityTP AS EquityTradingPlatform ,CashInCopy ,InvestedAmountCopy ,EquityCopy ,EquityStocksManual ,InvestedAmountStocksManual ,InvestedAmountCrypto…",
+      "expression_raw": ",TotalInvestedAmount\n\t  ,TotalEquityTP AS EquityTradingPlatform\n\t  ,CashInCopy\n\t  ,InvestedAmountCopy\n        ,EquityCopy\n\t  ,EquityStocksManual\n\t  ,InvestedAmountStocksManual\n\t  ,InvestedAmountCrypto…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L16-L45",
+      "scope": "main"
+    },
+    {
+      "column": "Language",
+      "formula": ",TotalEquityTP AS EquityTradingPlatform ,CashInCopy ,InvestedAmountCopy ,EquityCopy ,EquityStocksManual ,InvestedAmountStocksManual ,InvestedAmountCryptoManual ,CreditTP Bala…",
+      "expression_raw": ",TotalEquityTP AS EquityTradingPlatform\n\t  ,CashInCopy\n\t  ,InvestedAmountCopy\n        ,EquityCopy\n\t  ,EquityStocksManual\n\t  ,InvestedAmountStocksManual\n\t  ,InvestedAmountCryptoManual\n\t  ,CreditTP Bala…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L17-L46",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguageID",
+      "formula": ",CashInCopy ,InvestedAmountCopy ,EquityCopy ,EquityStocksManual ,InvestedAmountStocksManual ,InvestedAmountCryptoManual ,CreditTP BalanceTradingPlatfrom ,IBANBalance BalanceI…",
+      "expression_raw": ",CashInCopy\n\t  ,InvestedAmountCopy\n        ,EquityCopy\n\t  ,EquityStocksManual\n\t  ,InvestedAmountStocksManual\n\t  ,InvestedAmountCryptoManual\n\t  ,CreditTP BalanceTradingPlatfrom\n\t  ,IBANBalance BalanceI…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L18-L47",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguage",
+      "formula": ",InvestedAmountCopy ,EquityCopy ,EquityStocksManual ,InvestedAmountStocksManual ,InvestedAmountCryptoManual ,CreditTP BalanceTradingPlatfrom ,IBANBalance BalanceIBAN ,Realize…",
+      "expression_raw": ",InvestedAmountCopy\n        ,EquityCopy\n\t  ,EquityStocksManual\n\t  ,InvestedAmountStocksManual\n\t  ,InvestedAmountCryptoManual\n\t  ,CreditTP BalanceTradingPlatfrom\n\t  ,IBANBalance BalanceIBAN\n\t  ,Realize…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L19-L48",
+      "scope": "main"
+    },
+    {
+      "column": "AccountTypeID",
+      "formula": ",EquityCopy ,EquityStocksManual ,InvestedAmountStocksManual ,InvestedAmountCryptoManual ,CreditTP BalanceTradingPlatfrom ,IBANBalance BalanceIBAN ,RealizedEquityGlobal ,EquityGlob…",
+      "expression_raw": ",EquityCopy\n\t  ,EquityStocksManual\n\t  ,InvestedAmountStocksManual\n\t  ,InvestedAmountCryptoManual\n\t  ,CreditTP BalanceTradingPlatfrom\n\t  ,IBANBalance BalanceIBAN\n\t  ,RealizedEquityGlobal\n\t  ,EquityGlob…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L20-L49",
+      "scope": "main"
+    },
+    {
+      "column": "AccountType",
+      "formula": ",EquityStocksManual ,InvestedAmountStocksManual ,InvestedAmountCryptoManual ,CreditTP BalanceTradingPlatfrom ,IBANBalance BalanceIBAN ,RealizedEquityGlobal ,EquityGlobal ,CreditGl…",
+      "expression_raw": ",EquityStocksManual\n\t  ,InvestedAmountStocksManual\n\t  ,InvestedAmountCryptoManual\n\t  ,CreditTP BalanceTradingPlatfrom\n\t  ,IBANBalance BalanceIBAN\n\t  ,RealizedEquityGlobal\n\t  ,EquityGlobal\n\t  ,CreditGl…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L21-L50",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusID",
+      "formula": ",InvestedAmountStocksManual ,InvestedAmountCryptoManual ,CreditTP BalanceTradingPlatfrom ,IBANBalance BalanceIBAN ,RealizedEquityGlobal ,EquityGlobal ,CreditGlobal ,OptionsTotalEq…",
+      "expression_raw": ",InvestedAmountStocksManual\n\t  ,InvestedAmountCryptoManual\n\t  ,CreditTP BalanceTradingPlatfrom\n\t  ,IBANBalance BalanceIBAN\n\t  ,RealizedEquityGlobal\n\t  ,EquityGlobal\n\t  ,CreditGlobal\n\t  ,OptionsTotalEq…",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L51",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusName",
+      "formula": ",InvestedAmountCryptoManual ,CreditTP BalanceTradingPlatfrom ,IBANBalance BalanceIBAN ,RealizedEquityGlobal ,EquityGlobal ,CreditGlobal ,OptionsTotalEquity ,IsLastDayWeek ,…",
+      "expression_raw": ",InvestedAmountCryptoManual\n\t  ,CreditTP BalanceTradingPlatfrom\n\t  ,IBANBalance BalanceIBAN\n\t  ,RealizedEquityGlobal\n\t  ,EquityGlobal\n\t  ,CreditGlobal\n\t  ,OptionsTotalEquity\n\t  ,dd.IsLastDayWeek\n    ,…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L23-L52",
+      "scope": "main"
+    },
+    {
+      "column": "IsPI",
+      "formula": ",CreditTP BalanceTradingPlatfrom ,IBANBalance BalanceIBAN ,RealizedEquityGlobal ,EquityGlobal ,CreditGlobal ,OptionsTotalEquity ,IsLastDayWeek ,IsLastDayMonth ,IsLast…",
+      "expression_raw": ",CreditTP BalanceTradingPlatfrom\n\t  ,IBANBalance BalanceIBAN\n\t  ,RealizedEquityGlobal\n\t  ,EquityGlobal\n\t  ,CreditGlobal\n\t  ,OptionsTotalEquity\n\t  ,dd.IsLastDayWeek\n    ,dd.IsLastDayMonth\n\t  ,dd.IsLast…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L24-L53",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusID",
+      "formula": ",IBANBalance BalanceIBAN ,RealizedEquityGlobal ,EquityGlobal ,CreditGlobal ,OptionsTotalEquity ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear …",
+      "expression_raw": ",IBANBalance BalanceIBAN\n\t  ,RealizedEquityGlobal\n\t  ,EquityGlobal\n\t  ,CreditGlobal\n\t  ,OptionsTotalEquity\n\t  ,dd.IsLastDayWeek\n    ,dd.IsLastDayMonth\n\t  ,dd.IsLastDayQuarter\n\t  ,dd.IsLastDayYear \n   …",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L25-L54",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusName",
+      "formula": ",RealizedEquityGlobal ,EquityGlobal ,CreditGlobal ,OptionsTotalEquity ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,PlayerLevelID ,…",
+      "expression_raw": ",RealizedEquityGlobal\n\t  ,EquityGlobal\n\t  ,CreditGlobal\n\t  ,OptionsTotalEquity\n\t  ,dd.IsLastDayWeek\n    ,dd.IsLastDayMonth\n\t  ,dd.IsLastDayQuarter\n\t  ,dd.IsLastDayYear \n     ,fsc.PlayerLevelID\n      ,…",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L26-L55",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusID",
+      "formula": ",EquityGlobal ,CreditGlobal ,OptionsTotalEquity ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,PlayerLevelID ,Name AS ClubTier …",
+      "expression_raw": ",EquityGlobal\n\t  ,CreditGlobal\n\t  ,OptionsTotalEquity\n\t  ,dd.IsLastDayWeek\n    ,dd.IsLastDayMonth\n\t  ,dd.IsLastDayQuarter\n\t  ,dd.IsLastDayYear \n     ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n    …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.bi_output.bi_output_vg_date",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L27-L56",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusName",
+      "formula": ",CreditGlobal ,OptionsTotalEquity ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,PlayerLevelID ,Name AS ClubTier ,Regulation…",
+      "expression_raw": ",CreditGlobal\n\t  ,OptionsTotalEquity\n\t  ,dd.IsLastDayWeek\n    ,dd.IsLastDayMonth\n\t  ,dd.IsLastDayQuarter\n\t  ,dd.IsLastDayYear \n     ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.Regulation…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.bi_output.bi_output_vg_date",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L28-L57",
+      "scope": "main"
+    },
+    {
+      "column": "CanOpenPosition",
+      "formula": ",OptionsTotalEquity ,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name…",
+      "expression_raw": ",OptionsTotalEquity\n\t  ,dd.IsLastDayWeek\n    ,dd.IsLastDayMonth\n\t  ,dd.IsLastDayQuarter\n\t  ,dd.IsLastDayYear \n     ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.bi_output.bi_output_vg_date",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L29-L58",
+      "scope": "main"
+    },
+    {
+      "column": "CanClosePosition",
+      "formula": ",IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,f…",
+      "expression_raw": ",dd.IsLastDayWeek\n    ,dd.IsLastDayMonth\n\t  ,dd.IsLastDayQuarter\n\t  ,dd.IsLastDayYear \n     ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,f…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.bi_output.bi_output_vg_date",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L30-L59",
+      "scope": "main"
+    },
+    {
+      "column": "CanEditPosition",
+      "formula": ",IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID…",
+      "expression_raw": ",dd.IsLastDayMonth\n\t  ,dd.IsLastDayQuarter\n\t  ,dd.IsLastDayYear \n     ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,fsc.VerificationLevelID…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.bi_output.bi_output_vg_date",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L31-L60",
+      "scope": "main"
+    },
+    {
+      "column": "CanBeCopied",
+      "formula": ",IsLastDayQuarter ,IsLastDayYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS Ver…",
+      "expression_raw": ",dd.IsLastDayQuarter\n\t  ,dd.IsLastDayYear \n     ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,fsc.VerificationLevelID\n      ,dv.Name AS Ver…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.bi_output.bi_output_vg_date",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L32-L61",
+      "scope": "main"
+    },
+    {
+      "column": "CanDeposit",
+      "formula": ",IsLastDayYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,fs…",
+      "expression_raw": ",dd.IsLastDayYear \n     ,fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,fsc.VerificationLevelID\n      ,dv.Name AS VerificationLevel\n      ,fs…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.bi_output.bi_output_vg_date",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L33-L62",
+      "scope": "main"
+    },
+    {
+      "column": "CanRequestWithdraw",
+      "formula": ",PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Na…",
+      "expression_raw": ",fsc.PlayerLevelID\n      ,dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,fsc.VerificationLevelID\n      ,dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Na…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L34-L63",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonID",
+      "formula": ",Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,M…",
+      "expression_raw": ",dpl.Name AS ClubTier\n      ,fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,fsc.VerificationLevelID\n      ,dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.M…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L35-L64",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonName",
+      "formula": ",RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS …",
+      "expression_raw": ",fsc.RegulationID\n      ,dr.Name AS Regulation\n      ,fsc.VerificationLevelID\n      ,dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.MarketingRegionManualName AS …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L36-L65",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonID",
+      "formula": ",Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,Accoun…",
+      "expression_raw": ",dr.Name AS Regulation\n      ,fsc.VerificationLevelID\n      ,dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.MarketingRegionManualName AS Region\n      ,fsc.Accoun…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L37-L66",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonName",
+      "formula": ",VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(d…",
+      "expression_raw": ",fsc.VerificationLevelID\n      ,dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.MarketingRegionManualName AS Region\n      ,fsc.AccountManagerID\n      ,concat_ws(d…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L38-L67",
+      "scope": "main"
+    },
+    {
+      "column": "CitizenshipCountryID",
+      "formula": ",Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(FirstName,'',LastName) AS …",
+      "expression_raw": ",dv.Name AS VerificationLevel\n      ,fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.MarketingRegionManualName AS Region\n      ,fsc.AccountManagerID\n      ,concat_ws(dm.FirstName,'',dm.LastName) AS …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L68",
+      "scope": "main"
+    },
+    {
+      "column": "CitizenshipCountry",
+      "formula": ",CountryID ,Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(FirstName,'',LastName) AS AccountManager ,LanguageID…",
+      "expression_raw": ",fsc.CountryID\n      ,dc.Name AS Country\n      ,dc.MarketingRegionManualName AS Region\n      ,fsc.AccountManagerID\n      ,concat_ws(dm.FirstName,'',dm.LastName) AS AccountManager\n      ,fsc.LanguageID…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L40-L69",
+      "scope": "main"
+    },
+    {
+      "column": "AffiliateID",
+      "formula": ",Name AS Country ,MarketingRegionManualName AS Region ,AccountManagerID ,concat_ws(FirstName,'',LastName) AS AccountManager ,LanguageID ,Name AS La…",
+      "expression_raw": ",dc.Name AS Country\n      ,dc.MarketingRegionManualName AS Region\n      ,fsc.AccountManagerID\n      ,concat_ws(dm.FirstName,'',dm.LastName) AS AccountManager\n      ,fsc.LanguageID\n      ,dl.Name AS La…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L41-L70",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_aum.sql"
+}

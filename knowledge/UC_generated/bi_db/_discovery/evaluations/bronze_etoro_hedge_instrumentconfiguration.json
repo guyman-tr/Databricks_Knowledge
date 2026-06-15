@@ -1,0 +1,137 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_hedge_instrumentconfiguration",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:36Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentConfiguration.md",
+      "upstream_quote": "Primary key and FK to Trade.Instrument(InstrumentID). One row per instrument. All 10,468 instruments have exactly one co",
+      "wiki_quote": "Primary key and FK to Trade.Instrument(InstrumentID). One row per instrument. All 10,468 instruments have exactly one co",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MinOrderSizeForExecutionInEToroUnits",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentConfiguration.md",
+      "upstream_quote": "Minimum hedge order size before execution is attempted. Orders below this value are skipped. 0 = no minimum (5,039 instr",
+      "wiki_quote": "Minimum hedge order size before execution is attempted. Orders below this value are skipped. 0 = no minimum (5,039 instr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "HBCDealSizeThresholdAlertInEToroUnits",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentConfiguration.md",
+      "upstream_quote": "HBC (Hedge Bot Controller) warning threshold in eToro units. Orders at or above this size trigger an alert log entry but",
+      "wiki_quote": "HBC (Hedge Bot Controller) warning threshold in eToro units. Orders at or above this size trigger an alert log entry but",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "HBCMaxDealSizeThresholdRejectInEToroUnits",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentConfiguration.md",
+      "upstream_quote": "HBC hard rejection threshold in eToro units. Orders at or above this size are refused outright - no execution occurs. Ty",
+      "wiki_quote": "HBC hard rejection threshold in eToro units. Orders at or above this size are refused outright - no execution occurs. Ty",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManualMaxDealSizeInEToroUnits",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentConfiguration.md",
+      "upstream_quote": "Maximum deal size permitted via the manual order execution path (distinct from automated HBC path). No NULL values in da",
+      "wiki_quote": "Maximum deal size permitted via the manual order execution path (distinct from automated HBC path). No NULL values in da",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SpreadReturnFactor",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentConfiguration.md",
+      "upstream_quote": "Multiplier applied to spread calculations. DEFAULT 1; all 10,468 rows have value 1.0000 - this column is currently unifo",
+      "wiki_quote": "Multiplier applied to spread calculations. DEFAULT 1; all 10,468 rows have value 1.0000 - this column is currently unifo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CircuitBreakerLimit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentConfiguration.md",
+      "upstream_quote": "Hard cumulative exposure limit. When reached, the circuit breaker halts hedge execution for this instrument. NULL=not co",
+      "wiki_quote": "Hard cumulative exposure limit. When reached, the circuit breaker halts hedge execution for this instrument. NULL=not co",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CircuitBreakerWarningLimit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentConfiguration.md",
+      "upstream_quote": "Soft cumulative exposure limit. When reached, generates a warning before the hard limit triggers. Typically equal to or ",
+      "wiki_quote": "Soft cumulative exposure limit. When reached, generates a warning before the hard limit triggers. Typically equal to or ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DbLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentConfiguration.md",
+      "upstream_quote": "Computed audit column. SQL Server login executing the DML via `suser_name()`.",
+      "wiki_quote": "Computed audit column. SQL Server login executing the DML via `suser_name()` (Tier 1 — inherited from etoro.Hedge.Instru",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AppLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentConfiguration.md",
+      "upstream_quote": "Computed audit column. Application identity from `CONTEXT_INFO()`. NULL when not set.",
+      "wiki_quote": "Computed audit column. Application identity from `CONTEXT_INFO()`. NULL when not set (Tier 1 — inherited from etoro.Hedg",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysStartTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentConfiguration.md",
+      "upstream_quote": "Temporal period start. UTC timestamp when this row version became active. Managed by SQL Server SYSTEM_VERSIONING.",
+      "wiki_quote": "Temporal period start. UTC timestamp when this row version became active. Managed by SQL Server SYSTEM_VERSIONING (Tier ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysEndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentConfiguration.md",
+      "upstream_quote": "Temporal period end. 9999-12-31 for all current rows. Historical versions in History.HedgeInstrumentConfiguration.",
+      "wiki_quote": "Temporal period end. 9999-12-31 for all current rows. Historical versions in History.HedgeInstrumentConfiguration (Tier ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RestrictManualActions",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentConfiguration.md",
+      "upstream_quote": "Flag to restrict manual hedge actions for this instrument. DEFAULT 0; all 10,468 rows have value 0 - this column is curr",
+      "wiki_quote": "Flag to restrict manual hedge actions for this instrument. DEFAULT 0; all 10,468 rows have value 0 - this column is curr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LotSizeForView",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.InstrumentConfiguration.md",
+      "upstream_quote": "Lot size normalization factor for display/reporting purposes. DEFAULT 1; all 10,468 rows have value 1.0000 - currently u",
+      "wiki_quote": "Lot size normalization factor for display/reporting purposes. DEFAULT 1; all 10,468 rows have value 1.0000 - currently u",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 14,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 14 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

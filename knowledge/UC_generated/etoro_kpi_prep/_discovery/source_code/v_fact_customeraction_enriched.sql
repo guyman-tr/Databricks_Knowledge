@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_fact_customeraction_enriched
--- Captured: 2026-05-18T08:05:28Z
+-- Captured: 2026-05-19T12:12:55Z
 -- ==========================================================================
 
 WITH passive_actions_enriched AS (

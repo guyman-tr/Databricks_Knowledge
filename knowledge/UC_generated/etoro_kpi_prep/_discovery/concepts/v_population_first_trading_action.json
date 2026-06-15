@@ -1,0 +1,142 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_population_first_trading_action",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 5,
+  "concepts": [
+    {
+      "id": "case_flag_firstactiontype",
+      "name": "FirstActionType computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "FirstActionType"
+      ],
+      "predicates": [
+        {
+          "col": "InstrumentTypeID",
+          "op": "IN",
+          "val": "(1,2,4)"
+        },
+        {
+          "col": "InstrumentTypeID",
+          "op": "=",
+          "val": "10"
+        },
+        {
+          "col": "MirrorID",
+          "op": ">",
+          "val": "0"
+        },
+        {
+          "col": "IsCopyFund",
+          "op": "=",
+          "val": "0"
+        },
+        {
+          "col": "MirrorID",
+          "op": ">",
+          "val": "0"
+        },
+        {
+          "col": "IsCopyFund",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "InstrumentTypeID",
+          "op": "IN",
+          "val": "(5,6)"
+        }
+      ],
+      "then_value": "'      '",
+      "else_value": "'  '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "etoro_kpi_prep.sql L13-L20",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_iscopyfund",
+      "name": "IsCopyFund computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsCopyFund"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L36-L36",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_di",
+      "name": "Dim lookup via di",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "alias": "di",
+      "join_conditions": [
+        "dp.InstrumentID = di.InstrumentID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L40",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "dp.InstrumentID = di.InstrumentID"
+    },
+    {
+      "id": "dim_lookup_dm",
+      "name": "Dim lookup via dm",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "alias": "dm",
+      "join_conditions": [
+        "dp.MirrorID = dm.MirrorID AND dm.MirrorTypeID = 4"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L42",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "dp.MirrorID = dm.MirrorID AND dm.MirrorTypeID = 4"
+    },
+    {
+      "id": "dim_lookup_dc",
+      "name": "Dim lookup via dc",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "alias": "dc",
+      "join_conditions": [
+        "a.RealCID = dc.RealCID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L47",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "a.RealCID = dc.RealCID"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_first_trading_action.sql"
+}

@@ -1,0 +1,134 @@
+{
+  "object_fqn": "main.etoro_kpi.v_spaceship_fees",
+  "generated_at": "2026-05-19T15:20:30Z",
+  "concept_count": 6,
+  "concepts": [
+    {
+      "id": "filter_block_super_fees",
+      "name": "Filter block on super_fees",
+      "kind": "filter_block",
+      "columns_involved": [
+        "type"
+      ],
+      "predicates": [
+        {
+          "col": "type",
+          "op": "=",
+          "val": "'    '"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L30",
+      "scope": "super_fees",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_voyager_mgmt_fees",
+      "name": "Filter block on voyager_mgmt_fees",
+      "kind": "filter_block",
+      "columns_involved": [
+        "aud_fee_total",
+        "aud_balance"
+      ],
+      "predicates": [
+        {
+          "col": "aud_fee_total",
+          "op": "<>",
+          "val": "0"
+        },
+        {
+          "col": "aud_balance",
+          "op": ">",
+          "val": "0"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L74",
+      "scope": "voyager_mgmt_fees",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_nova_fees",
+      "name": "Filter block on nova_fees",
+      "kind": "filter_block",
+      "columns_involved": [
+        "aud_net_amount"
+      ],
+      "predicates": [
+        {
+          "col": "aud_net_amount",
+          "op": "<>",
+          "val": "0"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L86",
+      "scope": "nova_fees",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_nova_fx_fees",
+      "name": "Filter block on nova_fx_fees",
+      "kind": "filter_block",
+      "columns_involved": [
+        "order_status",
+        "order_fx_aud_fee"
+      ],
+      "predicates": [
+        {
+          "col": "order_status",
+          "op": "=",
+          "val": "'         '"
+        },
+        {
+          "col": "order_fx_aud_fee",
+          "op": "<>",
+          "val": "0"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L98",
+      "scope": "nova_fx_fees",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_user_gcid",
+      "name": "Filter block on user_gcid",
+      "kind": "filter_block",
+      "columns_involved": [
+        "providerName"
+      ],
+      "predicates": [
+        {
+          "col": "providerName",
+          "op": "=",
+          "val": "'         '"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L110",
+      "scope": "user_gcid",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_aud_usd_rates",
+      "name": "Filter block on aud_usd_rates",
+      "kind": "filter_block",
+      "columns_involved": [
+        "InstrumentID"
+      ],
+      "predicates": [
+        {
+          "col": "InstrumentID",
+          "op": "=",
+          "val": "7"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L119",
+      "scope": "aud_usd_rates",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/v_spaceship_fees.sql"
+}

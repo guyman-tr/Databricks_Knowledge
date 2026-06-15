@@ -1,0 +1,104 @@
+{
+  "object": "main.bi_output.bi_output_regtechops_wash_trading_alerts_daily",
+  "rows": [
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_instrumentmetadata",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_trade_instrumentmetadata",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "avg_hold_minutes",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "InitDateTime",
+      "target_column_name": "avg_hold_minutes",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "InitDateTime",
+      "target_column_name": "avg_time_between_pairs",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "InitDateTime",
+      "target_column_name": "first_detected",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "InitDateTime",
+      "target_column_name": "last_detected",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "NetProfit",
+      "target_column_name": "risk_level",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "Amount",
+      "target_column_name": "risk_level",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "NetProfit",
+      "target_column_name": "risk_score",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "Amount",
+      "target_column_name": "risk_score",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "Amount",
+      "target_column_name": "total_volume",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    }
+  ],
+  "generated_at": "2026-05-19T14:44:01Z"
+}

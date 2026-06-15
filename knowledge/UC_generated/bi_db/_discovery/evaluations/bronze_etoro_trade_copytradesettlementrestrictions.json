@@ -1,0 +1,144 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_trade_copytradesettlementrestrictions",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:41Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "CountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.CopyTradeSettlementRestrictions.md",
+      "upstream_quote": "Country for which this restriction applies. References `Dictionary.Country`.",
+      "wiki_quote": "Country for which this restriction applies. References `Dictionary.Country` (Tier 1 — inherited from etoro.Trade.CopyTra",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RegulationID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.CopyTradeSettlementRestrictions.md",
+      "upstream_quote": "Regulation scope; NULL = all regulations for that country. References `Dictionary.Regulation`.",
+      "wiki_quote": "Regulation scope; NULL = all regulations for that country. References `Dictionary.Regulation` (Tier 1 — inherited from e",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.CopyTradeSettlementRestrictions.md",
+      "upstream_quote": "Instrument type (e.g., Crypto=5). References `Dictionary.CurrencyType`. Part of CK: at least one of InstrumentTypeID/Exc",
+      "wiki_quote": "Instrument type (e.g., Crypto=5). References `Dictionary.CurrencyType`. Part of CK: at least one of InstrumentTypeID/Exc",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.CopyTradeSettlementRestrictions.md",
+      "upstream_quote": "Exchange scope; NULL = not exchange-specific. References `Dictionary.ExchangeInfo`.",
+      "wiki_quote": "Exchange scope; NULL = not exchange-specific. References `Dictionary.ExchangeInfo` (Tier 1 — inherited from etoro.Trade.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.CopyTradeSettlementRestrictions.md",
+      "upstream_quote": "Specific instrument; NULL = not instrument-specific. References `Trade.InstrumentMetaData`.",
+      "wiki_quote": "Specific instrument; NULL = not instrument-specific. References `Trade.InstrumentMetaData` (Tier 1 — inherited from etor",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RestrictionTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.CopyTradeSettlementRestrictions.md",
+      "upstream_quote": "Type of restriction (block/allow). References `Dictionary.RestrictionType`. Validated on INSERT.",
+      "wiki_quote": "Type of restriction (block/allow). References `Dictionary.RestrictionType`. Validated on INSERT (Tier 1 — inherited from",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.CopyTradeSettlementRestrictions.md",
+      "upstream_quote": "Surrogate primary key.",
+      "wiki_quote": "Surrogate primary key (Tier 1 — inherited from etoro.Trade.CopyTradeSettlementRestrictions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DbLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.CopyTradeSettlementRestrictions.md",
+      "upstream_quote": "Computed: current SQL login.",
+      "wiki_quote": "Computed: current SQL login (Tier 1 — inherited from etoro.Trade.CopyTradeSettlementRestrictions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AppLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.CopyTradeSettlementRestrictions.md",
+      "upstream_quote": "Computed: application login from CONTEXT_INFO.",
+      "wiki_quote": "Computed: application login from CONTEXT_INFO (Tier 1 — inherited from etoro.Trade.CopyTradeSettlementRestrictions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysStartTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.CopyTradeSettlementRestrictions.md",
+      "upstream_quote": "System-versioning row start.",
+      "wiki_quote": "System-versioning row start (Tier 1 — inherited from etoro.Trade.CopyTradeSettlementRestrictions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysEndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.CopyTradeSettlementRestrictions.md",
+      "upstream_quote": "System-versioning row end.",
+      "wiki_quote": "System-versioning row end (Tier 1 — inherited from etoro.Trade.CopyTradeSettlementRestrictions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "UnblockReasonId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.CopyTradeSettlementRestrictions.md",
+      "upstream_quote": "If set, restriction can be overridden by this reason. References `Dictionary.BlockUnBlockReason`.",
+      "wiki_quote": "If set, restriction can be overridden by this reason. References `Dictionary.BlockUnBlockReason` (Tier 1 — inherited fro",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "GroupID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.CopyTradeSettlementRestrictions.md",
+      "upstream_quote": "Instrument group scope. References `Dictionary.TradingInstrumentGroups`. Part of CK.",
+      "wiki_quote": "Instrument group scope. References `Dictionary.TradingInstrumentGroups`. Part of CK (Tier 1 — inherited from etoro.Trade",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RegistrationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.CopyTradeSettlementRestrictions.md",
+      "upstream_quote": "Optional registration date for time-bounded rules. Part of UQ.",
+      "wiki_quote": "Optional registration date for time-bounded rules. Part of UQ (Tier 1 — inherited from etoro.Trade.CopyTradeSettlementRe",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AccountTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.CopyTradeSettlementRestrictions.md",
+      "upstream_quote": "Account type scope. Part of UQ.",
+      "wiki_quote": "Account type scope. Part of UQ (Tier 1 — inherited from etoro.Trade.CopyTradeSettlementRestrictions).",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 15,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 15 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

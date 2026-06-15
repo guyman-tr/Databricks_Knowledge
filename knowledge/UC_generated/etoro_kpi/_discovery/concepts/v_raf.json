@@ -1,0 +1,55 @@
+{
+  "object_fqn": "main.etoro_kpi.v_raf",
+  "generated_at": "2026-05-19T15:20:30Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "case_flag_referringispi",
+      "name": "ReferringIsPI computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "ReferringIsPI"
+      ],
+      "predicates": [
+        {
+          "col": "GuruStatusID",
+          "op": ">",
+          "val": "1"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "evidence_lines": "etoro_kpi.sql L29-L29",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_C1",
+      "name": "Dim lookup via C1",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "alias": "C1",
+      "join_conditions": [
+        "R.ReferringCID = C1.RealCID",
+        "R.ReferredCID = C2.RealCID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L40,L41",
+      "scopes": [
+        "main",
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "R.ReferringCID = C1.RealCID"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/v_raf.sql"
+}

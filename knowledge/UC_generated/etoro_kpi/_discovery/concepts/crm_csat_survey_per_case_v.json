@@ -1,0 +1,27 @@
+{
+  "object_fqn": "main.etoro_kpi.crm_csat_survey_per_case_v",
+  "generated_at": "2026-05-19T15:20:28Z",
+  "concept_count": 1,
+  "concepts": [
+    {
+      "id": "filter_block_ranked",
+      "name": "Filter block on ranked",
+      "kind": "filter_block",
+      "columns_involved": [
+        "Survey_Type__c"
+      ],
+      "predicates": [
+        {
+          "col": "Survey_Type__c",
+          "op": "=",
+          "val": "'  '"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L14",
+      "scope": "ranked",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/crm_csat_survey_per_case_v.sql"
+}

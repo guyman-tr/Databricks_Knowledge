@@ -1,0 +1,85 @@
+{
+  "object_fqn": "main.etoro_kpi.vg_ddr_revenue",
+  "generated_at": "2026-05-19T15:20:30Z",
+  "concept_count": 3,
+  "concepts": [
+    {
+      "id": "case_flag_isicc",
+      "name": "IsICC computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsICC"
+      ],
+      "predicates": [
+        {
+          "col": "IsFuture",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "InstrumentTypeID",
+          "op": "IN",
+          "val": "(1, 2, 4)"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {
+        "InstrumentTypeID=1": "Currencies",
+        "InstrumentTypeID=2": "Commodities",
+        "InstrumentTypeID=4": "Indices"
+      },
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+        "main.bi_output.bi_ouput_v_dim_instrumenttype"
+      ],
+      "evidence_lines": "etoro_kpi.sql L37-L40",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_drm",
+      "name": "Dim lookup via drm",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dim_revenue_metrics",
+      "alias": "drm",
+      "join_conditions": [
+        "dfr.RevenueMetricID = drm.RevenueMetricID"
+      ],
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dim_revenue_metrics"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L42",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "dfr.RevenueMetricID = drm.RevenueMetricID"
+    },
+    {
+      "id": "dim_lookup_vit",
+      "name": "Dim lookup via vit",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.bi_output.bi_ouput_v_dim_instrumenttype",
+      "alias": "vit",
+      "join_conditions": [
+        "dfr.InstrumentTypeID = vit.InstrumentTypeID"
+      ],
+      "physical_inputs": [
+        "main.bi_output.bi_ouput_v_dim_instrumenttype"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L44",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "dfr.InstrumentTypeID = vit.InstrumentTypeID"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/vg_ddr_revenue.sql"
+}

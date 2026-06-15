@@ -1,0 +1,41 @@
+{
+  "object": "main.de_output.de_output_instruments_firsttradedate",
+  "rows": [
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "InitDateTime",
+      "target_column_name": "FirstTradeDate",
+      "entity_type": "JOB",
+      "event_count": 28
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "InitDateTime",
+      "target_column_name": "FirstTradeDate",
+      "entity_type": "JOB",
+      "event_count": 28
+    },
+    {
+      "source_table_full_name": "main.trading.silver_etoro_trade_position",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 28
+    },
+    {
+      "source_table_full_name": "main.trading.bronze_etoro_history_position_datafactory",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 28
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "update_date",
+      "entity_type": "JOB",
+      "event_count": 28
+    }
+  ],
+  "generated_at": "2026-05-19T13:48:41Z"
+}

@@ -1,0 +1,228 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_population_first_trading_action",
+  "generated_at": "2026-05-18T16:27:37Z",
+  "formula_count": 20,
+  "formulas": [
+    {
+      "column": "RealCID",
+      "formula": "RealCID",
+      "expression_raw": "dp.RealCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "PositionID",
+      "formula": "PositionID",
+      "expression_raw": "dp.PositionID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentID",
+      "formula": "InstrumentID",
+      "expression_raw": "dp.InstrumentID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "Instrument",
+      "formula": "Name",
+      "expression_raw": "di.Name AS Instrument",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "formula": "InstrumentTypeID",
+      "expression_raw": "di.InstrumentTypeID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentType",
+      "formula": "InstrumentType",
+      "expression_raw": "di.InstrumentType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "IsSettled",
+      "formula": "IsSettled",
+      "expression_raw": "dp.IsSettled",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "MirrorID",
+      "formula": "MirrorID",
+      "expression_raw": "dp.MirrorID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L31-L31",
+      "scope": "main"
+    },
+    {
+      "column": "Exchange",
+      "formula": "Exchange",
+      "expression_raw": "di.Exchange",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L32-L32",
+      "scope": "main"
+    },
+    {
+      "column": "ISINCode",
+      "formula": "ISINCode",
+      "expression_raw": "di.ISINCode",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "IsAirDrop",
+      "formula": "IFNULL(IsAirDrop, 0)",
+      "expression_raw": "IFNULL(dp.IsAirDrop, 0) AS IsAirDrop",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    },
+    {
+      "column": "RN",
+      "formula": "ROW_NUMBER() OVER (PARTITION BY RealCID ORDER BY DateID, Occurred)",
+      "expression_raw": "ROW_NUMBER() OVER (PARTITION BY dp.RealCID ORDER BY dp.DateID, dp.Occurred) AS RN",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "window",
+      "evidence_lines": "L35-L35",
+      "scope": "main"
+    },
+    {
+      "column": "IsCopyFund",
+      "formula": "CASE WHEN IFNULL(MirrorTypeID, 0) = 4 THEN 1 ELSE 0 END",
+      "expression_raw": "CASE WHEN IFNULL(dm.MirrorTypeID, 0) = 4 THEN 1 ELSE 0 END AS IsCopyFund",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "FirstTradeDateID",
+      "formula": "DateID",
+      "expression_raw": "dp.DateID AS FirstTradeDateID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L37-L37",
+      "scope": "main"
+    },
+    {
+      "column": "Occurred",
+      "formula": "Occurred",
+      "expression_raw": "dp.Occurred",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "IsDepositor",
+      "formula": "IsDepositor",
+      "expression_raw": "dc.IsDepositor",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "FirstDepositDate",
+      "formula": "FirstDepositDate",
+      "expression_raw": "dc.FirstDepositDate",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "FirstTradeDate",
+      "formula": "a.Occurred",
+      "expression_raw": "a.Occurred AS FirstTradeDate",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "FirstDepositDateID",
+      "formula": "CAST(DATE_FORMAT(CAST(FirstDepositDate AS DATE), 'yyyyMMdd') AS INT)",
+      "expression_raw": "CAST(DATE_FORMAT(CAST(dc.FirstDepositDate AS DATE), 'yyyyMMdd') AS INT) AS FirstDepositDateID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "FirstActionType",
+      "formula": "CASE WHEN a.InstrumentTypeID IN (1,2,4) THEN 'Forex' WHEN a.InstrumentTypeID = 10 THEN 'Crypto' WHEN a.MirrorID > 0 AND a.IsCopyFund = 0 THEN 'Copy' WHEN a.MirrorID >…",
+      "expression_raw": "CASE \n        WHEN a.InstrumentTypeID IN (1,2,4) THEN 'Forex' \n        WHEN a.InstrumentTypeID = 10 THEN 'Crypto'\n        WHEN a.MirrorID > 0 AND a.IsCopyFund = 0 THEN 'Copy'\n        WHEN a.MirrorID >…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L13-L20",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_first_trading_action.sql"
+}

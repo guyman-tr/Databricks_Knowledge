@@ -1,0 +1,102 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_backoffice_bonustype",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:28Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "BonusTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.BonusType.md",
+      "upstream_quote": "Auto-generated unique identifier for each bonus type. PK referenced by BackOffice.Bonus (BonusTypeID FK) and BackOffice.",
+      "wiki_quote": "Auto-generated unique identifier for each bonus type. PK referenced by BackOffice.Bonus (BonusTypeID FK) and BackOffice.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ParentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.BonusType.md",
+      "upstream_quote": "Self-referential FK to BonusTypeID. NULL = root/department category (9 root nodes). Non-NULL = specific bonus program un",
+      "wiki_quote": "Self-referential FK to BonusTypeID. NULL = root/department category (9 root nodes). Non-NULL = specific bonus program un",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Name",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.BonusType.md",
+      "upstream_quote": "Internal name used by BackOffice staff for identification, reporting, and operational routing. Shown in the BackOffice U",
+      "wiki_quote": "Internal name used by BackOffice staff for identification, reporting, and operational routing. Shown in the BackOffice U",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Configuration",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.BonusType.md",
+      "upstream_quote": "XML configuration payload for parameterized bonus types. Only one active bonus type has this populated (BonusTypeID=2: `",
+      "wiki_quote": "XML configuration payload for parameterized bonus types. Only one active bonus type has this populated (BonusTypeID=2: `",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsWithdrawable",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.BonusType.md",
+      "upstream_quote": "Whether the bonus amount can be withdrawn by the customer. Currently 0 (false) for ALL 70 active bonus types - this fiel",
+      "wiki_quote": "Whether the bonus amount can be withdrawn by the customer. Currently 0 (false) for ALL 70 active bonus types - this fiel",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsActive",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.BonusType.md",
+      "upstream_quote": "Whether this bonus type is still in active use. 0=deprecated (should not be assigned to new bonuses). Active=0 types: 17",
+      "wiki_quote": "Whether this bonus type is still in active use. 0=deprecated (should not be assigned to new bonuses). Active=0 types: 17",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "HideFromAffwiz",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.BonusType.md",
+      "upstream_quote": "Controls visibility in the Affiliate Wizard (AffWiz) portal used by affiliate partners. 1=hide from affiliates (internal",
+      "wiki_quote": "Controls visibility in the Affiliate Wizard (AffWiz) portal used by affiliate partners. 1=hide from affiliates (internal",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DisplayName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.BonusType.md",
+      "upstream_quote": "Customer-facing label shown in the customer's account statement for this bonus type. Decouples internal classification f",
+      "wiki_quote": "Customer-facing label shown in the customer's account statement for this bonus type. Decouples internal classification f",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsDepositRelated",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.BonusType.md",
+      "upstream_quote": "Whether this bonus type is triggered by or associated with a customer deposit event. 1=deposit-related (first deposit pr",
+      "wiki_quote": "Whether this bonus type is triggered by or associated with a customer deposit event. 1=deposit-related (first deposit pr",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 9,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 9 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

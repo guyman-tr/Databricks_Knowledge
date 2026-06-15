@@ -2,7 +2,7 @@
   "schema": "etoro_kpi_prep",
   "catalog": "main",
   "framework": "uc-pipeline-doc",
-  "generated_at": "2026-05-18T08:15:08Z",
+  "generated_at": "2026-05-19T12:26:15Z",
   "per_object_upstreams": {
     "gold_de_user_dim_ddr_customer_dailystatus_scd": [
       "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -24,19 +24,11 @@
       "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban",
       "main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban",
       "main.trading.bronze_etoro_trade_instrumentgroups",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
-      "main.basedata",
-      "main.dimpos",
-      "main.mirrors",
-      "main.ibanopen",
-      "main.ibanclose",
-      "main.sqf"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
     ],
     "v_copyfund_positions": [
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
-      "main.dwh.dim_position",
-      "main.copyfund_mirrors",
-      "main.copyfund_positions"
+      "main.dwh.dim_position"
     ],
     "v_ddr_revenues": [
       "main.etoro_kpi_prep.v_fact_customeraction_w_metrics",
@@ -46,20 +38,13 @@
       "main.etoro_kpi_prep.v_revenue_cryptotofiat_c2f",
       "main.etoro_kpi_prep.v_revenue_interestfee",
       "main.etoro_kpi_prep.v_revenue_stakingfee",
-      "main.etoro_kpi_prep_stg.v_fact_customeraction_w_metrics",
-      "main.base",
-      "main.unpivoted",
-      "main.dimensioned"
+      "main.etoro_kpi_prep_stg.v_fact_customeraction_w_metrics"
     ],
     "v_dim_dataplatform_uuid": [
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "main.bi_db.bronze_sub_accounts_accounts",
       "main.etoro_kpi.v_spaceship_aum",
-      "main.etoro_kpi_prep.v_spaceship_aum",
-      "main.sps_all",
-      "main.sps_cross",
-      "main.etoro",
-      "main.sps_only"
+      "main.etoro_kpi_prep.v_spaceship_aum"
     ],
     "v_dim_ftdplatform": [
       "main.bi_db.bronze_moneybusdb_dictionary_accounttypes"
@@ -69,23 +54,16 @@
       "main.trading.bronze_etoro_trade_providertoinstrument",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "main.trading.bronze_etoro_trade_instrumentgroups",
-      "main.trading.bronze_etoro_trade_instrumentmetadata",
-      "main.rth_instruments",
-      "main.instruments_245"
+      "main.trading.bronze_etoro_trade_instrumentmetadata"
     ],
     "v_fact_customeraction": [
       "main.trading.bronze_etoro_history_positionchangelog",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
-      "main.dwh.dim_position",
-      "main.mirror_changelog",
-      "main.passive_actions_enriched",
-      "main.active_actions"
+      "main.dwh.dim_position"
     ],
     "v_fact_customeraction_enriched": [
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
-      "main.dwh.dim_position",
-      "main.passive_actions_enriched",
-      "main.active_actions"
+      "main.dwh.dim_position"
     ],
     "v_fact_customeraction_w_metrics": [
       "main.general.bronze_recurringinvestment_recurringinvestment_planinstances",
@@ -97,78 +75,44 @@
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
       "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban",
       "main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban",
-      "main.bi_db.bronze_etoro_trade_adminpositionlog",
-      "main.recurring_positions"
+      "main.bi_db.bronze_etoro_trade_adminpositionlog"
     ],
     "v_globalftdplatform": [
       "main.bi_db.bronze_moneybusdb_dictionary_accounttypes"
     ],
     "v_instrument_conversion_rates_dwh": [
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
-      "main.latestdailyprices",
-      "main.alldates"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
     ],
     "v_mimo_allplatforms": [
       "main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms",
       "main.etoro_kpi_prep.v_mimo_tradingplatform",
       "main.etoro_kpi_prep.v_mimo_emoneyplatform",
       "main.etoro_kpi_prep.v_mimo_optionsplatform",
-      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
-      "main.global_ftds",
-      "main.tp_mimo",
-      "main.emoney_mimo",
-      "main.options_mimo",
-      "main.moneyfarm_ftds",
-      "main.unified_mimo"
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
     ],
     "v_mimo_emoneyplatform": [
       "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
-      "main.ftd_iban",
-      "main.deposits_iban",
-      "main.cashout_iban",
-      "main.mimo_iban_prep",
-      "main.mimo_iban_deduped"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency"
     ],
     "v_mimo_first_deposit_all_platforms": [
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
       "main.emoney.bronze_fiatdwhdb_dbo_fiattransactions",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "main.new_iban",
-      "main.new_tp",
-      "main.c2usd",
-      "main.dimcust"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
     ],
     "v_mimo_options_platform": [
       "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
       "main.general.bronze_usabroker_apex_options",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "main.mimorecords",
-      "main.deposit_unique_for_ftdjoin",
-      "main.finraonly_ftd_date",
-      "main.finraonly_ftd_records",
-      "main.ftdsingle",
-      "main.ftdmultiple",
-      "main.global_ftd",
-      "main.finalftd"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
     ],
     "v_mimo_optionsplatform": [
       "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
       "main.general.bronze_usabroker_apex_options",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
-      "main.mimorecords",
-      "main.deposit_unique_for_ftdjoin",
-      "main.finraonly_ftd_date",
-      "main.finraonly_ftd_records",
-      "main.ftdsingle",
-      "main.ftdmultiple",
-      "main.global_ftd",
-      "main.finalftd"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
     ],
     "v_mimo_tradingplatform": [
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -176,35 +120,20 @@
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
-      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee",
-      "main.deposits_tp",
-      "main.cashout_tp",
-      "main.mimo_combined",
-      "main.mimo_deduped"
+      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
     ],
     "v_moneyfarm_aum": [
       "main.money_farm.silver_moneyfarm_etoro_mf_aum",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
-      "main.daily_portfolio_balances",
-      "main.aggregated_balances",
-      "main.gbp_usd_rates"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit"
     ],
     "v_moneyfarm_fees": [],
     "v_moneyfarm_mimo": [
       "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
-      "main.raw_events",
-      "main.parsed_events",
-      "main.mimo_daily",
-      "main.first_deposit_dates",
-      "main.gbp_usd_rates"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit"
     ],
     "v_options_aum": [
       "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
-      "main.general.bronze_usabroker_apex_options",
-      "main.buypower_ranked",
-      "main.latest_daily_buypower",
-      "main.first_funding"
+      "main.general.bronze_usabroker_apex_options"
     ],
     "v_population_active_traders": [
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -213,11 +142,7 @@
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
       "main.etoro_kpi_prep.v_revenue_optionsplatform",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "main.actionsprep",
-      "main.active_options",
-      "main.activetypes_prep",
-      "main.activetypes"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
     ],
     "v_population_active_traders_lite": [
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -225,11 +150,7 @@
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "main.etoro_kpi_prep.v_revenue_optionsplatform",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "main.actionsprep",
-      "main.active_options",
-      "main.activetypes_prep",
-      "main.activetypes"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
     ],
     "v_population_balance_only_accounts": [
       "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
@@ -238,14 +159,7 @@
       "main.general.bronze_usabroker_apex_options",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "main.etoro_kpi_prep.v_population_active_traders",
-      "main.etoro_kpi_prep.v_population_portfolio_only",
-      "main.snapshot_dates",
-      "main.balanceprep_tp",
-      "main.maxbalance_tp",
-      "main.max_iban",
-      "main.max_options",
-      "main.candidates",
-      "main.balance_users"
+      "main.etoro_kpi_prep.v_population_portfolio_only"
     ],
     "v_population_first_time_funded": [
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -254,13 +168,7 @@
       "main.etoro_kpi_prep.v_globalftdplatform",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
       "main.dwh.dim_position",
-      "main.etoro_kpi_prep.v_revenue_optionsplatform",
-      "main.remove_bad_ftds",
-      "main.dwh_ftd",
-      "main.verification",
-      "main.trade",
-      "main.first_iob",
-      "main.optionstrade"
+      "main.etoro_kpi_prep.v_revenue_optionsplatform"
     ],
     "v_population_first_trading_action": [
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -277,11 +185,7 @@
     ],
     "v_population_otd_daterange": [
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
-      "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
-      "main.prep",
-      "main.filteredrealcid",
-      "main.rankeddeposits",
-      "main.daterange"
+      "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
     ],
     "v_population_portfolio_only": [
       "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
@@ -291,12 +195,7 @@
       "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
       "main.general.bronze_usabroker_apex_options",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "main.etoro_kpi_prep.v_population_active_traders",
-      "main.snapshot_dates",
-      "main.holders",
-      "main.options_aum",
-      "main.merged",
-      "main.filtered2"
+      "main.etoro_kpi_prep.v_population_active_traders"
     ],
     "v_revenue_adminfee": [
       "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution"
@@ -356,9 +255,7 @@
     "v_revenue_optionsplatform": [
       "main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports",
       "main.general.bronze_usabroker_apex_options",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "main.prep",
-      "main.firsttrade"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
     ],
     "v_revenue_rollover": [
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
@@ -379,25 +276,17 @@
       "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
-      "main.badmonths"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
     ],
     "v_revenue_ticketfee_bypercent": [
       "main.general.bronze_historycosts_history_costs",
       "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
-      "main.before_20260308_open",
-      "main.before_20260308_close",
-      "main.after_20260308"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
     ],
     "v_revenue_ticketfee_fixed": [
       "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution",
       "main.general.bronze_historycosts_history_costs",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
-      "main.before_20250525",
-      "main.mid_period_open",
-      "main.mid_period_close",
-      "main.after_20260308"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
     ],
     "v_revenue_transfercoinfee": [
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -412,18 +301,7 @@
       "main.spaceship.spaceship_metabase_voyager_user_balances",
       "main.spaceship.bronze_spaceship_metabase_nova_transactions",
       "main.bi_db.bronze_sub_accounts_accounts",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
-      "main.user_accounts",
-      "main.contact_mapping",
-      "main.super_mimo",
-      "main.money_mimo",
-      "main.voyager_mimo",
-      "main.nova_mimo",
-      "main.mimo_aggregated",
-      "main.first_deposit_dates",
-      "main.mimo_final",
-      "main.user_gcid",
-      "main.aud_usd_rates"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit"
     ],
     "v_trading_volume_and_amount": [
       "main.dwh.dim_position",
@@ -434,12 +312,7 @@
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "main.etoro_kpi_prep.v_copyfund_positions",
       "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_opened_from_iban",
-      "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_closed_to_iban",
-      "main.volume_open",
-      "main.volume_close",
-      "main.all_volumes",
-      "main.sqf",
-      "main.c2p"
+      "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_closed_to_iban"
     ],
     "v_trading_volume_positionlevel": [
       "main.dwh.dim_position",
@@ -450,181 +323,35 @@
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "main.etoro_kpi_prep.v_copyfund_positions",
       "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_opened_from_iban",
-      "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_closed_to_iban",
-      "main.volume_open",
-      "main.volume_close",
-      "main.all_volumes",
-      "main.sqf",
-      "main.c2p"
+      "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_closed_to_iban"
     ]
   },
   "upstreams": [
     {
-      "full_name": "main.actionsprep",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.actionsprep.md"
-    },
-    {
-      "full_name": "main.active_actions",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.active_actions.md"
-    },
-    {
-      "full_name": "main.active_options",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.active_options.md"
-    },
-    {
-      "full_name": "main.activetypes",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.activetypes.md"
-    },
-    {
-      "full_name": "main.activetypes_prep",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.activetypes_prep.md"
-    },
-    {
-      "full_name": "main.after_20260308",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.after_20260308.md"
-    },
-    {
-      "full_name": "main.aggregated_balances",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.aggregated_balances.md"
-    },
-    {
-      "full_name": "main.all_volumes",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.all_volumes.md"
-    },
-    {
-      "full_name": "main.alldates",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.alldates.md"
-    },
-    {
-      "full_name": "main.aud_usd_rates",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.aud_usd_rates.md"
-    },
-    {
-      "full_name": "main.badmonths",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.badmonths.md"
-    },
-    {
-      "full_name": "main.balance_users",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.balance_users.md"
-    },
-    {
-      "full_name": "main.balanceprep_tp",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.balanceprep_tp.md"
-    },
-    {
-      "full_name": "main.base",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.base.md"
-    },
-    {
-      "full_name": "main.basedata",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.basedata.md"
-    },
-    {
-      "full_name": "main.before_20250525",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.before_20250525.md"
-    },
-    {
-      "full_name": "main.before_20260308_close",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.before_20260308_close.md"
-    },
-    {
-      "full_name": "main.before_20260308_open",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.before_20260308_open.md"
-    },
-    {
       "full_name": "main.bi_db.bronze_etoro_trade_adminpositionlog",
-      "rule_matched": 4,
-      "rule_name": "bronze_pure_ingest",
-      "generic_pipeline_row": {
-        "database_name": "etoro",
-        "schema_name": "Trade",
-        "table_name": "AdminPositionLog",
-        "uc_table": "bi_db.bronze_etoro_trade_adminpositionlog"
-      },
-      "wiki_path": "knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.AdminPositionLog.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.AdminPositionLog.md",
       "wiki_exists": true,
+      "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.bi_db.bronze_etoro_trade_adminpositionlog.md"
     },
     {
       "full_name": "main.bi_db.bronze_moneybusdb_dictionary_accounttypes",
-      "rule_matched": 4,
-      "rule_name": "bronze_pure_ingest",
-      "generic_pipeline_row": {
-        "database_name": "MoneyBusDB",
-        "schema_name": "Dictionary",
-        "table_name": "AccountTypes",
-        "uc_table": "bi_db.bronze_moneybusdb_dictionary_accounttypes"
-      },
-      "wiki_path": "knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\Dictionary\\Tables\\Dictionary.AccountTypes.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki/Dictionary/Tables/Dictionary.AccountTypes.md",
       "wiki_exists": true,
+      "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.bi_db.bronze_moneybusdb_dictionary_accounttypes.md"
     },
     {
       "full_name": "main.bi_db.bronze_sub_accounts_accounts",
-      "rule_matched": 4,
-      "rule_name": "bronze_pure_ingest",
-      "generic_pipeline_row": {
-        "database_name": "sub-accounts",
-        "schema_name": "",
-        "table_name": "accounts",
-        "uc_table": "bi_db.bronze_sub_accounts_accounts"
-      },
-      "wiki_path": null,
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/bi_db/<Tables|Views>/bronze_sub_accounts_accounts.md",
       "wiki_exists": false,
+      "blocked_on_upstream": true,
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_db.bronze_sub_accounts_accounts.md"
     },
     {
@@ -782,130 +509,11 @@
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_output_stg._tmp_scd_merge_source.md"
     },
     {
-      "full_name": "main.buypower_ranked",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.buypower_ranked.md"
-    },
-    {
-      "full_name": "main.c2p",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.c2p.md"
-    },
-    {
-      "full_name": "main.c2usd",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.c2usd.md"
-    },
-    {
-      "full_name": "main.candidates",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.candidates.md"
-    },
-    {
-      "full_name": "main.cashout_iban",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.cashout_iban.md"
-    },
-    {
-      "full_name": "main.cashout_tp",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.cashout_tp.md"
-    },
-    {
       "full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
       "rule_matched": 6,
       "rule_name": "no_wiki",
       "reason": "no rule matched",
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts.md"
-    },
-    {
-      "full_name": "main.contact_mapping",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.contact_mapping.md"
-    },
-    {
-      "full_name": "main.copyfund_mirrors",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.copyfund_mirrors.md"
-    },
-    {
-      "full_name": "main.copyfund_positions",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.copyfund_positions.md"
-    },
-    {
-      "full_name": "main.daily_portfolio_balances",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.daily_portfolio_balances.md"
-    },
-    {
-      "full_name": "main.daterange",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.daterange.md"
-    },
-    {
-      "full_name": "main.deposit_unique_for_ftdjoin",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.deposit_unique_for_ftdjoin.md"
-    },
-    {
-      "full_name": "main.deposits_iban",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.deposits_iban.md"
-    },
-    {
-      "full_name": "main.deposits_tp",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.deposits_tp.md"
-    },
-    {
-      "full_name": "main.dimcust",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.dimcust.md"
-    },
-    {
-      "full_name": "main.dimensioned",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.dimensioned.md"
-    },
-    {
-      "full_name": "main.dimpos",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.dimpos.md"
     },
     {
       "full_name": "main.dwh.dim_position",
@@ -1028,39 +636,13 @@
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked.md"
     },
     {
-      "full_name": "main.dwh_ftd",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.dwh_ftd.md"
-    },
-    {
       "full_name": "main.emoney.bronze_fiatdwhdb_dbo_fiattransactions",
-      "rule_matched": 4,
-      "rule_name": "bronze_pure_ingest",
-      "generic_pipeline_row": {
-        "database_name": "FiatDwhDB",
-        "schema_name": "dbo",
-        "table_name": "FiatTransactions",
-        "uc_table": "emoney.bronze_fiatdwhdb_dbo_fiattransactions"
-      },
-      "wiki_path": "knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.FiatTransactions.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/dbo/Tables/dbo.FiatTransactions.md",
       "wiki_exists": true,
+      "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.emoney.bronze_fiatdwhdb_dbo_fiattransactions.md"
-    },
-    {
-      "full_name": "main.emoney_mimo",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.emoney_mimo.md"
-    },
-    {
-      "full_name": "main.etoro",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro.md"
     },
     {
       "full_name": "main.etoro_kpi.v_spaceship_aum",
@@ -1084,19 +666,19 @@
       "full_name": "main.etoro_kpi_prep.v_copyfund_positions",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_copyfund_positions.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_copyfund_positions.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_copyfund_positions.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_copyfund_positions.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_dim_instrument_enriched",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_dim_instrument_enriched.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_dim_instrument_enriched.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_dim_instrument_enriched.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_dim_instrument_enriched.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_fact_customeraction_enriched",
@@ -1120,199 +702,199 @@
       "full_name": "main.etoro_kpi_prep.v_globalftdplatform",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_globalftdplatform.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_globalftdplatform.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_globalftdplatform.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_globalftdplatform.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_mimo_allplatforms",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_mimo_allplatforms.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_mimo_allplatforms.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_mimo_allplatforms.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_mimo_allplatforms.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_mimo_emoneyplatform",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_mimo_emoneyplatform.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_mimo_emoneyplatform.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_mimo_emoneyplatform.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_mimo_emoneyplatform.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_mimo_first_deposit_all_platforms.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_mimo_first_deposit_all_platforms.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_mimo_optionsplatform",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_mimo_optionsplatform.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_mimo_optionsplatform.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_mimo_optionsplatform.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_mimo_optionsplatform.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_mimo_tradingplatform",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_mimo_tradingplatform.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_mimo_tradingplatform.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_mimo_tradingplatform.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_mimo_tradingplatform.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_options_aum",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_options_aum.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_options_aum.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_options_aum.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_options_aum.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_population_active_traders",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_population_active_traders.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_population_active_traders.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_population_active_traders.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_population_active_traders.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_population_first_time_funded",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_population_first_time_funded.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_population_first_time_funded.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_population_first_time_funded.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_population_first_time_funded.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_population_portfolio_only",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_population_portfolio_only.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_population_portfolio_only.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_population_portfolio_only.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_population_portfolio_only.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_revenue_adminfee",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_adminfee.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_revenue_adminfee.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_adminfee.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_revenue_adminfee.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_revenue_commission",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_commission.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_revenue_commission.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_commission.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_revenue_commission.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_revenue_cryptotofiat_c2f",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_cryptotofiat_c2f.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_revenue_cryptotofiat_c2f.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_cryptotofiat_c2f.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_revenue_cryptotofiat_c2f.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_revenue_dividend",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_dividend.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_revenue_dividend.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_dividend.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_revenue_dividend.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_revenue_fullcommission",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_fullcommission.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_revenue_fullcommission.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_fullcommission.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_revenue_fullcommission.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_revenue_interestfee",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_interestfee.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_revenue_interestfee.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_interestfee.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_revenue_interestfee.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_revenue_optionsplatform",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_optionsplatform.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_revenue_optionsplatform.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_optionsplatform.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_revenue_optionsplatform.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_revenue_rollover",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_rollover.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_revenue_rollover.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_rollover.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_revenue_rollover.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_revenue_spotadjustfee",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_spotadjustfee.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_revenue_spotadjustfee.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_spotadjustfee.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_revenue_spotadjustfee.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_revenue_stakingfee",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_stakingfee.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_revenue_stakingfee.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_stakingfee.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_revenue_stakingfee.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_revenue_ticketfee_bypercent",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_ticketfee_bypercent.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_revenue_ticketfee_bypercent.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_ticketfee_bypercent.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_revenue_ticketfee_bypercent.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_revenue_ticketfee_fixed",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_revenue_ticketfee_fixed.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep.v_revenue_ticketfee_fixed.md"
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_ticketfee_fixed.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_revenue_ticketfee_fixed.md"
     },
     {
       "full_name": "main.etoro_kpi_prep.v_spaceship_aum",
@@ -1331,178 +913,57 @@
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.etoro_kpi_prep_stg.v_fact_customeraction_w_metrics.md"
     },
     {
-      "full_name": "main.filtered2",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.filtered2.md"
-    },
-    {
-      "full_name": "main.filteredrealcid",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.filteredrealcid.md"
-    },
-    {
-      "full_name": "main.finalftd",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.finalftd.md"
-    },
-    {
       "full_name": "main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports",
-      "rule_matched": 4,
-      "rule_name": "bronze_pure_ingest",
-      "generic_pipeline_row": {
-        "database_name": "Sodreconciliation",
-        "schema_name": "apex",
-        "table_name": "EXT1047_RevenueReports",
-        "uc_table": "finance.bronze_sodreconciliation_apex_ext1047_revenuereports"
-      },
-      "wiki_path": "knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT1047_RevenueReports.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/Sodreconciliation/Wiki/apex/Tables/apex.EXT1047_RevenueReports.md",
       "wiki_exists": true,
+      "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports.md"
     },
     {
       "full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
-      "rule_matched": 4,
-      "rule_name": "bronze_pure_ingest",
-      "generic_pipeline_row": {
-        "database_name": "Sodreconciliation",
-        "schema_name": "apex",
-        "table_name": "EXT869_CashActivity",
-        "uc_table": "finance.bronze_sodreconciliation_apex_ext869_cashactivity"
-      },
-      "wiki_path": "knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT869_CashActivity.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/Sodreconciliation/Wiki/apex/Tables/apex.EXT869_CashActivity.md",
       "wiki_exists": true,
+      "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.finance.bronze_sodreconciliation_apex_ext869_cashactivity.md"
     },
     {
-      "full_name": "main.finraonly_ftd_date",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.finraonly_ftd_date.md"
-    },
-    {
-      "full_name": "main.finraonly_ftd_records",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.finraonly_ftd_records.md"
-    },
-    {
-      "full_name": "main.first_deposit_dates",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.first_deposit_dates.md"
-    },
-    {
-      "full_name": "main.first_funding",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.first_funding.md"
-    },
-    {
-      "full_name": "main.first_iob",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.first_iob.md"
-    },
-    {
-      "full_name": "main.firsttrade",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.firsttrade.md"
-    },
-    {
-      "full_name": "main.ftd_iban",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.ftd_iban.md"
-    },
-    {
-      "full_name": "main.ftdmultiple",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.ftdmultiple.md"
-    },
-    {
-      "full_name": "main.ftdsingle",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.ftdsingle.md"
-    },
-    {
-      "full_name": "main.gbp_usd_rates",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.gbp_usd_rates.md"
-    },
-    {
       "full_name": "main.general.bronze_historycosts_history_costs",
-      "rule_matched": 4,
-      "rule_name": "bronze_pure_ingest",
-      "generic_pipeline_row": {
-        "database_name": "HistoryCosts",
-        "schema_name": "History",
-        "table_name": "Costs",
-        "uc_table": "general.bronze_historycosts_history_costs"
-      },
-      "wiki_path": null,
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/general/<Tables|Views>/bronze_historycosts_history_costs.md",
       "wiki_exists": false,
+      "blocked_on_upstream": true,
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.general.bronze_historycosts_history_costs.md"
     },
     {
       "full_name": "main.general.bronze_recurringinvestment_recurringinvestment_planinstances",
-      "rule_matched": 4,
-      "rule_name": "bronze_pure_ingest",
-      "generic_pipeline_row": {
-        "database_name": "RecurringInvestment",
-        "schema_name": "RecurringInvestment",
-        "table_name": "PlanInstances",
-        "uc_table": "general.bronze_recurringinvestment_recurringinvestment_planinstances"
-      },
-      "wiki_path": "knowledge\\ProdSchemas\\ExperianceDBs\\RecurringInvestment\\Wiki\\RecurringInvestment\\Tables\\RecurringInvestment.PlanInstances.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/ExperianceDBs/RecurringInvestment/Wiki/RecurringInvestment/Tables/RecurringInvestment.PlanInstances.md",
       "wiki_exists": true,
+      "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.general.bronze_recurringinvestment_recurringinvestment_planinstances.md"
     },
     {
       "full_name": "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
-      "rule_matched": 4,
-      "rule_name": "bronze_pure_ingest",
-      "generic_pipeline_row": {
-        "database_name": "Sodreconciliation",
-        "schema_name": "apex",
-        "table_name": "EXT981_BuyPowerSummary",
-        "uc_table": "general.bronze_sodreconciliation_apex_ext981_buypowersummary"
-      },
-      "wiki_path": "knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT981_BuyPowerSummary.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/Sodreconciliation/Wiki/apex/Tables/apex.EXT981_BuyPowerSummary.md",
       "wiki_exists": true,
+      "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.general.bronze_sodreconciliation_apex_ext981_buypowersummary.md"
     },
     {
       "full_name": "main.general.bronze_usabroker_apex_options",
-      "rule_matched": 4,
-      "rule_name": "bronze_pure_ingest",
-      "generic_pipeline_row": {
-        "database_name": "USABroker",
-        "schema_name": "apex",
-        "table_name": "Options",
-        "uc_table": "general.bronze_usabroker_apex_options"
-      },
-      "wiki_path": "knowledge\\ProdSchemas\\ComplianceDBs\\USABroker\\Wiki\\apex\\Tables\\apex.Options.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/ComplianceDBs/USABroker/Wiki/apex/Tables/apex.Options.md",
       "wiki_exists": true,
+      "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.general.bronze_usabroker_apex_options.md"
     },
     {
@@ -1526,298 +987,11 @@
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_opened_from_iban.md"
     },
     {
-      "full_name": "main.global_ftd",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.global_ftd.md"
-    },
-    {
-      "full_name": "main.global_ftds",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.global_ftds.md"
-    },
-    {
-      "full_name": "main.holders",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.holders.md"
-    },
-    {
-      "full_name": "main.ibanclose",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.ibanclose.md"
-    },
-    {
-      "full_name": "main.ibanopen",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.ibanopen.md"
-    },
-    {
-      "full_name": "main.instruments_245",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.instruments_245.md"
-    },
-    {
-      "full_name": "main.latest_daily_buypower",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.latest_daily_buypower.md"
-    },
-    {
-      "full_name": "main.latestdailyprices",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.latestdailyprices.md"
-    },
-    {
-      "full_name": "main.max_iban",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.max_iban.md"
-    },
-    {
-      "full_name": "main.max_options",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.max_options.md"
-    },
-    {
-      "full_name": "main.maxbalance_tp",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.maxbalance_tp.md"
-    },
-    {
-      "full_name": "main.merged",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.merged.md"
-    },
-    {
-      "full_name": "main.mid_period_close",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.mid_period_close.md"
-    },
-    {
-      "full_name": "main.mid_period_open",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.mid_period_open.md"
-    },
-    {
-      "full_name": "main.mimo_aggregated",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.mimo_aggregated.md"
-    },
-    {
-      "full_name": "main.mimo_combined",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.mimo_combined.md"
-    },
-    {
-      "full_name": "main.mimo_daily",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.mimo_daily.md"
-    },
-    {
-      "full_name": "main.mimo_deduped",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.mimo_deduped.md"
-    },
-    {
-      "full_name": "main.mimo_final",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.mimo_final.md"
-    },
-    {
-      "full_name": "main.mimo_iban_deduped",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.mimo_iban_deduped.md"
-    },
-    {
-      "full_name": "main.mimo_iban_prep",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.mimo_iban_prep.md"
-    },
-    {
-      "full_name": "main.mimorecords",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.mimorecords.md"
-    },
-    {
-      "full_name": "main.mirror_changelog",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.mirror_changelog.md"
-    },
-    {
-      "full_name": "main.mirrors",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.mirrors.md"
-    },
-    {
       "full_name": "main.money_farm.silver_moneyfarm_etoro_mf_aum",
       "rule_matched": 6,
       "rule_name": "no_wiki",
       "reason": "no rule matched",
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.money_farm.silver_moneyfarm_etoro_mf_aum.md"
-    },
-    {
-      "full_name": "main.money_mimo",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.money_mimo.md"
-    },
-    {
-      "full_name": "main.moneyfarm_ftds",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.moneyfarm_ftds.md"
-    },
-    {
-      "full_name": "main.new_iban",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.new_iban.md"
-    },
-    {
-      "full_name": "main.new_tp",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.new_tp.md"
-    },
-    {
-      "full_name": "main.nova_mimo",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.nova_mimo.md"
-    },
-    {
-      "full_name": "main.options_aum",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.options_aum.md"
-    },
-    {
-      "full_name": "main.options_mimo",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.options_mimo.md"
-    },
-    {
-      "full_name": "main.optionstrade",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.optionstrade.md"
-    },
-    {
-      "full_name": "main.parsed_events",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.parsed_events.md"
-    },
-    {
-      "full_name": "main.passive_actions_enriched",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.passive_actions_enriched.md"
-    },
-    {
-      "full_name": "main.prep",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.prep.md"
-    },
-    {
-      "full_name": "main.rankeddeposits",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.rankeddeposits.md"
-    },
-    {
-      "full_name": "main.raw_events",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.raw_events.md"
-    },
-    {
-      "full_name": "main.recurring_positions",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.recurring_positions.md"
-    },
-    {
-      "full_name": "main.remove_bad_ftds",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.remove_bad_ftds.md"
-    },
-    {
-      "full_name": "main.rth_instruments",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.rth_instruments.md"
-    },
-    {
-      "full_name": "main.snapshot_dates",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.snapshot_dates.md"
     },
     {
       "full_name": "main.spaceship.bronze_spaceship_analytics_fct_money_transactions",
@@ -1868,191 +1042,61 @@
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.spaceship.spaceship_metabase_voyager_user_balances.md"
     },
     {
-      "full_name": "main.sps_all",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.sps_all.md"
-    },
-    {
-      "full_name": "main.sps_cross",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.sps_cross.md"
-    },
-    {
-      "full_name": "main.sps_only",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.sps_only.md"
-    },
-    {
-      "full_name": "main.sqf",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.sqf.md"
-    },
-    {
-      "full_name": "main.super_mimo",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.super_mimo.md"
-    },
-    {
-      "full_name": "main.tp_mimo",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.tp_mimo.md"
-    },
-    {
-      "full_name": "main.trade",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.trade.md"
-    },
-    {
       "full_name": "main.trading.bronze_etoro_history_positionchangelog",
-      "rule_matched": 4,
-      "rule_name": "bronze_pure_ingest",
-      "generic_pipeline_row": {
-        "database_name": "etoro",
-        "schema_name": "History",
-        "table_name": "PositionChangeLog",
-        "uc_table": "trading.bronze_etoro_history_positionchangelog"
-      },
-      "wiki_path": "knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.PositionChangeLog.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/History/Views/History.PositionChangeLog.md",
       "wiki_exists": true,
+      "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.trading.bronze_etoro_history_positionchangelog.md"
     },
     {
       "full_name": "main.trading.bronze_etoro_trade_instrumentgroups",
-      "rule_matched": 4,
-      "rule_name": "bronze_pure_ingest",
-      "generic_pipeline_row": {
-        "database_name": "etoro",
-        "schema_name": "Trade",
-        "table_name": "InstrumentGroups",
-        "uc_table": "trading.bronze_etoro_trade_instrumentgroups"
-      },
-      "wiki_path": "knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.InstrumentGroups.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.InstrumentGroups.md",
       "wiki_exists": true,
+      "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.trading.bronze_etoro_trade_instrumentgroups.md"
     },
     {
       "full_name": "main.trading.bronze_etoro_trade_instrumentmetadata",
-      "rule_matched": 4,
-      "rule_name": "bronze_pure_ingest",
-      "generic_pipeline_row": {
-        "database_name": "etoro",
-        "schema_name": "Trade",
-        "table_name": "InstrumentMetaData",
-        "uc_table": "trading.bronze_etoro_trade_instrumentmetadata"
-      },
-      "wiki_path": "knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.InstrumentMetaData.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.InstrumentMetaData.md",
       "wiki_exists": true,
+      "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.trading.bronze_etoro_trade_instrumentmetadata.md"
     },
     {
       "full_name": "main.trading.bronze_etoro_trade_instrumentmetadata_daily",
-      "rule_matched": 4,
-      "rule_name": "bronze_pure_ingest",
-      "generic_pipeline_row": {
-        "database_name": "etoro",
-        "schema_name": "Trade",
-        "table_name": "InstrumentMetaData_Daily",
-        "uc_table": "trading.bronze_etoro_trade_instrumentmetadata_daily"
-      },
-      "wiki_path": "knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Views\\Trade.InstrumentMetaData_Daily.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Views/Trade.InstrumentMetaData_Daily.md",
       "wiki_exists": true,
+      "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.trading.bronze_etoro_trade_instrumentmetadata_daily.md"
     },
     {
       "full_name": "main.trading.bronze_etoro_trade_providertoinstrument",
-      "rule_matched": 4,
-      "rule_name": "bronze_pure_ingest",
-      "generic_pipeline_row": {
-        "database_name": "etoro",
-        "schema_name": "Trade",
-        "table_name": "ProviderToInstrument",
-        "uc_table": "trading.bronze_etoro_trade_providertoinstrument"
-      },
-      "wiki_path": "knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.ProviderToInstrument.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.ProviderToInstrument.md",
       "wiki_exists": true,
+      "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.trading.bronze_etoro_trade_providertoinstrument.md"
-    },
-    {
-      "full_name": "main.unified_mimo",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.unified_mimo.md"
-    },
-    {
-      "full_name": "main.unpivoted",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.unpivoted.md"
-    },
-    {
-      "full_name": "main.user_accounts",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.user_accounts.md"
-    },
-    {
-      "full_name": "main.user_gcid",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.user_gcid.md"
-    },
-    {
-      "full_name": "main.verification",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.verification.md"
-    },
-    {
-      "full_name": "main.volume_close",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.volume_close.md"
-    },
-    {
-      "full_name": "main.volume_open",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.volume_open.md"
-    },
-    {
-      "full_name": "main.voyager_mimo",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "unparseable upstream ref (2 parts)",
-      "cached_at": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\_NO_WIKI__main.voyager_mimo.md"
     }
   ],
   "stats": {
-    "total_upstreams": 190,
-    "rule1_synapse_mirror": 25,
-    "rule2_uc_generated": 31,
+    "total_upstreams": 83,
+    "rule1_synapse_mirror": 38,
+    "rule2_uc_generated": 33,
     "rule3_uc_domain": 7,
-    "rule4_bronze_prod": 15,
+    "rule4_bronze_prod": 0,
     "rule5_uc_native_map": 1,
-    "rule6_no_wiki": 111,
-    "wikis_cached": 41,
-    "no_wiki_placeholders": 149,
-    "blocked_on_upstream": 29
+    "rule6_no_wiki": 4,
+    "wikis_cached": 65,
+    "no_wiki_placeholders": 18,
+    "blocked_on_upstream": 7
   }
 }

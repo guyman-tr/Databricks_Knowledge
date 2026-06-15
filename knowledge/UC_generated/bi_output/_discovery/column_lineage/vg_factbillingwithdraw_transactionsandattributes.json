@@ -1,0 +1,251 @@
+{
+  "object": "main.bi_output.vg_factbillingwithdraw_transactionsandattributes",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "Amount_Withdraw",
+      "target_column_name": "Amount_OriginalCurrency",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "Amount_Withdraw",
+      "target_column_name": "Amount_OriginalCurrency",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "BinCodeAsString",
+      "target_column_name": "BIN_Code",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "BinCodeAsString",
+      "target_column_name": "BIN_Code",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "BaseExchangeRate",
+      "target_column_name": "BaseExchangeRate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "BaseExchangeRate",
+      "target_column_name": "BaseExchangeRate",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_dictionary_cardtype",
+      "source_column_name": "Name",
+      "target_column_name": "CardBrand_Visa_MC_Amex",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_dictionary_cardtype",
+      "source_column_name": "Name",
+      "target_column_name": "CardBrand_Visa_MC_Amex",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "CardCategory",
+      "target_column_name": "CardCategory_Tier_And_Product",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "CardCategory",
+      "target_column_name": "CardCategory_Tier_And_Product",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_dictionary_country",
+      "source_column_name": "Name",
+      "target_column_name": "CardIssuingCountry_BIN",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_dictionary_country",
+      "source_column_name": "Name",
+      "target_column_name": "CardIssuingCountry_BIN",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_dictionary_cashoutreason",
+      "source_column_name": "Name",
+      "target_column_name": "CashoutReason",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_dictionary_cashoutreason",
+      "source_column_name": "Name",
+      "target_column_name": "CashoutReason",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
+      "source_column_name": "Abbreviation",
+      "target_column_name": "Currency",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
+      "source_column_name": "Abbreviation",
+      "target_column_name": "Currency",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "ExchangeFee",
+      "target_column_name": "ExchangeFee",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "ExchangeFee",
+      "target_column_name": "ExchangeFee",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype",
+      "source_column_name": "Name",
+      "target_column_name": "FundingType",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype",
+      "source_column_name": "Name",
+      "target_column_name": "FundingType",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "BankNameAsString",
+      "target_column_name": "IssuingBank",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "BankNameAsString",
+      "target_column_name": "IssuingBank",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "ProtocolMIDSettingsID",
+      "target_column_name": "MID_SettingsID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "ProtocolMIDSettingsID",
+      "target_column_name": "MID_SettingsID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "ModificationDate",
+      "target_column_name": "ModificationDate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "ModificationDate",
+      "target_column_name": "ModificationDate",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_billingdepot",
+      "source_column_name": "Name",
+      "target_column_name": "PSP_Name",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_billingdepot",
+      "source_column_name": "Name",
+      "target_column_name": "PSP_Name",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "WithdrawID",
+      "target_column_name": "WithdrawID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "WithdrawID",
+      "target_column_name": "WithdrawID",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "source_column_name": "WithdrawPaymentID",
+      "target_column_name": "WithdrawPaymentID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus",
+      "source_column_name": "Name",
+      "target_column_name": "WithdrawStatus",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus",
+      "source_column_name": "Name",
+      "target_column_name": "WithdrawStatus",
+      "entity_type": null,
+      "event_count": 2
+    }
+  ],
+  "generated_at": "2026-05-19T14:58:04Z"
+}

@@ -1,0 +1,346 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_mimo_emoneyplatform",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 15,
+  "concepts": [
+    {
+      "id": "case_flag_fundingtypeid",
+      "name": "FundingTypeID computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "FundingTypeID"
+      ],
+      "predicates": [
+        {
+          "col": "TxTypeID",
+          "op": "IN",
+          "val": "(5)"
+        }
+      ],
+      "then_value": "33",
+      "else_value": "0",
+      "upstream_enum_decodes": {
+        "TxTypeID=5": "TransferReceived"
+      },
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L33-L33",
+      "scope": "deposits_iban"
+    },
+    {
+      "id": "case_flag_isftd",
+      "name": "IsFTD computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsFTD"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L36-L36",
+      "scope": "deposits_iban"
+    },
+    {
+      "id": "case_flag_isinternaltransfer",
+      "name": "IsInternalTransfer computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsInternalTransfer"
+      ],
+      "predicates": [
+        {
+          "col": "TxTypeID",
+          "op": "IN",
+          "val": "(5)"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {
+        "TxTypeID=5": "TransferReceived"
+      },
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L37-L37",
+      "scope": "deposits_iban"
+    },
+    {
+      "id": "case_flag_istradefromiban",
+      "name": "IsTradeFromIBAN computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsTradeFromIBAN"
+      ],
+      "predicates": [
+        {
+          "col": "TxStatusModificationDateID",
+          "op": ">=",
+          "val": "20240403"
+        },
+        {
+          "col": "TxTypeID",
+          "op": "=",
+          "val": "5"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "etoro_kpi_prep.sql L40-L46",
+      "scope": "deposits_iban"
+    },
+    {
+      "id": "case_flag_iscryptotofiat",
+      "name": "IsCryptoToFiat computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsCryptoToFiat"
+      ],
+      "predicates": [
+        {
+          "col": "TxTypeID",
+          "op": "IN",
+          "val": "(14)"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {
+        "TxTypeID=14": "CryptoToFiat"
+      },
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L47-L47",
+      "scope": "deposits_iban"
+    },
+    {
+      "id": "case_flag_fundingtypeid",
+      "name": "FundingTypeID computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "FundingTypeID"
+      ],
+      "predicates": [
+        {
+          "col": "TxTypeID",
+          "op": "IN",
+          "val": "(6)"
+        }
+      ],
+      "then_value": "33",
+      "else_value": "0",
+      "upstream_enum_decodes": {
+        "TxTypeID=6": "Transfer"
+      },
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L67-L67",
+      "scope": "cashout_iban"
+    },
+    {
+      "id": "case_flag_isinternaltransfer",
+      "name": "IsInternalTransfer computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsInternalTransfer"
+      ],
+      "predicates": [
+        {
+          "col": "TxTypeID",
+          "op": "IN",
+          "val": "(6)"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {
+        "TxTypeID=6": "Transfer"
+      },
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L71-L71",
+      "scope": "cashout_iban"
+    },
+    {
+      "id": "case_flag_istradefromiban",
+      "name": "IsTradeFromIBAN computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsTradeFromIBAN"
+      ],
+      "predicates": [
+        {
+          "col": "TxStatusModificationDateID",
+          "op": ">=",
+          "val": "20240403"
+        },
+        {
+          "col": "TxTypeID",
+          "op": "=",
+          "val": "6"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "etoro_kpi_prep.sql L74-L80",
+      "scope": "cashout_iban"
+    },
+    {
+      "id": "union_leg_sign_flip_cashout_iban",
+      "name": "Sign-flip leg (cashout_iban)",
+      "kind": "union_leg_sign_flip",
+      "columns_involved": [
+        "AmountUSD",
+        "AmountOrigCurrency"
+      ],
+      "predicates": [],
+      "sign": "-1",
+      "expressions": [
+        "mfts.USDAmountApprox",
+        "mfts.LocalAmount"
+      ],
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency"
+      ],
+      "evidence_lines": "L65,L66",
+      "scope": "cashout_iban"
+    },
+    {
+      "id": "dim_lookup_dc1",
+      "name": "Dim lookup via dc1",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "alias": "dc1",
+      "join_conditions": [
+        "dc1.FTDTransactionID = mfts.SourceCugTransactionID\n    AND dc1.FTDPlatformID = 3"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L16",
+      "scopes": [
+        "ftd_iban"
+      ],
+      "scope": "ftd_iban",
+      "join_condition": "dc1.FTDTransactionID = mfts.SourceCugTransactionID\n    AND dc1.FTDPlatformID = 3"
+    },
+    {
+      "id": "dim_lookup_dc",
+      "name": "Dim lookup via dc",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
+      "alias": "dc",
+      "join_conditions": [
+        "mfts.HolderCurrencyISO = dc.Abbreviation",
+        "mfts.HolderCurrencyDesc = dc.Abbreviation"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L49,L83",
+      "scopes": [
+        "deposits_iban",
+        "cashout_iban"
+      ],
+      "scope": "deposits_iban",
+      "join_condition": "mfts.HolderCurrencyISO = dc.Abbreviation"
+    },
+    {
+      "id": "filter_block_ftd_iban",
+      "name": "Filter block on ftd_iban",
+      "kind": "filter_block",
+      "columns_involved": [
+        "TxStatusID"
+      ],
+      "predicates": [
+        {
+          "col": "TxStatusID",
+          "op": "=",
+          "val": "2"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L19",
+      "scope": "ftd_iban",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_deposits_iban",
+      "name": "Filter block on deposits_iban",
+      "kind": "filter_block",
+      "columns_involved": [
+        "TxStatusID"
+      ],
+      "predicates": [
+        {
+          "col": "TxStatusID",
+          "op": "=",
+          "val": "2"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L53",
+      "scope": "deposits_iban",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_cashout_iban",
+      "name": "Filter block on cashout_iban",
+      "kind": "filter_block",
+      "columns_involved": [
+        "TxStatusID"
+      ],
+      "predicates": [
+        {
+          "col": "TxStatusID",
+          "op": "=",
+          "val": "2"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L85",
+      "scope": "cashout_iban",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_mimo_iban_deduped",
+      "name": "Filter block on mimo_iban_deduped",
+      "kind": "filter_block",
+      "columns_involved": [
+        "RN"
+      ],
+      "predicates": [
+        {
+          "col": "RN",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L99",
+      "scope": "mimo_iban_deduped",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_mimo_emoneyplatform.sql"
+}

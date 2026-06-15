@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_ddr_revenues
--- Captured: 2026-05-18T08:04:40Z
+-- Captured: 2026-05-19T12:09:27Z
 -- ==========================================================================
 
 SELECT

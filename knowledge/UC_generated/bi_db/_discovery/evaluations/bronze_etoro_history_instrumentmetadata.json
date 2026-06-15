@@ -1,0 +1,298 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_history_instrumentmetadata",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:39Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "The instrument this history version belongs to. PK in Trade.InstrumentMetaData (one live row per instrument). Multiple h",
+      "wiki_quote": "The instrument this history version belongs to. PK in Trade.InstrumentMetaData (one live row per instrument). Multiple h",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentDisplayName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Human-readable display name shown in the eToro UI for this instrument (e.g., \"EUR/USD\", \"Apple\", \"Bitcoin\"). Audited by ",
+      "wiki_quote": "Human-readable display name shown in the eToro UI for this instrument (e.g., \"EUR/USD\", \"Apple\", \"Bitcoin\"). Audited by ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentTypeImage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "URL or path to the image representing the instrument type category (not the instrument itself).",
+      "wiki_quote": "URL or path to the image representing the instrument type category (not the instrument itself) (Tier 1 — inherited from ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Ticker",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Ticker symbol used for price feed lookup. Observed value: \"/ticker\" - may be overridden per instrument.",
+      "wiki_quote": "Ticker symbol used for price feed lookup. Observed value: \"/ticker\" - may be overridden per instrument (Tier 1 — inherit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ChartTicker",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Ticker symbol used specifically for charting data source lookups. May differ from Ticker for some instruments.",
+      "wiki_quote": "Ticker symbol used specifically for charting data source lookups. May differ from Ticker for some instruments (Tier 1 — ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentImageSmall",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "URL to the small (thumbnail) icon image for this instrument, displayed in instrument lists.",
+      "wiki_quote": "URL to the small (thumbnail) icon image for this instrument, displayed in instrument lists (Tier 1 — inherited from etor",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentImageMedium",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "URL to the medium-size image for this instrument.",
+      "wiki_quote": "URL to the medium-size image for this instrument (Tier 1 — inherited from etoro.History.InstrumentMetaData).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentImageLarge",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "URL to the large image for this instrument, used in instrument detail pages.",
+      "wiki_quote": "URL to the large image for this instrument, used in instrument detail pages (Tier 1 — inherited from etoro.History.Instr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Exchange",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Exchange name as a free-text string (e.g., \"NASDAQ\", \"NYSE\"). Supplemented by ExchangeID (the structured FK). This colum",
+      "wiki_quote": "Exchange name as a free-text string (e.g., \"NASDAQ\", \"NYSE\"). Supplemented by ExchangeID (the structured FK). This colum",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Industry",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Industry classification for stock instruments (e.g., \"Technology\", \"Healthcare\"). Audited by ASM triggers -> History.Aud",
+      "wiki_quote": "Industry classification for stock instruments (e.g., \"Technology\", \"Healthcare\"). Audited by ASM triggers -> History.Aud",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CompanyInfo",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Free-text company description displayed on the instrument detail page. Rich text describing the company's business and b",
+      "wiki_quote": "Free-text company description displayed on the instrument detail page. Rich text describing the company's business and b",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DailyRolloverFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Daily overnight/rollover fee rate applied to leveraged CFD positions in this instrument. Expressed as a percentage or ab",
+      "wiki_quote": "Daily overnight/rollover fee rate applied to leveraged CFD positions in this instrument. Expressed as a percentage or ab",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WeekendRolloverFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Weekend-specific rollover fee charged for positions held over the weekend (Friday close to Monday open, typically 3x dai",
+      "wiki_quote": "Weekend-specific rollover fee charged for positions held over the weekend (Friday close to Monday open, typically 3x dai",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ContractRolloverFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Rollover fee applied when a futures contract rolls to the next expiry period. Audited by ASM triggers. NULL for non-futu",
+      "wiki_quote": "Rollover fee applied when a futures contract rolls to the next expiry period. Audited by ASM triggers. NULL for non-futu",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentVisible",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Visibility flag: 1=visible to customers (default), 0=hidden. Controls whether the instrument appears in search and tradi",
+      "wiki_quote": "Visibility flag: 1=visible to customers (default), 0=hidden. Controls whether the instrument appears in search and tradi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Symbol",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Short trading symbol for the instrument (e.g., \"EURUSD\", \"AAPL\"). Used in price feeds and internal references. Audited b",
+      "wiki_quote": "Short trading symbol for the instrument (e.g., \"EURUSD\", \"AAPL\"). Used in price feeds and internal references. Audited b",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CandleTimeframeGroup",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "FK to Trade.CandleIntervalGroups (FK_InstrumentMetaData_CandleIntervalGroups). Determines which candle timeframe interva",
+      "wiki_quote": "FK to Trade.CandleIntervalGroups (FK_InstrumentMetaData_CandleIntervalGroups). Determines which candle timeframe interva",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SymbolFull",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Fully-qualified unique symbol string for the instrument (e.g., \"Drm.797\" for dormant instruments). UNIQUE constraint on ",
+      "wiki_quote": "Fully-qualified unique symbol string for the instrument (e.g., \"Drm.797\" for dormant instruments). UNIQUE constraint on ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tradable",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Whether customers can currently trade this instrument: 1=tradable, 0=not tradable (suspended, delisted, or not yet launc",
+      "wiki_quote": "Whether customers can currently trade this instrument: 1=tradable, 0=not tradable (suspended, delisted, or not yet launc",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "FK to Trade.Exchange (structural). Identifies the exchange where this instrument is traded. Validated on UPDATE by trigg",
+      "wiki_quote": "FK to Trade.Exchange (structural). Identifies the exchange where this instrument is traded. Validated on UPDATE by trigg",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StocksIndustryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Numeric ID of the stock's industry sector. FK to a stocks industry lookup table. NULL for non-stock instruments. Supplem",
+      "wiki_quote": "Numeric ID of the stock's industry sector. FK to a stocks industry lookup table. NULL for non-stock instruments. Supplem",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ISINCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "International Securities Identification Number for the instrument. Audited by ASM triggers -> History.AuditHistory. NULL",
+      "wiki_quote": "International Securities Identification Number for the instrument. Audited by ASM triggers -> History.AuditHistory. NULL",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ISINCountryCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Country code component of the ISIN (first 2 characters of ISIN, e.g., \"US\", \"GB\"). Audited by ASM triggers.",
+      "wiki_quote": "Country code component of the ISIN (first 2 characters of ISIN, e.g., \"US\", \"GB\"). Audited by ASM triggers (Tier 1 — inh",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ContractExpire",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Whether this futures/CFD instrument has a contract expiry date: 0=perpetual (no expiry), 1=expires. DEFAULT 0. Audited b",
+      "wiki_quote": "Whether this futures/CFD instrument has a contract expiry date: 0=perpetual (no expiry), 1=expires. DEFAULT 0. Audited b",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentTypeSubCategoryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Sub-category classification within the instrument's type. Provides finer granularity than InstrumentTypeID (e.g., distin",
+      "wiki_quote": "Sub-category classification within the instrument's type. Provides finer granularity than InstrumentTypeID (e.g., distin",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Instrument type classification. FK to Dictionary.CurrencyType (FK_InstrumentMetaData_InstrumentType). Observed: 1=FX pai",
+      "wiki_quote": "Instrument type classification. FK to Dictionary.CurrencyType (FK_InstrumentMetaData_InstrumentType). Observed: 1=FX pai",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PriceSourceID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "ID of the price data source for this instrument. DEFAULT 0 = default/unspecified source. Used by the Price engine to rou",
+      "wiki_quote": "ID of the price data source for this instrument. DEFAULT 0 = default/unspecified source. Used by the Price engine to rou",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Cusip",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "CUSIP identifier (Committee on Uniform Securities Identification Procedures). US-centric securities identifier. Indexed ",
+      "wiki_quote": "CUSIP identifier (Committee on Uniform Securities Identification Procedures). US-centric securities identifier. Indexed ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreateDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "UTC timestamp when the instrument metadata row was first created. DEFAULT getutcdate() set at row insertion.",
+      "wiki_quote": "UTC timestamp when the instrument metadata row was first created. DEFAULT getutcdate() set at row insertion (Tier 1 — in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "UnderlyingExchangeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "For derivative instruments (futures, CFDs), the exchange of the underlying asset. May differ from ExchangeID when eToro ",
+      "wiki_quote": "For derivative instruments (futures, CFDs), the exchange of the underlying asset. May differ from ExchangeID when eToro ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DbLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Materialized snapshot of suser_name() at version close time. Identifies who changed the metadata. Observed: \"DevTradingS",
+      "wiki_quote": "Materialized snapshot of suser_name() at version close time. Identifies who changed the metadata. Observed: \"DevTradingS",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AppLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Materialized snapshot of context_info() at version close time. Typically NULL.",
+      "wiki_quote": "Materialized snapshot of context_info() at version close time. Typically NULL (Tier 1 — inherited from etoro.History.Ins",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysStartTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Start of validity for this metadata version. Set by SQL Server temporal engine. Rows with SysStartTime=SysEndTime are in",
+      "wiki_quote": "Start of validity for this metadata version. Set by SQL Server temporal engine. Rows with SysStartTime=SysEndTime are in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysEndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "End of validity for this metadata version. CLUSTERED INDEX ordered (SysEndTime, SysStartTime) for temporal scan performa",
+      "wiki_quote": "End of validity for this metadata version. CLUSTERED INDEX ordered (SysEndTime, SysStartTime) for temporal scan performa",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SEDOL",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Stock Exchange Daily Official List identifier. UK-centric securities identifier (7-character alphanumeric). NULL for non",
+      "wiki_quote": "Stock Exchange Daily Official List identifier. UK-centric securities identifier (7-character alphanumeric). NULL for non",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SubCategory",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Freeform sub-category label providing additional classification context beyond InstrumentTypeSubCategoryID.",
+      "wiki_quote": "Freeform sub-category label providing additional classification context beyond InstrumentTypeSubCategoryID (Tier 1 — inh",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CFICode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InstrumentMetaData.md",
+      "upstream_quote": "Classification of Financial Instruments code (ISO 10962). 6-character standardized code describing the instrument type a",
+      "wiki_quote": "Classification of Financial Instruments code (ISO 10962). 6-character standardized code describing the instrument type a",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 37,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 37 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

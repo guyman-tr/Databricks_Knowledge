@@ -1,0 +1,349 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_ib_recon_trades",
+  "rows": [
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "Buy/Sell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "Buy/Sell",
+      "target_column_name": "Buy/Sell",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "ClientAmountUSD",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "CurrencyPrimary",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "IB-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "TradePrice",
+      "target_column_name": "IB-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "FXRateToBase",
+      "target_column_name": "IB-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "Quantity",
+      "target_column_name": "IB-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "Quantity",
+      "target_column_name": "IB-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "IB-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "TradePrice",
+      "target_column_name": "IB-eToro_Amount",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "IB-eToro_Amount",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "Quantity",
+      "target_column_name": "IB-eToro_Amount",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "IB-eToro_Amount",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "TradePrice",
+      "target_column_name": "IB-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "FXRateToBase",
+      "target_column_name": "IB-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "Quantity",
+      "target_column_name": "IB-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "IB-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "Quantity",
+      "target_column_name": "IB-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToro_AvgRate",
+      "target_column_name": "IB-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "TradePrice",
+      "target_column_name": "IB-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "IB-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "Quantity",
+      "target_column_name": "IB-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "IB-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "TradePrice",
+      "target_column_name": "IB_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "FXRateToBase",
+      "target_column_name": "IB_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "Quantity",
+      "target_column_name": "IB_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "TradePrice",
+      "target_column_name": "IB_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "Quantity",
+      "target_column_name": "IB_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "Quantity",
+      "target_column_name": "IB_Rate",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "TradePrice",
+      "target_column_name": "IB_Rate",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "Quantity",
+      "target_column_name": "IB_Units",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "SecurityID",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "Description",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.general.gold_ib_i1893329_daily_trades",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "eToroAmountUSD",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToroLocalAmount",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToro_AvgRate",
+      "target_column_name": "eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 4
+    }
+  ],
+  "generated_at": "2026-05-19T12:27:21Z"
+}

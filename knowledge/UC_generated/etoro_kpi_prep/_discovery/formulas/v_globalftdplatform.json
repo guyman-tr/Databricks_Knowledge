@@ -1,0 +1,30 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_globalftdplatform",
+  "generated_at": "2026-05-18T16:27:36Z",
+  "formula_count": 2,
+  "formulas": [
+    {
+      "column": "FTDPlatformID",
+      "formula": "-- ========================================================================== -- Source: information_schema.views.view_definition -- Object: etoro_kpi_prep.v_globalftdplatform -- Captured: 2026-0…",
+      "expression_raw": "-- ==========================================================================\n-- Source: information_schema.views.view_definition\n-- Object: main.etoro_kpi_prep.v_globalftdplatform\n-- Captured: 2026-0…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L1-L7",
+      "scope": "main"
+    },
+    {
+      "column": "Name",
+      "formula": ", CASE WHEN FTDPlatformID = 1 THEN 'TradingPlatform' WHEN FTDPlatformID = 2 THEN 'Options' WHEN FTDPlatformID = 3 THEN 'eMoney' WHEN FTDPlatformID = 4 THEN 'MoneyFarm' ELSE Name END",
+      "expression_raw": ", CASE WHEN FTDPlatformID = 1 THEN 'TradingPlatform'\n\t\t\tWHEN FTDPlatformID = 2 THEN 'Options'\n\t\t\tWHEN FTDPlatformID = 3 THEN 'eMoney'\n\t\t\tWHEN FTDPlatformID = 4 THEN 'MoneyFarm'\n\t\tELSE Name END AS Name",
+      "inputs": [
+        "main.bi_db.bronze_moneybusdb_dictionary_accounttypes"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L12",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_globalftdplatform.sql"
+}

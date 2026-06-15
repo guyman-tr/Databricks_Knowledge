@@ -1,0 +1,60 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_dictionary_riskclassificationregulation",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:34Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "RegulationID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.RiskClassificationRegulation.md",
+      "upstream_quote": "Part of composite PK. References Dictionary.Regulation (implicit). Identifies the regulatory authority.",
+      "wiki_quote": "Part of composite PK. References Dictionary.Regulation (implicit). Identifies the regulatory authority (Tier 1 — inherit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RiskScore",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.RiskClassificationRegulation.md",
+      "upstream_quote": "Part of composite PK. The numeric risk score threshold. Combined with RegulationID to form unique classification boundar",
+      "wiki_quote": "Part of composite PK. The numeric risk score threshold. Combined with RegulationID to form unique classification boundar",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Name",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.RiskClassificationRegulation.md",
+      "upstream_quote": "Risk classification label for this regulation+score combination (e.g., \"Low\", \"Medium\", \"High\").",
+      "wiki_quote": "Risk classification label for this regulation+score combination (e.g., \"Low\", \"Medium\", \"High\") (Tier 1 — inherited from",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 3,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 3 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

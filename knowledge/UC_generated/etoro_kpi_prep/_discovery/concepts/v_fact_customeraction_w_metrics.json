@@ -1,0 +1,504 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_fact_customeraction_w_metrics",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 10,
+  "concepts": [
+    {
+      "id": "case_flag_isactivetrade",
+      "name": "IsActiveTrade computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsActiveTrade"
+      ],
+      "predicates": [
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "35"
+        },
+        {
+          "col": "isfeedividend",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "35"
+        },
+        {
+          "col": "isfeedividend",
+          "op": "=",
+          "val": "2"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "35"
+        },
+        {
+          "col": "isfeedividend",
+          "op": "=",
+          "val": "3"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "117"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "118"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "IN",
+          "val": "(7, 44)"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "IN",
+          "val": "(8, 45)"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "30"
+        },
+        {
+          "col": "isredeem",
+          "op": "=",
+          "val": "0"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "30"
+        },
+        {
+          "col": "isredeem",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "30"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "119"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "119"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "119"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "119"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "IN",
+          "val": "(41, 51)"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "17"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "18"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "15"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "16"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "134"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "9"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "=",
+          "val": "22"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "IN",
+          "val": "(1, 2, 3, 39)"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "IN",
+          "val": "(4, 5, 6, 28, 40)"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "IN",
+          "val": "(1, 2, 3, 39)"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "IN",
+          "val": "(4, 5, 6, 28, 40)"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "35"
+        },
+        {
+          "col": "IsFeeDividend",
+          "op": "=",
+          "val": "4"
+        },
+        {
+          "col": "ticketfeeaction",
+          "op": "=",
+          "val": "'    '"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "35"
+        },
+        {
+          "col": "IsFeeDividend",
+          "op": "=",
+          "val": "4"
+        },
+        {
+          "col": "ticketfeeaction",
+          "op": "=",
+          "val": "'     '"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "IN",
+          "val": "(4, 5, 6, 28, 40)"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "IN",
+          "val": "(4, 5, 6, 28, 40)"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "IN",
+          "val": "(1, 2, 3, 39)"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "IN",
+          "val": "(4, 5, 6, 28, 40)"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "IN",
+          "val": "(1, 2, 3, 39)"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "IN",
+          "val": "(4, 5, 6, 28, 40)"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "mirrorid",
+          "op": "=",
+          "val": "0"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "IN",
+          "val": "(15, 17)"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_Reversals",
+        "main.etoro_kpi_prep.v_fact_customeraction_enriched",
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L71-L104",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_issqf",
+      "name": "IsSQF computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsSQF"
+      ],
+      "predicates": [
+        {
+          "col": "IsSQF",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.etoro_kpi_prep.v_dim_instrument_enriched"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L105-L105",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_is_245_instrument",
+      "name": "Is_245_Instrument computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "Is_245_Instrument"
+      ],
+      "predicates": [
+        {
+          "col": "Is_245_Instrument",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.etoro_kpi_prep.v_dim_instrument_enriched"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L106-L106",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_iscopyfund",
+      "name": "IsCopyFund computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsCopyFund"
+      ],
+      "predicates": [
+        {
+          "col": "mirrortypeid",
+          "op": "=",
+          "val": "4"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {
+        "mirrortypeid=4": "Fund"
+      },
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L107-L107",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_isopenfromiban",
+      "name": "IsOpenFromIBAN computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsOpenFromIBAN"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "etoro_kpi_prep.sql L110-L110",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_isclosedtoiban",
+      "name": "IsClosedToIBAN computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsClosedToIBAN"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "etoro_kpi_prep.sql L111-L111",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_isrecurring",
+      "name": "IsRecurring computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsRecurring"
+      ],
+      "predicates": [
+        {
+          "col": "actiontypeid",
+          "op": "IN",
+          "val": "(1,2,3,39,4,5,6,28,40,35)"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "=",
+          "val": "36"
+        },
+        {
+          "col": "CompensationReasonID",
+          "op": "IN",
+          "val": "(117,118)"
+        },
+        {
+          "col": "actiontypeid",
+          "op": "IN",
+          "val": "(7,44)"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "etoro_kpi_prep.sql L112-L115",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_isc2p",
+      "name": "IsC2P computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsC2P"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "etoro_kpi_prep.sql L116-L116",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_di",
+      "name": "Dim lookup via di",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.etoro_kpi_prep.v_dim_instrument_enriched",
+      "alias": "di",
+      "join_conditions": [
+        "fca.InstrumentID = di.InstrumentID"
+      ],
+      "physical_inputs": [
+        "main.etoro_kpi_prep.v_dim_instrument_enriched"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L118",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fca.InstrumentID = di.InstrumentID"
+    },
+    {
+      "id": "dim_lookup_dm",
+      "name": "Dim lookup via dm",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "alias": "dm",
+      "join_conditions": [
+        "fca.MirrorID = dm.MirrorID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L126",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fca.MirrorID = dm.MirrorID"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_fact_customeraction_w_metrics.sql"
+}

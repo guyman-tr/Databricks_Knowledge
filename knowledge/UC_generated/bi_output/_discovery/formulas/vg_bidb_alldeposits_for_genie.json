@@ -1,0 +1,426 @@
+{
+  "object_fqn": "main.bi_output.vg_bidb_alldeposits_for_genie",
+  "generated_at": "2026-05-19T15:01:27Z",
+  "formula_count": 38,
+  "formulas": [
+    {
+      "column": "CID",
+      "formula": "-- ====================== -- Core identifiers -- ====================== CID",
+      "expression_raw": "-- ======================\n    -- Core identifiers\n    -- ======================\n    CID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L11",
+      "scope": "main"
+    },
+    {
+      "column": "DepositID",
+      "formula": "DepositID",
+      "expression_raw": "DepositID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "FundingType",
+      "formula": "FundingType",
+      "expression_raw": "FundingType",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "ModificationDate",
+      "formula": "-- ====================== -- Dates (single main date + tx time) -- ====================== ModificationDate",
+      "expression_raw": "-- ======================\n    -- Dates (single main date + tx time)\n    -- ======================\n    ModificationDate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L14-L18",
+      "scope": "main"
+    },
+    {
+      "column": "AmountOrig",
+      "formula": "-- ====================== -- Amounts & currency (requested) -- ====================== Amount_In_Orig_Curr",
+      "expression_raw": "-- ======================\n    -- Amounts & currency (requested)\n    -- ======================\n    Amount_In_Orig_Curr    AS AmountOrig",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L19-L25",
+      "scope": "main"
+    },
+    {
+      "column": "AmountUSD",
+      "formula": "Amount_in_USD",
+      "expression_raw": "Amount_in_USD          AS AmountUSD",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "Currency",
+      "formula": "Currency",
+      "expression_raw": "Currency",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "BaseExchangeRate",
+      "formula": "BaseExchangeRate",
+      "expression_raw": "BaseExchangeRate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "IsFTD",
+      "formula": "-- ====================== -- Status & flags (requested) -- ====================== IsFTD",
+      "expression_raw": "-- ======================\n    -- Status & flags (requested)\n    -- ======================\n    IsFTD",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L29-L34",
+      "scope": "main"
+    },
+    {
+      "column": "PaymentStatus",
+      "formula": "PaymentStatus",
+      "expression_raw": "PaymentStatus",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L35-L35",
+      "scope": "main"
+    },
+    {
+      "column": "PaymentStatusAsInteger",
+      "formula": "PaymentStatusAsInteger",
+      "expression_raw": "PaymentStatusAsInteger",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "DepositCategory",
+      "formula": "Category",
+      "expression_raw": "Category               AS DepositCategory",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L37-L37",
+      "scope": "main"
+    },
+    {
+      "column": "Provider",
+      "formula": "-- ====================== -- Funding / provider (requested) -- ====================== Provider",
+      "expression_raw": "-- ======================\n    -- Funding / provider (requested)\n    -- ======================\n   \n    Provider",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L38-L43",
+      "scope": "main"
+    },
+    {
+      "column": "DepotID",
+      "formula": "DepotID",
+      "expression_raw": "DepotID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L44-L44",
+      "scope": "main"
+    },
+    {
+      "column": "PSPCode",
+      "formula": "PSPCode",
+      "expression_raw": "PSPCode",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L45-L45",
+      "scope": "main"
+    },
+    {
+      "column": "BINCountry",
+      "formula": "-- ====================== -- Card / BIN / bank (requested) -- ====================== BINCountry",
+      "expression_raw": "-- ======================\n    -- Card / BIN / bank (requested)\n    -- ======================\n    BINCountry",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L46-L50",
+      "scope": "main"
+    },
+    {
+      "column": "BinCode",
+      "formula": "BinCode",
+      "expression_raw": "BinCode",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L51-L51",
+      "scope": "main"
+    },
+    {
+      "column": "BinCodeAsString",
+      "formula": "BinCodeAsString",
+      "expression_raw": "BinCodeAsString",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L52-L52",
+      "scope": "main"
+    },
+    {
+      "column": "CardType",
+      "formula": "CardType",
+      "expression_raw": "CardType",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L53-L53",
+      "scope": "main"
+    },
+    {
+      "column": "CardSubType",
+      "formula": "CardSubType",
+      "expression_raw": "CardSubType",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L54-L54",
+      "scope": "main"
+    },
+    {
+      "column": "CardTypeIDAsInteger",
+      "formula": "CardTypeIDAsInteger",
+      "expression_raw": "CardTypeIDAsInteger",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L55-L55",
+      "scope": "main"
+    },
+    {
+      "column": "Bank_name_by_Bincode",
+      "formula": "Bank_name_by_Bincode",
+      "expression_raw": "Bank_name_by_Bincode",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L56-L56",
+      "scope": "main"
+    },
+    {
+      "column": "RiskStatus",
+      "formula": "-- ====================== -- Risk & regulation (requested) -- ====================== RiskStatus",
+      "expression_raw": "-- ======================\n    -- Risk & regulation (requested)\n    -- ======================\n    RiskStatus",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L57-L61",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": "Regulation",
+      "expression_raw": "Regulation",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L62-L63",
+      "scope": "main"
+    },
+    {
+      "column": "DesignatedRegulation",
+      "formula": "DesignatedRegulation",
+      "expression_raw": "DesignatedRegulation",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L64-L64",
+      "scope": "main"
+    },
+    {
+      "column": "RegistrationCountry",
+      "formula": "-- ====================== -- Geography / attribution (requested) -- ====================== Country_customer",
+      "expression_raw": "-- ======================\n    -- Geography / attribution (requested)\n    -- ======================\n    Country_customer        AS RegistrationCountry",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L65-L69",
+      "scope": "main"
+    },
+    {
+      "column": "CountryID",
+      "formula": "CountryIDAsInteger",
+      "expression_raw": "CountryIDAsInteger      AS CountryID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L70-L70",
+      "scope": "main"
+    },
+    {
+      "column": "Region",
+      "formula": "Region",
+      "expression_raw": "Region",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L71-L71",
+      "scope": "main"
+    },
+    {
+      "column": "Funnel",
+      "formula": "Funnel",
+      "expression_raw": "Funnel",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L72-L72",
+      "scope": "main"
+    },
+    {
+      "column": "FunnelFrom",
+      "formula": "FunnelFrom",
+      "expression_raw": "FunnelFrom",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L73-L73",
+      "scope": "main"
+    },
+    {
+      "column": "Affiliate_ID",
+      "formula": "Affiliate_ID",
+      "expression_raw": "Affiliate_ID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L74-L74",
+      "scope": "main"
+    },
+    {
+      "column": "Response",
+      "formula": "-- ====================== -- Responses / 3DS (requested) -- ====================== Response",
+      "expression_raw": "-- ======================\n    -- Responses / 3DS (requested)\n    -- ======================\n    Response",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L75-L79",
+      "scope": "main"
+    },
+    {
+      "column": "DeclineReason",
+      "formula": "ResponseMessageAsString",
+      "expression_raw": "ResponseMessageAsString AS DeclineReason",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L80-L80",
+      "scope": "main"
+    },
+    {
+      "column": "RREReason",
+      "formula": "ErrorCodeAsString",
+      "expression_raw": "ErrorCodeAsString       AS RREReason",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L81-L81",
+      "scope": "main"
+    },
+    {
+      "column": "ThreeDSResponseJson",
+      "formula": "ThreeDsAsJson",
+      "expression_raw": "ThreeDsAsJson           AS ThreeDSResponseJson",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L82-L82",
+      "scope": "main"
+    },
+    {
+      "column": "GCID",
+      "formula": "-- ====================== -- GCID / customer linkage (likely needed) -- ====================== CustomerIDAsString",
+      "expression_raw": "-- ======================\n    -- GCID / customer linkage (likely needed)\n    -- ======================\n    CustomerIDAsString      AS GCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L83-L87",
+      "scope": "main"
+    },
+    {
+      "column": "MID",
+      "formula": "-- ====================== -- Misc useful -- ====================== MID",
+      "expression_raw": "-- ======================\n    -- Misc useful\n    -- ======================\n    MID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L88-L92",
+      "scope": "main"
+    },
+    {
+      "column": "TransactionIDAsString",
+      "formula": "TransactionIDAsString",
+      "expression_raw": "TransactionIDAsString",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L93-L93",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_bidb_alldeposits_for_genie.sql"
+}

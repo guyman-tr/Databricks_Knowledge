@@ -1,0 +1,88 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_price_liquidityaccounttoinstrument",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:41Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "LiquidityAccountID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.LiquidityAccountToInstrument.md",
+      "upstream_quote": "Liquidity account identifier. Part of the composite PK (primary sort key). FK to Trade.LiquidityAccounts. Represents a p",
+      "wiki_quote": "Liquidity account identifier. Part of the composite PK (primary sort key). FK to Trade.LiquidityAccounts. Represents a p",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.LiquidityAccountToInstrument.md",
+      "upstream_quote": "eToro instrument identifier. Part of the composite PK. FK to Trade.Instrument. NC index on InstrumentID alone enables fa",
+      "wiki_quote": "eToro instrument identifier. Part of the composite PK. FK to Trade.Instrument. NC index on InstrumentID alone enables fa",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DbLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.LiquidityAccountToInstrument.md",
+      "upstream_quote": "Computed: SQL Server login of last row modifier. Auto-set by SQL Server on every DML. Used for DB-level audit tracking.",
+      "wiki_quote": "Computed: SQL Server login of last row modifier. Auto-set by SQL Server on every DML. Used for DB-level audit tracking (",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AppLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.LiquidityAccountToInstrument.md",
+      "upstream_quote": "Computed: application identity from context_info(). Populated when the calling service sets context_info before DML. NUL",
+      "wiki_quote": "Computed: application identity from context_info(). Populated when the calling service sets context_info before DML. NUL",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysStartTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.LiquidityAccountToInstrument.md",
+      "upstream_quote": "Temporal row validity start. Auto-managed by SQL Server system versioning. Enables point-in-time configuration queries.",
+      "wiki_quote": "Temporal row validity start. Auto-managed by SQL Server system versioning. Enables point-in-time configuration queries (",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysEndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.LiquidityAccountToInstrument.md",
+      "upstream_quote": "Temporal row validity end. Historical versions in History.LiquidityAccountToInstrument.",
+      "wiki_quote": "Temporal row validity end. Historical versions in History.LiquidityAccountToInstrument (Tier 1 — inherited from etoro.Pr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "HostName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Price\\Tables\\Price.LiquidityAccountToInstrument.md",
+      "upstream_quote": "Computed: DB server hostname that processed the last DML on this row. Unusual column - captures the server host rather t",
+      "wiki_quote": "Computed: DB server hostname that processed the last DML on this row. Unusual column - captures the server host rather t",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 7,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 7 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "object_fqn": "main.bi_output.limitation_to_normal_conversion",
+  "generated_at": "2026-05-19T15:01:27Z",
+  "formula_count": 6,
+  "formulas": [
+    {
+      "column": "Event_Month",
+      "formula": "DATE_TRUNC('month', Limited_Timestamp)",
+      "expression_raw": "DATE_TRUNC('month', Limited_Timestamp) AS Event_Month",
+      "inputs": [],
+      "transform_kind": "function",
+      "evidence_lines": "L72-L72",
+      "scope": "main"
+    },
+    {
+      "column": "Limitation_Type",
+      "formula": "Current_Status",
+      "expression_raw": "Current_Status AS Limitation_Type",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L42-L42",
+      "scope": "limited_events"
+    },
+    {
+      "column": "Total_Conversions",
+      "formula": "COUNT(*)",
+      "expression_raw": "COUNT(*) AS Total_Conversions",
+      "inputs": [],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L74-L74",
+      "scope": "main"
+    },
+    {
+      "column": "Avg_Hours_To_Normal",
+      "formula": "-- Average time AVG(TIMESTAMPDIFF(HOUR, Limited_Timestamp, First_Normal_Timestamp))",
+      "expression_raw": "-- Average time\n    AVG(TIMESTAMPDIFF(HOUR, Limited_Timestamp, First_Normal_Timestamp)) \n        AS Avg_Hours_To_Normal",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L75-L78",
+      "scope": "main"
+    },
+    {
+      "column": "Avg_Days_To_Normal",
+      "formula": "AVG(DATEDIFF(First_Normal_Timestamp, Limited_Timestamp))",
+      "expression_raw": "AVG(DATEDIFF(First_Normal_Timestamp, Limited_Timestamp))\n        AS Avg_Days_To_Normal",
+      "inputs": [],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L79-L81",
+      "scope": "main"
+    },
+    {
+      "column": "Median_Hours_To_Normal",
+      "formula": "0.5 )",
+      "expression_raw": "0.5\n    ) AS Median_Hours_To_Normal",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L86-L87",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/limitation_to_normal_conversion.sql"
+}

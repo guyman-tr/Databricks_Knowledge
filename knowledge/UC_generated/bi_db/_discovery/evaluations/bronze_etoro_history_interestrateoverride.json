@@ -1,0 +1,130 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_history_interestrateoverride",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:39Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "InterestRateOverrideID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InterestRateOverride.md",
+      "upstream_quote": "Surrogate PK for the override record. IDENTITY(1,1) in the live table. Uniquely identifies each override rule.",
+      "wiki_quote": "Surrogate PK for the override record. IDENTITY(1,1) in the live table. Uniquely identifies each override rule (Tier 1 — ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InterestRateOverride.md",
+      "upstream_quote": "Specific instrument this override applies to. NULL = override is not instrument-specific. FK to Trade.Instrument in the ",
+      "wiki_quote": "Specific instrument this override applies to. NULL = override is not instrument-specific. FK to Trade.Instrument in the ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InterestRateOverride.md",
+      "upstream_quote": "Specific exchange this override applies to. NULL = not exchange-specific. When InstrumentID is NULL but ExchangeID is NO",
+      "wiki_quote": "Specific exchange this override applies to. NULL = not exchange-specific. When InstrumentID is NULL but ExchangeID is NO",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InterestRateOverride.md",
+      "upstream_quote": "Instrument type this override applies to. NULL = not type-specific (would be a catch-all). When both InstrumentID and Ex",
+      "wiki_quote": "Instrument type this override applies to. NULL = not type-specific (would be a catch-all). When both InstrumentID and Ex",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "UpdatedByUser",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InterestRateOverride.md",
+      "upstream_quote": "Username of operator or service that set this override. NOT NULL - always attributed to a user or automated process.",
+      "wiki_quote": "Username of operator or service that set this override. NOT NULL - always attributed to a user or automated process (Tie",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InterestRateBuy",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InterestRateOverride.md",
+      "upstream_quote": "Override market benchmark rate for long buy positions. Replaces the default InterestRate.InterestRateBuy for matched ins",
+      "wiki_quote": "Override market benchmark rate for long buy positions. Replaces the default InterestRate.InterestRateBuy for matched ins",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InterestRateSell",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InterestRateOverride.md",
+      "upstream_quote": "Override market benchmark rate for short sell positions. Replaces the default rate for matched instruments.",
+      "wiki_quote": "Override market benchmark rate for short sell positions. Replaces the default rate for matched instruments (Tier 1 — inh",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MarkupBuy",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InterestRateOverride.md",
+      "upstream_quote": "eToro markup applied on top of InterestRateBuy for buy positions in this override.",
+      "wiki_quote": "eToro markup applied on top of InterestRateBuy for buy positions in this override (Tier 1 — inherited from etoro.History",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MarkupSell",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InterestRateOverride.md",
+      "upstream_quote": "eToro markup applied on top of InterestRateSell for sell positions in this override. Negative values reduce the effectiv",
+      "wiki_quote": "eToro markup applied on top of InterestRateSell for sell positions in this override. Negative values reduce the effectiv",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BeginTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InterestRateOverride.md",
+      "upstream_quote": "UTC timestamp when this override became active in Dictionary.InterestRateOverride (non-standard name for SysStartTime).",
+      "wiki_quote": "UTC timestamp when this override became active in Dictionary.InterestRateOverride (non-standard name for SysStartTime) (",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InterestRateOverride.md",
+      "upstream_quote": "UTC timestamp when this override was superseded (non-standard name for SysEndTime).",
+      "wiki_quote": "UTC timestamp when this override was superseded (non-standard name for SysEndTime) (Tier 1 — inherited from etoro.Histor",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OverNightFeePatternID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InterestRateOverride.md",
+      "upstream_quote": "Fee pattern for this override: 0=Regular, 1=WithNonLeverageFee, 2=Manual. Nullable - when NULL, inherits pattern from th",
+      "wiki_quote": "Fee pattern for this override: 0=Regular, 1=WithNonLeverageFee, 2=Manual. Nullable - when NULL, inherits pattern from th",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SettlementTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.InterestRateOverride.md",
+      "upstream_quote": "Settlement type this override applies to: 0=CFD, 1=REAL, 2=TRS, etc. DEFAULT 0 = CFD. (Dictionary.SettlementTypes).",
+      "wiki_quote": "Settlement type this override applies to: 0=CFD, 1=REAL, 2=TRS, etc. DEFAULT 0 = CFD. (Dictionary.SettlementTypes) (Tier",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 13,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 13 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

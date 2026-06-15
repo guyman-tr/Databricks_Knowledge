@@ -1,0 +1,67 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_dictionary_riskclassificationparameter",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:34Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "RiskClassificationParameterID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.RiskClassificationParameter.md",
+      "upstream_quote": "Primary key. Standard params: 2-21, EDD params: 1001-1025, Final: 9999. Referenced by RiskCalculation.ScoresTemporary an",
+      "wiki_quote": "Primary key. Standard params: 2-21, EDD params: 1001-1025, Final: 9999. Referenced by RiskCalculation.ScoresTemporary an",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Name",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.RiskClassificationParameter.md",
+      "upstream_quote": "Short parameter label (e.g., \"Country of Residence, Onboarding\", \"SectorHighRisk\"). Used in reporting and configuration ",
+      "wiki_quote": "Short parameter label (e.g., \"Country of Residence, Onboarding\", \"SectorHighRisk\"). Used in reporting and configuration ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Description",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.RiskClassificationParameter.md",
+      "upstream_quote": "Extended description of what the parameter measures and how it maps to questionnaire answers. Empty for EDD parameters.",
+      "wiki_quote": "Extended description of what the parameter measures and how it maps to questionnaire answers. Empty for EDD parameters (",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Source",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.RiskClassificationParameter.md",
+      "upstream_quote": "Data source table/view for the parameter value (e.g., \"Customer.CustomerStatic\", \"V_CustomerAnswersNrml\"). Empty for EDD",
+      "wiki_quote": "Data source table/view for the parameter value (e.g., \"Customer.CustomerStatic\", \"V_CustomerAnswersNrml\"). Empty for EDD",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 4,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 4 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

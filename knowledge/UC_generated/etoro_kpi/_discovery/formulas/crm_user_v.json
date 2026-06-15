@@ -1,0 +1,239 @@
+{
+  "object_fqn": "main.etoro_kpi.crm_user_v",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 21,
+  "formulas": [
+    {
+      "column": "UserId",
+      "formula": "Id",
+      "expression_raw": "u.Id            AS UserId",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "BO_User_ID",
+      "formula": "BO_User_ID__c",
+      "expression_raw": "u.BO_User_ID__c                           AS BO_User_ID",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L53-L53",
+      "scope": "main"
+    },
+    {
+      "column": "FullName",
+      "formula": "concat(FirstName, ' ', LastName)",
+      "expression_raw": "concat(u.FirstName, ' ', u.LastName)      AS FullName",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L54-L54",
+      "scope": "main"
+    },
+    {
+      "column": "Department",
+      "formula": "Department",
+      "expression_raw": "u.Department                              AS Department",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L55-L55",
+      "scope": "main"
+    },
+    {
+      "column": "Title",
+      "formula": "Title",
+      "expression_raw": "u.Title                                   AS Title",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L56-L56",
+      "scope": "main"
+    },
+    {
+      "column": "Position",
+      "formula": "Position__c",
+      "expression_raw": "u.Position__c                             AS Position",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L57-L57",
+      "scope": "main"
+    },
+    {
+      "column": "Desk",
+      "formula": "Desk__c",
+      "expression_raw": "u.Desk__c                                 AS Desk",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L58-L58",
+      "scope": "main"
+    },
+    {
+      "column": "Team",
+      "formula": "Team__c",
+      "expression_raw": "u.Team__c                                 AS Team",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L59-L59",
+      "scope": "main"
+    },
+    {
+      "column": "IsActive",
+      "formula": "IsActive",
+      "expression_raw": "u.IsActive                                AS IsActive",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L60-L60",
+      "scope": "main"
+    },
+    {
+      "column": "ManagerId",
+      "formula": "ManagerId",
+      "expression_raw": "u.ManagerId                               AS ManagerId",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L61-L61",
+      "scope": "main"
+    },
+    {
+      "column": "TimeZoneSidKeys",
+      "formula": "CASE WHEN ManagerId IN ('0050800000EE0zOAAT', '0050800000GyOLrAAN', '0050800000DArh6AAD') THEN 'Australia/Sydney' ELSE TimeZoneSidKey END AS T…",
+      "expression_raw": "CASE\n    WHEN u.ManagerId IN ('0050800000EE0zOAAT', '0050800000GyOLrAAN', '0050800000DArh6AAD')\n      THEN 'Australia/Sydney'\n    ELSE u.TimeZoneSidKey\n  END                                       AS T…",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L62-L66",
+      "scope": "main"
+    },
+    {
+      "column": "Manager_BO_User_ID",
+      "formula": "BO_User_ID__c",
+      "expression_raw": "m.BO_User_ID__c                           AS Manager_BO_User_ID",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L67-L67",
+      "scope": "main"
+    },
+    {
+      "column": "Manager_FullName",
+      "formula": "concat(FirstName, ' ', LastName)",
+      "expression_raw": "concat(m.FirstName, ' ', m.LastName)      AS Manager_FullName",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L68-L68",
+      "scope": "main"
+    },
+    {
+      "column": "Manager_Department",
+      "formula": "Department",
+      "expression_raw": "m.Department                              AS Manager_Department",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L69-L69",
+      "scope": "main"
+    },
+    {
+      "column": "Manager_Title",
+      "formula": "Title",
+      "expression_raw": "m.Title                                   AS Manager_Title",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L70-L70",
+      "scope": "main"
+    },
+    {
+      "column": "Manager_Position",
+      "formula": "Position__c",
+      "expression_raw": "m.Position__c                             AS Manager_Position",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L71-L71",
+      "scope": "main"
+    },
+    {
+      "column": "Manager_Desk",
+      "formula": "Desk__c",
+      "expression_raw": "m.Desk__c                                 AS Manager_Desk",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L72-L72",
+      "scope": "main"
+    },
+    {
+      "column": "Manager_Team",
+      "formula": "Team__c",
+      "expression_raw": "m.Team__c                                 AS Manager_Team",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L73-L73",
+      "scope": "main"
+    },
+    {
+      "column": "Manager_IsActive",
+      "formula": "IsActive",
+      "expression_raw": "m.IsActive                                AS Manager_IsActive",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L74-L74",
+      "scope": "main"
+    },
+    {
+      "column": "RM_UserId",
+      "formula": "Id",
+      "expression_raw": "rm.Id AS RM_UserId",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L39-L39",
+      "scope": "rm_choice"
+    },
+    {
+      "column": "RM_FullName",
+      "formula": "concat(FirstName, ' ', LastName)",
+      "expression_raw": "concat(rm.FirstName, ' ', rm.LastName) AS RM_FullName",
+      "inputs": [
+        "main.crm.silver_crm_user"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L40-L40",
+      "scope": "rm_choice"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/crm_user_v.sql"
+}

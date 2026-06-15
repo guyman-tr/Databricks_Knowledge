@@ -7,15 +7,15 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_revenue_optionsplatform.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_revenue_optionsplatform.json` (rows: 26, mismatches: 10) |
 | **Primary upstream** | `main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 
 | Upstream UC Object | Role | Upstream Wiki |
 |--------------------|------|---------------|
-| `main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports` | Primary (FROM) | ✓ `knowledge\ProdSchemas\DB_Schema\Sodreconciliation\Wiki\apex\Tables\apex.EXT1047_RevenueReports.md` |
+| `main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports` | Primary (FROM) | ✓ `knowledge/ProdSchemas/DB_Schema/Sodreconciliation/Wiki/apex/Tables/apex.EXT1047_RevenueReports.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Customer.md` |
-| `main.general.bronze_usabroker_apex_options` | JOIN / referenced | ✓ `knowledge\ProdSchemas\ComplianceDBs\USABroker\Wiki\apex\Tables\apex.Options.md` |
+| `main.general.bronze_usabroker_apex_options` | JOIN / referenced | ✓ `knowledge/ProdSchemas/ComplianceDBs/USABroker/Wiki/apex/Tables/apex.Options.md` |
 
 ## Lineage Chain
 

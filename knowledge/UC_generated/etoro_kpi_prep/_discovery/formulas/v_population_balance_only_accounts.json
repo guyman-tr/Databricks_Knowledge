@@ -1,0 +1,45 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_population_balance_only_accounts",
+  "generated_at": "2026-05-18T16:27:37Z",
+  "formula_count": 3,
+  "formulas": [
+    {
+      "column": "DateID",
+      "formula": "CAST(DATE_FORMAT(CAST(ProcessDate AS TIMESTAMP), 'yyyyMMdd') AS INT)",
+      "expression_raw": "CAST(DATE_FORMAT(CAST(bps.ProcessDate AS TIMESTAMP), 'yyyyMMdd') AS INT) AS DateID",
+      "inputs": [
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L39-L39",
+      "scope": "max_options"
+    },
+    {
+      "column": "RealCID",
+      "formula": "CID",
+      "expression_raw": "cb.CID AS RealCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "balanceprep_tp"
+    },
+    {
+      "column": "MaxAnyEquity",
+      "formula": "COALESCE(TPMaxEquity, 0) + COALESCE(eMoneyMaxEquity, 0) + COALESCE(TotalEquity, 0)",
+      "expression_raw": "COALESCE(tp.TPMaxEquity, 0) + COALESCE(ib.eMoneyMaxEquity, 0) + COALESCE(mo.TotalEquity, 0) AS MaxAnyEquity",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoneyclientbalance",
+        "main.general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+        "main.general.bronze_usabroker_apex_options",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L63-L63",
+      "scope": "balance_users"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_balance_only_accounts.sql"
+}

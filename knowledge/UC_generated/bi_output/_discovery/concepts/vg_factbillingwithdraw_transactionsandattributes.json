@@ -1,0 +1,96 @@
+{
+  "object_fqn": "main.bi_output.vg_factbillingwithdraw_transactionsandattributes",
+  "generated_at": "2026-05-19T15:01:22Z",
+  "concept_count": 4,
+  "concepts": [
+    {
+      "id": "dim_lookup_cur",
+      "name": "Dim lookup via cur",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
+      "alias": "cur",
+      "join_conditions": [
+        "fw.CurrencyID = cur.CurrencyID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L51",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fw.CurrencyID = cur.CurrencyID"
+    },
+    {
+      "id": "dim_lookup_cs",
+      "name": "Dim lookup via cs",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus",
+      "alias": "cs",
+      "join_conditions": [
+        "fw.CashoutStatusID_Withdraw = cs.CashoutStatusID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L53",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fw.CashoutStatusID_Withdraw = cs.CashoutStatusID"
+    },
+    {
+      "id": "dim_lookup_depot",
+      "name": "Dim lookup via depot",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_billingdepot",
+      "alias": "depot",
+      "join_conditions": [
+        "fw.DepotID = depot.DepotID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_billingdepot"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L57",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fw.DepotID = depot.DepotID"
+    },
+    {
+      "id": "dim_lookup_x",
+      "name": "Dim lookup via x",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype",
+      "alias": "x",
+      "join_conditions": [
+        "fw.FundingTypeID_Withdraw = x.FundingTypeID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L61",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "fw.FundingTypeID_Withdraw = x.FundingTypeID"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_factbillingwithdraw_transactionsandattributes.sql"
+}

@@ -1,0 +1,74 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_dim_dataplatform_uuid",
+  "generated_at": "2026-05-18T16:27:36Z",
+  "formula_count": 6,
+  "formulas": [
+    {
+      "column": "dp_uuid",
+      "formula": "CAST(GCID AS STRING)",
+      "expression_raw": "CAST(e.GCID AS STRING)                                                        AS dp_uuid",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L42-L42",
+      "scope": "main"
+    },
+    {
+      "column": "source_platform",
+      "formula": "CASE WHEN sps_user_id IS NOT NULL THEN 'both_gcid' ELSE 'etoro_gcid' END",
+      "expression_raw": "CASE WHEN sc.sps_user_id IS NOT NULL THEN 'both_gcid' ELSE 'etoro_gcid' END   AS source_platform",
+      "inputs": [
+        "main.bi_db.bronze_sub_accounts_accounts"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L43-L43",
+      "scope": "main"
+    },
+    {
+      "column": "gcid",
+      "formula": "GCID",
+      "expression_raw": "e.GCID                                                                        AS gcid",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L44-L44",
+      "scope": "main"
+    },
+    {
+      "column": "cid",
+      "formula": "primary_cid",
+      "expression_raw": "e.primary_cid                                                                 AS cid",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L45-L45",
+      "scope": "main"
+    },
+    {
+      "column": "etoro_cid_count",
+      "formula": "cid_count",
+      "expression_raw": "e.cid_count                                                                   AS etoro_cid_count",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L46-L46",
+      "scope": "main"
+    },
+    {
+      "column": "sps_user_id",
+      "formula": "-- SPS user_ids that are cross-onboarded (have a GCID via sub_accounts) sps_cross AS ( SELECT DISTINCT accountId AS sps_user_id, gcid",
+      "expression_raw": "-- SPS user_ids that are cross-onboarded (have a GCID via sub_accounts)\nsps_cross AS (\n  SELECT DISTINCT accountId AS sps_user_id, gcid",
+      "inputs": [
+        "main.bi_db.bronze_sub_accounts_accounts"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L18-L21",
+      "scope": "sps_cross"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_dim_dataplatform_uuid.sql"
+}

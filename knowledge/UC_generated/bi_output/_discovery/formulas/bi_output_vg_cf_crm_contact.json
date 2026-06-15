@@ -1,0 +1,614 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_cf_crm_contact",
+  "generated_at": "2026-05-19T15:01:25Z",
+  "formula_count": 58,
+  "formulas": [
+    {
+      "column": "Id_Source",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Id",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "CreatedDate",
+      "formula": "-- Derived date key CAST(date_format(tfcrm.CreatedDate, 'yyyyMMdd') AS INT)",
+      "expression_raw": "-- Derived date key\n  CAST(date_format(tfcrm.CreatedDate, 'yyyyMMdd') AS INT) AS CreatedDateId",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L9-L10",
+      "scope": "main"
+    },
+    {
+      "column": "CreatedDateTime",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Task_Id",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "CustEng_Id",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Email_Id",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Case_Id",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Case_Number",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "CID",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Task_CreatedDate",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Task_LastModifiedDate",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "CustEng_CreatedDate",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "CustEng_LastModifiedDate",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Email_CreatedDate",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Email_LastModifiedDate",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Task_Subject",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Task_Subtype",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Task_Status",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "CustEng_CallSummary",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "CustEng_ZoomCall",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "OwnerId",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Owner",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "AccountManagerId",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "AccountManager",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "CallDurationInSeconds",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Vonage_CallDuration",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Task_CallDuration",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "CustEng_CallDuration",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "ContactDirection",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "ContactType",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "ContactType_Group",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "CF_Terminology",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "CreatedDateId",
+      "formula": "-- Derived date key CAST(date_format(tfcrm.CreatedDate, 'yyyyMMdd') AS INT)",
+      "expression_raw": "-- Derived date key\n  CAST(date_format(tfcrm.CreatedDate, 'yyyyMMdd') AS INT) AS CreatedDateId",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L9-L10",
+      "scope": "main"
+    },
+    {
+      "column": "AM_BO_User_ID",
+      "formula": "-- AM enrichment BO_User_ID",
+      "expression_raw": "-- AM enrichment\n  amu.BO_User_ID  AS AM_BO_User_ID",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L11-L13",
+      "scope": "main"
+    },
+    {
+      "column": "AM_FullName",
+      "formula": "FullName",
+      "expression_raw": "amu.FullName    AS AM_FullName",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "AM_Department",
+      "formula": "Department",
+      "expression_raw": "amu.Department  AS AM_Department",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "AM_Title",
+      "formula": "Title",
+      "expression_raw": "amu.Title       AS AM_Title",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "AM_Position",
+      "formula": "Position",
+      "expression_raw": "amu.Position    AS AM_Position",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "AM_Desk",
+      "formula": "Desk",
+      "expression_raw": "amu.Desk        AS AM_Desk",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "AM_Team",
+      "formula": "Team",
+      "expression_raw": "amu.Team        AS AM_Team",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "AM_IsActive",
+      "formula": "IsActive",
+      "expression_raw": "amu.IsActive    AS AM_IsActive",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "AM_TimeZoneSidKeys",
+      "formula": "TimeZoneSidKeys",
+      "expression_raw": "amu.TimeZoneSidKeys AS AM_TimeZoneSidKeys",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "Manager_FullName",
+      "formula": "-- AM manager hierarchy Manager_FullName",
+      "expression_raw": "-- AM manager hierarchy\n  amu.Manager_FullName",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L22-L24",
+      "scope": "main"
+    },
+    {
+      "column": "Manager_Department",
+      "formula": "Manager_Department",
+      "expression_raw": "amu.Manager_Department",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "Manager_Title",
+      "formula": "Manager_Title",
+      "expression_raw": "amu.Manager_Title",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "Manager_Position",
+      "formula": "Manager_Position",
+      "expression_raw": "amu.Manager_Position",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "Manager_Desk",
+      "formula": "Manager_Desk",
+      "expression_raw": "amu.Manager_Desk",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "Manager_Team",
+      "formula": "Manager_Team",
+      "expression_raw": "amu.Manager_Team",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "Owner_BO_User_ID",
+      "formula": "-- Owner enrichment BO_User_ID",
+      "expression_raw": "-- Owner enrichment \n  owneru.BO_User_ID  AS Owner_BO_User_ID",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L30-L32",
+      "scope": "main"
+    },
+    {
+      "column": "Owner_FullName",
+      "formula": "FullName",
+      "expression_raw": "owneru.FullName    AS Owner_FullName",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L33-L33",
+      "scope": "main"
+    },
+    {
+      "column": "Owner_Department",
+      "formula": "Department",
+      "expression_raw": "owneru.Department  AS Owner_Department",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L34-L34",
+      "scope": "main"
+    },
+    {
+      "column": "Owner_Title",
+      "formula": "Title",
+      "expression_raw": "owneru.Title       AS Owner_Title",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L35-L35",
+      "scope": "main"
+    },
+    {
+      "column": "Owner_Position",
+      "formula": "Position",
+      "expression_raw": "owneru.Position    AS Owner_Position",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "Owner_Desk",
+      "formula": "Desk",
+      "expression_raw": "owneru.Desk        AS Owner_Desk",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L37-L37",
+      "scope": "main"
+    },
+    {
+      "column": "Owner_Team",
+      "formula": "Team",
+      "expression_raw": "owneru.Team        AS Owner_Team",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "Owner_IsActive",
+      "formula": "IsActive",
+      "expression_raw": "owneru.IsActive    AS Owner_IsActive",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L39-L39",
+      "scope": "main"
+    },
+    {
+      "column": "Owner_TimeZoneSidKeys",
+      "formula": "TimeZoneSidKeys",
+      "expression_raw": "owneru.TimeZoneSidKeys AS Owner_TimeZoneSidKeys",
+      "inputs": [
+        "main.bi_output.bi_output_vg_crm_user"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L40-L40",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_cf_crm_contact.sql"
+}

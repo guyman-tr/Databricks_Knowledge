@@ -1,0 +1,116 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiatdwhdb_dbo_eligibilityrules",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:43Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.EligibilityRules.md",
+      "upstream_quote": "Auto-incrementing surrogate primary key.",
+      "wiki_quote": "Auto-incrementing surrogate primary key (Tier 1 — inherited from FiatDwhDB.dbo.EligibilityRules).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FiatId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.EligibilityRules.md",
+      "upstream_quote": "Fiat platform instance identifier. Groups rules by deployment context.",
+      "wiki_quote": "Fiat platform instance identifier. Groups rules by deployment context (Tier 1 — inherited from FiatDwhDB.dbo.Eligibility",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DesignatedRegulationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.EligibilityRules.md",
+      "upstream_quote": "Target regulatory jurisdiction. Determines which regulatory framework governs the sub-program for this rule.",
+      "wiki_quote": "Target regulatory jurisdiction. Determines which regulatory framework governs the sub-program for this rule (Tier 1 — in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountryId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.EligibilityRules.md",
+      "upstream_quote": "Country filter for the rule. Only customers in this country match. References an external country ID system.",
+      "wiki_quote": "Country filter for the rule. Only customers in this country match. References an external country ID system (Tier 1 — in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ClubId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.EligibilityRules.md",
+      "upstream_quote": "eToro club tier filter. Restricts eligibility to customers at a specific club/loyalty level.",
+      "wiki_quote": "eToro club tier filter. Restricts eligibility to customers at a specific club/loyalty level (Tier 1 — inherited from Fia",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SubProgramId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.EligibilityRules.md",
+      "upstream_quote": "Target sub-program that eligible customers can access. FK to dbo.SubPrograms: 1=Card Premium UK, 2=Card Standard UK, ...",
+      "wiki_quote": "Target sub-program that eligible customers can access. FK to dbo.SubPrograms: 1=Card Premium UK, 2=Card Standard UK, ...",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RolloutPercentage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.EligibilityRules.md",
+      "upstream_quote": "Percentage of matching customers to enroll (0.0-100.0). Enables gradual rollout of new sub-programs. 100.0 = fully avail",
+      "wiki_quote": "Percentage of matching customers to enroll (0.0-100.0). Enables gradual rollout of new sub-programs. 100.0 = fully avail",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RegulationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.EligibilityRules.md",
+      "upstream_quote": "Source regulatory jurisdiction of the customer. Used to match customers by their current regulation.",
+      "wiki_quote": "Source regulatory jurisdiction of the customer. Used to match customers by their current regulation (Tier 1 — inherited ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "UpdateTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.EligibilityRules.md",
+      "upstream_quote": "Timestamp when this rule was last configured/deployed.",
+      "wiki_quote": "Timestamp when this rule was last configured/deployed (Tier 1 — inherited from FiatDwhDB.dbo.EligibilityRules).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LastTimeOverride",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.EligibilityRules.md",
+      "upstream_quote": "Timestamp of the most recent bulk refresh/override of this rule. Updated when AddEligibilityRules runs.",
+      "wiki_quote": "Timestamp of the most recent bulk refresh/override of this rule. Updated when AddEligibilityRules runs (Tier 1 — inherit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Priority",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\BankingDBs\\FiatDwhDB\\Wiki\\dbo\\Tables\\dbo.EligibilityRules.md",
+      "upstream_quote": "Priority rank for rule evaluation. When multiple rules match, lowest number wins. Default 0 (highest priority).",
+      "wiki_quote": "Priority rank for rule evaluation. When multiple rules match, lowest number wins. Default 0 (highest priority) (Tier 1 —",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 11,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 11 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

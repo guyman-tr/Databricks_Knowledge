@@ -1,0 +1,88 @@
+{
+  "object_fqn": "main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresses",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:14:06Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Eligibility\\Tables\\Eligibility.TravelRuleWhitelistedAddresses.md",
+      "upstream_quote": "Auto-incrementing surrogate key. Each row represents one verified address-customer-blockchain combination.",
+      "wiki_quote": "Auto-incrementing surrogate key. Each row represents one verified address-customer-blockchain combination (Tier 1 — inhe",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Gcid",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Eligibility\\Tables\\Eligibility.TravelRuleWhitelistedAddresses.md",
+      "upstream_quote": "Global Customer ID identifying the customer who proved ownership of this address. Used in the uniqueness check: an addre",
+      "wiki_quote": "Global Customer ID identifying the customer who proved ownership of this address. Used in the uniqueness check: an addre",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainCryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Eligibility\\Tables\\Eligibility.TravelRuleWhitelistedAddresses.md",
+      "upstream_quote": "Identifies the blockchain network of the whitelisted address. Values observed: 1=Bitcoin (59%), 2=Ethereum (37%), 18=Car",
+      "wiki_quote": "Identifies the blockchain network of the whitelisted address. Values observed: 1=Bitcoin (59%), 2=Ethereum (37%), 18=Car",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Created",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Eligibility\\Tables\\Eligibility.TravelRuleWhitelistedAddresses.md",
+      "upstream_quote": "UTC timestamp of when the whitelist entry was created. Set to `GETUTCDATE()` by all three writer procedures on INSERT. I",
+      "wiki_quote": "UTC timestamp of when the whitelist entry was created. Set to `GETUTCDATE()` by all three writer procedures on INSERT. I",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Address",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Eligibility\\Tables\\Eligibility.TravelRuleWhitelistedAddresses.md",
+      "upstream_quote": "The full blockchain address string that has been verified. Format varies by blockchain: \"0x...\" for Ethereum, \"addr1q...",
+      "wiki_quote": "The full blockchain address string that has been verified. Format varies by blockchain: \"0x...\" for Ethereum, \"addr1q...",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProofOfOwnership",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Eligibility\\Tables\\Eligibility.TravelRuleWhitelistedAddresses.md",
+      "upstream_quote": "The actual proof data - either the cryptographic signature bytes or the signed declaration text. Stored as a large text/",
+      "wiki_quote": "The actual proof data - either the cryptographic signature bytes or the signed declaration text. Stored as a large text/",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProofOfOwnershipTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Eligibility\\Tables\\Eligibility.TravelRuleWhitelistedAddresses.md",
+      "upstream_quote": "Method used to verify address ownership. FK to Dictionary.AddressOwnershipProofType: 1=Declaration (legal self-attestati",
+      "wiki_quote": "Method used to verify address ownership. FK to Dictionary.AddressOwnershipProofType: 1=Declaration (legal self-attestati",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 7,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 7 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

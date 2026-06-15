@@ -1,0 +1,54 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_revenue_fullcommission",
+  "generated_at": "2026-05-18T16:27:27Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "case_flag_actiontype",
+      "name": "ActionType computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "ActionType"
+      ],
+      "predicates": [
+        {
+          "col": "ActionTypeID",
+          "op": "IN",
+          "val": "(1, 2, 3, 39)"
+        }
+      ],
+      "then_value": "'    '",
+      "else_value": "'     '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L17-L20",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_isactivetrade",
+      "name": "IsActiveTrade computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsActiveTrade"
+      ],
+      "predicates": [
+        {
+          "col": "MirrorID",
+          "op": ">",
+          "val": "0"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L21-L28",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_revenue_fullcommission.sql"
+}

@@ -1,0 +1,81 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiktivo_dbo_tblaff_country",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:49Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "CountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Country.md",
+      "upstream_quote": "Primary key. ISO 3166-1 numeric country code. 0 = \"Not available\" sentinel. Referenced by tblaff_Affiliates.CountryID (e",
+      "wiki_quote": "Primary key. ISO 3166-1 numeric country code. 0 = \"Not available\" sentinel. Referenced by tblaff_Affiliates.CountryID (e",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Abbreviation",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Country.md",
+      "upstream_quote": "ISO 3166-1 alpha-2 country code (e.g., \"US\", \"GB\", \"DE\"). Used for display and API integration.",
+      "wiki_quote": "ISO 3166-1 alpha-2 country code (e.g., \"US\", \"GB\", \"DE\"). Used for display and API integration (Tier 1 — inherited from ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Name",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Country.md",
+      "upstream_quote": "Country display name (e.g., \"United States\", \"United Kingdom\"). MASKED (dynamic data masking).",
+      "wiki_quote": "Country display name (e.g., \"United States\", \"United Kingdom\"). MASKED (dynamic data masking) (Tier 1 — inherited from f",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliatesGroupsID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Country.md",
+      "upstream_quote": "Default affiliate group for this country. References [dbo.tblaff_AffiliatesGroups](dbo.tblaff_AffiliatesGroups.md). NULL",
+      "wiki_quote": "Default affiliate group for this country. References [dbo.tblaff_AffiliatesGroups](dbo.tblaff_AffiliatesGroups.md). NULL",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MarketingRegionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Country.md",
+      "upstream_quote": "FK to Dictionary.MarketingRegion. Groups country into marketing territory. See [Marketing Region](../../_glossary.md#mar",
+      "wiki_quote": "FK to Dictionary.MarketingRegion. Groups country into marketing territory. See [Marketing Region](../../_glossary.md#mar",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Country.md",
+      "upstream_quote": "Default commission plan for affiliates from this country. References [dbo.tblaff_AffiliateTypes](dbo.tblaff_AffiliateTyp",
+      "wiki_quote": "Default commission plan for affiliates from this country. References [dbo.tblaff_AffiliateTypes](dbo.tblaff_AffiliateTyp",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 6,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 6 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

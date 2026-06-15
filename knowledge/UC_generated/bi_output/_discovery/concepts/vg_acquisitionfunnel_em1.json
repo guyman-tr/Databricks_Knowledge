@@ -1,0 +1,30 @@
+{
+  "object_fqn": "main.bi_output.vg_acquisitionfunnel_em1",
+  "generated_at": "2026-05-19T15:01:21Z",
+  "concept_count": 1,
+  "concepts": [
+    {
+      "id": "dim_lookup_b",
+      "name": "Dim lookup via b",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account",
+      "alias": "b",
+      "join_conditions": [
+        "a.CID = b.CID\n   AND b.GCID_Unique_Count = 1\n   AND b.IsValidETM = 1\n   AND b.IsValidCustomer = 1"
+      ],
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L36",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "a.CID = b.CID\n   AND b.GCID_Unique_Count = 1\n   AND b.IsValidETM = 1\n   AND b.IsValidCustomer = 1"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_acquisitionfunnel_em1.sql"
+}

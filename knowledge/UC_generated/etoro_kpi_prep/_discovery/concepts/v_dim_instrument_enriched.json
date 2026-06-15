@@ -1,0 +1,99 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_dim_instrument_enriched",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 4,
+  "concepts": [
+    {
+      "id": "case_flag_tradeable",
+      "name": "Tradeable computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "Tradeable"
+      ],
+      "predicates": [
+        {
+          "col": "VisibleInternallyOnly",
+          "op": "=",
+          "val": "0"
+        },
+        {
+          "col": "Tradable",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "InstrumentVisible",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {
+        "VisibleInternallyOnly=0": "visible to all",
+        "Tradable=1": "orders allowed"
+      },
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "main.trading.bronze_etoro_trade_instrumentmetadata_daily"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L78-L84",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_issqf",
+      "name": "IsSQF computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsSQF"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.trading.bronze_etoro_trade_instrumentgroups"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L85-L88",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_is_245_instrument",
+      "name": "Is_245_Instrument computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "Is_245_Instrument"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.trading.bronze_etoro_trade_instrumentmetadata_daily",
+        "main.trading.bronze_etoro_trade_providertoinstrument"
+      ],
+      "evidence_lines": "etoro_kpi_prep.sql L89-L92",
+      "scope": "main"
+    },
+    {
+      "id": "filter_block_rth_instruments",
+      "name": "Filter block on rth_instruments",
+      "kind": "filter_block",
+      "columns_involved": [
+        "ExchangeID"
+      ],
+      "predicates": [
+        {
+          "col": "ExchangeID",
+          "op": "=",
+          "val": "33"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L15",
+      "scope": "rth_instruments",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_dim_instrument_enriched.sql"
+}

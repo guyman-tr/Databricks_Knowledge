@@ -1,0 +1,81 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_billing_currencysettings",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:29Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "ID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CurrencySettings.md",
+      "upstream_quote": "Surrogate primary key. No business significance - internal row identifier.",
+      "wiki_quote": "Surrogate primary key. No business significance - internal row identifier (Tier 1 — inherited from etoro.Billing.Currenc",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CurrencySettings.md",
+      "upstream_quote": "Currency being configured. Implicit FK to Dictionary.Currency. The lookup key used by PIP calculation functions: `JOIN B",
+      "wiki_quote": "Currency being configured. Implicit FK to Dictionary.Currency. The lookup key used by PIP calculation functions: `JOIN B",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CurrencySettings.md",
+      "upstream_quote": "Trading instrument that provides the exchange rate for this currency. Implicit FK to the Trade instrument table. For maj",
+      "wiki_quote": "Trading instrument that provides the exchange rate for this currency. Implicit FK to the Trade instrument table. For maj",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsReciprocal",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CurrencySettings.md",
+      "upstream_quote": "Rate direction flag: 0=direct quote (currency is base, e.g., EUR/USD), 1=reciprocal quote (USD is base, e.g., USD/JPY, m",
+      "wiki_quote": "Rate direction flag: 0=direct quote (currency is base, e.g., EUR/USD), 1=reciprocal quote (USD is base, e.g., USD/JPY, m",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Precision",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CurrencySettings.md",
+      "upstream_quote": "Decimal places used for this currency in PIP calculations. Determines rounding precision in the PIP formula. Values: 0=J",
+      "wiki_quote": "Decimal places used for this currency in PIP calculations. Determines rounding precision in the PIP formula. Values: 0=J",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ModificationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CurrencySettings.md",
+      "upstream_quote": "Timestamp of last configuration update. All 31 rows show 2024-05-06 - a bulk update/refresh event. Used for change track",
+      "wiki_quote": "Timestamp of last configuration update. All 31 rows show 2024-05-06 - a bulk update/refresh event. Used for change track",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 6,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 6 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "object_fqn": "main.etoro_kpi.customer_exclude_list",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 4,
+  "formulas": [
+    {
+      "column": "CID",
+      "formula": "CID",
+      "expression_raw": "cc.CID",
+      "inputs": [
+        "main.general.bronze_etoro_customer_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "GCID",
+      "formula": "GCID",
+      "expression_raw": "cc.GCID",
+      "inputs": [
+        "main.general.bronze_etoro_customer_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "excludeReason",
+      "formula": "case when lower(Comments) LIKE '%abuse%' and PlayerStatusID = 2 then 'Abuser' when PlayerStatusReasonID = 4 then 'High risk' when PlayerLevelID = 4 then 'Internal' when lowe…",
+      "expression_raw": "case\n      when lower(cc.Comments) LIKE '%abuse%' and PlayerStatusID = 2 then 'Abuser'\n      when PlayerStatusReasonID = 4 then 'High risk'\n      when PlayerLevelID = 4 then 'Internal'\n      when lowe…",
+      "inputs": [
+        "main.general.bronze_etoro_customer_customer_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L10-L15",
+      "scope": "main"
+    },
+    {
+      "column": "RegisterationDate",
+      "formula": "Registered",
+      "expression_raw": "cc.Registered as RegisterationDate",
+      "inputs": [
+        "main.general.bronze_etoro_customer_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/customer_exclude_list.sql"
+}

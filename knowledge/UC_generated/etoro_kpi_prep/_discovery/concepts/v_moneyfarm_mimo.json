@@ -1,0 +1,65 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_moneyfarm_mimo",
+  "generated_at": "2026-05-18T16:27:26Z",
+  "concept_count": 3,
+  "concepts": [
+    {
+      "id": "filter_block_raw_events",
+      "name": "Filter block on raw_events",
+      "kind": "filter_block",
+      "columns_involved": [
+        "ProviderName"
+      ],
+      "predicates": [
+        {
+          "col": "ProviderName",
+          "op": "=",
+          "val": "'         '"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L14",
+      "scope": "raw_events",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_first_deposit_dates",
+      "name": "Filter block on first_deposit_dates",
+      "kind": "filter_block",
+      "columns_involved": [
+        "total_deposits"
+      ],
+      "predicates": [
+        {
+          "col": "total_deposits",
+          "op": ">",
+          "val": "0"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L47",
+      "scope": "first_deposit_dates",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_gbp_usd_rates",
+      "name": "Filter block on gbp_usd_rates",
+      "kind": "filter_block",
+      "columns_involved": [
+        "InstrumentID"
+      ],
+      "predicates": [
+        {
+          "col": "InstrumentID",
+          "op": "=",
+          "val": "2"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L56",
+      "scope": "gbp_usd_rates",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_moneyfarm_mimo.sql"
+}

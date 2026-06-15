@@ -1,0 +1,159 @@
+{
+  "object_fqn": "main.etoro_kpi.crm_case_v",
+  "generated_at": "2026-05-19T15:20:28Z",
+  "concept_count": 8,
+  "concepts": [
+    {
+      "id": "case_flag_botplatform",
+      "name": "BotPlatform computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "BotPlatform"
+      ],
+      "predicates": [],
+      "then_value": "'        '",
+      "else_value": null,
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "etoro_kpi.sql L12-L15",
+      "scope": "deflection"
+    },
+    {
+      "id": "case_flag_isescalated",
+      "name": "IsEscalated computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsEscalated"
+      ],
+      "predicates": [
+        {
+          "col": "Case_Owner_Title__c",
+          "op": "<>",
+          "val": "'   '"
+        }
+      ],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "etoro_kpi.sql L107-L110",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_cs_ops",
+      "name": "CS_OPS computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "CS_OPS"
+      ],
+      "predicates": [],
+      "then_value": "'  '",
+      "else_value": "'   '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "etoro_kpi.sql L113-L113",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_isdeflected",
+      "name": "IsDeflected computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsDeflected"
+      ],
+      "predicates": [],
+      "then_value": "0",
+      "else_value": "1",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.crm.gold_crm_case_tiny",
+        "main.crm.gold_crm_web_chat_sessions",
+        "main.crm.gold_crm_bot_eligible_chats"
+      ],
+      "evidence_lines": "etoro_kpi.sql L114-L114",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_isdeescalated",
+      "name": "IsDeEscalated computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsDeEscalated"
+      ],
+      "predicates": [],
+      "then_value": "0",
+      "else_value": "1",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.crm.gold_crm_case_deescalation"
+      ],
+      "evidence_lines": "etoro_kpi.sql L115-L115",
+      "scope": "main"
+    },
+    {
+      "id": "filter_block_DeEscalation",
+      "name": "Filter block on DeEscalation",
+      "kind": "filter_block",
+      "columns_involved": [
+        "RN",
+        "IsDeEscalation"
+      ],
+      "predicates": [
+        {
+          "col": "RN",
+          "op": "=",
+          "val": "1"
+        },
+        {
+          "col": "IsDeEscalation",
+          "op": "=",
+          "val": "0"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L47",
+      "scope": "DeEscalation",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "filter_block_Solved",
+      "name": "Filter block on Solved",
+      "kind": "filter_block",
+      "columns_involved": [
+        "EventType",
+        "NewStatus"
+      ],
+      "predicates": [
+        {
+          "col": "EventType",
+          "op": "=",
+          "val": "'             '"
+        },
+        {
+          "col": "NewStatus",
+          "op": "=",
+          "val": "'      '"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L56",
+      "scope": "Solved",
+      "applies_to_all_rows_in_scope": true
+    },
+    {
+      "id": "pair_state_timestamp",
+      "name": "State + timestamp pair",
+      "kind": "pair_group",
+      "columns_involved": [
+        "IsSolved",
+        "SolvedDate"
+      ],
+      "predicates": [],
+      "pattern": "Is* + *Date",
+      "physical_inputs": [],
+      "evidence_lines": "uc_inventory.json",
+      "scope": "schema"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/crm_case_v.sql"
+}

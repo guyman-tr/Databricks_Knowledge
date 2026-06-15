@@ -1,0 +1,27 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_crm_user",
+  "generated_at": "2026-05-19T15:01:19Z",
+  "concept_count": 1,
+  "concepts": [
+    {
+      "id": "filter_block_rm_choice",
+      "name": "Filter block on rm_choice",
+      "kind": "filter_block",
+      "columns_involved": [
+        "Position__c"
+      ],
+      "predicates": [
+        {
+          "col": "Position__c",
+          "op": "=",
+          "val": "'  '"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L53",
+      "scope": "rm_choice",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_crm_user.sql"
+}

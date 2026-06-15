@@ -1,0 +1,109 @@
+{
+  "object_fqn": "main.bi_db.bronze_userapidb_dbo_v_customeranswers_masked",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:14:00Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "GCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Views\\dbo.V_CustomerAnswers.md",
+      "upstream_quote": "User who answered. From KYC.CustomerAnswers.",
+      "wiki_quote": "User who answered. From KYC.CustomerAnswers (Tier 1 — inherited from UserApiDB.dbo.V_CustomerAnswers).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OccurredAt",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Views\\dbo.V_CustomerAnswers.md",
+      "upstream_quote": "When answer was submitted. From KYC.CustomerAnswers.",
+      "wiki_quote": "When answer was submitted. From KYC.CustomerAnswers (Tier 1 — inherited from UserApiDB.dbo.V_CustomerAnswers).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FreeText",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Views\\dbo.V_CustomerAnswers.md",
+      "upstream_quote": "Free-text response. From KYC.CustomerAnswers.",
+      "wiki_quote": "Free-text response. From KYC.CustomerAnswers (Tier 1 — inherited from UserApiDB.dbo.V_CustomerAnswers).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "QuestionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Views\\dbo.V_CustomerAnswers.md",
+      "upstream_quote": "Question identifier. From V_KYC.",
+      "wiki_quote": "Question identifier. From V_KYC (Tier 1 — inherited from UserApiDB.dbo.V_CustomerAnswers).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "QuestionText",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Views\\dbo.V_CustomerAnswers.md",
+      "upstream_quote": "Question display text. From V_KYC -> KYC.Questions.",
+      "wiki_quote": "Question display text. From V_KYC -> KYC.Questions (Tier 1 — inherited from UserApiDB.dbo.V_CustomerAnswers).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AnswerId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Views\\dbo.V_CustomerAnswers.md",
+      "upstream_quote": "Answer identifier. From V_KYC.",
+      "wiki_quote": "Answer identifier. From V_KYC (Tier 1 — inherited from UserApiDB.dbo.V_CustomerAnswers).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AnswerText",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Views\\dbo.V_CustomerAnswers.md",
+      "upstream_quote": "Answer display text. From V_KYC -> KYC.Answers.",
+      "wiki_quote": "Answer display text. From V_KYC -> KYC.Answers (Tier 1 — inherited from UserApiDB.dbo.V_CustomerAnswers).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MinThreshold",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Views\\dbo.V_CustomerAnswers.md",
+      "upstream_quote": "Min range value. From V_KYC -> KYC.AnswerThresholds.",
+      "wiki_quote": "Min range value. From V_KYC -> KYC.AnswerThresholds (Tier 1 — inherited from UserApiDB.dbo.V_CustomerAnswers).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MaxThreshold",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Views\\dbo.V_CustomerAnswers.md",
+      "upstream_quote": "Max range value. From V_KYC -> KYC.AnswerThresholds.",
+      "wiki_quote": "Max range value. From V_KYC -> KYC.AnswerThresholds (Tier 1 — inherited from UserApiDB.dbo.V_CustomerAnswers).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MultipleSelection",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\dbo\\Views\\dbo.V_CustomerAnswers.md",
+      "upstream_quote": "Whether question allows multiple answers. From V_KYC -> KYC.Questions.",
+      "wiki_quote": "Whether question allows multiple answers. From V_KYC -> KYC.Questions (Tier 1 — inherited from UserApiDB.dbo.V_CustomerA",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 10,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 10 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

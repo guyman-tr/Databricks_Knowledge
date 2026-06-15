@@ -1,0 +1,86 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_population_portfolio_only",
+  "generated_at": "2026-05-18T16:27:27Z",
+  "concept_count": 4,
+  "concepts": [
+    {
+      "id": "case_flag_iscopyfund",
+      "name": "IsCopyFund computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsCopyFund"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "etoro_kpi_prep.sql L18-L18",
+      "scope": "holders"
+    },
+    {
+      "id": "dim_lookup_di",
+      "name": "Dim lookup via di",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "alias": "di",
+      "join_conditions": [
+        "dp.InstrumentID = di.InstrumentID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L24",
+      "scopes": [
+        "holders"
+      ],
+      "scope": "holders",
+      "join_condition": "dp.InstrumentID = di.InstrumentID"
+    },
+    {
+      "id": "dim_lookup_dc",
+      "name": "Dim lookup via dc",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "alias": "dc",
+      "join_conditions": [
+        "op.GCID = dc.GCID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L40",
+      "scopes": [
+        "options_aum"
+      ],
+      "scope": "options_aum",
+      "join_condition": "op.GCID = dc.GCID"
+    },
+    {
+      "id": "filter_block_holders",
+      "name": "Filter block on holders",
+      "kind": "filter_block",
+      "columns_involved": [
+        "MirrorTypeID"
+      ],
+      "predicates": [
+        {
+          "col": "MirrorTypeID",
+          "op": "=",
+          "val": "4"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L29",
+      "scope": "holders",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql"
+}

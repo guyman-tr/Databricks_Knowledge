@@ -1,0 +1,415 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_daily_commission",
+  "generated_at": "2026-05-19T15:01:26Z",
+  "formula_count": 37,
+  "formulas": [
+    {
+      "column": "RealCID",
+      "formula": "select RealCID",
+      "expression_raw": "select dc.RealCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentID",
+      "formula": "SELECT DISTINCT InstrumentID",
+      "expression_raw": "SELECT DISTINCT etig.InstrumentID",
+      "inputs": [
+        "main.trading.bronze_etoro_trade_instrumentgroups"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L17-L17",
+      "scope": "sqf_instruments"
+    },
+    {
+      "column": "Instrument",
+      "formula": ", InstrumentID , Instrument",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L40",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L41",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentType",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L42",
+      "scope": "main"
+    },
+    {
+      "column": "FullDate",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L43",
+      "scope": "main"
+    },
+    {
+      "column": "DateID",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L44",
+      "scope": "main"
+    },
+    {
+      "column": "Commissions",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L45",
+      "scope": "main"
+    },
+    {
+      "column": "FullCommissions",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L46",
+      "scope": "main"
+    },
+    {
+      "column": "VolumeOnOpen",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L47",
+      "scope": "main"
+    },
+    {
+      "column": "VolumeOnClose",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L48",
+      "scope": "main"
+    },
+    {
+      "column": "RollOverFee",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L49",
+      "scope": "main"
+    },
+    {
+      "column": "IsSettled",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L50",
+      "scope": "main"
+    },
+    {
+      "column": "IsMirror",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L51",
+      "scope": "main"
+    },
+    {
+      "column": "CommissionOnOpen",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L52",
+      "scope": "main"
+    },
+    {
+      "column": "CommissionOnCloseAdjustment",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L53",
+      "scope": "main"
+    },
+    {
+      "column": "FullCommissionOnOpen",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L54",
+      "scope": "main"
+    },
+    {
+      "column": "FullCommissionOnCloseAdjustment",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L55",
+      "scope": "main"
+    },
+    {
+      "column": "CommissionOnClose",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L56",
+      "scope": "main"
+    },
+    {
+      "column": "FullCommissionOnClose",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L57",
+      "scope": "main"
+    },
+    {
+      "column": "IsBuy",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L58",
+      "scope": "main"
+    },
+    {
+      "column": "IsLeverage",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L59",
+      "scope": "main"
+    },
+    {
+      "column": "IsAirDrop",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L60",
+      "scope": "main"
+    },
+    {
+      "column": "SettlementTypeID",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L61",
+      "scope": "main"
+    },
+    {
+      "column": "TicketFee",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L62",
+      "scope": "main"
+    },
+    {
+      "column": "TicketFeeByPercent",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L63",
+      "scope": "main"
+    },
+    {
+      "column": "AdminFee",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L64",
+      "scope": "main"
+    },
+    {
+      "column": "SpotAdjustFee",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L65",
+      "scope": "main"
+    },
+    {
+      "column": "InvestedAmountOpen",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L66",
+      "scope": "main"
+    },
+    {
+      "column": "CountUU",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L67",
+      "scope": "main"
+    },
+    {
+      "column": "IsMarginTrade",
+      "formula": ", InstrumentID , Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , d…",
+      "expression_raw": ", dc.InstrumentID\n\t , dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , d…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L39-L68",
+      "scope": "main"
+    },
+    {
+      "column": "instrumentdisplayname",
+      "formula": ", Instrument , InstrumentTypeID , InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , RollOverFee , dc…",
+      "expression_raw": ", dc.Instrument\n\t , dc.InstrumentTypeID\n\t , dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , dc.RollOverFee\n\t , dc…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L40-L69",
+      "scope": "main"
+    },
+    {
+      "column": "symbol",
+      "formula": "select InstrumentID, InstrumentDisplayName, IsFuture, Symbol",
+      "expression_raw": "select InstrumentID, InstrumentDisplayName, IsFuture, Symbol",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L13-L13",
+      "scope": "instrument_metadata"
+    },
+    {
+      "column": "IsFuture",
+      "formula": ", InstrumentType , FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , RollOverFee , IsSettled , IsMirror , Commissi…",
+      "expression_raw": ", dc.InstrumentType\n\t , dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , dc.RollOverFee\n\t , dc.IsSettled\n\t , dc.IsMirror\n\t , dc.Commissi…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L42-L71",
+      "scope": "main"
+    },
+    {
+      "column": "IsSQF",
+      "formula": ", FullDate , DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , RollOverFee , IsSettled , IsMirror , CommissionOnOpen , Commis…",
+      "expression_raw": ", dc.FullDate\n\t , dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , dc.RollOverFee\n\t , dc.IsSettled\n\t , dc.IsMirror\n\t , dc.CommissionOnOpen\n\t , dc.Commis…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L43-L72",
+      "scope": "main"
+    },
+    {
+      "column": "Is_245",
+      "formula": ", DateID , Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , RollOverFee , IsSettled , IsMirror , CommissionOnOpen , CommissionOnCloseAdjus…",
+      "expression_raw": ", dc.DateID\n\t , dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , dc.RollOverFee\n\t , dc.IsSettled\n\t , dc.IsMirror\n\t , dc.CommissionOnOpen\n\t , dc.CommissionOnCloseAdjus…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L44-L73",
+      "scope": "main"
+    },
+    {
+      "column": "IsUSStock",
+      "formula": ", Commissions , FullCommissions , VolumeOnOpen , VolumeOnClose , RollOverFee , IsSettled , IsMirror , CommissionOnOpen , CommissionOnCloseAdjustment , F…",
+      "expression_raw": ", dc.Commissions\n\t , dc.FullCommissions\n\t , dc.VolumeOnOpen\n\t , dc.VolumeOnClose\n\t , dc.RollOverFee\n\t , dc.IsSettled\n\t , dc.IsMirror\n\t , dc.CommissionOnOpen\n\t , dc.CommissionOnCloseAdjustment\n\t , dc.F…",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L45-L74",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_daily_commission.sql"
+}

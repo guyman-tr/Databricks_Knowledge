@@ -1,0 +1,74 @@
+{
+  "object_fqn": "main.bi_db.bronze_userapidb_dwh_questions_answers_v",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:14:01Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "QuestionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\DWH\\Views\\DWH.Questions_Answers_V.md",
+      "upstream_quote": "KYC question identifier. From KYC.Questions. Groups all answer rows for the same question.",
+      "wiki_quote": "KYC question identifier. From KYC.Questions. Groups all answer rows for the same question (Tier 1 — inherited from UserA",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "QuestionText",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\DWH\\Views\\DWH.Questions_Answers_V.md",
+      "upstream_quote": "The full text of the KYC question as shown to the user. From KYC.Questions.",
+      "wiki_quote": "The full text of the KYC question as shown to the user. From KYC.Questions (Tier 1 — inherited from UserApiDB.DWH.Questi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MultipleSelection",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\DWH\\Views\\DWH.Questions_Answers_V.md",
+      "upstream_quote": "Whether the user may select more than one answer for this question. 1=multiple allowed, 0=single answer only. From KYC.Q",
+      "wiki_quote": "Whether the user may select more than one answer for this question. 1=multiple allowed, 0=single answer only. From KYC.Q",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AnswerId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\DWH\\Views\\DWH.Questions_Answers_V.md",
+      "upstream_quote": "KYC answer option identifier. From KYC.Answers via KYC.QuestionsAnswers junction.",
+      "wiki_quote": "KYC answer option identifier. From KYC.Answers via KYC.QuestionsAnswers junction (Tier 1 — inherited from UserApiDB.DWH.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AnswerText",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\UserApiDB\\Wiki\\DWH\\Views\\DWH.Questions_Answers_V.md",
+      "upstream_quote": "The full text of the answer option as shown to the user. From KYC.Answers.",
+      "wiki_quote": "The full text of the answer option as shown to the user. From KYC.Answers (Tier 1 — inherited from UserApiDB.DWH.Questio",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 5,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 5 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

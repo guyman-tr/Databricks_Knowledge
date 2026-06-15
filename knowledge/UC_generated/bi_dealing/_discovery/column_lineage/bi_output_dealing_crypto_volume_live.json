@@ -1,0 +1,104 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_crypto_volume_live",
+  "rows": [
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_flowmatrix_dealing_flow_matrix",
+      "source_column_name": "VolumeBuyCloseUnits",
+      "target_column_name": "EtoroVolume",
+      "entity_type": "JOB",
+      "event_count": 10804
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_flowmatrix_dealing_flow_matrix",
+      "source_column_name": "VolumeSellCloseUnits",
+      "target_column_name": "EtoroVolume",
+      "entity_type": "JOB",
+      "event_count": 10804
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_flowmatrix_dealing_flow_matrix",
+      "source_column_name": "ConversionRate",
+      "target_column_name": "EtoroVolume",
+      "entity_type": "JOB",
+      "event_count": 10804
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_flowmatrix_dealing_flow_matrix",
+      "source_column_name": "VolumeBuyOpenUnits",
+      "target_column_name": "EtoroVolume",
+      "entity_type": "JOB",
+      "event_count": 10804
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_flowmatrix_dealing_flow_matrix",
+      "source_column_name": "WeightedAvgExecPriceBuy",
+      "target_column_name": "EtoroVolume",
+      "entity_type": "JOB",
+      "event_count": 10804
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_flowmatrix_dealing_flow_matrix",
+      "source_column_name": "WeightedAvgExecPriceSell",
+      "target_column_name": "EtoroVolume",
+      "entity_type": "JOB",
+      "event_count": 10804
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_flowmatrix_dealing_flow_matrix",
+      "source_column_name": "VolumeSellOpenUnits",
+      "target_column_name": "EtoroVolume",
+      "entity_type": "JOB",
+      "event_count": 10804
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_flowmatrix_dealing_flow_matrix",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 10804
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Name",
+      "target_column_name": "InstrumentName",
+      "entity_type": "JOB",
+      "event_count": 10804
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_flowmatrix_dealing_flow_matrix",
+      "source_column_name": "VolumeBuyOpenUnits",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 10804
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_flowmatrix_dealing_flow_matrix",
+      "source_column_name": "VolumeBuyCloseUnits",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 10804
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_flowmatrix_dealing_flow_matrix",
+      "source_column_name": "VolumeSellOpenUnits",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 10804
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_dealingstreaming_flowmatrix_dealing_flow_matrix",
+      "source_column_name": "VolumeSellCloseUnits",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 10804
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 7192
+    }
+  ],
+  "generated_at": "2026-05-19T12:22:18Z"
+}

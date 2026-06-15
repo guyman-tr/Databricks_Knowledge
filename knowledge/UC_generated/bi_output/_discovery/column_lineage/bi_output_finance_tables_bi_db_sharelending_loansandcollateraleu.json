@@ -1,0 +1,419 @@
+{
+  "object": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_loansandcollateraleu",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "Bid",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "BidSpreaded",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "CUSIP",
+      "target_column_name": "CUSIP",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Collateral_%",
+      "target_column_name": "CollateralPercent",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Current_Collateral_Value_",
+      "target_column_name": "CollateralPercentCalc",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Current_Market_Value_USD",
+      "target_column_name": "CollateralPercentCalc",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Current_Collateral_Value_",
+      "target_column_name": "CollateralPriceCalc",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Quantity",
+      "target_column_name": "CollateralPriceCalc",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Current_Collateral_Value_",
+      "target_column_name": "CollateralValueUSD",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "ACCOUNT_NO",
+      "target_column_name": "EquilendID",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "ISIN",
+      "target_column_name": "ISIN",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_raw_setteled_balance",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody_resolver",
+      "source_column_name": "CID",
+      "target_column_name": "IsUK",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "CURRENCY_KY",
+      "target_column_name": "LoanCurrency",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Quantity",
+      "target_column_name": "LoanPriceCalc",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Current_Market_Value_USD",
+      "target_column_name": "LoanPriceCalc",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "LoanQuantity",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "LoanUSDByEtoroPrice",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "LoanUSDByEtoroPrice",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "LoanUSDByEtoroPrice",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "PriceRatio",
+      "target_column_name": "LoanUSDByEtoroPrice",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "LoanUSDByEtoroPrice",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "QUANTITY",
+      "target_column_name": "LoanUSDByPrevEtoroPrice",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "LoanUSDByPrevEtoroPrice",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "PriceRatio",
+      "target_column_name": "LoanUSDByPrevEtoroPrice",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "LoanUSDByPrevEtoroPrice",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "LoanUSDByPrevEtoroPrice",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_collateralbyposition",
+      "source_column_name": "Current_Market_Value_USD",
+      "target_column_name": "LoanValueUSD",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "PrevBid",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "PrevBidSpreaded",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "PriceRatio",
+      "target_column_name": "PrevDatePriceRatio",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "OccurredDate",
+      "target_column_name": "PrevPriceDate",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "PrevPriceUSDeToro",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "PrevPriceUSDeToro",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "PriceRatio",
+      "target_column_name": "PrevPriceUSDeToro",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "PrevPriceUSDeToro",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "PrevUSD_CR_Computed",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "PriceRatio",
+      "target_column_name": "PrevUSD_CR_Computed",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "PrevUSD_CR_Computed",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "PrevUSD_CR_Computed",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "OccurredDate",
+      "target_column_name": "PriceDate",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "PriceRatio",
+      "target_column_name": "PriceRatio",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "PriceUSDeToro",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "PriceUSDeToro",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "PriceRatio",
+      "target_column_name": "PriceUSDeToro",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "PriceUSDeToro",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "ReportDate",
+      "entity_type": "JOB",
+      "event_count": 43
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "SellCurrencyID",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
+      "source_column_name": "TICKER",
+      "target_column_name": "TICKER",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "USD_CR_Computed",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "BidSpreaded",
+      "target_column_name": "USD_CR_Computed",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "BuyCurrencyID",
+      "target_column_name": "USD_CR_Computed",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "source_column_name": "PriceRatio",
+      "target_column_name": "USD_CR_Computed",
+      "entity_type": "JOB",
+      "event_count": 65
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 43
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_y",
+      "entity_type": "JOB",
+      "event_count": 43
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ym",
+      "entity_type": "JOB",
+      "event_count": 43
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "etr_ymd",
+      "entity_type": "JOB",
+      "event_count": 43
+    }
+  ],
+  "generated_at": "2026-05-19T14:34:55Z"
+}

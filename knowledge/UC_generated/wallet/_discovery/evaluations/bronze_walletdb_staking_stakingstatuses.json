@@ -1,0 +1,74 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_staking_stakingstatuses",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:17Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingStatuses.md",
+      "upstream_quote": "Auto-incrementing surrogate key. Monotonically increasing, used to establish event ordering when Occurred timestamps col",
+      "wiki_quote": "Auto-incrementing surrogate key. Monotonically increasing, used to establish event ordering when Occurred timestamps col",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StakingId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingStatuses.md",
+      "upstream_quote": "The staking operation this status event belongs to. FK to Staking.Staking.Id. Each staking operation has 2+ status rows ",
+      "wiki_quote": "The staking operation this status event belongs to. FK to Staking.Staking.Id. Each staking operation has 2+ status rows ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StakingStatusId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingStatuses.md",
+      "upstream_quote": "The status being applied. FK to Dictionary.StakingStatuses.Id: 1=Pending, 2=Failed, 3=Completed. See [Staking Status](..",
+      "wiki_quote": "The status being applied. FK to Dictionary.StakingStatuses.Id: 1=Pending, 2=Failed, 3=Completed. See [Staking Status](..",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DetailsJson",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingStatuses.md",
+      "upstream_quote": "Optional JSON payload for status-specific details (e.g., error messages for Failed status). Currently unused - all 4,419",
+      "wiki_quote": "Optional JSON payload for status-specific details (e.g., error messages for Failed status). Currently unused - all 4,419",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Staking\\Tables\\Staking.StakingStatuses.md",
+      "upstream_quote": "Timestamp of this status transition. Defaults to UTC now. Used by StakingData view to determine the latest status per st",
+      "wiki_quote": "Timestamp of this status transition. Defaults to UTC now. Used by StakingData view to determine the latest status per st",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 5,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 5 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

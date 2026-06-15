@@ -1,0 +1,102 @@
+{
+  "object_fqn": "main.bi_db.bronze_sodreconciliation_apex_ext538_closedaccounts",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:57Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT538_ClosedAccounts.md",
+      "upstream_quote": "Primary key. Auto-generated sequential GUID for each row.",
+      "wiki_quote": "Primary key. Auto-generated sequential GUID for each row (Tier 1 — inherited from Sodreconciliation.apex.EXT538_ClosedAc",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SodFileId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT538_ClosedAccounts.md",
+      "upstream_quote": "FK to apex.SodFiles. Links this row to the specific EXT538 file import. CASCADE DELETE.",
+      "wiki_quote": "FK to apex.SodFiles. Links this row to the specific EXT538 file import. CASCADE DELETE (Tier 1 — inherited from Sodrecon",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AccountNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT538_ClosedAccounts.md",
+      "upstream_quote": "Apex customer account number. MASKED (PII).",
+      "wiki_quote": "Apex customer account number. MASKED (PII) (Tier 1 — inherited from Sodreconciliation.apex.EXT538_ClosedAccounts).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AccountName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT538_ClosedAccounts.md",
+      "upstream_quote": "Account holder name. MASKED (PII).",
+      "wiki_quote": "Account holder name. MASKED (PII) (Tier 1 — inherited from Sodreconciliation.apex.EXT538_ClosedAccounts).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RestrictReasonCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT538_ClosedAccounts.md",
+      "upstream_quote": "Restriction reason code indicating why the account was closed.",
+      "wiki_quote": "Restriction reason code indicating why the account was closed (Tier 1 — inherited from Sodreconciliation.apex.EXT538_Clo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OfficeCurrency",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT538_ClosedAccounts.md",
+      "upstream_quote": "Currency code for the office/account.",
+      "wiki_quote": "Currency code for the office/account (Tier 1 — inherited from Sodreconciliation.apex.EXT538_ClosedAccounts).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MarketValue",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT538_ClosedAccounts.md",
+      "upstream_quote": "Remaining market value of securities in the closed account.",
+      "wiki_quote": "Remaining market value of securities in the closed account (Tier 1 — inherited from Sodreconciliation.apex.EXT538_Closed",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CashBalance",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT538_ClosedAccounts.md",
+      "upstream_quote": "Remaining cash balance in the closed account.",
+      "wiki_quote": "Remaining cash balance in the closed account (Tier 1 — inherited from Sodreconciliation.apex.EXT538_ClosedAccounts).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalEquity",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\Sodreconciliation\\Wiki\\apex\\Tables\\apex.EXT538_ClosedAccounts.md",
+      "upstream_quote": "Total equity remaining (MarketValue + CashBalance).",
+      "wiki_quote": "Total equity remaining (MarketValue + CashBalance) (Tier 1 — inherited from Sodreconciliation.apex.EXT538_ClosedAccounts",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 9,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 9 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

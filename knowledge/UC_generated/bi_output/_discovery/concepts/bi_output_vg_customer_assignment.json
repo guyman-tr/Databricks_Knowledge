@@ -1,0 +1,47 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_customer_assignment",
+  "generated_at": "2026-05-19T15:01:19Z",
+  "concept_count": 2,
+  "concepts": [
+    {
+      "id": "case_flag_iscurrentassignment",
+      "name": "IsCurrentAssignment computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsCurrentAssignment"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.crm.gold_crm_accountsmanager"
+      ],
+      "evidence_lines": "bi_output.sql L18-L21",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_dcu",
+      "name": "Dim lookup via dcu",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "alias": "dcu",
+      "join_conditions": [
+        "am.AccountId = dcu.SalesForceAccountID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L23",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "am.AccountId = dcu.SalesForceAccountID"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_customer_assignment.sql"
+}

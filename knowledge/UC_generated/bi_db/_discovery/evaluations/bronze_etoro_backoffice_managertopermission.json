@@ -1,0 +1,60 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_backoffice_managertopermission",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:28Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "ManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.ManagerToPermission.md",
+      "upstream_quote": "BackOffice agent receiving the permission. Part of composite PK. FK (WITH CHECK) to BackOffice.Manager. See BackOffice.M",
+      "wiki_quote": "BackOffice agent receiving the permission. Part of composite PK. FK (WITH CHECK) to BackOffice.Manager. See BackOffice.M",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PermissionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.ManagerToPermission.md",
+      "upstream_quote": "The specific permission being granted. Part of composite PK. FK (WITH CHECK) to Dictionary.Permission. 148 distinct perm",
+      "wiki_quote": "The specific permission being granted. Part of composite PK. FK (WITH CHECK) to Dictionary.Permission. 148 distinct perm",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.ManagerToPermission.md",
+      "upstream_quote": "The regulated entity/provider for which this permission applies. Part of composite PK. No FK constraint. Values: 0=globa",
+      "wiki_quote": "The regulated entity/provider for which this permission applies. Part of composite PK. No FK constraint. Values: 0=globa",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 3,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 3 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

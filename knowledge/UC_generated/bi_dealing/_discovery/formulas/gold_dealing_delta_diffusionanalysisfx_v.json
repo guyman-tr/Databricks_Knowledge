@@ -1,0 +1,175 @@
+{
+  "object_fqn": "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx_v",
+  "generated_at": "2026-05-19T12:47:55Z",
+  "formula_count": 14,
+  "formulas": [
+    {
+      "column": "PositionsTime",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "PositionsTime"
+    },
+    {
+      "column": "InstrumentName",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "InstrumentName"
+    },
+    {
+      "column": "InstrumentID",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "InstrumentID"
+    },
+    {
+      "column": "HedgeServerID",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "HedgeServerID"
+    },
+    {
+      "column": "USD_NOP",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx"
+      ],
+      "transform_kind": "udf",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "UnitsNOP",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx"
+      ],
+      "transform_kind": "udf",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Delta",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "DeltaRatio",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "DeltaSquared",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "DeltaSquaredRatio",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "Mid",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "Mid"
+    },
+    {
+      "column": "T",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "T"
+    },
+    {
+      "column": "Sigma",
+      "formula": null,
+      "expression_raw": null,
+      "inputs": [
+        "main.bi_dealing.gold_dealing_delta_diffusionanalysisfx"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": null,
+      "reason": "expression not locatable in source; fell back to lineage row",
+      "fallback_source_column": "—"
+    },
+    {
+      "column": "SigmaDate",
+      "formula": "-- ========================================================================== -- Source: information_schema.views.view_definition -- Object: bi_dealing.gold_dealing_delta_diffusionanalysisfx_v --…",
+      "expression_raw": "-- ==========================================================================\n-- Source: information_schema.views.view_definition\n-- Object: main.bi_dealing.gold_dealing_delta_diffusionanalysisfx_v\n--…",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L1-L7",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_dealing/_discovery/source_code/gold_dealing_delta_diffusionanalysisfx_v.sql"
+}

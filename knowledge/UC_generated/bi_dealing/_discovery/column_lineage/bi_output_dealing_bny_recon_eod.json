@@ -1,0 +1,559 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+  "rows": [
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Market_Value_Reporting_Currency",
+      "target_column_name": "BNY-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 340
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "BNY-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "BNY-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "BNY-Clients_AmountUSD",
+      "target_column_name": "BNY-Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Units",
+      "target_column_name": "BNY-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 340
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "BNY-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "BNY-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "BNY-Clients_Units",
+      "target_column_name": "BNY-Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Market_Value_Reporting_Currency",
+      "target_column_name": "BNY-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 340
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "BNY-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "BNY-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "BNY-eToro_AmountUSD",
+      "target_column_name": "BNY-eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Market_Value_Local",
+      "target_column_name": "BNY-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "BNY-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "BNY-eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "BNY-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroRate",
+      "target_column_name": "BNY-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Local_Price",
+      "target_column_name": "BNY-eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Units",
+      "target_column_name": "BNY-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 340
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "BNY-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "BNY-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "BNY-eToro_Units",
+      "target_column_name": "BNY-eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Market_Value_Reporting_Currency",
+      "target_column_name": "BNY_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 340
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "BNY_AmountUSD",
+      "target_column_name": "BNY_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Exchange_Rate",
+      "target_column_name": "BNY_FXRate",
+      "entity_type": "JOB",
+      "event_count": 340
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Market_Value_Reporting_Currency",
+      "target_column_name": "BNY_FXRate",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "BNY_FXRate",
+      "target_column_name": "BNY_FXRate",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Market_Value_Local",
+      "target_column_name": "BNY_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Local_Price",
+      "target_column_name": "BNY_Rate",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Market_Value_Reporting_Currency",
+      "target_column_name": "BNY_USD_Rate",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Exchange_Rate",
+      "target_column_name": "BNY_USD_Rate",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Local_Price",
+      "target_column_name": "BNY_USD_Rate",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "BNY_USD_Rate",
+      "target_column_name": "BNY_USD_Rate",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Units",
+      "target_column_name": "BNY_Units",
+      "entity_type": "JOB",
+      "event_count": 340
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "BNY_Units",
+      "target_column_name": "BNY_Units",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientAmount",
+      "target_column_name": "Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "Clients_AmountUSD",
+      "target_column_name": "Clients_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ClientUnits",
+      "target_column_name": "Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "Clients_Units",
+      "target_column_name": "Clients_Units",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "CurrencyPrimary",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "Date",
+      "target_column_name": "Date",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "ISIN",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 340
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "ISINCode",
+      "target_column_name": "ISINCode",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "Security_Short_Description",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
+      "source_column_name": "TICKER",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "UpdateDate",
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
+      "source_column_name": "activity",
+      "target_column_name": "activity",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
+      "source_column_name": "activity",
+      "target_column_name": "activity",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "activity",
+      "target_column_name": "activity",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "eToro_AmountUSD",
+      "target_column_name": "eToro_AmountUSD",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "FXratetoUSD",
+      "target_column_name": "eToro_FXRate",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "eToro_FXRate",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToro_FXRate",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToro_FXRate",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "FXratetoUSD",
+      "target_column_name": "eToro_FXRate",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "eToro_FXRate",
+      "target_column_name": "eToro_FXRate",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroLocalAmount",
+      "target_column_name": "eToro_LocalAmount",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "SellCurrency",
+      "target_column_name": "eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToroRate",
+      "target_column_name": "eToro_Rate",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "eToroUSDAmount",
+      "target_column_name": "eToro_USD_Rate",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "eToro_USD_Rate",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "eToro_USD_Rate",
+      "target_column_name": "eToro_USD_Rate",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_duco_eod",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 244
+    },
+    {
+      "source_table_full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 96
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "eToro_Units",
+      "target_column_name": "eToro_Units",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "Date",
+      "target_column_name": "etr_y",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "Date",
+      "target_column_name": "etr_ym",
+      "entity_type": "JOB",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_dealing.bi_output_dealing_bny_recon_eod",
+      "source_column_name": "Date",
+      "target_column_name": "etr_ymd",
+      "entity_type": "JOB",
+      "event_count": 1
+    }
+  ],
+  "generated_at": "2026-05-19T12:16:49Z"
+}

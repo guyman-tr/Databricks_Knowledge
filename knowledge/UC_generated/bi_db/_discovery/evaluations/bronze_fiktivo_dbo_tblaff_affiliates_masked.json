@@ -1,0 +1,536 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiktivo_dbo_tblaff_affiliates_masked",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:47Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "AffiliateID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Primary key. The unique identifier for each affiliate in the system. Referenced by virtually every other table via Affil",
+      "wiki_quote": "Primary key. The unique identifier for each affiliate in the system. Referenced by virtually every other table via Affil",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "UserID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Links to dbo.tblaff_User for admin portal user management. Default 0 indicates no linked admin user. Used by triggers an",
+      "wiki_quote": "Links to dbo.tblaff_User for admin portal user management. Default 0 indicates no linked admin user. Used by triggers an",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliatesGroupsID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Organizational group assignment. References dbo.tblaff_AffiliatesGroups.AffiliatesGroupsID [done]. Default 2 is the stan",
+      "wiki_quote": "Organizational group assignment. References dbo.tblaff_AffiliatesGroups.AffiliatesGroupsID [done]. Default 2 is the stan",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Affiliate portal login username. MASKED with default() for dynamic data masking. Has dedicated NC index for login lookup",
+      "wiki_quote": "Affiliate portal login username. MASKED with default() for dynamic data masking. Has dedicated NC index for login lookup",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LoginPassword",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Affiliate portal password. MASKED with default() for dynamic data masking. Stored as plaintext/hash depending on era of ",
+      "wiki_quote": "Affiliate portal password. MASKED with default() for dynamic data masking. Stored as plaintext/hash depending on era of ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Phrase",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Security phrase for account recovery or verification. Legacy field from original affiliate system.",
+      "wiki_quote": "Security phrase for account recovery or verification. Legacy field from original affiliate system (Tier 1 — inherited fr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Contact",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Primary contact person name for the affiliate. For corporate affiliates, this is the business contact.",
+      "wiki_quote": "Primary contact person name for the affiliate. For corporate affiliates, this is the business contact (Tier 1 — inherite",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Email",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Affiliate's email address. Has dedicated NC index. Used for notifications, password resets, and communication.",
+      "wiki_quote": "Affiliate's email address. Has dedicated NC index. Used for notifications, password resets, and communication (Tier 1 — ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TaxID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Tax identification number for the affiliate. Required for payment processing and regulatory reporting in some jurisdicti",
+      "wiki_quote": "Tax identification number for the affiliate. Required for payment processing and regulatory reporting in some jurisdicti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SocialSecurity",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Social security or national insurance number. Required for US-based affiliates for IRS W-9 reporting.",
+      "wiki_quote": "Social security or national insurance number. Required for US-based affiliates for IRS W-9 reporting (Tier 1 — inherited",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CompanyName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Legal company name for corporate affiliates. MASKED with default(). Used in payment processing and compliance documentat",
+      "wiki_quote": "Legal company name for corporate affiliates. MASKED with default(). Used in payment processing and compliance documentat",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CompanyAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Business address of the affiliate. MASKED with default(). Required for payment and compliance.",
+      "wiki_quote": "Business address of the affiliate. MASKED with default(). Required for payment and compliance (Tier 1 — inherited from f",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Country",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Country name as free text. Legacy field - CountryID (column 54) is the normalized version used by newer code.",
+      "wiki_quote": "Country name as free text. Legacy field - CountryID (column 54) is the normalized version used by newer code (Tier 1 — i",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "City",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "City of the affiliate's business address.",
+      "wiki_quote": "City of the affiliate's business address (Tier 1 — inherited from fiktivo.dbo.tblaff_Affiliates).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "State",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "State/province of the affiliate's business address.",
+      "wiki_quote": "State/province of the affiliate's business address (Tier 1 — inherited from fiktivo.dbo.tblaff_Affiliates).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Zip",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Postal/ZIP code of the affiliate's business address.",
+      "wiki_quote": "Postal/ZIP code of the affiliate's business address (Tier 1 — inherited from fiktivo.dbo.tblaff_Affiliates).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Telephone",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Primary telephone number. Legacy field - PhoneCountryID + PhoneNumber are the structured replacement.",
+      "wiki_quote": "Primary telephone number. Legacy field - PhoneCountryID + PhoneNumber are the structured replacement (Tier 1 — inherited",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Fax",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Fax number. Legacy communication field.",
+      "wiki_quote": "Fax number. Legacy communication field (Tier 1 — inherited from fiktivo.dbo.tblaff_Affiliates).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WebSiteURL",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "URL of the affiliate's website. Used for compliance review and traffic source verification.",
+      "wiki_quote": "URL of the affiliate's website. Used for compliance review and traffic source verification (Tier 1 — inherited from fikt",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WebSiteTitle",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Title/name of the affiliate's website.",
+      "wiki_quote": "Title/name of the affiliate's website (Tier 1 — inherited from fiktivo.dbo.tblaff_Affiliates).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Comments",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Free-text notes about the affiliate. Used by admins for internal annotations.",
+      "wiki_quote": "Free-text notes about the affiliate. Used by admins for internal annotations (Tier 1 — inherited from fiktivo.dbo.tblaff",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AccountStatus",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Affiliate account lifecycle state: 0=Inactive/Pending (default), 1=Active, 2=Suspended, 4=Under Review, 5=Rejected. Cont",
+      "wiki_quote": "Affiliate account lifecycle state: 0=Inactive/Pending (default), 1=Active, 2=Suspended, 4=Under Review, 5=Rejected. Cont",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SendEmailNotification",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Controls whether the affiliate receives automated email notifications (commission reports, announcements). 1=receive ema",
+      "wiki_quote": "Controls whether the affiliate receives automated email notifications (commission reports, announcements). 1=receive ema",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DateCreated",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Timestamp of affiliate account creation. Set automatically on INSERT. Oldest records date to 2007-07-01.",
+      "wiki_quote": "Timestamp of affiliate account creation. Set automatically on INSERT. Oldest records date to 2007-07-01 (Tier 1 — inheri",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AcceptedAgreement",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Whether the affiliate has accepted the affiliate program terms and conditions. 1=accepted, 0=not yet accepted. Required ",
+      "wiki_quote": "Whether the affiliate has accepted the affiliate program terms and conditions. 1=accepted, 0=not yet accepted. Required ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Commission plan type. References dbo.tblaff_AffiliateTypes.AffiliateTypeID [done]. Determines commission rates, CPA slab",
+      "wiki_quote": "Commission plan type. References dbo.tblaff_AffiliateTypes.AffiliateTypeID [done]. Determines commission rates, CPA slab",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "VATNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "EU VAT registration number. Required for European affiliates for proper invoicing and tax compliance.",
+      "wiki_quote": "EU VAT registration number. Required for European affiliates for proper invoicing and tax compliance (Tier 1 — inherited",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateCustom1",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Custom field 1. Configurable per deployment for additional affiliate metadata. Sometimes used for last name or additiona",
+      "wiki_quote": "Custom field 1. Configurable per deployment for additional affiliate metadata. Sometimes used for last name or additiona",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateCustom2",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Custom field 2. Configurable per deployment.",
+      "wiki_quote": "Custom field 2. Configurable per deployment (Tier 1 — inherited from fiktivo.dbo.tblaff_Affiliates).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateCustom3",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Custom field 3. Configurable per deployment.",
+      "wiki_quote": "Custom field 3. Configurable per deployment (Tier 1 — inherited from fiktivo.dbo.tblaff_Affiliates).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateCustom4",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Custom field 4. Configurable per deployment.",
+      "wiki_quote": "Custom field 4. Configurable per deployment (Tier 1 — inherited from fiktivo.dbo.tblaff_Affiliates).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateCustom5",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Custom field 5. Configurable per deployment.",
+      "wiki_quote": "Custom field 5. Configurable per deployment (Tier 1 — inherited from fiktivo.dbo.tblaff_Affiliates).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentDetailsID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Primary payment method. References dbo.tblaff_PaymentDetails [done]. Links to banking/payment info for commission disbur",
+      "wiki_quote": "Primary payment method. References dbo.tblaff_PaymentDetails [done]. Links to banking/payment info for commission disbur",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IBAffiliate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Introducing Broker flag/parent ID. 0=not an IB, >0=this affiliate is an IB (value may indicate parent IB structure).",
+      "wiki_quote": "Introducing Broker flag/parent ID. 0=not an IB, >0=this affiliate is an IB (value may indicate parent IB structure) (Tie",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_Tiers_Summary",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Controls whether the affiliate can see tier summary reports in the portal. 1=visible, 0=hidden.",
+      "wiki_quote": "Controls whether the affiliate can see tier summary reports in the portal. 1=visible, 0=hidden (Tier 1 — inherited from ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Reports_Tiers_Details",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Controls whether the affiliate can see detailed tier reports in the portal. 1=visible, 0=hidden.",
+      "wiki_quote": "Controls whether the affiliate can see detailed tier reports in the portal. 1=visible, 0=hidden (Tier 1 — inherited from",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IBCountries",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Comma-separated or JSON list of country IDs where this IB affiliate can operate. NULL means no geographic restriction.",
+      "wiki_quote": "Comma-separated or JSON list of country IDs where this IB affiliate can operate. NULL means no geographic restriction (T",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerID_Demo",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Demo account manager ID assigned to this affiliate. Default 36. Used for demo/sandbox environment tracking.",
+      "wiki_quote": "Demo account manager ID assigned to this affiliate. Default 36. Used for demo/sandbox environment tracking (Tier 1 — inh",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerID_Real",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Real/production account manager ID assigned to this affiliate. Default 45. Determines which manager oversees this affili",
+      "wiki_quote": "Real/production account manager ID assigned to this affiliate. Default 45. Determines which manager oversees this affili",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MarketingExpenseID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Marketing expense category. References dbo.tblaff_MarketingExpense [done]. Default 1. Categorizes the affiliate's market",
+      "wiki_quote": "Marketing expense category. References dbo.tblaff_MarketingExpense [done]. Default 1. Categorizes the affiliate's market",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IBProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "The provider/partner ID within the IB hierarchy. Default 1. For IB sub-affiliates, identifies their parent IB.",
+      "wiki_quote": "The provider/partner ID within the IB hierarchy. Default 1. For IB sub-affiliates, identifies their parent IB (Tier 1 — ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IBLabelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Label/brand identifier within the IB structure. Default 0. Supports white-label IB configurations.",
+      "wiki_quote": "Label/brand identifier within the IB structure. Default 0. Supports white-label IB configurations (Tier 1 — inherited fr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "HideExceptIBCRM",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Visibility flag. 1=this affiliate is hidden from standard admin views, only visible in IB CRM tools. 0=visible everywher",
+      "wiki_quote": "Visibility flag. 1=this affiliate is hidden from standard admin views, only visible in IB CRM tools. 0=visible everywher",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CanShowCashier",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Controls whether the affiliate can access cashier/payment features in the portal. 1=cashier visible, 0=hidden.",
+      "wiki_quote": "Controls whether the affiliate can access cashier/payment features in the portal. 1=cashier visible, 0=hidden (Tier 1 — ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CommunicationLangID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Preferred communication language for emails and notifications. Default 0. References a language lookup.",
+      "wiki_quote": "Preferred communication language for emails and notifications. Default 0. References a language lookup (Tier 1 — inherit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountImpressions",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Controls whether banner impressions are tracked for this affiliate. 1=track impressions, 0=clicks only.",
+      "wiki_quote": "Controls whether banner impressions are tracked for this affiliate. 1=track impressions, 0=clicks only (Tier 1 — inherit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountClicks",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Controls whether clicks are tracked for this affiliate. 1=track clicks (default), 0=no click tracking.",
+      "wiki_quote": "Controls whether clicks are tracked for this affiliate. 1=track clicks (default), 0=no click tracking (Tier 1 — inherite",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PrefferedCurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Affiliate's preferred payment currency. References Dictionary.Currency (1=USD, 2=EUR, 3=GBP, 4=CAD, 5=AUD, 38=RMB).",
+      "wiki_quote": "Affiliate's preferred payment currency. References Dictionary.Currency (1=USD, 2=EUR, 3=GBP, 4=CAD, 5=AUD, 38=RMB) (Tier",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentDetails2ID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Secondary payment method. References dbo.tblaff_PaymentDetails [done]. NULL if only one payment method configured.",
+      "wiki_quote": "Secondary payment method. References dbo.tblaff_PaymentDetails [done]. NULL if only one payment method configured (Tier ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentDetails3ID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Tertiary payment method. References dbo.tblaff_PaymentDetails [done]. NULL if fewer than three payment methods configure",
+      "wiki_quote": "Tertiary payment method. References dbo.tblaff_PaymentDetails [done]. NULL if fewer than three payment methods configure",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentDetailsDefault",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Indicates which payment method is active for disbursement. 1=primary (PaymentDetailsID), 2=secondary, 12=specific method",
+      "wiki_quote": "Indicates which payment method is active for disbursement. 1=primary (PaymentDetailsID), 2=secondary, 12=specific method",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BirthDayDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Affiliate's date of birth. Required for individual affiliates in some jurisdictions for KYC compliance.",
+      "wiki_quote": "Affiliate's date of birth. Required for individual affiliates in some jurisdictions for KYC compliance (Tier 1 — inherit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Normalized country reference. FK to dbo.tblaff_Country.CountryID [done]. Default 0. The authoritative country field (rep",
+      "wiki_quote": "Normalized country reference. FK to dbo.tblaff_Country.CountryID [done]. Default 0. The authoritative country field (rep",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IdentificationTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Type of government ID submitted. FK to Dictionary.IdentificationType: 1=Passport, 2=ID Card, 3=NI Number, etc. Part of K",
+      "wiki_quote": "Type of government ID submitted. FK to Dictionary.IdentificationType: 1=Passport, 2=ID Card, 3=NI Number, etc. Part of K",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IdentificationNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "The actual ID document number corresponding to IdentificationTypeID. Stored for KYC verification records.",
+      "wiki_quote": "The actual ID document number corresponding to IdentificationTypeID. Stored for KYC verification records (Tier 1 — inher",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "NeedsResetPassword",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Forces password change on next login. 1=must reset, NULL/0=normal login. Set by admins for security events.",
+      "wiki_quote": "Forces password change on next login. 1=must reset, NULL/0=normal login. Set by admins for security events (Tier 1 — inh",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "GCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Global Customer ID linking this affiliate to the main trading platform's customer system. Has filtered NC index (WHERE G",
+      "wiki_quote": "Global Customer ID linking this affiliate to the main trading platform's customer system. Has filtered NC index (WHERE G",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AccountTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Entity type classification: 0=Legacy/unclassified (181), 1=Individual (43,513), 2=Corporate (12). Determines required co",
+      "wiki_quote": "Entity type classification: 0=Legacy/unclassified (181), 1=Individual (43,513), 2=Corporate (12). Determines required co",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EntityName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Legal entity name for corporate affiliates (AccountTypeID=2). The registered company name for KYP documentation.",
+      "wiki_quote": "Legal entity name for corporate affiliates (AccountTypeID=2). The registered company name for KYP documentation (Tier 1 ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IncorporationNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Company registration/incorporation number for corporate affiliates. Required for KYP compliance.",
+      "wiki_quote": "Company registration/incorporation number for corporate affiliates. Required for KYP compliance (Tier 1 — inherited from",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IncorporationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Date the corporate entity was incorporated. Part of KYP due diligence.",
+      "wiki_quote": "Date the corporate entity was incorporated. Part of KYP due diligence (Tier 1 — inherited from fiktivo.dbo.tblaff_Affili",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LeiNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Legal Entity Identifier (LEI) - a 20-character alphanumeric code required for corporate entities under MiFID II and othe",
+      "wiki_quote": "Legal Entity Identifier (LEI) - a 20-character alphanumeric code required for corporate entities under MiFID II and othe",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ContactPersonFullName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Full name of the authorized contact person for corporate affiliates. MASKED with default().",
+      "wiki_quote": "Full name of the authorized contact person for corporate affiliates. MASKED with default() (Tier 1 — inherited from fikt",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreationSourceID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "How the affiliate account was created. FK to Dictionary.CreationSource: 1=Local (admin), 2=Azure (AD sync), 3=Test. NULL",
+      "wiki_quote": "How the affiliate account was created. FK to Dictionary.CreationSource: 1=Local (admin), 2=Azure (AD sync), 3=Test. NULL",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AzureObjectId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Azure Active Directory object identifier for SSO-provisioned affiliates. Has unique filtered NC index (WHERE NOT NULL). ",
+      "wiki_quote": "Azure Active Directory object identifier for SSO-provisioned affiliates. Has unique filtered NC index (WHERE NOT NULL). ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Trace",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Computed JSON column capturing session context: HostName, AppName, SUserName, SPID, DBName, ObjectName. Audit trail for ",
+      "wiki_quote": "Computed JSON column capturing session context: HostName, AppName, SUserName, SPID, DBName, ObjectName. Audit trail for ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PhoneCountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "International dialing code/country for the affiliate's phone number. Structured replacement for the legacy Telephone fie",
+      "wiki_quote": "International dialing code/country for the affiliate's phone number. Structured replacement for the legacy Telephone fie",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PhoneNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Affiliate's phone number (without country code). Paired with PhoneCountryID for the full international number.",
+      "wiki_quote": "Affiliate's phone number (without country code). Paired with PhoneCountryID for the full international number (Tier 1 — ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StreetNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Street/building number component of the affiliate's address. Added to support structured address formats.",
+      "wiki_quote": "Street/building number component of the affiliate's address. Added to support structured address formats (Tier 1 — inher",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LoginName_LOWER",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Computed column: lower(LoginName). Provides case-insensitive login name lookups via NC index without collation overhead.",
+      "wiki_quote": "Computed column: lower(LoginName). Provides case-insensitive login name lookups via NC index without collation overhead ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CalculateCommission",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Affiliates.md",
+      "upstream_quote": "Commission calculation method flag: 0=standard calculation (99.8%), 1=custom/override calculation (96 accounts). Control",
+      "wiki_quote": "Commission calculation method flag: 0=standard calculation (99.8%), 1=custom/override calculation (96 accounts). Control",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 71,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 71 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

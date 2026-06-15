@@ -1,0 +1,1130 @@
+{
+  "object_fqn": "main.bi_output.bi_output_vg_ddr_customers_snapshot",
+  "generated_at": "2026-05-19T15:01:26Z",
+  "formula_count": 102,
+  "formulas": [
+    {
+      "column": "RealCID",
+      "formula": "STRING(RealCID)",
+      "expression_raw": "STRING(ddrc.RealCID) AS RealCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "GCID",
+      "formula": "GCID",
+      "expression_raw": "fsc.GCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "Date",
+      "formula": "date",
+      "expression_raw": "ddrc.date as Date",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "DateID",
+      "formula": "DateID",
+      "expression_raw": "ddrc.DateID as DateID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerLevelID",
+      "formula": "PlayerLevelID",
+      "expression_raw": "fsc.PlayerLevelID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "ClubTier",
+      "formula": "Name",
+      "expression_raw": "dpl.Name AS ClubTier",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationID",
+      "formula": "RegulationID",
+      "expression_raw": "fsc.RegulationID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "Regulation",
+      "formula": "Name",
+      "expression_raw": "dr.Name AS Regulation",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevelID",
+      "formula": "VerificationLevelID",
+      "expression_raw": "fsc.VerificationLevelID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevel",
+      "formula": "Name",
+      "expression_raw": "dv.Name AS VerificationLevel",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "CountryID",
+      "formula": "CountryID",
+      "expression_raw": "fsc.CountryID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "Country",
+      "formula": "Name",
+      "expression_raw": "dc.Name AS Country",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "Region",
+      "formula": "MarketingRegionManualName",
+      "expression_raw": "dc.MarketingRegionManualName AS Region",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManagerID",
+      "formula": "AccountManagerID",
+      "expression_raw": "fsc.AccountManagerID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManager",
+      "formula": "concat(FirstName, ' ', LastName)",
+      "expression_raw": "concat(dm.FirstName, ' ', dm.LastName) AS AccountManager",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager"
+      ],
+      "transform_kind": "function",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "LanguageID",
+      "formula": "LanguageID",
+      "expression_raw": "fsc.LanguageID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "Language",
+      "formula": "Name",
+      "expression_raw": "dl.Name AS Language",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguageID",
+      "formula": "CommunicationLanguageID",
+      "expression_raw": "fsc.CommunicationLanguageID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguage",
+      "formula": "Name",
+      "expression_raw": "dcl.Name AS CommunicationLanguage",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L26-L26",
+      "scope": "main"
+    },
+    {
+      "column": "AccountTypeID",
+      "formula": "AccountTypeID",
+      "expression_raw": "fsc.AccountTypeID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L27-L27",
+      "scope": "main"
+    },
+    {
+      "column": "AccountType",
+      "formula": "Name",
+      "expression_raw": "act.Name AS AccountType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L28-L28",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusID",
+      "formula": "GuruStatusID",
+      "expression_raw": "fsc.GuruStatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L29-L29",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusName",
+      "formula": "GuruStatusName",
+      "expression_raw": "gs.GuruStatusName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L30-L30",
+      "scope": "main"
+    },
+    {
+      "column": "IsPI",
+      "formula": "CASE WHEN GuruStatusID > 1 THEN 1 else 0 END",
+      "expression_raw": "CASE\n    WHEN fsc.GuruStatusID > 1 THEN 1\n    else 0\n  END AS IsPI",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L31-L34",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusID",
+      "formula": "AccountStatusID",
+      "expression_raw": "fsc.AccountStatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L35-L35",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusName",
+      "formula": "AccountStatusName",
+      "expression_raw": "ast.AccountStatusName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L36-L36",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusID",
+      "formula": "PlayerStatusID",
+      "expression_raw": "fsc.PlayerStatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L37-L37",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusName",
+      "formula": "Name",
+      "expression_raw": "pst.Name as PlayerStatusName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L38-L38",
+      "scope": "main"
+    },
+    {
+      "column": "CanOpenPosition",
+      "formula": "CanOpenPosition",
+      "expression_raw": "pst.CanOpenPosition",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L39-L39",
+      "scope": "main"
+    },
+    {
+      "column": "CanClosePosition",
+      "formula": "CanClosePosition",
+      "expression_raw": "pst.CanClosePosition",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L40-L40",
+      "scope": "main"
+    },
+    {
+      "column": "CanEditPosition",
+      "formula": "CanEditPosition",
+      "expression_raw": "pst.CanEditPosition",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L41-L41",
+      "scope": "main"
+    },
+    {
+      "column": "CanBeCopied",
+      "formula": "CanBeCopied",
+      "expression_raw": "pst.CanBeCopied",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L42-L42",
+      "scope": "main"
+    },
+    {
+      "column": "CanDeposit",
+      "formula": "CanDeposit",
+      "expression_raw": "pst.CanDeposit",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L43-L43",
+      "scope": "main"
+    },
+    {
+      "column": "CanRequestWithdraw",
+      "formula": "CanRequestWithdraw",
+      "expression_raw": "pst.CanRequestWithdraw",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L44-L44",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonID",
+      "formula": "PlayerStatusReasonID",
+      "expression_raw": "fsc.PlayerStatusReasonID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L45-L45",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonName",
+      "formula": "Name",
+      "expression_raw": "psr.Name AS PlayerStatusReasonName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L46-L46",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonID",
+      "formula": "PlayerStatusSubReasonID",
+      "expression_raw": "fsc.PlayerStatusSubReasonID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L47-L47",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonName",
+      "formula": "PlayerStatusSubReasonName",
+      "expression_raw": "pssr.PlayerStatusSubReasonName",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L48-L48",
+      "scope": "main"
+    },
+    {
+      "column": "WeekNumberYear",
+      "formula": "WeekNumberYear",
+      "expression_raw": "dd.WeekNumberYear",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L49-L49",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYearMonth",
+      "formula": "CalendarYearMonth",
+      "expression_raw": "dd.CalendarYearMonth",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L50-L50",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarQuarter",
+      "formula": "CalendarQuarter",
+      "expression_raw": "dd.CalendarQuarter",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L51-L51",
+      "scope": "main"
+    },
+    {
+      "column": "CalendarYear",
+      "formula": "CalendarYear",
+      "expression_raw": "dd.CalendarYear",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L52-L52",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayWeek",
+      "formula": "IsLastDayWeek",
+      "expression_raw": "dd.IsLastDayWeek",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L53-L53",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayMonth",
+      "formula": "IsLastDayMonth",
+      "expression_raw": "dd.IsLastDayMonth",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L54-L54",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayQuarter",
+      "formula": "IsLastDayQuarter",
+      "expression_raw": "dd.IsLastDayQuarter",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L55-L55",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastDayYear",
+      "formula": "IsLastDayYear",
+      "expression_raw": "dd.IsLastDayYear",
+      "inputs": [
+        "main.bi_output.bi_output_vg_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L56-L56",
+      "scope": "main"
+    },
+    {
+      "column": "CitizenshipCountryID",
+      "formula": "CitizenshipCountryID",
+      "expression_raw": "dcu.CitizenshipCountryID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L57-L57",
+      "scope": "main"
+    },
+    {
+      "column": "CitizenshipCountry",
+      "formula": "Name CitizenshipCountry",
+      "expression_raw": "dcz.Name CitizenshipCountry",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L58-L58",
+      "scope": "main"
+    },
+    {
+      "column": "AffiliateID",
+      "formula": "AffiliateID",
+      "expression_raw": "dcu.AffiliateID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L59-L59",
+      "scope": "main"
+    },
+    {
+      "column": "ClusterDetail",
+      "formula": "cdl.ClusterDetail",
+      "expression_raw": "cdl.ClusterDetail",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L60-L60",
+      "scope": "main"
+    },
+    {
+      "column": "ClusterSF",
+      "formula": "cdl.ClusterSF",
+      "expression_raw": "cdl.ClusterSF",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L61-L61",
+      "scope": "main"
+    },
+    {
+      "column": "IsLastCluster",
+      "formula": "cdl.IsLastCluster",
+      "expression_raw": "cdl.IsLastCluster",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L62-L62",
+      "scope": "main"
+    },
+    {
+      "column": "IsFirstCluster",
+      "formula": "cdl.IsFirstCluster",
+      "expression_raw": "cdl.IsFirstCluster",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L63-L63",
+      "scope": "main"
+    },
+    {
+      "column": "IsSFCluster",
+      "formula": "cdl.IsSFCluster",
+      "expression_raw": "cdl.IsSFCluster",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L64-L64",
+      "scope": "main"
+    },
+    {
+      "column": "UpdateDateIDSF",
+      "formula": "cdl.UpdateDateIDSF",
+      "expression_raw": "cdl.UpdateDateIDSF",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L65-L65",
+      "scope": "main"
+    },
+    {
+      "column": "ClusterDynamic",
+      "formula": "cdl.ClusterDynamic",
+      "expression_raw": "cdl.ClusterDynamic",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L66-L66",
+      "scope": "main"
+    },
+    {
+      "column": "ActiveTraded",
+      "formula": "ActiveTraded",
+      "expression_raw": "ddrc.ActiveTraded",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L67-L67",
+      "scope": "main"
+    },
+    {
+      "column": "BalanceOnlyAccount",
+      "formula": "BalanceOnlyAccount",
+      "expression_raw": "ddrc.BalanceOnlyAccount",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L68-L68",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only",
+      "formula": "Portfolio_Only",
+      "expression_raw": "ddrc.Portfolio_Only",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L69-L69",
+      "scope": "main"
+    },
+    {
+      "column": "AccountActive",
+      "formula": "AccountActive",
+      "expression_raw": "ddrc.AccountActive",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L70-L70",
+      "scope": "main"
+    },
+    {
+      "column": "AccountInActive",
+      "formula": "AccountInActive",
+      "expression_raw": "ddrc.AccountInActive",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L71-L71",
+      "scope": "main"
+    },
+    {
+      "column": "IsFunded",
+      "formula": "IsFunded",
+      "expression_raw": "ddrc.IsFunded",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L72-L72",
+      "scope": "main"
+    },
+    {
+      "column": "ActiveTraded_ThisWeek",
+      "formula": "ActiveTraded_ThisWeek",
+      "expression_raw": "ddps.ActiveTraded_ThisWeek",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L73-L73",
+      "scope": "main"
+    },
+    {
+      "column": "ActiveTraded_ThisMonth",
+      "formula": "ActiveTraded_ThisMonth",
+      "expression_raw": "ddps.ActiveTraded_ThisMonth",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L74-L74",
+      "scope": "main"
+    },
+    {
+      "column": "ActiveTraded_ThisQuarter",
+      "formula": "ActiveTraded_ThisQuarter",
+      "expression_raw": "ddps.ActiveTraded_ThisQuarter",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L75-L75",
+      "scope": "main"
+    },
+    {
+      "column": "ActiveTraded_ThisYear",
+      "formula": "ActiveTraded_ThisYear",
+      "expression_raw": "ddps.ActiveTraded_ThisYear",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L76-L76",
+      "scope": "main"
+    },
+    {
+      "column": "BalanceOnlyAccount_ThisWeek",
+      "formula": "BalanceOnlyAccount_ThisWeek",
+      "expression_raw": "ddps.BalanceOnlyAccount_ThisWeek",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L77-L77",
+      "scope": "main"
+    },
+    {
+      "column": "BalanceOnlyAccount_ThisMonth",
+      "formula": "BalanceOnlyAccount_ThisMonth",
+      "expression_raw": "ddps.BalanceOnlyAccount_ThisMonth",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L78-L78",
+      "scope": "main"
+    },
+    {
+      "column": "BalanceOnlyAccount_ThisQuarter",
+      "formula": "BalanceOnlyAccount_ThisQuarter",
+      "expression_raw": "ddps.BalanceOnlyAccount_ThisQuarter",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L79-L79",
+      "scope": "main"
+    },
+    {
+      "column": "BalanceOnlyAccount_ThisYear",
+      "formula": "BalanceOnlyAccount_ThisYear",
+      "expression_raw": "ddps.BalanceOnlyAccount_ThisYear",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L80-L80",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_ThisWeek",
+      "formula": "Portfolio_Only_ThisWeek",
+      "expression_raw": "ddps.Portfolio_Only_ThisWeek",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L81-L81",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_ThisMonth",
+      "formula": "Portfolio_Only_ThisMonth",
+      "expression_raw": "ddps.Portfolio_Only_ThisMonth",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L82-L82",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_ThisQuarter",
+      "formula": "Portfolio_Only_ThisQuarter",
+      "expression_raw": "ddps.Portfolio_Only_ThisQuarter",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L83-L83",
+      "scope": "main"
+    },
+    {
+      "column": "Portfolio_Only_ThisYear",
+      "formula": "Portfolio_Only_ThisYear",
+      "expression_raw": "ddps.Portfolio_Only_ThisYear",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L84-L84",
+      "scope": "main"
+    },
+    {
+      "column": "IsFunded_ThisWeek",
+      "formula": "IsFunded_ThisWeek",
+      "expression_raw": "ddps.IsFunded_ThisWeek",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L85-L85",
+      "scope": "main"
+    },
+    {
+      "column": "IsFunded_ThisMonth",
+      "formula": "IsFunded_ThisMonth",
+      "expression_raw": "ddps.IsFunded_ThisMonth",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L86-L86",
+      "scope": "main"
+    },
+    {
+      "column": "IsFunded_ThisQuarter",
+      "formula": "IsFunded_ThisQuarter",
+      "expression_raw": "ddps.IsFunded_ThisQuarter",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L87-L87",
+      "scope": "main"
+    },
+    {
+      "column": "IsFunded_ThisYear",
+      "formula": "IsFunded_ThisYear",
+      "expression_raw": "ddps.IsFunded_ThisYear",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L88-L88",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationID_ThisWeek",
+      "formula": "RegulationID_ThisWeek",
+      "expression_raw": "ddps.RegulationID_ThisWeek",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L89-L89",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationID_ThisMonth",
+      "formula": "RegulationID_ThisMonth",
+      "expression_raw": "ddps.RegulationID_ThisMonth",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L90-L90",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationID_ThisQuarter",
+      "formula": "RegulationID_ThisQuarter",
+      "expression_raw": "ddps.RegulationID_ThisQuarter",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L91-L91",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationID_ThisYear",
+      "formula": "RegulationID_ThisYear",
+      "expression_raw": "ddps.RegulationID_ThisYear",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L92-L92",
+      "scope": "main"
+    },
+    {
+      "column": "CountryID_ThisWeek",
+      "formula": "CountryID_ThisWeek",
+      "expression_raw": "ddps.CountryID_ThisWeek",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L93-L93",
+      "scope": "main"
+    },
+    {
+      "column": "CountryID_ThisMonth",
+      "formula": "CountryID_ThisMonth",
+      "expression_raw": "ddps.CountryID_ThisMonth",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L94-L94",
+      "scope": "main"
+    },
+    {
+      "column": "CountryID_ThisQuarter",
+      "formula": "CountryID_ThisQuarter",
+      "expression_raw": "ddps.CountryID_ThisQuarter",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L95-L95",
+      "scope": "main"
+    },
+    {
+      "column": "CountryID_ThisYear",
+      "formula": "CountryID_ThisYear",
+      "expression_raw": "ddps.CountryID_ThisYear",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L96-L96",
+      "scope": "main"
+    },
+    {
+      "column": "IsCreditReportValidCB_ThisWeek",
+      "formula": "IsCreditReportValidCB_ThisWeek",
+      "expression_raw": "ddps.IsCreditReportValidCB_ThisWeek",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L97-L97",
+      "scope": "main"
+    },
+    {
+      "column": "IsCreditReportValidCB_ThisMonth",
+      "formula": "IsCreditReportValidCB_ThisMonth",
+      "expression_raw": "ddps.IsCreditReportValidCB_ThisMonth",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L98-L98",
+      "scope": "main"
+    },
+    {
+      "column": "IsCreditReportValidCB_ThisQuarter",
+      "formula": "IsCreditReportValidCB_ThisQuarter",
+      "expression_raw": "ddps.IsCreditReportValidCB_ThisQuarter",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L99-L99",
+      "scope": "main"
+    },
+    {
+      "column": "IsCreditReportValidCB_ThisYear",
+      "formula": "IsCreditReportValidCB_ThisYear",
+      "expression_raw": "ddps.IsCreditReportValidCB_ThisYear",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L100-L100",
+      "scope": "main"
+    },
+    {
+      "column": "IsValidCustomer_ThisWeek",
+      "formula": "IsValidCustomer_ThisWeek",
+      "expression_raw": "ddps.IsValidCustomer_ThisWeek",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L101-L101",
+      "scope": "main"
+    },
+    {
+      "column": "IsValidCustomer_ThisMonth",
+      "formula": "IsValidCustomer_ThisMonth",
+      "expression_raw": "ddps.IsValidCustomer_ThisMonth",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L102-L102",
+      "scope": "main"
+    },
+    {
+      "column": "IsValidCustomer_ThisQuarter",
+      "formula": "IsValidCustomer_ThisQuarter",
+      "expression_raw": "ddps.IsValidCustomer_ThisQuarter",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L103-L103",
+      "scope": "main"
+    },
+    {
+      "column": "IsValidCustomer_ThisYear",
+      "formula": "IsValidCustomer_ThisYear",
+      "expression_raw": "ddps.IsValidCustomer_ThisYear",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L104-L104",
+      "scope": "main"
+    },
+    {
+      "column": "MarketingRegion_ThisWeek",
+      "formula": "MarketingRegion_ThisWeek",
+      "expression_raw": "ddps.MarketingRegion_ThisWeek",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L105-L105",
+      "scope": "main"
+    },
+    {
+      "column": "MarketingRegion_ThisMonth",
+      "formula": "MarketingRegion_ThisMonth",
+      "expression_raw": "ddps.MarketingRegion_ThisMonth",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L106-L106",
+      "scope": "main"
+    },
+    {
+      "column": "MarketingRegion_ThisQuarter",
+      "formula": "MarketingRegion_ThisQuarter",
+      "expression_raw": "ddps.MarketingRegion_ThisQuarter",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L107-L107",
+      "scope": "main"
+    },
+    {
+      "column": "MarketingRegion_ThisYear",
+      "formula": "MarketingRegion_ThisYear",
+      "expression_raw": "ddps.MarketingRegion_ThisYear",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L108-L108",
+      "scope": "main"
+    },
+    {
+      "column": "ClubTier_ThisWeek",
+      "formula": "PlayerLevelID_ThisWeek",
+      "expression_raw": "ddps.PlayerLevelID_ThisWeek AS ClubTier_ThisWeek",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L109-L109",
+      "scope": "main"
+    },
+    {
+      "column": "ClubTier_ThisMonth",
+      "formula": "PlayerLevelID_ThisMonth",
+      "expression_raw": "ddps.PlayerLevelID_ThisMonth AS ClubTier_ThisMonth",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L110-L110",
+      "scope": "main"
+    },
+    {
+      "column": "ClubTier_ThisQuarter",
+      "formula": "PlayerLevelID_ThisQuarter",
+      "expression_raw": "ddps.PlayerLevelID_ThisQuarter AS ClubTier_ThisQuarter",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L111-L111",
+      "scope": "main"
+    },
+    {
+      "column": "ClubTier_ThisYear",
+      "formula": "PlayerLevelID_ThisYear",
+      "expression_raw": "ddps.PlayerLevelID_ThisYear AS ClubTier_ThisYear",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L112-L112",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_vg_ddr_customers_snapshot.sql"
+}

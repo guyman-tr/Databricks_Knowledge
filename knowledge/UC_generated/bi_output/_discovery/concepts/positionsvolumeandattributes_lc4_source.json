@@ -1,0 +1,80 @@
+{
+  "object_fqn": "main.bi_output.positionsvolumeandattributes_lc4_source",
+  "generated_at": "2026-05-19T15:01:20Z",
+  "concept_count": 3,
+  "concepts": [
+    {
+      "id": "dim_lookup_di",
+      "name": "Dim lookup via di",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "alias": "di",
+      "join_conditions": [
+        "dp.InstrumentID = di.InstrumentID",
+        "dp.InstrumentID = di.InstrumentID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L20,L86",
+      "scopes": [
+        "BaseOpen",
+        "BaseClose"
+      ],
+      "scope": "BaseOpen",
+      "join_condition": "dp.InstrumentID = di.InstrumentID"
+    },
+    {
+      "id": "dim_lookup_dr",
+      "name": "Dim lookup via dr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "alias": "dr",
+      "join_conditions": [
+        "dr.DateRangeID = fsc.DateRangeID\n       AND CAST(date_format(bse.Date_, '        '",
+        "dr.DateRangeID = fsc.DateRangeID\n       AND CAST(date_format(bse.Date_, '        '"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L58,L123",
+      "scopes": [
+        "FinalOpen",
+        "FinalClose"
+      ],
+      "scope": "FinalOpen",
+      "join_condition": "dr.DateRangeID = fsc.DateRangeID\n       AND CAST(date_format(bse.Date_, '        '"
+    },
+    {
+      "id": "dim_lookup_dpl",
+      "name": "Dim lookup via dpl",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "alias": "dpl",
+      "join_conditions": [
+        "fsc.PlayerLevelID = dpl.PlayerLevelID",
+        "fsc.PlayerLevelID = dpl.PlayerLevelID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L62,L127",
+      "scopes": [
+        "FinalOpen",
+        "FinalClose"
+      ],
+      "scope": "FinalOpen",
+      "join_condition": "fsc.PlayerLevelID = dpl.PlayerLevelID"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/positionsvolumeandattributes_lc4_source.sql"
+}

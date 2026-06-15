@@ -1,0 +1,95 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_senttransactions",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:24Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactions.md",
+      "upstream_quote": "Auto-incrementing primary key. FK target for Wallet.SentTransactionStatuses, Wallet.SentTransactionOutputs, and Wallet.S",
+      "wiki_quote": "Auto-incrementing primary key. FK target for Wallet.SentTransactionStatuses, Wallet.SentTransactionOutputs, and Wallet.S",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainTransactionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactions.md",
+      "upstream_quote": "The on-chain transaction hash/ID. Unique constraint enforced. Can be looked up on blockchain explorers. Format varies by",
+      "wiki_quote": "The on-chain transaction hash/ID. Unique constraint enforced. Can be looked up on blockchain explorers. Format varies by",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactions.md",
+      "upstream_quote": "The source wallet this transaction was sent from. FK to Wallet.Wallets.WalletId. For customer withdrawals, this is the c",
+      "wiki_quote": "The source wallet this transaction was sent from. FK to Wallet.Wallets.WalletId. For customer withdrawals, this is the c",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactions.md",
+      "upstream_quote": "Timestamp when the transaction was broadcast to the blockchain. NULL only for legacy records.",
+      "wiki_quote": "Timestamp when the transaction was broadcast to the blockchain. NULL only for legacy records (Tier 1 — inherited from Wa",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CorrelationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactions.md",
+      "upstream_quote": "Links to the parent request in Wallet.Requests.CorrelationId. Enables tracing from business request to on-chain transact",
+      "wiki_quote": "Links to the parent request in Wallet.Requests.CorrelationId. Enables tracing from business request to on-chain transact",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TransactionTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactions.md",
+      "upstream_quote": "Business purpose: 0=Redeem, 1=CustomerMoneyOut, 2=AmlMoneyBack, 4=Funding, 5=ConversionMoneyIn, 6=ConversionMoneyOut, 7=",
+      "wiki_quote": "Business purpose: 0=Redeem, 1=CustomerMoneyOut, 2=AmlMoneyBack, 4=Funding, 5=ConversionMoneyIn, 6=ConversionMoneyOut, 7=",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactions.md",
+      "upstream_quote": "Network fee paid in the crypto's native units. Recorded after on-chain confirmation. Used for cost analysis, customer bi",
+      "wiki_quote": "Network fee paid in the crypto's native units. Recorded after on-chain confirmation. Used for cost analysis, customer bi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.SentTransactions.md",
+      "upstream_quote": "The cryptocurrency sent. FK to Wallet.CryptoTypes.CryptoID. Combined with WalletId for per-wallet per-crypto transaction",
+      "wiki_quote": "The cryptocurrency sent. FK to Wallet.CryptoTypes.CryptoID. Combined with WalletId for per-wallet per-crypto transaction",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 8,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 8 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

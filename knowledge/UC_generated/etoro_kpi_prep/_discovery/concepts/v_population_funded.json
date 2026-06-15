@@ -1,0 +1,30 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_population_funded",
+  "generated_at": "2026-05-18T16:27:27Z",
+  "concept_count": 1,
+  "concepts": [
+    {
+      "id": "dim_lookup_dc",
+      "name": "Dim lookup via dc",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "alias": "dc",
+      "join_conditions": [
+        "faop.GCID = dc.GCID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L35",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "faop.GCID = dc.GCID"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_funded.sql"
+}

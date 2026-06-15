@@ -1,0 +1,74 @@
+{
+  "object_fqn": "main.bi_output.vg_emoney_openbankingdeposit",
+  "generated_at": "2026-05-19T15:01:27Z",
+  "formula_count": 6,
+  "formulas": [
+    {
+      "column": "CID",
+      "formula": "CID",
+      "expression_raw": "CID",
+      "inputs": [
+        "main.bi_db.bronze_moneytransfer_billing_transfers"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "OpenBankingDeposit_Attempt_ID",
+      "formula": "TransferID",
+      "expression_raw": "TransferID                                   as OpenBankingDeposit_Attempt_ID",
+      "inputs": [
+        "main.bi_db.bronze_moneytransfer_billing_transfers"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "OpenBankingDeposit_Attempt_Status",
+      "formula": "case when TransferStatusID = 10 then 'Success' else 'Pending_or_Failed' end",
+      "expression_raw": "case\n        when TransferStatusID = 10\n            then 'Success'\n        else 'Pending_or_Failed'\n    end                                          as OpenBankingDeposit_Attempt_Status",
+      "inputs": [
+        "main.bi_db.bronze_moneytransfer_billing_transfers"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L10-L15",
+      "scope": "main"
+    },
+    {
+      "column": "OpenBankingDeposit_Provider",
+      "formula": "case when left(ExReferenceID, 2) = 'TZ' then 'Volt' when left(ExReferenceID, 2) = 'TK' then 'Tink' else 'Other' end as OpenBank…",
+      "expression_raw": "case\n        when left(p.ExReferenceID, 2) = 'TZ' then 'Volt'\n        when left(p.ExReferenceID, 2) = 'TK' then 'Tink'\n        else 'Other'\n    end                                          as OpenBank…",
+      "inputs": [
+        "main.bi_db.bronze_moneytransfer_billing_transfers"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L16-L21",
+      "scope": "main"
+    },
+    {
+      "column": "OpenBankingDeposit_Attempt_USDAmount",
+      "formula": "Amount as OpenBankingDeposit_Attempt_USDAmount , ModificationDate",
+      "expression_raw": "Amount as OpenBankingDeposit_Attempt_USDAmount , ModificationDate as OpenBankingDeposit_Attempt_Date",
+      "inputs": [
+        "main.bi_db.bronze_moneytransfer_billing_transfers"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "OpenBankingDeposit_Attempt_Date",
+      "formula": "Amount as OpenBankingDeposit_Attempt_USDAmount , ModificationDate",
+      "expression_raw": "Amount as OpenBankingDeposit_Attempt_USDAmount , ModificationDate as OpenBankingDeposit_Attempt_Date",
+      "inputs": [
+        "main.bi_db.bronze_moneytransfer_billing_transfers"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_emoney_openbankingdeposit.sql"
+}

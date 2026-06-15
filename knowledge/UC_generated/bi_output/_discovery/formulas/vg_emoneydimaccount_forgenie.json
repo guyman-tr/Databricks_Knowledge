@@ -1,0 +1,96 @@
+{
+  "object_fqn": "main.bi_output.vg_emoneydimaccount_forgenie",
+  "generated_at": "2026-05-19T15:01:28Z",
+  "formula_count": 8,
+  "formulas": [
+    {
+      "column": "CID",
+      "formula": "CID",
+      "expression_raw": "mda.CID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "GCID",
+      "formula": "GCID",
+      "expression_raw": "mda.GCID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "AccountSubProgram",
+      "formula": "AccountSubProgram",
+      "expression_raw": "mda.AccountSubProgram",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "AccountCreateDate",
+      "formula": "AccountCreateDate",
+      "expression_raw": "mda.AccountCreateDate",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "RegAccountSubProgram",
+      "formula": "RegAccountSubProgram",
+      "expression_raw": "mda.RegAccountSubProgram",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "CurrencyBalanceStatus",
+      "formula": "COALESCE(CurrencyBalanceStatus, 'Active')",
+      "expression_raw": "COALESCE(mda.CurrencyBalanceStatus, 'Active') AS CurrencyBalanceStatus",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "CurrencyBalanceISODesc",
+      "formula": "CurrencyBalanceISODesc",
+      "expression_raw": "mda.CurrencyBalanceISODesc",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "CurrencyBalanceID",
+      "formula": "CurrencyBalanceID",
+      "expression_raw": "mda.CurrencyBalanceID",
+      "inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_emoneydimaccount_forgenie.sql"
+}

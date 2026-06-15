@@ -1,0 +1,30 @@
+{
+  "object_fqn": "main.bi_output.positive_nmi",
+  "generated_at": "2026-05-19T15:01:21Z",
+  "concept_count": 1,
+  "concepts": [
+    {
+      "id": "dim_lookup_imd",
+      "name": "Dim lookup via imd",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "alias": "imd",
+      "join_conditions": [
+        "P0.InstrumentID = imd.InstrumentID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L50",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "P0.InstrumentID = imd.InstrumentID"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/positive_nmi.sql"
+}

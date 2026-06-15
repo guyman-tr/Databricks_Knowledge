@@ -7,14 +7,14 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_options_aum.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_options_aum.json` (rows: 8, mismatches: 7) |
 | **Primary upstream** | `main.general.bronze_sodreconciliation_apex_ext981_buypowersummary` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 
 | Upstream UC Object | Role | Upstream Wiki |
 |--------------------|------|---------------|
-| `main.general.bronze_sodreconciliation_apex_ext981_buypowersummary` | Primary (FROM) | ✓ `knowledge\ProdSchemas\DB_Schema\Sodreconciliation\Wiki\apex\Tables\apex.EXT981_BuyPowerSummary.md` |
-| `main.general.bronze_usabroker_apex_options` | JOIN / referenced | ✓ `knowledge\ProdSchemas\ComplianceDBs\USABroker\Wiki\apex\Tables\apex.Options.md` |
+| `main.general.bronze_sodreconciliation_apex_ext981_buypowersummary` | Primary (FROM) | ✓ `knowledge/ProdSchemas/DB_Schema/Sodreconciliation/Wiki/apex/Tables/apex.EXT981_BuyPowerSummary.md` |
+| `main.general.bronze_usabroker_apex_options` | JOIN / referenced | ✓ `knowledge/ProdSchemas/ComplianceDBs/USABroker/Wiki/apex/Tables/apex.Options.md` |
 
 ## Lineage Chain
 

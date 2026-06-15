@@ -1,0 +1,43 @@
+{
+  "object_fqn": "main.etoro_kpi.customer_exclude_list",
+  "generated_at": "2026-05-19T15:20:28Z",
+  "concept_count": 1,
+  "concepts": [
+    {
+      "id": "case_flag_excludereason",
+      "name": "excludeReason computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "excludeReason"
+      ],
+      "predicates": [
+        {
+          "col": "PlayerStatusID",
+          "op": "=",
+          "val": "2"
+        },
+        {
+          "col": "PlayerStatusReasonID",
+          "op": "=",
+          "val": "4"
+        },
+        {
+          "col": "PlayerLevelID",
+          "op": "=",
+          "val": "4"
+        }
+      ],
+      "then_value": "'          '",
+      "else_value": null,
+      "upstream_enum_decodes": {
+        "PlayerLevelID=4": "Popular Investor"
+      },
+      "physical_inputs": [
+        "main.general.bronze_etoro_customer_customer_masked"
+      ],
+      "evidence_lines": "etoro_kpi.sql L10-L15",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/customer_exclude_list.sql"
+}

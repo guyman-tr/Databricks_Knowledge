@@ -1,0 +1,74 @@
+{
+  "object_fqn": "main.bi_dealing.v_hschangesummarylog_yesterday_email_csv",
+  "generated_at": "2026-05-19T12:47:57Z",
+  "formula_count": 6,
+  "formulas": [
+    {
+      "column": "ID",
+      "formula": "CAST(NULL AS BIGINT)",
+      "expression_raw": "CAST(NULL AS BIGINT)    AS ID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L50-L50",
+      "scope": "main"
+    },
+    {
+      "column": "StartTime",
+      "formula": "CAST(NULL AS TIMESTAMP)",
+      "expression_raw": "CAST(NULL AS TIMESTAMP) AS StartTime",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L51-L51",
+      "scope": "main"
+    },
+    {
+      "column": "EndTime",
+      "formula": "CAST(NULL AS TIMESTAMP)",
+      "expression_raw": "CAST(NULL AS TIMESTAMP) AS EndTime",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L52-L52",
+      "scope": "main"
+    },
+    {
+      "column": "Comments",
+      "formula": "-- normalize comments: trim + lowercase + collapse multiple spaces regexp_replace(lower(trim(Comments)), '\\\\s+', ' ')",
+      "expression_raw": "-- normalize comments: trim + lowercase + collapse multiple spaces\n        regexp_replace(lower(trim(Comments)), '\\\\s+', ' ') AS Comments",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L17-L18",
+      "scope": "filtered"
+    },
+    {
+      "column": "etr_ymd",
+      "formula": "run_date",
+      "expression_raw": "r.run_date              AS etr_ymd",
+      "inputs": [
+        "run_date"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L54-L54",
+      "scope": "main"
+    },
+    {
+      "column": "UpdateDate",
+      "formula": "current_timestamp()",
+      "expression_raw": "current_timestamp() AS UpdateDate",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L42-L42",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_dealing/_discovery/source_code/v_hschangesummarylog_yesterday_email_csv.sql"
+}

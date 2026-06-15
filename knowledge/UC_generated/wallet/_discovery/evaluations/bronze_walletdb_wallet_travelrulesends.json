@@ -1,0 +1,74 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_travelrulesends",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:25Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleSends.md",
+      "upstream_quote": "Auto-incrementing primary key.",
+      "wiki_quote": "Auto-incrementing primary key (Tier 1 — inherited from WalletDB.Wallet.TravelRuleSends).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleSends.md",
+      "upstream_quote": "Source wallet that performed the send. FK to Wallet.WalletPool.WalletId.",
+      "wiki_quote": "Source wallet that performed the send. FK to Wallet.WalletPool.WalletId (Tier 1 — inherited from WalletDB.Wallet.TravelR",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CorrelationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleSends.md",
+      "upstream_quote": "Links to the parent send request.",
+      "wiki_quote": "Links to the parent send request (Tier 1 — inherited from WalletDB.Wallet.TravelRuleSends).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TravelRuleAddressId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleSends.md",
+      "upstream_quote": "The whitelisted address used for this send. FK to Wallet.TravelRuleAddresses.Id.",
+      "wiki_quote": "The whitelisted address used for this send. FK to Wallet.TravelRuleAddresses.Id (Tier 1 — inherited from WalletDB.Wallet",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Created",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.TravelRuleSends.md",
+      "upstream_quote": "Timestamp of this send-address linkage.",
+      "wiki_quote": "Timestamp of this send-address linkage (Tier 1 — inherited from WalletDB.Wallet.TravelRuleSends).",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 5,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 5 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

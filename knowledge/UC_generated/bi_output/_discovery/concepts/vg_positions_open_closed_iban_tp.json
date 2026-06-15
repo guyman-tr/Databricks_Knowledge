@@ -1,0 +1,103 @@
+{
+  "object_fqn": "main.bi_output.vg_positions_open_closed_iban_tp",
+  "generated_at": "2026-05-19T15:01:22Z",
+  "concept_count": 5,
+  "concepts": [
+    {
+      "id": "case_flag_isclosetoiban",
+      "name": "IsCloseToIBan computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsCloseToIBan"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.bi_output.BI_OUTPUT_Finance_Tables_bi_db_positions_closed_to_iban_parquet"
+      ],
+      "evidence_lines": "bi_output.sql L12-L12",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_isopenfromiban",
+      "name": "IsOpenFromIBan computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsOpenFromIBan"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet"
+      ],
+      "evidence_lines": "bi_output.sql L13-L13",
+      "scope": "main"
+    },
+    {
+      "id": "case_flag_isemoneycustomer",
+      "name": "IsEmoneyCustomer computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "IsEmoneyCustomer"
+      ],
+      "predicates": [],
+      "then_value": "1",
+      "else_value": "0",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "evidence_lines": "bi_output.sql L14-L14",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_dc",
+      "name": "Dim lookup via dc",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "alias": "dc",
+      "join_conditions": [
+        "a.CID = dc.RealCID AND dc.IsValidCustomer = 1"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L16",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "a.CID = dc.RealCID AND dc.IsValidCustomer = 1"
+    },
+    {
+      "id": "dim_lookup_e",
+      "name": "Dim lookup via e",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account",
+      "alias": "e",
+      "join_conditions": [
+        "a.CID=e.CID and e.IsValidETM=1 and e.GCID_Unique_Count=1"
+      ],
+      "physical_inputs": [
+        "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L18",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "a.CID=e.CID and e.IsValidETM=1 and e.GCID_Unique_Count=1"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/vg_positions_open_closed_iban_tp.sql"
+}

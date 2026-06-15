@@ -1,0 +1,55 @@
+{
+  "object_fqn": "main.bi_output.bi_ouput_vg_etoro_emoney",
+  "generated_at": "2026-05-19T15:01:16Z",
+  "concept_count": 1,
+  "concepts": [
+    {
+      "id": "case_flag_fundingtype_txtype_7",
+      "name": "Fundingtype_Txtype_7 computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "Fundingtype_Txtype_7"
+      ],
+      "predicates": [
+        {
+          "col": "MIMOPlatform",
+          "op": "=",
+          "val": "'      '"
+        },
+        {
+          "col": "IsInternalTransfer",
+          "op": "=",
+          "val": "0"
+        },
+        {
+          "col": "IsTradeFromIBAN",
+          "op": "=",
+          "val": "0"
+        },
+        {
+          "col": "IsValidCustomer",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "then_value": "'           '",
+      "else_value": "'            '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [
+        "bi_db.bronze_moneytransfer_billing_transfers",
+        "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
+        "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+        "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+        "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+        "bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction",
+        "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+        "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype",
+        "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms"
+      ],
+      "evidence_lines": "bi_output.sql L41-L77",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_ouput_vg_etoro_emoney.sql"
+}

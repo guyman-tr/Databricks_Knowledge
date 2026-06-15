@@ -1,0 +1,102 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_hedge_hbcaccountconfiguration",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:35Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "LiquidityAccountID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.HBCAccountConfiguration.md",
+      "upstream_quote": "FK to Trade.LiquidityAccounts(LiquidityAccountID). The liquidity account these execution parameters apply to. Part of 3-",
+      "wiki_quote": "FK to Trade.LiquidityAccounts(LiquidityAccountID). The liquidity account these execution parameters apply to. Part of 3-",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.HBCAccountConfiguration.md",
+      "upstream_quote": "FK to Trade.Instrument(InstrumentID). The instrument these execution parameters apply to. Part of 3-column composite PK.",
+      "wiki_quote": "FK to Trade.Instrument(InstrumentID). The instrument these execution parameters apply to. Part of 3-column composite PK.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ThresholdInEToroUnits",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.HBCAccountConfiguration.md",
+      "upstream_quote": "Order size tier boundary (in eToro units). Part of 3-column composite PK enabling tiered config. The HBC selects the row",
+      "wiki_quote": "Order size tier boundary (in eToro units). Part of 3-column composite PK enabling tiered config. The HBC selects the row",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MaxTimeMS",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.HBCAccountConfiguration.md",
+      "upstream_quote": "Maximum milliseconds to wait for an order to fill before timeout. Range: 0-25,000 in current data. Applied per-tier, per",
+      "wiki_quote": "Maximum milliseconds to wait for an order to fill before timeout. Range: 0-25,000 in current data. Applied per-tier, per",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MaxRejectRetries",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.HBCAccountConfiguration.md",
+      "upstream_quote": "Maximum number of retry attempts when an order is rejected. Range: 0-10 in current data. Higher values = more persistent",
+      "wiki_quote": "Maximum number of retry attempts when an order is rejected. Range: 0-10 in current data. Higher values = more persistent",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MinOrderSizeInEToroUnits",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.HBCAccountConfiguration.md",
+      "upstream_quote": "Minimum order size in eToro units for this account/instrument/tier. Orders below this floor are not routed. NULL = no mi",
+      "wiki_quote": "Minimum order size in eToro units for this account/instrument/tier. Orders below this floor are not routed. NULL = no mi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MaxOrderSizeInEToroUnits",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.HBCAccountConfiguration.md",
+      "upstream_quote": "Maximum single-order execution size in eToro units. Orders exceeding this must be split. Controls individual order impac",
+      "wiki_quote": "Maximum single-order execution size in eToro units. Orders exceeding this must be split. Controls individual order impac",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "UseExecutionRateWithSpread",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.HBCAccountConfiguration.md",
+      "upstream_quote": "Whether the execution rate calculation includes the bid-ask spread. 1=include spread (12,723 rows), 0=exclude spread (20",
+      "wiki_quote": "Whether the execution rate calculation includes the bid-ask spread. 1=include spread (12,723 rows), 0=exclude spread (20",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MinOrderSizeUSDForHBC",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.HBCAccountConfiguration.md",
+      "upstream_quote": "Minimum order size in USD for HBC routing. DEFAULT 0 = no USD minimum. Provides a USD-denominated floor in addition to t",
+      "wiki_quote": "Minimum order size in USD for HBC routing. DEFAULT 0 = no USD minimum. Provides a USD-denominated floor in addition to t",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 9,
+    "B": 0,
+    "C": 4,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 9 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 4 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

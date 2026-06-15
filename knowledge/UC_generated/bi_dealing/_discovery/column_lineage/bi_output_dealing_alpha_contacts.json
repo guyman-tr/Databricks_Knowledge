@@ -1,0 +1,83 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_alpha_contacts",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "LastName",
+      "target_column_name": "AccountManager",
+      "entity_type": "JOB",
+      "event_count": 80
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "FirstName",
+      "target_column_name": "AccountManager",
+      "entity_type": "JOB",
+      "event_count": 80
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_support_agent_user",
+      "source_column_name": "AccountManagerID",
+      "target_column_name": "AccountManagerID",
+      "entity_type": "JOB",
+      "event_count": 80
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 80
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "source_column_name": "CID",
+      "target_column_name": "CallSeq",
+      "entity_type": "JOB",
+      "event_count": 80
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "CallSeq",
+      "entity_type": "JOB",
+      "event_count": 80
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "ContactDate",
+      "entity_type": "JOB",
+      "event_count": 80
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "ContactDateMinus3",
+      "entity_type": "JOB",
+      "event_count": 80
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_facing_agent_engagement",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "ContactDatePlus30",
+      "entity_type": "JOB",
+      "event_count": 80
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_support_agent_user",
+      "source_column_name": "LastName",
+      "target_column_name": "Name",
+      "entity_type": "JOB",
+      "event_count": 80
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_customer_customer_support_agent_user",
+      "source_column_name": "FirstName",
+      "target_column_name": "Name",
+      "entity_type": "JOB",
+      "event_count": 80
+    }
+  ],
+  "generated_at": "2026-05-19T12:10:19Z"
+}

@@ -1,0 +1,265 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_manipulation_report_real_stocks",
+  "rows": [
+    {
+      "source_table_full_name": "main.experience.vw_silver_xignite_fundamentalsdailyrange_ttm",
+      "source_column_name": "FundamentalsSets_Fundamentals_Value",
+      "target_column_name": "ExchangeUnitsVolume",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.experience.vw_silver_xignite_fundamentalsdailyrange_ttm",
+      "source_column_name": "MetadataID",
+      "target_column_name": "ExchangeUnitsVolume",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentType",
+      "target_column_name": "InstrumentType",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Volume",
+      "target_column_name": "Last30DaysAvgVolume",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "VolumeOnClose",
+      "target_column_name": "Last30DaysAvgVolume",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseDateID",
+      "target_column_name": "Last30DaysAvgVolume",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "Last30DaysAvgVolume",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.experience.vw_silver_xignite_fundamentalsdailyrange_ttm",
+      "source_column_name": "MetadataID",
+      "target_column_name": "MA_10Days",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.experience.vw_silver_xignite_fundamentalsdailyrange_ttm",
+      "source_column_name": "FundamentalsSets_Fundamentals_Value",
+      "target_column_name": "MA_10Days",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.experience.vw_silver_xignite_fundamentalsdailyrange_ttm",
+      "source_column_name": "instrument_id",
+      "target_column_name": "MA_10Days",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.experience.vw_silver_xignite_fundamentalsdailyrange_ttm",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "MA_10Days",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dealing.candles_get_spreaded_price_candle60min_splitted",
+      "source_column_name": "BidMin",
+      "target_column_name": "MaxToMinChange",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dealing.candles_get_spreaded_price_candle60min_splitted",
+      "source_column_name": "BidMax",
+      "target_column_name": "MaxToMinChange",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.experience.vw_silver_xignite_fundamentalsdailyrange_ttm",
+      "source_column_name": "FundamentalsSets_Fundamentals_Value",
+      "target_column_name": "RN",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "VolumeOnClose",
+      "target_column_name": "RN",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseDateID",
+      "target_column_name": "RN",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "source_column_name": "Name",
+      "target_column_name": "RN",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "RN",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Volume",
+      "target_column_name": "RN",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.experience.vw_silver_xignite_fundamentalsdailyrange_ttm",
+      "source_column_name": "etr_ymd",
+      "target_column_name": "RN",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.experience.vw_silver_xignite_fundamentalsdailyrange_ttm",
+      "source_column_name": "MetadataID",
+      "target_column_name": "RN",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "source_column_name": "Name",
+      "target_column_name": "Regulation",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.bi_dealing_stg.tmp_instrumentmetadata_snapshot",
+      "source_column_name": "ExchangeID",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "AmountInUnitsDecimal",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseDateID",
+      "target_column_name": "Units",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "Volume",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Volume",
+      "target_column_name": "Volume",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseDateID",
+      "target_column_name": "Volume",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "VolumeOnClose",
+      "target_column_name": "Volume",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.bi_dealing_stg.tmp_instrumentmetadata_snapshot",
+      "source_column_name": "ExchangeID",
+      "target_column_name": "Volume",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "Volume",
+      "entity_type": "JOB",
+      "event_count": 21
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "Volume",
+      "entity_type": "JOB",
+      "event_count": 21
+    }
+  ],
+  "generated_at": "2026-05-19T12:30:32Z"
+}

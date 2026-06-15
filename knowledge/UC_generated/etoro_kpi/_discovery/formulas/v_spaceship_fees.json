@@ -1,0 +1,84 @@
+{
+  "object_fqn": "main.etoro_kpi.v_spaceship_fees",
+  "generated_at": "2026-05-19T15:20:31Z",
+  "formula_count": 7,
+  "formulas": [
+    {
+      "column": "date",
+      "formula": "CAST(paid_date AS DATE)",
+      "expression_raw": "CAST(st.paid_date AS DATE)                                AS date",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_transactions"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L24-L24",
+      "scope": "super_fees"
+    },
+    {
+      "column": "date_id",
+      "formula": "CAST(DATE_FORMAT(f.date, 'yyyyMMdd') AS INT)",
+      "expression_raw": "CAST(DATE_FORMAT(f.date, 'yyyyMMdd') AS INT)               AS date_id",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L124-L124",
+      "scope": "main"
+    },
+    {
+      "column": "product",
+      "formula": "'Super'",
+      "expression_raw": "'Super'                                                   AS product",
+      "inputs": [
+        "literal"
+      ],
+      "transform_kind": "literal",
+      "evidence_lines": "L23-L23",
+      "scope": "super_fees"
+    },
+    {
+      "column": "user_id",
+      "formula": "COALESCE(user_id, member_id)",
+      "expression_raw": "COALESCE(ua.user_id, st.member_id)                        AS user_id",
+      "inputs": [
+        "main.spaceship.bronze_spaceship_metabase_super_transactions",
+        "main.spaceship.bronze_spaceship_metabase_user_beta"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L25-L25",
+      "scope": "super_fees"
+    },
+    {
+      "column": "gcid",
+      "formula": "gcid",
+      "expression_raw": "sa.gcid",
+      "inputs": [
+        "main.bi_db.bronze_sub_accounts_accounts"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L106-L106",
+      "scope": "user_gcid"
+    },
+    {
+      "column": "total_fees_aud",
+      "formula": "ABS(SUM(f.fee_amount))",
+      "expression_raw": "ABS(SUM(f.fee_amount))                                      AS total_fees_aud",
+      "inputs": [],
+      "transform_kind": "function",
+      "evidence_lines": "L128-L128",
+      "scope": "main"
+    },
+    {
+      "column": "total_fees_usd",
+      "formula": "ABS(SUM(f.fee_amount)) * COALESCE(aud_to_usd_rate, 0)",
+      "expression_raw": "ABS(SUM(f.fee_amount)) * COALESCE(r.aud_to_usd_rate, 0)    AS total_fees_usd",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L129-L129",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi/_discovery/source_code/v_spaceship_fees.sql"
+}

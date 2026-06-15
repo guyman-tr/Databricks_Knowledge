@@ -1,0 +1,258 @@
+{
+  "object": "main.bi_output.vg_positionsvolumeandattributes_lc4_source",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "AccountTypeID",
+      "target_column_name": "AccountTypeID_as_of_position_date",
+      "entity_type": null,
+      "event_count": 8
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "AccountTypeID",
+      "target_column_name": "AccountTypeID_as_of_position_date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Amount",
+      "target_column_name": "Amount_Total",
+      "entity_type": null,
+      "event_count": 35
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Amount",
+      "target_column_name": "Amount_Total",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet",
+      "source_column_name": "PositionID",
+      "target_column_name": "Amount_lc",
+      "entity_type": null,
+      "event_count": 39
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Amount",
+      "target_column_name": "Amount_lc",
+      "entity_type": null,
+      "event_count": 39
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban_parquet",
+      "source_column_name": "PositionID",
+      "target_column_name": "Amount_lc",
+      "entity_type": null,
+      "event_count": 39
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet",
+      "source_column_name": "PositionID",
+      "target_column_name": "Amount_lc",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban_parquet",
+      "source_column_name": "PositionID",
+      "target_column_name": "Amount_lc",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Amount",
+      "target_column_name": "Amount_lc",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": null,
+      "event_count": 59
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "Name",
+      "target_column_name": "Club_as_of_position_date",
+      "entity_type": null,
+      "event_count": 40
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "Name",
+      "target_column_name": "Club_as_of_position_date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "CountryName_as_of_position_date",
+      "entity_type": null,
+      "event_count": 14
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "CountryName_as_of_position_date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account",
+      "source_column_name": "CID",
+      "target_column_name": "HasEMoneyAccount",
+      "entity_type": null,
+      "event_count": 8
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account",
+      "source_column_name": "CID",
+      "target_column_name": "HasEMoneyAccount",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentType",
+      "target_column_name": "InstrumentType",
+      "entity_type": null,
+      "event_count": 40
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentType",
+      "target_column_name": "InstrumentType",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsSettled",
+      "target_column_name": "IsSettled",
+      "entity_type": null,
+      "event_count": 8
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "IsSettled",
+      "target_column_name": "IsSettled",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Region",
+      "target_column_name": "Region_as_of_position_date",
+      "entity_type": null,
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Region",
+      "target_column_name": "Region_as_of_position_date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "SellCurrencyID",
+      "entity_type": null,
+      "event_count": 14
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "SellCurrencyID",
+      "target_column_name": "SellCurrencyID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban_parquet",
+      "source_column_name": "PositionID",
+      "target_column_name": "num_positions_lc",
+      "entity_type": null,
+      "event_count": 60
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet",
+      "source_column_name": "PositionID",
+      "target_column_name": "num_positions_lc",
+      "entity_type": null,
+      "event_count": 60
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "PositionID",
+      "target_column_name": "num_positions_lc",
+      "entity_type": null,
+      "event_count": 60
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet",
+      "source_column_name": "PositionID",
+      "target_column_name": "num_positions_lc",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "PositionID",
+      "target_column_name": "num_positions_lc",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban_parquet",
+      "source_column_name": "PositionID",
+      "target_column_name": "num_positions_lc",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "position_event_date",
+      "entity_type": null,
+      "event_count": 98
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "position_event_date",
+      "entity_type": null,
+      "event_count": 98
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "position_event_date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseOccurred",
+      "target_column_name": "position_event_date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    }
+  ],
+  "generated_at": "2026-05-19T15:00:41Z"
+}

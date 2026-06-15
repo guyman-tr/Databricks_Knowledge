@@ -1,0 +1,60 @@
+{
+  "object_fqn": "main.wallet.bronze_walletbalancesreportdb_wallet_financereports",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:13Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReports.md",
+      "upstream_quote": "Auto-incrementing primary key identifying each legacy reconciliation run. Referenced as ReportId by Wallet.FinanceReport",
+      "wiki_quote": "Auto-incrementing primary key identifying each legacy reconciliation run. Referenced as ReportId by Wallet.FinanceReport",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StartTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReports.md",
+      "upstream_quote": "UTC timestamp when the reconciliation run began. Set to GETUTCDATE() by Wallet.CreateNewReports at the start of the tran",
+      "wiki_quote": "UTC timestamp when the reconciliation run began. Set to GETUTCDATE() by Wallet.CreateNewReports at the start of the tran",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletBalancesReportDB\\Wiki\\Wallet\\Tables\\Wallet.FinanceReports.md",
+      "upstream_quote": "Timestamp when the reconciliation run completed. NULL while the run is in progress or if the run failed/was abandoned. S",
+      "wiki_quote": "Timestamp when the reconciliation run completed. NULL while the run is in progress or if the run failed/was abandoned. S",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 3,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 3 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

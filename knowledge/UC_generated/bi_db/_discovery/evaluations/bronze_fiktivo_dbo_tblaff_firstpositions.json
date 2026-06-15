@@ -1,0 +1,165 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiktivo_dbo_tblaff_firstpositions",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:49Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "FirstPositionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "Primary key. Unique identifier for each first position event. NOT FOR REPLICATION. Referenced by tblaff_FirstPositions_C",
+      "wiki_quote": "Primary key. Unique identifier for each first position event. NOT FOR REPLICATION. Referenced by tblaff_FirstPositions_C",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ORDER_DATE",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "Timestamp when the first position was opened.",
+      "wiki_quote": "Timestamp when the first position was opened (Tier 1 — inherited from fiktivo.dbo.tblaff_FirstPositions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "GRAND_TOTAL",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "Monetary value/size of the first trade.",
+      "wiki_quote": "Monetary value/size of the first trade (Tier 1 — inherited from fiktivo.dbo.tblaff_FirstPositions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateFirstPositionAccepted",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "Attribution flag. 1=accepted for commission, 0=not attributed.",
+      "wiki_quote": "Attribution flag. 1=accepted for commission, 0=not attributed (Tier 1 — inherited from fiktivo.dbo.tblaff_FirstPositions",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Valid",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "Validation flag. 1=valid, 0=rejected.",
+      "wiki_quote": "Validation flag. 1=valid, 0=rejected (Tier 1 — inherited from fiktivo.dbo.tblaff_FirstPositions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BannerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "Marketing banner. References dbo.tblaff_Banners [done].",
+      "wiki_quote": "Marketing banner. References dbo.tblaff_Banners [done] (Tier 1 — inherited from fiktivo.dbo.tblaff_FirstPositions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DaysToConvert",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "Days between affiliate click and first position.",
+      "wiki_quote": "Days between affiliate click and first position (Tier 1 — inherited from fiktivo.dbo.tblaff_FirstPositions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Optional1",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "Sub-affiliate tracking parameter.",
+      "wiki_quote": "Sub-affiliate tracking parameter (Tier 1 — inherited from fiktivo.dbo.tblaff_FirstPositions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Optional2",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "Secondary tracking parameter.",
+      "wiki_quote": "Secondary tracking parameter (Tier 1 — inherited from fiktivo.dbo.tblaff_FirstPositions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OriginalCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "Original customer ID. Clustered index column - primary lookup pattern for deduplication.",
+      "wiki_quote": "Original customer ID. Clustered index column - primary lookup pattern for deduplication (Tier 1 — inherited from fiktivo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DownloadID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "App download event ID.",
+      "wiki_quote": "App download event ID (Tier 1 — inherited from fiktivo.dbo.tblaff_FirstPositions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "Currently attributed affiliate provider.",
+      "wiki_quote": "Currently attributed affiliate provider (Tier 1 — inherited from fiktivo.dbo.tblaff_FirstPositions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OriginalProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "First affiliate that acquired this customer.",
+      "wiki_quote": "First affiliate that acquired this customer (Tier 1 — inherited from fiktivo.dbo.tblaff_FirstPositions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "Customer's country. References dbo.tblaff_Country [done].",
+      "wiki_quote": "Customer's country. References dbo.tblaff_Country [done] (Tier 1 — inherited from fiktivo.dbo.tblaff_FirstPositions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RealProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "Leaf-level provider after IB hierarchy resolution.",
+      "wiki_quote": "Leaf-level provider after IB hierarchy resolution (Tier 1 — inherited from fiktivo.dbo.tblaff_FirstPositions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FunnelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "Marketing funnel identifier.",
+      "wiki_quote": "Marketing funnel identifier (Tier 1 — inherited from fiktivo.dbo.tblaff_FirstPositions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LabelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "Marketing label/campaign identifier.",
+      "wiki_quote": "Marketing label/campaign identifier (Tier 1 — inherited from fiktivo.dbo.tblaff_FirstPositions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PlayerLevelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_FirstPositions.md",
+      "upstream_quote": "Customer tier at event time.",
+      "wiki_quote": "Customer tier at event time (Tier 1 — inherited from fiktivo.dbo.tblaff_FirstPositions).",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 18,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 18 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

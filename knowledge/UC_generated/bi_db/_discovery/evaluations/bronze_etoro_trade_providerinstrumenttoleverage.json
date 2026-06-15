@@ -1,0 +1,109 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_trade_providerinstrumenttoleverage",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:43Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "ProviderID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "FK to Trade.Provider. Part of PK. Identifies execution provider (e.g., 1=Tradonomi).",
+      "wiki_quote": "FK to Trade.Provider. Part of PK. Identifies execution provider (e.g., 1=Tradonomi) (Tier 1 — inherited from etoro.Trade",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "FK to Trade.Instrument (via ProviderToInstrument). Part of PK. Identifies tradeable instrument.",
+      "wiki_quote": "FK to Trade.Instrument (via ProviderToInstrument). Part of PK. Identifies tradeable instrument (Tier 1 — inherited from ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LeverageID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "FK to Dictionary.Leverage. Part of PK. Leverage tier (1=1x, 2=5x, 3=10x, 5=50x, 6=100x, 7=200x, 8=400x, 9=2x, 10=30x, 11",
+      "wiki_quote": "FK to Dictionary.Leverage. Part of PK. Leverage tier (1=1x, 2=5x, 3=10x, 5=50x, 6=100x, 7=200x, 8=400x, 9=2x, 10=30x, 11",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsDefault",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "1=default leverage for this provider-instrument (offered when user does not specify), 0=available but not default. Provi",
+      "wiki_quote": "1=default leverage for this provider-instrument (offered when user does not specify), 0=available but not default. Provi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Percentage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "Display or allocation weight. Sample shows 0.",
+      "wiki_quote": "Display or allocation weight. Sample shows 0 (Tier 1 — inherited from etoro.Trade.ProviderInstrumentToLeverage).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LeverageType",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "Leverage category. Default 1 (retail). Part of PK. May distinguish professional/restricted tiers.",
+      "wiki_quote": "Leverage category. Default 1 (retail). Part of PK. May distinguish professional/restricted tiers (Tier 1 — inherited fro",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DbLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "Computed: suser_name(). Current DB login for audit.",
+      "wiki_quote": "Computed: suser_name(). Current DB login for audit (Tier 1 — inherited from etoro.Trade.ProviderInstrumentToLeverage).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AppLoginName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "Computed: CONVERT(varchar(500), context_info()). Application context.",
+      "wiki_quote": "Computed: CONVERT(varchar(500), context_info()). Application context (Tier 1 — inherited from etoro.Trade.ProviderInstru",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysStartTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "System-versioning row start. GENERATED ALWAYS AS ROW START.",
+      "wiki_quote": "System-versioning row start. GENERATED ALWAYS AS ROW START (Tier 1 — inherited from etoro.Trade.ProviderInstrumentToLeve",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysEndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Trade\\Tables\\Trade.ProviderInstrumentToLeverage.md",
+      "upstream_quote": "System-versioning row end. GENERATED ALWAYS AS ROW END. History in History.TradeProviderInstrumentToLeverage.",
+      "wiki_quote": "System-versioning row end. GENERATED ALWAYS AS ROW END. History in History.TradeProviderInstrumentToLeverage (Tier 1 — i",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 10,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 10 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

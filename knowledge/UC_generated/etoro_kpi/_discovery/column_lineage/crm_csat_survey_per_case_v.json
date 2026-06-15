@@ -1,0 +1,90 @@
+{
+  "object": "main.etoro_kpi.crm_csat_survey_per_case_v",
+  "rows": [
+    {
+      "source_table_full_name": "main.crm.silver_crm_csat_survey_entry__c",
+      "source_column_name": "Id",
+      "target_column_name": "Id",
+      "entity_type": null,
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_medallia_xm__medallia_feedback__c",
+      "source_column_name": "Id",
+      "target_column_name": "Id",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_csat_survey_entry__c",
+      "source_column_name": "Id",
+      "target_column_name": "Id",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_csat_survey_entry__c",
+      "source_column_name": "CreatedDate",
+      "target_column_name": "cSAT_Date",
+      "entity_type": null,
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_medallia_xm__medallia_feedback__c",
+      "source_column_name": "CreatedDate",
+      "target_column_name": "cSAT_Date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_csat_survey_entry__c",
+      "source_column_name": "CreatedDate",
+      "target_column_name": "cSAT_Date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_csat_survey_entry__c",
+      "source_column_name": "Case__c",
+      "target_column_name": "simplesurvey__Case__c",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_medallia_xm__medallia_feedback__c",
+      "source_column_name": "medallia_xm__Original_case_Number__c",
+      "target_column_name": "simplesurvey__Case__c",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_csat_survey_entry__c",
+      "source_column_name": "Case__c",
+      "target_column_name": "simplesurvey__Case__c",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_csat_survey_entry__c",
+      "source_column_name": "Agent_Service_NumValue__c",
+      "target_column_name": "simplesurvey__Survey_Score__c",
+      "entity_type": null,
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_medallia_xm__medallia_feedback__c",
+      "source_column_name": "CSAT_Score__c",
+      "target_column_name": "simplesurvey__Survey_Score__c",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_csat_survey_entry__c",
+      "source_column_name": "Agent_Service_NumValue__c",
+      "target_column_name": "simplesurvey__Survey_Score__c",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    }
+  ],
+  "generated_at": "2026-05-19T15:05:05Z"
+}

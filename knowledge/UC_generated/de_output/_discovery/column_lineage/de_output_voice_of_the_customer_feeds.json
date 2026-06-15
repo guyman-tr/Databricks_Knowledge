@@ -1,0 +1,104 @@
+{
+  "object": "main.de_output.de_output_voice_of_the_customer_feeds",
+  "rows": [
+    {
+      "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_post",
+      "source_column_name": "EventPayloadRowData_Entity_Owner_Id",
+      "target_column_name": "CID",
+      "entity_type": "JOB",
+      "event_count": 343
+    },
+    {
+      "source_table_full_name": "main.de_output_stg.de_output_voice_of_the_customer_feeds",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_post",
+      "source_column_name": "EventPayloadRowData_Entity_Created",
+      "target_column_name": "Created",
+      "entity_type": "JOB",
+      "event_count": 343
+    },
+    {
+      "source_table_full_name": "main.de_output_stg.de_output_voice_of_the_customer_feeds",
+      "source_column_name": "Created",
+      "target_column_name": "Created",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_post",
+      "source_column_name": "EventPayloadRowData_Entity_Message_Text",
+      "target_column_name": "Feed_Text",
+      "entity_type": "JOB",
+      "event_count": 343
+    },
+    {
+      "source_table_full_name": "main.de_output_stg.de_output_voice_of_the_customer_feeds",
+      "source_column_name": "Feed_Text",
+      "target_column_name": "Feed_Text",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_post",
+      "source_column_name": "EventPayloadRowData_Entity_Message_LanguageCode",
+      "target_column_name": "LanguageCode",
+      "entity_type": "JOB",
+      "event_count": 343
+    },
+    {
+      "source_table_full_name": "main.de_output_stg.de_output_voice_of_the_customer_feeds",
+      "source_column_name": "LanguageCode",
+      "target_column_name": "LanguageCode",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_post",
+      "source_column_name": "EventPayloadRowData_Entity_Message_Text",
+      "target_column_name": "Sentiment",
+      "entity_type": "JOB",
+      "event_count": 343
+    },
+    {
+      "source_table_full_name": "main.de_output_stg.de_output_voice_of_the_customer_feeds",
+      "source_column_name": "Sentiment",
+      "target_column_name": "Sentiment",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_post",
+      "source_column_name": "EventPayloadRowData_Entity_Message_Text",
+      "target_column_name": "Sentiment_Classification",
+      "entity_type": "JOB",
+      "event_count": 343
+    },
+    {
+      "source_table_full_name": "main.de_output_stg.de_output_voice_of_the_customer_feeds",
+      "source_column_name": "Sentiment_Classification",
+      "target_column_name": "Sentiment_Classification",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_post",
+      "source_column_name": "EventPayloadRowData_Entity_Id",
+      "target_column_name": "Text_Id",
+      "entity_type": "JOB",
+      "event_count": 343
+    },
+    {
+      "source_table_full_name": "main.de_output_stg.de_output_voice_of_the_customer_feeds",
+      "source_column_name": "Text_Id",
+      "target_column_name": "Text_Id",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 6
+    }
+  ],
+  "generated_at": "2026-05-19T14:08:56Z"
+}

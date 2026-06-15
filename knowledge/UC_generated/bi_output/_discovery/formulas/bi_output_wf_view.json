@@ -1,0 +1,206 @@
+{
+  "object_fqn": "main.bi_output.bi_output_wf_view",
+  "generated_at": "2026-05-19T15:01:27Z",
+  "formula_count": 18,
+  "formulas": [
+    {
+      "column": "GCID",
+      "formula": "gcid",
+      "expression_raw": "gcid as GCID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "ClientID",
+      "formula": "ClientId",
+      "expression_raw": "ClientId AS ClientID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "ContractNumber",
+      "formula": "contractNo",
+      "expression_raw": "contractNo AS ContractNumber",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "ProductCode",
+      "formula": "productCode",
+      "expression_raw": "productCode AS ProductCode",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L11-L11",
+      "scope": "main"
+    },
+    {
+      "column": "ProductName",
+      "formula": "productName",
+      "expression_raw": "productName AS ProductName",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    },
+    {
+      "column": "SubscriptionDate",
+      "formula": "subscriptionDate",
+      "expression_raw": "subscriptionDate AS SubscriptionDate",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L13-L13",
+      "scope": "main"
+    },
+    {
+      "column": "ContractStatus",
+      "formula": "contractStatus",
+      "expression_raw": "contractStatus AS ContractStatus",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L14-L14",
+      "scope": "main"
+    },
+    {
+      "column": "ReferenceCurrency",
+      "formula": "referenceCurrency",
+      "expression_raw": "referenceCurrency AS ReferenceCurrency",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L15-L15",
+      "scope": "main"
+    },
+    {
+      "column": "SavingValue",
+      "formula": "savingsValue",
+      "expression_raw": "savingsValue AS SavingValue",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L16-L16",
+      "scope": "main"
+    },
+    {
+      "column": "SavingValueInDollar",
+      "formula": "((Bid+Ask)/2) * savingsValue",
+      "expression_raw": "((Bid+Ask)/2) * savingsValue AS SavingValueInDollar",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L17-L17",
+      "scope": "main"
+    },
+    {
+      "column": "SavingsValueDate",
+      "formula": "savingsValueDate",
+      "expression_raw": "savingsValueDate AS SavingsValueDate",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L18-L18",
+      "scope": "main"
+    },
+    {
+      "column": "ISIN",
+      "formula": "isin",
+      "expression_raw": "isin AS ISIN",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L19-L19",
+      "scope": "main"
+    },
+    {
+      "column": "Percent",
+      "formula": "percent",
+      "expression_raw": "percent AS Percent",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L20-L20",
+      "scope": "main"
+    },
+    {
+      "column": "Amount",
+      "formula": "amount",
+      "expression_raw": "amount AS Amount",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L21-L21",
+      "scope": "main"
+    },
+    {
+      "column": "AmountInDollar",
+      "formula": "((Bid+Ask)/2) * amount",
+      "expression_raw": "((Bid+Ask)/2) * amount AS AmountInDollar",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L22-L22",
+      "scope": "main"
+    },
+    {
+      "column": "NumberOfShares",
+      "formula": "numberOfShares",
+      "expression_raw": "numberOfShares AS NumberOfShares",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L23-L23",
+      "scope": "main"
+    },
+    {
+      "column": "Currency",
+      "formula": "currency",
+      "expression_raw": "currency AS Currency",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L24-L24",
+      "scope": "main"
+    },
+    {
+      "column": "ExchangeRate",
+      "formula": "((Bid+Ask)/2)",
+      "expression_raw": "((Bid+Ask)/2) AS ExchangeRate",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L25-L25",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/bi_output_wf_view.sql"
+}

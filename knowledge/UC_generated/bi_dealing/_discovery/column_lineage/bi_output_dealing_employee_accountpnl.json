@@ -1,0 +1,426 @@
+{
+  "object": "main.bi_dealing.bi_output_dealing_employee_accountpnl",
+  "rows": [
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "AccountPNL",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "AccountPNL",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "ExecutionRate",
+      "target_column_name": "AccountPNL",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "AccountPNL",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_splitratio",
+      "source_column_name": "AmountRatio",
+      "target_column_name": "AccountPNL",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "AccountPNL",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "Units",
+      "target_column_name": "AccountPNL",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_1",
+      "target_column_name": "AccountPNL",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "AccountPNL",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "AccountPNL",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_0",
+      "target_column_name": "AccountPNL",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "IsBuy",
+      "target_column_name": "AccountPNL",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_splitratio",
+      "source_column_name": "AmountRatio",
+      "target_column_name": "End_Ask",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "End_Ask",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_splitratio",
+      "source_column_name": "AmountRatio",
+      "target_column_name": "End_Bid",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "End_Bid",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_0",
+      "target_column_name": "End_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "End_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "End_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "End_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_splitratio",
+      "source_column_name": "AmountRatio",
+      "target_column_name": "End_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_1",
+      "target_column_name": "End_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "End_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "End_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "End_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "End_Units",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "End_Units",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "End_Units",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "End_Units",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Exchange",
+      "target_column_name": "Exchange",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "Units",
+      "target_column_name": "Executions",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_1",
+      "target_column_name": "Executions",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_0",
+      "target_column_name": "Executions",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Executions",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
+      "source_column_name": "ExecutionRate",
+      "target_column_name": "Executions",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentType",
+      "target_column_name": "InstrumentType",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentTypeID",
+      "target_column_name": "InstrumentTypeID",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Name",
+      "target_column_name": "Name",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_splitratio",
+      "source_column_name": "AmountRatio",
+      "target_column_name": "Start_Ask",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "Start_Ask",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_splitratio",
+      "source_column_name": "AmountRatio",
+      "target_column_name": "Start_Bid",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "Start_Bid",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "Start_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "Start_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_pricelog_history_splitratio",
+      "source_column_name": "AmountRatio",
+      "target_column_name": "Start_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Start_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_0",
+      "target_column_name": "Start_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "Start_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Start_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "ConvertRateIsBuy_1",
+      "target_column_name": "Start_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "Start_NOP",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Start_Units",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "Start_Units",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Start_Units",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "Start_Units",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "Symbol",
+      "target_column_name": "Symbol",
+      "entity_type": "JOB",
+      "event_count": 91
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UpdateDate",
+      "entity_type": "JOB",
+      "event_count": 61
+    }
+  ],
+  "generated_at": "2026-05-19T12:25:22Z"
+}

@@ -1,0 +1,63 @@
+{
+  "object_fqn": "main.bi_output.negative_nmi",
+  "generated_at": "2026-05-19T15:01:27Z",
+  "formula_count": 5,
+  "formulas": [
+    {
+      "column": "SymbolFull",
+      "formula": "SymbolFull",
+      "expression_raw": "SymbolFull",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentDisplayName",
+      "formula": "InstrumentDisplayName",
+      "expression_raw": "InstrumentDisplayName",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "MoneyIn",
+      "formula": "CAST(MoneyIn AS Decimal(12, 2))",
+      "expression_raw": "CAST(MoneyIn AS Decimal(12, 2)) AS MoneyIn",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "MoneyOut",
+      "formula": "SUM( CASE WHEN CreditTypeID = 4 THEN Payment * -1 ELSE 0 END )",
+      "expression_raw": "SUM(\n        CASE\n          WHEN hm.CreditTypeID = 4 THEN hm.Payment * -1\n          ELSE 0\n        END\n      ) AS MoneyOut",
+      "inputs": [
+        "main.general.bronze_etoro_history_credit"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L24-L29",
+      "scope": "main"
+    },
+    {
+      "column": "NetMoneyIn",
+      "formula": "CAST((MoneyIn + MoneyOut) AS Decimal(12, 2))",
+      "expression_raw": "CAST((MoneyIn + MoneyOut) AS Decimal(12, 2)) AS NetMoneyIn",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L12-L12",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/negative_nmi.sql"
+}

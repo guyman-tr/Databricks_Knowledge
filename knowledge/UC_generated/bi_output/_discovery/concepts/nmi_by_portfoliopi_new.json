@@ -1,0 +1,73 @@
+{
+  "object_fqn": "main.bi_output.nmi_by_portfoliopi_new",
+  "generated_at": "2026-05-19T15:01:20Z",
+  "concept_count": 3,
+  "concepts": [
+    {
+      "id": "case_flag_copytype",
+      "name": "CopyType computed flag",
+      "kind": "case_flag",
+      "columns_involved": [
+        "CopyType"
+      ],
+      "predicates": [
+        {
+          "col": "AccountTypeID",
+          "op": "=",
+          "val": "9"
+        }
+      ],
+      "then_value": "'         '",
+      "else_value": "'  '",
+      "upstream_enum_decodes": {},
+      "physical_inputs": [],
+      "evidence_lines": "bi_output.sql L19-L22",
+      "scope": "main"
+    },
+    {
+      "id": "dim_lookup_dc",
+      "name": "Dim lookup via dc",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "alias": "dc",
+      "join_conditions": [
+        "dc.CountryID = cc.CountryID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L63",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "dc.CountryID = cc.CountryID"
+    },
+    {
+      "id": "dim_lookup_bm",
+      "name": "Dim lookup via bm",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "alias": "bm",
+      "join_conditions": [
+        "bc.ManagerID = bm.ManagerID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L65",
+      "scopes": [
+        "main"
+      ],
+      "scope": "main",
+      "join_condition": "bc.ManagerID = bm.ManagerID"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/nmi_by_portfoliopi_new.sql"
+}

@@ -1,0 +1,264 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_ddr_revenues",
+  "generated_at": "2026-05-18T16:27:36Z",
+  "formula_count": 24,
+  "formulas": [
+    {
+      "column": "DateID",
+      "formula": "DateID",
+      "expression_raw": "DateID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "Date",
+      "formula": "to_date(CAST(DateID AS STRING), 'yyyyMMdd')",
+      "expression_raw": "to_date(CAST(DateID AS STRING), 'yyyyMMdd') AS Date",
+      "inputs": [],
+      "transform_kind": "function",
+      "evidence_lines": "L9-L9",
+      "scope": "main"
+    },
+    {
+      "column": "RealCID",
+      "formula": "RealCID, ActionTypeID, ActionType, InstrumentTypeID, IsSettled, IsCopy",
+      "expression_raw": "RealCID, ActionTypeID, ActionType, InstrumentTypeID, IsSettled, IsCopy",
+      "inputs": [],
+      "transform_kind": "unknown",
+      "evidence_lines": "L10-L10",
+      "scope": "main"
+    },
+    {
+      "column": "ActionTypeID",
+      "formula": "d_ActionTypeID",
+      "expression_raw": "d_ActionTypeID AS ActionTypeID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L458-L458",
+      "scope": "main"
+    },
+    {
+      "column": "ActionType",
+      "formula": "d_ActionType",
+      "expression_raw": "d_ActionType AS ActionType",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L459-L459",
+      "scope": "main"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "formula": "d_InstrumentTypeID",
+      "expression_raw": "d_InstrumentTypeID AS InstrumentTypeID",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L460-L460",
+      "scope": "main"
+    },
+    {
+      "column": "IsSettled",
+      "formula": "CAST(IsSettled AS INT)",
+      "expression_raw": "CAST(v.IsSettled AS INT) AS IsSettled",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_w_metrics"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L30-L30",
+      "scope": "base"
+    },
+    {
+      "column": "IsCopy",
+      "formula": "CASE WHEN MirrorID > 0 THEN 1 ELSE 0 END",
+      "expression_raw": "CASE\n      WHEN v.MirrorID > 0 THEN 1\n      ELSE 0\n    END AS IsCopy",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_w_metrics"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L31-L34",
+      "scope": "base"
+    },
+    {
+      "column": "Metric",
+      "formula": "CASE WHEN MetricName LIKE 'ConversionFee%' THEN 'ConversionFee' ELSE MetricName END",
+      "expression_raw": "CASE\n    WHEN MetricName LIKE 'ConversionFee%' THEN 'ConversionFee'\n    ELSE MetricName\n  END AS Metric",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L463-L466",
+      "scope": "main"
+    },
+    {
+      "column": "Amount",
+      "formula": "SUM(MetricAmount)",
+      "expression_raw": "SUM(MetricAmount) AS Amount",
+      "inputs": [],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L467-L467",
+      "scope": "main"
+    },
+    {
+      "column": "CountTransactions",
+      "formula": "COUNT(*)",
+      "expression_raw": "COUNT(*) AS CountTransactions",
+      "inputs": [],
+      "transform_kind": "aggregate",
+      "evidence_lines": "L468-L468",
+      "scope": "main"
+    },
+    {
+      "column": "IncludedInTotalRevenue",
+      "formula": "CASE WHEN MetricName IN ('Commission', 'Dividends', 'SDRT') THEN 0 ELSE 1 END",
+      "expression_raw": "CASE\n    WHEN MetricName IN ('Commission', 'Dividends', 'SDRT') THEN 0\n    ELSE 1\n  END AS IncludedInTotalRevenue",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L469-L472",
+      "scope": "main"
+    },
+    {
+      "column": "CountAsActiveTrade",
+      "formula": "CASE WHEN MetricName IN ('FullCommission', 'Commission') THEN SUM(IsActiveTrade) ELSE 0 END",
+      "expression_raw": "CASE\n    WHEN MetricName IN ('FullCommission', 'Commission') THEN SUM(IsActiveTrade)\n    ELSE 0\n  END AS CountAsActiveTrade",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L473-L476",
+      "scope": "main"
+    },
+    {
+      "column": "IsBuy",
+      "formula": "CAST(IsBuy AS INT)",
+      "expression_raw": "CAST(v.IsBuy AS INT) AS IsBuy",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_w_metrics"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L35-L35",
+      "scope": "base"
+    },
+    {
+      "column": "IsLeveraged",
+      "formula": "CASE WHEN Leverage > 1 THEN 1 ELSE 0 END",
+      "expression_raw": "CASE\n      WHEN v.Leverage > 1 THEN 1\n      ELSE 0\n    END AS IsLeveraged",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_w_metrics"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L36-L39",
+      "scope": "base"
+    },
+    {
+      "column": "IsFuture",
+      "formula": "COALESCE(CAST(IsFuture AS INT), 0)",
+      "expression_raw": "COALESCE(CAST(di.IsFuture AS INT), 0) AS IsFuture",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L40-L40",
+      "scope": "base"
+    },
+    {
+      "column": "IsCopyFund",
+      "formula": "d_IsCopyFund",
+      "expression_raw": "d_IsCopyFund AS IsCopyFund",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L480-L480",
+      "scope": "main"
+    },
+    {
+      "column": "IsOpenedFromIBAN",
+      "formula": "IsOpenFromIBAN",
+      "expression_raw": "v.IsOpenFromIBAN AS IsOpenedFromIBAN",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_w_metrics"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L43-L43",
+      "scope": "base"
+    },
+    {
+      "column": "IsClosedToIBAN",
+      "formula": "d_IsClosedToIBAN",
+      "expression_raw": "d_IsClosedToIBAN AS IsClosedToIBAN",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L482-L482",
+      "scope": "main"
+    },
+    {
+      "column": "IsRecurring",
+      "formula": "d_IsRecurring",
+      "expression_raw": "d_IsRecurring AS IsRecurring",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L483-L483",
+      "scope": "main"
+    },
+    {
+      "column": "IsAirDrop",
+      "formula": "CAST(IsAirDrop AS INT)",
+      "expression_raw": "CAST(v.IsAirDrop AS INT) AS IsAirDrop",
+      "inputs": [
+        "main.etoro_kpi_prep.v_fact_customeraction_w_metrics"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L41-L41",
+      "scope": "base"
+    },
+    {
+      "column": "IsSQF",
+      "formula": "d_IsSQF",
+      "expression_raw": "d_IsSQF AS IsSQF",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L485-L485",
+      "scope": "main"
+    },
+    {
+      "column": "IsC2P",
+      "formula": "d_IsC2P",
+      "expression_raw": "d_IsC2P AS IsC2P",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L486-L486",
+      "scope": "main"
+    },
+    {
+      "column": "IsMarginTrade",
+      "formula": "d_IsMarginTrade",
+      "expression_raw": "d_IsMarginTrade AS IsMarginTrade",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L487-L487",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_ddr_revenues.sql"
+}

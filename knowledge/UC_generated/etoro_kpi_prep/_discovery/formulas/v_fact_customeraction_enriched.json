@@ -1,0 +1,884 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_fact_customeraction_enriched",
+  "generated_at": "2026-05-18T16:27:36Z",
+  "formula_count": 79,
+  "formulas": [
+    {
+      "column": "HistoryID",
+      "formula": "HistoryID, GCID, RealCID, DemoCID, Occurred, IPNumber, IsReal",
+      "expression_raw": "fca.HistoryID, fca.GCID, fca.RealCID, fca.DemoCID, fca.Occurred, fca.IPNumber, fca.IsReal",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "GCID",
+      "formula": "HistoryID, GCID, RealCID, DemoCID, Occurred, IPNumber, IsReal",
+      "expression_raw": "fca.HistoryID, fca.GCID, fca.RealCID, fca.DemoCID, fca.Occurred, fca.IPNumber, fca.IsReal",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "RealCID",
+      "formula": "HistoryID, GCID, RealCID, DemoCID, Occurred, IPNumber, IsReal",
+      "expression_raw": "fca.HistoryID, fca.GCID, fca.RealCID, fca.DemoCID, fca.Occurred, fca.IPNumber, fca.IsReal",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "DemoCID",
+      "formula": "HistoryID, GCID, RealCID, DemoCID, Occurred, IPNumber, IsReal",
+      "expression_raw": "fca.HistoryID, fca.GCID, fca.RealCID, fca.DemoCID, fca.Occurred, fca.IPNumber, fca.IsReal",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "Occurred",
+      "formula": "LEFT JOIN dwh.dim_position dp ON CASE WHEN ActionTypeID = 36 AND CompensationReasonID IN (117, 118) THEN TRY_CAST(REVERSE(SUBSTRING(REVERSE(Description), 1, CHA…",
+      "expression_raw": "LEFT JOIN main.dwh.dim_position dp \n    ON CASE\n         WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID IN (117, 118)\n         THEN TRY_CAST(REVERSE(SUBSTRING(REVERSE(fca.Description), 1, CHA…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L49-L56",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "IPNumber",
+      "formula": "HistoryID, GCID, RealCID, DemoCID, Occurred, IPNumber, IsReal",
+      "expression_raw": "fca.HistoryID, fca.GCID, fca.RealCID, fca.DemoCID, fca.Occurred, fca.IPNumber, fca.IsReal",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "IsReal",
+      "formula": "HistoryID, GCID, RealCID, DemoCID, Occurred, IPNumber, IsReal",
+      "expression_raw": "fca.HistoryID, fca.GCID, fca.RealCID, fca.DemoCID, fca.Occurred, fca.IPNumber, fca.IsReal",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L9-L9",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "ActionTypeID",
+      "formula": "ActionTypeID, PlatformTypeID",
+      "expression_raw": "fca.ActionTypeID, fca.PlatformTypeID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L10-L10",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "PlatformTypeID",
+      "formula": "ActionTypeID, PlatformTypeID",
+      "expression_raw": "fca.ActionTypeID, fca.PlatformTypeID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L10-L10",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "InstrumentID",
+      "formula": "COALESCE(InstrumentID, InstrumentID)",
+      "expression_raw": "COALESCE(dp.InstrumentID, fca.InstrumentID) AS InstrumentID",
+      "inputs": [
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L11-L11",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "Amount",
+      "formula": "Amount",
+      "expression_raw": "fca.Amount",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L12-L12",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "Leverage",
+      "formula": "COALESCE(Leverage, Leverage)",
+      "expression_raw": "COALESCE(dp.Leverage, fca.Leverage) AS Leverage",
+      "inputs": [
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L13-L13",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "NetProfit",
+      "formula": "NetProfit, Commission",
+      "expression_raw": "fca.NetProfit, fca.Commission",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L14-L14",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "Commission",
+      "formula": "NetProfit, Commission",
+      "expression_raw": "fca.NetProfit, fca.Commission",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L14-L14",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "PositionID",
+      "formula": "CASE WHEN ActionTypeID = 36 AND CompensationReasonID IN (117, 118) THEN TRY_CAST(REVERSE(SUBSTRING(REVERSE(Description), 1, CHARINDEX(' ', REVERSE(Description)) - 1)) AS BI…",
+      "expression_raw": "CASE\n      WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID IN (117, 118)\n      THEN TRY_CAST(REVERSE(SUBSTRING(REVERSE(fca.Description), 1, CHARINDEX(' ', REVERSE(fca.Description)) - 1)) AS BI…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L15-L19",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "CampaignID",
+      "formula": "CampaignID, BonusTypeID, FundingTypeID, LoginID",
+      "expression_raw": "fca.CampaignID, fca.BonusTypeID, fca.FundingTypeID, fca.LoginID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L20-L20",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "BonusTypeID",
+      "formula": "CampaignID, BonusTypeID, FundingTypeID, LoginID",
+      "expression_raw": "fca.CampaignID, fca.BonusTypeID, fca.FundingTypeID, fca.LoginID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L20-L20",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "FundingTypeID",
+      "formula": "CampaignID, BonusTypeID, FundingTypeID, LoginID",
+      "expression_raw": "fca.CampaignID, fca.BonusTypeID, fca.FundingTypeID, fca.LoginID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L20-L20",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "LoginID",
+      "formula": "CampaignID, BonusTypeID, FundingTypeID, LoginID",
+      "expression_raw": "fca.CampaignID, fca.BonusTypeID, fca.FundingTypeID, fca.LoginID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L20-L20",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "MirrorID",
+      "formula": "CASE WHEN Occurred > dm.Occurred THEN 0 ELSE COALESCE(MirrorID, MirrorID) END",
+      "expression_raw": "CASE WHEN fca.Occurred > dm.Occurred THEN 0 ELSE COALESCE(dp.MirrorID, fca.MirrorID) END AS MirrorID",
+      "inputs": [
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L21-L21",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "WithdrawID",
+      "formula": "WithdrawID, DurationInSeconds, PostID, CaseID, UpdateDate, DateID, TimeID, StatusID",
+      "expression_raw": "fca.WithdrawID, fca.DurationInSeconds, fca.PostID, fca.CaseID, fca.UpdateDate, fca.DateID, fca.TimeID, fca.StatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L22",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "DurationInSeconds",
+      "formula": "WithdrawID, DurationInSeconds, PostID, CaseID, UpdateDate, DateID, TimeID, StatusID",
+      "expression_raw": "fca.WithdrawID, fca.DurationInSeconds, fca.PostID, fca.CaseID, fca.UpdateDate, fca.DateID, fca.TimeID, fca.StatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L22",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "PostID",
+      "formula": "WithdrawID, DurationInSeconds, PostID, CaseID, UpdateDate, DateID, TimeID, StatusID",
+      "expression_raw": "fca.WithdrawID, fca.DurationInSeconds, fca.PostID, fca.CaseID, fca.UpdateDate, fca.DateID, fca.TimeID, fca.StatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L22",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "CaseID",
+      "formula": "WithdrawID, DurationInSeconds, PostID, CaseID, UpdateDate, DateID, TimeID, StatusID",
+      "expression_raw": "fca.WithdrawID, fca.DurationInSeconds, fca.PostID, fca.CaseID, fca.UpdateDate, fca.DateID, fca.TimeID, fca.StatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L22",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "UpdateDate",
+      "formula": "WithdrawID, DurationInSeconds, PostID, CaseID, UpdateDate, DateID, TimeID, StatusID",
+      "expression_raw": "fca.WithdrawID, fca.DurationInSeconds, fca.PostID, fca.CaseID, fca.UpdateDate, fca.DateID, fca.TimeID, fca.StatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L22",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "DateID",
+      "formula": "WithdrawID, DurationInSeconds, PostID, CaseID, UpdateDate, DateID, TimeID, StatusID",
+      "expression_raw": "fca.WithdrawID, fca.DurationInSeconds, fca.PostID, fca.CaseID, fca.UpdateDate, fca.DateID, fca.TimeID, fca.StatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L22",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "TimeID",
+      "formula": "WithdrawID, DurationInSeconds, PostID, CaseID, UpdateDate, DateID, TimeID, StatusID",
+      "expression_raw": "fca.WithdrawID, fca.DurationInSeconds, fca.PostID, fca.CaseID, fca.UpdateDate, fca.DateID, fca.TimeID, fca.StatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L22",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "StatusID",
+      "formula": "WithdrawID, DurationInSeconds, PostID, CaseID, UpdateDate, DateID, TimeID, StatusID",
+      "expression_raw": "fca.WithdrawID, fca.DurationInSeconds, fca.PostID, fca.CaseID, fca.UpdateDate, fca.DateID, fca.TimeID, fca.StatusID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L22",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "PreviousOccurred",
+      "formula": "PreviousOccurred, CompensationReasonID, WithdrawPaymentID, CommissionOnClose, IsPlug",
+      "expression_raw": "fca.PreviousOccurred, fca.CompensationReasonID, fca.WithdrawPaymentID, fca.CommissionOnClose, fca.IsPlug",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L23-L23",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "CompensationReasonID",
+      "formula": "PreviousOccurred, CompensationReasonID, WithdrawPaymentID, CommissionOnClose, IsPlug",
+      "expression_raw": "fca.PreviousOccurred, fca.CompensationReasonID, fca.WithdrawPaymentID, fca.CommissionOnClose, fca.IsPlug",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L23-L23",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "WithdrawPaymentID",
+      "formula": "PreviousOccurred, CompensationReasonID, WithdrawPaymentID, CommissionOnClose, IsPlug",
+      "expression_raw": "fca.PreviousOccurred, fca.CompensationReasonID, fca.WithdrawPaymentID, fca.CommissionOnClose, fca.IsPlug",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L23-L23",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "CommissionOnClose",
+      "formula": "PreviousOccurred, CompensationReasonID, WithdrawPaymentID, CommissionOnClose, IsPlug",
+      "expression_raw": "fca.PreviousOccurred, fca.CompensationReasonID, fca.WithdrawPaymentID, fca.CommissionOnClose, fca.IsPlug",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L23-L23",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "IsPlug",
+      "formula": "PreviousOccurred, CompensationReasonID, WithdrawPaymentID, CommissionOnClose, IsPlug",
+      "expression_raw": "fca.PreviousOccurred, fca.CompensationReasonID, fca.WithdrawPaymentID, fca.CommissionOnClose, fca.IsPlug",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L23-L23",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "DepositID",
+      "formula": "DepositID, PostRootID, FullCommission, FullCommissionOnClose, RedeemID, RedeemStatus",
+      "expression_raw": "fca.DepositID, fca.PostRootID, fca.FullCommission, fca.FullCommissionOnClose, fca.RedeemID, fca.RedeemStatus",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L24-L24",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "PostRootID",
+      "formula": "DepositID, PostRootID, FullCommission, FullCommissionOnClose, RedeemID, RedeemStatus",
+      "expression_raw": "fca.DepositID, fca.PostRootID, fca.FullCommission, fca.FullCommissionOnClose, fca.RedeemID, fca.RedeemStatus",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L24-L24",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "FullCommission",
+      "formula": "DepositID, PostRootID, FullCommission, FullCommissionOnClose, RedeemID, RedeemStatus",
+      "expression_raw": "fca.DepositID, fca.PostRootID, fca.FullCommission, fca.FullCommissionOnClose, fca.RedeemID, fca.RedeemStatus",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L24-L24",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "FullCommissionOnClose",
+      "formula": "DepositID, PostRootID, FullCommission, FullCommissionOnClose, RedeemID, RedeemStatus",
+      "expression_raw": "fca.DepositID, fca.PostRootID, fca.FullCommission, fca.FullCommissionOnClose, fca.RedeemID, fca.RedeemStatus",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L24-L24",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "RedeemID",
+      "formula": "DepositID, PostRootID, FullCommission, FullCommissionOnClose, RedeemID, RedeemStatus",
+      "expression_raw": "fca.DepositID, fca.PostRootID, fca.FullCommission, fca.FullCommissionOnClose, fca.RedeemID, fca.RedeemStatus",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L24-L24",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "RedeemStatus",
+      "formula": "DepositID, PostRootID, FullCommission, FullCommissionOnClose, RedeemID, RedeemStatus",
+      "expression_raw": "fca.DepositID, fca.PostRootID, fca.FullCommission, fca.FullCommissionOnClose, fca.RedeemID, fca.RedeemStatus",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L24-L24",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "SessionID",
+      "formula": "SessionID, IsRedeem, RegulationIDOnOpen, PlatformID, ReopenForPositionID, IsReOpen",
+      "expression_raw": "fca.SessionID, fca.IsRedeem, fca.RegulationIDOnOpen, fca.PlatformID, fca.ReopenForPositionID, fca.IsReOpen",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L25-L25",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "IsRedeem",
+      "formula": "SessionID, IsRedeem, RegulationIDOnOpen, PlatformID, ReopenForPositionID, IsReOpen",
+      "expression_raw": "fca.SessionID, fca.IsRedeem, fca.RegulationIDOnOpen, fca.PlatformID, fca.ReopenForPositionID, fca.IsReOpen",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L25-L25",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "RegulationIDOnOpen",
+      "formula": "SessionID, IsRedeem, RegulationIDOnOpen, PlatformID, ReopenForPositionID, IsReOpen",
+      "expression_raw": "fca.SessionID, fca.IsRedeem, fca.RegulationIDOnOpen, fca.PlatformID, fca.ReopenForPositionID, fca.IsReOpen",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L25-L25",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "PlatformID",
+      "formula": "SessionID, IsRedeem, RegulationIDOnOpen, PlatformID, ReopenForPositionID, IsReOpen",
+      "expression_raw": "fca.SessionID, fca.IsRedeem, fca.RegulationIDOnOpen, fca.PlatformID, fca.ReopenForPositionID, fca.IsReOpen",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L25-L25",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "ReopenForPositionID",
+      "formula": "SessionID, IsRedeem, RegulationIDOnOpen, PlatformID, ReopenForPositionID, IsReOpen",
+      "expression_raw": "fca.SessionID, fca.IsRedeem, fca.RegulationIDOnOpen, fca.PlatformID, fca.ReopenForPositionID, fca.IsReOpen",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L25-L25",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "IsReOpen",
+      "formula": "SessionID, IsRedeem, RegulationIDOnOpen, PlatformID, ReopenForPositionID, IsReOpen",
+      "expression_raw": "fca.SessionID, fca.IsRedeem, fca.RegulationIDOnOpen, fca.PlatformID, fca.ReopenForPositionID, fca.IsReOpen",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L25-L25",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "CommissionOnCloseOrig",
+      "formula": "CommissionOnCloseOrig, FullCommissionOnCloseOrig, OriginalPositionID, IsPartialCloseParent",
+      "expression_raw": "fca.CommissionOnCloseOrig, fca.FullCommissionOnCloseOrig, fca.OriginalPositionID, fca.IsPartialCloseParent",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L26-L26",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "FullCommissionOnCloseOrig",
+      "formula": "CommissionOnCloseOrig, FullCommissionOnCloseOrig, OriginalPositionID, IsPartialCloseParent",
+      "expression_raw": "fca.CommissionOnCloseOrig, fca.FullCommissionOnCloseOrig, fca.OriginalPositionID, fca.IsPartialCloseParent",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L26-L26",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "OriginalPositionID",
+      "formula": "CommissionOnCloseOrig, FullCommissionOnCloseOrig, OriginalPositionID, IsPartialCloseParent",
+      "expression_raw": "fca.CommissionOnCloseOrig, fca.FullCommissionOnCloseOrig, fca.OriginalPositionID, fca.IsPartialCloseParent",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L26-L26",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "IsPartialCloseParent",
+      "formula": "CommissionOnCloseOrig, FullCommissionOnCloseOrig, OriginalPositionID, IsPartialCloseParent",
+      "expression_raw": "fca.CommissionOnCloseOrig, fca.FullCommissionOnCloseOrig, fca.OriginalPositionID, fca.IsPartialCloseParent",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L26-L26",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "IsPartialCloseChild",
+      "formula": "IsPartialCloseChild, InitialUnits, PaymentStatusID, IsDiscounted",
+      "expression_raw": "fca.IsPartialCloseChild, fca.InitialUnits, fca.PaymentStatusID, fca.IsDiscounted",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L27-L27",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "InitialUnits",
+      "formula": "IsPartialCloseChild, InitialUnits, PaymentStatusID, IsDiscounted",
+      "expression_raw": "fca.IsPartialCloseChild, fca.InitialUnits, fca.PaymentStatusID, fca.IsDiscounted",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L27-L27",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "PaymentStatusID",
+      "formula": "IsPartialCloseChild, InitialUnits, PaymentStatusID, IsDiscounted",
+      "expression_raw": "fca.IsPartialCloseChild, fca.InitialUnits, fca.PaymentStatusID, fca.IsDiscounted",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L27-L27",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "IsDiscounted",
+      "formula": "IsPartialCloseChild, InitialUnits, PaymentStatusID, IsDiscounted",
+      "expression_raw": "fca.IsPartialCloseChild, fca.InitialUnits, fca.PaymentStatusID, fca.IsDiscounted",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L27-L27",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "IsSettled",
+      "formula": "COALESCE(IsSettled, IsSettled)",
+      "expression_raw": "COALESCE(dp.IsSettled, fca.IsSettled) AS IsSettled",
+      "inputs": [
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L28-L28",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "CommissionByUnits",
+      "formula": "CommissionByUnits, FullCommissionByUnits, IsFTD, CountryIDByIP, IsAnonymousIP, ProxyType",
+      "expression_raw": "fca.CommissionByUnits, fca.FullCommissionByUnits, fca.IsFTD, fca.CountryIDByIP, fca.IsAnonymousIP, fca.ProxyType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L29-L29",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "FullCommissionByUnits",
+      "formula": "CommissionByUnits, FullCommissionByUnits, IsFTD, CountryIDByIP, IsAnonymousIP, ProxyType",
+      "expression_raw": "fca.CommissionByUnits, fca.FullCommissionByUnits, fca.IsFTD, fca.CountryIDByIP, fca.IsAnonymousIP, fca.ProxyType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L29-L29",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "IsFTD",
+      "formula": "CommissionByUnits, FullCommissionByUnits, IsFTD, CountryIDByIP, IsAnonymousIP, ProxyType",
+      "expression_raw": "fca.CommissionByUnits, fca.FullCommissionByUnits, fca.IsFTD, fca.CountryIDByIP, fca.IsAnonymousIP, fca.ProxyType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L29-L29",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "CountryIDByIP",
+      "formula": "CommissionByUnits, FullCommissionByUnits, IsFTD, CountryIDByIP, IsAnonymousIP, ProxyType",
+      "expression_raw": "fca.CommissionByUnits, fca.FullCommissionByUnits, fca.IsFTD, fca.CountryIDByIP, fca.IsAnonymousIP, fca.ProxyType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L29-L29",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "IsAnonymousIP",
+      "formula": "CommissionByUnits, FullCommissionByUnits, IsFTD, CountryIDByIP, IsAnonymousIP, ProxyType",
+      "expression_raw": "fca.CommissionByUnits, fca.FullCommissionByUnits, fca.IsFTD, fca.CountryIDByIP, fca.IsAnonymousIP, fca.ProxyType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L29-L29",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "ProxyType",
+      "formula": "CommissionByUnits, FullCommissionByUnits, IsFTD, CountryIDByIP, IsAnonymousIP, ProxyType",
+      "expression_raw": "fca.CommissionByUnits, fca.FullCommissionByUnits, fca.IsFTD, fca.CountryIDByIP, fca.IsAnonymousIP, fca.ProxyType",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L29-L29",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "IsFeeDividend",
+      "formula": "IsFeeDividend",
+      "expression_raw": "fca.IsFeeDividend",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L30-L30",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "IsAirDrop",
+      "formula": "COALESCE(IsAirDrop, IsAirDrop)",
+      "expression_raw": "COALESCE(dp.IsAirDrop, fca.IsAirDrop) AS IsAirDrop",
+      "inputs": [
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L31-L31",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "DividendID",
+      "formula": "DividendID, MoveMoneyReasonID",
+      "expression_raw": "fca.DividendID, fca.MoveMoneyReasonID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L32-L32",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "MoveMoneyReasonID",
+      "formula": "DividendID, MoveMoneyReasonID",
+      "expression_raw": "fca.DividendID, fca.MoveMoneyReasonID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L32-L32",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "SettlementTypeID",
+      "formula": "COALESCE(SettlementTypeID, SettlementTypeID)",
+      "expression_raw": "COALESCE(dp.SettlementTypeID, fca.SettlementTypeID) AS SettlementTypeID",
+      "inputs": [
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L33-L33",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "etr_y",
+      "formula": "etr_y, etr_ym, etr_ymd, DLTOpen, DLTClose, OpenMarkupByUnits, Description",
+      "expression_raw": "fca.etr_y, fca.etr_ym, fca.etr_ymd, fca.DLTOpen, fca.DLTClose, fca.OpenMarkupByUnits, fca.Description",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L34-L34",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "etr_ym",
+      "formula": "etr_y, etr_ym, etr_ymd, DLTOpen, DLTClose, OpenMarkupByUnits, Description",
+      "expression_raw": "fca.etr_y, fca.etr_ym, fca.etr_ymd, fca.DLTOpen, fca.DLTClose, fca.OpenMarkupByUnits, fca.Description",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L34-L34",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "etr_ymd",
+      "formula": "etr_y, etr_ym, etr_ymd, DLTOpen, DLTClose, OpenMarkupByUnits, Description",
+      "expression_raw": "fca.etr_y, fca.etr_ym, fca.etr_ymd, fca.DLTOpen, fca.DLTClose, fca.OpenMarkupByUnits, fca.Description",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L34-L34",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "DLTOpen",
+      "formula": "etr_y, etr_ym, etr_ymd, DLTOpen, DLTClose, OpenMarkupByUnits, Description",
+      "expression_raw": "fca.etr_y, fca.etr_ym, fca.etr_ymd, fca.DLTOpen, fca.DLTClose, fca.OpenMarkupByUnits, fca.Description",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L34-L34",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "DLTClose",
+      "formula": "etr_y, etr_ym, etr_ymd, DLTOpen, DLTClose, OpenMarkupByUnits, Description",
+      "expression_raw": "fca.etr_y, fca.etr_ym, fca.etr_ymd, fca.DLTOpen, fca.DLTClose, fca.OpenMarkupByUnits, fca.Description",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L34-L34",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "OpenMarkupByUnits",
+      "formula": "etr_y, etr_ym, etr_ymd, DLTOpen, DLTClose, OpenMarkupByUnits, Description",
+      "expression_raw": "fca.etr_y, fca.etr_ym, fca.etr_ymd, fca.DLTOpen, fca.DLTClose, fca.OpenMarkupByUnits, fca.Description",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L34-L34",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "Description",
+      "formula": "etr_y, etr_ym, etr_ymd, DLTOpen, DLTClose, OpenMarkupByUnits, Description",
+      "expression_raw": "fca.etr_y, fca.etr_ym, fca.etr_ymd, fca.DLTOpen, fca.DLTClose, fca.OpenMarkupByUnits, fca.Description",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L34-L34",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "IsBuy",
+      "formula": "COALESCE(IsBuy, IsBuy)",
+      "expression_raw": "COALESCE(dp.IsBuy, fca.IsBuy) AS IsBuy",
+      "inputs": [
+        "main.dwh.dim_position",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "coalesce",
+      "evidence_lines": "L35-L35",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "CreditID",
+      "formula": "CreditID",
+      "expression_raw": "fca.CreditID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L36-L36",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "OpenDateID",
+      "formula": "-- Replicated Date IDs CAST(OpenDateID AS INT)",
+      "expression_raw": "-- Replicated Date IDs\n    CAST(dp.OpenDateID AS INT) AS OpenDateID",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L37-L38",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "CloseDateID",
+      "formula": "CAST(CloseDateID AS INT)",
+      "expression_raw": "CAST(dp.CloseDateID AS INT) AS CloseDateID",
+      "inputs": [
+        "main.dwh.dim_position"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L39-L39",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "VolumeOnOpen",
+      "formula": "-- Volume set to NULL for Passive Actions to prevent aggregation duplication CAST(NULL AS DECIMAL(38,6))",
+      "expression_raw": "-- Volume set to NULL for Passive Actions to prevent aggregation duplication\n    CAST(NULL AS DECIMAL(38,6)) AS VolumeOnOpen",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L40-L41",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "VolumeOnClose",
+      "formula": "CAST(NULL AS DECIMAL(38,6))",
+      "expression_raw": "CAST(NULL AS DECIMAL(38,6)) AS VolumeOnClose",
+      "inputs": [
+        "computed in source"
+      ],
+      "transform_kind": "cast",
+      "evidence_lines": "L42-L42",
+      "scope": "passive_actions_enriched"
+    },
+    {
+      "column": "TicketFeeAction",
+      "formula": "CASE WHEN Description = 'OpenTotalFees' THEN 'Open' WHEN Description = 'CloseTotalFees' THEN 'Close' ELSE NULL END",
+      "expression_raw": "CASE\n      WHEN fca.Description = 'OpenTotalFees' THEN 'Open'\n      WHEN fca.Description = 'CloseTotalFees' THEN 'Close'\n      ELSE NULL\n    END AS TicketFeeAction",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L43-L47",
+      "scope": "passive_actions_enriched"
+    }
+  ],
+  "source": "knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_fact_customeraction_enriched.sql"
+}

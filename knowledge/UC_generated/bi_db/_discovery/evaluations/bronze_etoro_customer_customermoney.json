@@ -1,0 +1,88 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_customer_customermoney",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:31Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "CID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.CustomerMoney.md",
+      "upstream_quote": "Customer ID - primary key. Matches CID in Customer.CustomerStatic. One row per customer.",
+      "wiki_quote": "Customer ID - primary key. Matches CID in Customer.CustomerStatic. One row per customer (Tier 1 — inherited from etoro.C",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "GCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.CustomerMoney.md",
+      "upstream_quote": "Group Customer ID - same as Customer.CustomerStatic.GCID. Redundant storage for lookup performance - avoids join to Cust",
+      "wiki_quote": "Group Customer ID - same as Customer.CustomerStatic.GCID. Redundant storage for lookup performance - avoids join to Cust",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Credit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.CustomerMoney.md",
+      "upstream_quote": "Current available cash balance in USD. The primary trading balance - what the customer can use to open positions. Update",
+      "wiki_quote": "Current available cash balance in USD. The primary trading balance - what the customer can use to open positions. Update",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BonusCredit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.CustomerMoney.md",
+      "upstream_quote": "Promotional/bonus credits, separate from real funds. Default = 0. Confirmed as account-level (USD-only) in multi-currenc",
+      "wiki_quote": "Promotional/bonus credits, separate from real funds. Default = 0. Confirmed as account-level (USD-only) in multi-currenc",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RealizedEquity",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.CustomerMoney.md",
+      "upstream_quote": "Running total of realized value: increases on deposits and position close proceeds, decreases on withdrawals. Answers \"h",
+      "wiki_quote": "Running total of realized value: increases on deposits and position close proceeds, decreases on withdrawals. Answers \"h",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalCash",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.CustomerMoney.md",
+      "upstream_quote": "Reconciled cash total maintained by Trade.UpdateTotalCash reconciliation job. Uses dtPrice UDT (higher decimal precision",
+      "wiki_quote": "Reconciled cash total maintained by Trade.UpdateTotalCash reconciliation job. Uses dtPrice UDT (higher decimal precision",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BSLRealFunds",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Customer\\Tables\\Customer.CustomerMoney.md",
+      "upstream_quote": "Real funds threshold for Balance Stop Loss (BSL) system. Updated by PostMIMOOperations. When customer equity drops to th",
+      "wiki_quote": "Real funds threshold for Balance Stop Loss (BSL) system. Updated by PostMIMOOperations. When customer equity drops to th",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 7,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 7 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

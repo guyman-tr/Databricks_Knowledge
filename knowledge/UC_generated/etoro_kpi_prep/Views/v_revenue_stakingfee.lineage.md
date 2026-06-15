@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_revenue_stakingfee.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_revenue_stakingfee.json` (rows: 22, mismatches: 10) |
 | **Primary upstream** | `main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 

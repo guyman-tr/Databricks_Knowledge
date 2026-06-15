@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_revenue_conversionfee_withpositiondata
--- Captured: 2026-05-18T08:12:20Z
+-- Captured: 2026-05-19T12:22:08Z
 -- ==========================================================================
 
 SELECT

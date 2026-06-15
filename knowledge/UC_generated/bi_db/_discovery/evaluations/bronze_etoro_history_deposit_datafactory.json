@@ -1,0 +1,340 @@
+{
+  "object_fqn": "main.bi_db.bronze_etoro_history_deposit_datafactory",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:38Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "UTC timestamp of this deposit event. The base table CLUSTERED index sorts on (Occurred, DepositID). Primary time axis fo",
+      "wiki_quote": "UTC timestamp of this deposit event. The base table CLUSTERED index sorts on (Occurred, DepositID). Primary time axis fo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepositID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Identifier of the deposit record being audited. One DepositID appears multiple times as the deposit progresses through s",
+      "wiki_quote": "Identifier of the deposit record being audited. One DepositID appears multiple times as the deposit progresses through s",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Customer who made the deposit. Filtered: CID=43496401 excluded (spam account). Central key for per-customer deposit anal",
+      "wiki_quote": "Customer who made the deposit. Filtered: CID=43496401 excluded (spam account). Central key for per-customer deposit anal",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundingID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Specific payment instrument used (credit card, bank account, PayPal, etc.). References Billing.Funding.",
+      "wiki_quote": "Specific payment instrument used (credit card, bank account, PayPal, etc.). References Billing.Funding (Tier 1 — inherit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Currency of the deposit amount. Live data shows 2=EUR, 3=other currencies. References Dictionary.Currency.",
+      "wiki_quote": "Currency of the deposit amount. Live data shows 2=EUR, 3=other currencies. References Dictionary.Currency (Tier 1 — inhe",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Deposit processing state at this event. 1=New, 2=Approved, 5=InProcess, 13=Failed, 11=Chargeback, 36=PendingReview. The ",
+      "wiki_quote": "Deposit processing state at this event. 1=New, 2=Approved, 5=InProcess, 13=Failed, 11=Chargeback, 36=PendingReview. The ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Back-office manager who manually triggered this deposit state change. NULL for automated payment processor events.",
+      "wiki_quote": "Back-office manager who manually triggered this deposit state change. NULL for automated payment processor events (Tier ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RiskManagementStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Risk engine evaluation result for this deposit event. Non-null when a risk rule was applied.",
+      "wiki_quote": "Risk engine evaluation result for this deposit event. Non-null when a risk rule was applied (Tier 1 — inherited from eto",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Gross deposit amount in the deposit's currency before fees/commissions. The face value requested by the customer.",
+      "wiki_quote": "Gross deposit amount in the deposit's currency before fees/commissions. The face value requested by the customer (Tier 1",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Exchange rate applied to convert the deposit currency to the account's base currency. NULL if same-currency deposit.",
+      "wiki_quote": "Exchange rate applied to convert the deposit currency to the account's base currency. NULL if same-currency deposit (Tie",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Payment provider's confirmed transaction date. May differ from Occurred when provider confirmation is delayed.",
+      "wiki_quote": "Payment provider's confirmed transaction date. May differ from Occurred when provider confirmation is delayed (Tier 1 — ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ModificationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Timestamp of the last modification to the source Billing.Deposit record at the time this history row was captured.",
+      "wiki_quote": "Timestamp of the last modification to the source Billing.Deposit record at the time this history row was captured (Tier ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TransactionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Short 6-character internal transaction reference code. Legacy field from early eToro.",
+      "wiki_quote": "Short 6-character internal transaction reference code. Legacy field from early eToro (Tier 1 — inherited from etoro.Hist",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IPAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Customer's IP address at deposit time, stored as a numeric integer (legacy IP-as-integer format). Used for fraud geo-ana",
+      "wiki_quote": "Customer's IP address at deposit time, stored as a numeric integer (legacy IP-as-integer format). Used for fraud geo-ana",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Approved",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Legacy approval flag. 1=deposit was approved. Predates the full PaymentStatusID system; maintained for backward compatib",
+      "wiki_quote": "Legacy approval flag. 1=deposit was approved. Predates the full PaymentStatusID system; maintained for backward compatib",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Commission",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Platform commission (fee) deducted from the deposit. 0 for most standard deposits.",
+      "wiki_quote": "Platform commission (fee) deducted from the deposit. 0 for most standard deposits (Tier 1 — inherited from etoro.History",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ClearingHouseEffectiveDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Date the clearing house (bank) recognized the transaction. May lag PaymentDate by 1-3 business days for wire transfers.",
+      "wiki_quote": "Date the clearing house (bank) recognized the transaction. May lag PaymentDate by 1-3 business days for wire transfers (",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OldPaymentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Reference to a superseded/replaced payment record. Used when a deposit is re-submitted from a legacy payment system.",
+      "wiki_quote": "Reference to a superseded/replaced payment record. Used when a deposit is re-submitted from a legacy payment system (Tie",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsFTD",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "First-Time Deposit flag. 1=this event was the customer's qualifying first deposit. Critical for marketing attribution, b",
+      "wiki_quote": "First-Time Deposit flag. 1=this event was the customer's qualifying first deposit. Critical for marketing attribution, b",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProcessorValueDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Value date assigned by the payment processor - when funds become available to eToro. Important for treasury/cash managem",
+      "wiki_quote": "Value date assigned by the payment processor - when funds become available to eToro. Important for treasury/cash managem",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RefundVerificationCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Verification code required to authorize a refund. Security measure ensuring refunds match the original deposit.",
+      "wiki_quote": "Verification code required to authorize a refund. Security measure ensuring refunds match the original deposit (Tier 1 —",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepotID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Depot/vault identifier for the funds. Used in multi-entity or multi-jurisdiction fund segregation. NULL for standard ret",
+      "wiki_quote": "Depot/vault identifier for the funds. Used in multi-entity or multi-jurisdiction fund segregation. NULL for standard ret",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MatchStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Wire transfer matching status. For bank wire deposits where the incoming transfer must be matched to the deposit request",
+      "wiki_quote": "Wire transfer matching status. For bank wire deposits where the incoming transfer must be matched to the deposit request",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FunnelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Marketing/acquisition funnel the customer was on at deposit time. Used for conversion analytics and campaign ROI.",
+      "wiki_quote": "Marketing/acquisition funnel the customer was on at deposit time. Used for conversion analytics and campaign ROI (Tier 1",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Code",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Promotional or campaign code applied at deposit time. NULL for no-promo deposits.",
+      "wiki_quote": "Promotional or campaign code applied at deposit time. NULL for no-promo deposits (Tier 1 — inherited from etoro.History.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExTransactionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "External transaction ID from the payment provider. Used for provider-side reconciliation and dispute filing.",
+      "wiki_quote": "External transaction ID from the payment provider. Used for provider-side reconciliation and dispute filing (Tier 1 — in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CampaignCodeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Campaign code that qualified this deposit for a bonus. NULL if deposit was not part of a bonus campaign.",
+      "wiki_quote": "Campaign code that qualified this deposit for a bonus. NULL if deposit was not part of a bonus campaign (Tier 1 — inheri",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BonusStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Processing state of the bonus associated with this deposit. Tracks whether bonus was awarded, failed, or pending.",
+      "wiki_quote": "Processing state of the bonus associated with this deposit. Tracks whether bonus was awarded, failed, or pending (Tier 1",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BonusAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Bonus credit amount granted based on this deposit. NULL if no bonus was applicable.",
+      "wiki_quote": "Bonus credit amount granted based on this deposit. NULL if no bonus was applicable (Tier 1 — inherited from etoro.Histor",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BonusErrorCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Error code when bonus processing failed. 1=Campaign inactive, 2=Already received, 3=Max users reached, 4=Max amount reac",
+      "wiki_quote": "Error code when bonus processing failed. 1=Campaign inactive, 2=Already received, 3=Max users reached, 4=Max amount reac",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SessionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Web/API session ID at deposit submission time. Links to session audit tables for end-to-end request tracing.",
+      "wiki_quote": "Web/API session ID at deposit submission time. Links to session audit tables for end-to-end request tracing (Tier 1 — in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepositTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Deposit transaction type. Live data shows 5=RecurringInvestment. 1=Regular, 2=CvvFree, 3=Recurring, 4=MoneyTransfer, 5=R",
+      "wiki_quote": "Deposit transaction type. Live data shows 5=RecurringInvestment. 1=Regular, 2=CvvFree, 3=Recurring, 4=MoneyTransfer, 5=R",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Surrogate PK for this audit event row. Auto-incrementing - higher ID = later event. Not the same as DepositID.",
+      "wiki_quote": "Surrogate PK for this audit event row. Auto-incrementing - higher ID = later event. Not the same as DepositID (Tier 1 — ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DRStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Dispute/Reversal status. 0=no dispute. Non-zero=chargeback or reversal process active.",
+      "wiki_quote": "Dispute/Reversal status. 0=no dispute. Non-zero=chargeback or reversal process active (Tier 1 — inherited from etoro.His",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DRDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Date when the dispute/reversal was opened or last updated. NULL when DRStatusID=0.",
+      "wiki_quote": "Date when the dispute/reversal was opened or last updated. NULL when DRStatusID=0 (Tier 1 — inherited from etoro.History",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProtocolMIDSettingsID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Merchant ID configuration at the time of this deposit. Identifies which payment gateway MID processed this deposit. Refe",
+      "wiki_quote": "Merchant ID configuration at the time of this deposit. Identifies which payment gateway MID processed this deposit. Refe",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Fixed fee component for currency exchange in minor units. Applied when deposit currency differs from account currency.",
+      "wiki_quote": "Fixed fee component for currency exchange in minor units. Applied when deposit currency differs from account currency (T",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BaseExchangeRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Base exchange rate before markup. Paired with ExchangeRate to calculate the markup applied on top of the mid-market rate",
+      "wiki_quote": "Base exchange rate before markup. Paired with ExchangeRate to calculate the markup applied on top of the mid-market rate",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentGeneration",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Payment system generation/version indicator. Live data shows 1=first-generation pipeline. Distinguishes deposits process",
+      "wiki_quote": "Payment system generation/version indicator. Live data shows 1=first-generation pipeline. Distinguishes deposits process",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProcessRegulationID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Regulatory jurisdiction under which this deposit was processed. Determines compliance rules and reporting requirements. ",
+      "wiki_quote": "Regulatory jurisdiction under which this deposit was processed. Determines compliance rules and reporting requirements. ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsSetBalanceCompleted",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Whether the Customer.SetBalance call that accompanies deposit approval completed successfully. 1=balance updated; NULL/0",
+      "wiki_quote": "Whether the Customer.SetBalance call that accompanies deposit approval completed successfully. 1=balance updated; NULL/0",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RoutingReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Reason the deposit was routed to a specific payment processor. Used in multi-processor setups.",
+      "wiki_quote": "Reason the deposit was routed to a specific payment processor. Used in multi-processor setups (Tier 1 — inherited from e",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MerchantAccountID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Views\\History.Deposit_DataFactory.md",
+      "upstream_quote": "Specific merchant account within a payment provider that processed this deposit. More granular than ProtocolMIDSettingsI",
+      "wiki_quote": "Specific merchant account within a payment provider that processed this deposit. More granular than ProtocolMIDSettingsI",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 43,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 43 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

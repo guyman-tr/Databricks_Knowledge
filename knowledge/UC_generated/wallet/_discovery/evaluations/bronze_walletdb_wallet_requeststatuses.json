@@ -1,0 +1,74 @@
+{
+  "object_fqn": "main.wallet.bronze_walletdb_wallet_requeststatuses",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.82,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:08:23Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "Id",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.RequestStatuses.md",
+      "upstream_quote": "Auto-incrementing event identifier. The highest Id for a given RequestId represents the most recent status. Used in comp",
+      "wiki_quote": "Auto-incrementing event identifier. The highest Id for a given RequestId represents the most recent status. Used in comp",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RequestId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.RequestStatuses.md",
+      "upstream_quote": "The request this status event belongs to. FK to Wallet.Requests.Id. Multiple status rows exist per request (event-source",
+      "wiki_quote": "The request this status event belongs to. FK to Wallet.Requests.Id. Multiple status rows exist per request (event-source",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RequestStatusId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.RequestStatuses.md",
+      "upstream_quote": "The status the request transitioned to: 0=Start, 1=Done, 2=Error, 3=ExecuterEnqueued, 4=ReadByExecuter, 5=TransactionSen",
+      "wiki_quote": "The status the request transitioned to: 0=Start, 1=Done, 2=Error, 3=ExecuterEnqueued, 4=ReadByExecuter, 5=TransactionSen",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Timestamp",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.RequestStatuses.md",
+      "upstream_quote": "When this status transition occurred. Used for SLA monitoring, processing time calculations, and chronological ordering.",
+      "wiki_quote": "When this status transition occurred. Used for SLA monitoring, processing time calculations, and chronological ordering.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DetailsJson",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.RequestStatuses.md",
+      "upstream_quote": "JSON payload with status-specific context. For ExecuterEnqueued: saga key, full request payload including amounts, addre",
+      "wiki_quote": "JSON payload with status-specific context. For ExecuterEnqueued: saga key, full request payload including amounts, addre",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 5,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 5 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

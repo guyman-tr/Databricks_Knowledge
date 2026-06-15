@@ -1,0 +1,102 @@
+{
+  "object_fqn": "main.bi_db.bronze_fiktivo_dbo_tblaff_leads_commissions",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0,
+    "concept_coverage": 7.5
+  },
+  "weighted_score": 8.53,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-19T12:13:51Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "ID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads_Commissions.md",
+      "upstream_quote": "Auto-incrementing primary key. NOT FOR REPLICATION.",
+      "wiki_quote": "Auto-incrementing primary key. NOT FOR REPLICATION (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads_Commissions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LeadID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads_Commissions.md",
+      "upstream_quote": "References tblaff_Leads.LeadID. Trigger enforces RI.",
+      "wiki_quote": "References tblaff_Leads.LeadID. Trigger enforces RI (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads_Commissions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AffiliateID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads_Commissions.md",
+      "upstream_quote": "The affiliate receiving this commission. Trigger enforces RI against tblaff_Affiliates.",
+      "wiki_quote": "The affiliate receiving this commission. Trigger enforces RI against tblaff_Affiliates (Tier 1 — inherited from fiktivo.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Commission",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads_Commissions.md",
+      "upstream_quote": "Lead commission amount for this tier.",
+      "wiki_quote": "Lead commission amount for this tier (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads_Commissions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Tier",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads_Commissions.md",
+      "upstream_quote": "Commission tier level: 1-5.",
+      "wiki_quote": "Commission tier level: 1-5 (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads_Commissions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Paid",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads_Commissions.md",
+      "upstream_quote": "Payment status: 0 = unpaid, 1 = paid.",
+      "wiki_quote": "Payment status: 0 = unpaid, 1 = paid (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads_Commissions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads_Commissions.md",
+      "upstream_quote": "References tblaff_PaymentHistory.PaymentID when paid.",
+      "wiki_quote": "References tblaff_PaymentHistory.PaymentID when paid (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads_Commissions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SubAffiliateID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads_Commissions.md",
+      "upstream_quote": "Sub-affiliate tracking tag. Updatable by UpdateSubAffiliateID.",
+      "wiki_quote": "Sub-affiliate tracking tag. Updatable by UpdateSubAffiliateID (Tier 1 — inherited from fiktivo.dbo.tblaff_Leads_Commissi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "eCost",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\ExperianceDBs\\fiktivo\\Wiki\\dbo\\Tables\\dbo.tblaff_Leads_Commissions.md",
+      "upstream_quote": "Effective cost to the platform for this lead event. Enables ROI calculation: Commission/eCost. NULL when eCost tracking ",
+      "wiki_quote": "Effective cost to the platform for this lead event. Enables ROI calculation: Commission/eCost. NULL when eCost tracking ",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 9,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 9 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage",
+    "concept_coverage": "no concepts.json or formulas.json — Phase 4.5/4.6 not run"
+  }
+}

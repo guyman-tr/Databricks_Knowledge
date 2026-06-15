@@ -1,0 +1,517 @@
+{
+  "object_fqn": "main.bi_output.finance_tables_functions_revenue_trading_fees",
+  "generated_at": "2026-05-19T15:01:27Z",
+  "formula_count": 46,
+  "formulas": [
+    {
+      "column": "RealCID",
+      "formula": "RealCID",
+      "expression_raw": "fca.RealCID",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "passthrough",
+      "evidence_lines": "L8-L8",
+      "scope": "main"
+    },
+    {
+      "column": "TradingFee",
+      "formula": "RealCID , -1 * Amount",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "arithmetic",
+      "evidence_lines": "L8-L9",
+      "scope": "main"
+    },
+    {
+      "column": "TradingFeeType",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L13",
+      "scope": "main"
+    },
+    {
+      "column": "DateID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L14",
+      "scope": "main"
+    },
+    {
+      "column": "GCID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L15",
+      "scope": "main"
+    },
+    {
+      "column": "CountryID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L16",
+      "scope": "main"
+    },
+    {
+      "column": "LabelID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L17",
+      "scope": "main"
+    },
+    {
+      "column": "LanguageID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L18",
+      "scope": "main"
+    },
+    {
+      "column": "VerificationLevelID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L19",
+      "scope": "main"
+    },
+    {
+      "column": "DocsOK",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L20",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L21",
+      "scope": "main"
+    },
+    {
+      "column": "Bankruptcy",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L22",
+      "scope": "main"
+    },
+    {
+      "column": "RiskStatusID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L23",
+      "scope": "main"
+    },
+    {
+      "column": "RiskClassificationID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L24",
+      "scope": "main"
+    },
+    {
+      "column": "CommunicationLanguageID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L25",
+      "scope": "main"
+    },
+    {
+      "column": "PremiumAccount",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L26",
+      "scope": "main"
+    },
+    {
+      "column": "Evangelist",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L27",
+      "scope": "main"
+    },
+    {
+      "column": "GuruStatusID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L28",
+      "scope": "main"
+    },
+    {
+      "column": "UpdateDate",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L29",
+      "scope": "main"
+    },
+    {
+      "column": "RegulationID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L30",
+      "scope": "main"
+    },
+    {
+      "column": "AccountStatusID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L31",
+      "scope": "main"
+    },
+    {
+      "column": "AccountManagerID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L32",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerLevelID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L33",
+      "scope": "main"
+    },
+    {
+      "column": "AccountTypeID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L34",
+      "scope": "main"
+    },
+    {
+      "column": "DateRangeID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L35",
+      "scope": "main"
+    },
+    {
+      "column": "IsDepositor",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L36",
+      "scope": "main"
+    },
+    {
+      "column": "PendingClosureStatusID",
+      "formula": "RealCID , -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID …",
+      "expression_raw": "fca.RealCID\n  , -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L8-L37",
+      "scope": "main"
+    },
+    {
+      "column": "DocumentStatusID",
+      "formula": ", -1 * Amount AS TradingFee , CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID = 118 THEN 'Sp…",
+      "expression_raw": ", -1 * fca.Amount AS TradingFee\n  , CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 118 THEN 'Sp…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L9-L38",
+      "scope": "main"
+    },
+    {
+      "column": "SuitabilityTestStatusID",
+      "formula": ", CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN 'Administrationfee' WHEN ActionTypeID = 36 AND CompensationReasonID = 118 THEN 'SpotPriceAdjustment' WHEN Acti…",
+      "expression_raw": ", CASE WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 117 THEN 'Administrationfee'\n\t\tWHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 118 THEN 'SpotPriceAdjustment'\n\t\tWHEN fca.Acti…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "case_flag",
+      "evidence_lines": "L10-L39",
+      "scope": "main"
+    },
+    {
+      "column": "MifidCategorizationID",
+      "formula": "WHEN ActionTypeID = 36 AND CompensationReasonID = 118 THEN 'SpotPriceAdjustment' WHEN ActionTypeID = 35 AND IsFeeDividend = 4 THEN 'TicketFee' ELSE 'NA' END AS TradingFeeType , fc…",
+      "expression_raw": "WHEN fca.ActionTypeID = 36 AND fca.CompensationReasonID = 118 THEN 'SpotPriceAdjustment'\n\t\tWHEN fca.ActionTypeID = 35 AND fca.IsFeeDividend = 4 THEN 'TicketFee'\n\tELSE 'NA' END AS TradingFeeType\n  , fc…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L11-L40",
+      "scope": "main"
+    },
+    {
+      "column": "IsEmailVerified",
+      "formula": "WHEN ActionTypeID = 35 AND IsFeeDividend = 4 THEN 'TicketFee' ELSE 'NA' END AS TradingFeeType , DateID , GCID , CountryID , LabelID , LanguageID , Verifica…",
+      "expression_raw": "WHEN fca.ActionTypeID = 35 AND fca.IsFeeDividend = 4 THEN 'TicketFee'\n\tELSE 'NA' END AS TradingFeeType\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.Verifica…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L12-L41",
+      "scope": "main"
+    },
+    {
+      "column": "IsValidCustomer",
+      "formula": "ELSE 'NA' END AS TradingFeeType , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , Bankruptcy …",
+      "expression_raw": "ELSE 'NA' END AS TradingFeeType\n  , fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L13-L42",
+      "scope": "main"
+    },
+    {
+      "column": "DesignatedRegulationID",
+      "formula": ", DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , Bankruptcy , RiskStatusID , RiskCla…",
+      "expression_raw": ", fca.DateID\n  , fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskCla…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L14-L43",
+      "scope": "main"
+    },
+    {
+      "column": "EvMatchStatus",
+      "formula": ", GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , Bankruptcy , RiskStatusID , RiskClassificationID …",
+      "expression_raw": ", fsc.GCID\n  , fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskClassificationID\n …",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L15-L44",
+      "scope": "main"
+    },
+    {
+      "column": "RegionID",
+      "formula": ", CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , Bankruptcy , RiskStatusID , RiskClassificationID , Commun…",
+      "expression_raw": ", fsc.CountryID\n  , fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskClassificationID\n  , fsc.Commun…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L16-L45",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusReasonID",
+      "formula": ", LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , Bankruptcy , RiskStatusID , RiskClassificationID , CommunicationLanguageID …",
+      "expression_raw": ", fsc.LabelID\n  , fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskClassificationID\n  , fsc.CommunicationLanguageID\n…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L17-L46",
+      "scope": "main"
+    },
+    {
+      "column": "IsCreditReportValidCB",
+      "formula": ", LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , Bankruptcy , RiskStatusID , RiskClassificationID , CommunicationLanguageID , PremiumA…",
+      "expression_raw": ", fsc.LanguageID\n  , fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskClassificationID\n  , fsc.CommunicationLanguageID\n  , fsc.PremiumA…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L18-L47",
+      "scope": "main"
+    },
+    {
+      "column": "AffiliateID",
+      "formula": ", VerificationLevelID , DocsOK , PlayerStatusID , Bankruptcy , RiskStatusID , RiskClassificationID , CommunicationLanguageID , PremiumAccount , Evan…",
+      "expression_raw": ", fsc.VerificationLevelID\n  , fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskClassificationID\n  , fsc.CommunicationLanguageID\n  , fsc.PremiumAccount\n  , fsc.Evan…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L19-L48",
+      "scope": "main"
+    },
+    {
+      "column": "Email",
+      "formula": ", DocsOK , PlayerStatusID , Bankruptcy , RiskStatusID , RiskClassificationID , CommunicationLanguageID , PremiumAccount , Evangelist , GuruStatusID …",
+      "expression_raw": ", fsc.DocsOK\n  , fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskClassificationID\n  , fsc.CommunicationLanguageID\n  , fsc.PremiumAccount\n  , fsc.Evangelist\n  , fsc.GuruStatusID\n…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L20-L49",
+      "scope": "main"
+    },
+    {
+      "column": "City",
+      "formula": ", PlayerStatusID , Bankruptcy , RiskStatusID , RiskClassificationID , CommunicationLanguageID , PremiumAccount , Evangelist , GuruStatusID , UpdateD…",
+      "expression_raw": ", fsc.PlayerStatusID\n  , fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskClassificationID\n  , fsc.CommunicationLanguageID\n  , fsc.PremiumAccount\n  , fsc.Evangelist\n  , fsc.GuruStatusID\n  , fsc.UpdateD…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L21-L50",
+      "scope": "main"
+    },
+    {
+      "column": "Address",
+      "formula": ", Bankruptcy , RiskStatusID , RiskClassificationID , CommunicationLanguageID , PremiumAccount , Evangelist , GuruStatusID , UpdateDate , RegulationI…",
+      "expression_raw": ", fsc.Bankruptcy\n  , fsc.RiskStatusID\n  , fsc.RiskClassificationID\n  , fsc.CommunicationLanguageID\n  , fsc.PremiumAccount\n  , fsc.Evangelist\n  , fsc.GuruStatusID\n  , fsc.UpdateDate\n  , fsc.RegulationI…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L22-L51",
+      "scope": "main"
+    },
+    {
+      "column": "Zip",
+      "formula": ", RiskStatusID , RiskClassificationID , CommunicationLanguageID , PremiumAccount , Evangelist , GuruStatusID , UpdateDate , RegulationID , AccountSt…",
+      "expression_raw": ", fsc.RiskStatusID\n  , fsc.RiskClassificationID\n  , fsc.CommunicationLanguageID\n  , fsc.PremiumAccount\n  , fsc.Evangelist\n  , fsc.GuruStatusID\n  , fsc.UpdateDate\n  , fsc.RegulationID\n  , fsc.AccountSt…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L23-L52",
+      "scope": "main"
+    },
+    {
+      "column": "PhoneNumber",
+      "formula": ", RiskClassificationID , CommunicationLanguageID , PremiumAccount , Evangelist , GuruStatusID , UpdateDate , RegulationID , AccountStatusID , Accoun…",
+      "expression_raw": ", fsc.RiskClassificationID\n  , fsc.CommunicationLanguageID\n  , fsc.PremiumAccount\n  , fsc.Evangelist\n  , fsc.GuruStatusID\n  , fsc.UpdateDate\n  , fsc.RegulationID\n  , fsc.AccountStatusID\n  , fsc.Accoun…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L24-L53",
+      "scope": "main"
+    },
+    {
+      "column": "IsPhoneVerified",
+      "formula": ", CommunicationLanguageID , PremiumAccount , Evangelist , GuruStatusID , UpdateDate , RegulationID , AccountStatusID , AccountManagerID , PlayerLeve…",
+      "expression_raw": ", fsc.CommunicationLanguageID\n  , fsc.PremiumAccount\n  , fsc.Evangelist\n  , fsc.GuruStatusID\n  , fsc.UpdateDate\n  , fsc.RegulationID\n  , fsc.AccountStatusID\n  , fsc.AccountManagerID\n  , fsc.PlayerLeve…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L25-L54",
+      "scope": "main"
+    },
+    {
+      "column": "PhoneVerificationDateID",
+      "formula": ", PremiumAccount , Evangelist , GuruStatusID , UpdateDate , RegulationID , AccountStatusID , AccountManagerID , PlayerLevelID , AccountTypeID , fs…",
+      "expression_raw": ", fsc.PremiumAccount\n  , fsc.Evangelist\n  , fsc.GuruStatusID\n  , fsc.UpdateDate\n  , fsc.RegulationID\n  , fsc.AccountStatusID\n  , fsc.AccountManagerID\n  , fsc.PlayerLevelID\n  , fsc.AccountTypeID\n  , fs…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L26-L55",
+      "scope": "main"
+    },
+    {
+      "column": "PlayerStatusSubReasonID",
+      "formula": ", Evangelist , GuruStatusID , UpdateDate , RegulationID , AccountStatusID , AccountManagerID , PlayerLevelID , AccountTypeID , DateRangeID , I…",
+      "expression_raw": ", fsc.Evangelist\n  , fsc.GuruStatusID\n  , fsc.UpdateDate\n  , fsc.RegulationID\n  , fsc.AccountStatusID\n  , fsc.AccountManagerID\n  , fsc.PlayerLevelID\n  , fsc.AccountTypeID\n  , fsc.DateRangeID\n  , fsc.I…",
+      "inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked"
+      ],
+      "transform_kind": "unknown",
+      "evidence_lines": "L27-L56",
+      "scope": "main"
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/finance_tables_functions_revenue_trading_fees.sql"
+}

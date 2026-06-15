@@ -1,0 +1,71 @@
+{
+  "object_fqn": "main.bi_output.limitation_to_normal_conversion",
+  "generated_at": "2026-05-19T15:01:20Z",
+  "concept_count": 3,
+  "concepts": [
+    {
+      "id": "dim_lookup_dr",
+      "name": "Dim lookup via dr",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "alias": "dr",
+      "join_conditions": [
+        "fsc.DateRangeID = dr.DateRangeID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L19",
+      "scopes": [
+        "status_changes"
+      ],
+      "scope": "status_changes",
+      "join_condition": "fsc.DateRangeID = dr.DateRangeID"
+    },
+    {
+      "id": "dim_lookup_dps",
+      "name": "Dim lookup via dps",
+      "kind": "dim_lookup",
+      "columns_involved": [],
+      "predicates": [],
+      "dim_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "alias": "dps",
+      "join_conditions": [
+        "fsc.PlayerStatusID = dps.PlayerStatusID"
+      ],
+      "physical_inputs": [
+        "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus"
+      ],
+      "upstream_wiki_exists": true,
+      "evidence_lines": "L22",
+      "scopes": [
+        "status_changes"
+      ],
+      "scope": "status_changes",
+      "join_condition": "fsc.PlayerStatusID = dps.PlayerStatusID"
+    },
+    {
+      "id": "filter_block_status_changes",
+      "name": "Filter block on status_changes",
+      "kind": "filter_block",
+      "columns_involved": [
+        "IsValidCustomer"
+      ],
+      "predicates": [
+        {
+          "col": "IsValidCustomer",
+          "op": "=",
+          "val": "1"
+        }
+      ],
+      "physical_inputs": [],
+      "evidence_lines": "L25",
+      "scope": "status_changes",
+      "applies_to_all_rows_in_scope": true
+    }
+  ],
+  "source": "knowledge/UC_generated/bi_output/_discovery/source_code/limitation_to_normal_conversion.sql"
+}
