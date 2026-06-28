@@ -1,0 +1,22 @@
+{
+  "flow_key": "fact_history_cost",
+  "proc_name": "sp_fact_history_cost_dl_to_synapse_autopoc",
+  "status": "SUCCESS",
+  "passes_used": 1,
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost",
+  "parity_grain": "latest_common_day_slice",
+  "target_date": "2026-06-21",
+  "structure": "EXT-table pattern: orchestrator TRUNCATEs Ext_History_Cost, full-loads single-day CDC snapshot HistoryCosts_History_Costs, helper deletes target day from Fact_History_Cost and reinserts Ext.",
+  "parity_result": {
+    "DateID": 20260621,
+    "rows": {"migration": 70706, "gold": 70706, "match": true},
+    "distinct_CostID": {"migration": 70706, "gold": 70706, "match": true},
+    "sum_ValueInAccountCurrency": {"migration": 92549.7800, "gold": 92549.7800, "match": true},
+    "sum_ValueInAssetCurrency": {"migration": 463841.4902, "gold": 463841.4902, "match": true},
+    "sum_TransactionUnits": {"migration": 112077105.8282, "gold": 112077105.8282, "match": true},
+    "all_pass": true,
+    "qa_pass_migration_vs_gold": true
+  },
+  "dialect_notes": "Both procs already DBSQL-clean (DateID via date_format; 'FROM Fact_History_Cost NOLOCK' parses as table alias; the V_row_count it feeds is dead). Autopoc clone only repoints the orchestrator's helper CALL to sp_fact_history_cost_autopoc.",
+  "gold_freshness": "FRESH - gold max DateID 20260621 (yesterday), 918M rows. Migration 684M (historical backfill gap on older days) but latest-day slice is bit-exact."
+}

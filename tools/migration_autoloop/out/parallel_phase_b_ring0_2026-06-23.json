@@ -1,0 +1,91 @@
+{
+  "ring": 0,
+  "target_date": "2026-06-23",
+  "run_date": "2026-06-24",
+  "targets": [
+    "dictionaries",
+    "dictionaries_country",
+    "channel_affiliate",
+    "dim_mirror"
+  ],
+  "target_results": [
+    {
+      "target_id": "dictionaries",
+      "await_gold": {
+        "target_id": "dictionaries",
+        "attempts": 1,
+        "gold_state": {
+          "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+          "signal": "delta_history",
+          "latest_commit_date": "2026-06-24",
+          "run_date": "2026-06-24",
+          "state": "postflip"
+        },
+        "timed_out": false
+      },
+      "parity": {
+        "target_id": "dictionaries",
+        "status": "pass",
+        "parity_status": "PARITY_PASS",
+        "par_rows": "251",
+        "gold_rows": "251",
+        "elapsed_ms": 466
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 8867
+    },
+    {
+      "target_id": "dictionaries_country",
+      "await_gold": {
+        "target_id": "dictionaries_country",
+        "attempts": 1,
+        "gold_state": {
+          "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+          "signal": "delta_history",
+          "latest_commit_date": "2026-06-24",
+          "run_date": "2026-06-24",
+          "state": "postflip"
+        },
+        "timed_out": false
+      },
+      "parity": {
+        "target_id": "dictionaries_country",
+        "status": "pass",
+        "parity_status": "PARITY_PASS",
+        "par_rows": "251",
+        "gold_rows": "251",
+        "elapsed_ms": 443
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 1803
+    },
+    {
+      "target_id": "channel_affiliate",
+      "parity": {
+        "status": "skipped",
+        "reason": "skip_compare=True"
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 0
+    },
+    {
+      "target_id": "dim_mirror",
+      "parity": {
+        "status": "skipped",
+        "reason": "skip_compare=True"
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 0
+    }
+  ],
+  "overall_status": "success",
+  "total_elapsed_ms": 10682
+}

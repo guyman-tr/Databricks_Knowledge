@@ -1,0 +1,70 @@
+{
+  "ring": 2,
+  "target_date": "2026-06-24",
+  "run_date": "2026-06-25",
+  "targets": [
+    "fact_customeraction_etl",
+    "fact_snapshotequity",
+    "dim_customer",
+    "fact_snapshotcustomer"
+  ],
+  "target_results": [
+    {
+      "target_id": "fact_customeraction_etl",
+      "await_gold": {
+        "skipped": true,
+        "reason": "skip_wait_flag"
+      },
+      "parity": {
+        "target_id": "fact_customeraction_etl",
+        "status": "pass",
+        "parity_status": "PARITY_PASS",
+        "par_rows": "0",
+        "gold_rows": "0",
+        "elapsed_ms": 8339,
+        "par_agg": null,
+        "gold_agg": null,
+        "agg_status": "AGG_PASS"
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 9354
+    },
+    {
+      "target_id": "fact_snapshotequity",
+      "parity": {
+        "status": "skipped",
+        "reason": "skip_compare=True"
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 0
+    },
+    {
+      "target_id": "dim_customer",
+      "parity": {
+        "status": "skipped",
+        "reason": "skip_compare=True"
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 0
+    },
+    {
+      "target_id": "fact_snapshotcustomer",
+      "parity": {
+        "status": "skipped",
+        "reason": "skip_compare=True"
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 0
+    }
+  ],
+  "overall_status": "success",
+  "total_elapsed_ms": 9363
+}

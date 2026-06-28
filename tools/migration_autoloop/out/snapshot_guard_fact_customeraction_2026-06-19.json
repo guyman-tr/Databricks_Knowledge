@@ -1,0 +1,890 @@
+{
+  "target_date": "2026-06-19",
+  "proc_name": "sp_fact_customeraction_dl_to_synapse_autopoc",
+  "required_table_count": 0,
+  "stale_before_count": 5,
+  "refreshed_count": 0,
+  "unresolved_count": 5,
+  "stale_before": [
+    {
+      "table_name": "customerfinancedb_customer_firsttimedeposits",
+      "snapshot_date": "2026-06-17",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-17/CustomerFinanceDB/Customer/GlobalFtds"
+    },
+    {
+      "table_name": "etoro_trade_openpositionendofday_test",
+      "snapshot_date": "2026-05-23",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-05/etr_ymd=2026-05-23/etoro/Trade/OpenPositionEndOfDay_test"
+    },
+    {
+      "table_name": "etoro_trade_openpositionendofday_test2",
+      "snapshot_date": "2026-05-23",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-05/etr_ymd=2026-05-23/etoro/Trade/OpenPositionEndOfDay_test2"
+    },
+    {
+      "table_name": "fiktivo_dbo_tblaff_affiliatesgroups",
+      "snapshot_date": "2026-05-16",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-05/etr_ymd=2026-05-16/fiktivo/dbo/tblaff_AffiliatesGroups"
+    },
+    {
+      "table_name": "ip2location",
+      "snapshot_date": "2026-06-17",
+      "storage_path": "abfss://external-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-17/IP2Location"
+    }
+  ],
+  "refreshed": [],
+  "post_snapshot_rows": [
+    {
+      "table_name": "compliancestatedb_compliance_regulationcountry",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/ComplianceStateDB/Compliance/RegulationCountry",
+      "last_altered": "2026-06-20 07:07:07.158",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "compliancestatedb_compliance_stockslending",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/ComplianceStateDB/Compliance/StocksLending",
+      "last_altered": "2026-06-20 07:07:09.925",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "contactverification_phone_customer",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/ContactVerification/Phone/Customer",
+      "last_altered": "2026-06-20 07:07:11.56",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "customerfinancedb_customer_firsttimedeposits",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-17/CustomerFinanceDB/Customer/GlobalFtds",
+      "last_altered": "2026-06-18 04:59:40.637",
+      "snapshot_date": "2026-06-17"
+    },
+    {
+      "table_name": "customerfinancedb_customer_globalftds",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/CustomerFinanceDB/Customer/GlobalFtds",
+      "last_altered": "2026-06-20 07:07:13.361",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "endofday_eod_settlementprices",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/EndOfDay/EOD/SettlementPrices",
+      "last_altered": "2026-06-20 07:07:15.147",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_backoffice_bonustype",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/BackOffice/BonusType",
+      "last_altered": "2026-06-20 07:07:51.527",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_backoffice_campaign",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/BackOffice/Campaign",
+      "last_altered": "2026-06-20 07:07:52.927",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_backoffice_compensationreason",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/BackOffice/CompensationReason",
+      "last_altered": "2026-06-20 07:07:54.296",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_backoffice_customer",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/BackOffice/Customer",
+      "last_altered": "2026-06-20 07:07:55.72",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_backoffice_customeralltimeaggregateddata",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/BackOffice/CustomerAllTimeAggregatedData",
+      "last_altered": "2026-06-20 07:07:57.278",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_backoffice_customerdocument",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/BackOffice/CustomerDocument",
+      "last_altered": "2026-06-20 07:07:58.77",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_backoffice_customerdocumenttodocumenttype",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/BackOffice/CustomerDocumentToDocumentType",
+      "last_altered": "2026-06-20 07:08:00.175",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_backoffice_manager",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/BackOffice/Manager",
+      "last_altered": "2026-06-20 07:08:01.607",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_billing_bi_cashout_state_report",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Billing/BI_Cashout_State_Report",
+      "last_altered": "2026-06-20 07:08:03.524",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_billing_bi_deposit_state_report",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Billing/BI_Deposit_State_Report",
+      "last_altered": "2026-06-20 07:08:05.015",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_billing_deposit",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Billing/Deposit",
+      "last_altered": "2026-06-20 07:08:06.436",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_billing_depot",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Billing/Depot",
+      "last_altered": "2026-06-20 07:08:07.815",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_billing_funding",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Billing/Funding",
+      "last_altered": "2026-06-20 07:08:09.394",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_billing_login",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Billing/Login",
+      "last_altered": "2026-06-20 07:08:10.809",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_billing_protocolmidsettings",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Billing/ProtocolMIDSettings",
+      "last_altered": "2026-06-20 07:08:12.242",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_billing_recurringdeposit",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Billing/RecurringDeposit",
+      "last_altered": "2026-06-20 07:08:13.673",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_billing_redeem",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Billing/Redeem",
+      "last_altered": "2026-06-20 07:08:15.101",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_billing_vdeposit",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Billing/vDeposit",
+      "last_altered": "2026-06-20 07:08:19.431",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_billing_vwithdrawtofunding",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Billing/vWithdrawToFunding",
+      "last_altered": "2026-06-20 07:08:20.983",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_billing_withdraw",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Billing/Withdraw",
+      "last_altered": "2026-06-20 07:08:16.587",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_billing_withdrawtofunding",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Billing/WithdrawToFunding",
+      "last_altered": "2026-06-20 07:08:18.068",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_customer_customer",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Customer/Customer",
+      "last_altered": "2026-06-20 07:08:23.074",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_customer_customerstatic",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Customer/CustomerStatic",
+      "last_altered": "2026-06-20 07:08:24.517",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_accountstatus",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/AccountStatus",
+      "last_altered": "2026-06-20 07:08:26.478",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_accounttype",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/AccountType",
+      "last_altered": "2026-06-20 07:08:27.875",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_cashoutfeegroup",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/CashoutFeeGroup",
+      "last_altered": "2026-06-20 07:08:29.248",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_cashoutmode",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/CashoutMode",
+      "last_altered": "2026-06-20 07:08:30.667",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_cashoutreason",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/CashoutReason",
+      "last_altered": "2026-06-20 07:08:32.356",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_cashoutstatus",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/CashoutStatus",
+      "last_altered": "2026-06-20 07:08:34.062",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_clientwithdrawreason",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/ClientWithdrawReason",
+      "last_altered": "2026-06-20 07:08:35.457",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_closepositionactiontype",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/ClosePositionActionType",
+      "last_altered": "2026-06-20 07:08:36.851",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_country",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/Country",
+      "last_altered": "2026-06-20 07:08:38.274",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_countrybin",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/CountryBin",
+      "last_altered": "2026-06-20 07:08:39.683",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_countryip",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/CountryIP",
+      "last_altered": "2026-06-20 07:08:41.201",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_credittype",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/CreditType",
+      "last_altered": "2026-06-20 07:08:42.717",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_currency",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/Currency",
+      "last_altered": "2026-06-20 07:08:44.048",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_documentstatus",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/DocumentStatus",
+      "last_altered": "2026-06-20 07:08:45.428",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_exchangeinfo",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/ExchangeInfo",
+      "last_altered": "2026-06-20 07:08:46.868",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_feeoperationtypes",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/FeeOperationTypes",
+      "last_altered": "2026-06-20 07:08:48.323",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_fundingtype",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/FundingType",
+      "last_altered": "2026-06-20 07:08:51.26",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_fundtype",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/FundType",
+      "last_altered": "2026-06-20 07:08:49.694",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_funnel",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/Funnel",
+      "last_altered": "2026-06-20 07:08:52.695",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_gurustatus",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/GuruStatus",
+      "last_altered": "2026-06-20 07:08:54.101",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_label",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/Label",
+      "last_altered": "2026-06-20 07:08:55.495",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_language",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/Language",
+      "last_altered": "2026-06-20 07:08:56.901",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_marketingregion",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/MarketingRegion",
+      "last_altered": "2026-06-20 07:08:58.316",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_mifidcategorization",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/MifidCategorization",
+      "last_altered": "2026-06-20 07:08:59.865",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_mirrortype",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/MirrorType",
+      "last_altered": "2026-06-20 07:09:01.295",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_movemoneyreason",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/MoveMoneyReason",
+      "last_altered": "2026-06-20 07:09:02.727",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_paymentstatus",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/PaymentStatus",
+      "last_altered": "2026-06-20 07:09:04.537",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_pendingclosurestatus",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/PendingClosureStatus",
+      "last_altered": "2026-06-20 07:09:05.886",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_phoneverified",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/PhoneVerified",
+      "last_altered": "2026-06-20 07:09:07.322",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_platform",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/Platform",
+      "last_altered": "2026-06-20 07:09:08.639",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_playerlevel",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/PlayerLevel",
+      "last_altered": "2026-06-20 07:09:10.071",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_playerstatus",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/PlayerStatus",
+      "last_altered": "2026-06-20 07:09:11.413",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_playerstatusreasons",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/PlayerStatusReasons",
+      "last_altered": "2026-06-20 07:09:12.853",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_playerstatussubreasons",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/PlayerStatusSubReasons",
+      "last_altered": "2026-06-20 07:09:14.278",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_redeemreason",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/RedeemReason",
+      "last_altered": "2026-06-20 07:09:15.664",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_redeemstatus",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/RedeemStatus",
+      "last_altered": "2026-06-20 07:09:17.216",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_regionbyip",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/RegionByIP",
+      "last_altered": "2026-06-20 07:09:18.482",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_regionname",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/RegionName",
+      "last_altered": "2026-06-20 07:09:19.849",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_regulation",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/Regulation",
+      "last_altered": "2026-06-20 07:09:21.099",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_riskclassification",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/RiskClassification",
+      "last_altered": "2026-06-20 07:09:22.398",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_riskmanagementstatus",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/RiskManagementStatus",
+      "last_altered": "2026-06-20 07:09:23.726",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_riskstatus",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/RiskStatus",
+      "last_altered": "2026-06-20 07:09:25.054",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_threedsresponsetypes",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/ThreeDsResponseTypes",
+      "last_altered": "2026-06-20 07:09:26.504",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_verificationlevel",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/VerificationLevel",
+      "last_altered": "2026-06-20 07:09:30.333",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_dictionary_worldcheck",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Dictionary/WorldCheck",
+      "last_altered": "2026-06-20 07:09:31.908",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_history_activecredit",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/History/ActiveCredit",
+      "last_altered": "2026-06-20 07:09:33.815",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_history_backofficecustomer",
+      "storage_path": "",
+      "last_altered": "2026-06-18 05:03:01.945",
+      "snapshot_date": ""
+    },
+    {
+      "table_name": "etoro_history_closepositionendofday",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/History/ClosePositionEndOfDay",
+      "last_altered": "2026-06-20 07:09:35.574",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_history_credit",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/History/Credit",
+      "last_altered": "2026-06-20 07:09:37.029",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_history_customer",
+      "storage_path": "",
+      "last_altered": "2026-06-18 05:03:07.705",
+      "snapshot_date": ""
+    },
+    {
+      "table_name": "etoro_history_gurucopiers",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/History/GuruCopiers",
+      "last_altered": "2026-06-20 07:09:38.618",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_history_mirror",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/History/Mirror",
+      "last_altered": "2026-06-20 07:09:40.559",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_history_positionchangelog",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/History/PositionChangeLog",
+      "last_altered": "2026-06-20 07:09:41.987",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_history_positionchangelog_active",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/History/PositionChangeLog_Active",
+      "last_altered": "2026-06-20 07:09:43.523",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_history_splitratio",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/History/SplitRatio",
+      "last_altered": "2026-06-20 07:09:44.963",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_history_withdrawaction",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/History/WithdrawAction",
+      "last_altered": "2026-06-20 07:09:46.586",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_history_withdrawtofundingaction",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/History/WithdrawToFundingAction",
+      "last_altered": "2026-06-20 07:09:48.098",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_trade_fund",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Trade/Fund",
+      "last_altered": "2026-06-20 07:09:49.925",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_trade_futuresinstrumentsinitialmarginbyprovidermapping",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Trade/FuturesInstrumentsInitialMarginByProviderMapping",
+      "last_altered": "2026-06-20 07:09:51.572",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_trade_futuresmetadata",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Trade/FuturesMetaData",
+      "last_altered": "2026-06-20 07:09:52.962",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_trade_getinstrument",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Trade/GetInstrument",
+      "last_altered": "2026-06-20 07:09:54.395",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_trade_indexdividends",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Trade/IndexDividends",
+      "last_altered": "2026-06-20 07:09:55.744",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_trade_instrument",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Trade/Instrument",
+      "last_altered": "2026-06-20 07:09:57.107",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_trade_instrumentcusip",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Trade/InstrumentCusip",
+      "last_altered": "2026-06-20 07:09:58.528",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_trade_instrumentgroups",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Trade/InstrumentGroups",
+      "last_altered": "2026-06-20 07:10:00.031",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_trade_instrumentmetadata",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Trade/InstrumentMetaData",
+      "last_altered": "2026-06-20 07:10:01.525",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_trade_mirror",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Trade/Mirror",
+      "last_altered": "2026-06-20 07:10:03.013",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_trade_openpositionendofday",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Trade/OpenPositionEndOfDay",
+      "last_altered": "2026-06-20 07:10:04.477",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_trade_openpositionendofday_test",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-05/etr_ymd=2026-05-23/etoro/Trade/OpenPositionEndOfDay_test",
+      "last_altered": "2026-05-24 20:55:27.131",
+      "snapshot_date": "2026-05-23"
+    },
+    {
+      "table_name": "etoro_trade_openpositionendofday_test2",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-05/etr_ymd=2026-05-23/etoro/Trade/OpenPositionEndOfDay_test2",
+      "last_altered": "2026-05-24 20:55:28.825",
+      "snapshot_date": "2026-05-23"
+    },
+    {
+      "table_name": "etoro_trade_positionairdroplog",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Trade/PositionAirdropLog",
+      "last_altered": "2026-06-20 07:10:05.978",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_trade_positionshedgeserverchangelog",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Trade/PositionsHedgeServerChangeLog",
+      "last_altered": "2026-06-20 07:10:07.448",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_trade_positionsprocessedforindexdividnds",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Trade/PositionsProcessedForIndexDividnds",
+      "last_altered": "2026-06-20 07:10:08.872",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "etoro_trade_providertoinstrument",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/etoro/Trade/ProviderToInstrument",
+      "last_altered": "2026-06-20 07:10:10.387",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "fiktivo_affiliateadmin_affiliatesgroups",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/fiktivo/AffiliateAdmin/AffiliatesGroups",
+      "last_altered": "2026-06-20 07:10:12.339",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "fiktivo_affiliatecommission_credit",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/fiktivo/AffiliateCommission/Credit",
+      "last_altered": "2026-06-20 07:10:13.74",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "fiktivo_affiliatecommission_creditcommission",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/fiktivo/AffiliateCommission/CreditCommission",
+      "last_altered": "2026-06-20 07:10:15.262",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "fiktivo_affiliatecommission_registration",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/fiktivo/AffiliateCommission/Registration",
+      "last_altered": "2026-06-20 07:10:16.762",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "fiktivo_affiliatecommission_registrationcommission",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/fiktivo/AffiliateCommission/RegistrationCommission",
+      "last_altered": "2026-06-20 07:10:18.226",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "fiktivo_dbo_tblaff_affiliates",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/fiktivo/dbo/tblaff_Affiliates",
+      "last_altered": "2026-06-20 07:10:21.104",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "fiktivo_dbo_tblaff_affiliatesgroups",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-05/etr_ymd=2026-05-16/fiktivo/dbo/tblaff_AffiliatesGroups",
+      "last_altered": "2026-05-17 07:11:54.985",
+      "snapshot_date": "2026-05-16"
+    },
+    {
+      "table_name": "fiktivo_dbo_tblaff_affiliatetypes",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/fiktivo/dbo/tblaff_AffiliateTypes",
+      "last_altered": "2026-06-20 07:10:19.765",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "fiktivo_dbo_tblaff_languages",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/fiktivo/dbo/tblaff_Languages",
+      "last_altered": "2026-06-20 07:10:22.522",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "fiktivo_dbo_tblaff_marketingexpense",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/fiktivo/dbo/tblaff_MarketingExpense",
+      "last_altered": "2026-06-20 07:10:23.819",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "fiktivo_dbo_tblaff_paymentdetails",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/fiktivo/dbo/tblaff_PaymentDetails",
+      "last_altered": "2026-06-20 07:10:25.196",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "fiktivo_dbo_tblaff_tier2members",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/fiktivo/dbo/tblaff_Tier2Members",
+      "last_altered": "2026-06-20 07:10:26.528",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "historycosts_dictionary_calculationtype",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/HistoryCosts/Dictionary/CalculationType",
+      "last_altered": "2026-06-20 07:07:16.883",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "historycosts_dictionary_costconfigurationid",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/HistoryCosts/Dictionary/CostConfigurationId",
+      "last_altered": "2026-06-20 07:07:18.282",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "historycosts_dictionary_costsubtype",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/HistoryCosts/Dictionary/CostSubtype",
+      "last_altered": "2026-06-20 07:07:19.774",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "historycosts_dictionary_costtype",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/HistoryCosts/Dictionary/CostType",
+      "last_altered": "2026-06-20 07:07:21.191",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "historycosts_dictionary_executionoperationtype",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/HistoryCosts/Dictionary/ExecutionOperationType",
+      "last_altered": "2026-06-20 07:07:23.179",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "historycosts_history_costs",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/HistoryCosts/History/Costs",
+      "last_altered": "2026-06-20 07:07:24.896",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "ip2location",
+      "storage_path": "abfss://external-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-17/IP2Location",
+      "last_altered": "2026-06-18 04:59:38.494",
+      "snapshot_date": "2026-06-17"
+    },
+    {
+      "table_name": "pricelog_candles_currencypricemaxdate",
+      "storage_path": "",
+      "last_altered": "2026-06-19 11:08:55.422",
+      "snapshot_date": ""
+    },
+    {
+      "table_name": "pricelog_candles_currencypricemaxdatewithsplitview",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/PriceLog/Candles/CurrencyPriceMaxDateWithSplitView",
+      "last_altered": "2026-06-20 07:07:26.527",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "pricelog_candles_currencypricemaxdatewithsplitview_splitinsthistory",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/PriceLog/Candles/CurrencyPriceMaxDateWithSplitView_SplitInstHistory",
+      "last_altered": "2026-06-20 07:07:27.999",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "pricelog_candles_getspreadedpricecandle60minsplitted",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/PriceLog/Candles/GetSpreadedPriceCandle60MinSplitted",
+      "last_altered": "2026-06-20 07:07:29.585",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "pricelog_history_currencyprice_active",
+      "storage_path": "",
+      "last_altered": "2026-06-18 05:00:14.666",
+      "snapshot_date": ""
+    },
+    {
+      "table_name": "pricelog_history_currencyprice_active_5_days",
+      "storage_path": "",
+      "last_altered": "2026-06-18 05:04:13.772",
+      "snapshot_date": ""
+    },
+    {
+      "table_name": "rankings_stockinfo_instrumentdata",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/Rankings/StockInfo/InstrumentData",
+      "last_altered": "2026-06-20 07:07:31.83",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "rankings_stockinfo_metadata",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/Rankings/StockInfo/Metadata",
+      "last_altered": "2026-06-20 07:07:33.412",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "salesforce_db_prod_dbo_idmaptopology",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/SalesForce_DB_Prod/dbo/IdMapTopology",
+      "last_altered": "2026-06-20 07:07:35.462",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "salesforce_db_prod_dbo_salesforcetobomanagermapping",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/SalesForce_DB_Prod/dbo/SalesForceToBOManagerMapping",
+      "last_altered": "2026-06-20 07:07:36.9",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "screeningservice_dictionary_screeningstatus",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/ScreeningService/Dictionary/ScreeningStatus",
+      "last_altered": "2026-06-20 07:07:38.373",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "screeningservice_screening_userscreening",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/ScreeningService/Screening/UserScreening",
+      "last_altered": "2026-06-20 07:07:39.847",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "settingsdb_dbo_vw_getcustomer2fa_enabled",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/SettingsDB/dbo/vw_GetCustomer2FA_enabled",
+      "last_altered": "2026-06-20 07:07:41.264",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "sts_audit_useroperationsdata",
+      "storage_path": "",
+      "last_altered": "2026-06-18 05:00:26.452",
+      "snapshot_date": ""
+    },
+    {
+      "table_name": "userapidb_customer_avatars",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/UserApiDB/Customer/Avatars",
+      "last_altered": "2026-06-20 07:07:42.797",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "userapidb_customer_customeridentification",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/UserApiDB/Customer/CustomerIdentification",
+      "last_altered": "2026-06-20 07:07:44.2",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "userapidb_dictionary_evmatchstatus",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/UserApiDB/Dictionary/EvMatchStatus",
+      "last_altered": "2026-06-20 07:07:45.701",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "userapidb_dictionary_extendeduserfield",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/UserApiDB/Dictionary/ExtendedUserField",
+      "last_altered": "2026-06-20 07:07:47.21",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "userapidb_dictionary_tanganystatus",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/UserApiDB/Dictionary/TanganyStatus",
+      "last_altered": "2026-06-20 07:07:48.67",
+      "snapshot_date": "2026-06-19"
+    },
+    {
+      "table_name": "userapidb_dictionary_verificationstatus",
+      "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-19/UserApiDB/Dictionary/VerificationStatus",
+      "last_altered": "2026-06-20 07:07:49.929",
+      "snapshot_date": "2026-06-19"
+    }
+  ]
+}

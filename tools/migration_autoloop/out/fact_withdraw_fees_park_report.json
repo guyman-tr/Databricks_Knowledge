@@ -1,0 +1,11 @@
+{
+  "flow_key": "fact_withdraw_fees",
+  "proc_name": "sp_fact_withdraw_fees_dl_to_synapse",
+  "status": "PARKED_GOLD_FROZEN",
+  "passes_used": 1,
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_withdraw_fees",
+  "row_counts": {"migration": 6599637, "gold": 6599637, "match": true},
+  "data_range": {"min_ModificationDateID": 20211201, "max_ModificationDateID": 20240630},
+  "why_parked": "GOLD itself is frozen at 2024-06-30 (~2 years stale) while the rest of the platform is current (2026). This fact is decommissioned upstream - there is no current gold to reach parity against. Per directive: frozen gold => park, do not chase parity. Migration row count already matches gold exactly.",
+  "dialect_notes": "Proc is incremental (DELETE by ModificationDateID + WHERE on StatusModificationTime). If re-sourced, only fix needed is DATEDIFF(0, StatusModificationTime) -> date_format(StatusModificationTime,'yyyyMMdd'). Source: dwh_daily_process.daily_snapshot.etoro_BackOffice_GetProcessedWithdrawPCIVersion."
+}

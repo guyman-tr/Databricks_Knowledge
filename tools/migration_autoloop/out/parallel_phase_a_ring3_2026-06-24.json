@@ -1,0 +1,237 @@
+{
+  "ring": 3,
+  "target_date": "2026-06-24",
+  "run_date": "2026-06-25",
+  "targets": [
+    "dim_position"
+  ],
+  "gate": {
+    "passed": true,
+    "skipped": true
+  },
+  "snapshot_guard": [
+    {
+      "target_id": "dim_position",
+      "snapshot_guard": {
+        "target_date": "2026-06-24",
+        "proc_name": "sp_dim_position_dl_to_synapse_autopoc",
+        "required_table_count": 9,
+        "stale_before_count": 0,
+        "refreshed_count": 0,
+        "unresolved_count": 0,
+        "stale_before": [],
+        "refreshed": [],
+        "post_snapshot_rows": [
+          {
+            "table_name": "etoro_backoffice_customer",
+            "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-24/etoro/BackOffice/Customer",
+            "last_altered": "2026-06-25 05:49:18.835",
+            "snapshot_date": "2026-06-24"
+          },
+          {
+            "table_name": "etoro_history_backofficecustomer",
+            "storage_path": "",
+            "last_altered": "2026-06-25 05:51:08.236",
+            "snapshot_date": ""
+          },
+          {
+            "table_name": "etoro_history_closepositionendofday",
+            "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-24/etoro/History/ClosePositionEndOfDay",
+            "last_altered": "2026-06-25 05:51:09.981",
+            "snapshot_date": "2026-06-24"
+          },
+          {
+            "table_name": "etoro_history_positionchangelog",
+            "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-24/etoro/History/PositionChangeLog",
+            "last_altered": "2026-06-25 05:51:18.732",
+            "snapshot_date": "2026-06-24"
+          },
+          {
+            "table_name": "etoro_trade_getinstrument",
+            "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-24/etoro/Trade/GetInstrument",
+            "last_altered": "2026-06-25 05:51:32.91",
+            "snapshot_date": "2026-06-24"
+          },
+          {
+            "table_name": "etoro_trade_openpositionendofday",
+            "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-24/etoro/Trade/OpenPositionEndOfDay",
+            "last_altered": "2026-06-25 05:51:44.14",
+            "snapshot_date": "2026-06-24"
+          },
+          {
+            "table_name": "etoro_trade_positionairdroplog",
+            "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-24/etoro/Trade/PositionAirdropLog",
+            "last_altered": "2026-06-25 05:51:45.835",
+            "snapshot_date": "2026-06-24"
+          },
+          {
+            "table_name": "pricelog_history_currencyprice_active",
+            "storage_path": "",
+            "last_altered": "2026-06-25 05:48:38.481",
+            "snapshot_date": ""
+          },
+          {
+            "table_name": "pricelog_history_currencyprice_active_5_days",
+            "storage_path": "",
+            "last_altered": "2026-06-25 05:52:15.3",
+            "snapshot_date": ""
+          }
+        ]
+      },
+      "warning": false
+    }
+  ],
+  "target_results": [
+    {
+      "target_id": "dim_position",
+      "status": "success",
+      "materialize": {
+        "target_id": "dim_position",
+        "ok": true,
+        "clones": [
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.dim_position",
+            "target": "dwh_daily_process.migration_parallel.dim_position",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 15859,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Dim_Position_SWITCH_SINGLE",
+            "target": "dwh_daily_process.migration_parallel.Dim_Position_SWITCH_SINGLE",
+            "elapsed_ms": 6738,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Position_AirDrop",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Position_AirDrop",
+            "elapsed_ms": 6644,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Position_CurrencyPrice_Active",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Position_CurrencyPrice_Active",
+            "elapsed_ms": 7469,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Position_First_Open",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Position_First_Open",
+            "elapsed_ms": 4269,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Position_FundCIDs",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Position_FundCIDs",
+            "elapsed_ms": 4706,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Position_HBCExecutionLog",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Position_HBCExecutionLog",
+            "elapsed_ms": 3898,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Position_History_Real",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Position_History_Real",
+            "elapsed_ms": 7091,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Position_PositionChangeLog",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Position_PositionChangeLog",
+            "elapsed_ms": 6471,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Position_PositionChangeLogAmount",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Position_PositionChangeLogAmount",
+            "elapsed_ms": 7864,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Position_PositionChangeLogAmount_ChangeType12",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Position_PositionChangeLogAmount_ChangeType12",
+            "elapsed_ms": 6145,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Position_Real",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Position_Real",
+            "elapsed_ms": 12954,
+            "ok": true
+          }
+        ],
+        "routines": [
+          {
+            "routine": "sp_dim_position_reopen_autopoc",
+            "routine_type": "PROCEDURE",
+            "ok": true,
+            "elapsed_ms": 992
+          },
+          {
+            "routine": "sp_dim_position_ispartialcloseparent_autopoc",
+            "routine_type": "PROCEDURE",
+            "ok": true,
+            "elapsed_ms": 950
+          },
+          {
+            "routine": "sp_dim_position_hedgetype_real_autopoc",
+            "routine_type": "PROCEDURE",
+            "ok": true,
+            "elapsed_ms": 932
+          },
+          {
+            "routine": "sp_dim_position_hedgetype_history_autopoc",
+            "routine_type": "PROCEDURE",
+            "ok": true,
+            "elapsed_ms": 806
+          },
+          {
+            "routine": "sp_check_pnlindollars_in_dwh_staging_etoro_trade_openpositionendofday",
+            "routine_type": "PROCEDURE",
+            "ok": true,
+            "elapsed_ms": 706
+          },
+          {
+            "routine": "sp_dim_position_dl_to_synapse_autopoc",
+            "routine_type": "PROCEDURE",
+            "ok": true,
+            "elapsed_ms": 3351
+          }
+        ]
+      },
+      "proc_call": {
+        "status": "success",
+        "elapsed_ms": 469705,
+        "columns": [
+          "V_date"
+        ],
+        "sample_row": [
+          "2026-06-24T00:00:00.000Z"
+        ]
+      },
+      "etr_ymd_stamp": {
+        "action": "stamped",
+        "table": "dwh_daily_process.migration_parallel.dim_position",
+        "etr_ymd": "2026-06-24"
+      },
+      "elapsed_ms": 682213
+    }
+  ],
+  "overall_status": "success",
+  "total_elapsed_ms": 902609
+}

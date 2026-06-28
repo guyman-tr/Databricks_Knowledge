@@ -1,0 +1,114 @@
+{
+  "target_id": "fact_snapshotcustomer",
+  "status": "success",
+  "materialize": {
+    "target_id": "fact_snapshotcustomer",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_snapshotcustomer",
+        "target": "dwh_daily_process.migration_parallel.fact_snapshotcustomer",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 2979,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_Range",
+        "row_count": 4,
+        "elapsed_ms": 618,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Customer_CustomerIdentification_DLT",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Customer_CustomerIdentification_DLT",
+        "elapsed_ms": 4695,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSC_BackOffice_Customer",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSC_BackOffice_Customer",
+        "elapsed_ms": 4496,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSC_BackOffice_RegulationChangeLog",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSC_BackOffice_RegulationChangeLog",
+        "elapsed_ms": 3984,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSC_BackOffice_RegulationChangeLog_All",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSC_BackOffice_RegulationChangeLog_All",
+        "elapsed_ms": 4007,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSC_Customer_FirstTimeDeposits",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSC_Customer_FirstTimeDeposits",
+        "elapsed_ms": 3890,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSC_PhoneCustomer",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSC_PhoneCustomer",
+        "elapsed_ms": 4254,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSC_Real_Customer_Customer",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSC_Real_Customer_Customer",
+        "elapsed_ms": 4321,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSC_Real_History_Credit",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSC_Real_History_Credit",
+        "elapsed_ms": 4183,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSC_StocksLending",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSC_StocksLending",
+        "elapsed_ms": 4901,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_fact_snapshotcustomer_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 804
+      },
+      {
+        "routine": "sp_fact_snapshotcustomer_dl_to_synapse_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 854
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 136360,
+    "columns": [],
+    "sample_row": []
+  },
+  "etr_ymd_stamp": {
+    "action": "stamped",
+    "table": "dwh_daily_process.migration_parallel.fact_snapshotcustomer",
+    "etr_ymd": "2026-06-24"
+  },
+  "elapsed_ms": 197899
+}

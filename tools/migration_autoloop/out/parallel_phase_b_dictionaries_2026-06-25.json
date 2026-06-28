@@ -1,0 +1,19 @@
+{
+  "target_id": "dictionaries",
+  "await_gold": {
+    "skipped": true,
+    "reason": "skip_wait_flag"
+  },
+  "parity": {
+    "target_id": "dictionaries",
+    "status": "fail",
+    "error": "Databricks SQL failed: [TABLE_OR_VIEW_NOT_FOUND] The table or view `dwh_daily_process`.`migration_parallel`.`dim_country` cannot be found. Verify the spelling and correctness of the schema and catalog.\nIf you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.\nTo tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 3 pos 26",
+    "elapsed_ms": 8475
+  },
+  "drop": {
+    "action": "dropped",
+    "target": "dwh_daily_process.migration_parallel.dim_country",
+    "ok": true
+  },
+  "elapsed_ms": 8900
+}

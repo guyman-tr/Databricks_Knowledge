@@ -1,0 +1,158 @@
+{
+  "target_id": "fact_snapshotequity",
+  "status": "success",
+  "materialize": {
+    "target_id": "fact_snapshotequity",
+    "ok": true,
+    "clones": [
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Fact_SnapshotEquity",
+        "target": "dwh_daily_process.migration_parallel.fact_snapshotequity",
+        "elapsed_ms": 7939,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Dim_Instrument_Snapshot",
+        "target": "dwh_daily_process.migration_parallel.Dim_Instrument_Snapshot",
+        "elapsed_ms": 8142,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_Range",
+        "row_count": 4,
+        "elapsed_ms": 801,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSE_Billing_Withdraw",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSE_Billing_Withdraw",
+        "elapsed_ms": 5985,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSE_Billing_WithdrawToFunding",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSE_Billing_WithdrawToFunding",
+        "elapsed_ms": 5264,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSE_Fact_SnapshotEquity",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSE_Fact_SnapshotEquity",
+        "elapsed_ms": 5716,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSE_History_Credit",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSE_History_Credit",
+        "elapsed_ms": 5157,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSE_History_Position",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSE_History_Position",
+        "elapsed_ms": 5431,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSE_History_WithdrawAction",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSE_History_WithdrawAction",
+        "elapsed_ms": 5556,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSE_History_WithdrawToFundingAction",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSE_History_WithdrawToFundingAction",
+        "elapsed_ms": 5508,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSE_InProcessCashouts",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSE_InProcessCashouts",
+        "elapsed_ms": 4626,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSE_PositionChangeLog",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSE_PositionChangeLog",
+        "elapsed_ms": 4901,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSE_Real_History_Credit",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSE_Real_History_Credit",
+        "elapsed_ms": 5808,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSE_TotalCashChangeAll",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSE_TotalCashChangeAll",
+        "elapsed_ms": 5681,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSE_TotalPositionAmount",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSE_TotalPositionAmount",
+        "elapsed_ms": 5085,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FSE_Trade_Position",
+        "target": "dwh_daily_process.migration_parallel.Ext_FSE_Trade_Position",
+        "elapsed_ms": 7088,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_fact_snapshotequity_totalpositionamount_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 1376
+      },
+      {
+        "routine": "sp_fact_snapshotequity_inprocesscashouts_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 979
+      },
+      {
+        "routine": "sp_fact_snapshotequity_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 1237
+      },
+      {
+        "routine": "sp_fact_snapshotequity_dl_to_synapse_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 943
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 131605,
+    "columns": [],
+    "sample_row": []
+  },
+  "etr_ymd_stamp": {
+    "action": "skipped"
+  },
+  "elapsed_ms": 252257
+}

@@ -1,0 +1,114 @@
+{
+  "block_id": "fact_currencypricewithsplit",
+  "block_step": 1,
+  "pipeline_name": "DWH_Daily_Process_-_Entry_Point",
+  "wrapper_proc": "sp_fact_currencypricewithsplit_dl_to_synapse_autopoc",
+  "migration_table": "dwh_daily_process.migration_tables.fact_currencypricewithsplit",
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+  "task_sequences": {
+    "barrier_ext_instrument": 3,
+    "parity_gate": 5,
+    "qa_probe": 4,
+    "run_proc": 2,
+    "snapshot_guard": 1
+  },
+  "overall_status": "success",
+  "task_results": [
+    {
+      "task_id": "snapshot_guard",
+      "status": "success",
+      "elapsed_ms": 7859,
+      "columns": [
+        "run_date",
+        "target_date"
+      ],
+      "sample_row": [
+        "2026-06-22",
+        "2026-06-21T00:00:00.000Z"
+      ],
+      "sequence": 1,
+      "task_kind": "guard",
+      "depends_on": []
+    },
+    {
+      "task_id": "run_proc",
+      "status": "success",
+      "elapsed_ms": 25413,
+      "columns": [],
+      "sample_row": [],
+      "sequence": 2,
+      "task_kind": "sp",
+      "depends_on": [
+        "snapshot_guard"
+      ]
+    },
+    {
+      "task_id": "barrier_ext_instrument",
+      "status": "success",
+      "elapsed_ms": 832,
+      "columns": [
+        "ext_barrier"
+      ],
+      "sample_row": [
+        "BARRIER_PASS"
+      ],
+      "sequence": 3,
+      "task_kind": "barrier",
+      "depends_on": [
+        "run_proc"
+      ]
+    },
+    {
+      "task_id": "qa_probe",
+      "status": "success",
+      "elapsed_ms": 1311,
+      "columns": [
+        "target_date_id",
+        "migration_rows",
+        "gold_rows",
+        "migration_sum_ask",
+        "gold_sum_ask",
+        "migration_sum_bid",
+        "gold_sum_bid",
+        "migration_sum_cr0",
+        "gold_sum_cr0",
+        "migration_sum_cr1",
+        "gold_sum_cr1"
+      ],
+      "sample_row": [
+        "20260621",
+        "16017",
+        "16017",
+        "20996771.2382702300",
+        "20996771.2382702300",
+        "20964351.1310621400",
+        "20964351.1310621400",
+        "223269.3790000000",
+        "223269.3790000000",
+        "223267.1000000000",
+        "223267.1000000000"
+      ],
+      "sequence": 4,
+      "task_kind": "qa",
+      "depends_on": [
+        "barrier_ext_instrument"
+      ]
+    },
+    {
+      "task_id": "parity_gate",
+      "status": "success",
+      "elapsed_ms": 1074,
+      "columns": [
+        "parity_status"
+      ],
+      "sample_row": [
+        "PARITY_PASS date=20260621 rows/Ask/Bid exact; cross-rate within tol cr0_diff=0E-9 cr1_diff=0E-9"
+      ],
+      "sequence": 5,
+      "task_kind": "gate",
+      "depends_on": [
+        "qa_probe"
+      ]
+    }
+  ]
+}

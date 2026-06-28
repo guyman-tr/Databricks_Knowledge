@@ -1,0 +1,21 @@
+{
+  "block_id": "fact_customerunrealized_pnl",
+  "migration_table": "dwh_daily_process.migration_tables.fact_customerunrealized_pnl",
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl",
+  "all_pass": false,
+  "pass_count": 0,
+  "fail_count": 1,
+  "mapped_table_count": 1,
+  "status": "parked",
+  "gate_kind": "common_available_date_slice",
+  "proc": "sp_fact_customerunrealized_pnl_dl_to_synapse_autopoc",
+  "rows": [
+    {"migration_table": "dwh_daily_process.migration_tables.fact_customerunrealized_pnl", "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl", "post": {"rows_cnt": 2788950}, "gold": {"rows_cnt": 2790998}}
+  ],
+  "attempts": [
+    {"pass": 1, "approach": "run proc for yesterday (20260621); compare common date", "common_date_id": 20260619, "mig_rows": 2790988, "gold_rows": 2790998, "pnl_diff": -26821576.53, "nop_diff": -14463889.12, "notional_diff": -112608067.86},
+    {"pass": 2, "approach": "rebuild 20260619 slice directly via proc; recompare", "common_date_id": 20260619, "mig_rows": 2788950, "gold_rows": 2790998, "pnl_diff": -26555753.19, "nop_diff": -29547261.27, "notional_diff": -64507408.19}
+  ],
+  "park_reason": "Point-in-time unrealized-PnL fact (grain CID + DateModified). The proc recomputes each day's open-position/price snapshot from upstream, but the replicated daily_snapshot only holds the LATEST day's point-in-time state, so the proc cannot reproduce any historical DateModified slice: re-running for 20260619 produced 2,788,950 rows vs gold 2,790,998 (worse than the pre-existing stale slice's 2,790,988), with large PnL/NOP/Notional diffs. Gold also runs ~2 days ahead of the replicated source (gold max 20260621 vs mig max 20260619), so no date exists where the migration can freshly+correctly produce the slice AND gold holds the matching settled value. NOT a transpilation/logic defect and NOT seedable from gold without faking parity. Needs full historical point-in-time source replication to validate. Parked per 5-pass guardrail (root cause is environmental; further identical-outcome passes skipped).",
+  "note": "PARKED: environmental partial-replication limit on point-in-time source; proc cannot reproduce historical slices."
+}

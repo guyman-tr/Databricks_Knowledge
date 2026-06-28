@@ -1,0 +1,68 @@
+{
+  "target_id": "dictionaries_country",
+  "status": "success",
+  "materialize": {
+    "target_id": "dictionaries_country",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "target": "dwh_daily_process.migration_parallel.dim_country",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 3123,
+        "ok": true
+      },
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_countryipanonymous",
+        "target": "dwh_daily_process.migration_parallel.Dim_CountryIPAnonymous",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 3591,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Country",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Country",
+        "elapsed_ms": 4574,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Country_Region_Desk",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Country_Region_Desk",
+        "elapsed_ms": 3958,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Country_Regulation",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Country_Regulation",
+        "elapsed_ms": 3969,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_dictionaries_country_dl_to_synapse",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 721
+      },
+      {
+        "routine": "sp_dictionaries_country_dl_to_synapse_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 668
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 36422,
+    "columns": [],
+    "sample_row": []
+  },
+  "elapsed_ms": 70695
+}

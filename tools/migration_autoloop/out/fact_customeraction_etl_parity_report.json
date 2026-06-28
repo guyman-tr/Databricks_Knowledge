@@ -1,0 +1,19 @@
+{
+  "block_id": "fact_customeraction_etl",
+  "migration_table": "dwh_daily_process.migration_tables.fact_customeraction",
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+  "all_pass": true,
+  "pass_count": 1,
+  "fail_count": 0,
+  "mapped_table_count": 1,
+  "gate_kind": "common_available_date_slice",
+  "proc": "sp_fact_customeraction_dl_to_synapse_autopoc",
+  "common_date_id": 20260620,
+  "rows": [
+    {"migration_table": "dwh_daily_process.migration_tables.fact_customeraction", "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction", "post": {"rows_cnt": 771614}, "gold": {"rows_cnt": 771614}}
+  ],
+  "measures_compared": ["Amount", "NetProfit", "Commission"],
+  "job_name": "DWH_Daily_Process__BLOCK__fact_customeraction_etl__AutoPOC",
+  "run_url": "https://adb-5142916747090026.6.azuredatabricks.net/jobs/302287168220151/runs/1093368556404493",
+  "note": "End-to-end block job SUCCESS (9 tasks incl. parallel billing sub-procs). 11.7B-row daily-append fact; parity sliced at common available DateID. Rows 771614=771614 and Amount/NetProfit/Commission exact."
+}

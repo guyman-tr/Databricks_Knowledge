@@ -6,6 +6,8 @@ import argparse
 import json
 import os
 import re
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -16,7 +18,7 @@ if __package__ in {None, ""}:
 from tools.skill_suggestions.db import execute_sql, make_workspace_client, warehouse_id_from_env
 
 
-TABLE_FQN = "main.de_output.skill_suggestions"
+TABLE_FQN = "main.de_output.de_output_skills_automation_user_suggestions_agent"
 
 
 def _sql_quote(value: str) -> str:
@@ -39,12 +41,13 @@ def _download_volume_prefix(
     *,
     row: dict[str, Any],
     output_root: Path,
+    profile: str | None,
 ) -> str | None:
     """
     Best-effort helper:
     - If volume_path is already local, return it.
-    - If path starts with /Volumes, return local mirror target path (caller can populate later).
-    This keeps the manifest deterministic even when file download is deferred.
+    - If path starts with /Volumes, recursively download payload files to local mirror path.
+    This keeps the manifest deterministic and executable by run_once.py.
     """
     raw = row.get("volume_path")
     if not raw:
@@ -53,8 +56,26 @@ def _download_volume_prefix(
     if vp.startswith("/Volumes/"):
         row_id = str(row.get("id") or "unknown")
         target = output_root / "payloads" / _safe_component(row_id)
+        if target.exists():
+            shutil.rmtree(target)
         target.mkdir(parents=True, exist_ok=True)
-        # Note: full recursive volume download can be added here if needed.
+        src = f"dbfs:{vp.rstrip('/')}/"
+        cmd = [
+            "databricks",
+            "fs",
+            "cp",
+            src,
+            str(target),
+            "--recursive",
+            "--overwrite",
+        ]
+        if profile:
+            cmd.extend(["--profile", profile])
+        proc = subprocess.run(cmd, capture_output=True, text=True)
+        if proc.returncode != 0:
+            raise RuntimeError(
+                f"volume payload download failed for {row_id}: {(proc.stderr or proc.stdout).strip()}"
+            )
         return str(target)
     if Path(vp).exists():
         return vp
@@ -65,6 +86,11 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--status", default="new", help="Queue status to scan (default: new)")
     ap.add_argument("--limit", type=int, default=25, help="Max rows to scan")
+    ap.add_argument(
+        "--profile",
+        default=None,
+        help="Databricks profile override (otherwise resolved from env/default logic).",
+    )
     ap.add_argument(
         "--claim",
         action="store_true",
@@ -80,7 +106,7 @@ def main() -> int:
     output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    w = make_workspace_client()
+    w = make_workspace_client(profile=args.profile)
     warehouse_id = warehouse_id_from_env()
     status = _sql_quote(args.status)
     scan_sql = f"""
@@ -132,7 +158,11 @@ WHERE id = '{_sql_quote(row_id)}'
         "items": [],
     }
     for item in items:
-        item["local_payload_path"] = _download_volume_prefix(row=item, output_root=output_root)
+        item["local_payload_path"] = _download_volume_prefix(
+            row=item,
+            output_root=output_root,
+            profile=args.profile,
+        )
         manifest["items"].append(item)
 
     output_path.write_text(json.dumps(manifest, indent=2, default=str), encoding="utf-8")

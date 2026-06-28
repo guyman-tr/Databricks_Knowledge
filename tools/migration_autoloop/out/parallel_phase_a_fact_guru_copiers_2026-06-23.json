@@ -1,0 +1,62 @@
+{
+  "target_id": "fact_guru_copiers",
+  "status": "success",
+  "materialize": {
+    "target_id": "fact_guru_copiers",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers",
+        "target": "dwh_daily_process.migration_parallel.Fact_Guru_Copiers",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 273104,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FGC_Guru_Copiers",
+        "target": "dwh_daily_process.migration_parallel.Ext_FGC_Guru_Copiers",
+        "elapsed_ms": 5208,
+        "ok": true
+      },
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_snapshotcustomer",
+        "target": "dwh_daily_process.migration_parallel.Fact_SnapshotCustomer",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 3534,
+        "ok": true
+      },
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_m2m_date_daterange",
+        "target": "dwh_daily_process.migration_parallel.V_M2M_Date_DateRange",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 3137,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_fact_guru_copiers_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 723
+      },
+      {
+        "routine": "sp_fact_guru_copiers_dl_to_synapse_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 672
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 3293,
+    "columns": [],
+    "sample_row": []
+  },
+  "elapsed_ms": 303256
+}

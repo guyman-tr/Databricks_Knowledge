@@ -1,0 +1,23 @@
+{
+  "target_id": "positionhedgeserverchangelog",
+  "await_gold": {
+    "target_id": "positionhedgeserverchangelog",
+    "attempts": 120,
+    "gold_state": {
+      "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionhedgeserverchangelog_snapshot",
+      "signal": "etr_ymd",
+      "target_date": "2026-06-23",
+      "etr_ymd_row_count": 0,
+      "state": "preflip"
+    },
+    "timed_out": true
+  },
+  "parity": {
+    "status": "skipped",
+    "reason": "await_timed_out"
+  },
+  "drop": {
+    "action": "skipped"
+  },
+  "elapsed_ms": 14407392
+}

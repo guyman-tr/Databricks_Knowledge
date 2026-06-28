@@ -1,0 +1,25 @@
+{
+  "target_id": "fact_guru_copiers",
+  "await_gold": {
+    "target_id": "fact_guru_copiers",
+    "attempts": 1,
+    "gold_state": {
+      "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers",
+      "signal": "etr_ymd",
+      "target_date": "2026-06-23",
+      "etr_ymd_row_count": 97530,
+      "state": "postflip"
+    },
+    "timed_out": false
+  },
+  "parity": {
+    "target_id": "fact_guru_copiers",
+    "status": "fail",
+    "error": "Databricks SQL failed: [USER_RAISED_EXCEPTION] PARITY_FAIL target=fact_guru_copiers etr_ymd=2026-06-23 par_rows=0 gold_rows=97530 SQLSTATE: P0001",
+    "elapsed_ms": 142808
+  },
+  "drop": {
+    "action": "skipped"
+  },
+  "elapsed_ms": 308670
+}

@@ -1,0 +1,41 @@
+{
+  "proc_name": "sp_fact_snapshotequity_dl_to_synapse_autopoc",
+  "target_date": "2026-06-21",
+  "has_date_param": true,
+  "mapped_table_count": 1,
+  "pass_count": 0,
+  "fail_count": 1,
+  "all_pass": false,
+  "rows": [
+    {
+      "migration_table": "dwh_daily_process.migration_tables.fact_snapshotequity",
+      "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid",
+      "where_migration": "LEFT(CAST(DateRangeID AS STRING), 8) = '20260621'",
+      "where_gold": "LEFT(CAST(DateRangeID AS STRING), 8) = '20260621'",
+      "metrics": [
+        "TotalPositionsAmount",
+        "TotalMirrorPositionsAmount",
+        "TotalStockPositionAmount"
+      ],
+      "post": {
+        "rows_cnt": 13159.0,
+        "sum_TotalPositionsAmount": 0.0,
+        "sum_TotalMirrorPositionsAmount": 0.0,
+        "sum_TotalStockPositionAmount": 0.0
+      },
+      "gold": {
+        "rows_cnt": 48844.0,
+        "sum_TotalPositionsAmount": 747658473.92,
+        "sum_TotalMirrorPositionsAmount": 151653845.09,
+        "sum_TotalStockPositionAmount": 408692536.96
+      },
+      "delta": {
+        "delta_rows": -35685.0,
+        "delta_sum_TotalPositionsAmount": -747658473.92,
+        "delta_sum_TotalMirrorPositionsAmount": -151653845.09,
+        "delta_sum_TotalStockPositionAmount": -408692536.96
+      },
+      "pass": false
+    }
+  ]
+}

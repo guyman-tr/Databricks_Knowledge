@@ -1,0 +1,24 @@
+{
+  "table": "main.de_output.de_output_skills_automation_user_suggestions_agent",
+  "status_filter": "processing",
+  "claimed": false,
+  "count": 1,
+  "claimed_ids": [],
+  "items": [
+    {
+      "id": "live-test-anchored-0001",
+      "submitted_at": "2026-06-18T10:50:00Z",
+      "submitter": "guyman",
+      "request_type": "new_skill",
+      "target_skill": null,
+      "title": "LIVE TEST ROW - anchored skill draft",
+      "body_text": "---\nname: domain-bizops\n\ndescription: Contact-center chatbot and deflection KPIs from CRM silver layer.\n\nrequired_tables:\n  - main.crm.silver_conversations\n  - main.crm.silver_messages\n  - main.crm.silver_case_events\n\nversion: 1\nowner: dataplatform\n---\n\n# Contact Center Deflection Performance\n\n## Anchor Tables\n- main.crm.silver_conversations\n- main.crm.silver_messages\n- main.crm.silver_case_events\n\n## Scope\nMeasure chatbot containment, escalation, and agent handoff behavior across channels.\n\n## Metrics\n- deflection_rate = deflected_cases / total_cases\n- escalation_rate = escalated_cases / total_cases\n",
+      "volume_path": null,
+      "status": "processing",
+      "pr_url": null,
+      "processed_at": null,
+      "agent_notes": null,
+      "local_payload_path": null
+    }
+  ]
+}

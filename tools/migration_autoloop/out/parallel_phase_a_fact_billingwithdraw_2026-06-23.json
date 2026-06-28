@@ -1,0 +1,66 @@
+{
+  "target_id": "fact_billingwithdraw",
+  "status": "success",
+  "materialize": {
+    "target_id": "fact_billingwithdraw",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+        "target": "dwh_daily_process.migration_parallel.fact_billingwithdraw",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 4540,
+        "ok": true
+      },
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_countrybin",
+        "target": "dwh_daily_process.migration_parallel.Dim_CountryBin",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 2470,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FBW_Fact_BillingWithdraw",
+        "target": "dwh_daily_process.migration_parallel.Ext_FBW_Fact_BillingWithdraw",
+        "elapsed_ms": 4704,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "waitforseconds",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 1042
+      },
+      {
+        "routine": "sp_fact_billingwithdraw_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 690
+      },
+      {
+        "routine": "extractxmlvalue",
+        "routine_type": "FUNCTION",
+        "ok": true,
+        "elapsed_ms": 1041
+      },
+      {
+        "routine": "sp_fact_billingwithdraw_dl_to_synapse_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 1010
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 14477,
+    "columns": [],
+    "sample_row": []
+  },
+  "elapsed_ms": 52194
+}

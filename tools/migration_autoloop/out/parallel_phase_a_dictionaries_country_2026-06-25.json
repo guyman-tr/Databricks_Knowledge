@@ -1,0 +1,74 @@
+{
+  "target_id": "dictionaries_country",
+  "status": "success",
+  "materialize": {
+    "target_id": "dictionaries_country",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "target": "dwh_daily_process.migration_parallel.dim_country",
+        "baseline_filter": "1=0",
+        "pre_flip_ts": "2026-06-26 01:00:00",
+        "elapsed_ms": 3475,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_CountryIPAnonymous",
+        "row_count": 5654327,
+        "elapsed_ms": 772,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Country",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Country",
+        "pre_flip_ts": null,
+        "elapsed_ms": 6014,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Country_Region_Desk",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Country_Region_Desk",
+        "pre_flip_ts": null,
+        "elapsed_ms": 4588,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Country_Regulation",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Country_Regulation",
+        "pre_flip_ts": null,
+        "elapsed_ms": 5772,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_dictionaries_country_dl_to_synapse",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 1048
+      },
+      {
+        "routine": "sp_dictionaries_country_dl_to_synapse_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 854
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 25637,
+    "columns": [],
+    "sample_row": []
+  },
+  "etr_ymd_stamp": {
+    "action": "skipped"
+  },
+  "elapsed_ms": 61418
+}

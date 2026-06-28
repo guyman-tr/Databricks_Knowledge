@@ -1,0 +1,40 @@
+{
+  "target_id": "fact_billingredeem",
+  "status": "success",
+  "materialize": {
+    "target_id": "fact_billingredeem",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingredeem",
+        "target": "dwh_daily_process.migration_parallel.fact_billingredeem",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 196972,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FBR_Fact_BillingRedeem",
+        "target": "dwh_daily_process.migration_parallel.Ext_FBR_Fact_BillingRedeem",
+        "elapsed_ms": 3831,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_fact_billingredeem_dl_to_synapse_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 758
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 7846,
+    "columns": [],
+    "sample_row": []
+  },
+  "elapsed_ms": 218351
+}

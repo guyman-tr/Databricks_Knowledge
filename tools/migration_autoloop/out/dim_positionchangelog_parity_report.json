@@ -1,0 +1,21 @@
+{
+  "flow_key": "dim_positionchangelog",
+  "proc_name": "sp_dim_positionchangelog_dl_to_synapse_autopoc",
+  "status": "SUCCESS",
+  "passes_used": 1,
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog",
+  "parity_grain": "latest_settled_common_day_slice",
+  "target_date": "2026-06-21",
+  "structure": "Self-contained orchestrator (no helper): deletes Dim_PositionChangeLog where OccurredDateID>=target, reloads from snapshot etoro_History_PositionChangeLog WHERE Occurred>=target. Snapshot holds 2 days (06-21,06-22).",
+  "parity_result": {
+    "OccurredDateID": 20260621,
+    "rows": {"migration": 74911, "gold": 74911, "match": true},
+    "distinct_PositionID": {"migration": 55273, "gold": 55273, "match": true},
+    "sum_AmountChanged": {"migration": 968571.4400, "gold": 968571.4400, "match": true},
+    "sum_NewAmount": {"migration": 66225490.7500, "gold": 66225490.7500, "match": true},
+    "all_pass": true,
+    "qa_pass_migration_vs_gold": true
+  },
+  "dialect_notes": "Proc already DBSQL-clean (OccurredDateID via date_format, cast(IsSettled as int)). Pure autopoc clone, no patching needed.",
+  "gold_freshness": "FRESH - gold max OccurredDateID 20260622 (today), 1.36B rows."
+}

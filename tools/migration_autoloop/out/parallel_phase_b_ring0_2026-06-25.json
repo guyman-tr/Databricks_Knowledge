@@ -1,0 +1,79 @@
+{
+  "ring": 0,
+  "target_date": "2026-06-25",
+  "run_date": "2026-06-26",
+  "targets": [
+    "dictionaries",
+    "dictionaries_country",
+    "channel_affiliate",
+    "dim_mirror"
+  ],
+  "target_results": [
+    {
+      "target_id": "dictionaries",
+      "await_gold": {
+        "skipped": true,
+        "reason": "skip_wait_flag"
+      },
+      "parity": {
+        "target_id": "dictionaries",
+        "status": "fail",
+        "error": "Databricks SQL failed: [TABLE_OR_VIEW_NOT_FOUND] The table or view `dwh_daily_process`.`migration_parallel`.`dim_country` cannot be found. Verify the spelling and correctness of the schema and catalog.\nIf you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.\nTo tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 3 pos 26",
+        "elapsed_ms": 8475
+      },
+      "drop": {
+        "action": "dropped",
+        "target": "dwh_daily_process.migration_parallel.dim_country",
+        "ok": true
+      },
+      "elapsed_ms": 8900
+    },
+    {
+      "target_id": "dictionaries_country",
+      "await_gold": {
+        "skipped": true,
+        "reason": "skip_wait_flag"
+      },
+      "parity": {
+        "target_id": "dictionaries_country",
+        "status": "fail",
+        "error": "Databricks SQL failed: [TABLE_OR_VIEW_NOT_FOUND] The table or view `dwh_daily_process`.`migration_parallel`.`dim_country` cannot be found. Verify the spelling and correctness of the schema and catalog.\nIf you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.\nTo tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 3 pos 26",
+        "elapsed_ms": 729
+      },
+      "drop": {
+        "action": "dropped",
+        "target": "dwh_daily_process.migration_parallel.dim_country",
+        "ok": true
+      },
+      "elapsed_ms": 1146
+    },
+    {
+      "target_id": "channel_affiliate",
+      "parity": {
+        "status": "skipped",
+        "reason": "skip_compare=True"
+      },
+      "drop": {
+        "action": "dropped",
+        "target": "dwh_daily_process.migration_parallel.Dim_Channel_Affiliate_UnifyCode",
+        "ok": true
+      },
+      "elapsed_ms": 449
+    },
+    {
+      "target_id": "dim_mirror",
+      "parity": {
+        "status": "skipped",
+        "reason": "skip_compare=True"
+      },
+      "drop": {
+        "action": "dropped",
+        "target": "dwh_daily_process.migration_parallel.dim_mirror",
+        "ok": true
+      },
+      "elapsed_ms": 383
+    }
+  ],
+  "overall_status": "failed",
+  "total_elapsed_ms": 10892
+}

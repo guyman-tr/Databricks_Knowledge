@@ -1,0 +1,27 @@
+{
+  "target_id": "fact_billingwithdraw",
+  "await_gold": {
+    "target_id": "fact_billingwithdraw",
+    "attempts": 1,
+    "gold_state": {
+      "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "signal": "etr_ymd",
+      "target_date": "2026-06-23",
+      "etr_ymd_row_count": 41725,
+      "state": "postflip"
+    },
+    "timed_out": false
+  },
+  "parity": {
+    "target_id": "fact_billingwithdraw",
+    "status": "pass",
+    "parity_status": "PARITY_PASS",
+    "par_rows": "41725",
+    "gold_rows": "41725",
+    "elapsed_ms": 834
+  },
+  "drop": {
+    "action": "skipped"
+  },
+  "elapsed_ms": 2056
+}

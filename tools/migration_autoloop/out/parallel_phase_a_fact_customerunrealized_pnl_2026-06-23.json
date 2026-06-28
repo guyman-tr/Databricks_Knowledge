@@ -1,0 +1,163 @@
+{
+  "target_id": "fact_customerunrealized_pnl",
+  "status": "success",
+  "materialize": {
+    "target_id": "fact_customerunrealized_pnl",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl",
+        "target": "dwh_daily_process.migration_parallel.fact_customerunrealized_pnl",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 357242,
+        "ok": true
+      },
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+        "target": "dwh_daily_process.migration_parallel.Dim_Instrument",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 3112,
+        "ok": true
+      },
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation",
+        "target": "dwh_daily_process.migration_parallel.Dim_Instrument_Correlation",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 321159,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FCUPNL_BackOfficeCustomer",
+        "target": "dwh_daily_process.migration_parallel.Ext_FCUPNL_BackOfficeCustomer",
+        "elapsed_ms": 5183,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FCUPNL_CurrencyPriceMaxDateWithSplit",
+        "target": "dwh_daily_process.migration_parallel.Ext_FCUPNL_CurrencyPriceMaxDateWithSplit",
+        "elapsed_ms": 3999,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FCUPNL_Dictionary_Instrument",
+        "target": "dwh_daily_process.migration_parallel.Ext_FCUPNL_Dictionary_Instrument",
+        "elapsed_ms": 3831,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FCUPNL_GetSpreadedPriceCandle60MinSplitted",
+        "target": "dwh_daily_process.migration_parallel.Ext_FCUPNL_GetSpreadedPriceCandle60MinSplitted",
+        "elapsed_ms": 3789,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FCUPNL_History_Mirror",
+        "target": "dwh_daily_process.migration_parallel.Ext_FCUPNL_History_Mirror",
+        "elapsed_ms": 3901,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FCUPNL_History_Position",
+        "target": "dwh_daily_process.migration_parallel.Ext_FCUPNL_History_Position",
+        "elapsed_ms": 3817,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FCUPNL_History_SplitRatio",
+        "target": "dwh_daily_process.migration_parallel.Ext_FCUPNL_History_SplitRatio",
+        "elapsed_ms": 3801,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FCUPNL_PositionChangeLog",
+        "target": "dwh_daily_process.migration_parallel.Ext_FCUPNL_PositionChangeLog",
+        "elapsed_ms": 4110,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FCUPNL_Trade_Position",
+        "target": "dwh_daily_process.migration_parallel.Ext_FCUPNL_Trade_Position",
+        "elapsed_ms": 4577,
+        "ok": true
+      },
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl_userapi",
+        "target": "dwh_daily_process.migration_parallel.Fact_CustomerUnrealized_PnL_UserAPI",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 3292,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Fact_SnapshotEquity",
+        "target": "dwh_daily_process.migration_parallel.Fact_SnapshotEquity",
+        "elapsed_ms": 3754,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.fcupnl_debug_counts",
+        "target": "dwh_daily_process.migration_parallel.fcupnl_debug_counts",
+        "elapsed_ms": 3947,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.fcupnl_rundate",
+        "target": "dwh_daily_process.migration_parallel.fcupnl_rundate",
+        "elapsed_ms": 3858,
+        "ok": true
+      },
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "dwh_daily_process.migration_tables.vw_fcupnl_backofficecustomer_target",
+        "target": "dwh_daily_process.migration_parallel.vw_fcupnl_backofficecustomer_target",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 5208,
+        "ok": true
+      },
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "dwh_daily_process.migration_tables.vw_fcupnl_currencypricemaxdate_target",
+        "target": "dwh_daily_process.migration_parallel.vw_fcupnl_currencypricemaxdate_target",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 2876,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_fact_customerunrealized_pnl_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 1335
+      },
+      {
+        "routine": "sp_fact_customerunrealized_pnl_dl_to_synapse_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 803
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 138058,
+    "columns": [],
+    "sample_row": []
+  },
+  "elapsed_ms": 902141
+}

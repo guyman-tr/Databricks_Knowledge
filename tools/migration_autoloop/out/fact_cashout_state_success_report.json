@@ -1,0 +1,18 @@
+{
+  "migration_table": "dwh_daily_process.migration_tables.fact_cashout_state",
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_cashout_state",
+  "all_pass": true,
+  "mapped_table_count": 1,
+  "pass_count": 1,
+  "fail_count": 0,
+  "common_date_id": "20260511",
+  "rows": [
+    {
+      "post": {"rows_cnt": 60244, "sum_usd": 45413232.09, "sum_amt": 55998204.98},
+      "gold": {"rows_cnt": 60244, "sum_usd": 45413232.09, "sum_amt": 55998204.98}
+    }
+  ],
+  "databricks_job_id": 93393147966261,
+  "databricks_run_id": 741872212558367,
+  "evidence": "tools/migration_autoloop/out/fact_cashout_state_block_run.json"
+}

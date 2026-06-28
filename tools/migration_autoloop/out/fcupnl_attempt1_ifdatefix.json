@@ -1,0 +1,90 @@
+{
+  "target_date": "2026-06-18",
+  "date_id": 20260618,
+  "snapshot_guard": {
+    "target_date": "2026-06-18",
+    "proc_name": "sp_fact_customerunrealized_pnl_dl_to_synapse_autopoc",
+    "required_table_count": 7,
+    "stale_before_count": 0,
+    "refreshed_count": 0,
+    "unresolved_count": 0,
+    "stale_before": [],
+    "refreshed": [],
+    "post_snapshot_rows": [
+      {
+        "table_name": "etoro_history_closepositionendofday",
+        "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-18/etoro/History/ClosePositionEndOfDay",
+        "last_altered": "2026-06-19 07:11:06.925",
+        "snapshot_date": "2026-06-18"
+      },
+      {
+        "table_name": "etoro_history_mirror",
+        "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-18/etoro/History/Mirror",
+        "last_altered": "2026-06-19 07:11:12.569",
+        "snapshot_date": "2026-06-18"
+      },
+      {
+        "table_name": "etoro_history_positionchangelog",
+        "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-18/etoro/History/PositionChangeLog",
+        "last_altered": "2026-06-19 07:11:14.119",
+        "snapshot_date": "2026-06-18"
+      },
+      {
+        "table_name": "etoro_history_splitratio",
+        "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-18/etoro/History/SplitRatio",
+        "last_altered": "2026-06-19 07:11:17.526",
+        "snapshot_date": "2026-06-18"
+      },
+      {
+        "table_name": "etoro_trade_getinstrument",
+        "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-18/etoro/Trade/GetInstrument",
+        "last_altered": "2026-06-19 07:11:28.281",
+        "snapshot_date": "2026-06-18"
+      },
+      {
+        "table_name": "etoro_trade_openpositionendofday",
+        "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-18/etoro/Trade/OpenPositionEndOfDay",
+        "last_altered": "2026-06-19 07:11:39.779",
+        "snapshot_date": "2026-06-18"
+      },
+      {
+        "table_name": "pricelog_candles_getspreadedpricecandle60minsplitted",
+        "storage_path": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/DailySnapshot/etr_y=2026/etr_ym=2026-06/etr_ymd=2026-06-18/PriceLog/Candles/GetSpreadedPriceCandle60MinSplitted",
+        "last_altered": "2026-06-19 07:08:39.47",
+        "snapshot_date": "2026-06-18"
+      }
+    ]
+  },
+  "special_snapshot_views": {
+    "refreshed": true,
+    "backoffice_days": [
+      "2026-06-18",
+      "2026-06-17"
+    ]
+  },
+  "dim_customer_rewind": {
+    "rewound": false
+  },
+  "job_run": {
+    "run_id": 392284604433080,
+    "state": "INTERNAL_ERROR",
+    "result_state": "FAILED",
+    "state_message": "Task SP_Fact_CustomerUnrealized_PnL_DL_To_Synapse failed with message: Workload failed, see run output for details. This caused all downstream tasks to get skipped.",
+    "run_page_url": "https://adb-5142916747090026.6.azuredatabricks.net/?o=5142916747090026#job/18080659306023/run/392284604433080"
+  },
+  "parity_date_scope": {
+    "migration_rows": 0,
+    "gold_rows": 2790406,
+    "only_in_migration": 0,
+    "only_in_gold": 2790406,
+    "parity_pass": false
+  },
+  "parity_full_table": {
+    "migration_rows": 0,
+    "gold_rows": 2790406,
+    "only_in_migration": 0,
+    "only_in_gold": 2790406,
+    "short_circuit_reason": "date_slice_empty_in_migration",
+    "parity_pass": false
+  }
+}

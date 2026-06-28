@@ -1,0 +1,24 @@
+{
+  "block_id": "fact_snapshotcustomer",
+  "status": "PARITY_PASS",
+  "all_pass": true,
+  "qa_pass_migration_vs_gold": true,
+  "passes_used": 1,
+  "job_name": "DWH_Daily_Process__BLOCK__fact_snapshotcustomer__AutoPOC",
+  "job_id": 471547512320586,
+  "run_id": 199004609394918,
+  "wrapper_proc": "sp_fact_snapshotcustomer_dl_to_synapse_autopoc",
+  "migration_table": "dwh_daily_process.migration_tables.fact_snapshotcustomer",
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_snapshotcustomer",
+  "parity_basis": "common_available_date",
+  "common_date": "20260516",
+  "evidence": {
+    "migration_rows": 13531,
+    "gold_rows": 13531,
+    "migration_distinct_cid": 13531,
+    "gold_distinct_cid": 13531,
+    "migration_gcid_checksum": 594633780096,
+    "gold_gcid_checksum": 594633780096
+  },
+  "notes": "autopoc proc is DBSQL-clean (DATEDIFF(-1,v_dt) bug only present in non-autopoc). Source is a periodic snapshot capped at 20260516; both sides cap there. Reproduction validated: rebuilding the slice via the proc stayed bit-exact. No side-action needed."
+}

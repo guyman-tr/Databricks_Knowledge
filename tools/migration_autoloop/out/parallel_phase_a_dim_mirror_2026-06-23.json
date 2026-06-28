@@ -1,0 +1,67 @@
+{
+  "target_id": "dim_mirror",
+  "status": "success",
+  "materialize": {
+    "target_id": "dim_mirror",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "target": "dwh_daily_process.migration_parallel.dim_mirror",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 3329,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Mirror_FundCIDs",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Mirror_FundCIDs",
+        "elapsed_ms": 4783,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Mirror_History",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Mirror_History",
+        "elapsed_ms": 3708,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Mirror_Real",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Mirror_Real",
+        "elapsed_ms": 3912,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Mirror_SessionID",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Mirror_SessionID",
+        "elapsed_ms": 4208,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_dim_mirror_dl_to_synapse",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 788
+      },
+      {
+        "routine": "sp_dim_mirror_dl_to_synapse_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 796
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 36681,
+    "columns": [],
+    "sample_row": []
+  },
+  "elapsed_ms": 70659
+}

@@ -1,0 +1,47 @@
+{
+  "target_id": "fact_currencypricewithsplit",
+  "status": "success",
+  "materialize": {
+    "target_id": "fact_currencypricewithsplit",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+        "target": "dwh_daily_process.migration_parallel.fact_currencypricewithsplit",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 3419,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FCPWS_History_SplitRatio",
+        "target": "dwh_daily_process.migration_parallel.Ext_FCPWS_History_SplitRatio",
+        "elapsed_ms": 4402,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FCPWS_Instrument",
+        "target": "dwh_daily_process.migration_parallel.Ext_FCPWS_Instrument",
+        "elapsed_ms": 3882,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_fact_currencypricewithsplit_dl_to_synapse_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 765
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 17611,
+    "columns": [],
+    "sample_row": []
+  },
+  "elapsed_ms": 45196
+}

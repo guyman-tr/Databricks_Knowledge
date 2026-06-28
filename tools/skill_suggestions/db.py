@@ -1,9 +1,11 @@
 """Databricks SQL helpers for skill suggestion queue tools."""
 from __future__ import annotations
 
+import configparser
 import os
 import re
 import time
+from pathlib import Path
 from typing import Any
 
 from databricks.sdk import WorkspaceClient
@@ -14,11 +16,23 @@ DEFAULT_WAREHOUSE_ID = "208214768b0e0308"
 
 
 def profile_from_env() -> str:
-    return (
-        (os.environ.get("DATABRICKS_MCP_PROFILE") or "").strip()
-        or (os.environ.get("DATABRICKS_CONFIG_PROFILE") or "").strip()
-        or "DEFAULT"
-    )
+    explicit_mcp = (os.environ.get("DATABRICKS_MCP_PROFILE") or "").strip()
+    explicit_cfg = (os.environ.get("DATABRICKS_CONFIG_PROFILE") or "").strip()
+    if explicit_mcp:
+        return explicit_mcp
+
+    cfg = Path.home() / ".databrickscfg"
+    parser = configparser.ConfigParser()
+    if cfg.exists():
+        parser.read(cfg, encoding="utf-8")
+        # Favor the profile used by local MCP setup if present.
+        if "guyman" in parser.sections():
+            return "guyman"
+        if explicit_cfg and explicit_cfg in parser.sections():
+            return explicit_cfg
+        if "DEFAULT" in parser.sections():
+            return "DEFAULT"
+    return explicit_cfg or "DEFAULT"
 
 
 def warehouse_id_from_env() -> str:

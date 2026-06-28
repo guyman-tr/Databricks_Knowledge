@@ -1,0 +1,26 @@
+{
+  "block_id": "fact_billingredeem",
+  "status": "PARITY_PASS",
+  "all_pass": true,
+  "qa_pass_migration_vs_gold": true,
+  "passes_used": 1,
+  "job_name": "DWH_Daily_Process__BLOCK__fact_billingredeem__AutoPOC",
+  "job_id": 174419621294097,
+  "run_id": 480308228885789,
+  "wrapper_proc": "sp_fact_billingredeem_dl_to_synapse_autopoc",
+  "migration_table": "dwh_daily_process.migration_tables.fact_billingredeem",
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingredeem",
+  "parity_basis": "common_available_date",
+  "common_date": 20260621,
+  "evidence": {
+    "migration_rows": 117,
+    "gold_rows": 117,
+    "migration_redeems": 117,
+    "gold_redeems": 117,
+    "migration_amountonrequest": 144598.73,
+    "gold_amountonrequest": 144598.73,
+    "migration_amountonclose": 74491.63,
+    "gold_amountonclose": 74491.63
+  },
+  "notes": "Autopoc clone already DBSQL-clean (DATEDIFF floor-to-midnight idiom patched to CAST(... AS DATE)); no helper, no XML. 7-day rolling reload from daily_snapshot.etoro_Billing_Redeem (window 2026-06-14..21). Gate at common available ModificationDateID. 20260621 slice reproduced gold exactly. 1 pass."
+}

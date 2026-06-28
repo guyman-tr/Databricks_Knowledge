@@ -1,0 +1,21 @@
+{
+  "migration_table": "dwh_daily_process.migration_tables.fact_snapshotequity",
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid",
+  "all_pass": false,
+  "mapped_table_count": 1,
+  "pass_count": 0,
+  "fail_count": 1,
+  "target_date_id": "20260621",
+  "rows": [
+    {
+      "post": {"rows_cnt": 13226, "sum_totalpositions": 168721612.15},
+      "gold": {"rows_cnt": 48844, "sum_totalpositions": 747658473.92}
+    }
+  ],
+  "bugs_fixed": [
+    "T-SQL string '+' concatenation built DateRangeID via numeric addition in Databricks (e.g. '20260621'+'1231' -> 20261852). Fixed to '||' for all DateRangeID computations.",
+    "MERGE ... OUTPUT $action INTO #outputdata (changed-CID capture) was migrated as a blanket 'WHERE DateRangeID <> today' capturing all history. Fixed by capturing changed+open CIDs before the MERGE.",
+    "Accumulated 8-digit garbage DateRangeID rows from earlier buggy runs shadowed CIDs in the MERGE (matched but failed open predicate, so never inserted via NOT MATCHED). Purged as POC side-repair."
+  ],
+  "park_reason": "SCD-2 partial-replication limitation: migration schema holds a single source snapshot, so gold's full day-keyed open-snapshot history cannot be reconstructed. After fixing 3 real dialect/logic bugs and side-repairing the baseline, target-day output reached 13226/48844 rows. Remaining gap is CIDs whose last snapshot predates the one prior day we can bootstrap from gold."
+}

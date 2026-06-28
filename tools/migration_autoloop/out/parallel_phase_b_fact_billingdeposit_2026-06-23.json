@@ -1,0 +1,30 @@
+{
+  "target_id": "fact_billingdeposit",
+  "await_gold": {
+    "target_id": "fact_billingdeposit",
+    "attempts": 1,
+    "gold_state": {
+      "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit",
+      "signal": "etr_ymd",
+      "target_date": "2026-06-23",
+      "etr_ymd_row_count": 44818,
+      "state": "postflip"
+    },
+    "timed_out": false
+  },
+  "parity": {
+    "target_id": "fact_billingdeposit",
+    "status": "pass",
+    "parity_status": "PARITY_PASS",
+    "par_rows": "44818",
+    "gold_rows": "44818",
+    "elapsed_ms": 731,
+    "par_agg": "3488760543389",
+    "gold_agg": "3488760543389",
+    "agg_status": "AGG_PASS"
+  },
+  "drop": {
+    "action": "skipped"
+  },
+  "elapsed_ms": 2032
+}

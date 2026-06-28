@@ -1,0 +1,89 @@
+{
+  "block_id": "fact_cashout_state",
+  "block_step": 1,
+  "pipeline_name": "DWH_Daily_Process_-_Entry_Point",
+  "wrapper_proc": "sp_fact_cashout_state",
+  "migration_table": "dwh_daily_process.migration_tables.fact_cashout_state",
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_cashout_state",
+  "task_sequences": {
+    "parity_gate": 4,
+    "qa_probe": 3,
+    "run_proc": 2,
+    "snapshot_guard": 1
+  },
+  "overall_status": "success",
+  "task_results": [
+    {
+      "task_id": "snapshot_guard",
+      "status": "success",
+      "elapsed_ms": 7422,
+      "columns": [
+        "run_date",
+        "target_date"
+      ],
+      "sample_row": [
+        "2026-06-22",
+        "2026-06-21T00:00:00.000Z"
+      ],
+      "sequence": 1,
+      "task_kind": "guard",
+      "depends_on": []
+    },
+    {
+      "task_id": "run_proc",
+      "status": "success",
+      "elapsed_ms": 5120,
+      "columns": [],
+      "sample_row": [],
+      "sequence": 2,
+      "task_kind": "sp",
+      "depends_on": [
+        "snapshot_guard"
+      ]
+    },
+    {
+      "task_id": "qa_probe",
+      "status": "success",
+      "elapsed_ms": 2009,
+      "columns": [
+        "common_date_id",
+        "migration_rows",
+        "gold_rows",
+        "migration_sum_usd",
+        "gold_sum_usd",
+        "migration_sum_amt",
+        "gold_sum_amt"
+      ],
+      "sample_row": [
+        "20260511",
+        "60244",
+        "60244",
+        "45413232.090000",
+        "45413232.090000",
+        "55998204.980000",
+        "55998204.980000"
+      ],
+      "sequence": 3,
+      "task_kind": "qa",
+      "depends_on": [
+        "run_proc"
+      ]
+    },
+    {
+      "task_id": "parity_gate",
+      "status": "success",
+      "elapsed_ms": 1400,
+      "columns": [
+        "parity_status"
+      ],
+      "sample_row": [
+        "PARITY_PASS common_date=20260511 rows=60244"
+      ],
+      "sequence": 4,
+      "task_kind": "gate",
+      "depends_on": [
+        "qa_probe"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,324 @@
+{
+  "ring": 1,
+  "target_date": "2026-06-23",
+  "run_date": "2026-06-24",
+  "targets": [
+    "fact_currencypricewithsplit",
+    "fact_deposit_state",
+    "fact_cashout_state",
+    "fact_billingdeposit",
+    "fact_billingredeem",
+    "fact_billingwithdraw",
+    "fact_regulationtransfer",
+    "fact_history_cost",
+    "dim_positionchangelog",
+    "fact_guru_copiers",
+    "positionhedgeserverchangelog",
+    "fact_customerunrealized_pnl"
+  ],
+  "target_results": [
+    {
+      "target_id": "fact_currencypricewithsplit",
+      "await_gold": {
+        "target_id": "fact_currencypricewithsplit",
+        "attempts": 1,
+        "gold_state": {
+          "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+          "signal": "etr_ymd",
+          "target_date": "2026-06-23",
+          "etr_ymd_row_count": 16017,
+          "state": "postflip"
+        },
+        "timed_out": false
+      },
+      "parity": {
+        "target_id": "fact_currencypricewithsplit",
+        "status": "fail",
+        "error": "Databricks SQL failed: [USER_RAISED_EXCEPTION] PARITY_FAIL target=fact_currencypricewithsplit etr_ymd=2026-06-23 par_rows=0 gold_rows=16017 SQLSTATE: P0001",
+        "elapsed_ms": 1010
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 10041
+    },
+    {
+      "target_id": "fact_deposit_state",
+      "await_gold": {
+        "target_id": "fact_deposit_state",
+        "attempts": 113,
+        "gold_state": {
+          "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_deposit_state",
+          "signal": "delta_history",
+          "latest_commit_date": "2026-06-23",
+          "run_date": "2026-06-24",
+          "state": "preflip"
+        },
+        "timed_out": true
+      },
+      "parity": {
+        "status": "skipped",
+        "reason": "await_timed_out"
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 14483785
+    },
+    {
+      "target_id": "fact_cashout_state",
+      "await_gold": {
+        "target_id": "fact_cashout_state",
+        "attempts": 120,
+        "gold_state": {
+          "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_cashout_state",
+          "signal": "delta_history",
+          "latest_commit_date": "2026-06-23",
+          "run_date": "2026-06-24",
+          "state": "preflip"
+        },
+        "timed_out": true
+      },
+      "parity": {
+        "status": "skipped",
+        "reason": "await_timed_out"
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 14516890
+    },
+    {
+      "target_id": "fact_billingdeposit",
+      "await_gold": {
+        "target_id": "fact_billingdeposit",
+        "attempts": 1,
+        "gold_state": {
+          "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit",
+          "signal": "etr_ymd",
+          "target_date": "2026-06-23",
+          "etr_ymd_row_count": 44818,
+          "state": "postflip"
+        },
+        "timed_out": false
+      },
+      "parity": {
+        "target_id": "fact_billingdeposit",
+        "status": "pass",
+        "parity_status": "PARITY_PASS",
+        "par_rows": "44818",
+        "gold_rows": "44818",
+        "elapsed_ms": 731,
+        "par_agg": "3488760543389",
+        "gold_agg": "3488760543389",
+        "agg_status": "AGG_PASS"
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 2032
+    },
+    {
+      "target_id": "fact_billingredeem",
+      "await_gold": {
+        "target_id": "fact_billingredeem",
+        "attempts": 1,
+        "gold_state": {
+          "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingredeem",
+          "signal": "etr_ymd",
+          "target_date": "2026-06-23",
+          "etr_ymd_row_count": 303,
+          "state": "postflip"
+        },
+        "timed_out": false
+      },
+      "parity": {
+        "target_id": "fact_billingredeem",
+        "status": "fail",
+        "error": "Databricks SQL failed: [USER_RAISED_EXCEPTION] PARITY_FAIL target=fact_billingredeem etr_ymd=2026-06-23 par_rows=1595 gold_rows=303 SQLSTATE: P0001",
+        "elapsed_ms": 102495
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 224362
+    },
+    {
+      "target_id": "fact_billingwithdraw",
+      "await_gold": {
+        "target_id": "fact_billingwithdraw",
+        "attempts": 1,
+        "gold_state": {
+          "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+          "signal": "etr_ymd",
+          "target_date": "2026-06-23",
+          "etr_ymd_row_count": 41725,
+          "state": "postflip"
+        },
+        "timed_out": false
+      },
+      "parity": {
+        "target_id": "fact_billingwithdraw",
+        "status": "pass",
+        "parity_status": "PARITY_PASS",
+        "par_rows": "41725",
+        "gold_rows": "41725",
+        "elapsed_ms": 834
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 2056
+    },
+    {
+      "target_id": "fact_regulationtransfer",
+      "await_gold": {
+        "target_id": "fact_regulationtransfer",
+        "attempts": 1,
+        "gold_state": {
+          "gold_table": "main.compliance.gold_sql_dp_prod_we_dwh_dbo_fact_regulationtransfer",
+          "signal": "etr_ymd",
+          "target_date": "2026-06-23",
+          "etr_ymd_row_count": 864,
+          "state": "postflip"
+        },
+        "timed_out": false
+      },
+      "parity": {
+        "target_id": "fact_regulationtransfer",
+        "status": "fail",
+        "error": "Databricks SQL failed: [USER_RAISED_EXCEPTION] PARITY_FAIL target=fact_regulationtransfer etr_ymd=2026-06-23 par_rows=736 gold_rows=864 SQLSTATE: P0001",
+        "elapsed_ms": 1169
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 2315
+    },
+    {
+      "target_id": "fact_history_cost",
+      "await_gold": {
+        "target_id": "fact_history_cost",
+        "attempts": 1,
+        "gold_state": {
+          "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost",
+          "signal": "etr_ymd",
+          "target_date": "2026-06-23",
+          "etr_ymd_row_count": 5571615,
+          "state": "postflip"
+        },
+        "timed_out": false
+      },
+      "parity": {
+        "target_id": "fact_history_cost",
+        "status": "fail",
+        "error": "Databricks SQL failed: [USER_RAISED_EXCEPTION] PARITY_FAIL target=fact_history_cost etr_ymd=2026-06-23 par_rows=4361008 gold_rows=5571615 SQLSTATE: P0001",
+        "elapsed_ms": 1212
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 2413
+    },
+    {
+      "target_id": "dim_positionchangelog",
+      "await_gold": {
+        "target_id": "dim_positionchangelog",
+        "attempts": 1,
+        "gold_state": {
+          "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog",
+          "signal": "etr_ymd",
+          "target_date": "2026-06-23",
+          "etr_ymd_row_count": 3716935,
+          "state": "postflip"
+        },
+        "timed_out": false
+      },
+      "parity": {
+        "target_id": "dim_positionchangelog",
+        "status": "fail",
+        "error": "Databricks SQL failed: [USER_RAISED_EXCEPTION] PARITY_FAIL target=dim_positionchangelog etr_ymd=2026-06-23 par_rows=3732056 gold_rows=3716935 SQLSTATE: P0001",
+        "elapsed_ms": 76069
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 173500
+    },
+    {
+      "target_id": "fact_guru_copiers",
+      "await_gold": {
+        "target_id": "fact_guru_copiers",
+        "attempts": 1,
+        "gold_state": {
+          "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers",
+          "signal": "etr_ymd",
+          "target_date": "2026-06-23",
+          "etr_ymd_row_count": 97530,
+          "state": "postflip"
+        },
+        "timed_out": false
+      },
+      "parity": {
+        "target_id": "fact_guru_copiers",
+        "status": "fail",
+        "error": "Databricks SQL failed: [USER_RAISED_EXCEPTION] PARITY_FAIL target=fact_guru_copiers etr_ymd=2026-06-23 par_rows=0 gold_rows=97530 SQLSTATE: P0001",
+        "elapsed_ms": 142808
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 308670
+    },
+    {
+      "target_id": "positionhedgeserverchangelog",
+      "await_gold": {
+        "target_id": "positionhedgeserverchangelog",
+        "attempts": 120,
+        "gold_state": {
+          "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionhedgeserverchangelog_snapshot",
+          "signal": "etr_ymd",
+          "target_date": "2026-06-23",
+          "etr_ymd_row_count": 0,
+          "state": "preflip"
+        },
+        "timed_out": true
+      },
+      "parity": {
+        "status": "skipped",
+        "reason": "await_timed_out"
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 14407392
+    },
+    {
+      "target_id": "fact_customerunrealized_pnl",
+      "await_gold": {
+        "target_id": "fact_customerunrealized_pnl",
+        "attempts": 1,
+        "gold_state": {
+          "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl",
+          "signal": "etr_ymd",
+          "target_date": "2026-06-23",
+          "etr_ymd_row_count": 2795949,
+          "state": "postflip"
+        },
+        "timed_out": false
+      },
+      "parity": {
+        "target_id": "fact_customerunrealized_pnl",
+        "status": "fail",
+        "error": "Databricks SQL failed: [USER_RAISED_EXCEPTION] PARITY_FAIL target=fact_customerunrealized_pnl etr_ymd=2026-06-23 par_rows=2795518 gold_rows=2795949 SQLSTATE: P0001",
+        "elapsed_ms": 158229
+      },
+      "drop": {
+        "action": "skipped"
+      },
+      "elapsed_ms": 425727
+    }
+  ],
+  "overall_status": "failed",
+  "total_elapsed_ms": 44559273
+}

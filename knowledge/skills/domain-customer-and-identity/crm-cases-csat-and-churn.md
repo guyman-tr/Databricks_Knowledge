@@ -1,6 +1,6 @@
 ---
 name: domain-customer-and-identity
-description: "CRM Salesforce cases, CSAT survey scores, agent quality assessments, KYC questionnaire answers, and the churn-winback targeting model. Anchored on vg_crm_case (etoro_kpi, 110 cols, ~8.9M cases all-time on ~3.2M CIDs, since 2014, CID is STRING). Adjacent staging-tier views in etoro_kpi_stg: crm_csat_survey_per_case_v (4 cols, Salesforce-flavoured names with simplesurvey__Case__c FK and simplesurvey__Survey_Score__c metric), crm_quality_assessment_per_case_v (8 cols, every metric col uses Salesforce __c suffix — Case__c / Survey__c / Agent_Under_Assessment__c / Quality_Score__c DOUBLE / Compliance_a__c / Type_of_Communication__c / Team__c / CreatedDate), crm_user_v (22 cols, agent + manager + RM hierarchy with FullName / Department / Team / IsActive). Churn-winback (bi_output_stg): churn_winback_summary (8 cols per CID — segment, age, country, reason_for_churn_prediction, suggested_winback_text, expected_ltv, budget_to_winback) and churn_winback_recent_targets (12 cols, adds winback_score, pct_deposits_withdrawn, recent_withdrawal_usd, incentive_type). These are the targeting / scoring output of a predictive churn model — NOT a churn-population definition. Salesforce reply chain mirror lives at bi_output.bi_output_customer_customer_support_salesforce_reply (9 cols at the parent ticket grain). SF-to-BO manager mapping at crm.gold_crm_salesforcetobomanagermapping. KYC questionnaire raw answers across 5 UC locations: bi_db.bronze_userapidb_dbo_v_customeranswers (14 cols, GCID-keyed — NOT RealCID), _masked variant, bi_db.bronze_userapidb_asic_customeranswers (ASIC region 8 cols), compliance.bronze_userapidb_kyc_customeranswers, compliance.bronze_userapidb_history_customeranswers."
+description: "CRM Salesforce cases, CSAT survey scores, agent quality assessments, KYC questionnaire answers, and the churn-winback targeting model. Anchored on vg_crm_case (etoro_kpi, 110 cols, ≈8.9M cases all-time on ≈3.2M CIDs, since 2014, CID is STRING). Adjacent staging-tier views in etoro_kpi_stg: crm_csat_survey_per_case_v (4 cols, Salesforce-flavoured names with simplesurvey__Case__c FK and simplesurvey__Survey_Score__c metric), crm_quality_assessment_per_case_v (8 cols, every metric col uses Salesforce __c suffix — Case__c / Survey__c / Agent_Under_Assessment__c / Quality_Score__c DOUBLE / Compliance_a__c / Type_of_Communication__c / Team__c / CreatedDate), crm_user_v (22 cols, agent + manager + RM hierarchy with FullName / Department / Team / IsActive). Churn-winback (bi_output_stg): churn_winback_summary (8 cols per CID — segment, age, country, reason_for_churn_prediction, suggested_winback_text, expected_ltv, budget_to_winback) and churn_winback_recent_targets (12 cols, adds winback_score, pct_deposits_withdrawn, recent_withdrawal_usd, incentive_type). These are the targeting / scoring output of a predictive churn model — NOT a churn-population definition. Salesforce reply chain mirror lives at bi_output.bi_output_customer_customer_support_salesforce_reply (9 cols at the parent ticket grain). SF-to-BO manager mapping at crm.gold_crm_salesforcetobomanagermapping. KYC questionnaire raw answers across 5 UC locations: bi_db.bronze_userapidb_dbo_v_customeranswers (14 cols, GCID-keyed — NOT RealCID), _masked variant, bi_db.bronze_userapidb_asic_customeranswers (ASIC region 8 cols), compliance.bronze_userapidb_kyc_customeranswers, compliance.bronze_userapidb_history_customeranswers."
 triggers:
   - vg_crm_case
   - CRM case
@@ -115,9 +115,9 @@ domain_tags:
   - winback
   - kyc
   - salesforce
-version: 2
+version: 3
 owner: "dataplatform"
-last_validated_at: "2026-05-11"
+last_validated_at: "2026-06-17"
 ---
 
 # B.6 — CRM Cases, CSAT, QA & Churn-Winback
@@ -164,6 +164,13 @@ Do **NOT** use this skill for:
   → that's `Fact_CustomerAction` (B.4).
 - Customer-master attributes (Region / Country / Regulation / Club tier)
   → that's `Dim_Customer` (B.1) or `customer_snapshot_v` (B.5).
+- Chatbot / multi-channel **deflection** performance, WhatsApp bot, bot
+  per-message feedback (thumbs up/down), auto-resolved ticket economics,
+  escalation / inactive-chat rates → that is the bizops contact-center
+  automation lens on raw `main.crm.silver_*` tables, `domain-bizops`. This
+  skill is the curated `vg_crm_case` ledger + **survey** CSAT
+  (`simplesurvey__Survey_Score__c`) + QA + churn; it is NOT the deflection
+  engine and its `IsDeflected` is one flag, not the deflection KPI.
 
 ## Scope
 
@@ -180,7 +187,9 @@ the SF-reply mirror, the SF→BO manager mapping, and all five UC-resident
 Out of scope: a separate compliance KYC verdict view (B.5
 `kyc_for_compliance_v`), a population-shape churn metric (sibling
 sub-skill `customer-populations-and-lifecycle.md`), operator-driven
-account events (B.4 `Fact_CustomerAction`).
+account events (B.4 `Fact_CustomerAction`), and contact-center
+**automation/deflection** KPIs on raw `main.crm.silver_*` (Web bot /
+WhatsApp / ticket deflection, bot feedback) → `domain-bizops`.
 
 Last verified: 2026-05-11
 

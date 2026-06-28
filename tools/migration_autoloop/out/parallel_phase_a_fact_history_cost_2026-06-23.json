@@ -1,0 +1,46 @@
+{
+  "target_id": "fact_history_cost",
+  "status": "success",
+  "materialize": {
+    "target_id": "fact_history_cost",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost",
+        "target": "dwh_daily_process.migration_parallel.Fact_History_Cost",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 3137,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_History_Cost",
+        "target": "dwh_daily_process.migration_parallel.Ext_History_Cost",
+        "elapsed_ms": 3766,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_fact_history_cost_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 588
+      },
+      {
+        "routine": "sp_fact_history_cost_dl_to_synapse_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 662
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 10241,
+    "columns": [],
+    "sample_row": []
+  },
+  "elapsed_ms": 30664
+}

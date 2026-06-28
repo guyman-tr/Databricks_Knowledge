@@ -1,0 +1,17 @@
+{
+  "migration_table": "dwh_daily_process.migration_tables.fact_currencypricewithsplit",
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+  "all_pass": true,
+  "mapped_table_count": 1,
+  "pass_count": 1,
+  "fail_count": 0,
+  "target_date_id": "20260621",
+  "rows": [
+    {
+      "post": {"rows_cnt": 16017, "sum_ask": 20996771.23827023, "sum_bid": 20964351.13106214, "sum_cr0": 223269.379, "sum_cr1": 223267.1},
+      "gold": {"rows_cnt": 16017, "sum_ask": 20996771.23827023, "sum_bid": 20964351.13106214, "sum_cr0": 223269.379, "sum_cr1": 223267.1}
+    }
+  ],
+  "evidence": "tools/migration_autoloop/out/fact_currencypricewithsplit_block_run.json",
+  "notes_detail": "Date-sliced parity (OccurredDateID=20260621). Daily full-replace price fact, not an SCD. Patched proc (deterministic QUALIFY tie-break + date-scoped MERGE ON) makes all columns bit-exact including derived ConvertRateIsBuy_0/1 (diff 0E-9). Earlier 'failed' status was full-table comparison vs stale pre-patch data."
+}

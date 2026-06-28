@@ -1,0 +1,65 @@
+{
+  "target_id": "fact_regulationtransfer",
+  "status": "success",
+  "materialize": {
+    "target_id": "fact_regulationtransfer",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.compliance.gold_sql_dp_prod_we_dwh_dbo_fact_regulationtransfer",
+        "target": "dwh_daily_process.migration_parallel.fact_regulationtransfer",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 2949,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FRT_BackOffice_RegulationChangeLog",
+        "target": "dwh_daily_process.migration_parallel.Ext_FRT_BackOffice_RegulationChangeLog",
+        "elapsed_ms": 3884,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FRT_BackOffice_RegulationChangeLog_All",
+        "target": "dwh_daily_process.migration_parallel.Ext_FRT_BackOffice_RegulationChangeLog_All",
+        "elapsed_ms": 3595,
+        "ok": true
+      },
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+        "target": "dwh_daily_process.migration_parallel.V_Liabilities",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 3164,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_fact_regulationtransfer_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 634
+      },
+      {
+        "routine": "sp_fact_regulationtransfer_dl_to_synapse_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 676
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 76165,
+    "columns": [
+      "1"
+    ],
+    "sample_row": [
+      "1"
+    ]
+  },
+  "elapsed_ms": 103531
+}

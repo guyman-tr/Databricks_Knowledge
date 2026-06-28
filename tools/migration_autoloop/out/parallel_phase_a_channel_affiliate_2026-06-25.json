@@ -1,0 +1,53 @@
+{
+  "target_id": "channel_affiliate",
+  "status": "success",
+  "materialize": {
+    "target_id": "channel_affiliate",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_channel",
+        "target": "dwh_daily_process.migration_parallel.Dim_Channel_Affiliate_UnifyCode",
+        "baseline_filter": "1=0",
+        "pre_flip_ts": "2026-06-26 01:00:00",
+        "elapsed_ms": 3696,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Channel_Affiliate_UnifyCode",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Channel_Affiliate_UnifyCode",
+        "pre_flip_ts": null,
+        "elapsed_ms": 5523,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_SubChannel_UnifyCode",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_SubChannel_UnifyCode",
+        "pre_flip_ts": null,
+        "elapsed_ms": 4996,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_dim_channel_affiliate_unifycode_dl_to_synapse",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 1164
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 7858,
+    "columns": [],
+    "sample_row": []
+  },
+  "etr_ymd_stamp": {
+    "action": "skipped"
+  },
+  "elapsed_ms": 30732
+}

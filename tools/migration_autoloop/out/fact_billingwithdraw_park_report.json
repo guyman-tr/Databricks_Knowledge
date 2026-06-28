@@ -1,0 +1,21 @@
+{
+  "block_id": "fact_billingwithdraw",
+  "status": "PARKED",
+  "wrapper_proc": "sp_fact_billingwithdraw_dl_to_synapse_autopoc",
+  "migration_table": "dwh_daily_process.migration_tables.fact_billingwithdraw",
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+  "mapped_table_count": 1,
+  "all_pass": false,
+  "park_reason": "Live mutable source — re-extraction cannot reproduce frozen gold.",
+  "rows": [
+    {
+      "migration_table": "dwh_daily_process.migration_tables.fact_billingwithdraw",
+      "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "target_date": 20260615,
+      "post": {"rows_cnt": 59416},
+      "gold": {"rows_cnt": 59835}
+    }
+  ],
+  "detail": "Autopoc proc was rebuilt from a no-op stub and now runs end-to-end (fixed: backtick CAST identifiers, DATEDIFF(0,x) floor-to-midnight idiom, infinite freshness-wait WHILE loop in helper, MERGE multi-match dedup; reuses ExtractXMLValue UDF). However, the source daily_snapshot.etoro_Billing_Withdraw is a LIVE FULL TABLE (2007..today) whose rows are continuously re-modified — ModificationDate moves forward on each re-modification, so rows migrate between day-slices over time. Gold is a frozen daily snapshot. Re-extracting ANY day from the current live source drifts from gold (e.g., re-extracting settled day 20260615 yielded 59,416 rows vs gold's 59,835; tail day 20260620 yielded 4,827 vs 4,843). The migration table's older days matched gold ONLY because they were a verbatim one-time bulk copy (CREATE OR REPLACE TABLE AS SELECT), not because the proc can reproduce them. Honest reproduction parity is therefore not achievable in this partial-replication environment. The two days touched during testing (20260615, 20260620) were restored to their bulk state via Delta time-travel (version 29). Same environmental class as fact_snapshotequity / fact_customerunrealized_pnl.",
+  "guardrail": "Parked on environmental data-availability limitation (not a code defect); no benefit to exhausting 5 passes."
+}

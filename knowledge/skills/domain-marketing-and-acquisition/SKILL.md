@@ -39,6 +39,18 @@ triggers:
   - v_marketing_campaigns_google
   - marketing_campaigns_social
   - marketing_campaigns_google
+  - cpa
+  - CPA
+  - cost per acquisition
+  - cost_per_acquisition
+  - cost per FTD
+  - cost_per_ftd
+  - cost per install
+  - cost per registration
+  - marketing cost
+  - marketing spend
+  - media cost
+  - media spend
   - marketing campaigns
   - Marketing Campaigns Performance
   - paid media
@@ -199,6 +211,12 @@ triggers:
   - OfferTypeID
   - bronze_etoro_trade_positionairdroplog
   - positionairdroplog
+  - gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason
+  - dim_compensationreason
+  - compensationreason
+  - affiliateid_numeric
+  - airdrop campaign
+  - campaign attribution
   - silver_sharepoint_dealing_staking_airdrop_hs
   - bronze_fivetran_dealing_staking_airdrop_hs
   - bi_output_product_analytics_airdrop_financial_metrics
@@ -348,11 +366,12 @@ domain_tags:
 sub_skills:
   - affiliate-and-paid-media.md
   - appflyer-mobile-attribution.md
+  - australia-tag-ob-june26.md
   - marketing-comms-and-sfmc.md
   - raf-and-incentives.md
-version: 1
+version: 2
 owner: "dataplatform"
-last_validated_at: "2026-06-08"
+last_validated_at: "2026-06-23"
 ---
 
 # Marketing & Acquisition Super-Domain
@@ -483,6 +502,11 @@ graph LR
 | `v_marketing_campaigns_social/_google` | (none — already aggregated) | drive off Date + Channel for time-series, no CID join possible |
 | `bi_output_marketing_liveacquisitiondashboard` | `dim_customer_masked` | `CID` (per-customer live funnel) |
 | `bi_output_marketing_liveacquisitiondashboard` | `dim_affiliate_masked` | `AffiliatesGroupsName` (affiliate-side attribution) |
+|| `bronze_marketperformance_airdrop_customer` | `bronze_etoro_trade_positionairdroplog` | `CID` + `SelectedInstrumentID` = `InstrumentID` + date proximity (GivenDate ≈ ExecutionOccurred ± 2 days) — no direct FK |
+|| `bronze_etoro_trade_positionairdroplog` | `dim_position` / `fact_customeraction_w_metrics` | `PositionID` (full position lifecycle + P&L) |
+|| `bronze_etoro_trade_positionairdroplog` | `dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason` | `CompensationReasonID` (gold reason dim — label col `Name`; always join, never hardcode IDs) |
+|| `bronze_marketperformance_airdrop_customer` | `mixpanel.silver` (event=`'Airdrop Delivered BE'`) | `GCID` = `CAST(mp_user_id AS INT)` + date proximity to `GivenDate` |
+|| `mixpanel.silver` (`'Airdrop Delivered BE'`) | `dim_affiliate_masked` | `affiliateid_numeric` = `AffiliateID` (11=RAF; other non-NULL=paid affiliate) |
 
 ## Canonical Genie spaces
 

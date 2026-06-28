@@ -1,4 +1,4 @@
--- Skill suggestions storage (AUTONOMOUS AGENT INPUT QUEUE)
+-- Skills automation user submission storage (AUTONOMOUS AGENT INPUT QUEUE)
 -- Target schema: main.de_output
 --
 -- HARD RULE:
@@ -6,14 +6,15 @@
 --   It MUST remain EXTERNAL and naming/location compliant or it will be dropped.
 --
 -- Name formula check for this table:
---   LOCATION .../skill_suggestions/  -> expected table name: skill_suggestions
+--   LOCATION .../DE_OUTPUT/Skills_Automation/User_Suggestions_Agent/
+--   -> expected table name: de_output_skills_automation_user_suggestions_agent
 --
--- Before running, set a valid container name used in your workspace.
--- Example: internal-sources (non external-sources container keeps start_index=3).
+-- Uses existing de_output external location parent:
+--   abfss://analysis@dldataplatformprodwe.dfs.core.windows.net/DE_OUTPUT/...
 
 CREATE SCHEMA IF NOT EXISTS main.de_output;
 
-CREATE EXTERNAL TABLE IF NOT EXISTS main.de_output.skill_suggestions (
+CREATE EXTERNAL TABLE IF NOT EXISTS main.de_output.de_output_skills_automation_user_suggestions_agent (
   id STRING NOT NULL COMMENT 'UUID for submission request',
   submitted_at TIMESTAMP NOT NULL COMMENT 'Request creation timestamp',
   submitter STRING COMMENT 'Human submitter identity',
@@ -28,12 +29,13 @@ CREATE EXTERNAL TABLE IF NOT EXISTS main.de_output.skill_suggestions (
   agent_notes STRING COMMENT 'Execution diagnostics'
 )
 USING DELTA
-LOCATION 'abfss://<container>@dldataplatformprodwe.dfs.core.windows.net/skill_suggestions/';
+LOCATION 'abfss://analysis@dldataplatformprodwe.dfs.core.windows.net/DE_OUTPUT/Skills_Automation/User_Suggestions_Agent/';
 
-CREATE EXTERNAL VOLUME IF NOT EXISTS main.de_output.skill_submissions
+CREATE EXTERNAL VOLUME IF NOT EXISTS main.de_output.skills_automation_user_suggestions_agent_files
 COMMENT 'Uploaded markdown bundles for skill suggestion submissions'
-LOCATION 'abfss://<container>@dldataplatformprodwe.dfs.core.windows.net/skill_submissions/';
+LOCATION 'abfss://analysis@dldataplatformprodwe.dfs.core.windows.net/DE_OUTPUT/Skills_Automation/User_Suggestions_Agent_Files/';
 
 -- Optional: add table to purge whitelist as defense-in-depth.
 -- The true fix is still naming + location compliance above.
--- Whitelist format in maintenance notebook: 'de_output.skill_suggestions'
+-- Whitelist format in maintenance notebook:
+-- 'de_output.de_output_skills_automation_user_suggestions_agent'

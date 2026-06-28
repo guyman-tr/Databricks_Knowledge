@@ -1,0 +1,39 @@
+{
+  "target_id": "fact_deposit_state",
+  "status": "success",
+  "materialize": {
+    "target_id": "fact_deposit_state",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_deposit_state",
+        "target": "dwh_daily_process.migration_parallel.fact_deposit_state",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 2990,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_fact_deposit_state",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 663
+      },
+      {
+        "routine": "sp_fact_deposit_state_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 689
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 3613,
+    "columns": [],
+    "sample_row": []
+  },
+  "elapsed_ms": 20383
+}

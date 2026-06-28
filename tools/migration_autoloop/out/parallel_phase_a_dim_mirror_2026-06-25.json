@@ -1,0 +1,75 @@
+{
+  "target_id": "dim_mirror",
+  "status": "success",
+  "materialize": {
+    "target_id": "dim_mirror",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "target": "dwh_daily_process.migration_parallel.dim_mirror",
+        "baseline_filter": "1=0",
+        "pre_flip_ts": "2026-06-26 01:00:00",
+        "elapsed_ms": 2730,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Mirror_FundCIDs",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Mirror_FundCIDs",
+        "pre_flip_ts": null,
+        "elapsed_ms": 4451,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Mirror_History",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Mirror_History",
+        "pre_flip_ts": null,
+        "elapsed_ms": 5738,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Mirror_Real",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Mirror_Real",
+        "pre_flip_ts": null,
+        "elapsed_ms": 4828,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Mirror_SessionID",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Mirror_SessionID",
+        "pre_flip_ts": null,
+        "elapsed_ms": 4724,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_dim_mirror_dl_to_synapse",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 841
+      },
+      {
+        "routine": "sp_dim_mirror_dl_to_synapse_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 818
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 37909,
+    "columns": [],
+    "sample_row": []
+  },
+  "etr_ymd_stamp": {
+    "action": "skipped"
+  },
+  "elapsed_ms": 74632
+}

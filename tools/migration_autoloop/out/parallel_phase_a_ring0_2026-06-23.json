@@ -1,0 +1,831 @@
+{
+  "ring": 0,
+  "target_date": "2026-06-23",
+  "run_date": "2026-06-24",
+  "targets": [
+    "dictionaries",
+    "dictionaries_country",
+    "channel_affiliate",
+    "dim_mirror"
+  ],
+  "gate": {
+    "passed": true,
+    "skipped": true
+  },
+  "snapshot_guard": [
+    {
+      "target_id": "dictionaries",
+      "snapshot_guard": {
+        "note": "permission_denied_skipped"
+      },
+      "warning": true
+    },
+    {
+      "target_id": "dictionaries_country",
+      "snapshot_guard": {
+        "note": "permission_denied_skipped"
+      },
+      "warning": true
+    },
+    {
+      "target_id": "channel_affiliate",
+      "snapshot_guard": {
+        "note": "permission_denied_skipped"
+      },
+      "warning": true
+    },
+    {
+      "target_id": "dim_mirror",
+      "snapshot_guard": {
+        "note": "permission_denied_skipped"
+      },
+      "warning": true
+    }
+  ],
+  "target_results": [
+    {
+      "target_id": "dictionaries",
+      "status": "success",
+      "materialize": {
+        "target_id": "dictionaries",
+        "ok": true,
+        "clones": [
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+            "target": "dwh_daily_process.migration_parallel.dim_country",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2600,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus",
+            "target": "dwh_daily_process.migration_parallel.Dim_AccountStatus",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3271,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+            "target": "dwh_daily_process.migration_parallel.Dim_AccountType",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3075,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Dim_Affiliate",
+            "target": "dwh_daily_process.migration_parallel.Dim_Affiliate",
+            "elapsed_ms": 5016,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_billingdepot",
+            "target": "dwh_daily_process.migration_parallel.Dim_BillingDepot",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3245,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_billingprotocolmidsettingsid",
+            "target": "dwh_daily_process.migration_parallel.Dim_BillingProtocolMIDSettingsID",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2390,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_bonustype",
+            "target": "dwh_daily_process.migration_parallel.Dim_BonusType",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2925,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_calculationtype",
+            "target": "dwh_daily_process.migration_parallel.Dim_CalculationType",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2493,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign",
+            "target": "dwh_daily_process.migration_parallel.Dim_Campaign",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3063,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutfeegroup",
+            "target": "dwh_daily_process.migration_parallel.Dim_CashoutFeeGroup",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2824,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutmode",
+            "target": "dwh_daily_process.migration_parallel.Dim_CashoutMode",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2660,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason",
+            "target": "dwh_daily_process.migration_parallel.Dim_CashoutReason",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2623,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus",
+            "target": "dwh_daily_process.migration_parallel.Dim_CashoutStatus",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3455,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_channel",
+            "target": "dwh_daily_process.migration_parallel.Dim_Channel",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2887,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_clientwithdrawreason",
+            "target": "dwh_daily_process.migration_parallel.Dim_ClientWithdrawReason",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3179,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason",
+            "target": "dwh_daily_process.migration_parallel.Dim_ClosePositionReason",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2778,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason",
+            "target": "dwh_daily_process.migration_parallel.Dim_CompensationReason",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3176,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_costconfigurationid",
+            "target": "dwh_daily_process.migration_parallel.Dim_CostConfigurationId",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2445,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_costsubtype",
+            "target": "dwh_daily_process.migration_parallel.Dim_CostSubtype",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2218,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_costtype",
+            "target": "dwh_daily_process.migration_parallel.Dim_CostType",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 1990,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_countrybin",
+            "target": "dwh_daily_process.migration_parallel.Dim_CountryBin",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2975,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_countryip",
+            "target": "dwh_daily_process.migration_parallel.Dim_CountryIP",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3445,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_credittype",
+            "target": "dwh_daily_process.migration_parallel.Dim_CreditType",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3548,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
+            "target": "dwh_daily_process.migration_parallel.Dim_Currency",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3491,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+            "target": "dwh_daily_process.migration_parallel.Dim_Date",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3901,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_documentstatus",
+            "target": "dwh_daily_process.migration_parallel.Dim_DocumentStatus",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2963,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus",
+            "target": "dwh_daily_process.migration_parallel.Dim_EvMatchStatus",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2895,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_exchangeinfo",
+            "target": "dwh_daily_process.migration_parallel.Dim_ExchangeInfo",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3840,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_executionoperationtype",
+            "target": "dwh_daily_process.migration_parallel.Dim_ExecutionOperationType",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2421,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_extendeduserfield",
+            "target": "dwh_daily_process.migration_parallel.Dim_ExtendedUserField",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2966,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_feeoperationtypes",
+            "target": "dwh_daily_process.migration_parallel.Dim_FeeOperationTypes",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2517,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fund",
+            "target": "dwh_daily_process.migration_parallel.Dim_Fund",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3606,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundtype",
+            "target": "dwh_daily_process.migration_parallel.Dim_FundType",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3262,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype",
+            "target": "dwh_daily_process.migration_parallel.Dim_FundingType",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3012,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_funnel",
+            "target": "dwh_daily_process.migration_parallel.Dim_Funnel",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3330,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+            "target": "dwh_daily_process.migration_parallel.Dim_GuruStatus",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3030,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_label",
+            "target": "dwh_daily_process.migration_parallel.Dim_Label",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3116,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+            "target": "dwh_daily_process.migration_parallel.Dim_Language",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3136,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+            "target": "dwh_daily_process.migration_parallel.Dim_Manager",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2594,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization",
+            "target": "dwh_daily_process.migration_parallel.Dim_MifidCategorization",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2957,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirrortype",
+            "target": "dwh_daily_process.migration_parallel.Dim_MirrorType",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2947,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_paymentstatus",
+            "target": "dwh_daily_process.migration_parallel.Dim_PaymentStatus",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3257,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_pendingclosurestatus",
+            "target": "dwh_daily_process.migration_parallel.Dim_PendingClosureStatus",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3011,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_phoneverified",
+            "target": "dwh_daily_process.migration_parallel.Dim_PhoneVerified",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3421,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_platform",
+            "target": "dwh_daily_process.migration_parallel.Dim_Platform",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3148,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+            "target": "dwh_daily_process.migration_parallel.Dim_PlayerLevel",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3141,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+            "target": "dwh_daily_process.migration_parallel.Dim_PlayerStatus",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3057,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+            "target": "dwh_daily_process.migration_parallel.Dim_PlayerStatusReasons",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3504,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+            "target": "dwh_daily_process.migration_parallel.Dim_PlayerStatusSubReasons",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 6818,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_redeemreason",
+            "target": "dwh_daily_process.migration_parallel.Dim_RedeemReason",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 4170,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_redeemstatus",
+            "target": "dwh_daily_process.migration_parallel.Dim_RedeemStatus",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 4441,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+            "target": "dwh_daily_process.migration_parallel.Dim_Regulation",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3732,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_riskclassification",
+            "target": "dwh_daily_process.migration_parallel.Dim_RiskClassification",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3284,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_riskmanagementstatus",
+            "target": "dwh_daily_process.migration_parallel.Dim_RiskManagementStatus",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3208,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_riskstatus",
+            "target": "dwh_daily_process.migration_parallel.Dim_RiskStatus",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3629,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_screeningstatus",
+            "target": "dwh_daily_process.migration_parallel.Dim_ScreeningStatus",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3152,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_state_and_province",
+            "target": "dwh_daily_process.migration_parallel.Dim_State_and_Province",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3141,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_threedsresponsetypes",
+            "target": "dwh_daily_process.migration_parallel.Dim_ThreeDsResponseTypes",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3195,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+            "target": "dwh_daily_process.migration_parallel.Dim_VerificationLevel",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3434,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationstatus",
+            "target": "dwh_daily_process.migration_parallel.Dim_VerificationStatus",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3128,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_worldcheck",
+            "target": "dwh_daily_process.migration_parallel.Dim_WorldCheck",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3135,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Affiliate",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Affiliate",
+            "elapsed_ms": 5972,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Affiliate_Customer",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Affiliate_Customer",
+            "elapsed_ms": 6630,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Affiliate_FTD",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Affiliate_FTD",
+            "elapsed_ms": 6867,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Affiliate_FTDe",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Affiliate_FTDe",
+            "elapsed_ms": 6621,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Affiliate_MasterAffiliate",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Affiliate_MasterAffiliate",
+            "elapsed_ms": 5089,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Affiliate_Registrations",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Affiliate_Registrations",
+            "elapsed_ms": 5124,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Channel",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Channel",
+            "elapsed_ms": 8877,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Channel_Affiliate_UnifyCode",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Channel_Affiliate_UnifyCode",
+            "elapsed_ms": 6082,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Manager",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Manager",
+            "elapsed_ms": 5072,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_SubChannel_UnifyCode",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_SubChannel_UnifyCode",
+            "elapsed_ms": 6007,
+            "ok": true
+          }
+        ],
+        "routines": [
+          {
+            "routine": "sp_populatedimdate",
+            "routine_type": "PROCEDURE",
+            "ok": true,
+            "elapsed_ms": 1213
+          },
+          {
+            "routine": "sp_dim_channel",
+            "routine_type": "PROCEDURE",
+            "ok": true,
+            "elapsed_ms": 967
+          },
+          {
+            "routine": "sp_dim_affiliate",
+            "routine_type": "PROCEDURE",
+            "ok": true,
+            "elapsed_ms": 918
+          },
+          {
+            "routine": "sp_dictionaries_dl_to_synapse_autopoc",
+            "routine_type": "PROCEDURE",
+            "ok": true,
+            "elapsed_ms": 1155
+          }
+        ]
+      },
+      "proc_call": {
+        "status": "success",
+        "elapsed_ms": 231753,
+        "columns": [],
+        "sample_row": []
+      },
+      "elapsed_ms": 564892
+    },
+    {
+      "target_id": "dictionaries_country",
+      "status": "success",
+      "materialize": {
+        "target_id": "dictionaries_country",
+        "ok": true,
+        "clones": [
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+            "target": "dwh_daily_process.migration_parallel.dim_country",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3123,
+            "ok": true
+          },
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_countryipanonymous",
+            "target": "dwh_daily_process.migration_parallel.Dim_CountryIPAnonymous",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3591,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Country",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Country",
+            "elapsed_ms": 4574,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Country_Region_Desk",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Country_Region_Desk",
+            "elapsed_ms": 3958,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Country_Regulation",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Country_Regulation",
+            "elapsed_ms": 3969,
+            "ok": true
+          }
+        ],
+        "routines": [
+          {
+            "routine": "sp_dictionaries_country_dl_to_synapse",
+            "routine_type": "PROCEDURE",
+            "ok": true,
+            "elapsed_ms": 721
+          },
+          {
+            "routine": "sp_dictionaries_country_dl_to_synapse_autopoc",
+            "routine_type": "PROCEDURE",
+            "ok": true,
+            "elapsed_ms": 668
+          }
+        ]
+      },
+      "proc_call": {
+        "status": "success",
+        "elapsed_ms": 36422,
+        "columns": [],
+        "sample_row": []
+      },
+      "elapsed_ms": 70695
+    },
+    {
+      "target_id": "channel_affiliate",
+      "status": "success",
+      "materialize": {
+        "target_id": "channel_affiliate",
+        "ok": true,
+        "clones": [
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_channel",
+            "target": "dwh_daily_process.migration_parallel.dim_channel",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 2941,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Channel_Affiliate_UnifyCode",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Channel_Affiliate_UnifyCode",
+            "elapsed_ms": 5579,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_SubChannel_UnifyCode",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_SubChannel_UnifyCode",
+            "elapsed_ms": 4481,
+            "ok": true
+          }
+        ],
+        "routines": [
+          {
+            "routine": "sp_dim_channel_affiliate_unifycode_dl_to_synapse",
+            "routine_type": "PROCEDURE",
+            "ok": true,
+            "elapsed_ms": 701
+          }
+        ]
+      },
+      "proc_call": {
+        "status": "success",
+        "elapsed_ms": 8295,
+        "columns": [],
+        "sample_row": []
+      },
+      "elapsed_ms": 29383
+    },
+    {
+      "target_id": "dim_mirror",
+      "status": "success",
+      "materialize": {
+        "target_id": "dim_mirror",
+        "ok": true,
+        "clones": [
+          {
+            "action": "ctas_fallback",
+            "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+            "target": "dwh_daily_process.migration_parallel.dim_mirror",
+            "baseline_filter": "1=0",
+            "elapsed_ms": 3329,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Mirror_FundCIDs",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Mirror_FundCIDs",
+            "elapsed_ms": 4783,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Mirror_History",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Mirror_History",
+            "elapsed_ms": 3708,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Mirror_Real",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Mirror_Real",
+            "elapsed_ms": 3912,
+            "ok": true
+          },
+          {
+            "action": "shallow_clone",
+            "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Mirror_SessionID",
+            "target": "dwh_daily_process.migration_parallel.Ext_Dim_Mirror_SessionID",
+            "elapsed_ms": 4208,
+            "ok": true
+          }
+        ],
+        "routines": [
+          {
+            "routine": "sp_dim_mirror_dl_to_synapse",
+            "routine_type": "PROCEDURE",
+            "ok": true,
+            "elapsed_ms": 788
+          },
+          {
+            "routine": "sp_dim_mirror_dl_to_synapse_autopoc",
+            "routine_type": "PROCEDURE",
+            "ok": true,
+            "elapsed_ms": 796
+          }
+        ]
+      },
+      "proc_call": {
+        "status": "success",
+        "elapsed_ms": 36681,
+        "columns": [],
+        "sample_row": []
+      },
+      "elapsed_ms": 70659
+    }
+  ],
+  "overall_status": "success",
+  "total_elapsed_ms": 1363570
+}

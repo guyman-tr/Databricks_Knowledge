@@ -1,0 +1,105 @@
+{
+  "block_id": "fact_regulationtransfer",
+  "block_step": 1,
+  "pipeline_name": "DWH_Daily_Process_-_Entry_Point",
+  "wrapper_proc": "sp_fact_regulationtransfer_dl_to_synapse_autopoc",
+  "migration_table": "dwh_daily_process.migration_tables.fact_regulationtransfer",
+  "gold_table": "main.compliance.gold_sql_dp_prod_we_dwh_dbo_fact_regulationtransfer",
+  "task_sequences": {
+    "parity_gate": 4,
+    "qa_probe": 3,
+    "run_proc": 2,
+    "snapshot_guard": 1
+  },
+  "overall_status": "success",
+  "task_results": [
+    {
+      "task_id": "snapshot_guard",
+      "status": "success",
+      "elapsed_ms": 7722,
+      "columns": [
+        "run_date",
+        "target_date"
+      ],
+      "sample_row": [
+        "2026-06-22",
+        "2026-06-21T00:00:00.000Z"
+      ],
+      "sequence": 1,
+      "task_kind": "guard",
+      "depends_on": []
+    },
+    {
+      "task_id": "run_proc",
+      "status": "success",
+      "elapsed_ms": 72963,
+      "columns": [
+        "1"
+      ],
+      "sample_row": [
+        "1"
+      ],
+      "sequence": 2,
+      "task_kind": "sp",
+      "depends_on": [
+        "snapshot_guard"
+      ]
+    },
+    {
+      "task_id": "qa_probe",
+      "status": "success",
+      "elapsed_ms": 1152,
+      "columns": [
+        "target_date_id",
+        "migration_rows",
+        "gold_rows",
+        "migration_realizedequity",
+        "gold_realizedequity",
+        "migration_totalcash",
+        "gold_totalcash",
+        "migration_aum",
+        "gold_aum",
+        "migration_totalliability",
+        "gold_totalliability",
+        "migration_unrealizedpnl",
+        "gold_unrealizedpnl"
+      ],
+      "sample_row": [
+        "20260621",
+        "456",
+        "456",
+        "34037.3600",
+        "34037.3600",
+        "16063.5200",
+        "16063.5200",
+        "2488.4900",
+        "2488.4900",
+        "54085.4000",
+        "54085.4000",
+        "20048.0400",
+        "20048.0400"
+      ],
+      "sequence": 3,
+      "task_kind": "qa",
+      "depends_on": [
+        "run_proc"
+      ]
+    },
+    {
+      "task_id": "parity_gate",
+      "status": "success",
+      "elapsed_ms": 1164,
+      "columns": [
+        "parity_status"
+      ],
+      "sample_row": [
+        "PARITY_PASS date=20260621 rows=456 all equity sums exact"
+      ],
+      "sequence": 4,
+      "task_kind": "gate",
+      "depends_on": [
+        "qa_probe"
+      ]
+    }
+  ]
+}

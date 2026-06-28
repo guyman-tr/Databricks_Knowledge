@@ -1,0 +1,551 @@
+{
+  "target_id": "dictionaries",
+  "status": "success",
+  "materialize": {
+    "target_id": "dictionaries",
+    "ok": true,
+    "clones": [
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Dim_Affiliate",
+        "target": "dwh_daily_process.migration_parallel.Dim_Affiliate",
+        "pre_flip_ts": null,
+        "elapsed_ms": 6566,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_AccountStatus",
+        "row_count": 3,
+        "elapsed_ms": 689,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_AccountType",
+        "row_count": 19,
+        "elapsed_ms": 693,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_BillingDepot",
+        "row_count": 164,
+        "elapsed_ms": 700,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_BillingProtocolMIDSettingsID",
+        "row_count": 1851,
+        "elapsed_ms": 641,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_BonusType",
+        "row_count": 66,
+        "elapsed_ms": 699,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_CalculationType",
+        "row_count": 8,
+        "elapsed_ms": 636,
+        "ok": true
+      },
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign",
+        "target": "dwh_daily_process.migration_parallel.Dim_Campaign",
+        "baseline_filter": "1=0",
+        "pre_flip_ts": "2026-06-26 01:00:00",
+        "elapsed_ms": 6446,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_CashoutFeeGroup",
+        "row_count": 3,
+        "elapsed_ms": 842,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_CashoutMode",
+        "row_count": 4,
+        "elapsed_ms": 915,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_CashoutReason",
+        "row_count": 19,
+        "elapsed_ms": 649,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_CashoutStatus",
+        "row_count": 18,
+        "elapsed_ms": 663,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_Channel",
+        "row_count": 36,
+        "elapsed_ms": 621,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_ClientWithdrawReason",
+        "row_count": 7,
+        "elapsed_ms": 646,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_ClosePositionReason",
+        "row_count": 28,
+        "elapsed_ms": 601,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_CompensationReason",
+        "row_count": 138,
+        "elapsed_ms": 581,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_CostConfigurationId",
+        "row_count": 4,
+        "elapsed_ms": 735,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_CostSubtype",
+        "row_count": 7,
+        "elapsed_ms": 611,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_CostType",
+        "row_count": 4,
+        "elapsed_ms": 607,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_CountryBin",
+        "row_count": 16354799,
+        "elapsed_ms": 609,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_CountryIP",
+        "row_count": 6864024,
+        "elapsed_ms": 626,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_CreditType",
+        "row_count": 33,
+        "elapsed_ms": 632,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_Currency",
+        "row_count": 16271,
+        "elapsed_ms": 666,
+        "ok": true
+      },
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+        "target": "dwh_daily_process.migration_parallel.Dim_Date",
+        "baseline_filter": "1=0",
+        "pre_flip_ts": "2026-06-26 01:00:00",
+        "elapsed_ms": 5570,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_DocumentStatus",
+        "row_count": 7,
+        "elapsed_ms": 690,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_EvMatchStatus",
+        "row_count": 4,
+        "elapsed_ms": 649,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_ExchangeInfo",
+        "row_count": 51,
+        "elapsed_ms": 643,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_ExecutionOperationType",
+        "row_count": 25,
+        "elapsed_ms": 624,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_ExtendedUserField",
+        "row_count": 12,
+        "elapsed_ms": 678,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_FeeOperationTypes",
+        "row_count": 15,
+        "elapsed_ms": 667,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_Fund",
+        "row_count": 12921,
+        "elapsed_ms": 789,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_FundType",
+        "row_count": 3,
+        "elapsed_ms": 642,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_FundingType",
+        "row_count": 45,
+        "elapsed_ms": 619,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_Funnel",
+        "row_count": 135,
+        "elapsed_ms": 877,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_GuruStatus",
+        "row_count": 9,
+        "elapsed_ms": 584,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_Label",
+        "row_count": 26,
+        "elapsed_ms": 654,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_Language",
+        "row_count": 29,
+        "elapsed_ms": 736,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_Manager",
+        "row_count": 5205,
+        "elapsed_ms": 723,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_MifidCategorization",
+        "row_count": 6,
+        "elapsed_ms": 635,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_MirrorType",
+        "row_count": 4,
+        "elapsed_ms": 586,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_PaymentStatus",
+        "row_count": 40,
+        "elapsed_ms": 909,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_PendingClosureStatus",
+        "row_count": 3,
+        "elapsed_ms": 740,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_PhoneVerified",
+        "row_count": 6,
+        "elapsed_ms": 676,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_Platform",
+        "row_count": 4,
+        "elapsed_ms": 674,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_PlayerLevel",
+        "row_count": 8,
+        "elapsed_ms": 610,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_PlayerStatus",
+        "row_count": 16,
+        "elapsed_ms": 654,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_PlayerStatusReasons",
+        "row_count": 44,
+        "elapsed_ms": 601,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_PlayerStatusSubReasons",
+        "row_count": 84,
+        "elapsed_ms": 694,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_RedeemReason",
+        "row_count": 19,
+        "elapsed_ms": 696,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_RedeemStatus",
+        "row_count": 13,
+        "elapsed_ms": 584,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_Regulation",
+        "row_count": 15,
+        "elapsed_ms": 606,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_RiskClassification",
+        "row_count": 6,
+        "elapsed_ms": 682,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_RiskManagementStatus",
+        "row_count": 70,
+        "elapsed_ms": 648,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_RiskStatus",
+        "row_count": 90,
+        "elapsed_ms": 615,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_ScreeningStatus",
+        "row_count": 8,
+        "elapsed_ms": 687,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_State_and_Province",
+        "row_count": 181,
+        "elapsed_ms": 594,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_ThreeDsResponseTypes",
+        "row_count": 15,
+        "elapsed_ms": 636,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_VerificationLevel",
+        "row_count": 4,
+        "elapsed_ms": 631,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_VerificationStatus",
+        "row_count": 3,
+        "elapsed_ms": 579,
+        "ok": true
+      },
+      {
+        "action": "skip_already_populated",
+        "target": "dwh_daily_process.migration_parallel.Dim_WorldCheck",
+        "row_count": 5,
+        "elapsed_ms": 646,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Affiliate",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Affiliate",
+        "pre_flip_ts": null,
+        "elapsed_ms": 6060,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Affiliate_Customer",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Affiliate_Customer",
+        "pre_flip_ts": null,
+        "elapsed_ms": 4472,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Affiliate_FTD",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Affiliate_FTD",
+        "pre_flip_ts": null,
+        "elapsed_ms": 5175,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Affiliate_FTDe",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Affiliate_FTDe",
+        "pre_flip_ts": null,
+        "elapsed_ms": 5392,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Affiliate_MasterAffiliate",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Affiliate_MasterAffiliate",
+        "pre_flip_ts": null,
+        "elapsed_ms": 4544,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Affiliate_Registrations",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Affiliate_Registrations",
+        "pre_flip_ts": null,
+        "elapsed_ms": 4894,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Channel",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Channel",
+        "pre_flip_ts": null,
+        "elapsed_ms": 4663,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Channel_Affiliate_UnifyCode",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Channel_Affiliate_UnifyCode",
+        "pre_flip_ts": null,
+        "elapsed_ms": 5463,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Manager",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Manager",
+        "pre_flip_ts": null,
+        "elapsed_ms": 4598,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_SubChannel_UnifyCode",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_SubChannel_UnifyCode",
+        "pre_flip_ts": null,
+        "elapsed_ms": 4894,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_populatedimdate",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 1237
+      },
+      {
+        "routine": "sp_dim_channel",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 1025
+      },
+      {
+        "routine": "sp_dim_affiliate",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 980
+      },
+      {
+        "routine": "sp_dictionaries_dl_to_synapse_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 1208
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 213008,
+    "columns": [],
+    "sample_row": []
+  },
+  "etr_ymd_stamp": {
+    "action": "skipped"
+  },
+  "elapsed_ms": 389616
+}

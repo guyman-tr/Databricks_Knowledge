@@ -56,9 +56,9 @@ domain_tags:
   - cashout
   - trading-platform
   - fiat
-version: 1
+version: 2
 owner: "dataplatform"
-last_validated_at: "2026-05-11"
+last_validated_at: "2026-06-25"
 ---
 
 # Trading-Platform Deposits & Withdrawals
@@ -277,8 +277,8 @@ WHERE dwf.WithdrawPaymentID = :wpid;
 | Decline-by-risk-engine rate | **Fact_BillingDeposit** | `COUNT_IF(PaymentStatusID=35) / COUNT(*)`. DepositWithdrawFee drops most declines (Critical Warning 1). |
 | MID-level approval rate | **DepositWithdrawFee** for approved; **Fact_Deposit_State** (Synapse) for full coverage incl. declines | `DepositWithdrawFee` carries `MIDName` / `MIDValue` directly for approved rows; for decline-rate by MID drop down to Synapse via the State table. |
 | Funding-method mix | **DepositWithdrawFee** | `GROUP BY PaymentMethod` (already dim-resolved as `Dim_FundingType.Name`). |
-| Recurring-deposit subscribers | **MIMO** or **Fact_BillingDeposit** | `IsRecurring=1`. MIMO has it cross-platform; Fact_BillingDeposit for TP-only. |
-| First trade after FTD (per CID) | **Fact_CustomerAction** | SQL 3 above; or use `domain-cross/recurring-deposit-to-trade`. |
+| Recurring-deposit subscribers | **MIMO** or **Fact_BillingDeposit** | `IsRecurring=1`. MIMO has it cross-platform; Fact_BillingDeposit for TP-only. ⚠ `IsRecurring=1` counts recurring **deposits** — correct and complete for that. Since the 2026-06 decoupling it is NOT a count of recurring **investments/positions** (a recurring position can be funded from available USD balance with no deposit, so the two populations differ). For recurring-investment / plan counts use `domain-cross/recurring-deposits-and-investments` (`Plans.PlanStatusID`, trade-side `BI_DB_RecurringInvestment_Positions`). |
+| First trade after FTD (per CID) | **Fact_CustomerAction** | SQL 3 above; or use `domain-cross/recurring-deposits-and-investments`. |
 | Per-row PIPs / production conversion fee | **DepositWithdrawFee** (`PIPsCalculation` col 28) | Already plumbed from `Fact_*_State.PIPsInUSD` with sign correction. |
 | 3DS outcome, `RiskManagementStatusID` drill | **Fact_BillingDeposit** | XML-extracted columns not in BI layer. |
 | Withdraw rollback investigation | **DepositWithdrawFee_Reversals** (UC) for the dim-resolved reversal row; **Fact_Cashout_Rollback** (Synapse-only) for the upstream event | Rollback events × dim-resolved reversal row. From Genie use the `_Reversals` UC table; for upstream provenance run the Synapse query separately. |
@@ -295,7 +295,7 @@ WHERE dwf.WithdrawPaymentID = :wpid;
 | **Fee revenue / aggregation** (commission / rollover / dividend / spread / share-lending / dormant / staking / spaceship / moneyfarm) | `domain-revenue-and-fees` super-domain |
 | **Bonuses** (deposit bonus, refer-a-friend, club, marketing campaign) | Compensation regular domain (planned) |
 | **BackOffice operator action** (operator-initiated deposits / refunds) | `domain-customer-and-identity/customer-action-audit-trail` |
-| First trade after first deposit | `domain-cross/recurring-deposit-to-trade` |
+| First trade after first deposit | `domain-cross/recurring-deposits-and-investments` |
 | Chargeback case forensics | `domain-cross/refund-chargeback-chain` |
 | Provider statement reconciliation | `domain-cross/provider-reconciliation` |
 | Treezor / Tribe envelope audit on eMoney withdrawals | `domain-cross/tribe-emoney-audit` |
@@ -314,4 +314,4 @@ These wikis carry the full column-level truth. The skill above only encodes the 
 
 - Anchored on Synapse-side `BI_DB_dbo.BI_DB_DepositWithdrawFee` (RnD PIPS-based 2025 canonical view) + `BI_DB_DepositWithdrawFee_Reversals`, both bronzed to UC.
 - Column counts and FQN existence verified 2026-05-11 against `system.information_schema.columns` and `system.information_schema.tables`: BI_DB_DepositWithdrawFee = 48 cols, _Reversals = 45 cols, Fact_BillingDeposit = 139 cols (NOT ~91 as older wiki text claims), Fact_BillingWithdraw = 86 cols, Fact_CustomerAction = 74 cols, de_output_etoro_kpi_fact_customeraction_w_metrics = 98 cols. `Fact_Deposit_State`, `Fact_Cashout_State`, `Fact_Cashout_Rollback`, `Dim_BillingProtocolMIDSettingsID`, `BI_DB_AllDeposits` returned zero rows — confirmed Synapse-only / legacy-dead.
-- Intersecting cross-domain skills (loaded together when the question crosses a boundary): `mimo-panel-and-ddr`, `emoney-accounts-and-cards`, `finance-recon-and-balances`, `domain-revenue-and-fees/SKILL`, `domain-cross/refund-chargeback-chain`, `domain-cross/recurring-deposit-to-trade`, `domain-cross/provider-reconciliation`.
+- Intersecting cross-domain skills (loaded together when the question crosses a boundary): `mimo-panel-and-ddr`, `emoney-accounts-and-cards`, `finance-recon-and-balances`, `domain-revenue-and-fees/SKILL`, `domain-cross/refund-chargeback-chain`, `domain-cross/recurring-deposits-and-investments`, `domain-cross/provider-reconciliation`.

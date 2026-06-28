@@ -1,0 +1,25 @@
+{
+  "target_id": "fact_customerunrealized_pnl",
+  "await_gold": {
+    "target_id": "fact_customerunrealized_pnl",
+    "attempts": 1,
+    "gold_state": {
+      "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl",
+      "signal": "etr_ymd",
+      "target_date": "2026-06-23",
+      "etr_ymd_row_count": 2795949,
+      "state": "postflip"
+    },
+    "timed_out": false
+  },
+  "parity": {
+    "target_id": "fact_customerunrealized_pnl",
+    "status": "fail",
+    "error": "Databricks SQL failed: [USER_RAISED_EXCEPTION] PARITY_FAIL target=fact_customerunrealized_pnl etr_ymd=2026-06-23 par_rows=2795518 gold_rows=2795949 SQLSTATE: P0001",
+    "elapsed_ms": 158229
+  },
+  "drop": {
+    "action": "skipped"
+  },
+  "elapsed_ms": 425727
+}

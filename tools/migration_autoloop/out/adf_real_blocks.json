@@ -1,0 +1,483 @@
+{
+  "blocks": [
+    {
+      "block_id": "dictionaries",
+      "block_step": 1,
+      "pipeline_name": "DWH_Daily_Process_-_Entry_Point",
+      "wrapper_proc": "sp_dictionaries_dl_to_synapse_autopoc",
+      "depends_on_blocks": [],
+      "migration_table": "dwh_daily_process.migration_tables.dim_country",
+      "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "task_plan": [
+        {
+          "task_id": "snapshot_guard",
+          "task_kind": "guard",
+          "sequence": 1,
+          "depends_on": []
+        },
+        {
+          "task_id": "run_proc",
+          "task_kind": "sp",
+          "sequence": 2,
+          "depends_on": [
+            "snapshot_guard"
+          ]
+        },
+        {
+          "task_id": "qa_probe",
+          "task_kind": "qa",
+          "sequence": 3,
+          "depends_on": [
+            "run_proc"
+          ]
+        },
+        {
+          "task_id": "parity_gate",
+          "task_kind": "gate",
+          "sequence": 4,
+          "depends_on": [
+            "qa_probe"
+          ]
+        }
+      ],
+      "parallel_groups": [
+        {
+          "sequence": 1,
+          "tasks": [
+            "snapshot_guard"
+          ]
+        },
+        {
+          "sequence": 2,
+          "tasks": [
+            "run_proc"
+          ]
+        },
+        {
+          "sequence": 3,
+          "tasks": [
+            "qa_probe"
+          ]
+        },
+        {
+          "sequence": 4,
+          "tasks": [
+            "parity_gate"
+          ]
+        }
+      ],
+      "procedure_call_chain": [
+        {
+          "proc_name": "sp_dictionaries_dl_to_synapse_autopoc",
+          "level": 0,
+          "body_chars": 52275,
+          "calls": [
+            "sp_dim_affiliate",
+            "sp_dim_channel",
+            "sp_populatedimdate"
+          ]
+        },
+        {
+          "proc_name": "sp_dim_affiliate",
+          "level": 1,
+          "body_chars": 6098,
+          "calls": []
+        },
+        {
+          "proc_name": "sp_dim_channel",
+          "level": 1,
+          "body_chars": 4130,
+          "calls": []
+        },
+        {
+          "proc_name": "sp_populatedimdate",
+          "level": 1,
+          "body_chars": 97,
+          "calls": []
+        }
+      ]
+    },
+    {
+      "block_id": "fact_customeraction_etl",
+      "block_step": 2,
+      "pipeline_name": "DWH_Daily_Process_-_Entry_Point",
+      "wrapper_proc": "sp_fact_customeraction_dl_to_synapse_autopoc",
+      "depends_on_blocks": [
+        "dictionaries"
+      ],
+      "migration_table": "dwh_daily_process.migration_tables.fact_customeraction",
+      "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "task_plan": [
+        {
+          "task_id": "snapshot_guard",
+          "task_kind": "guard",
+          "sequence": 1,
+          "depends_on": []
+        },
+        {
+          "task_id": "dictionaries_country",
+          "task_kind": "sp",
+          "sequence": 2,
+          "depends_on": [
+            "snapshot_guard"
+          ]
+        },
+        {
+          "task_id": "fact_customeraction",
+          "task_kind": "sp",
+          "sequence": 3,
+          "depends_on": [
+            "dictionaries_country"
+          ]
+        },
+        {
+          "task_id": "fact_firstcustomeraction",
+          "task_kind": "sp",
+          "sequence": 4,
+          "depends_on": [
+            "fact_customeraction"
+          ]
+        },
+        {
+          "task_id": "fact_billingdeposit",
+          "task_kind": "sp",
+          "sequence": 4,
+          "depends_on": [
+            "fact_customeraction"
+          ]
+        },
+        {
+          "task_id": "fact_billingwithdraw",
+          "task_kind": "sp",
+          "sequence": 4,
+          "depends_on": [
+            "fact_customeraction"
+          ]
+        },
+        {
+          "task_id": "fact_billingredeem",
+          "task_kind": "sp",
+          "sequence": 4,
+          "depends_on": [
+            "fact_customeraction"
+          ]
+        },
+        {
+          "task_id": "qa_probe",
+          "task_kind": "qa",
+          "sequence": 5,
+          "depends_on": [
+            "fact_firstcustomeraction",
+            "fact_billingdeposit",
+            "fact_billingwithdraw",
+            "fact_billingredeem"
+          ]
+        },
+        {
+          "task_id": "parity_gate",
+          "task_kind": "gate",
+          "sequence": 6,
+          "depends_on": [
+            "qa_probe"
+          ]
+        }
+      ],
+      "parallel_groups": [
+        {
+          "sequence": 1,
+          "tasks": [
+            "snapshot_guard"
+          ]
+        },
+        {
+          "sequence": 2,
+          "tasks": [
+            "dictionaries_country"
+          ]
+        },
+        {
+          "sequence": 3,
+          "tasks": [
+            "fact_customeraction"
+          ]
+        },
+        {
+          "sequence": 4,
+          "tasks": [
+            "fact_firstcustomeraction",
+            "fact_billingdeposit",
+            "fact_billingwithdraw",
+            "fact_billingredeem"
+          ]
+        },
+        {
+          "sequence": 5,
+          "tasks": [
+            "qa_probe"
+          ]
+        },
+        {
+          "sequence": 6,
+          "tasks": [
+            "parity_gate"
+          ]
+        }
+      ],
+      "procedure_call_chain": [
+        {
+          "proc_name": "sp_fact_customeraction_dl_to_synapse_autopoc",
+          "level": 0,
+          "body_chars": 87,
+          "calls": []
+        }
+      ]
+    },
+    {
+      "block_id": "dim_customer",
+      "block_step": 1,
+      "pipeline_name": "DWH_Daily_Process_-_Entry_Point",
+      "wrapper_proc": "sp_dim_customer",
+      "depends_on_blocks": [],
+      "migration_table": "dwh_daily_process.migration_tables.dim_customer",
+      "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "task_plan": [
+        {
+          "task_id": "snapshot_guard",
+          "task_kind": "guard",
+          "sequence": 1,
+          "depends_on": []
+        },
+        {
+          "task_id": "run_proc",
+          "task_kind": "sp",
+          "sequence": 2,
+          "depends_on": [
+            "snapshot_guard"
+          ]
+        },
+        {
+          "task_id": "qa_probe",
+          "task_kind": "qa",
+          "sequence": 3,
+          "depends_on": [
+            "run_proc"
+          ]
+        },
+        {
+          "task_id": "parity_gate",
+          "task_kind": "gate",
+          "sequence": 4,
+          "depends_on": [
+            "qa_probe"
+          ]
+        }
+      ],
+      "parallel_groups": [
+        {
+          "sequence": 1,
+          "tasks": [
+            "snapshot_guard"
+          ]
+        },
+        {
+          "sequence": 2,
+          "tasks": [
+            "run_proc"
+          ]
+        },
+        {
+          "sequence": 3,
+          "tasks": [
+            "qa_probe"
+          ]
+        },
+        {
+          "sequence": 4,
+          "tasks": [
+            "parity_gate"
+          ]
+        }
+      ],
+      "procedure_call_chain": [
+        {
+          "proc_name": "sp_dim_customer",
+          "level": 0,
+          "body_chars": 22092,
+          "calls": []
+        }
+      ]
+    },
+    {
+      "block_id": "fact_snapshotequity",
+      "block_step": 1,
+      "pipeline_name": "DWH_Daily_Process_-_Entry_Point",
+      "wrapper_proc": "sp_fact_snapshotequity_dl_to_synapse_autopoc",
+      "depends_on_blocks": [],
+      "migration_table": "dwh_daily_process.migration_tables.fact_snapshotequity",
+      "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid",
+      "task_plan": [
+        {
+          "task_id": "snapshot_guard",
+          "task_kind": "guard",
+          "sequence": 1,
+          "depends_on": []
+        },
+        {
+          "task_id": "extract",
+          "task_kind": "sp",
+          "sequence": 2,
+          "depends_on": [
+            "snapshot_guard"
+          ]
+        },
+        {
+          "task_id": "barrier_extract",
+          "task_kind": "barrier",
+          "sequence": 3,
+          "depends_on": [
+            "extract"
+          ]
+        },
+        {
+          "task_id": "inprocesscashouts",
+          "task_kind": "sp",
+          "sequence": 4,
+          "depends_on": [
+            "barrier_extract"
+          ]
+        },
+        {
+          "task_id": "barrier_inprocesscashouts",
+          "task_kind": "barrier",
+          "sequence": 5,
+          "depends_on": [
+            "inprocesscashouts"
+          ]
+        },
+        {
+          "task_id": "totalpositionamount",
+          "task_kind": "sp",
+          "sequence": 4,
+          "depends_on": [
+            "barrier_extract"
+          ]
+        },
+        {
+          "task_id": "barrier_totalpositionamount",
+          "task_kind": "barrier",
+          "sequence": 5,
+          "depends_on": [
+            "totalpositionamount"
+          ]
+        },
+        {
+          "task_id": "core",
+          "task_kind": "sp",
+          "sequence": 6,
+          "depends_on": [
+            "barrier_inprocesscashouts",
+            "barrier_totalpositionamount"
+          ]
+        },
+        {
+          "task_id": "qa_probe",
+          "task_kind": "qa",
+          "sequence": 7,
+          "depends_on": [
+            "core"
+          ]
+        },
+        {
+          "task_id": "parity_gate",
+          "task_kind": "gate",
+          "sequence": 8,
+          "depends_on": [
+            "qa_probe"
+          ]
+        }
+      ],
+      "parallel_groups": [
+        {
+          "sequence": 1,
+          "tasks": [
+            "snapshot_guard"
+          ]
+        },
+        {
+          "sequence": 2,
+          "tasks": [
+            "extract"
+          ]
+        },
+        {
+          "sequence": 3,
+          "tasks": [
+            "barrier_extract"
+          ]
+        },
+        {
+          "sequence": 4,
+          "tasks": [
+            "inprocesscashouts",
+            "totalpositionamount"
+          ]
+        },
+        {
+          "sequence": 5,
+          "tasks": [
+            "barrier_inprocesscashouts",
+            "barrier_totalpositionamount"
+          ]
+        },
+        {
+          "sequence": 6,
+          "tasks": [
+            "core"
+          ]
+        },
+        {
+          "sequence": 7,
+          "tasks": [
+            "qa_probe"
+          ]
+        },
+        {
+          "sequence": 8,
+          "tasks": [
+            "parity_gate"
+          ]
+        }
+      ],
+      "procedure_call_chain": [
+        {
+          "proc_name": "sp_fact_snapshotequity_dl_to_synapse_autopoc",
+          "level": 0,
+          "body_chars": 12733,
+          "calls": [
+            "sp_fact_snapshotequity_inprocesscashouts_autopoc",
+            "sp_fact_snapshotequity_totalpositionamount_autopoc",
+            "sp_fact_snapshotequity_autopoc"
+          ]
+        },
+        {
+          "proc_name": "sp_fact_snapshotequity_inprocesscashouts_autopoc",
+          "level": 1,
+          "body_chars": 3426,
+          "calls": []
+        },
+        {
+          "proc_name": "sp_fact_snapshotequity_totalpositionamount_autopoc",
+          "level": 1,
+          "body_chars": 9962,
+          "calls": []
+        },
+        {
+          "proc_name": "sp_fact_snapshotequity_autopoc",
+          "level": 1,
+          "body_chars": 22566,
+          "calls": []
+        }
+      ]
+    }
+  ]
+}

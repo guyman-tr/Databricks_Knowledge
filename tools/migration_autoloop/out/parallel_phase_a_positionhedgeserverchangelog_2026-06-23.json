@@ -1,0 +1,53 @@
+{
+  "target_id": "positionhedgeserverchangelog",
+  "status": "success",
+  "materialize": {
+    "target_id": "positionhedgeserverchangelog",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionhedgeserverchangelog_snapshot",
+        "target": "dwh_daily_process.migration_parallel.dim_positionhedgeserverchangelog_snapshot",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 2935,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Dim_Position",
+        "target": "dwh_daily_process.migration_parallel.Dim_Position",
+        "elapsed_ms": 5517,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Position_PositionHedgeServerChangeLog",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Position_PositionHedgeServerChangeLog",
+        "elapsed_ms": 3827,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_dim_position_positionhedgeserverchangelog",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 718
+      },
+      {
+        "routine": "sp_dim_positionhedgeserverchangelog_dl_to_synapse",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 653
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 11034,
+    "columns": [],
+    "sample_row": []
+  },
+  "elapsed_ms": 37721
+}

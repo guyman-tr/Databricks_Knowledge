@@ -1,0 +1,179 @@
+{
+  "block_id": "fact_snapshotequity",
+  "block_step": 1,
+  "pipeline_name": "DWH_Daily_Process_-_Entry_Point",
+  "wrapper_proc": "sp_fact_snapshotequity_dl_to_synapse_autopoc",
+  "migration_table": "dwh_daily_process.migration_tables.fact_snapshotequity",
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid",
+  "task_sequences": {
+    "barrier_extract": 3,
+    "barrier_inprocesscashouts": 5,
+    "barrier_totalpositionamount": 5,
+    "core": 6,
+    "extract": 2,
+    "inprocesscashouts": 4,
+    "parity_gate": 8,
+    "qa_probe": 7,
+    "snapshot_guard": 1,
+    "totalpositionamount": 4
+  },
+  "overall_status": "failed",
+  "task_results": [
+    {
+      "task_id": "snapshot_guard",
+      "status": "success",
+      "elapsed_ms": 7704,
+      "columns": [
+        "run_date",
+        "target_date"
+      ],
+      "sample_row": [
+        "2026-06-22",
+        "2026-06-21T00:00:00.000Z"
+      ],
+      "sequence": 1,
+      "task_kind": "guard",
+      "depends_on": []
+    },
+    {
+      "task_id": "extract",
+      "status": "success",
+      "elapsed_ms": 42362,
+      "columns": [],
+      "sample_row": [],
+      "sequence": 2,
+      "task_kind": "sp",
+      "depends_on": [
+        "snapshot_guard"
+      ]
+    },
+    {
+      "task_id": "barrier_extract",
+      "status": "success",
+      "elapsed_ms": 995,
+      "columns": [
+        "extract_barrier"
+      ],
+      "sample_row": [
+        "BARRIER_PASS"
+      ],
+      "sequence": 3,
+      "task_kind": "barrier",
+      "depends_on": [
+        "extract"
+      ]
+    },
+    {
+      "task_id": "inprocesscashouts",
+      "status": "success",
+      "elapsed_ms": 8609,
+      "columns": [],
+      "sample_row": [],
+      "sequence": 4,
+      "task_kind": "sp",
+      "depends_on": [
+        "barrier_extract"
+      ]
+    },
+    {
+      "task_id": "totalpositionamount",
+      "status": "success",
+      "elapsed_ms": 18720,
+      "columns": [],
+      "sample_row": [],
+      "sequence": 4,
+      "task_kind": "sp",
+      "depends_on": [
+        "barrier_extract"
+      ]
+    },
+    {
+      "task_id": "barrier_inprocesscashouts",
+      "status": "success",
+      "elapsed_ms": 604,
+      "columns": [
+        "inprocess_barrier"
+      ],
+      "sample_row": [
+        "BARRIER_PASS"
+      ],
+      "sequence": 5,
+      "task_kind": "barrier",
+      "depends_on": [
+        "inprocesscashouts"
+      ]
+    },
+    {
+      "task_id": "barrier_totalpositionamount",
+      "status": "success",
+      "elapsed_ms": 830,
+      "columns": [
+        "totalposition_barrier"
+      ],
+      "sample_row": [
+        "BARRIER_PASS"
+      ],
+      "sequence": 5,
+      "task_kind": "barrier",
+      "depends_on": [
+        "totalpositionamount"
+      ]
+    },
+    {
+      "task_id": "core",
+      "status": "success",
+      "elapsed_ms": 18666,
+      "columns": [],
+      "sample_row": [],
+      "sequence": 6,
+      "task_kind": "sp",
+      "depends_on": [
+        "barrier_inprocesscashouts",
+        "barrier_totalpositionamount"
+      ]
+    },
+    {
+      "task_id": "qa_probe",
+      "status": "success",
+      "elapsed_ms": 1907,
+      "columns": [
+        "target_date_id",
+        "migration_rows",
+        "gold_rows",
+        "migration_sum_totalpositions",
+        "gold_sum_totalpositions",
+        "migration_sum_totalmirrorpositions",
+        "gold_sum_totalmirrorpositions",
+        "migration_sum_totalstockposition",
+        "gold_sum_totalstockposition"
+      ],
+      "sample_row": [
+        "20260621",
+        "13159",
+        "48844",
+        "0E-10",
+        "747658473.9200000000",
+        "0E-10",
+        "151653845.0900000000",
+        "0E-10",
+        "408692536.9600000000"
+      ],
+      "sequence": 7,
+      "task_kind": "qa",
+      "depends_on": [
+        "core"
+      ]
+    },
+    {
+      "task_id": "parity_gate",
+      "status": "failed",
+      "elapsed_ms": 1826,
+      "error": "Databricks SQL failed: [USER_RAISED_EXCEPTION] PARITY_FAIL date=20260621 mr=13159 gr=48844 ms1=0E-10 gs1=747658473.9200000000 ms2=0E-10 gs2=151653845.0900000000 ms3=0E-10 gs3=408692536.9600000000 SQLSTATE: P0001",
+      "sequence": 8,
+      "task_kind": "gate",
+      "depends_on": [
+        "qa_probe"
+      ]
+    }
+  ]
+}

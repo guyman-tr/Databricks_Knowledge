@@ -192,7 +192,7 @@ Last verified: 2026-05-11
 >
 > See [`../cross-cutting/valid-users-filter-contract.md`](../cross-cutting/valid-users-filter-contract.md) for the full opt-in SQL patterns, the `IsCreditReportValidCB` formal definition (six hard-coded subsidiary CIDs re-included; `AccountTypeID != 2` carve-out), and the rationale for the two-flag asymmetry. **But the inline rule above is enforceable on its own — do not skip it because the link wasn't resolved.**
 
-1. **Tier 1 — Five sub-skills, each owns ONE slice of the lifecycle. Do NOT cross slices yourself.** A deposit reaches a trade only via `domain-cross/recurring-deposit-to-trade`. A fiat deposit reaches eMoney IBAN only via `FlowID` / `IsIBANTrade` flag (C.1 → C.3). A crypto event reaches MIMO only via C2F conversion (C.4 → C.3 → C.2 via `IsCryptoToFiat=1`). The boundaries are explicit and sparse — respect them.
+1. **Tier 1 — Five sub-skills, each owns ONE slice of the lifecycle. Do NOT cross slices yourself.** A deposit reaches a trade only via `domain-cross/recurring-deposits-and-investments`. A fiat deposit reaches eMoney IBAN only via `FlowID` / `IsIBANTrade` flag (C.1 → C.3). A crypto event reaches MIMO only via C2F conversion (C.4 → C.3 → C.2 via `IsCryptoToFiat=1`). The boundaries are explicit and sparse — respect them.
 2. **Tier 1 — Default to MIMO panel for cross-platform money-flow questions.** `BI_DB_DDR_Fact_MIMO_AllPlatforms` (24c) is THE pre-aggregated panel UNION-ALLing TradingPlatform / eMoney / Options / (post-C2F) Crypto. Raw billing facts (`Fact_BillingDeposit` etc.) are for platform-specific drill — never UNION them yourself across platforms.
 3. **Tier 1 — Canonical balance is `BI_DB_Client_Balance_CID_Level_New` (178c), NOT `EXW_FinanceReportsBalancesNew`.** Verified 2026-05-11. The CID-level table is per-CID daily cross-platform with `OpeningBalance` + signed flows + `ClosingBalance`. `EXW_FinanceReportsBalancesNew` is a 40-col crypto-wallet recon (per `WalletID + CryptoID + BalanceDate`) comparing internal `WalletDBBalance` / `ComputedAmount` vs external `ProviderValue` / `WalletTrackerValue`. See [`finance-recon-and-balances.md`](finance-recon-and-balances.md) Critical Warning 1.
 4. **Tier 1 — Crypto is OFF the MIMO graph. There is NO `BI_DB_DDR_Fact_MIMO_Crypto_Platform`.** Verified 2026-05-11 against `system.information_schema.tables`. MIMO sees crypto activity ONLY after C2F conversion to fiat — those rows appear as `MIMOPlatform='eMoney'` tagged with `IsCryptoToFiat=1`. For raw on-chain inflow/outflow, start at [`crypto-wallet.md`](crypto-wallet.md) at `EXW_FactTransactions` (DWH-side default) or the `wallet.bronze_walletdb_wallet_*` ledger (production-mirror).
@@ -236,7 +236,7 @@ graph LR
 Every sub-skill below owns **one slice** of that lifecycle. The slices are designed so:
 
 1. **Intra-slice joins** are dense (4–15 tables that always go together).
-2. **Inter-slice joins** are explicit and sparse — a deposit reaches a trade only via `domain-cross/recurring-deposit-to-trade`; a fiat deposit reaches eMoney IBAN only via `FlowID` / `IsIBANTrade` flag; a crypto event reaches MIMO only via C2F (`IsCryptoToFiat=1`).
+2. **Inter-slice joins** are explicit and sparse — a deposit reaches a trade only via `domain-cross/recurring-deposits-and-investments`; a fiat deposit reaches eMoney IBAN only via `FlowID` / `IsIBANTrade` flag; a crypto event reaches MIMO only via C2F (`IsCryptoToFiat=1`).
 
 ## Sub-skill routing
 
@@ -253,7 +253,7 @@ Every sub-skill below owns **one slice** of that lifecycle. The slices are desig
 | Cross-domain | Connects | When to load |
 |---|---|---|
 | [`../domain-cross/crypto-to-fiat.md`](../domain-cross/crypto-to-fiat.md) | C.4 ↔ C.3 via `EXW_C2F_E2E` 103c | "Crypto came into wallet → converted to EUR/USD on IBAN" — owns the E2E underbelly map and the `IsCryptoToFiat=1` tagging logic. |
-| [`../domain-cross/recurring-deposit-to-trade.md`](../domain-cross/recurring-deposit-to-trade.md) | C.1 ↔ A. Trading | "Customer deposited via recurring plan → opened first position within N days". Canonical pre-stitched table: `de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`. |
+| [`../domain-cross/recurring-deposits-and-investments.md`](../domain-cross/recurring-deposits-and-investments.md) | C.1 ↔ A. Trading | "Customer deposited via recurring plan → opened first position within N days". Canonical pre-stitched table: `de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`. |
 | [`../domain-cross/provider-reconciliation.md`](../domain-cross/provider-reconciliation.md) | C.1 / C.5 ↔ external providers | Settlement-level recon: `ExternalTransactionID` matching against provider statement files (Worldpay / SafeCharge / Nuvei / etc.). |
 | [`../domain-cross/refund-chargeback-chain.md`](../domain-cross/refund-chargeback-chain.md) | C.1 ↔ H. Revenue & Fees ↔ D. Compliance | Investigating a single dispute end-to-end: original deposit → refund/chargeback → AML flag → resolution. |
 | [`../domain-cross/tribe-emoney-audit.md`](../domain-cross/tribe-emoney-audit.md) | D. Compliance ↔ C.3 eMoney | Treezor XML audit envelopes (`eMoney_Tribe.*`) + FiatDwhDB operational mirrors. SOC2 audit trail / "who authorized this" / operator-action forensics on eMoney accounts/cards/IBAN. C.3 supplies join keys; cross-domain skill supplies the audit map. |

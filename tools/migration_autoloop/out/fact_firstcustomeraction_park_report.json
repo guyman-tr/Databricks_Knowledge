@@ -1,0 +1,33 @@
+{
+  "flow_key": "fact_firstcustomeraction",
+  "proc_name": "sp_fact_firstcustomeraction_dl_to_synapse_autopoc",
+  "status": "PARKED",
+  "target_date": "2026-05-23",
+  "passes_used": 2,
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_firstcustomeraction",
+  "what_was_fixed": [
+    "Codex-era autopoc orchestrator was a DESTRUCTIVE STUB: ran the DELETE but skipped the helper CALL, so migration drifted ~30 days behind gold (149.2M vs 150.3M rows).",
+    "Rebuilt sp_fact_firstcustomeraction_autopoc (helper) resolving LOCAL_VARIABLE_IN_TEMP_OBJECT_DEFINITION by inlining the deduped FirstActions set into both MERGE USING subqueries.",
+    "Repointed sp_fact_firstcustomeraction_dl_to_synapse_autopoc to actually CALL the helper. Proc deploys and runs cleanly (19s)."
+  ],
+  "parity_result": {
+    "target_day_slice": "DateID=20260523",
+    "migration_rows": 20573,
+    "gold_rows": 19769,
+    "delta_rows": 804,
+    "migration_firstever1": 20563,
+    "gold_firstever1": 19762,
+    "delta_firstever1": 801
+  },
+  "diagnosis": {
+    "source_identical": "Fact_CustomerAction 05-23 slice is bit-identical mig vs gold (408,207 HistoryIDs / 603,931 rows).",
+    "baseline_reseeded": "Migration baseline (DateID<=20260522) was INSERT OVERWRITE-reseeded from gold; the 05-23 output was byte-for-byte identical before and after reseed, ruling out baseline staleness.",
+    "extra_combos_absent_in_gold": "All 801 extra (ActionTypeID,GCID) first-ever combos are absent from gold entirely (any FirstEver, any date).",
+    "extra_combos_have_earlier_source_actions": "All 801 combos have an earlier action of the same ActionTypeID in source Fact_CustomerAction (DateID<20260523), so they are NOT truly first on 05-23.",
+    "gcids_in_dim_customer": "All 801 GCIDs are present in Dim_Customer, so it is not a valid-customer join filter.",
+    "root_cause": "The transpiled migration_tables proc determines 'first ever' by ABSENCE FROM THE TARGET TABLE (incremental MERGE WHEN NOT MATCHED). Gold's production proc determines first-ever by GLOBAL-FIRST-OCCURRENCE over full source history. Combos whose earlier actions were never recorded (gold systematically excludes them) get wrongly re-claimed as first-on-05-23 by the transpiled proc."
+  },
+  "why_parked": "Faithful reproduction requires gold's production proc source (not available in migration_tables; the transpiled version is a simplified/incremental approximation) OR recomputing first-ever via a full-history scan of the 11.7B-row Fact_CustomerAction per run (prohibitive). This is an upstream proc-logic gap, not a SQL-dialect or baseline defect. Proc is deployed and runnable.",
+  "table_state": "Restored to clean gold baseline (DateID<=20260522); tainted 05-23 run (20,573 rows) deleted.",
+  "guardrail": "5-pass; resolved at pass 2 with definitive root cause."
+}

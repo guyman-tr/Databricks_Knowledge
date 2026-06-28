@@ -1,0 +1,77 @@
+{
+  "target_date": "2026-06-19",
+  "selection_json": "tools/migration_autoloop/out/adf_candidate_flows.json",
+  "selected_flow_ids": [
+    "dim_mirror",
+    "fact_currencypricewithsplit",
+    "fact_deposit_state"
+  ],
+  "results": [
+    {
+      "flow_id": "dim_mirror",
+      "return_code": 0,
+      "stdout": "{\n  \"flow_id\": \"dim_mirror\",\n  \"target_date\": \"2026-06-19\",\n  \"qa_pass_migration_vs_gold\": true,\n  \"out_json\": \"tools\\\\migration_autoloop\\\\out\\\\dim_mirror_trust_report_2026-06-19.json\",\n  \"out_md\": \"tools\\\\migration_autoloop\\\\out\\\\dim_mirror_trust_report_2026-06-19.md\"\n}",
+      "stderr": "",
+      "report_json": "tools/migration_autoloop/out/dim_mirror_trust_report_2026-06-19.json",
+      "report_md": "tools/migration_autoloop/out/dim_mirror_trust_report_2026-06-19.md",
+      "qa_pass_migration_vs_gold": true,
+      "databricks_job_state": "job_name_match:DWH_Daily_Process__SP_Dim_Mirror_AutoPOC",
+      "migration_vs_gold": {
+        "delta_rows": 0.0,
+        "delta_sum_Amount": 0.0,
+        "delta_sum_RealziedPnL": 0.0,
+        "delta_sum_RealizedEquity": 0.0
+      },
+      "post_migration_vs_synapse": {
+        "delta_rows": 0.0,
+        "delta_sum_Amount": 0.0,
+        "delta_sum_RealziedPnL": 0.0,
+        "delta_sum_RealizedEquity": 0.0
+      }
+    },
+    {
+      "flow_id": "fact_currencypricewithsplit",
+      "return_code": 0,
+      "stdout": "{\n  \"flow_id\": \"fact_currencypricewithsplit\",\n  \"target_date\": \"2026-06-19\",\n  \"qa_pass_migration_vs_gold\": true,\n  \"out_json\": \"tools\\\\\\\\migration_autoloop\\\\\\\\out\\\\\\\\fact_currencypricewithsplit_trust_report_2026-06-19.json\",\n  \"out_md\": \"tools\\\\\\\\migration_autoloop\\\\\\\\out\\\\\\\\fact_currencypricewithsplit_trust_report_2026-06-19.md\"\n}",
+      "stderr": "",
+      "report_json": "tools/migration_autoloop/out/fact_currencypricewithsplit_trust_report_2026-06-19.json",
+      "report_md": "tools/migration_autoloop/out/fact_currencypricewithsplit_trust_report_2026-06-19.md",
+      "qa_pass_migration_vs_gold": true,
+      "databricks_job_state": "job_name_match:DWH_Daily_Process__SP_Fact_CurrencyPriceWithSplit_AutoPOC",
+      "migration_vs_gold": {
+        "delta_rows": 0.0,
+        "delta_sum_RateLastEx": 0.0,
+        "delta_sum_ConvertRateIsBuy_1": 0.0,
+        "delta_sum_ConvertRateIsBuy_0": 0.0
+      },
+      "post_migration_vs_synapse": {
+        "delta_rows": 16017.0,
+        "delta_sum_RateLastEx": 20969194.5272156,
+        "delta_sum_ConvertRateIsBuy_1": 224168.6409,
+        "delta_sum_ConvertRateIsBuy_0": 224170.9325
+      }
+    },
+    {
+      "flow_id": "fact_deposit_state",
+      "return_code": 2,
+      "stdout": "{\n  \"flow_id\": \"fact_deposit_state\",\n  \"target_date\": \"2026-06-19\",\n  \"qa_pass_migration_vs_gold\": false,\n  \"out_json\": \"tools\\\\migration_autoloop\\\\out\\\\fact_deposit_state_trust_report_2026-06-19.json\",\n  \"out_md\": \"tools\\\\migration_autoloop\\\\out\\\\fact_deposit_state_trust_report_2026-06-19.md\"\n}",
+      "stderr": "",
+      "report_json": "tools/migration_autoloop/out/fact_deposit_state_trust_report_2026-06-19.json",
+      "report_md": "tools/migration_autoloop/out/fact_deposit_state_trust_report_2026-06-19.md",
+      "qa_pass_migration_vs_gold": false,
+      "databricks_job_state": "job_name_match:DWH_Daily_Process__SP_Fact_Deposit_State_AutoPOC",
+      "migration_vs_gold": {
+        "delta_rows": 19262.0,
+        "delta_sum_AmountInUSD": 15179971.64,
+        "delta_sum_Amount": 72158790.49,
+        "delta_sum_BaseExchangeRate": 22112.18612783
+      },
+      "post_migration_vs_synapse": {
+        "delta_rows": 0.0,
+        "delta_sum_AmountInUSD": 0.0,
+        "delta_sum_Amount": 0.0,
+        "delta_sum_BaseExchangeRate": 0.0
+      }
+    }
+  ]
+}

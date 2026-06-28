@@ -101,9 +101,9 @@ sub_skills:
   - customer-populations-and-lifecycle.md
   - identity-jurisdiction-and-regulation.md
   - oltp-customer-static-and-breaches.md
-version: 3
+version: 4
 owner: "dataplatform"
-last_validated_at: "2026-05-28"
+last_validated_at: "2026-06-18"
 ---
 
 # Customer & Identity Super-Domain
@@ -294,6 +294,7 @@ These hold whether you load any sub-skill or not:
 - It does not own funnel rates or onboarding-conversion analytics — those live in the referenced DE workspace skill `registration-to-ftd-funnel`. Population segment aggregates and lifecycle milestones DO live here, in the local sub-skill `customer-populations-and-lifecycle.md` (absorbed 2026-05-28 from the legacy `customer-populations` workspace skill).
 - It is not a wiki — it routes to per-table wikis under `knowledge/synapse/Wiki/<schema>/Tables/<obj>.md` for full column-level detail.
 - It does not cover **what a customer DID with money** (deposit, trade) — those route to the doing-domain (Payments, Trading).
+- It does not cover generic chatbot deflection KPIs unless explicitly tied to curated CRM case ledger semantics (`vg_crm_case` lineage and governed derivatives).
 
 ## Skill provenance
 

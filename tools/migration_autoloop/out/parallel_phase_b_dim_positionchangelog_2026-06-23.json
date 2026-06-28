@@ -1,0 +1,25 @@
+{
+  "target_id": "dim_positionchangelog",
+  "await_gold": {
+    "target_id": "dim_positionchangelog",
+    "attempts": 1,
+    "gold_state": {
+      "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog",
+      "signal": "etr_ymd",
+      "target_date": "2026-06-23",
+      "etr_ymd_row_count": 3716935,
+      "state": "postflip"
+    },
+    "timed_out": false
+  },
+  "parity": {
+    "target_id": "dim_positionchangelog",
+    "status": "fail",
+    "error": "Databricks SQL failed: [USER_RAISED_EXCEPTION] PARITY_FAIL target=dim_positionchangelog etr_ymd=2026-06-23 par_rows=3732056 gold_rows=3716935 SQLSTATE: P0001",
+    "elapsed_ms": 76069
+  },
+  "drop": {
+    "action": "skipped"
+  },
+  "elapsed_ms": 173500
+}

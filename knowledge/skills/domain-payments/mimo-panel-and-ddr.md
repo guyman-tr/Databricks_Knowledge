@@ -1,6 +1,6 @@
 ---
 name: domain-payments
-description: "Cross-platform Money-In / Money-Out (MIMO) panel and the new Daily Data Report (DDR) framework above it. THIS IS THE DEFAULT skill for any 'how much money flowed', 'FTD count', 'customer money status by date', 'deposit/withdrawal volumes' question. Anchored on BI_DB_DDR_Fact_MIMO_AllPlatforms (UC: main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms, 24 cols, ~91.5M rows, unifies TradingPlatform + eMoney + Options/Apex + MoneyFarm-FTD via UNION ALL with FTD machinery applied). Per-platform MIMO objects (Trading_Platform / eMoney_Platform / Options_Platform) are NOT materialized in UC — they are VIEWS in main.etoro_kpi_prep (v_mimo_tradingplatform ~68M rows, v_mimo_emoneyplatform ~23M rows, v_mimo_options_platform ~98K rows) sitting on top of the materialized AllPlatforms table. The DDR framework adds five per-fact daily/periodic tables: BI_DB_DDR_Customer_Daily_Status (67 cols, 1 row per CID per DateID even on no-MIMO days), BI_DB_DDR_Customer_Periodic_Status (131 cols, weekly/monthly rollup), BI_DB_DDR_Fact_AUM (43 cols, assets-under-management per CID per day), BI_DB_DDR_Fact_PnL (18 cols, per CID per day per instrument), BI_DB_DDR_Fact_Revenue_Generating_Actions (27 cols, granular revenue event), BI_DB_DDR_Fact_Trading_Volumes_And_Amounts (30 cols, per CID per day per instrument type — also see Trading & Markets domain). Crypto wallet activity is OFF the MIMO graph unless C2F-converted to fiat (IsCryptoToFiat=1). Old DDR (BI_DB_LTV_*, BI_DB_CID_*Panel_*, BI_DB_DDR_CID_Level) is deprecated — use the new BI_DB_DDR_* framework only. Use INSTEAD of joining raw Fact_BillingDeposit/Withdraw/eMoney/EXW tables — those are for forensic drill-down only."
+description: "Cross-platform Money-In / Money-Out (MIMO) panel and the new Daily Data Report (DDR) framework above it. THIS IS THE DEFAULT skill for any 'how much money flowed', 'FTD count', 'customer money status by date', 'deposit/withdrawal volumes' question. Anchored on BI_DB_DDR_Fact_MIMO_AllPlatforms (UC: main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms, 24 cols, ≈91.5M rows, unifies TradingPlatform + eMoney + Options/Apex + MoneyFarm-FTD via UNION ALL with FTD machinery applied). Per-platform MIMO objects (Trading_Platform / eMoney_Platform / Options_Platform) are NOT materialized in UC — they are VIEWS in main.etoro_kpi_prep (v_mimo_tradingplatform ≈68M rows, v_mimo_emoneyplatform ≈23M rows, v_mimo_options_platform ≈98K rows) sitting on top of the materialized AllPlatforms table. The DDR framework adds five per-fact daily/periodic tables: BI_DB_DDR_Customer_Daily_Status (67 cols, 1 row per CID per DateID even on no-MIMO days), BI_DB_DDR_Customer_Periodic_Status (131 cols, weekly/monthly rollup), BI_DB_DDR_Fact_AUM (43 cols, assets-under-management per CID per day), BI_DB_DDR_Fact_PnL (18 cols, per CID per day per instrument), BI_DB_DDR_Fact_Revenue_Generating_Actions (27 cols, granular revenue event), BI_DB_DDR_Fact_Trading_Volumes_And_Amounts (30 cols, per CID per day per instrument type — also see Trading & Markets domain). Crypto wallet activity is OFF the MIMO graph unless C2F-converted to fiat (IsCryptoToFiat=1). Old DDR (BI_DB_LTV_*, BI_DB_CID_*Panel_*, BI_DB_DDR_CID_Level) is deprecated — use the new BI_DB_DDR_* framework only. Use INSTEAD of joining raw Fact_BillingDeposit/Withdraw/eMoney/EXW tables — those are for forensic drill-down only."
 triggers:
   - MIMO
   - money in money out
@@ -65,9 +65,9 @@ domain_tags:
   - aum
   - pnl
   - revenue-events
-version: 1
+version: 2
 owner: "dataplatform"
-last_validated_at: "2026-05-11"
+last_validated_at: "2026-06-25"
 ---
 
 # MIMO Panel & DDR (cross-platform money flow)
@@ -103,14 +103,14 @@ Do NOT load for:
 - **Crypto wallet on-chain transactions / wallet balances** → `crypto-wallet`.
 - **Realtime / sub-day customer balance** → `finance-recon-and-balances` (MIMO is daily snapshot).
 - **Fee revenue composition** → `domain-revenue-and-fees` super-domain (MIMO has Amounts but not fee composition).
-- **Customer's first trade after FTD** → `domain-cross/recurring-deposit-to-trade`.
+- **Customer's first trade after FTD** → `domain-cross/recurring-deposits-and-investments`.
 - **Crypto deposit → fiat conversion chain** → `domain-cross/crypto-to-fiat` (`IsCryptoToFiat` is here, but the journey is in C.4 + C.3).
 - **Trading volumes for revenue-per-volume / commission rate questions** → `domain-trading/trading-volumes` (uses `fact_customeraction_w_metrics` as authoritative source; the DDR `Fact_Trading_Volumes_And_Amounts` is the user-segmentation cut, not the revenue-grade cut).
 
 ## Scope
 
 In scope: `BI_DB_DDR_Fact_MIMO_AllPlatforms` (24-col canonical cross-platform money-flow fact, ~91.5M rows materialized in UC); the three per-platform views (`v_mimo_tradingplatform`, `v_mimo_emoneyplatform`, `v_mimo_options_platform`) and passthrough/staging views (`v_mimo_allplatforms`, `v_ddr_mimo_*`); the global FTD view (`v_mimo_first_deposit_all_platforms`); the per-fact daily / periodic DDR family (`BI_DB_DDR_Customer_Daily_Status` 67 cols, `BI_DB_DDR_Customer_Periodic_Status` 131 cols, `BI_DB_DDR_Fact_AUM` 43 cols, `BI_DB_DDR_Fact_PnL` 18 cols, `BI_DB_DDR_Fact_Revenue_Generating_Actions` 27 cols, `BI_DB_DDR_Fact_Trading_Volumes_And_Amounts` 30 cols); the standard customer / funding-type / currency dim joins.
-Out of scope: provider / MID drill (`deposits-and-withdrawals`); eMoney transaction status / card / OpenBanking (`emoney-accounts-and-cards`); on-chain crypto (`crypto-wallet`); realtime balance (`finance-recon-and-balances`); fee revenue composition (`domain-revenue-and-fees`); trading volumes at revenue grain (`domain-trading/trading-volumes`); first-trade-after-FTD lag (`domain-cross/recurring-deposit-to-trade`); crypto-to-fiat conversion chain (`domain-cross/crypto-to-fiat`); old DDR (`BI_DB_LTV_*`, `BI_DB_CID_*Panel_*` — deprecated, see Critical Warning 5).
+Out of scope: provider / MID drill (`deposits-and-withdrawals`); eMoney transaction status / card / OpenBanking (`emoney-accounts-and-cards`); on-chain crypto (`crypto-wallet`); realtime balance (`finance-recon-and-balances`); fee revenue composition (`domain-revenue-and-fees`); trading volumes at revenue grain (`domain-trading/trading-volumes`); first-trade-after-FTD lag (`domain-cross/recurring-deposits-and-investments`); crypto-to-fiat conversion chain (`domain-cross/crypto-to-fiat`); old DDR (`BI_DB_LTV_*`, `BI_DB_CID_*Panel_*` — deprecated, see Critical Warning 5).
 Last verified: 2026-05-11
 
 ## Critical Warnings
@@ -283,7 +283,7 @@ WHERE r.DateID BETWEEN :from_dt AND :to_dt
 | **Global FTD count per day per platform** | `WHERE IsGlobalFTD=1 AND MIMOAction='Deposit' GROUP BY DateID, MIMOPlatform` — **cross-platform unique first deposits.** |
 | **Platform FTD count per day** | `WHERE IsPlatformFTD=1 AND MIMOAction='Deposit' GROUP BY DateID, MIMOPlatform` — different from global; a customer can have eMoney FTD AFTER a TP FTD. |
 | **Crypto-to-fiat deposit volume** | `WHERE IsCryptoToFiat=1 AND MIMOAction='Deposit'`. Dual-source flag (sub-platform tag + post-insert UPDATE). For the full conversion story → `domain-cross/crypto-to-fiat`. |
-| **Recurring-deposit penetration** | `COUNT(DISTINCT CASE WHEN IsRecurring=1 AND MIMOAction='Deposit' THEN RealCID END) * 1.0 / COUNT(DISTINCT RealCID)` |
+| **Recurring-deposit penetration** | `COUNT(DISTINCT CASE WHEN IsRecurring=1 AND MIMOAction='Deposit' THEN RealCID END) * 1.0 / COUNT(DISTINCT RealCID)`. ⚠ `IsRecurring` here counts recurring **deposits** — correct for deposit penetration. Since the 2026-06 decoupling it is NOT recurring *investment/position* penetration (balance-funded recurring positions have no deposit). For recurring-investment plan counts use `domain-cross/recurring-deposits-and-investments` (`Plans.PlanStatusID`, trade-side `BI_DB_RecurringInvestment_Positions`). |
 | **IBAN-initiated trades (eMoney quick transfer)** | `WHERE MIMOPlatform='eMoney' AND IsTradeFromIBAN=1`. For the eMoney → trading deposit story specifically. |
 | **Internal transfers (TP↔eMoney) excluded from "real" MIMO** | `AND IsInternalTransfer = 0` (TP-side flag, only column needed). `IsIBANQuickTransfer` is a 12% sub-tag of `IsInternalTransfer` (specifically the IBAN-Quick-Transfer mechanism, `FundingTypeID = 42`); adding it filters out an additional 0.05% of dollar volume — see Critical Warning #2. The historical `AND IsIBANQuickTransfer = 0` is harmless but reads as a misunderstanding of the relationship between the two flags. |
 | **AML net deposits (specific KPI)** | SQL 3 above (`FundingTypeID <> 33` exclusion + both internal-transfer flags). |
@@ -306,7 +306,7 @@ WHERE r.DateID BETWEEN :from_dt AND :to_dt
 | **Realtime / sub-day customer balance** (vs the daily snapshot here) | `finance-recon-and-balances`. |
 | **Fee revenue specifically** | `domain-revenue-and-fees` super-domain — MIMO has Amounts but not fee composition. |
 | **Trading volumes for revenue-rate questions** | `domain-trading/trading-volumes` (uses `fact_customeraction_w_metrics` as authoritative). |
-| **Customer's first trade after FTD** | `domain-cross/recurring-deposit-to-trade`. |
+| **Customer's first trade after FTD** | `domain-cross/recurring-deposits-and-investments`. |
 | **Crypto deposit → fiat conversion chain** | `domain-cross/crypto-to-fiat` — `IsCryptoToFiat` is here, but the journey is in C.4 + C.3. |
 | **Provider statement reconciliation** | `domain-cross/provider-reconciliation`. |
 | **Treezor / Tribe audit envelope on eMoney transactions** | `domain-cross/tribe-emoney-audit`. |
@@ -324,4 +324,4 @@ WHERE r.DateID BETWEEN :from_dt AND :to_dt
 - Cluster 13 from the Louvain partition (74 members, intra-cluster weight 429.0). Schema mix: `BI_DB_dbo:41, DWH_dbo:7, eMoney_dbo:4, etoro_kpi[_prep]:5, spaceship:5, money_farm:1, bi_output:2, others`.
 - Highest Tableau / Genie edge weight in all of Payments — this layer is what dashboards and curated AI spaces consume.
 - Column counts verified 2026-05-11 against `system.information_schema.columns`: MIMO_AllPlatforms = 24, Customer_Daily_Status = 67, Customer_Periodic_Status = 131, Fact_AUM = 43, Fact_PnL = 18, Fact_Revenue_Generating_Actions = 27, Fact_Trading_Volumes_And_Amounts = 30. Old DDR (`BI_DB_LTV_*`, `BI_DB_CID_*Panel_*`, `BI_DB_DDR_CID_Level`) confirmed deprecated — do not reference for new analyses.
-- Intersecting skills: `deposits-and-withdrawals`, `emoney-accounts-and-cards`, `crypto-wallet`, `finance-recon-and-balances`, `domain-revenue-and-fees/SKILL`, `domain-trading/trading-volumes`, `domain-cross/recurring-deposit-to-trade`, `domain-cross/crypto-to-fiat`, `domain-cross/provider-reconciliation`.
+- Intersecting skills: `deposits-and-withdrawals`, `emoney-accounts-and-cards`, `crypto-wallet`, `finance-recon-and-balances`, `domain-revenue-and-fees/SKILL`, `domain-trading/trading-volumes`, `domain-cross/recurring-deposits-and-investments`, `domain-cross/crypto-to-fiat`, `domain-cross/provider-reconciliation`.

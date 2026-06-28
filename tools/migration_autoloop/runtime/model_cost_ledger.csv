@@ -1,0 +1,4 @@
+event_ts,flow_id,pipeline_name,status,run_id,model_cost_usd_low,model_cost_usd_mid,model_cost_usd_high,notes,evidence_path
+2026-06-21T05:46:25.459277+00:00,fact_snapshotcustomer,DWH_Daily_Process_-_Entry_Point,success,595990055452661,12.00,16.00,22.00,end-to-end DAG plus iterative autopoc patching,tools/migration_autoloop/out/fact_snapshotcustomer_trust_report_2026-06-19.json
+2026-06-21T12:43:17.929893+00:00,fact_snapshotequity,DWH_Daily_Process_-_Entry_Point,in_progress,51200682507915,2.00,6.00,12.00,reset+explicit-dag rebuilt; run succeeded but parity failed,tools/migration_autoloop/runtime/tmp_qa_snapshotequity.py
+2026-06-21T20:07:57.161669+00:00,dim_position,DWH_Daily_Process_-_Entry_Point,in_progress,859732829927573,4.00,9.00,18.00,Added sp_trace and hard parity_gate tasks; parity now enforced on common_open_date counts+sums.,tools/migration_autoloop/runtime/dim_position_evidence_now.py

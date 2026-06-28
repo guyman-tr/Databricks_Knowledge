@@ -1,0 +1,135 @@
+{
+  "target_id": "dim_customer",
+  "status": "success",
+  "materialize": {
+    "target_id": "dim_customer",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "target": "dwh_daily_process.migration_parallel.dim_customer",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 3127,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_CustomerFinanceDB_Customer_FirstTimeDeposits",
+        "target": "dwh_daily_process.migration_parallel.Ext_CustomerFinanceDB_Customer_FirstTimeDeposits",
+        "elapsed_ms": 7024,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_CustomerStatic",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_CustomerStatic",
+        "elapsed_ms": 6354,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Customer_2FA",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Customer_2FA",
+        "elapsed_ms": 5072,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Customer_Affiliate",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Customer_Affiliate",
+        "elapsed_ms": 5824,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Customer_Avatars",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Customer_Avatars",
+        "elapsed_ms": 5601,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Customer_BOCustomer",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Customer_BOCustomer",
+        "elapsed_ms": 5262,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Customer_Customer",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Customer_Customer",
+        "elapsed_ms": 7351,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Customer_CustomerIdentification",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Customer_CustomerIdentification",
+        "elapsed_ms": 5492,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Customer_Document",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Customer_Document",
+        "elapsed_ms": 5176,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Customer_ExternalID_GCID",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Customer_ExternalID_GCID",
+        "elapsed_ms": 5153,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Customer_PhoneCustomer",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Customer_PhoneCustomer",
+        "elapsed_ms": 5401,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Customer_SF_ID",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Customer_SF_ID",
+        "elapsed_ms": 4846,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Customer_ScreeningStatusID",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Customer_ScreeningStatusID",
+        "elapsed_ms": 4979,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_Customer_StocksLending",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_Customer_StocksLending",
+        "elapsed_ms": 4445,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_dim_customer_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 1041
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 87801,
+    "columns": [],
+    "sample_row": []
+  },
+  "etr_ymd_stamp": {
+    "action": "stamp_error",
+    "error": "Databricks SQL failed: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `etr_ymd` cannot be resolved. Did you mean one of the following? [`City`, `2FA`, `DltID`, `Email`, `GCID`]. SQLSTATE: 42703; line 1 pos 61"
+  },
+  "elapsed_ms": 179096
+}

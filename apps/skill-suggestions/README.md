@@ -6,18 +6,20 @@ Simple submission UI for the autonomous skills pipeline.
 
 - Collect **new skill bundles** (`.md` files and/or text context).
 - Collect **targeted corrections** for existing skills.
-- Persist requests into `main.de_output.skill_suggestions`.
-- Store uploaded markdown files in `/Volumes/main/de_output/skill_submissions/<id>/`.
+- Keep the searchable target-skill picker disabled for now (`Coming soon`) until app-principal workspace-read access is finalized.
+- Collect `Target skill name` directly from the user for correction requests (name-based entry, not id-based).
+- Persist requests into `main.de_output.de_output_skills_automation_user_suggestions_agent`.
+- Store uploaded markdown files in `/Volumes/main/de_output/skills_automation_user_suggestions_agent_files/<id>/`.
 
 ## Prerequisites
 
 1. Apply queue DDL first:
    - `tools/skill_suggestions/ddl.sql`
 2. Validate queue table naming/location before deployment:
-   - `python tools/skill_suggestions/validate_external_name.py --schema de_output --table-name skill_suggestions --location "abfss://<container>@dldataplatformprodwe.dfs.core.windows.net/skill_suggestions/"`
+   - `python tools/skill_suggestions/validate_external_name.py --schema de_output --table-name de_output_skills_automation_user_suggestions_agent --location "abfss://analysis@dldataplatformprodwe.dfs.core.windows.net/DE_OUTPUT/Skills_Automation/User_Suggestions_Agent/"`
 3. Grant app service principal:
-   - `SELECT`, `MODIFY` on `main.de_output.skill_suggestions`
-   - `READ VOLUME`, `WRITE VOLUME` on `main.de_output.skill_submissions`
+   - `SELECT`, `MODIFY` on `main.de_output.de_output_skills_automation_user_suggestions_agent`
+   - `READ VOLUME`, `WRITE VOLUME` on `main.de_output.skills_automation_user_suggestions_agent_files`
 
 ## Local run
 

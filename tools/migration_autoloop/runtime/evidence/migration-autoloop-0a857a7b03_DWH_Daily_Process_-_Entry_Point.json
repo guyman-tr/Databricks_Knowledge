@@ -1,0 +1,83 @@
+{
+  "run_id": "migration-autoloop-0a857a7b03",
+  "pipeline": "DWH_Daily_Process_-_Entry_Point",
+  "deploy_hook": {
+    "ok": true,
+    "message": "no command configured"
+  },
+  "run_hook": {
+    "ok": true,
+    "message": "no command configured"
+  },
+  "qa_summary": {
+    "compared_count": 6,
+    "mismatch_count": 6,
+    "error_count": 0,
+    "rows": [
+      {
+        "uc_table": "dwh_daily_process.migration_tables.dim_customer",
+        "synapse_table": "DWH_dbo.Dim_Customer",
+        "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+        "status": "Mismatch",
+        "insert_date": "2026-06-14"
+      },
+      {
+        "uc_table": "dwh_daily_process.migration_tables.dim_historysplitratio",
+        "synapse_table": "DWH_dbo.Dim_HistorySplitRatio",
+        "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+        "status": "Mismatch",
+        "insert_date": "2026-06-14"
+      },
+      {
+        "uc_table": "dwh_daily_process.migration_tables.dim_mirror",
+        "synapse_table": "DWH_dbo.Dim_Mirror",
+        "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+        "status": "Mismatch",
+        "insert_date": "2026-06-14"
+      },
+      {
+        "uc_table": "dwh_daily_process.migration_tables.fact_cashout_state",
+        "synapse_table": "DWH_dbo.Fact_Cashout_State",
+        "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_cashout_state",
+        "status": "Mismatch",
+        "insert_date": "2026-06-14"
+      },
+      {
+        "uc_table": "dwh_daily_process.migration_tables.fact_currencypricewithsplit",
+        "synapse_table": "DWH_dbo.Fact_CurrencyPriceWithSplit",
+        "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+        "status": "Mismatch",
+        "insert_date": "2026-06-14"
+      },
+      {
+        "uc_table": "dwh_daily_process.migration_tables.fact_deposit_state",
+        "synapse_table": "DWH_dbo.Fact_Deposit_State",
+        "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_deposit_state",
+        "status": "Mismatch",
+        "insert_date": "2026-06-14"
+      }
+    ]
+  },
+  "mapped_tables": [
+    "dwh_daily_process.migration_tables.dim_customer",
+    "dwh_daily_process.migration_tables.dim_historysplitratio",
+    "dwh_daily_process.migration_tables.dim_mirror",
+    "dwh_daily_process.migration_tables.fact_cashout_state",
+    "dwh_daily_process.migration_tables.fact_currencypricewithsplit",
+    "dwh_daily_process.migration_tables.fact_deposit_state"
+  ],
+  "registry_row": {
+    "pipeline_name": "DWH_Daily_Process_-_Entry_Point",
+    "source": "vault:dwh",
+    "status": "qa_failed",
+    "retry_count": 1,
+    "last_run_id": "migration-autoloop-0a857a7b03",
+    "last_checked_at": "2026-06-19T10:07:47+00:00",
+    "last_error": "qa_mismatch=6 qa_error=0",
+    "last_qa_compared_count": 6,
+    "last_qa_mismatch_count": 6,
+    "last_qa_error_count": 0,
+    "evidence_path": "",
+    "notes": "Phase-1 POC seed unit using QA parity gate"
+  }
+}

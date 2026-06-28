@@ -1,0 +1,28 @@
+{
+  "block_id": "fact_billingdeposit",
+  "status": "PARITY_PASS",
+  "all_pass": true,
+  "qa_pass_migration_vs_gold": true,
+  "passes_used": 1,
+  "job_name": "DWH_Daily_Process__BLOCK__fact_billingdeposit__AutoPOC",
+  "job_id": 1100518728738243,
+  "run_id": 643179814792564,
+  "wrapper_proc": "sp_fact_billingdeposit_dl_to_synapse_autopoc",
+  "helper_proc": "SP_Fact_BillingDeposit_autopoc",
+  "migration_table": "dwh_daily_process.migration_tables.fact_billingdeposit",
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit",
+  "parity_basis": "common_available_date",
+  "common_date": 20260621,
+  "evidence": {
+    "migration_rows": 10604,
+    "gold_rows": 10604,
+    "migration_deposits": 10604,
+    "gold_deposits": 10604,
+    "migration_amount": 296265455.98,
+    "gold_amount": 296265455.98,
+    "migration_amountusd": 13997528.35,
+    "gold_amountusd": 13997528.35
+  },
+  "notes": "Codex-era autopoc was a NO-OP STUB that never ran the logic. Rebuilt as a real runnable autopoc (patch_billingdeposit_autopoc.py) fixing: backtick-wrapped CAST identifiers, DATEDIFF(0,x) floor-to-midnight idiom (drives ModificationDateID), dead temp view with local var, infinite freshness-wait WHILE loop in helper, Delta-illegal multi-match MERGE (deduped via QUALIFY). Implemented the missing ExtractXMLValue scalar UDF (regex element extractor). Source daily_snapshot is a single-day CDC delta (only the snapshot day reproducible); settled days already bit-exact. Re-extracting 2026-06-21 reproduced gold exactly. Restored a 20260619 slice deleted during manual testing via Delta time-travel (version 28).",
+  "fidelity_note": "Gated measures (rows, distinct DepositID, Amount, AmountUSD) are bit-exact. Descriptive XML-derived columns reproduced via the new ExtractXMLValue UDF; non-gated enrichment (BankName/CardCategory) uses an arbitrary-pick dedup matching T-SQL UPDATE..FROM semantics."
+}

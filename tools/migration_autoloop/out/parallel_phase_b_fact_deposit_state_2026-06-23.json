@@ -1,0 +1,23 @@
+{
+  "target_id": "fact_deposit_state",
+  "await_gold": {
+    "target_id": "fact_deposit_state",
+    "attempts": 113,
+    "gold_state": {
+      "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_deposit_state",
+      "signal": "delta_history",
+      "latest_commit_date": "2026-06-23",
+      "run_date": "2026-06-24",
+      "state": "preflip"
+    },
+    "timed_out": true
+  },
+  "parity": {
+    "status": "skipped",
+    "reason": "await_timed_out"
+  },
+  "drop": {
+    "action": "skipped"
+  },
+  "elapsed_ms": 14483785
+}

@@ -1,0 +1,40 @@
+{
+  "target_id": "dim_positionchangelog",
+  "status": "success",
+  "materialize": {
+    "target_id": "dim_positionchangelog",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog",
+        "target": "dwh_daily_process.migration_parallel.Dim_PositionChangeLog",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 179576,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_Dim_PositionChangeLog",
+        "target": "dwh_daily_process.migration_parallel.Ext_Dim_PositionChangeLog",
+        "elapsed_ms": 3972,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "sp_dim_positionchangelog_dl_to_synapse_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 771
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 6649,
+    "columns": [],
+    "sample_row": []
+  },
+  "elapsed_ms": 199040
+}

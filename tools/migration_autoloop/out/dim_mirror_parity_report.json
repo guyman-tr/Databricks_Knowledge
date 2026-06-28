@@ -1,0 +1,18 @@
+{
+  "block_id": "dim_mirror",
+  "migration_table": "dwh_daily_process.migration_tables.dim_mirror",
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+  "all_pass": true,
+  "pass_count": 1,
+  "fail_count": 0,
+  "mapped_table_count": 1,
+  "gate_kind": "full_table_exact_rows_plus_money_sums",
+  "proc": "sp_dim_mirror_dl_to_synapse_autopoc",
+  "rows": [
+    {"migration_table": "dwh_daily_process.migration_tables.dim_mirror", "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror", "post": {"rows_cnt": 11376544}, "gold": {"rows_cnt": 11376544}}
+  ],
+  "measures_compared": ["Amount", "RealizedEquity", "InitialInvestment"],
+  "job_name": "DWH_Daily_Process__BLOCK__dim_mirror__AutoPOC",
+  "run_url": "https://adb-5142916747090026.6.azuredatabricks.net/jobs/1073687206691436/runs/343548463071567",
+  "note": "End-to-end block job SUCCESS. Current-state mirror dimension, gold not masked. Fresh autopoc run stayed bit-exact full-table: 11,376,544 rows and Amount/RealizedEquity/InitialInvestment sums all exact."
+}

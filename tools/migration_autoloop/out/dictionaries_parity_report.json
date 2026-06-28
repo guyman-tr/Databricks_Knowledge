@@ -1,0 +1,16 @@
+{
+  "block_id": "dictionaries",
+  "migration_table": "dwh_daily_process.migration_tables.dim_country",
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+  "all_pass": true,
+  "pass_count": 1,
+  "fail_count": 0,
+  "mapped_table_count": 1,
+  "gate_kind": "full_table_exact",
+  "rows": [
+    {"migration_table": "dwh_daily_process.migration_tables.dim_country", "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country", "post": {"rows_cnt": 251}, "gold": {"rows_cnt": 251}}
+  ],
+  "job_name": "DWH_Daily_Process__BLOCK__dictionaries__AutoPOC",
+  "run_url": "https://adb-5142916747090026.6.azuredatabricks.net/jobs/162844839736253/runs/822226117659682",
+  "note": "End-to-end block job SUCCESS. dim_country exact full-table parity 251=251."
+}

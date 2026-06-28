@@ -1,6 +1,6 @@
 ---
 name: domain-cross
-description: "Router for skills that bridge two or more super-domains. Load when a question explicitly crosses the Payments, Customer & Identity, Trading, Revenue & Fees, or Compliance domain boundaries. Five cross-domain skills: (1) crypto-to-fiat (C2F) — EXW crypto wallet to eMoney IBAN off-ramp anchored on EXW_C2F_E2E 103c + IsCryptoToFiat=1 MIMO marker; (2) provider-reconciliation — PSP settlement-statement matching vs BI_DB_DepositWithdrawFee, MID-routing joins (Synapse-only core), plus Apex SOD recon (UC); (3) tribe-emoney-audit — Treezor XML audit envelopes (emoney.bronze_fiatdwhdb_tribe_* family, ETL_AccountsActivities 105c) for SOC2-grade compliance investigation of eMoney accounts, cards, and IBAN transactions; (4) refund-chargeback-chain — forensic single-dispute chain from original deposit to reversal to AML overlay anchored on BI_DB_DepositWithdrawFee_Reversals 45c (pre-signed amounts); (5) recurring-deposit-to-trade — FTD-to-first-trade funnel (Dim_Customer.FTDDate + FirstTradeDate), recurring investment plan analysis (bronze_recurringinvestment_planinstances 33c), and the pre-stitched de_output_etoro_kpi_fact_customeraction_w_metrics. Load this hub to be routed to the right cross-domain skill; do NOT load individual super-domain skills for questions that explicitly span two domains."
+description: "Router for skills that bridge two or more super-domains. Load when a question explicitly crosses the Payments, Customer & Identity, Trading, Revenue & Fees, or Compliance domain boundaries. Five cross-domain skills: (1) crypto-to-fiat (C2F) — EXW crypto wallet to eMoney IBAN off-ramp anchored on EXW_C2F_E2E 103c + IsCryptoToFiat=1 MIMO marker; (2) provider-reconciliation — PSP settlement-statement matching vs BI_DB_DepositWithdrawFee, MID-routing joins (Synapse-only core), plus Apex SOD recon (UC); (3) tribe-emoney-audit — Treezor XML audit envelopes (emoney.bronze_fiatdwhdb_tribe_* family, ETL_AccountsActivities 105c) for SOC2-grade compliance investigation of eMoney accounts, cards, and IBAN transactions; (4) refund-chargeback-chain — forensic single-dispute chain from original deposit to reversal to AML overlay anchored on BI_DB_DepositWithdrawFee_Reversals 45c (pre-signed amounts); (5) recurring-deposits-and-investments — FTD-to-first-trade funnel (Dim_Customer.FTDDate + FirstTradeDate), recurring investment plan analysis (bronze_recurringinvestment_plans 26c + planinstances 33c), and the pre-stitched de_output_etoro_kpi_fact_customeraction_w_metrics. NOTE the 2026-06 deposit↔trade DECOUPLING: recurring positions can be funded from available USD balance with no deposit, so deposit-side (Fact_BillingDeposit/MIMO IsRecurring) counts recurring DEPOSITS while trade-side (BI_DB_RecurringInvestment_Positions / PlanInstances.PositionStatus) counts recurring TRADES — separate measures, not proxies; plan lifecycle = Plans.PlanStatusID vs DepositPlanStatusID. Includes an infra/ETL data-loss audit of the trade↔deposit bridge. Load this hub to be routed to the right cross-domain skill; do NOT load individual super-domain skills for questions that explicitly span two domains."
 triggers:
   - C2F
   - crypto to fiat
@@ -45,6 +45,10 @@ triggers:
   - recurring deposit
   - IsRecurring
   - recurring investment
+  - recurring position open
+  - balance-funded recurring
+  - PlanStatusID
+  - DepositPlanStatusID
   - bronze_recurringinvestment
   - First5Actions
   - time-to-first-trade
@@ -75,12 +79,12 @@ domain_tags:
 sub_skills:
   - crypto-to-fiat.md
   - provider-reconciliation.md
-  - recurring-deposit-to-trade.md
+  - recurring-deposits-and-investments.md
   - refund-chargeback-chain.md
   - tribe-emoney-audit.md
-version: 1
+version: 2
 owner: "dataplatform"
-last_validated_at: "2026-05-17"
+last_validated_at: "2026-06-25"
 ---
 
 # Cross-Domain Skills Hub
@@ -95,7 +99,7 @@ Load when the user's question explicitly spans **two or more** of these super-do
 - "Match our deposit record against the Worldpay settlement file" → [`provider-reconciliation.md`](provider-reconciliation.md)
 - "Who authorized this eMoney account action?" / "SOC2 audit trail for this IBAN" → [`tribe-emoney-audit.md`](tribe-emoney-audit.md)
 - "Investigate this chargeback / refund end-to-end" → [`refund-chargeback-chain.md`](refund-chargeback-chain.md)
-- "Customer deposited then opened first trade — funnel metrics / cohort" → [`recurring-deposit-to-trade.md`](recurring-deposit-to-trade.md)
+- "Customer deposited then opened first trade — funnel metrics / cohort" → [`recurring-deposits-and-investments.md`](recurring-deposits-and-investments.md)
 
 Do **not** load this hub for questions that stay within a single super-domain — route directly to that domain instead.
 
@@ -119,4 +123,4 @@ Last verified: 2026-05-17
 | [`provider-reconciliation.md`](provider-reconciliation.md) | Payments C.1 / C.5 ↔ external PSPs | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee` + Apex SOD tables | Settlement-statement gap analysis. Core MID-routing join is Synapse-only; Apex SOD is in UC. |
 | [`tribe-emoney-audit.md`](tribe-emoney-audit.md) | Compliance ↔ Payments C.3 (eMoney) | `main.bi_db.gold_sql_dp_prod_we_emoney_dbo_etl_accountsactivities` (105c) + `main.emoney.bronze_fiatdwhdb_tribe_*` | Treezor XML audit-envelope investigation of eMoney accounts, cards, and IBAN transactions. Operator / system action trail; SOC2 forensics. |
 | [`refund-chargeback-chain.md`](refund-chargeback-chain.md) | Payments C.1 ↔ Revenue & Fees ↔ Compliance | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals` (45c) | Single-dispute forensics: original deposit → chargeback/refund → AML overlay. Amounts are PRE-SIGNED (refunds/chargebacks negative). State-table provenance is Synapse-only. |
-| [`recurring-deposit-to-trade.md`](recurring-deposit-to-trade.md) | Payments C.1 ↔ Trading | `main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics` + `Dim_Customer.FTDDate/FirstTradeDate` | FTD-to-first-trade cohort funnel, recurring investment plan analysis. Use `FTDDate + FirstTradeDate` on `Dim_Customer` (already computed); reach for `bronze_recurringinvestment_planinstances` only for plan-level recurring analysis. |
+| [`recurring-deposits-and-investments.md`](recurring-deposits-and-investments.md) | Payments C.1 ↔ Trading | `main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics` + `Dim_Customer.FTDDate/FirstTradeDate` + `bronze_recurringinvestment_recurringinvestment_plans` | FTD-to-first-trade cohort funnel, recurring investment plan analysis. Use `FTDDate + FirstTradeDate` on `Dim_Customer` (already computed); reach for the RecurringInvestment `plans`/`planinstances` tables for plan-level recurring analysis. **2026-06 decoupling:** recurring trade ≠ recurring deposit (balance-funded positions have no deposit row) — deposit-side `IsRecurring` counts recurring *deposits*, trade-side bridge counts recurring *trades* (separate measures); plan lifecycle via `Plans.PlanStatusID` vs `DepositPlanStatusID`. Includes infra/ETL data-loss audit. |

@@ -12,7 +12,7 @@ if __package__ in {None, ""}:
 from tools.skill_suggestions.db import execute_sql, make_workspace_client, warehouse_id_from_env
 
 
-TABLE_FQN = "main.de_output.skill_suggestions"
+TABLE_FQN = "main.de_output.de_output_skills_automation_user_suggestions_agent"
 ALLOWED_STATUS = {"new", "processing", "pushed", "skipped_overlap", "error"}
 
 

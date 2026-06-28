@@ -1,0 +1,22 @@
+{
+  "block_id": "dim_customer",
+  "migration_table": "dwh_daily_process.migration_tables.dim_customer",
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+  "all_pass": true,
+  "pass_count": 1,
+  "fail_count": 0,
+  "mapped_table_count": 1,
+  "gate_kind": "subset_clean_plus_value_parity",
+  "proc": "sp_dim_customer_autopoc",
+  "rows": [
+    {"migration_table": "dwh_daily_process.migration_tables.dim_customer", "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked", "post": {"rows_cnt": 48132117}, "gold": {"rows_cnt": 48161043}}
+  ],
+  "spurious_rows": 0,
+  "gold_only_rows": 28926,
+  "shared_value_match_rows": 48118587,
+  "value_match_rate": 0.999719,
+  "unmasked_compare_columns": ["CountryID", "LabelID", "AccountTypeID", "RegulationID", "PlayerLevelID", "PlayerStatusID", "IsValidCustomer"],
+  "job_name": "DWH_Daily_Process__BLOCK__dim_customer__AutoPOC",
+  "run_url": "https://adb-5142916747090026.6.azuredatabricks.net/jobs/799064271887181/runs/1108308263768239",
+  "note": "End-to-end block job SUCCESS. Gold is _masked so PII cannot match; gate asserts migration is a clean SUBSET of gold (0 spurious RealCIDs) and >=99.9% value-exact on unmasked structural columns over the 48M shared population. The 28,926 gold-only customers are a partial-replication source-population gap, not a logic defect. Enrichment MERGEs kept sequential (concurrent MERGE into one Delta table conflicts)."
+}

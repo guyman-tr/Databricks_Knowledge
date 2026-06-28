@@ -1,0 +1,144 @@
+{
+  "flow_id": "fact_snapshotequity",
+  "pipeline_name": "DWH_Daily_Process_-_Entry_Point",
+  "target_date": "2026-06-21",
+  "target_date_id": 20260621,
+  "migration_table": "dwh_daily_process.migration_tables.fact_snapshotequity",
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid",
+  "synapse_table": "DWH_dbo.v_Fact_SnapshotEquity_FromDateID",
+  "procedure_name": "sp_fact_snapshotequity_dl_to_synapse_autopoc",
+  "has_date_param": true,
+  "databricks_job_state": "unknown",
+  "autopoc_patch": {
+    "patched": false
+  },
+  "where_clause": "LEFT(CAST(DateRangeID AS STRING), 8) = '20260621'",
+  "where_column_used": "DateRangeID",
+  "where_clause_gold": "LEFT(CAST(DateRangeID AS STRING), 8) = '20260621'",
+  "where_column_used_gold": "DateRangeID",
+  "where_clause_synapse": "1=1",
+  "where_column_used_synapse": "",
+  "comparison_date_migration_vs_gold": "2026-06-21",
+  "comparison_date_post_migration_vs_synapse": "2026-06-21",
+  "where_clause_migration_compare_gold": "LEFT(CAST(DateRangeID AS STRING), 8) = '20260621'",
+  "where_clause_gold_compare": "LEFT(CAST(DateRangeID AS STRING), 8) = '20260621'",
+  "where_clause_migration_compare_synapse": "LEFT(CAST(DateRangeID AS STRING), 8) = '20260621'",
+  "metrics": [
+    "TotalPositionsAmount",
+    "TotalMirrorPositionsAmount",
+    "TotalStockPositionAmount"
+  ],
+  "proc_dump_path": "tools\\migration_autoloop\\runtime\\proc_dumps\\sp_fact_snapshotequity_dl_to_synapse_autopoc.sql",
+  "pre_migration": {
+    "rows_cnt": 13159.0,
+    "sum_TotalPositionsAmount": 0.0,
+    "sum_TotalMirrorPositionsAmount": 0.0,
+    "sum_TotalStockPositionAmount": 0.0
+  },
+  "post_migration": {
+    "rows_cnt": 13159.0,
+    "sum_TotalPositionsAmount": 0.0,
+    "sum_TotalMirrorPositionsAmount": 0.0,
+    "sum_TotalStockPositionAmount": 0.0
+  },
+  "gold": {
+    "rows_cnt": 48844.0,
+    "sum_TotalPositionsAmount": 747658473.92,
+    "sum_TotalMirrorPositionsAmount": 151653845.09,
+    "sum_TotalStockPositionAmount": 408692536.96
+  },
+  "migration_vs_gold": {
+    "delta_rows": -35685.0,
+    "delta_sum_TotalPositionsAmount": -747658473.92,
+    "delta_sum_TotalMirrorPositionsAmount": -151653845.09,
+    "delta_sum_TotalStockPositionAmount": -408692536.96
+  },
+  "synapse_final": {
+    "enabled": true,
+    "error": "('42S02', \"[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'DWH_dbo.v_Fact_SnapshotEquity_FromDateID'. (208) (SQLExecDirectW)\")"
+  },
+  "post_migration_vs_synapse": {
+    "error": "('42S02', \"[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'DWH_dbo.v_Fact_SnapshotEquity_FromDateID'. (208) (SQLExecDirectW)\")"
+  },
+  "interim_triage": [
+    {
+      "table": "Ext_FSE_Billing_Withdraw",
+      "dbx": {
+        "rows_cnt": 21391289.0
+      },
+      "synapse": {
+        "enabled": true,
+        "rows_cnt": 5577.0
+      },
+      "dbx_vs_synapse": {
+        "delta_rows": 21385712.0
+      }
+    },
+    {
+      "table": "Ext_FSE_Billing_WithdrawToFunding",
+      "dbx": {
+        "rows_cnt": 23227213.0
+      },
+      "synapse": {
+        "enabled": true,
+        "rows_cnt": 23227213.0
+      },
+      "dbx_vs_synapse": {
+        "delta_rows": 0.0
+      }
+    },
+    {
+      "table": "Ext_FSE_History_Credit",
+      "dbx": {
+        "rows_cnt": 457.0
+      },
+      "synapse": {
+        "enabled": true,
+        "rows_cnt": 457.0
+      },
+      "dbx_vs_synapse": {
+        "delta_rows": 0.0
+      }
+    },
+    {
+      "table": "Ext_FSE_History_Position",
+      "dbx": {
+        "rows_cnt": 92075.0
+      },
+      "synapse": {
+        "enabled": true,
+        "rows_cnt": 92075.0
+      },
+      "dbx_vs_synapse": {
+        "delta_rows": 0.0
+      }
+    },
+    {
+      "table": "Ext_FSE_History_WithdrawAction",
+      "dbx": {
+        "rows_cnt": 106858140.0
+      },
+      "synapse": {
+        "enabled": true,
+        "rows_cnt": 26455.0
+      },
+      "dbx_vs_synapse": {
+        "delta_rows": 106831685.0
+      }
+    },
+    {
+      "table": "Ext_FSE_History_WithdrawToFundingAction",
+      "dbx": {
+        "rows_cnt": 149506088.0
+      },
+      "synapse": {
+        "enabled": true,
+        "rows_cnt": 26679.0
+      },
+      "dbx_vs_synapse": {
+        "delta_rows": 149479409.0
+      }
+    }
+  ],
+  "qa_pass_migration_vs_gold": false
+}

@@ -1,0 +1,82 @@
+{
+  "target_id": "fact_billingdeposit",
+  "status": "success",
+  "materialize": {
+    "target_id": "fact_billingdeposit",
+    "ok": true,
+    "clones": [
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit",
+        "target": "dwh_daily_process.migration_parallel.Fact_BillingDeposit",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 3921,
+        "ok": true
+      },
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+        "target": "dwh_daily_process.migration_parallel.Dim_Country",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 2679,
+        "ok": true
+      },
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_countrybin",
+        "target": "dwh_daily_process.migration_parallel.Dim_CountryBin",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 3248,
+        "ok": true
+      },
+      {
+        "action": "shallow_clone",
+        "gold_fqn": "dwh_daily_process.migration_tables.Ext_FBD_Fact_BillingDeposit",
+        "target": "dwh_daily_process.migration_parallel.Ext_FBD_Fact_BillingDeposit",
+        "elapsed_ms": 4548,
+        "ok": true
+      },
+      {
+        "action": "ctas_fallback",
+        "gold_fqn": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+        "target": "dwh_daily_process.migration_parallel.Fact_CustomerAction",
+        "baseline_filter": "1=0",
+        "elapsed_ms": 3352,
+        "ok": true
+      }
+    ],
+    "routines": [
+      {
+        "routine": "waitforseconds",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 1095
+      },
+      {
+        "routine": "sp_fact_billingdeposit_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 753
+      },
+      {
+        "routine": "extractxmlvalue",
+        "routine_type": "FUNCTION",
+        "ok": true,
+        "elapsed_ms": 996
+      },
+      {
+        "routine": "sp_fact_billingdeposit_dl_to_synapse_autopoc",
+        "routine_type": "PROCEDURE",
+        "ok": true,
+        "elapsed_ms": 718
+      }
+    ]
+  },
+  "proc_call": {
+    "status": "success",
+    "elapsed_ms": 19155,
+    "columns": [],
+    "sample_row": []
+  },
+  "elapsed_ms": 63334
+}

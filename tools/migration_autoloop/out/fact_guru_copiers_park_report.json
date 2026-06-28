@@ -1,0 +1,12 @@
+{
+  "flow_key": "fact_guru_copiers",
+  "proc_name": "sp_fact_guru_copiers_dl_to_synapse",
+  "status": "PARKED_MISSING_DEPENDENCY",
+  "passes_used": 1,
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers",
+  "gold_freshness": "FRESH - gold max DateID 20260621 (144M rows); migration stale at 20260522.",
+  "gold_slice_0621_rows": 97494,
+  "why_parked": "Helper sp_fact_guru_copiers joins to dwh_daily_process.migration_tables.V_M2M_Date_DateRange (date<->daterange mapping) which DOES NOT EXIST in migration_tables (no M2M/DateRange object found at all). The join 'fsc.DateRangeID = bb.DateRangeID AND DateID = bb.DateKey' cannot resolve, so the helper cannot run. This is a missing shared dependency object, not a code/dialect defect.",
+  "additional_notes": "Orchestrator also references the source column literally named TIMESTAMP unquoted (CAST(date_format(TIMESTAMP,...)) and WHERE TIMESTAMP = V_Yesterday) - would likely need backticks in DBSQL. Source snapshot etoro_History_GuruCopiers is single-day (688,839 rows, 20260621). Helper additionally depends on Fact_SnapshotCustomer (AccountTypeID=9).",
+  "action_for_DE": "Add the shared V_M2M_Date_DateRange (DateKey<->DateRangeID) view to the migration/generic pipeline. Once present, guru_copiers can be retried (also quote the TIMESTAMP column)."
+}

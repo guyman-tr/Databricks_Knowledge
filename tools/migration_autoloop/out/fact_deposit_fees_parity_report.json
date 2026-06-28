@@ -1,0 +1,20 @@
+{
+  "flow_key": "fact_deposit_fees",
+  "proc_name": "sp_fact_deposit_fees_dl_to_synapse",
+  "status": "VERIFIED_FROZEN_SOURCE_DECOMMISSIONED",
+  "passes_used": 1,
+  "gold_table": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_deposit_fees",
+  "parity_grain": "full_table_exact",
+  "parity_result": {
+    "rows": {"migration": 14429422, "gold": 14429422, "match": true},
+    "distinct_DepositID": {"migration": 14384489, "gold": 14384489, "match": true},
+    "sum_DepositAmount": {"migration": 55160879114.07, "gold": 55160879114.07, "match": true},
+    "sum_PIPsinUSD": {"migration": 63978867.1700, "gold": 63978867.1700, "match": true},
+    "all_pass": true,
+    "qa_pass_migration_vs_gold": true
+  },
+  "data_range": {"min_ModificationDateID": 20211201, "max_ModificationDateID": 20240630},
+  "orchestration_note": "Source snapshot dwh_daily_process.daily_snapshot.etoro_BackOffice_BillingDepositsPCIVersion NO LONGER EXISTS (TABLE_OR_VIEW_NOT_FOUND; no BillingDeposits* table in daily_snapshot). The fact is FROZEN at 2024-06-30 (~2 years stale) and is no longer refreshed upstream. The proc is a full-reload (no incremental date filter) and CANNOT be operationalized as a recurring Databricks job because the live source was retired.",
+  "dialect_notes": "If re-sourced, the only fix needed is the DATEDIFF(0, StatusModificationTime) floor-to-midnight idiom -> date_format(StatusModificationTime,'yyyyMMdd'). Backtick identifiers are DBSQL-valid.",
+  "conclusion": "Migration data is a VERIFIED bit-exact replica of gold (full-table parity on rows, distinct keys, and money sums). No autopoc/job created because the upstream source is decommissioned. DE must wire a new source if deposit_fees refresh resumes."
+}

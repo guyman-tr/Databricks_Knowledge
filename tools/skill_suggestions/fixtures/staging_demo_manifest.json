@@ -1,0 +1,24 @@
+{
+  "table": "main.de_output.de_output_skills_automation_user_suggestions_agent",
+  "status_filter": "processing",
+  "claimed": false,
+  "count": 1,
+  "claimed_ids": [],
+  "items": [
+    {
+      "id": "staging-demo-0001",
+      "submitted_at": "2026-06-18T18:52:00Z",
+      "submitter": "guyman",
+      "request_type": "new_skill",
+      "target_skill": null,
+      "title": "STAGING DEMO - auto_kb runbook",
+      "body_text": "---\nname: auto-kb-staging-demo\ndescription: Staging-only skill for interpreting auto_kb watcher runlog outcomes and deciding promotion readiness.\nrequired_tables:\n  - main.de_output.de_output_auto_kb_genie_runs\n  - main.de_output.de_output_auto_kb_uc_object_runs\n  - main.de_output.de_output_auto_kb_dbschema_runs\n  - main.de_output.de_output_auto_kb_confluence_runs\nversion: 1\nowner: dataplatform\n---\n\n# Auto KB Staging Runbook\n\n## Purpose\nReview watcher run outcomes and quickly decide whether a change is safe to promote.\n\n## Checks\n- Any status=error rows in the latest run_id block promotion.\n- status=skipped rows are expected when overlap guards trigger.\n- status=done with artifact_ref set means a concrete deliverable was produced.\n",
+      "volume_path": null,
+      "status": "processing",
+      "pr_url": null,
+      "processed_at": null,
+      "agent_notes": null,
+      "local_payload_path": null
+    }
+  ]
+}

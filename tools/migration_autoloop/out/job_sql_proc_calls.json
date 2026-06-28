@@ -1,0 +1,212 @@
+[
+  {
+    "job_id": 302287168220151,
+    "job_name": "DWH_Daily_Process__BLOCK__fact_customeraction_etl__AutoPOC",
+    "task_key": "s02_dictionaries_country",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_blocks/fact_customeraction_etl_s02_dictionaries_country.sql",
+    "proc": "sp_dictionaries_country_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 302287168220151,
+    "job_name": "DWH_Daily_Process__BLOCK__fact_customeraction_etl__AutoPOC",
+    "task_key": "s03_fact_customeraction",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_blocks/fact_customeraction_etl_s03_fact_customeraction.sql",
+    "proc": "sp_fact_customeraction_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 302287168220151,
+    "job_name": "DWH_Daily_Process__BLOCK__fact_customeraction_etl__AutoPOC",
+    "task_key": "s04_fact_firstcustomeraction",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_blocks/fact_customeraction_etl_s04_fact_firstcustomeraction.sql",
+    "proc": "sp_fact_firstcustomeraction_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 302287168220151,
+    "job_name": "DWH_Daily_Process__BLOCK__fact_customeraction_etl__AutoPOC",
+    "task_key": "s04_fact_billingdeposit",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_blocks/fact_customeraction_etl_s04_fact_billingdeposit.sql",
+    "proc": "sp_fact_billingdeposit_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 302287168220151,
+    "job_name": "DWH_Daily_Process__BLOCK__fact_customeraction_etl__AutoPOC",
+    "task_key": "s04_fact_billingwithdraw",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_blocks/fact_customeraction_etl_s04_fact_billingwithdraw.sql",
+    "proc": "sp_fact_billingwithdraw_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 302287168220151,
+    "job_name": "DWH_Daily_Process__BLOCK__fact_customeraction_etl__AutoPOC",
+    "task_key": "s04_fact_billingredeem",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_blocks/fact_customeraction_etl_s04_fact_billingredeem.sql",
+    "proc": "sp_fact_billingredeem_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 799064271887181,
+    "job_name": "DWH_Daily_Process__BLOCK__dim_customer__AutoPOC",
+    "task_key": "s02_run_proc",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_blocks/dim_customer_s02_run_proc.sql",
+    "proc": "sp_dim_customer_autopoc"
+  },
+  {
+    "job_id": 162844839736253,
+    "job_name": "DWH_Daily_Process__BLOCK__dictionaries__AutoPOC",
+    "task_key": "s02_run_proc",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_blocks/dictionaries_s02_run_proc.sql",
+    "proc": "sp_dictionaries_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 812731732601593,
+    "job_name": "DWH_Daily_Process__BLOCK__fact_regulationtransfer__AutoPOC",
+    "task_key": "s02_run_proc",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_blocks/fact_regulationtransfer_s02_run_proc.sql",
+    "proc": "sp_fact_regulationtransfer_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 93393147966261,
+    "job_name": "DWH_Daily_Process__BLOCK__fact_cashout_state__AutoPOC",
+    "task_key": "s02_run_proc",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_blocks/fact_cashout_state_s02_run_proc.sql",
+    "proc": "sp_fact_cashout_state"
+  },
+  {
+    "job_id": 192692760246867,
+    "job_name": "DWH_Daily_Process__BLOCK__fact_deposit_state__AutoPOC",
+    "task_key": "s02_run_proc",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_blocks/fact_deposit_state_s02_run_proc.sql",
+    "proc": "sp_fact_deposit_state_autopoc"
+  },
+  {
+    "job_id": 896083936128302,
+    "job_name": "DWH_Daily_Process__BLOCK__fact_currencypricewithsplit__AutoPOC",
+    "task_key": "s02_run_proc",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_blocks/fact_currencypricewithsplit_s02_run_proc.sql",
+    "proc": "sp_fact_currencypricewithsplit_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 335239814018514,
+    "job_name": "DWH_Daily_Process__Fact_CustomerAction_ETL_AutoPOC",
+    "task_key": "SP_Dictionaries_Country_DL_To_Synapse",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_restored_customeraction/ca_01_sp_dictionaries_country_dl_to_synapse_autopoc.sql",
+    "proc": "sp_dictionaries_country_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 335239814018514,
+    "job_name": "DWH_Daily_Process__Fact_CustomerAction_ETL_AutoPOC",
+    "task_key": "SP_Fact_CustomerAction_DL_To_Synapse",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_restored_customeraction/ca_02_sp_fact_customeraction_dl_to_synapse_autopoc.sql",
+    "proc": "sp_fact_customeraction_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 335239814018514,
+    "job_name": "DWH_Daily_Process__Fact_CustomerAction_ETL_AutoPOC",
+    "task_key": "SP_Fact_FirstCustomerAction_DL_To_Synapse",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_restored_customeraction/ca_03_sp_fact_firstcustomeraction_dl_to_synapse_autopoc.sql",
+    "proc": "sp_fact_firstcustomeraction_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 335239814018514,
+    "job_name": "DWH_Daily_Process__Fact_CustomerAction_ETL_AutoPOC",
+    "task_key": "SP_Fact_BillingDeposit_DL_To_Synapse",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_restored_customeraction/ca_04_sp_fact_billingdeposit_dl_to_synapse_autopoc.sql",
+    "proc": "sp_fact_billingdeposit_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 335239814018514,
+    "job_name": "DWH_Daily_Process__Fact_CustomerAction_ETL_AutoPOC",
+    "task_key": "SP_Fact_BillingWithdraw_DL_To_Synapse",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_restored_customeraction/ca_05_sp_fact_billingwithdraw_dl_to_synapse_autopoc.sql",
+    "proc": "sp_fact_billingwithdraw_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 335239814018514,
+    "job_name": "DWH_Daily_Process__Fact_CustomerAction_ETL_AutoPOC",
+    "task_key": "SP_Fact_BillingRedeem_DL_To_Synapse",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_restored_customeraction/ca_06_sp_fact_billingredeem_dl_to_synapse_autopoc.sql",
+    "proc": "sp_fact_billingredeem_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 389322205125509,
+    "job_name": "DWH_Daily_Process__Fact_CustomerAction_ETL",
+    "task_key": "SP_Dictionaries_Country_DL_To_Synapse",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_restored_customeraction/ca_01_sp_dictionaries_country_dl_to_synapse_autopoc.sql",
+    "proc": "sp_dictionaries_country_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 389322205125509,
+    "job_name": "DWH_Daily_Process__Fact_CustomerAction_ETL",
+    "task_key": "SP_Fact_CustomerAction_DL_To_Synapse",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_restored_customeraction/ca_02_sp_fact_customeraction_dl_to_synapse_autopoc.sql",
+    "proc": "sp_fact_customeraction_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 389322205125509,
+    "job_name": "DWH_Daily_Process__Fact_CustomerAction_ETL",
+    "task_key": "SP_Fact_FirstCustomerAction_DL_To_Synapse",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_restored_customeraction/ca_03_sp_fact_firstcustomeraction_dl_to_synapse_autopoc.sql",
+    "proc": "sp_fact_firstcustomeraction_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 389322205125509,
+    "job_name": "DWH_Daily_Process__Fact_CustomerAction_ETL",
+    "task_key": "SP_Fact_BillingDeposit_DL_To_Synapse",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_restored_customeraction/ca_04_sp_fact_billingdeposit_dl_to_synapse_autopoc.sql",
+    "proc": "sp_fact_billingdeposit_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 389322205125509,
+    "job_name": "DWH_Daily_Process__Fact_CustomerAction_ETL",
+    "task_key": "SP_Fact_BillingWithdraw_DL_To_Synapse",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_restored_customeraction/ca_05_sp_fact_billingwithdraw_dl_to_synapse_autopoc.sql",
+    "proc": "sp_fact_billingwithdraw_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 389322205125509,
+    "job_name": "DWH_Daily_Process__Fact_CustomerAction_ETL",
+    "task_key": "SP_Fact_BillingRedeem_DL_To_Synapse",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_restored_customeraction/ca_06_sp_fact_billingredeem_dl_to_synapse_autopoc.sql",
+    "proc": "sp_fact_billingredeem_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 209109198950935,
+    "job_name": "DWH_Daily_Process__SP_Dictionaries_AutoPOC",
+    "task_key": "run_proc",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_restored/dict_01_run_proc.sql",
+    "proc": "sp_dictionaries_dl_to_synapse_autopoc"
+  },
+  {
+    "job_id": 326808570319429,
+    "job_name": "DWH_Daily_Process__SP_Dim_Customer",
+    "task_key": "run_proc",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_restored/dim_customer_02_run_proc.sql",
+    "proc": "sp_dim_customer"
+  },
+  {
+    "job_id": 660422186057164,
+    "job_name": "DWH_Daily_Process__BLOCK__fact_snapshotequity__AutoPOC",
+    "task_key": "s02_extract",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_blocks/fact_snapshotequity_s02_extract.sql",
+    "proc": "sp_fact_snapshotequity_extract_autopoc"
+  },
+  {
+    "job_id": 660422186057164,
+    "job_name": "DWH_Daily_Process__BLOCK__fact_snapshotequity__AutoPOC",
+    "task_key": "s04_inprocesscashouts",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_blocks/fact_snapshotequity_s04_inprocesscashouts.sql",
+    "proc": "sp_fact_snapshotequity_inprocesscashouts_autopoc"
+  },
+  {
+    "job_id": 660422186057164,
+    "job_name": "DWH_Daily_Process__BLOCK__fact_snapshotequity__AutoPOC",
+    "task_key": "s04_totalpositionamount",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_blocks/fact_snapshotequity_s04_totalpositionamount.sql",
+    "proc": "sp_fact_snapshotequity_totalpositionamount_autopoc"
+  },
+  {
+    "job_id": 660422186057164,
+    "job_name": "DWH_Daily_Process__BLOCK__fact_snapshotequity__AutoPOC",
+    "task_key": "s06_core",
+    "sql_path": "/Workspace/Users/guyman@etoro.com/dwh_daily_process_jobs_blocks/fact_snapshotequity_s06_core.sql",
+    "proc": "sp_fact_snapshotequity_autopoc"
+  }
+]
