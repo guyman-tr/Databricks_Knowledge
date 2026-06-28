@@ -1,0 +1,34 @@
+{
+  "objects": [
+    {
+      "catalog": "main",
+      "schema": "etoro_kpi_prep",
+      "table": "v_fixture_new_metric_enriched",
+      "table_type": "VIEW",
+      "columns": [
+        {"column_name": "DateID", "data_type": "INT"},
+        {"column_name": "CID", "data_type": "BIGINT"},
+        {"column_name": "metric_value", "data_type": "DECIMAL(18,2)"}
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "de_output",
+      "table": "de_output_fixture_new_fact",
+      "table_type": "TABLE",
+      "columns": [
+        {"column_name": "DateID", "data_type": "INT"},
+        {"column_name": "amount_usd", "data_type": "DECIMAL(18,2)"}
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "etoro_kpi_prep_stg",
+      "table": "v_should_be_excluded_stg",
+      "table_type": "VIEW",
+      "columns": [
+        {"column_name": "x", "data_type": "INT"}
+      ]
+    }
+  ]
+}

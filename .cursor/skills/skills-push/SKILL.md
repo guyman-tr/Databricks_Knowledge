@@ -157,6 +157,30 @@ if (-not (Test-Path "$DPSkillsDir\skill-creator\SKILL.md")) {
 }
 ```
 
+### Step 1b — Freshness guard: the local gate files MUST match `origin/dev`
+
+> **Why this exists.** Phase 1 runs whatever validator / `skill-creator` files are checked out on disk — and it runs BEFORE Phase 2 freshens the repo (`fetch`/`checkout dev`/`pull`). So a stale local checkout (old `dev`, or a feature branch frozen weeks ago) silently validates against stale rules: the local gate goes green while the real GitHub Actions CI — running the *current* `dev` scripts — rejects the PR. That is the exact "authority-laundering" the Phase 1 preamble exists to forbid. "The local gate is the cloud gate" is only true if the gate files are current. This guard makes that an enforced precondition, not a coincidence.
+
+This check is **branch-agnostic**: it compares ONLY the three canonical gate files against `origin/dev`, not your whole working tree. You can be on any DataPlatform branch — as long as those three files match `origin/dev`, the gate is current and you proceed. It does NOT force you to `checkout dev`.
+
+```powershell
+git -C $DPRoot fetch origin dev --quiet 2>&1 | Out-Null
+$staleGateFiles = @()
+foreach ($f in @(
+    "databricks/data-skills/scripts/validate_skills.py",
+    "databricks/data-skills/scripts/validate_skill_quality.py",
+    "databricks/data-skills/skills/skill-creator/SKILL.md")) {
+    git -C $DPRoot diff --quiet origin/dev -- $f
+    if ($LASTEXITCODE -ne 0) { $staleGateFiles += $f }
+}
+$global:LASTEXITCODE = 0
+if ($staleGateFiles.Count -gt 0) {
+    throw ("Gate files differ from origin/dev — the LOCAL CI gate would NOT match the CLOUD CI:`n  " +
+           ($staleGateFiles -join "`n  ") +
+           "`nFix: in the DataPlatform repo bring these to origin/dev (e.g. 'git checkout origin/dev -- <file>' for each, or 'git checkout dev; git pull --ff-only origin dev'), then re-run /skills-push.")
+}
+```
+
 ### Step 2 — Read `skill-creator/SKILL.md` for context (one read, no duplication)
 
 Do this with the `Read` tool, NOT with `cat` / `Get-Content`. The point of the read is so the agent can answer "what rule am I about to violate?" before the validator says no — but the answer is always "see `skill-creator/SKILL.md`", never "see this skill's inlined table". If you find yourself summarising rules into this skill's body, stop.

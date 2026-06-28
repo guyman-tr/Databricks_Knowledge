@@ -1,0 +1,71 @@
+{
+  "spaces": [
+    {
+      "space_id": "fixture_rich_0001",
+      "title": "FIXTURE - Subscription Revenue (rich)",
+      "warehouse_id": "208214768b0e0308",
+      "tables": ["bi_output.bi_output_deltaapp_subscription_view"],
+      "n_tables": 1,
+      "n_join_specs": 1,
+      "serialized_space": {
+        "version": 2,
+        "data_sources": {
+          "tables": [
+            {
+              "identifier": "main.bi_output.bi_output_deltaapp_subscription_view",
+              "column_configs": [
+                {"column_name": "plan_tier", "description": ["Subscription plan tier"], "enable_entity_matching": true}
+              ]
+            }
+          ]
+        },
+        "instructions": {
+          "text_instructions": [
+            {"id": "i1", "content": ["## Revenue\n", "- MRR excludes refunds and chargebacks.\n"]}
+          ],
+          "join_specs": [
+            {"id": "j1", "left": {"identifier": "a"}, "right": {"identifier": "b"}, "sql": ["a.id = b.id"]}
+          ],
+          "sql_snippets": {
+            "measures": [
+              {"id": "m1", "display_name": "MRR", "sql": ["SUM(monthly_recurring_revenue)"], "synonyms": ["monthly recurring revenue"]},
+              {"id": "m2", "display_name": "Active Subscribers", "sql": ["COUNT(DISTINCT CASE WHEN status='active' THEN cid END)"]}
+            ]
+          }
+        }
+      }
+    },
+    {
+      "space_id": "fixture_medium_0002",
+      "title": "FIXTURE - Notifications (instructions only)",
+      "warehouse_id": "5f6c5302def2ad2c",
+      "tables": ["bi_output.bi_output_urban_notifications_daily_panel", "mixpanel.notifications_events"],
+      "n_tables": 2,
+      "n_join_specs": 0,
+      "serialized_space": {
+        "version": 2,
+        "data_sources": {"tables": [{"identifier": "main.mixpanel.notifications_events", "column_configs": []}]},
+        "instructions": {
+          "text_instructions": [
+            {"id": "i1", "content": ["## Notifications\n", "- Count an open only once per user per day.\n"]}
+          ],
+          "join_specs": [],
+          "sql_snippets": {"measures": []}
+        }
+      }
+    },
+    {
+      "space_id": "fixture_thin_0003",
+      "title": "FIXTURE - Ad-hoc Portfolio (thin, no curation)",
+      "warehouse_id": "5f6c5302def2ad2c",
+      "tables": ["bi_output.bi_output_moneyfarm_fact_portfolio_snapshot"],
+      "n_tables": 1,
+      "n_join_specs": 0,
+      "serialized_space": {
+        "version": 2,
+        "data_sources": {"tables": [{"identifier": "main.bi_output.bi_output_moneyfarm_fact_portfolio_snapshot", "column_configs": []}]},
+        "instructions": {"text_instructions": [], "join_specs": [], "sql_snippets": {"measures": []}}
+      }
+    }
+  ]
+}

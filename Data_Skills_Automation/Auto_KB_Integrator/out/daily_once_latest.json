@@ -1,0 +1,65 @@
+{
+  "run_at_utc": "2026-06-19T14:29:17+00:00",
+  "staging": true,
+  "confluence_bridge": {
+    "ok": true,
+    "notes": "confluence skipped by flag"
+  },
+  "steps": [
+    {
+      "name": "watcher_genie",
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "[genie] diff: new=0 changed=0 removed=0\n[genie] wrote manifest -> Data_Skills_Automation/Genie_Watcher/out/daily_manifest.json\n[genie] run_id=genie-20260619T142804Z-eeec5846 items=0 dry_run=False\n[genie] snapshot advanced -> Data_Skills_Automation/Genie_Watcher/runtime/daily_snapshot.json\n{\n  \"app\": \"genie\",\n  \"run_id\": \"genie-20260619T142804Z-eeec5846\",\n  \"total\": 0,\n  \"processed\": 0,\n  \"failures\": 0,\n  \"dry_run\": false,\n  \"snapshot_committed\": true,\n  \"results\": []\n}",
+      "stderr_tail": "",
+      "started_at": "2026-06-19T14:28:01+00:00",
+      "ended_at": "2026-06-19T14:28:04+00:00"
+    },
+    {
+      "name": "watcher_uc_object",
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "[uc_object] diff: new=355 changed=0 removed=0\n[uc_object] wrote manifest -> Data_Skills_Automation/UC_Object_Watcher/out/daily_manifest.json\n[uc_object] run_id=uc_object-20260619T142817Z-ecd27fd1 items=1 dry_run=False\n[no-notify] status=ok subject=auto_kb/uc_object: done (uc_object:uc_new_object:main.bi_output.australia_tag_ob_june26)\n[uc_object] snapshot advanced -> Data_Skills_Automation/UC_Object_Watcher/runtime/daily_snapshot.json\n{\n  \"app\": \"uc_object\",\n  \"run_id\": \"uc_object-20260619T142817Z-ecd27fd1\",\n  \"total\": 1,\n  \"processed\": 1,\n  \"failures\": 0,\n  \"dry_run\": false,\n  \"snapshot_committed\": true,\n  \"results\": [\n    {\n      \"id\": \"uc_object:uc_new_object:main.bi_output.australia_tag_ob_june26\",\n      \"kind\": \"uc_new_object\",\n      \"status\": \"done\",\n      \"ok\": true,\n      \"artifact_ref\": \"wiki:knowledge/UC_generated/bi_output/Views/australia_tag_ob_june26.md\",\n      \"pr_url\": null,\n      \"notes\": \"staging deterministic UC processing: dry-run: would document main.bi_output.australia_tag_ob_june26 (8 cols) via uc-pipeline-doc; conditional skill PR\"\n    }\n  ]\n}",
+      "stderr_tail": "",
+      "started_at": "2026-06-19T14:28:04+00:00",
+      "ended_at": "2026-06-19T14:28:31+00:00"
+    },
+    {
+      "name": "watcher_dbschema",
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "[dbschema] diff: new=0 changed=0 removed=0\n[dbschema] wrote manifest -> Data_Skills_Automation/DBSchema_Lake_Watcher/out/daily_manifest.json\n[dbschema] run_id=dbschema-20260619T142834Z-58fc5031 items=0 dry_run=False\n[dbschema] snapshot advanced -> Data_Skills_Automation/DBSchema_Lake_Watcher/runtime/daily_snapshot.json\n{\n  \"app\": \"dbschema\",\n  \"run_id\": \"dbschema-20260619T142834Z-58fc5031\",\n  \"total\": 0,\n  \"processed\": 0,\n  \"failures\": 0,\n  \"dry_run\": false,\n  \"snapshot_committed\": true,\n  \"results\": []\n}",
+      "stderr_tail": "",
+      "started_at": "2026-06-19T14:28:31+00:00",
+      "ended_at": "2026-06-19T14:28:34+00:00"
+    },
+    {
+      "name": "watcher_confluence",
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "skipped by --skip-confluence",
+      "stderr_tail": "",
+      "started_at": "2026-06-19T14:28:34+00:00",
+      "ended_at": "2026-06-19T14:28:34+00:00"
+    },
+    {
+      "name": "implications_report",
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "rows=12\nrows_csv=Data_Skills_Automation\\Auto_KB_Integrator\\out\\implications_rows.csv\nsummary_csv=Data_Skills_Automation\\Auto_KB_Integrator\\out\\implications_summary.csv\nblockers=5 actionable_changes=1",
+      "stderr_tail": "",
+      "started_at": "2026-06-19T14:28:34+00:00",
+      "ended_at": "2026-06-19T14:28:45+00:00"
+    },
+    {
+      "name": "integrator",
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "summary_json=Data_Skills_Automation\\Auto_KB_Integrator\\out\\integrated_summary.json\nsummary_csv=Data_Skills_Automation\\Auto_KB_Integrator\\out\\integrated_summary.csv\nsummary_md=Data_Skills_Automation\\Auto_KB_Integrator\\out\\integrated_summary.md\nagentic_status=done\nagentic_appendix=Data_Skills_Automation\\Auto_KB_Integrator\\out\\integrated_agentic_appendix.md",
+      "stderr_tail": "",
+      "started_at": "2026-06-19T14:28:45+00:00",
+      "ended_at": "2026-06-19T14:29:17+00:00"
+    }
+  ],
+  "overall_ok": true
+}

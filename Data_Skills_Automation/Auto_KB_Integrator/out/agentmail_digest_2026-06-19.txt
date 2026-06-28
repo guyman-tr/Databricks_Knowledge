@@ -1,0 +1,38 @@
+Auto KB Daily Integrated Summary (Staging)
+
+Overall Health: BLOCKED
+Promotion Decision: NO-GO
+
+Snapshot
+- Inputs integrated: 5 outputs (4 watcher manifests + implications rows)
+- App stats:
+  - genie: new=1, changed=0, removed=0, processed_items=1
+  - uc_object: new=2, changed=0, removed=0, processed_items=1
+  - dbschema: new=2, changed=0, removed=0, processed_items=1
+  - confluence: new=2, changed=0, removed=0, processed_items=1
+- Implications:
+  - BLOCKER: 3
+  - NO_CHANGE_SKIPPED: 3
+  - ACTIONABLE_CHANGE: 0
+
+Blockers
+1) uc_object item main.de_output.de_output_fixture_new_fact
+   - cursor_sdk Agent.prompt timed out after 60s
+2) uc_object item main.de_output.de_output_fixture_new_fact
+   - cursor_sdk Agent.prompt timed out after 180s
+3) confluence page 100001
+   - Atlassian MCP session unavailable (no MCP servers discovered), so getConfluencePage could not be called
+
+Interpretation
+- Detection is working (new items are being found).
+- Integration/execution is the current bottleneck.
+- The run is currently not producing promotable skill amendments.
+
+Immediate Actions
+- Genie owner: confirm single detected item remains correctly skipped (no missed durable concept).
+- UC Object owner: add timeout hardening + bounded retry/fallback, then replay failed object.
+- DBSchema owner: keep stream green and ready; hold promotion until blockers clear.
+- Confluence owner: restore MCP session/auth and re-run page 100001 with preflight availability checks.
+
+Requested Delivery Format
+- Inline email only (no attached markdown/csv files).

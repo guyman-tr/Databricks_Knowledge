@@ -1,0 +1,37 @@
+{
+  "app": "genie",
+  "new": [
+    "01f14469b87810f78ac2e068df8dbe62"
+  ],
+  "changed": [],
+  "removed": [],
+  "items": [
+    {
+      "id": "genie:genie_new:01f14469b87810f78ac2e068df8dbe62",
+      "kind": "genie_new",
+      "title": "DEV - Customer Support Case Analytics",
+      "source_ref": "01f14469b87810f78ac2e068df8dbe62",
+      "payload": {
+        "space_id": "01f14469b87810f78ac2e068df8dbe62",
+        "title": "DEV - Customer Support Case Analytics",
+        "warehouse_id": "39b1e32f407ac813",
+        "tables": [
+          "etoro_kpi.cidfirstdates_v",
+          "etoro_kpi.vg_crm_case",
+          "etoro_kpi_stg.crm_csat_survey_per_case_v",
+          "etoro_kpi_stg.crm_quality_assessment_per_case_v",
+          "etoro_kpi_stg.crm_user_v"
+        ],
+        "n_tables": 5,
+        "n_join_specs": 4,
+        "score": 80,
+        "score_reasons": [
+          "1 builder measure(s)",
+          "1 instruction block(s)",
+          "4 curated join(s)",
+          "3 described column(s)"
+        ]
+      }
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 ---
-description: Daily autonomous loop for skill suggestions. Scans main.de_output.skill_suggestions, processes new submissions (new skill bundles or targeted corrections), runs skills-ingest/skills-push, updates queue status, and notifies the skills team in Teams.
+description: Daily autonomous loop for skill suggestions. Scans main.de_output.de_output_skills_automation_user_suggestions_agent, processes new submissions (new skill bundles or targeted corrections), runs skills-ingest/skills-push, updates queue status, and notifies the skills team in Teams.
 ---
 
 # /skills-autoloop
@@ -8,8 +8,8 @@ Run one full autonomous cycle for the skill suggestion queue.
 
 ## Inputs and data contract
 
-- Queue table: `main.de_output.skill_suggestions`
-- File payload volume: `main.de_output.skill_submissions`
+- Queue table: `main.de_output.de_output_skills_automation_user_suggestions_agent`
+- File payload volume: `main.de_output.skills_automation_user_suggestions_agent_files`
 - Scanner output: `tools/skill_suggestions/work_manifest.json`
 - Status writer: `tools/skill_suggestions/update_status.py`
 - Notification tool: `tools/notify/notify.py`
@@ -30,29 +30,13 @@ the table definition. If this gate fails, stop the run and alert.
 ## Processing flow
 
 1. Scan + claim new items:
+   - `python tools/skill_suggestions/run_cycle.py --status new --claim --execution-mode full`
+2. Execute one cycle (manual split mode):
    - `python tools/skill_suggestions/scan.py --status new --claim`
-2. For each claimed item:
-   - Immediately set status to `processing`.
-   - Branch by `request_type`:
-     - `new_skill`:
-       - Materialize source markdown from `body_text` and/or `local_payload_path`.
-       - Run `/skills-ingest` headlessly.
-     - `correction`:
-       - Resolve `target_skill`.
-       - Apply surgical correction only to requested scope.
-       - Bump `version`.
-       - Re-run canonical validators from the ingest contract.
-   - If overlap is a hard stop:
-     - Set status `skipped_overlap`.
-     - Send Teams warning.
-     - Continue.
-   - Else run `/skills-push`.
-   - On success:
-     - Set status `pushed`, set `pr_url`, set `processed_at`.
-     - Notify Teams with `status=ok`.
-   - On failure:
-     - Set status `error`, set `processed_at`, append error details.
-     - Notify Teams with `status=fail`.
+   - `python tools/skill_suggestions/run_once.py --manifest tools/skill_suggestions/work_manifest.json`
+   - Live full mode uses Cursor SDK to run ingest/push workflows per row.
+3. Optional dry-run harness:
+   - `python tools/skill_suggestions/run_once.py --manifest tools/skill_suggestions/fixtures/dryrun_manifest.json --dry-run`
 
 ## Reliability rules
 

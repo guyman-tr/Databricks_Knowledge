@@ -1,0 +1,121 @@
+{
+  "app": "questions",
+  "new": [
+    "m:cpa",
+    "m:deposits+net_deposits",
+    "m:ftd",
+    "m:trading_volume"
+  ],
+  "changed": [],
+  "removed": [],
+  "items": [
+    {
+      "id": "questions:questions_new_intent:m:cpa",
+      "kind": "questions_new_intent",
+      "title": "cpa by country, quarter, year [underserved]",
+      "source_ref": "m:cpa",
+      "payload": {
+        "signature": "m:cpa",
+        "label": "cpa by country, quarter, year",
+        "metrics": [
+          "cpa"
+        ],
+        "classifiers": [
+          "country",
+          "quarter",
+          "year"
+        ],
+        "coverage_status": "underserved",
+        "freq_bucket": "low",
+        "users_bucket": "few",
+        "top_skill": "domain-marketing-and-acquisition",
+        "examples": [
+          "cpa cost per acquisition by country for",
+          "cpa per country per quarter year",
+          "marketing cost related cpa as number per quarter per country"
+        ]
+      }
+    },
+    {
+      "id": "questions:questions_new_intent:m:deposits+net_deposits",
+      "kind": "questions_new_intent",
+      "title": "deposits, net_deposits by platform, region, month, quarter [underserved]",
+      "source_ref": "m:deposits+net_deposits",
+      "payload": {
+        "signature": "m:deposits+net_deposits",
+        "label": "deposits, net_deposits by platform, region, month, quarter",
+        "metrics": [
+          "deposits",
+          "net_deposits"
+        ],
+        "classifiers": [
+          "platform",
+          "region",
+          "month",
+          "quarter"
+        ],
+        "coverage_status": "underserved",
+        "freq_bucket": "low",
+        "users_bucket": "few",
+        "top_skill": "domain-payments",
+        "examples": [
+          "net deposit breakdown by platform and region this quarter",
+          "net deposits by region and platform last month"
+        ]
+      }
+    },
+    {
+      "id": "questions:questions_new_intent:m:ftd",
+      "kind": "questions_new_intent",
+      "title": "ftd by country, region, day [partial]",
+      "source_ref": "m:ftd",
+      "payload": {
+        "signature": "m:ftd",
+        "label": "ftd by country, region, day",
+        "metrics": [
+          "ftd"
+        ],
+        "classifiers": [
+          "country",
+          "region",
+          "day"
+        ],
+        "coverage_status": "partial",
+        "freq_bucket": "low",
+        "users_bucket": "few",
+        "top_skill": "domain-customer-and-identity",
+        "examples": [
+          "region ftds per day by country",
+          "show avg ftda by country for cee markets for ytd"
+        ]
+      }
+    },
+    {
+      "id": "questions:questions_new_intent:m:trading_volume",
+      "kind": "questions_new_intent",
+      "title": "trading_volume by instrument, day, month [well_covered]",
+      "source_ref": "m:trading_volume",
+      "payload": {
+        "signature": "m:trading_volume",
+        "label": "trading_volume by instrument, day, month",
+        "metrics": [
+          "trading_volume"
+        ],
+        "classifiers": [
+          "instrument",
+          "day",
+          "month"
+        ],
+        "coverage_status": "well_covered",
+        "freq_bucket": "low",
+        "users_bucket": "few",
+        "top_skill": "domain-trading",
+        "examples": [
+          "etoro_trading top stock instruments by trading volume total volume",
+          "top instruments by trading volume notional invested amount per trading day day over day change",
+          "top traded commodities by trading volume this month"
+        ]
+      }
+    }
+  ]
+}

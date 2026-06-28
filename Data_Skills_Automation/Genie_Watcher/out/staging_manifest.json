@@ -1,0 +1,41 @@
+{
+  "app": "genie",
+  "new": [
+    "01f137f76a75126fb15b03341732911f"
+  ],
+  "changed": [],
+  "removed": [],
+  "items": [
+    {
+      "id": "genie:genie_new:01f137f76a75126fb15b03341732911f",
+      "kind": "genie_new",
+      "title": "PROD - Compliance Genie",
+      "source_ref": "01f137f76a75126fb15b03341732911f",
+      "payload": {
+        "space_id": "01f137f76a75126fb15b03341732911f",
+        "title": "PROD - Compliance Genie",
+        "warehouse_id": "208214768b0e0308",
+        "tables": [
+          "etoro_kpi.cfd_statusinfo_v",
+          "etoro_kpi.customer_snapshot_v",
+          "etoro_kpi.ddr_aum_v",
+          "etoro_kpi.ddr_mimo_v",
+          "etoro_kpi.ddr_revenue_v",
+          "etoro_kpi.kyc_for_compliance_v",
+          "etoro_kpi.positions_for_compliance_v",
+          "etoro_kpi_stg.bi_output_vg_aum_slim"
+        ],
+        "n_tables": 8,
+        "n_join_specs": 3,
+        "score": 100,
+        "score_reasons": [
+          "3 builder measure(s)",
+          "1 sample/benchmark query(ies)",
+          "1 instruction block(s)",
+          "3 curated join(s)",
+          "3 described column(s)"
+        ]
+      }
+    }
+  ]
+}

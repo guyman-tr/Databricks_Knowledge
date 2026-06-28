@@ -1,0 +1,76 @@
+{
+  "app": "genie",
+  "new": [
+    "fixture_medium_0002",
+    "fixture_rich_0001",
+    "fixture_thin_0003"
+  ],
+  "changed": [],
+  "removed": [],
+  "items": [
+    {
+      "id": "genie:genie_new:fixture_medium_0002",
+      "kind": "genie_new",
+      "title": "FIXTURE - Notifications (instructions only)",
+      "source_ref": "fixture_medium_0002",
+      "payload": {
+        "space_id": "fixture_medium_0002",
+        "title": "FIXTURE - Notifications (instructions only)",
+        "warehouse_id": "5f6c5302def2ad2c",
+        "tables": [
+          "bi_output.bi_output_urban_notifications_daily_panel",
+          "mixpanel.notifications_events"
+        ],
+        "n_tables": 2,
+        "n_join_specs": 0,
+        "score": 25,
+        "score_reasons": [
+          "1 instruction block(s)"
+        ]
+      }
+    },
+    {
+      "id": "genie:genie_new:fixture_rich_0001",
+      "kind": "genie_new",
+      "title": "FIXTURE - Subscription Revenue (rich)",
+      "source_ref": "fixture_rich_0001",
+      "payload": {
+        "space_id": "fixture_rich_0001",
+        "title": "FIXTURE - Subscription Revenue (rich)",
+        "warehouse_id": "208214768b0e0308",
+        "tables": [
+          "bi_output.bi_output_deltaapp_subscription_view"
+        ],
+        "n_tables": 1,
+        "n_join_specs": 1,
+        "score": 80,
+        "score_reasons": [
+          "2 builder measure(s)",
+          "1 instruction block(s)",
+          "1 curated join(s)",
+          "1 described column(s)"
+        ]
+      }
+    },
+    {
+      "id": "genie:genie_new:fixture_thin_0003",
+      "kind": "genie_new",
+      "title": "FIXTURE - Ad-hoc Portfolio (thin, no curation)",
+      "source_ref": "fixture_thin_0003",
+      "payload": {
+        "space_id": "fixture_thin_0003",
+        "title": "FIXTURE - Ad-hoc Portfolio (thin, no curation)",
+        "warehouse_id": "5f6c5302def2ad2c",
+        "tables": [
+          "bi_output.bi_output_moneyfarm_fact_portfolio_snapshot"
+        ],
+        "n_tables": 1,
+        "n_join_specs": 0,
+        "score": 0,
+        "score_reasons": [
+          "1 data source(s) only (thin)"
+        ]
+      }
+    }
+  ]
+}

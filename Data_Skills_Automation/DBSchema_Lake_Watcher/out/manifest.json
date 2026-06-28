@@ -1,0 +1,39 @@
+{
+  "app": "dbschema",
+  "new": [
+    "etoro.BackOffice.BonusType",
+    "etoro.BackOffice.Customer"
+  ],
+  "changed": [],
+  "removed": [],
+  "items": [
+    {
+      "id": "dbschema:dbschema_new_wiki:etoro.BackOffice.BonusType",
+      "kind": "dbschema_new_wiki",
+      "title": "etoro.BackOffice.BonusType -> bi_db.bronze_etoro_backoffice_bonustype",
+      "source_ref": "etoro.BackOffice.BonusType",
+      "payload": {
+        "db": "etoro",
+        "schema": "BackOffice",
+        "object": "BonusType",
+        "wiki_path": "DB_Schema/etoro/Wiki/BackOffice/Tables/BackOffice.BonusType.md",
+        "uc_table": "bi_db.bronze_etoro_backoffice_bonustype",
+        "business_group": "BI_DB"
+      }
+    },
+    {
+      "id": "dbschema:dbschema_new_wiki:etoro.BackOffice.Customer",
+      "kind": "dbschema_new_wiki",
+      "title": "etoro.BackOffice.Customer -> general.bronze_etoro_backoffice_customer",
+      "source_ref": "etoro.BackOffice.Customer",
+      "payload": {
+        "db": "etoro",
+        "schema": "BackOffice",
+        "object": "Customer",
+        "wiki_path": "DB_Schema/etoro/Wiki/BackOffice/Tables/BackOffice.Customer.md",
+        "uc_table": "general.bronze_etoro_backoffice_customer",
+        "business_group": "general"
+      }
+    }
+  ]
+}

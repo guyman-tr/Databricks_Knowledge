@@ -1,0 +1,24 @@
+{
+  "_comment": "Offline fixture for the Questions Watcher. Rows are in the source-agnostic common shape produced by fetch_current. user_email is hashed (or pass user_hash directly). No real PII.",
+  "questions": [
+    {"source": "mcp", "prompt": "registration to FTD funnel by country region", "skills_top_score": 1.0, "skills_match_quality_hint": "above_floor", "skills_all_below_floor": false, "returned_skill_ids": ["domain-marketing-and-acquisition", "domain-ops-and-onboarding"], "status": "ok", "user_hash": "u_aaa"},
+    {"source": "mcp", "prompt": "CEE region Q2 FTDs first time depositors by country monthly", "skills_top_score": 0.95, "skills_match_quality_hint": "above_floor", "skills_all_below_floor": false, "returned_skill_ids": ["domain-marketing-and-acquisition", "domain-customer-and-identity"], "status": "ok", "user_hash": "u_bbb"},
+    {"source": "genie", "prompt": "French region June 19 2026 FTDs per day by country", "status": "COMPLETED", "thumb_down": false, "user_hash": "u_ccc"},
+    {"source": "genie", "prompt": "Show Avg FTDA by country for CEE markets (Poland, Greece, Romania) for Q2 2026 YTD", "status": "COMPLETED", "thumb_down": false, "user_hash": "u_aaa"},
+
+    {"source": "mcp", "prompt": "MIMO AllPlatforms weekly deposits withdrawals net Australia billing country MarketingRegion", "skills_top_score": 0.42, "skills_match_quality_hint": "below_floor", "skills_all_below_floor": true, "returned_skill_ids": ["domain-payments", "domain-spaceship"], "status": "ok", "user_hash": "u_ddd"},
+    {"source": "mcp", "prompt": "net deposits by region and platform last month", "skills_top_score": 0.38, "skills_match_quality_hint": "below_floor", "skills_all_below_floor": true, "returned_skill_ids": ["domain-payments"], "status": "ok", "user_hash": "u_eee"},
+    {"source": "genie", "prompt": "deposits and withdrawals net by region for all platforms June 2026", "status": "FAILED", "thumb_down": true, "user_hash": "u_ddd"},
+    {"source": "genie", "prompt": "net deposit breakdown by platform and region this quarter", "status": "ERROR", "thumb_down": false, "user_hash": "u_fff"},
+
+    {"source": "mcp", "prompt": "top instruments by trading volume notional invested amount per trading day day over day change", "skills_top_score": 0.92, "skills_match_quality_hint": "above_floor", "skills_all_below_floor": false, "returned_skill_ids": ["domain-trading", "domain-revenue-and-fees"], "status": "ok", "user_hash": "u_ggg"},
+    {"source": "genie", "prompt": "etoro_trading top 10 stock instruments by trading volume total volume", "status": "COMPLETED", "thumb_down": false, "user_hash": "u_hhh"},
+    {"source": "genie", "prompt": "top traded commodities by trading volume this month", "status": "COMPLETED", "thumb_down": false, "user_hash": "u_ggg"},
+
+    {"source": "mcp", "prompt": "CPA cost per acquisition by country for Q4 2025 Q1 2026 Q2 2026", "skills_top_score": 0.33, "skills_match_quality_hint": "below_floor", "skills_all_below_floor": true, "returned_skill_ids": ["domain-marketing-and-acquisition"], "status": "ok", "user_hash": "u_iii"},
+    {"source": "genie", "prompt": "marketing cost related CPA as 1 number per quarter per country", "status": "COMPLETED", "thumb_down": false, "user_hash": "u_jjj"},
+    {"source": "genie", "prompt": "CPA per country per quarter year 2026", "status": "FAILED", "thumb_down": false, "user_hash": "u_iii"},
+
+    {"source": "genie", "prompt": "why do we see a drop in crypto trading quarter by quarter", "status": "COMPLETED", "thumb_down": false, "user_hash": "u_kkk"}
+  ]
+}

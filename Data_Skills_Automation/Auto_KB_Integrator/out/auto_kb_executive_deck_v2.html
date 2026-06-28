@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Auto KB Automations - Executive Brief</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #141a2f;
+      --text: #f2f5ff;
+      --muted: #b8c0e6;
+      --accent: #78a6ff;
+      --ok: #47d18c;
+      --warn: #ffcc66;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(circle at top, #1b2450 0%, var(--bg) 55%);
+      color: var(--text);
+      overflow: hidden;
+    }
+    .deck {
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+    }
+    .slide {
+      display: none;
+      height: 100%;
+      padding: 56px 72px 90px;
+    }
+    .slide.active { display: block; }
+    .kicker {
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+    h1 {
+      margin: 10px 0 18px;
+      font-size: 48px;
+      line-height: 1.1;
+    }
+    h2 {
+      margin: 10px 0 18px;
+      font-size: 36px;
+      line-height: 1.2;
+    }
+    p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 22px;
+      line-height: 1.45;
+      max-width: 1100px;
+    }
+    ul {
+      margin: 8px 0 0 0;
+      padding-left: 26px;
+      max-width: 1180px;
+    }
+    li {
+      margin: 10px 0;
+      font-size: 26px;
+      line-height: 1.35;
+      color: var(--text);
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(280px, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+      max-width: 1200px;
+    }
+    .card {
+      background: linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid rgba(120,166,255,0.25);
+      border-radius: 14px;
+      padding: 18px 18px 14px;
+    }
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      color: var(--accent);
+    }
+    .card p {
+      margin: 0;
+      font-size: 20px;
+      color: var(--muted);
+    }
+    .tag {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .tag.ok { background: rgba(71, 209, 140, 0.2); color: var(--ok); border: 1px solid rgba(71,209,140,0.45); }
+    .tag.warn { background: rgba(255, 204, 102, 0.2); color: var(--warn); border: 1px solid rgba(255,204,102,0.45); }
+    .footer {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 14px 24px;
+      background: rgba(8, 12, 24, 0.82);
+      border-top: 1px solid rgba(120,166,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    button {
+      background: #1f2b52;
+      border: 1px solid #34509a;
+      color: #e8edff;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    button:hover { background: #273a70; }
+    .hint {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .counter {
+      color: #dce5ff;
+      font-size: 14px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" id="deck">
+    <section class="slide active">
+      <div class="kicker">Executive Brief</div>
+      <h1>Auto KB Existing Automations</h1>
+      <p>Automated knowledge operations that detect meaningful platform deltas and update skills only when durable value exists.</p>
+      <div class="tag ok">Live architecture in place</div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Business Problem</div>
+      <h2>Why we built this</h2>
+      <ul>
+        <li>Knowledge changed faster than manual updates to skills and domains.</li>
+        <li>Important updates could be missed between human curation cycles.</li>
+        <li>Signals were fragmented across Genie, Unity Catalog, DB wikis, and Confluence.</li>
+      </ul>
+      <p>Objective: move to a repeatable daily process that detects, evaluates, and applies only high-value knowledge changes.</p>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Operating Model</div>
+      <h2>One consistent flow across all sources</h2>
+      <ul>
+        <li><strong>Detect:</strong> snapshot diff finds new/changed items.</li>
+        <li><strong>Evaluate:</strong> durability + overlap checks filter noise.</li>
+        <li><strong>Act:</strong> conditional ingest/push for approved items only.</li>
+        <li><strong>Log:</strong> every decision is persisted and reportable.</li>
+      </ul>
+      <div class="tag ok">Diff -> Evaluate -> Conditional Push</div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Coverage</div>
+      <h2>Six trackers currently running</h2>
+      <div class="grid-2">
+        <article class="card">
+          <h3>Genie Watcher</h3>
+          <p>Detects new/changed Genie spaces and scores curation quality before action.</p>
+        </article>
+        <article class="card">
+          <h3>UC Object + Pipeline Watcher</h3>
+          <p>Tracks new/changed UC objects, resolves build lineage, updates docs/comments.</p>
+        </article>
+        <article class="card">
+          <h3>DBSchema Lake Wiki Watcher</h3>
+          <p>Finds DB wiki changes that map to lake objects via generic pipeline links.</p>
+        </article>
+        <article class="card">
+          <h3>Confluence Delta Watcher</h3>
+          <p>Processes only version deltas from MCP snapshots; avoids spray-and-pray ingest.</p>
+        </article>
+        <article class="card">
+          <h3>Skill Submission Watcher</h3>
+          <p>Monitors the Databricks skill-submission app intake and processes proposals through ingest and conditional push.</p>
+        </article>
+        <article class="card">
+          <h3>Questions Watcher</h3>
+          <p>Mines MCP and Genie question logs, clusters recurring intents, scores skill coverage, and proposes gap dossiers for underserved topics.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Questions Watcher — Dry Run</div>
+      <h2>What the watcher found</h2>
+      <div class="grid-2">
+        <article class="card">
+          <h3>⚠ CPA (underserved)</h3>
+          <p>Cost-per-acquisition by country/quarter. 3 questions, 2 distinct users. Below-floor on MCP + 1 Genie failure. Current routing: <em>domain-marketing-and-acquisition</em> — but no triggers match CPA directly.</p>
+          <div class="tag warn">Gap dossier proposed</div>
+        </article>
+        <article class="card">
+          <h3>⚠ Net Deposits by platform (underserved)</h3>
+          <p>Deposits &amp; net-deposits sliced by platform and region. MCP score below-floor, 1 Genie failure + 1 thumb-down. Current routing: <em>domain-payments</em> — partial skill gap on platform breakdown.</p>
+          <div class="tag warn">Gap dossier proposed</div>
+        </article>
+        <article class="card">
+          <h3>~ FTD by country (partial)</h3>
+          <p>First-time depositors by country/region/day. 2 questions, Genie-only (no MCP score). Local router → <em>domain-customer-and-identity</em>, score 60 — coverage exists but not strong.</p>
+          <div class="tag warn">Monitored, dossier optional</div>
+        </article>
+        <article class="card">
+          <h3>✓ Trading volume by instrument (well covered)</h3>
+          <p>3 questions, 2 users. MCP score 1.0, above-floor. Local router → <em>domain-trading</em> with high confidence. Skipped — no gap.</p>
+          <div class="tag ok">No action needed</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Databricks App Channels</div>
+      <h2>Submission and feedback loops</h2>
+      <ul>
+        <li><strong>Skill Submission App:</strong> active intake channel for authored skill proposals.</li>
+        <li><strong>Dedicated watcher exists:</strong> submission rows are processed by the skill-suggestions automation flow (ingest + conditional push).</li>
+        <li><strong>Feedback App:</strong> present but currently underutilized in operations.</li>
+        <li><strong>Current state:</strong> no dedicated feedback tracker was built yet due to low signal volume.</li>
+        <li><strong>Executive implication:</strong> submission automation is operational now; feedback automation can be added when adoption increases.</li>
+      </ul>
+      <div class="tag warn">Submission tracked now, feedback tracker deferred</div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Quality Safeguards</div>
+      <h2>How we prevent skill bloat</h2>
+      <ul>
+        <li>Existing overlap gate blocks duplicate semantic coverage.</li>
+        <li>New adversarial durability gate filters temporary/trivial artifacts.</li>
+        <li>Heuristic + adversarial judge returns <code>approve</code>, <code>reject</code>, or <code>review</code>.</li>
+        <li>Rejected/reviewed items are logged as skipped with explicit reasons.</li>
+      </ul>
+      <div class="tag warn">Noise filtered before ingest</div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Daily Operations</div>
+      <h2>Single orchestrated run</h2>
+      <ul>
+        <li>Wrapper executes: Confluence bridge → 6 watchers → implications → integrator.</li>
+        <li>Staging mode enables safe proving before production push behavior.</li>
+        <li>Snapshots advance only on fully successful non-dry runs.</li>
+      </ul>
+      <p>Outcome: predictable, auditable, and resumable knowledge operations.</p>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Executive Outputs</div>
+      <h2>What leadership receives</h2>
+      <ul>
+        <li>Integrated daily summary from the 6th agent (cross-source rollup).</li>
+        <li>Implication summaries showing accepted, skipped, and blocked items.</li>
+        <li>Action-focused appendix for follow-up decisions and ownership.</li>
+      </ul>
+      <p>Everything is produced under <code>Data_Skills_Automation/Auto_KB_Integrator/out/</code>.</p>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">CI/CD Decision Point</div>
+      <h2>PR review model for automation changes</h2>
+      <ul>
+        <li><strong>Current mode:</strong> automation opens skill-change PRs, humans approve/merge.</li>
+        <li><strong>Scale risk:</strong> as volume grows, manual review can become a bottleneck.</li>
+        <li><strong>Proposed option:</strong> dedicated Auto-KB CI/CD lane with policy-based auto-merge for low-risk changes.</li>
+        <li><strong>Safety controls:</strong> strict checks (tests/lint/format), durability score threshold, duplicate gate pass, protected-path allowlist, rollback path.</li>
+        <li><strong>Governance:</strong> keep high-risk domains or low-confidence items on mandatory human review.</li>
+      </ul>
+      <div class="tag warn">Hybrid model: autonomous for safe changes, human review for sensitive ones</div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Next Phase</div>
+      <h2>Planned hardening</h2>
+      <ul>
+        <li>Questions Watcher: promote gap dossiers into staged skill drafts via <code>/skills-ingest</code> for the strongest underserved clusters.</li>
+        <li>Review queue for borderline (<code>review</code>) cases with human approval.</li>
+        <li>Per-watcher threshold tuning from false-positive/false-negative feedback.</li>
+        <li>Operational KPIs: signal-to-noise ratio, accepted durable changes, time-to-update.</li>
+      </ul>
+      <p>The platform is now in a strong position to scale autonomous knowledge curation safely.</p>
+      <div class="tag ok">Promising trajectory</div>
+    </section>
+
+    <footer class="footer">
+      <div class="controls">
+        <button type="button" id="prevBtn" aria-label="Previous slide">Previous</button>
+        <button type="button" id="nextBtn" aria-label="Next slide">Next</button>
+      </div>
+      <div class="hint">Use Left/Right arrows or Space to navigate</div>
+      <div class="counter" id="counter">1 / 11</div>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      const slides = Array.from(document.querySelectorAll(".slide"));
+      const counter = document.getElementById("counter");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      let index = 0;
+
+      function render() {
+        slides.forEach((s, i) => s.classList.toggle("active", i === index));
+        counter.textContent = (index + 1) + " / " + slides.length;
+      }
+
+      function next() {
+        if (index < slides.length - 1) {
+          index += 1;
+          render();
+        }
+      }
+
+      function prev() {
+        if (index > 0) {
+          index -= 1;
+          render();
+        }
+      }
+
+      nextBtn.addEventListener("click", next);
+      prevBtn.addEventListener("click", prev);
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") next();
+        if (e.key === "ArrowLeft" || e.key === "PageUp") prev();
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>

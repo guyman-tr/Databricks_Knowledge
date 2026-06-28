@@ -24,8 +24,8 @@ Automate ingestion and push of analyst/business-user skill submissions.
 ## Target schema
 
 - `main.de_output`
-- Table: `main.de_output.skill_suggestions` (external, purge-formula compliant)
-- Volume: `main.de_output.skill_submissions` (external)
+- Table: `main.de_output.de_output_skills_automation_user_suggestions_agent` (external, purge-formula compliant)
+- Volume: `main.de_output.skills_automation_user_suggestions_agent_files` (external)
 
 ## Mirror
 
