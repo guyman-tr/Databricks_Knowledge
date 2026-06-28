@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\bi_output_vg_club_offers.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\bi_output_vg_club_offers.json` (rows: 64, mismatches: 3) |
 | **Primary upstream** | `main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 
@@ -90,7 +90,7 @@ main.bi_output.bi_output_vg_club_offers   ←── this object
 | 28 | `ClubTier` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel` | `Name` | `join_enriched` | (Tier 1 - upstream wiki, Dictionary.PlayerLevel) | dpl.Name AS ClubTier |
 | 29 | `RegulationID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `RegulationID` | `join_enriched` | (Tier 1 — BackOffice.Customer) | dc1.RegulationID |
 | 30 | `Regulation` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` | `Name` | `join_enriched` | (Tier 1 - upstream wiki, Dictionary.Regulation) | dr.Name AS Regulation |
-| 31 | `VerificationLevelID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `VerificationLevelID` | `join_enriched` | (Tier 1 — BackOffice.Customer) | dc1.VerificationLevelID |
+| 31 | `VerificationLevelID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `VerificationLevelID` | `join_enriched` | — | dc1.VerificationLevelID |
 | 32 | `VerificationLevel` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel` | `Name` | `join_enriched` | (Tier 1 — upstream wiki, Dictionary.VerificationLevel) | dv.Name AS VerificationLevel |
 | 33 | `CountryID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `CountryID` | `join_enriched` | (Tier 1 — Customer.CustomerStatic) | dc1.CountryID |
 | 34 | `Country` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country` | `Name` | `join_enriched` | (Tier 1 - Dictionary.Country upstream wiki) | dc.Name AS Country |
@@ -107,7 +107,7 @@ main.bi_output.bi_output_vg_club_offers   ←── this object
 | 45 | `GuruStatusName` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus` | `GuruStatusName` | `join_enriched` | (Tier 1 — Dictionary.GuruStatus) | gs.GuruStatusName |
 | 46 | `IsPI` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `—` | `case` | — | CASE WHEN dc1.GuruStatusID > 1 THEN 1 ELSE 0 END AS IsPI |
 | 47 | `IsPro` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `—` | `case` | — | CASE WHEN dc1.MifidCategorizationID IN (2, 3) THEN 1 ELSE 0 END AS IsPro |
-| 48 | `AccountStatusID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `AccountStatusID` | `join_enriched` | (Tier 1 — Customer.CustomerStatic) | dc1.AccountStatusID |
+| 48 | `AccountStatusID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `AccountStatusID` | `join_enriched` | — | dc1.AccountStatusID |
 | 49 | `AccountStatusName` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus` | `AccountStatusName` | `join_enriched` | (Tier 1 - upstream wiki, Dictionary.AccountStatus) | ast.AccountStatusName |
 | 50 | `PlayerStatusID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `PlayerStatusID` | `join_enriched` | (Tier 1 — Customer.CustomerStatic) | dc1.PlayerStatusID |
 | 51 | `PlayerStatusName` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus` | `Name` | `join_enriched` | (Tier 1 - upstream wiki, Dictionary.PlayerStatus) | pst.Name AS PlayerStatusName |
@@ -115,7 +115,7 @@ main.bi_output.bi_output_vg_club_offers   ←── this object
 | 53 | `CanClosePosition` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus` | `CanClosePosition` | `join_enriched` | (Tier 1 - upstream wiki, Dictionary.PlayerStatus) | pst.CanClosePosition |
 | 54 | `CanEditPosition` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus` | `CanEditPosition` | `join_enriched` | (Tier 1 - upstream wiki, Dictionary.PlayerStatus) | pst.CanEditPosition |
 | 55 | `CanBeCopied` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus` | `CanBeCopied` | `join_enriched` | (Tier 1 - upstream wiki, Dictionary.PlayerStatus) | pst.CanBeCopied |
-| 56 | `CanDeposit` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus` | `CanDeposit` | `join_enriched` | (Tier 1 - upstream wiki, Dictionary.PlayerStatus) | pst.CanDeposit |
+| 56 | `CanDeposit` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus` | `CanDeposit` | `join_enriched` | — | pst.CanDeposit |
 | 57 | `CanRequestWithdraw` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus` | `CanRequestWithdraw` | `join_enriched` | (Tier 1 - upstream wiki, Dictionary.PlayerStatus) | pst.CanRequestWithdraw |
 | 58 | `PlayerStatusReasonID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `PlayerStatusReasonID` | `join_enriched` | (Tier 1 — Customer.CustomerStatic) | dc1.PlayerStatusReasonID |
 | 59 | `PlayerStatusReasonName` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons` | `Name` | `join_enriched` | (Tier 1 - upstream wiki, Dictionary.PlayerStatusReasons) | psr.Name AS PlayerStatusReasonName |

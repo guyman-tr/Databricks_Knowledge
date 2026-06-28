@@ -10,7 +10,7 @@ table_type: MATERIALIZED_VIEW
 format: null
 column_count: 5
 row_count: null
-generated_at: '2026-05-19T15:01:54Z'
+generated_at: '2026-06-19T14:36:00Z'
 upstreams:
 - main.general.bronze_etoro_history_credit
 - main.trading.bronze_etoro_history_position_datafactory
@@ -46,7 +46,7 @@ tier_breakdown:
 | **Column count** | 5 |
 | **Concepts** | 1 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Thu Feb 20 20:40:54 UTC 2025 |
 
 ---
@@ -176,4 +176,4 @@ main.bi_output.negative_nmi   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 1 | Formulas: 5 | Tiers: 0 T1, 5 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 5/5 | Source: sp_or_sql*
+*Generated: 2026-06-19 | Concepts: 1 | Formulas: 5 | Tiers: 0 T1, 5 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 5/5 | Source: sp_or_sql*

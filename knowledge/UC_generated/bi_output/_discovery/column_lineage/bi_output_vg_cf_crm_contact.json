@@ -2,18 +2,95 @@
   "object": "main.bi_output.bi_output_vg_cf_crm_contact",
   "rows": [
     {
-      "source_table_full_name": "main.bi_output.bi_output_vg_crm_user",
-      "source_column_name": "Desk",
-      "target_column_name": "AM_Desk",
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "CallType",
+      "target_column_name": "CF_Terminology",
       "entity_type": null,
-      "event_count": 2
+      "event_count": 3
     },
     {
-      "source_table_full_name": "main.bi_output.bi_output_vg_crm_user",
-      "source_column_name": "FullName",
-      "target_column_name": "AM_FullName",
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "CallDurationInSeconds",
+      "target_column_name": "CF_Terminology",
       "entity_type": null,
-      "event_count": 2
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_customer_engagement__c",
+      "source_column_name": "Zoom_Call__c",
+      "target_column_name": "CF_Terminology",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_case",
+      "source_column_name": "Id",
+      "target_column_name": "CF_Terminology",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "Subject",
+      "target_column_name": "CF_Terminology",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "Id",
+      "target_column_name": "CF_Terminology",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "Status",
+      "target_column_name": "CF_Terminology",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_emailmessage",
+      "source_column_name": "Incoming",
+      "target_column_name": "CF_Terminology",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_nvmstatssf__nvm_call_summary__c",
+      "source_column_name": "NVMStatsSF__Total_Call_Duration__c",
+      "target_column_name": "CF_Terminology",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_customer_engagement__c",
+      "source_column_name": "Status__c",
+      "target_column_name": "CF_Terminology",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_customer_engagement__c",
+      "source_column_name": "Call_Duration__c",
+      "target_column_name": "CF_Terminology",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_customer_engagement__c",
+      "source_column_name": "Id",
+      "target_column_name": "CF_Terminology",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "TaskSubtype",
+      "target_column_name": "CF_Terminology",
+      "entity_type": null,
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.crm.silver_crm_emailmessage",
@@ -30,19 +107,180 @@
       "event_count": 2
     },
     {
-      "source_table_full_name": "main.bi_output.bi_output_vg_crm_user",
-      "source_column_name": "Desk",
-      "target_column_name": "Owner_Desk",
+      "source_table_full_name": "main.crm.silver_crm_case",
+      "source_column_name": "Id",
+      "target_column_name": "ContactType",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_customer_engagement__c",
+      "source_column_name": "Zoom_Call__c",
+      "target_column_name": "ContactType",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "CallDurationInSeconds",
+      "target_column_name": "ContactType",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "Status",
+      "target_column_name": "ContactType",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_nvmstatssf__nvm_call_summary__c",
+      "source_column_name": "NVMStatsSF__Total_Call_Duration__c",
+      "target_column_name": "ContactType",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "Subject",
+      "target_column_name": "ContactType",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_customer_engagement__c",
+      "source_column_name": "Call_Duration__c",
+      "target_column_name": "ContactType",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_customer_engagement__c",
+      "source_column_name": "Id",
+      "target_column_name": "ContactType",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "Id",
+      "target_column_name": "ContactType",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "TaskSubtype",
+      "target_column_name": "ContactType",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_customer_engagement__c",
+      "source_column_name": "Status__c",
+      "target_column_name": "ContactType",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_nvmstatssf__nvm_call_summary__c",
+      "source_column_name": "NVMStatsSF__Total_Call_Duration__c",
+      "target_column_name": "ContactType_Group",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_customer_engagement__c",
+      "source_column_name": "Status__c",
+      "target_column_name": "ContactType_Group",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_case",
+      "source_column_name": "Id",
+      "target_column_name": "ContactType_Group",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_customer_engagement__c",
+      "source_column_name": "Id",
+      "target_column_name": "ContactType_Group",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "Id",
+      "target_column_name": "ContactType_Group",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "Status",
+      "target_column_name": "ContactType_Group",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "CallDurationInSeconds",
+      "target_column_name": "ContactType_Group",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_customer_engagement__c",
+      "source_column_name": "Zoom_Call__c",
+      "target_column_name": "ContactType_Group",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "Subject",
+      "target_column_name": "ContactType_Group",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_customer_engagement__c",
+      "source_column_name": "Call_Duration__c",
+      "target_column_name": "ContactType_Group",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "TaskSubtype",
+      "target_column_name": "ContactType_Group",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_task",
+      "source_column_name": "CreatedDate",
+      "target_column_name": "CreatedDate",
       "entity_type": null,
       "event_count": 2
     },
     {
-      "source_table_full_name": "main.bi_output.bi_output_vg_crm_user",
-      "source_column_name": "FullName",
-      "target_column_name": "Owner_FullName",
+      "source_table_full_name": "main.crm.silver_crm_emailmessage",
+      "source_column_name": "CreatedDate",
+      "target_column_name": "CreatedDate",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.crm.silver_crm_customer_engagement__c",
+      "source_column_name": "CreatedDate",
+      "target_column_name": "CreatedDate",
       "entity_type": null,
       "event_count": 2
     }
   ],
-  "generated_at": "2026-05-19T14:47:18Z"
+  "generated_at": "2026-06-19T14:29:59Z"
 }

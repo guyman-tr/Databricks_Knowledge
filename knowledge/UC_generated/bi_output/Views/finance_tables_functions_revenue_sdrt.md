@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 45
 row_count: null
-generated_at: '2026-05-19T15:01:53Z'
+generated_at: '2026-06-19T14:35:58Z'
 upstreams:
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked
@@ -45,7 +45,7 @@ tier_breakdown:
 | **Column count** | 45 |
 | **Concepts** | 3 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Tue Apr 02 14:17:48 UTC 2024 |
 
 ---
@@ -132,14 +132,14 @@ Of its 45 columns: 0 inherit byte-for-byte from upstream wikis (Tier 1), 45 are 
 | 5 | LabelID | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 6 | LanguageID | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 7 | VerificationLevelID | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
-| 8 | DocsOK | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK`. (Tier 4 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
+| 8 | DocsOK | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 9 | PlayerStatusID | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
-| 10 | Bankruptcy | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…`. (Tier 4 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
+| 10 | Bankruptcy | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 11 | RiskStatusID | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 12 | RiskClassificationID | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 13 | CommunicationLanguageID | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
-| 14 | PremiumAccount | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…`. (Tier 4 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
-| 15 | Evangelist | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…`. (Tier 4 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
+| 14 | PremiumAccount | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
+| 15 | Evangelist | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 16 | GuruStatusID | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 17 | RegulationID | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 18 | AccountStatusID | INT | YES | Computed in source (transform kind not classified). Formula: `RealCID , Occurred , Amount , DateID , GCID , CountryID , LabelID , LanguageID , VerificationLevelID , DocsOK , PlayerStatusID , B…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
@@ -233,4 +233,4 @@ main.bi_output.finance_tables_functions_revenue_sdrt   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 3 | Formulas: 45 | Tiers: 0 T1, 45 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 45/45 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 3 | Formulas: 45 | Tiers: 0 T1, 45 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 45/45 | Source: view_definition*

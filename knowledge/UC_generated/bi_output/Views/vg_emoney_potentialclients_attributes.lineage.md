@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\vg_emoney_potentialclients_attributes.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\vg_emoney_potentialclients_attributes.json` (rows: 9, mismatches: 0) |
 | **Primary upstream** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 

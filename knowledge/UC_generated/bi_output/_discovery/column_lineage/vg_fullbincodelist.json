@@ -6,7 +6,7 @@
       "source_column_name": "SupportsAFT",
       "target_column_name": "aft_support",
       "entity_type": null,
-      "event_count": 9
+      "event_count": 10
     },
     {
       "source_table_full_name": "main.general.bronze_etoro_dictionary_countrybin",
@@ -27,14 +27,14 @@
       "source_column_name": "BinCode",
       "target_column_name": "bin_code",
       "entity_type": null,
-      "event_count": 25
+      "event_count": 28
     },
     {
       "source_table_full_name": "main.general.bronze_etoro_dictionary_countrybin",
       "source_column_name": "BinCode",
       "target_column_name": "bin_code",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.general.bronze_etoro_dictionary_countrybin",
@@ -48,7 +48,14 @@
       "source_column_name": "CardSubType",
       "target_column_name": "card_subtype",
       "entity_type": "NOTEBOOK",
-      "event_count": 4
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_dictionary_countrybin",
+      "source_column_name": "CardSubType",
+      "target_column_name": "card_subtype",
+      "entity_type": null,
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.general.bronze_etoro_dictionary_countrybin",
@@ -58,46 +65,39 @@
       "event_count": 2
     },
     {
-      "source_table_full_name": "main.general.bronze_etoro_dictionary_countrybin",
-      "source_column_name": "CardSubType",
-      "target_column_name": "card_subtype",
-      "entity_type": null,
-      "event_count": 2
-    },
-    {
       "source_table_full_name": "main.general.bronze_etoro_dictionary_cardtype",
       "source_column_name": "Name",
       "target_column_name": "card_type",
-      "entity_type": null,
-      "event_count": 8
-    },
-    {
-      "source_table_full_name": "main.general.bronze_etoro_dictionary_cardtype",
-      "source_column_name": "Name",
-      "target_column_name": "card_type",
-      "entity_type": "NOTEBOOK",
-      "event_count": 3
-    },
-    {
-      "source_table_full_name": "main.general.bronze_etoro_dictionary_cardtype",
-      "source_column_name": "Name",
-      "target_column_name": "card_type",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 2
-    },
-    {
-      "source_table_full_name": "main.billing.bronze_etoro_billing_badbin",
-      "source_column_name": "BinFrom",
-      "target_column_name": "is_bad_bin",
       "entity_type": null,
       "event_count": 11
     },
     {
+      "source_table_full_name": "main.general.bronze_etoro_dictionary_cardtype",
+      "source_column_name": "Name",
+      "target_column_name": "card_type",
+      "entity_type": "NOTEBOOK",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.general.bronze_etoro_dictionary_cardtype",
+      "source_column_name": "Name",
+      "target_column_name": "card_type",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.billing.bronze_etoro_billing_badbin",
+      "source_column_name": "BinFrom",
+      "target_column_name": "is_bad_bin",
+      "entity_type": null,
+      "event_count": 12
+    },
+    {
       "source_table_full_name": "main.billing.bronze_etoro_billing_badbin",
       "source_column_name": "BinFrom",
       "target_column_name": "is_bad_bin",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.billing.bronze_etoro_billing_badbin",
@@ -111,7 +111,7 @@
       "source_column_name": "IssuingBank",
       "target_column_name": "issuer_name",
       "entity_type": null,
-      "event_count": 11
+      "event_count": 16
     },
     {
       "source_table_full_name": "main.general.bronze_etoro_dictionary_countrybin",
@@ -132,7 +132,7 @@
       "source_column_name": "Name",
       "target_column_name": "issuing_country",
       "entity_type": null,
-      "event_count": 15
+      "event_count": 18
     },
     {
       "source_table_full_name": "main.general.bronze_etoro_dictionary_country",
@@ -149,5 +149,5 @@
       "event_count": 1
     }
   ],
-  "generated_at": "2026-05-19T14:58:13Z"
+  "generated_at": "2026-06-19T14:34:55Z"
 }

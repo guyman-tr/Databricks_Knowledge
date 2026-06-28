@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.positive_nmi_commodities
--- Captured: 2026-05-19T14:54:03Z
+-- Captured: 2026-06-19T14:32:58Z
 -- ==========================================================================
 
 SELECT

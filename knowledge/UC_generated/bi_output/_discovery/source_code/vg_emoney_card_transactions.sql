@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.vg_emoney_card_transactions
--- Captured: 2026-05-19T14:56:20Z
+-- Captured: 2026-06-19T14:33:39Z
 -- ==========================================================================
 
 select

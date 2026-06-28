@@ -2,6 +2,76 @@
   "object": "main.bi_output.bi_output_vg_customer_snapshot_v2",
   "rows": [
     {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus",
+      "source_column_name": "AccountStatusName",
+      "target_column_name": "AccountStatusName",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "Name",
+      "target_column_name": "ClubTier",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "DateID",
+      "target_column_name": "DateID",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_vg_date",
+      "source_column_name": "DateID",
+      "target_column_name": "DateID",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "GCID",
+      "target_column_name": "GCID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "source_column_name": "GuruStatusName",
+      "target_column_name": "GuruStatusName",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "PlayerLevelID",
+      "target_column_name": "PlayerLevelID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "source_column_name": "Name",
+      "target_column_name": "PlayerStatusName",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
       "source_column_name": "Name",
       "target_column_name": "VerificationLevel",
@@ -9,5 +79,5 @@
       "event_count": 1
     }
   ],
-  "generated_at": "2026-05-19T14:48:53Z"
+  "generated_at": "2026-06-19T14:30:40Z"
 }

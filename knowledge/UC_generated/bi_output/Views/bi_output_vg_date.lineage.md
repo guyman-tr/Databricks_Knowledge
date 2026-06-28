@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\bi_output_vg_date.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\bi_output_vg_date.json` (rows: 10, mismatches: 4) |
 | **Primary upstream** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 

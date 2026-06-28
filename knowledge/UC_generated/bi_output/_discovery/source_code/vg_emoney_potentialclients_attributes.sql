@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.vg_emoney_potentialclients_attributes
--- Captured: 2026-05-19T14:56:46Z
+-- Captured: 2026-06-19T14:33:58Z
 -- ==========================================================================
 
 WITH base_customers AS (

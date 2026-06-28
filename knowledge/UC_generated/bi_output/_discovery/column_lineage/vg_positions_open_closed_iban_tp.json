@@ -1,5 +1,90 @@
 {
   "object": "main.bi_output.vg_positions_open_closed_iban_tp",
-  "rows": [],
-  "generated_at": "2026-05-19T15:00:32Z"
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Amount",
+      "target_column_name": "Amount",
+      "entity_type": null,
+      "event_count": 10
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CID",
+      "target_column_name": "CID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "CloseDateID",
+      "target_column_name": "CloseDateID",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Commission",
+      "target_column_name": "Commission",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentDisplayName",
+      "target_column_name": "InstrumentDisplayName",
+      "entity_type": null,
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "source_column_name": "InstrumentType",
+      "target_column_name": "InstrumentType",
+      "entity_type": null,
+      "event_count": 8
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Leverage",
+      "target_column_name": "Leverage",
+      "entity_type": null,
+      "event_count": 9
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "NetProfit",
+      "target_column_name": "NetProfit",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "OpenDateID",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "PositionID",
+      "target_column_name": "PositionID",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "UpdateDate",
+      "target_column_name": "PositionUpdateDate",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    }
+  ],
+  "generated_at": "2026-06-19T14:35:13Z"
 }

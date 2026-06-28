@@ -5,7 +5,7 @@
 | **UC Object** | `main.bi_output.bi_output_urban_notifications_daily_panel_agg` |
 | **Object Type** | `EXTERNAL` |
 | **Source** | (no source code snapshot — JOB-written table or fetch failed) |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 > No SQL/notebook source was cached for this object. The wiki for this object
 > relies on `system.access.column_lineage` data cached under

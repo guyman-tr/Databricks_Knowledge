@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.bi_output_vg_club_offers
--- Captured: 2026-05-19T14:47:32Z
+-- Captured: 2026-06-19T14:30:08Z
 -- ==========================================================================
 
 SELECT STRING(clb.RealCID) AS RealCID

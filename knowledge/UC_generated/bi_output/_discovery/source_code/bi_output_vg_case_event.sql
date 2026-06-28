@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.bi_output_vg_case_event
--- Captured: 2026-05-19T14:47:12Z
+-- Captured: 2026-06-19T14:29:54Z
 -- ==========================================================================
 
 SELECT bdsce.EventID,

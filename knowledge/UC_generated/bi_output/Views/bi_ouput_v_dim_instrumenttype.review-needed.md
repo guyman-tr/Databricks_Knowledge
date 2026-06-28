@@ -1,6 +1,6 @@
 # Review-needed sidecar — `bi_ouput_v_dim_instrumenttype`
 
-Generated: 2026-05-19
+Generated: 2026-06-19
 Wiki: `knowledge/UC_generated/bi_output/Views/bi_ouput_v_dim_instrumenttype.md`
 
 ## UNVERIFIED columns

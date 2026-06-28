@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\v_external_france_wealth_contracts_transactions.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\v_external_france_wealth_contracts_transactions.json` (rows: 13, mismatches: 0) |
 | **Primary upstream** | `main.bi_db.bronze_wealth_france_wealth_france_users_data` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 

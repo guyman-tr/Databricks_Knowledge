@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 15
 row_count: null
-generated_at: '2026-05-19T15:02:05Z'
+generated_at: '2026-06-19T14:36:08Z'
 upstreams:
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country
@@ -51,7 +51,7 @@ tier_breakdown:
 | **Column count** | 15 |
 | **Concepts** | 7 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Mon Dec 15 14:17:50 UTC 2025 |
 
 ---
@@ -166,7 +166,7 @@ Of its 15 columns: 3 inherit byte-for-byte from upstream wikis (Tier 1), 12 are 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | AccountTypeID | INT | YES | Account type (e.g., 7=Employee, 9=excluded). FK to Dim_AccountType. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
-| 1 | Region | STRING | YES | Marketing region label for this country. Loaded from etoro.Dictionary.MarketingRegion.Name via JOIN on MarketingRegionID. NOT the geographic region from Dictionary.Region. 22 distinct values (e.g., "ROW", "Africa", "French", "Arabic Other"). Used for marketing campaign grouping. (Tier 2 - SP_Dictionaries_Country_DL_To_Synapse) |
+| 1 | Region | STRING | YES | Marketing region label for this country. Loaded from Dictionary.MarketingRegion.Name via JOIN on MarketingRegionID. NOT the geographic region from Dictionary.Region. Up to 21 distinct values (e.g., "ROW", "Africa", "French", "Arabic"). Used for marketing campaign grouping (Tier 1 — inherited from main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country). |
 | 2 | CountryName | STRING | YES | Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. (Tier 1 - Dictionary.Country upstream wiki) |
 | 3 | SellCurrencyID | INT | YES | Direct passthrough from upstream. Formula: `SellCurrencyID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument`) |
 | 4 | InstrumentType | STRING | YES | Computed in source (transform kind not classified). Formula: `SellCurrencyID , InstrumentType`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument`) |
@@ -251,4 +251,4 @@ main.bi_output.vg_positionsvolumeandattributes_lc4_source_test1   ←── this
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 7 | Formulas: 15 | Tiers: 3 T1, 12 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 15/15 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 7 | Formulas: 15 | Tiers: 3 T1, 12 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 15/15 | Source: view_definition*

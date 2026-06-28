@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.finance_tables_functions_revenue_trading_fees
--- Captured: 2026-05-19T14:53:03Z
+-- Captured: 2026-06-19T14:32:12Z
 -- ==========================================================================
 
 select 

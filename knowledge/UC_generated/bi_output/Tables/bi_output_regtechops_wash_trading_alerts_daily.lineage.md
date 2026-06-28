@@ -8,7 +8,7 @@
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\bi_output_regtechops_wash_trading_alerts_daily.json` (rows: 19, mismatches: 11) |
 | **Parse warning** | `no final write to target found in notebook` |
 | **Primary upstream** | `n/a` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 

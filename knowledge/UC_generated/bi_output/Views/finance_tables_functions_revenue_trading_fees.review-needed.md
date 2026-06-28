@@ -1,6 +1,6 @@
 # Review-needed sidecar — `finance_tables_functions_revenue_trading_fees`
 
-Generated: 2026-05-19
+Generated: 2026-06-19
 Wiki: `knowledge/UC_generated/bi_output/Views/finance_tables_functions_revenue_trading_fees.md`
 
 ## UNVERIFIED columns

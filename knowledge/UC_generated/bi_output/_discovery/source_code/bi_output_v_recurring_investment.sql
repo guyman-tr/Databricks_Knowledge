@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.bi_output_v_recurring_investment
--- Captured: 2026-05-19T14:46:46Z
+-- Captured: 2026-06-19T14:29:38Z
 -- ==========================================================================
 
 select

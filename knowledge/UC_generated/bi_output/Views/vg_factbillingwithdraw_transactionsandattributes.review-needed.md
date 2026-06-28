@@ -1,6 +1,6 @@
 # Review-needed sidecar — `vg_factbillingwithdraw_transactionsandattributes`
 
-Generated: 2026-05-19
+Generated: 2026-06-19
 Wiki: `knowledge/UC_generated/bi_output/Views/vg_factbillingwithdraw_transactionsandattributes.md`
 
 ## UNVERIFIED columns

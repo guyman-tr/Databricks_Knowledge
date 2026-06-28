@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\bi_output_marketing_marketingcloud_user_behavior_pi_v.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\bi_output_marketing_marketingcloud_user_behavior_pi_v.json` (rows: 1, mismatches: 0) |
 | **Primary upstream** | `main.bi_output.bi_output_marketing_marketingcloud_user_behavior_pi` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 

@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.bi_ouput_v_dim_instrumenttype
--- Captured: 2026-05-19T14:12:32Z
+-- Captured: 2026-06-19T14:17:34Z
 -- ==========================================================================
 
 SELECT ct.CurrencyTypeID AS InstrumentTypeID

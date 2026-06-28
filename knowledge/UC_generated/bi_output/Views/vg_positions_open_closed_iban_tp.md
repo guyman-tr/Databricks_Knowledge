@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 47
 row_count: null
-generated_at: '2026-05-19T15:02:04Z'
+generated_at: '2026-06-19T14:36:08Z'
 upstreams:
 - main.dwh.dim_position
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked
@@ -48,7 +48,7 @@ tier_breakdown:
 | **Column count** | 47 |
 | **Concepts** | 5 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Wed Nov 19 08:30:36 UTC 2025 |
 
 ---
@@ -257,4 +257,4 @@ main.bi_output.vg_positions_open_closed_iban_tp   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 5 | Formulas: 44 | Tiers: 1 T1, 46 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 47/47 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 5 | Formulas: 44 | Tiers: 1 T1, 46 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 47/47 | Source: view_definition*

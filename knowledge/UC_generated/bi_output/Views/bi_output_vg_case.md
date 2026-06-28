@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 50
 row_count: null
-generated_at: '2026-05-19T15:01:45Z'
+generated_at: '2026-06-19T14:35:52Z'
 upstreams:
 - main.crm.silver_crm_case
 writer:
@@ -43,7 +43,7 @@ tier_breakdown:
 | **Column count** | 50 |
 | **Concepts** | 2 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Wed Jan 21 15:49:28 UTC 2026 |
 
 ---
@@ -136,12 +136,12 @@ Of its 50 columns: 0 inherit byte-for-byte from upstream wikis (Tier 1), 49 are 
 | 9 | OwnerTeam | STRING | YES | Computed in source (transform kind not classified). Formula: `,Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …`. (Tier 2 — from `main.crm.silver_crm_case`) |
 | 10 | AccountID | STRING | YES | Computed in source (transform kind not classified). Formula: `,Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …`. (Tier 2 — from `main.crm.silver_crm_case`) |
 | 11 | RealCID | STRING | YES | Computed in source (transform kind not classified). Formula: `,Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …`. (Tier 2 — from `main.crm.silver_crm_case`) |
-| 12 | Origin | STRING | YES | Computed in source (transform kind not classified). Formula: `,Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …`. (Tier U — from `main.crm.silver_crm_case`) |
+| 12 | Origin | STRING | YES | Computed in source (transform kind not classified). Formula: `,Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …`. (Tier 2 — from `main.crm.silver_crm_case`) |
 | 13 | CurrentStatus | STRING | YES | Computed in source (transform kind not classified). Formula: `,Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …`. (Tier 2 — from `main.crm.silver_crm_case`) |
-| 14 | Priority | STRING | YES | Computed in source (transform kind not classified). Formula: `,Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …`. (Tier U — from `main.crm.silver_crm_case`) |
-| 15 | Subject | STRING | YES | Computed in source (transform kind not classified). Formula: `,Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …`. (Tier U — from `main.crm.silver_crm_case`) |
+| 14 | Priority | STRING | YES | Computed in source (transform kind not classified). Formula: `,Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …`. (Tier 2 — from `main.crm.silver_crm_case`) |
+| 15 | Subject | STRING | YES | Computed in source (transform kind not classified). Formula: `,Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …`. (Tier 2 — from `main.crm.silver_crm_case`) |
 | 16 | Description | STRING | YES | Computed in source (transform kind not classified). Formula: `,Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …`. (Tier 2 — from `main.crm.silver_crm_case`) |
-| 17 | IsClosedOnCreate | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …`. (Tier U — from `main.crm.silver_crm_case`) |
+| 17 | IsClosedOnCreate | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …`. (Tier 2 — from `main.crm.silver_crm_case`) |
 | 18 | Product | STRING | YES | Computed in source (transform kind not classified). Formula: `,Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …`. (Tier 2 — from `main.crm.silver_crm_case`) |
 | 19 | CASS_Impact | DECIMAL | YES | Computed in source (transform kind not classified). Formula: `,Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …`. (Tier 2 — from `main.crm.silver_crm_case`) |
 | 20 | AML_status | STRING | YES | Computed in source (transform kind not classified). Formula: `,Id AS CaseID ,CreatedDate AS CreatedDate ,CreatedById AS CreatedById ,LastModifiedDate AS LastModifiedDate ,LastModifiedById AS LastModifiedByID ,OwnerId AS OwnerID …`. (Tier 2 — from `main.crm.silver_crm_case`) |
@@ -232,4 +232,4 @@ main.bi_output.bi_output_vg_case   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 2 | Formulas: 49 | Tiers: 0 T1, 49 T2, 0 T3, 0 T4, 0 T5, 0 TN, 1 U | Elements: 50/50 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 2 | Formulas: 49 | Tiers: 0 T1, 49 T2, 0 T3, 0 T4, 0 T5, 0 TN, 1 U | Elements: 50/50 | Source: view_definition*

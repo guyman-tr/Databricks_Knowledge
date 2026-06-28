@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\vg_positionsvolumeandattributes_lc4_source.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\vg_positionsvolumeandattributes_lc4_source.json` (rows: 15, mismatches: 11) |
 | **Primary upstream** | `main.dwh.dim_position` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 

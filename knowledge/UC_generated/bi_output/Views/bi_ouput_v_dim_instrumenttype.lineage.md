@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\bi_ouput_v_dim_instrumenttype.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\bi_ouput_v_dim_instrumenttype.json` (rows: 2, mismatches: 1) |
 | **Primary upstream** | `main.general.bronze_etoro_dictionary_currencytype` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 

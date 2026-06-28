@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 6
 row_count: null
-generated_at: '2026-05-19T15:01:58Z'
+generated_at: '2026-06-19T14:36:02Z'
 upstreams:
 - main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_card_instance_summary
 writer:
@@ -43,7 +43,7 @@ tier_breakdown:
 | **Column count** | 6 |
 | **Concepts** | 0 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Mon Jan 19 11:58:45 UTC 2026 |
 
 ---
@@ -161,4 +161,4 @@ main.bi_output.vg_emoney_card_instance_summary   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 0 | Formulas: 6 | Tiers: 3 T1, 3 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 6/6 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 0 | Formulas: 6 | Tiers: 3 T1, 3 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 6/6 | Source: view_definition*

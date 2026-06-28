@@ -123,34 +123,34 @@ ROUND_ROBIN distribution — no hash key, data spread evenly across distribution
 |---|---------|------|----------|-------------|
 | 1 | CID | int | YES | Anonymized customer identifier. Hardcoded to 999999999 for all rows — original CID from BI_DB_PositionPnL is stripped for privacy. (Tier 2 — SP_BI_DB_PositionPnL_EU_Custody) |
 | 2 | PositionID_Hashed | varchar(100) | NO | SHA1 hash of the original PositionID from BI_DB_PositionPnL. 40-character uppercase hex string. Use UK_Custody_Resolver to map back to real PositionID. (Tier 2 — SP_BI_DB_PositionPnL_EU_Custody) |
-| 3 | InstrumentID | int | NO | Traded instrument. Only stocks/ETFs (InstrumentTypeID 5,6) appear. FK to Dim_Instrument. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 4 | MirrorID | int | YES | Copy-trading mirror link when applicable. 0 = non-mirror (direct) position. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 5 | Commission | money | NO | Opening commission in dollars. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 6 | InitForexRate | numeric(16,8) | NO | Open rate; split-adjusted in SP when position spans a split. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 7 | SpreadedPipBid | numeric(16,8) | YES | Bid with spread at open. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 8 | SpreadedPipAsk | numeric(16,8) | YES | Ask with spread at open. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 9 | PositionPnL | decimal(16,4) | YES | Unrealized P&L in USD; from PnLInDollars (replaces legacy formula). Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 10 | Price | numeric(38,6) | YES | Per-unit price-move expression x USD conversion factor from #Pre_UnrealizedPnL (bid/ask vs InitForexRate and instrument FX chain). Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 11 | HedgeServerID | int | YES | Hedge server for the position. 16 distinct values. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 12 | Amount | money | NO | Position amount in USD; rewound via Dim_PositionChangeLog when SL/partial-close edits after @dt. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 13 | AmountInUnitsDecimal | numeric(16,6) | YES | Size in instrument units; split-adjusted and rewound from partial-close log when applicable. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 14 | LimitRate | numeric(16,8) | NO | Take-profit rate. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 15 | StopRate | numeric(16,8) | NO | Stop-loss rate; rewound to PreviousStopRate when edited after @dt. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 16 | IsBuy | bit | NO | Long (1) vs short (0). Always 1 (True) in this table — real stock custody is BUY-only. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 17 | Occurred | datetime | NO | Position open timestamp (OpenOccurred). Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 18 | Date | date | YES | Snapshot calendar date @dt. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
+| 3 | InstrumentID | int | NO | Traded instrument. Only stocks/ETFs (InstrumentTypeID 5,6) appear. FK to Dim_Instrument. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 4 | MirrorID | int | YES | Copy-trading mirror link when applicable. 0 = non-mirror (direct) position. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 5 | Commission | money | NO | Opening commission in dollars. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 6 | InitForexRate | numeric(16,8) | NO | Open rate; split-adjusted in SP when position spans a split. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 7 | SpreadedPipBid | numeric(16,8) | YES | Bid with spread at open. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 8 | SpreadedPipAsk | numeric(16,8) | YES | Ask with spread at open. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 9 | PositionPnL | decimal(16,4) | YES | Unrealized P&L in USD; from PnLInDollars (replaces legacy formula). Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 10 | Price | numeric(38,6) | YES | Per-unit price-move expression x USD conversion factor from #Pre_UnrealizedPnL (bid/ask vs InitForexRate and instrument FX chain). Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 11 | HedgeServerID | int | YES | Hedge server for the position. 16 distinct values. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 12 | Amount | money | NO | Position amount in USD; rewound via Dim_PositionChangeLog when SL/partial-close edits after @dt. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 13 | AmountInUnitsDecimal | numeric(16,6) | YES | Size in instrument units; split-adjusted and rewound from partial-close log when applicable. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 14 | LimitRate | numeric(16,8) | NO | Take-profit rate. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 15 | StopRate | numeric(16,8) | NO | Stop-loss rate; rewound to PreviousStopRate when edited after @dt. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 16 | IsBuy | bit | NO | Long (1) vs short (0). Always 1 (True) in this table — real stock custody is BUY-only. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 17 | Occurred | datetime | NO | Position open timestamp (OpenOccurred). Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 18 | Date | date | YES | Snapshot calendar date @dt. Passthrough from BI_DB_PositionPnL. (Tier 3 — BI_DB_PositionPnL) |
 | 19 | DateID | int | NO | Snapshot date as YYYYMMDD; clustered index key. Single value per load (TRUNCATE+INSERT). Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
 | 20 | UpdateDate | datetime | YES | Row load timestamp at insert (GETDATE()). Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 21 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. Always 1 in this table (pre-filtered). Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 22 | NOP | money | YES | Net open position in USD from units x pair rate x direction x conversion. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 23 | DailyPnL | decimal(16,4) | YES | Day-over-day change: PositionPnL minus prior day PositionPnL. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 24 | Leverage | int | YES | Position leverage. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 25 | RateBid | numeric(36,12) | YES | EOD bid from latest Fact_CurrencyPriceWithSplit row before @ReportDate, split-adjusted. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 26 | RateAsk | numeric(36,12) | YES | EOD ask from same price row, split-adjusted. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 27 | USD_CR | money | YES | End-of-day conversion rate used with PnL context; from Dim_Position CurrentConversionRate. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 28 | SettlementTypeID | int | YES | Modern settlement type from Dim_Position. 2 distinct values (NULL, 0, 1). Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 29 | IsCreditReportValidCB | int | YES | 1 if customer is eligible for CreditBureau credit report validation. ETL-computed in Fact_SnapshotCustomer from PlayerLevelID, AccountTypeID, LabelID, CountryID. 99.96% = 1. Passthrough from Fact_SnapshotCustomer. (Tier 1 — DWH_dbo.Fact_SnapshotCustomer) |
-| 30 | IsValidCustomer | int | YES | 1 if the customer is a valid retail customer for analytics purposes. ETL-computed in Fact_SnapshotCustomer from PlayerLevelID, LabelID, CountryID. 99.96% = 1. Passthrough from Fact_SnapshotCustomer. (Tier 1 — DWH_dbo.Fact_SnapshotCustomer) |
+| 21 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. Always 1 in this table (pre-filtered). Passthrough from BI_DB_PositionPnL. (Tier 5 — BI_DB_PositionPnL) |
+| 22 | NOP | money | YES | Net open position in USD from units x pair rate x direction x conversion. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 23 | DailyPnL | decimal(16,4) | YES | Day-over-day change: PositionPnL minus prior day PositionPnL. Passthrough from BI_DB_PositionPnL. (Tier 3 — BI_DB_PositionPnL) |
+| 24 | Leverage | int | YES | Position leverage. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 25 | RateBid | numeric(36,12) | YES | EOD bid from latest Fact_CurrencyPriceWithSplit row before @ReportDate, split-adjusted. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 26 | RateAsk | numeric(36,12) | YES | EOD ask from same price row, split-adjusted. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 27 | USD_CR | money | YES | End-of-day conversion rate used with PnL context; from Dim_Position CurrentConversionRate. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 28 | SettlementTypeID | int | YES | Modern settlement type from Dim_Position. 2 distinct values (NULL, 0, 1). Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 29 | IsCreditReportValidCB | int | YES | Financial-customer flag for Client_Balance reports (CB = Client_Balance, NOT CreditBureau). ETL-computed in Fact_SnapshotCustomer from PlayerLevelID, AccountTypeID, LabelID, CountryID. 99.96% = 1. Passthrough from Fact_SnapshotCustomer. (Tier 2 — DWH_dbo.Fact_SnapshotCustomer) |
+| 30 | IsValidCustomer | int | YES | 1 if the customer is a valid retail customer for analytics purposes. ETL-computed in Fact_SnapshotCustomer from PlayerLevelID, LabelID, CountryID. 99.96% = 1. Passthrough from Fact_SnapshotCustomer. (Tier 2 — DWH_dbo.Fact_SnapshotCustomer) |
 
 ---
 

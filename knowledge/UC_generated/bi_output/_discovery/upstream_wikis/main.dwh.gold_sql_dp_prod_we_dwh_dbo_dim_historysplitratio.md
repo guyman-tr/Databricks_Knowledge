@@ -130,7 +130,7 @@ InstrumentID=1004 split history:
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | ID | int | NO | Surrogate primary key, auto-incremented. NOT FOR REPLICATION indicates replication topology. Uniquely identifies each split event. (Tier 1 — History.SplitRatio) |
+| 1 | ID | int | NO | Integer primary key identifying each split ratio record. Not auto-incremented in the DWH; value is passed through from the staging source via SP_Dim_HistorySplitRatio_DL_To_Synapse. |
 | 2 | InstrumentID | int | NO | The stock instrument this split applies to. FK to Trade.Instrument. CHECK constraint enforces InstrumentID > 1000 — only stock instruments (not forex or crypto). (Tier 1 — History.SplitRatio) |
 | 3 | MinDate | datetime | YES | Start of the period this split ratio is effective. Default '2000-01-01' means "from the beginning of the instrument's history." The split adjustment applies to transactions from this date forward until MaxDate. (Tier 1 — History.SplitRatio) |
 | 4 | MaxDate | datetime | YES | End of the period this split ratio is effective (exclusive). Sentinel value '2100-01-01' means "currently active — no end date set." When a new split occurs, the current active row's MaxDate is set to the new split's MinDate. (Tier 1 — History.SplitRatio) |

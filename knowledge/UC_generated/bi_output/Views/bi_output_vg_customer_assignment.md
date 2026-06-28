@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 11
 row_count: null
-generated_at: '2026-05-19T15:01:48Z'
+generated_at: '2026-06-19T14:35:54Z'
 upstreams:
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked
 - main.crm.gold_crm_accountsmanager
@@ -45,7 +45,7 @@ tier_breakdown:
 | **Column count** | 11 |
 | **Concepts** | 2 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Mon Jan 19 12:21:38 UTC 2026 |
 
 ---
@@ -136,7 +136,7 @@ Of its 11 columns: 0 inherit byte-for-byte from upstream wikis (Tier 1), 11 are 
 |----------|------|------|
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | Primary | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Customer.md` |
 | `main.crm.gold_crm_accountsmanager` | JOIN/UNION | `(no wiki — see `.review-needed.md`)` |
-| `main.bi_output.bi_output_vg_crm_user` | JOIN/UNION | `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_crm_user.md` |
+| `main.bi_output.bi_output_vg_crm_user` | JOIN/UNION | `knowledge\UC_generated\bi_output\Views\bi_output_vg_crm_user.md` |
 
 ### 5.2 Pipeline ASCII Diagram
 
@@ -189,4 +189,4 @@ main.bi_output.bi_output_vg_customer_assignment   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 2 | Formulas: 11 | Tiers: 0 T1, 11 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 11/11 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 2 | Formulas: 11 | Tiers: 0 T1, 11 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 11/11 | Source: view_definition*

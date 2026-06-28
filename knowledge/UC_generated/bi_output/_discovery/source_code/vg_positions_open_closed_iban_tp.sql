@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.vg_positions_open_closed_iban_tp
--- Captured: 2026-05-19T15:00:32Z
+-- Captured: 2026-06-19T14:35:13Z
 -- ==========================================================================
 
 SELECT 

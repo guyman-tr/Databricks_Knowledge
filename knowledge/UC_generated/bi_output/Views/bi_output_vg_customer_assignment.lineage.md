@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\bi_output_vg_customer_assignment.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\bi_output_vg_customer_assignment.json` (rows: 11, mismatches: 1) |
 | **Primary upstream** | `main.crm.gold_crm_accountsmanager` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 
@@ -15,7 +15,7 @@
 |--------------------|------|---------------|
 | `main.crm.gold_crm_accountsmanager` | Primary (FROM) | ✗ `(no wiki found)` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Customer.md` |
-| `main.bi_output.bi_output_vg_crm_user` | JOIN / referenced | ✗ `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_crm_user.md` |
+| `main.bi_output.bi_output_vg_crm_user` | JOIN / referenced | ✓ `knowledge\UC_generated\bi_output\Views\bi_output_vg_crm_user.md` |
 
 ## Lineage Chain
 
@@ -34,11 +34,11 @@ main.bi_output.bi_output_vg_customer_assignment   ←── this object
 |---|-----------|------------------|---------------|-----------|---------------|-------|
 | 1 | `RealCID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `RealCID` | `join_enriched` | (Tier 1 — Customer.CustomerStatic) | dcu.RealCID |
 | 2 | `SalesForceAccountID` | `main.crm.gold_crm_accountsmanager` | `AccountId` | `rename` | — | am.AccountId AS SalesForceAccountID |
-| 3 | `AM_CID` | `main.bi_output.bi_output_vg_crm_user` | `BO_User_ID` | `join_enriched` | — | u.BO_User_ID AS AM_CID |
+| 3 | `AM_CID` | `main.bi_output.bi_output_vg_crm_user` | `BO_User_ID` | `join_enriched` | (Tier 2 — from `main.crm.silver_crm_user`) | u.BO_User_ID AS AM_CID |
 | 4 | `AM_ID` | `main.crm.gold_crm_accountsmanager` | `OwnerId` | `rename` | — | am.OwnerId AS AM_ID |
-| 5 | `AM_FullName` | `main.bi_output.bi_output_vg_crm_user` | `FullName` | `join_enriched` | — | u.FullName AS AM_FullName |
-| 6 | `AM_Department` | `main.bi_output.bi_output_vg_crm_user` | `Department` | `join_enriched` | — | u.Department AS AM_Department |
-| 7 | `AM_Position` | `main.bi_output.bi_output_vg_crm_user` | `Position` | `join_enriched` | — | u.Position AS AM_Position |
+| 5 | `AM_FullName` | `main.bi_output.bi_output_vg_crm_user` | `FullName` | `join_enriched` | (Tier 2 — from `main.crm.silver_crm_user`) | u.FullName AS AM_FullName |
+| 6 | `AM_Department` | `main.bi_output.bi_output_vg_crm_user` | `Department` | `join_enriched` | (Tier 2 — from `main.crm.silver_crm_user`) | u.Department AS AM_Department |
+| 7 | `AM_Position` | `main.bi_output.bi_output_vg_crm_user` | `Position` | `join_enriched` | (Tier 2 — from `main.crm.silver_crm_user`) | u.Position AS AM_Position |
 | 8 | `AssignmentCreatedDate` | `main.crm.gold_crm_accountsmanager` | `CreatedDate` | `rename` | — | am.CreatedDate AS AssignmentCreatedDate |
 | 9 | `AssignmentStartAt` | `main.crm.gold_crm_accountsmanager` | `__START_AT` | `rename` | — | am.__START_AT AS AssignmentStartAt |
 | 10 | `AssignmentEndAt` | `main.crm.gold_crm_accountsmanager` | `__END_AT` | `rename` | — | am.__END_AT AS AssignmentEndAt |

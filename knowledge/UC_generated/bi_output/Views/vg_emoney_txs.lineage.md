@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\vg_emoney_txs.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\vg_emoney_txs.json` (rows: 10, mismatches: 0) |
 | **Primary upstream** | `main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 

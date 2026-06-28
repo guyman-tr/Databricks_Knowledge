@@ -1,0 +1,1268 @@
+{
+  "schema": "bi_output",
+  "catalog": "main",
+  "started_at": "2026-06-19T14:15:39Z",
+  "finished_at": "2026-06-19T14:36:10Z",
+  "wall_seconds": 1231.0,
+  "phases": {
+    "1": {
+      "wall_seconds": 0.17301177978515625,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "[discover-schema] phase=0 skip: C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\bi_output\\_schema_card.md exists (pass --force to rebuild)\n[discover-schema] phase=1 skip: C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\bi_output\\_discovery\\uc_inventory.json exists (pass --force to rebuild)"
+    },
+    "2": {
+      "wall_seconds": 1193.6464207172394,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [121/124] vg_positions_open_closed_iban_tp (VIEW)\n  [122/124] vg_positionsvolumeandattributes_lc4_source (VIEW)\n  [123/124] vg_positionsvolumeandattributes_lc4_source_test1 (VIEW)\n  [124/124] vg_trades (VIEW)\n[fetch-writer] wrote C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_fetch_manifest.json (ok=67, no_lineage=1, errors=0)"
+    },
+    "3": {
+      "wall_seconds": 2.555187702178955,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [126/128] vg_positionsvolumeandattributes_lc4_source_test1 → 9 upstream refs\n  [127/128] vg_promo_card_cashback → 0 upstream refs\n  [128/128] vg_trades → 9 upstream refs\n[upstream-bridge] wrote C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_index.json\n[upstream-bridge] stats={'total_upstreams': 213, 'rule1_synapse_mirror': 107, 'rule2_uc_generated': 59, 'rule3_uc_domain': 0, 'rule4_bronze_prod': 3, 'rule5_uc_native_map': 1, 'rule6_no_wiki': 43, 'wikis_cached': 111, 'no_wiki_placeholders': 102, 'blocked_on_upstream': 55}"
+    },
+    "4": {
+      "wall_seconds": 4.0312910079956055,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  wrote knowledge\\UC_generated\\bi_output\\Views\\vg_positionsvolumeandattributes_lc4_source.lineage.md\n[build-lineage] main.bi_output.vg_positionsvolumeandattributes_lc4_source_test1 (VIEW)\n  wrote knowledge\\UC_generated\\bi_output\\Views\\vg_positionsvolumeandattributes_lc4_source_test1.lineage.md\n[build-lineage] main.bi_output.vg_trades (VIEW)\n  wrote knowledge\\UC_generated\\bi_output\\Views\\vg_trades.lineage.md"
+    },
+    "4.5": {
+      "wall_seconds": 0.2700169086456299,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [SKIP] vg_payments_mimo_basedonddrallplatfrommimo_for_genie — concept_count=1 (use --force)\n  [SKIP] vg_positions_open_closed_iban_tp — concept_count=5 (use --force)\n  [SKIP] vg_positionsvolumeandattributes_lc4_source — concept_count=7 (use --force)\n  [SKIP] vg_positionsvolumeandattributes_lc4_source_test1 — concept_count=7 (use --force)\n  [SKIP] vg_trades — concept_count=8 (use --force)"
+    },
+    "4.6": {
+      "wall_seconds": 0.25202226638793945,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [SKIP] vg_payments_mimo_basedonddrallplatfrommimo_for_genie — formula_count=19 (use --force)\n  [SKIP] vg_positions_open_closed_iban_tp — formula_count=47 (use --force)\n  [SKIP] vg_positionsvolumeandattributes_lc4_source — formula_count=15 (use --force)\n  [SKIP] vg_positionsvolumeandattributes_lc4_source_test1 — formula_count=15 (use --force)\n  [SKIP] vg_trades — formula_count=23 (use --force)"
+    },
+    "5": {
+      "wall_seconds": 28.432976484298706,
+      "rc": 1,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [OK] vg_positions_open_closed_iban_tp — tiers={'2': 46, '1': 1}, unverified=0\n  [OK] vg_positionsvolumeandattributes_lc4_source — tiers={'2': 15}, unverified=0\n  [OK] vg_positionsvolumeandattributes_lc4_source_test1 — tiers={'2': 12, '1': 3}, unverified=0\n  [OK] vg_trades — tiers={'2': 20, '1': 3}, unverified=0\n[generate-wiki] done: 123/124 OK"
+    }
+  },
+  "failures": [
+    "phase 5 rc=1: [generate-wiki] done: 123/124 OK"
+  ],
+  "objects": [
+    {
+      "name": "australia_tag_ob_june26",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 8
+      }
+    },
+    {
+      "name": "bi_ouput_v_dim_instrumenttype",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 1,
+        "2": 1
+      }
+    },
+    {
+      "name": "bi_ouput_vg_etoro_emoney",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 18
+      }
+    },
+    {
+      "name": "bi_output_compliance_kycscreeninglimitation",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_compliance_mas_daily_client_metrics",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_compliance_mas_population",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_compliance_uk_social_activity_monitoring",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_compliance_uk_social_activity_monitoring_m",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_agent_engagement",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_club_club_equity",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_pageviews_behaviour",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_survey",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_survey_taker",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_triggers",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_triggers_filtered",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_triggers_lead_score",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_support_agent_user",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_support_aml_handling_days",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_support_case",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_support_case_event",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_support_customer_engagement",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_support_task",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_external_table_isa",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_investment_capital_guarantee_capital_guarantee_q42024_global",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_social_social_feed",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_markit_ca_stockdiv_spinoff_mapping",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_dealing_markit_ca_stockdiv_spinoff_report",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_deltaapp_subscription_view",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 21
+      }
+    },
+    {
+      "name": "bi_output_emoney_datapipeline_cardinstancelaststatus",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_emoney_datapipeline_cardtokenseventlog",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_external_table_bi_db_sharelending_custodyreconciliation_external",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_external_table_bi_db_sharelending_reconciliation_external",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_hedge_nettingbalance",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_positions_closed_to_iban",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_positions_closed_to_iban_parquet",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_positions_opened_from_iban",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_recurringinvestment_positions_parquet",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_collateraldetaileseu",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_collateraldetailesmain",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_collateraldetailesuk",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_custodyreconciliation",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_uk",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_loansandcollateraleu",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_loansandcollateralmain",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_loansandcollateraluk",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_price_estimated",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_reconciliation",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_ptp_tax",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_marketing_acquisition_demo",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_marketing_acquisition_liveacquisition",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_marketing_affiliate_payments_report_closed_position",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_marketing_liveacquisitiondashboard",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_marketing_marketingcloud_user_behavior_instrument_v",
+      "in_pilot_scope": true,
+      "status": "Stub only",
+      "status_detail": "all 16 columns unclassifiable",
+      "blocked_on_upstream": null,
+      "routing_attempts": "no upstream wiki match AND no source-code citation",
+      "n_unverified": 16,
+      "tier_breakdown": {
+        "U": 16
+      }
+    },
+    {
+      "name": "bi_output_marketing_marketingcloud_user_behavior_pi_v",
+      "in_pilot_scope": true,
+      "status": "Stub only",
+      "status_detail": "all 13 columns unclassifiable",
+      "blocked_on_upstream": null,
+      "routing_attempts": "no upstream wiki match AND no source-code citation",
+      "n_unverified": 13,
+      "tier_breakdown": {
+        "U": 13
+      }
+    },
+    {
+      "name": "bi_output_marketing_promotion_bi_db_promo_card",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_marketing_sfmc_sfmc_filter",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_marketing_sfmc_sfmc_report",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_moneyfarm_customers",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_moneyfarm_fact_portfolio_snapshot",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_moneyfarm_fact_transactions",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_regtechops_wash_trading_alerts_daily",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 19
+      }
+    },
+    {
+      "name": "bi_output_urban_notifications_daily_panel",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_urban_notifications_daily_panel_agg",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_urban_notifications_monthly_lsd",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_v_recurring_investment",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 63
+      }
+    },
+    {
+      "name": "bi_output_vg_aum",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 3,
+        "2": 61
+      }
+    },
+    {
+      "name": "bi_output_vg_case",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "1 of 50 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "2": 49,
+        "U": 1
+      }
+    },
+    {
+      "name": "bi_output_vg_case_event",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.bi_output.bi_output_customer_customer_support_case_event",
+      "blocked_on_upstream": "main.bi_output.bi_output_customer_customer_support_case_event",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "N": 20,
+        "2": 2
+      }
+    },
+    {
+      "name": "bi_output_vg_cf_crm_contact",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "32 of 58 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 32,
+      "tier_breakdown": {
+        "U": 32,
+        "2": 26
+      }
+    },
+    {
+      "name": "bi_output_vg_club",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 68,
+        "1": 1
+      }
+    },
+    {
+      "name": "bi_output_vg_club_offers",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 64
+      }
+    },
+    {
+      "name": "bi_output_vg_copy_mimo",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 52,
+        "1": 3
+      }
+    },
+    {
+      "name": "bi_output_vg_crm_user",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 21
+      }
+    },
+    {
+      "name": "bi_output_vg_customer_assignment",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 11
+      }
+    },
+    {
+      "name": "bi_output_vg_customer_first_dates",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 2,
+        "2": 65
+      }
+    },
+    {
+      "name": "bi_output_vg_customer_snapshot",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 56
+      }
+    },
+    {
+      "name": "bi_output_vg_customer_snapshot_test",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 56
+      }
+    },
+    {
+      "name": "bi_output_vg_customer_snapshot_v2",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 62
+      }
+    },
+    {
+      "name": "bi_output_vg_daily_commission",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 37
+      }
+    },
+    {
+      "name": "bi_output_vg_date",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 5,
+        "2": 5
+      }
+    },
+    {
+      "name": "bi_output_vg_ddr_customers_snapshot",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 102
+      }
+    },
+    {
+      "name": "bi_output_vg_mimo",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 62,
+        "1": 1
+      }
+    },
+    {
+      "name": "bi_output_vg_new_funded_2026_single_asset",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_parentcid",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 66,
+        "1": 10
+      }
+    },
+    {
+      "name": "bi_output_vg_revenue",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 49,
+        "1": 2,
+        "5": 1
+      }
+    },
+    {
+      "name": "bi_output_vg_volume_amount",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "29 of 71 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 29,
+      "tier_breakdown": {
+        "2": 42,
+        "U": 29
+      }
+    },
+    {
+      "name": "bi_output_wf_view",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 18
+      }
+    },
+    {
+      "name": "current",
+      "in_pilot_scope": true,
+      "status": "Stub only",
+      "status_detail": "all 1 columns unclassifiable",
+      "blocked_on_upstream": null,
+      "routing_attempts": "no upstream wiki match AND no source-code citation",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "U": 1
+      }
+    },
+    {
+      "name": "current_table",
+      "in_pilot_scope": true,
+      "status": "Stub only",
+      "status_detail": "all 1 columns unclassifiable",
+      "blocked_on_upstream": null,
+      "routing_attempts": "no upstream wiki match AND no source-code citation",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "U": 1
+      }
+    },
+    {
+      "name": "finance_tables_functions_revenue_sdrt",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 45
+      }
+    },
+    {
+      "name": "finance_tables_functions_revenue_trading_fees",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 1,
+        "2": 45
+      }
+    },
+    {
+      "name": "funded",
+      "in_pilot_scope": true,
+      "status": "Stub only",
+      "status_detail": "all 2 columns unclassifiable",
+      "blocked_on_upstream": null,
+      "routing_attempts": "no upstream wiki match AND no source-code citation",
+      "n_unverified": 2,
+      "tier_breakdown": {
+        "U": 2
+      }
+    },
+    {
+      "name": "limitation_to_normal_conversion",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 6
+      }
+    },
+    {
+      "name": "negative_nmi",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 5
+      }
+    },
+    {
+      "name": "nmi_by_portfoliopi_new",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 7
+      }
+    },
+    {
+      "name": "positionsvolumeandattributes_lc4_source",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 14,
+        "1": 1
+      }
+    },
+    {
+      "name": "positive_nmi",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 5
+      }
+    },
+    {
+      "name": "positive_nmi_commodities",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 5
+      }
+    },
+    {
+      "name": "snapshot",
+      "in_pilot_scope": true,
+      "status": "Stub only",
+      "status_detail": "all 1 columns unclassifiable",
+      "blocked_on_upstream": null,
+      "routing_attempts": "no upstream wiki match AND no source-code citation",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "U": 1
+      }
+    },
+    {
+      "name": "snapshot_table",
+      "in_pilot_scope": true,
+      "status": "Stub only",
+      "status_detail": "all 1 columns unclassifiable",
+      "blocked_on_upstream": null,
+      "routing_attempts": "no upstream wiki match AND no source-code citation",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "U": 1
+      }
+    },
+    {
+      "name": "v_external_france_wealth_contracts_transactions",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 13
+      }
+    },
+    {
+      "name": "vg_acquisitionfunnel_em1",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 2,
+        "2": 15
+      }
+    },
+    {
+      "name": "vg_bidb_alldeposits_for_genie",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 8,
+        "2": 30
+      }
+    },
+    {
+      "name": "vg_emoney_card_instance_summary",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 3,
+        "2": 3
+      }
+    },
+    {
+      "name": "vg_emoney_card_transactions",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 1,
+        "2": 8
+      }
+    },
+    {
+      "name": "vg_emoney_openbankingdeposit",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 4,
+        "2": 2
+      }
+    },
+    {
+      "name": "vg_emoney_panel_firstdates_em1",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 2,
+        "2": 42
+      }
+    },
+    {
+      "name": "vg_emoney_potentialclients_attributes",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 9
+      }
+    },
+    {
+      "name": "vg_emoney_txs",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 2,
+        "2": 8
+      }
+    },
+    {
+      "name": "vg_emoneydimaccount_forgenie",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 3,
+        "2": 5
+      }
+    },
+    {
+      "name": "vg_emoneydimtransaction_forgenie",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 2,
+        "2": 11
+      }
+    },
+    {
+      "name": "vg_fact_billingdeposit_for_genie",
+      "in_pilot_scope": true,
+      "status": "Stub only",
+      "status_detail": "all 139 columns unclassifiable",
+      "blocked_on_upstream": null,
+      "routing_attempts": "no upstream wiki match AND no source-code citation",
+      "n_unverified": 139,
+      "tier_breakdown": {
+        "U": 139
+      }
+    },
+    {
+      "name": "vg_fact_billingdepost_forgenie",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 7,
+        "2": 14
+      }
+    },
+    {
+      "name": "vg_fact_billingdepost_forgenie_new",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 7,
+        "2": 14
+      }
+    },
+    {
+      "name": "vg_fact_billingwithdraw_for_genie",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 11,
+        "2": 10
+      }
+    },
+    {
+      "name": "vg_fact_snapshotcustomer_for_emoney_genie",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 26
+      }
+    },
+    {
+      "name": "vg_factbillingdeposit_transactionsandattributes",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 9,
+        "2": 18
+      }
+    },
+    {
+      "name": "vg_factbillingwithdraw_transactionsandattributes",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 7,
+        "2": 10
+      }
+    },
+    {
+      "name": "vg_fullbincodelist",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 4,
+        "2": 3
+      }
+    },
+    {
+      "name": "vg_payments_mimo_allplatformddr_genienew",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 12,
+        "1": 2
+      }
+    },
+    {
+      "name": "vg_payments_mimo_basedonddrallplatfrommimo_for_genie",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 19
+      }
+    },
+    {
+      "name": "vg_positions_open_closed_iban_tp",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 46,
+        "1": 1
+      }
+    },
+    {
+      "name": "vg_positionsvolumeandattributes_lc4_source",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 15
+      }
+    },
+    {
+      "name": "vg_positionsvolumeandattributes_lc4_source_test1",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 12,
+        "1": 3
+      }
+    },
+    {
+      "name": "vg_promo_card_cashback",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 5 rc=1)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_trades",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 20,
+        "1": 3
+      }
+    }
+  ]
+}

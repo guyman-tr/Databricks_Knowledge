@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.v_external_france_wealth_contracts_transactions
--- Captured: 2026-05-19T14:54:25Z
+-- Captured: 2026-06-19T14:33:12Z
 -- ==========================================================================
 
 SELECT

@@ -21,7 +21,7 @@ source_tool: tools/uc_bronze/generate_bronze_alters.py
 | [Customer.AdditionalCitizenship](Wiki/Customer/Tables/Customer.AdditionalCitizenship.md) | `main.bi_db.bronze_userapidb_customer_additionalcitizenship` | Deployed (Batch 1) - 2026-05-03 |
 | [Customer.Avatars](Wiki/Customer/Tables/Customer.Avatars.md) | `main.compliance.bronze_userapidb_customer_avatars` | Deployed (Batch 1) - 2026-05-03 |
 | [Customer.CustomerIdentification](Wiki/Customer/Tables/Customer.CustomerIdentification.md) | `main.compliance.bronze_userapidb_customer_customeridentification` | Deployed (Batch 1) - 2026-05-03 |
-| [Customer.ExtendedUserField](Wiki/Customer/Tables/Customer.ExtendedUserField.md) | `main.pii_data.bronze_userapidb_customer_extendeduserfield` | Deployed (Batch 1) - 2026-05-03 |
+| [Customer.ExtendedUserField](Wiki/Customer/Tables/Customer.ExtendedUserField.md) | `main.pii_data.bronze_userapidb_customer_extendeduserfield` | Deployed (Batch 1) - 2026-05-03; column comments redeployed 2026-06-23 (drift fix) |
 | [Customer.ExtendedUserField](Wiki/Customer/Tables/Customer.ExtendedUserField.md) | `main.compliance.bronze_userapidb_customer_extendeduserfield_masked` | Deployed (Batch 1) - 2026-05-03 |
 | [Customer.ExtendedUserFieldValidation](Wiki/Customer/Tables/Customer.ExtendedUserFieldValidation.md) | `main.bi_db.bronze_userapidb_customer_extendeduserfieldvalidation` | Deployed (Batch 1) - 2026-05-03 |
 | [Customer.ExtendedUserField_History](Wiki/Customer/Tables/Customer.ExtendedUserField_History.md) | `main.pii_data.bronze_userapidb_customer_extendeduserfield_history` | Deployed (Batch 1) - 2026-05-03 |

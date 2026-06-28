@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 139
 row_count: null
-generated_at: '2026-05-19T15:02:01Z'
+generated_at: '2026-06-19T14:36:05Z'
 upstreams:
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit
 writer:
@@ -43,7 +43,7 @@ tier_breakdown:
 | **Column count** | 139 |
 | **Concepts** | 0 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Thu Jan 29 11:08:21 UTC 2026 |
 
 ---
@@ -294,4 +294,4 @@ main.bi_output.vg_fact_billingdeposit_for_genie   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 0 | Formulas: 0 | Tiers: 0 T1, 0 T2, 0 T3, 0 T4, 0 T5, 0 TN, 139 U | Elements: 139/139 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 0 | Formulas: 0 | Tiers: 0 T1, 0 T2, 0 T3, 0 T4, 0 T5, 0 TN, 139 U | Elements: 139/139 | Source: view_definition*

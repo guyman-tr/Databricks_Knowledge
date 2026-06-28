@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.vg_payments_mimo_allplatformddr_genienew
--- Captured: 2026-05-19T14:58:19Z
+-- Captured: 2026-06-19T14:35:00Z
 -- ==========================================================================
 
 SELECT

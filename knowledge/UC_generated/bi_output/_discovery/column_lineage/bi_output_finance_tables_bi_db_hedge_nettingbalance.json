@@ -30,6 +30,20 @@
       "event_count": 92
     },
     {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "Balance",
+      "entity_type": "JOB",
+      "event_count": 12
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "Balance",
+      "entity_type": "JOB",
+      "event_count": 12
+    },
+    {
       "source_table_full_name": "main.bi_output_stg.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "Balance",
@@ -65,6 +79,20 @@
       "event_count": 92
     },
     {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "IsBuy",
+      "target_column_name": "BalancePlus1h",
+      "entity_type": "JOB",
+      "event_count": 12
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "Units",
+      "target_column_name": "BalancePlus1h",
+      "entity_type": "JOB",
+      "event_count": 12
+    },
+    {
       "source_table_full_name": "main.bi_output_stg.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "BalancePlus1h",
       "target_column_name": "BalancePlus1h",
@@ -86,6 +114,13 @@
       "event_count": 92
     },
     {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "HedgeServerID",
+      "target_column_name": "HedgeServerID",
+      "entity_type": "JOB",
+      "event_count": 12
+    },
+    {
       "source_table_full_name": "main.bi_output_stg.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "HedgeServerID",
       "target_column_name": "HedgeServerID",
@@ -107,6 +142,13 @@
       "event_count": 92
     },
     {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "InstrumentID",
+      "target_column_name": "InstrumentID",
+      "entity_type": "JOB",
+      "event_count": 12
+    },
+    {
       "source_table_full_name": "main.bi_output_stg.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "InstrumentID",
       "target_column_name": "InstrumentID",
@@ -128,6 +170,13 @@
       "event_count": 92
     },
     {
+      "source_table_full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "source_column_name": "LiquidityAccountID",
+      "target_column_name": "LiquidityAccountID",
+      "entity_type": "JOB",
+      "event_count": 12
+    },
+    {
       "source_table_full_name": "main.bi_output_stg.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "LiquidityAccountID",
       "target_column_name": "LiquidityAccountID",
@@ -139,7 +188,7 @@
       "source_column_name": null,
       "target_column_name": "ReportDate",
       "entity_type": "JOB",
-      "event_count": 62
+      "event_count": 92
     },
     {
       "source_table_full_name": "main.bi_output_stg.bi_output_finance_tables_bi_db_hedge_nettingbalance",
@@ -153,7 +202,7 @@
       "source_column_name": null,
       "target_column_name": "ReportDateID",
       "entity_type": "JOB",
-      "event_count": 62
+      "event_count": 92
     },
     {
       "source_table_full_name": "main.bi_output_stg.bi_output_finance_tables_bi_db_hedge_nettingbalance",
@@ -167,7 +216,7 @@
       "source_column_name": null,
       "target_column_name": "UpdateDate",
       "entity_type": "JOB",
-      "event_count": 62
+      "event_count": 92
     },
     {
       "source_table_full_name": "main.bi_output_stg.bi_output_finance_tables_bi_db_hedge_nettingbalance",
@@ -181,7 +230,7 @@
       "source_column_name": null,
       "target_column_name": "etr_y",
       "entity_type": "JOB",
-      "event_count": 62
+      "event_count": 92
     },
     {
       "source_table_full_name": null,
@@ -195,7 +244,7 @@
       "source_column_name": null,
       "target_column_name": "etr_ym",
       "entity_type": "JOB",
-      "event_count": 62
+      "event_count": 92
     },
     {
       "source_table_full_name": null,
@@ -209,7 +258,7 @@
       "source_column_name": null,
       "target_column_name": "etr_ymd",
       "entity_type": "JOB",
-      "event_count": 62
+      "event_count": 92
     },
     {
       "source_table_full_name": null,
@@ -219,5 +268,5 @@
       "event_count": 1
     }
   ],
-  "generated_at": "2026-05-19T14:26:26Z"
+  "generated_at": "2026-06-19T14:23:25Z"
 }

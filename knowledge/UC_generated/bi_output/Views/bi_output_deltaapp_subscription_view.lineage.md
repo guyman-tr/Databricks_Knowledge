@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\bi_output_deltaapp_subscription_view.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\bi_output_deltaapp_subscription_view.json` (rows: 21, mismatches: 21) |
 | **Primary upstream** | `main.bi_db.bronze_deltaapp_bronze_subscriptions` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 

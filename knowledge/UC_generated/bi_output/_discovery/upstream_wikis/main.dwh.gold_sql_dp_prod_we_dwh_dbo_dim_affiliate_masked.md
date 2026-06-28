@@ -167,7 +167,7 @@ _Pending — resolved during write-objects._
 | 28 | FTDLastMonth | int | YES | FTDs referred last calendar month. (Tier 2 — Ext_Dim_Affiliate_FTD) |
 | 29 | FTDLastQuarter | int | YES | FTDs referred last calendar quarter. (Tier 2 — Ext_Dim_Affiliate_FTD) |
 | 30 | FTDLastYear | int | YES | FTDs referred last calendar year. (Tier 2 — Ext_Dim_Affiliate_FTD) |
-| 31 | FTDeFirstDate | datetime | YES | Date of the affiliate's first referred FTDe (FTD equivalent — includes qualifying non-deposit events). (Tier 2 — Ext_Dim_Affiliate_FTDe) |
+| 31 | FTDeFirstDate | datetime | YES | Date of the affiliate's first referred FTDe (Valid first-time deposit). FTDe uses the same deposit source as FTD (CreditTypeID=1, IsFirstDeposit=1) but adds a Valid=1 filter. Sourced from Ext_Dim_Affiliate_FTDe. |
 | 32 | FTDeLastDate | datetime | YES | Date of the most recent referred FTDe. (Tier 2 — Ext_Dim_Affiliate_FTDe) |
 | 33 | FTDeLifeTime | int | YES | Total FTDe events referred all time. (Tier 2 — Ext_Dim_Affiliate_FTDe) |
 | 34 | FTDeYesterday | int | YES | FTDe events referred yesterday. (Tier 2 — Ext_Dim_Affiliate_FTDe) |

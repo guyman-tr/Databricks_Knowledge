@@ -10,7 +10,7 @@ table_type: EXTERNAL
 format: null
 column_count: 19
 row_count: null
-generated_at: '2026-05-19T15:01:44Z'
+generated_at: '2026-06-19T14:35:51Z'
 upstreams:
 - main.trading.bronze_etoro_history_position_datafactory
 - main.trading.bronze_etoro_trade_instrumentmetadata
@@ -45,7 +45,7 @@ tier_breakdown:
 | **Column count** | 19 |
 | **Concepts** | 0 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Mon May 04 11:10:18 UTC 2026 |
 
 ---
@@ -128,7 +128,7 @@ Pure passthrough — no discriminator concepts detected in source. Refer to upst
 |----------|------|------|
 | `main.trading.bronze_etoro_history_position_datafactory` | Primary | `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/History/Views/History.Position_DataFactory.md` |
 | `main.trading.bronze_etoro_trade_instrumentmetadata` | JOIN/UNION | `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.InstrumentMetaData.md` |
-| `main.bi_output.bi_output_regtechops_wash_trading_alerts_daily` | JOIN/UNION | `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_regtechops_wash_trading_alerts_daily.md` |
+| `main.bi_output.bi_output_regtechops_wash_trading_alerts_daily` | JOIN/UNION | `knowledge\UC_generated\bi_output\Tables\bi_output_regtechops_wash_trading_alerts_daily.md` |
 
 ### 5.2 Pipeline ASCII Diagram
 
@@ -181,4 +181,4 @@ main.bi_output.bi_output_regtechops_wash_trading_alerts_daily   ←── this o
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 0 | Formulas: 19 | Tiers: 0 T1, 19 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 19/19 | Source: notebook*
+*Generated: 2026-06-19 | Concepts: 0 | Formulas: 19 | Tiers: 0 T1, 19 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 19/19 | Source: notebook*

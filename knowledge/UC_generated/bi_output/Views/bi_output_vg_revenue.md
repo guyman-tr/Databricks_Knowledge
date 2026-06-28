@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 52
 row_count: null
-generated_at: '2026-05-19T15:01:51Z'
+generated_at: '2026-06-19T14:35:57Z'
 upstreams:
 - main.bi_output.bi_output_vg_date
 - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions
@@ -52,7 +52,7 @@ tier_breakdown:
 | **Column count** | 52 |
 | **Concepts** | 15 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Mon Dec 29 14:07:59 UTC 2025 |
 
 ---
@@ -61,7 +61,7 @@ tier_breakdown:
 
 `bi_output_vg_revenue` is a view in `main.bi_output` that composes 1 CASE-based classifier flag(s) computed from upstream IDs, 14 JOIN-enriched dimension lookup(s).
 
-Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.bi_output.bi_output_vg_date` → this object. Canonical upstream documentation: `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_date.md`. Additional upstreams: 17 object(s), listed in §5 Lineage.
+Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.bi_output.bi_output_vg_date` → this object. Canonical upstream documentation: `knowledge\UC_generated\bi_output\Views\bi_output_vg_date.md`. Additional upstreams: 17 object(s), listed in §5 Lineage.
 
 Of its 52 columns: 2 inherit byte-for-byte from upstream wikis (Tier 1), 49 are formula-assembled from cached source code (Tier 2 — see §4 for the formula and §2 for the named concept), 0 are null-with-provenance (Tier N — terminal-no-wiki upstream).
 
@@ -254,18 +254,18 @@ Of its 52 columns: 2 inherit byte-for-byte from upstream wikis (Tier 1), 49 are 
 | 13 | RevenueMetricCategory | STRING | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
 | 14 | PlayerLevelID | INT | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
 | 15 | ClubTier | STRING | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
-| 16 | RegulationID | INT | YES | Customer's assigned regulatory jurisdiction. DEFAULT 0. Sourced from Ext_FSC_BackOffice_RegulationChangeLog.ToRegulationID — end-of-day change. See §2.4. FK to Dim_Regulation. (Tier 2 — via Fact_SnapshotCustomer) |
+| 16 | RegulationID | INT | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
 | 17 | Regulation | STRING | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
 | 18 | VerificationLevelID | INT | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
 | 19 | VerificationLevel | STRING | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
 | 20 | CountryID | INT | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
 | 21 | Country | STRING | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
 | 22 | Region | STRING | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
-| 23 | AccountManagerID | INT | YES | Assigned account manager (sales/retention). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.AccountManagerID (BO). FK to Dim_Manager. (Tier 2 — via Fact_SnapshotCustomer) |
+| 23 | AccountManagerID | INT | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
 | 24 | AccountManager | STRING | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
 | 25 | LanguageID | INT | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
 | 26 | Language | STRING | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
-| 27 | CommunicationLanguageID | INT | YES | Preferred communication language (may differ from interface language). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.CommunicationLanguageID (CC). FK to Dim_Language. (Tier 2 — via Fact_SnapshotCustomer) |
+| 27 | CommunicationLanguageID | INT | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
 | 28 | CommunicationLanguage | STRING | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
 | 29 | AccountTypeID | INT | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
 | 30 | AccountType | STRING | YES | Computed in source (transform kind not classified). Formula: `, DateID , CalendarYearMonth , CalendarQuarter , CalendarYear , STRING(RealCID) AS RealCID , InstrumentTypeID , InstrumentType , IsSettled …`. (Tier 2 — from `main.bi_output.bi_ouput_v_dim_Instrumenttype`, `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`) |
@@ -280,7 +280,7 @@ Of its 52 columns: 2 inherit byte-for-byte from upstream wikis (Tier 1), 49 are 
 | 39 | CanClosePosition | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `, Metric , CountAsActiveTrade , IncludedInTotalRevenue , RevenueMetricCategory ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name A…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel` (+2 more)) |
 | 40 | CanEditPosition | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `, CountAsActiveTrade , IncludedInTotalRevenue , RevenueMetricCategory ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel` (+2 more)) |
 | 41 | CanBeCopied | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `, IncludedInTotalRevenue , RevenueMetricCategory ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` (+1 more)) |
-| 42 | CanDeposit | BOOLEAN | YES | Whether the user can add funds to their account. False for full-block statuses (IsBlocked=1), close-only/pending statuses (9, 13, 15), status 10 (Deposit Blocked), and status 11 (Social Index). |
+| 42 | CanDeposit | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `, RevenueMetricCategory ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel` (+2 more)) |
 | 43 | CanRequestWithdraw | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Na…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country` (+2 more)) |
 | 44 | PlayerStatusReasonID | INT | YES | Computed in source (transform kind not classified). Formula: `,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,M…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country` (+2 more)) |
 | 45 | PlayerStatusReasonName | STRING | YES | Computed in source (transform kind not classified). Formula: `,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
@@ -299,9 +299,9 @@ Of its 52 columns: 2 inherit byte-for-byte from upstream wikis (Tier 1), 49 are 
 
 | Upstream | Role | Wiki |
 |----------|------|------|
-| `main.bi_output.bi_output_vg_date` | Primary | `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_date.md` |
+| `main.bi_output.bi_output_vg_date` | Primary | `knowledge\UC_generated\bi_output\Views\bi_output_vg_date.md` |
 | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions` | JOIN/UNION | `knowledge\synapse\Wiki\BI_DB_dbo\Tables\BI_DB_DDR_Fact_Revenue_Generating_Actions.md` |
-| `main.bi_output.bi_ouput_v_dim_instrumenttype` | JOIN/UNION | `knowledge/UC_generated/bi_output/<Tables|Views>/bi_ouput_v_dim_instrumenttype.md` |
+| `main.bi_output.bi_ouput_v_dim_instrumenttype` | JOIN/UNION | `knowledge\UC_generated\bi_output\Views\bi_ouput_v_dim_instrumenttype.md` |
 | `main.bi_output.bi_output_customer_ddr_revenue_metrics` | JOIN/UNION | `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_customer_ddr_revenue_metrics.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Views\V_Fact_SnapshotCustomer_FromDateID.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_PlayerLevel.md` |
@@ -340,7 +340,7 @@ main.bi_output.bi_output_vg_revenue   ←── this object
 
 ### 6.1 References To (summary — see §5 for full table)
 
-- **Primary upstream**: `main.bi_output.bi_output_vg_date` (wiki: `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_date.md`)
+- **Primary upstream**: `main.bi_output.bi_output_vg_date` (wiki: `knowledge\UC_generated\bi_output\Views\bi_output_vg_date.md`)
 - **JOIN/UNION upstreams**: 17 additional object(s)
 - **Wiki coverage**: 17/17 JOIN/UNION upstreams have a cached upstream wiki (see `_discovery/upstream_wikis/_index.json`)
 
@@ -370,4 +370,4 @@ main.bi_output.bi_output_vg_revenue   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 15 | Formulas: 52 | Tiers: 2 T1, 49 T2, 0 T3, 0 T4, 1 T5, 0 TN, 0 U | Elements: 52/52 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 15 | Formulas: 52 | Tiers: 2 T1, 49 T2, 0 T3, 0 T4, 1 T5, 0 TN, 0 U | Elements: 52/52 | Source: view_definition*

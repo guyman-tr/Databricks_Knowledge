@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 38
 row_count: null
-generated_at: '2026-05-19T15:01:57Z'
+generated_at: '2026-06-19T14:36:02Z'
 upstreams:
 - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits
 writer:
@@ -43,7 +43,7 @@ tier_breakdown:
 | **Column count** | 38 |
 | **Concepts** | 0 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Thu Jan 29 13:40:30 UTC 2026 |
 
 ---
@@ -193,4 +193,4 @@ main.bi_output.vg_bidb_alldeposits_for_genie   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 0 | Formulas: 38 | Tiers: 8 T1, 30 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 38/38 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 0 | Formulas: 38 | Tiers: 8 T1, 30 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 38/38 | Source: view_definition*

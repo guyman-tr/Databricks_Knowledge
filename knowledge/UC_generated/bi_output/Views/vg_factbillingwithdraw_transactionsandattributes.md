@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 17
 row_count: null
-generated_at: '2026-05-19T15:02:03Z'
+generated_at: '2026-06-19T14:36:06Z'
 upstreams:
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype
@@ -50,7 +50,7 @@ tier_breakdown:
 | **Column count** | 17 |
 | **Concepts** | 4 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Thu May 14 12:42:17 UTC 2026 |
 
 ---
@@ -145,7 +145,7 @@ Of its 17 columns: 7 inherit byte-for-byte from upstream wikis (Tier 1), 10 are 
 | 5 | Currency | STRING | YES | Direct passthrough from upstream. Formula: `Abbreviation`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency`) |
 | 6 | BaseExchangeRate | DECIMAL | YES | Reference exchange rate before fee markup. Spread = ExchangeRate minus BaseExchangeRate. (Tier 1 — Billing.WithdrawToFunding) |
 | 7 | ExchangeFee | INT | YES | Exchange fee in provider-specific integer units. (Tier 1 — Billing.WithdrawToFunding) |
-| 8 | WithdrawStatus | STRING | YES | Human-readable status label (e.g. Pending, InProcess, Processed, Canceled, Rejected, etc.). All 17 production values are loaded from staging; the DWH is not limited to 5 values. UNIQUE constraint exists at production level but is not enforced in the DWH DDL. |
+| 8 | WithdrawStatus | STRING | YES | Arithmetic combination of upstream columns. Formula: `-- ====================== -- Status -- ====================== Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus`) |
 | 9 | CashoutReason | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.general.bronze_etoro_dictionary_cashoutreason`) |
 | 10 | PSP_Name | STRING | YES | Arithmetic combination of upstream columns. Formula: `-- ====================== -- PSP / Provider -- ====================== Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_billingdepot`) |
 | 11 | MID_SettingsID | INT | YES | MID configuration profile used for this payment leg. FK to Dim_BillingProtocolMIDSettingsID. Default=0. (Tier 1 — Billing.WithdrawToFunding) |
@@ -224,4 +224,4 @@ main.bi_output.vg_factbillingwithdraw_transactionsandattributes   ←── this
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 4 | Formulas: 17 | Tiers: 7 T1, 10 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 17/17 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 4 | Formulas: 17 | Tiers: 7 T1, 10 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 17/17 | Source: view_definition*

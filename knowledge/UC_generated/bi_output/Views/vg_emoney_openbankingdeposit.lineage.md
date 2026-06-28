@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\vg_emoney_openbankingdeposit.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\vg_emoney_openbankingdeposit.json` (rows: 6, mismatches: 2) |
 | **Primary upstream** | `main.bi_db.bronze_moneytransfer_billing_transfers` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 

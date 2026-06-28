@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 64
 row_count: null
-generated_at: '2026-05-19T15:01:45Z'
+generated_at: '2026-06-19T14:35:52Z'
 upstreams:
 - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum
 - main.bi_output.bi_output_vg_date
@@ -52,7 +52,7 @@ tier_breakdown:
 | **Column count** | 64 |
 | **Concepts** | 14 (see §2) |
 | **Downstream consumers** | 1 (see §6.2) |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Tue Apr 28 19:07:27 UTC 2026 |
 
 ---
@@ -258,18 +258,18 @@ Of its 64 columns: 3 inherit byte-for-byte from upstream wikis (Tier 1), 61 are 
 | 26 | IsLastDayYear | INT | NO | Computed in source (transform kind not classified). Formula: `,DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalI…`. (Tier 2 — from `main.bi_output.bi_output_vg_date`) |
 | 27 | PlayerLevelID | INT | YES | Computed in source (transform kind not classified). Formula: `,DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalI…`. (Tier 2 — from `main.bi_output.bi_output_vg_date`) |
 | 28 | ClubTier | STRING | YES | Computed in source (transform kind not classified). Formula: `,DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalI…`. (Tier 2 — from `main.bi_output.bi_output_vg_date`) |
-| 29 | RegulationID | INT | YES | Customer's assigned regulatory jurisdiction. DEFAULT 0. Sourced from Ext_FSC_BackOffice_RegulationChangeLog.ToRegulationID — end-of-day change. See §2.4. FK to Dim_Regulation. (Tier 2 — via Fact_SnapshotCustomer) |
+| 29 | RegulationID | INT | YES | Computed in source (transform kind not classified). Formula: `,DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalI…`. (Tier 2 — from `main.bi_output.bi_output_vg_date`) |
 | 30 | Regulation | STRING | YES | Computed in source (transform kind not classified). Formula: `,DateID ,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalI…`. (Tier 2 — from `main.bi_output.bi_output_vg_date`) |
 | 31 | VerificationLevelID | INT | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalInvestedAmount …`. (Tier 2 — from `main.bi_output.bi_output_vg_date`) |
 | 32 | VerificationLevel | STRING | YES | Computed in source (transform kind not classified). Formula: `,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalInvestedAmount ,TotalEqui…`. (Tier 2 — from `main.bi_output.bi_output_vg_date`) |
 | 33 | CountryID | INT | YES | Computed in source (transform kind not classified). Formula: `,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalInvestedAmount ,TotalEquityTP AS EquityTradingP…`. (Tier 2 — from `main.bi_output.bi_output_vg_date`) |
 | 34 | Country | STRING | YES | Computed in source (transform kind not classified). Formula: `,CalendarQuarter ,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalInvestedAmount ,TotalEquityTP AS EquityTradingPlatform ,CashInCopy …`. (Tier 2 — from `main.bi_output.bi_output_vg_date`) |
 | 35 | Region | STRING | YES | Computed in source (transform kind not classified). Formula: `,CalendarYear ,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalInvestedAmount ,TotalEquityTP AS EquityTradingPlatform ,CashInCopy ,InvestedAmountCopy …`. (Tier 2 — from `main.bi_output.bi_output_vg_date`) |
-| 36 | AccountManagerID | INT | YES | Assigned account manager (sales/retention). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.AccountManagerID (BO). FK to Dim_Manager. (Tier 2 — via Fact_SnapshotCustomer) |
+| 36 | AccountManagerID | INT | YES | Computed in source (transform kind not classified). Formula: `,RealizedEquityTP AS RealizedEquityTradingPlatform ,TotalPositionPNL ,TotalInvestedAmount ,TotalEquityTP AS EquityTradingPlatform ,CashInCopy ,InvestedAmountCopy ,EquityCopy …`. (Tier 2 — literal) |
 | 37 | AccountManager | STRING | YES | Computed in source (transform kind not classified). Formula: `,TotalPositionPNL ,TotalInvestedAmount ,TotalEquityTP AS EquityTradingPlatform ,CashInCopy ,InvestedAmountCopy ,EquityCopy ,EquityStocksManual ,InvestedAmountStocksManual …`. (Tier 2 — literal) |
 | 38 | LanguageID | INT | YES | Computed in source (transform kind not classified). Formula: `,TotalInvestedAmount ,TotalEquityTP AS EquityTradingPlatform ,CashInCopy ,InvestedAmountCopy ,EquityCopy ,EquityStocksManual ,InvestedAmountStocksManual ,InvestedAmountCrypto…`. (Tier 2 — literal) |
 | 39 | Language | STRING | YES | Computed in source (transform kind not classified). Formula: `,TotalEquityTP AS EquityTradingPlatform ,CashInCopy ,InvestedAmountCopy ,EquityCopy ,EquityStocksManual ,InvestedAmountStocksManual ,InvestedAmountCryptoManual ,CreditTP Bala…`. (Tier 2 — literal) |
-| 40 | CommunicationLanguageID | INT | YES | Preferred communication language (may differ from interface language). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.CommunicationLanguageID (CC). FK to Dim_Language. (Tier 2 — via Fact_SnapshotCustomer) |
+| 40 | CommunicationLanguageID | INT | YES | Computed in source (transform kind not classified). Formula: `,CashInCopy ,InvestedAmountCopy ,EquityCopy ,EquityStocksManual ,InvestedAmountStocksManual ,InvestedAmountCryptoManual ,CreditTP BalanceTradingPlatfrom ,IBANBalance BalanceI…`. (Tier 2 — literal) |
 | 41 | CommunicationLanguage | STRING | YES | Computed in source (transform kind not classified). Formula: `,InvestedAmountCopy ,EquityCopy ,EquityStocksManual ,InvestedAmountStocksManual ,InvestedAmountCryptoManual ,CreditTP BalanceTradingPlatfrom ,IBANBalance BalanceIBAN ,Realize…`. (Tier 2 — literal) |
 | 42 | AccountTypeID | INT | YES | Computed in source (transform kind not classified). Formula: `,EquityCopy ,EquityStocksManual ,InvestedAmountStocksManual ,InvestedAmountCryptoManual ,CreditTP BalanceTradingPlatfrom ,IBANBalance BalanceIBAN ,RealizedEquityGlobal ,EquityGlob…`. (Tier 2 — literal) |
 | 43 | AccountType | STRING | YES | Computed in source (transform kind not classified). Formula: `,EquityStocksManual ,InvestedAmountStocksManual ,InvestedAmountCryptoManual ,CreditTP BalanceTradingPlatfrom ,IBANBalance BalanceIBAN ,RealizedEquityGlobal ,EquityGlobal ,CreditGl…`. (Tier 2 — literal) |
@@ -284,7 +284,7 @@ Of its 64 columns: 3 inherit byte-for-byte from upstream wikis (Tier 1), 61 are 
 | 52 | CanClosePosition | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,IsLastDayWeek ,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,f…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
 | 53 | CanEditPosition | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,IsLastDayMonth ,IsLastDayQuarter ,IsLastDayYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
 | 54 | CanBeCopied | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,IsLastDayQuarter ,IsLastDayYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS Ver…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`, `main.bi_output.bi_output_vg_date` (+2 more)) |
-| 55 | CanDeposit | BOOLEAN | YES | Whether the user can add funds to their account. False for full-block statuses (IsBlocked=1), close-only/pending statuses (9, 13, 15), status 10 (Deposit Blocked), and status 11 (Social Index). |
+| 55 | CanDeposit | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,IsLastDayYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,fs…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`, `main.bi_output.bi_output_vg_date` (+2 more)) |
 | 56 | CanRequestWithdraw | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Na…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country` (+2 more)) |
 | 57 | PlayerStatusReasonID | INT | YES | Computed in source (transform kind not classified). Formula: `,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,M…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country` (+2 more)) |
 | 58 | PlayerStatusReasonName | STRING | YES | Computed in source (transform kind not classified). Formula: `,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
@@ -303,7 +303,7 @@ Of its 64 columns: 3 inherit byte-for-byte from upstream wikis (Tier 1), 61 are 
 | Upstream | Role | Wiki |
 |----------|------|------|
 | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum` | Primary | `knowledge\synapse\Wiki\BI_DB_dbo\Tables\BI_DB_DDR_Fact_AUM.md` |
-| `main.bi_output.bi_output_vg_date` | JOIN/UNION | `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_date.md` |
+| `main.bi_output.bi_output_vg_date` | JOIN/UNION | `knowledge\UC_generated\bi_output\Views\bi_output_vg_date.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Views\V_Fact_SnapshotCustomer_FromDateID.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_PlayerLevel.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Regulation.md` |
@@ -374,4 +374,4 @@ main.bi_dealing_stg.bi_output_dealing_bod_overview_investment_etoro
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 14 | Formulas: 52 | Tiers: 3 T1, 61 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 64/64 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 14 | Formulas: 52 | Tiers: 3 T1, 61 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 64/64 | Source: view_definition*

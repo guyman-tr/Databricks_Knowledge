@@ -5,9 +5,9 @@
 | **UC Object** | `main.bi_output.limitation_to_normal_conversion` |
 | **Object Type** | `VIEW` |
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\limitation_to_normal_conversion.sql` |
-| **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\limitation_to_normal_conversion.json` (rows: 6, mismatches: 5) |
+| **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\limitation_to_normal_conversion.json` (rows: 6, mismatches: 0) |
 | **Primary upstream** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 
@@ -42,15 +42,7 @@ main.bi_output.limitation_to_normal_conversion   ←── this object
 ## Cross-check vs system.access.column_lineage
 
 - Total target columns: **6**
-- OK: **1**, WARN: **1**, ERROR: **4**, INFO: **0**  ⚠
-
-| Target | Parsed | Runtime | Severity |
-|--------|--------|---------|----------|
-| `Event_Month` | — | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range.fromdateid` | ERROR |
-| `Limitation_Type` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked.limitation_type` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus.name` | WARN |
-| `Avg_Hours_To_Normal` | — | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range.fromdateid` | ERROR |
-| `Avg_Days_To_Normal` | — | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range.fromdateid` | ERROR |
-| `Median_Hours_To_Normal` | — | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range.fromdateid` | ERROR |
+- OK: **5**, WARN: **0**, ERROR: **0**, INFO: **1**  ✓
 
 ## Lost / added columns
 

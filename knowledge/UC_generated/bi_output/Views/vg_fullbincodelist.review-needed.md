@@ -1,6 +1,6 @@
 # Review-needed sidecar — `vg_fullbincodelist`
 
-Generated: 2026-05-19
+Generated: 2026-06-19
 Wiki: `knowledge/UC_generated/bi_output/Views/vg_fullbincodelist.md`
 
 ## UNVERIFIED columns

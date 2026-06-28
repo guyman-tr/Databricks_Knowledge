@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 27
 row_count: null
-generated_at: '2026-05-19T15:02:02Z'
+generated_at: '2026-06-19T14:36:06Z'
 upstreams:
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype
@@ -51,7 +51,7 @@ tier_breakdown:
 | **Column count** | 27 |
 | **Concepts** | 8 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Wed May 06 17:52:57 UTC 2026 |
 
 ---
@@ -196,8 +196,8 @@ Of its 27 columns: 9 inherit byte-for-byte from upstream wikis (Tier 1), 18 are 
 | 20 | BIN_Code | STRING | YES | `[DWH_dbo].[ExtractXMLValue]('BinCodeAsString',f.FundingData)`. Downstream `SP_Fact_BillingDeposit`: `CAST(BinCodeAsString AS INT) = Dim_CountryBin.BinCode`. (Tier 2 — Billing.Funding.FundingData) |
 | 21 | IssuingBank | STRING | YES | `[DWH_dbo].[ExtractXMLValue]('BankNameAsString',f.FundingData)` (XML). Distinct from `BankName` column enriched from `Dim_CountryBin`. (Tier 2 — Billing.Funding.FundingData) |
 | 22 | CardIssuingCountry_BIN | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.general.bronze_etoro_dictionary_country`) |
-| 23 | AFT_Supported | STRING | NO | Whether Account Funding Transaction (AFT) is supported. Extracted from Billing.Deposit PaymentData XML (not Billing.Funding). Defaults to 0 when NULL. |
-| 24 | AFT_Eligible | STRING | NO | Whether this deposit was eligible for AFT processing. Extracted from Billing.Deposit PaymentData XML (not Billing.Funding). Defaults to 0 when NULL. |
+| 23 | AFT_Supported | STRING | NO | `AFT_Supported` computed flag. Formula: `-- ====================== -- AFT (Account Funding Transaction) -- ====================== CASE WHEN IsAftSupportedAsBool = true THEN 'Yes' ELSE 'No' END`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit`) |
+| 24 | AFT_Eligible | STRING | NO | `AFT_Eligible` computed flag. Formula: `CASE WHEN IsAftEligibleAsBool = true THEN 'Yes' ELSE 'No' END`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit`) |
 | 25 | AFT_Processed | STRING | NO | `AFT_Processed` computed flag. Formula: `CASE WHEN IsAftProcessedAsBool = true THEN 'Yes' ELSE 'No' END`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit`) |
 | 26 | Regulation | STRING | YES | Arithmetic combination of upstream columns. Formula: `-- ====================== -- Regulation -- ====================== Name`. (Tier 2 — from `main.general.bronze_etoro_dictionary_regulation`) |
 
@@ -271,4 +271,4 @@ main.bi_output.vg_factbillingdeposit_transactionsandattributes   ←── this 
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 8 | Formulas: 27 | Tiers: 9 T1, 18 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 27/27 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 8 | Formulas: 27 | Tiers: 9 T1, 18 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 27/27 | Source: view_definition*

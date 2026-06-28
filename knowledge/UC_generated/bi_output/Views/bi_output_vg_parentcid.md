@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 76
 row_count: null
-generated_at: '2026-05-19T15:01:51Z'
+generated_at: '2026-06-19T14:35:57Z'
 upstreams:
 - main.bi_output.bi_output_vg_date
 - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy
@@ -28,8 +28,8 @@ writer:
 concept_count: 6
 formula_count: 76
 tier_breakdown:
-  tier1_columns: 14
-  tier2_columns: 62
+  tier1_columns: 10
+  tier2_columns: 66
   tier3_columns: 0
   tier4_columns: 0
   tier5_columns: 0
@@ -51,7 +51,7 @@ tier_breakdown:
 | **Column count** | 76 |
 | **Concepts** | 6 (see §2) |
 | **Downstream consumers** | 2 (see §6.2) |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Sat Mar 07 07:33:40 UTC 2026 |
 
 ---
@@ -60,9 +60,9 @@ tier_breakdown:
 
 `bi_output_vg_parentcid` is a view in `main.bi_output` that composes 6 JOIN-enriched dimension lookup(s).
 
-Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.bi_output.bi_output_vg_date` → this object. Canonical upstream documentation: `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_date.md`. Additional upstreams: 8 object(s), listed in §5 Lineage.
+Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.bi_output.bi_output_vg_date` → this object. Canonical upstream documentation: `knowledge\UC_generated\bi_output\Views\bi_output_vg_date.md`. Additional upstreams: 8 object(s), listed in §5 Lineage.
 
-Of its 76 columns: 14 inherit byte-for-byte from upstream wikis (Tier 1), 62 are formula-assembled from cached source code (Tier 2 — see §4 for the formula and §2 for the named concept), 0 are null-with-provenance (Tier N — terminal-no-wiki upstream).
+Of its 76 columns: 10 inherit byte-for-byte from upstream wikis (Tier 1), 66 are formula-assembled from cached source code (Tier 2 — see §4 for the formula and §2 for the named concept), 0 are null-with-provenance (Tier N — terminal-no-wiki upstream).
 
 ---
 
@@ -197,7 +197,7 @@ Of its 76 columns: 14 inherit byte-for-byte from upstream wikis (Tier 1), 62 are
 | 38 | CanClosePosition | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,IsLastDayYear ,CID AS RealCID ,UserName ,Gender ,Manager ,Country ,Region ,Language ,Club ,Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAs…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked`, `bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy`) |
 | 39 | CanEditPosition | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,CID AS RealCID ,UserName ,Gender ,Manager ,Country ,Region ,Language ,Club ,Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,cp…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy`) |
 | 40 | CanBeCopied | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,UserName ,Gender ,Manager ,Country ,Region ,Language ,Club ,Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,PortfolioType ,cp.…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy`) |
-| 41 | CanDeposit | BOOLEAN | YES | Whether the user can add funds to their account. False for full-block statuses (IsBlocked=1), close-only/pending statuses (9, 13, 15), status 10 (Deposit Blocked), and status 11 (Social Index). |
+| 41 | CanDeposit | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,Gender ,Manager ,Country ,Region ,Language ,Club ,Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,PortfolioType ,GuruStatusID …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy`) |
 | 42 | CanRequestWithdraw | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,Manager ,Country ,Region ,Language ,Club ,Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,PortfolioType ,GuruStatusID ,GuruSta…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy`) |
 | 43 | PlayerStatusReasonID | INT | YES | Computed in source (transform kind not classified). Formula: `,Country ,Region ,Language ,Club ,Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,PortfolioType ,GuruStatusID ,GuruStatus ,Prev…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy`) |
 | 44 | PlayerStatusReasonName | STRING | YES | Computed in source (transform kind not classified). Formula: `,Region ,Language ,Club ,Regulation ,RegisteredReal ,FirstDepositDate ,Seniority ,DaysAsPI ,CopyType ,PortfolioType ,GuruStatusID ,GuruStatus ,PreviousGuruStat…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy`) |
@@ -207,7 +207,7 @@ Of its 76 columns: 14 inherit byte-for-byte from upstream wikis (Tier 1), 62 are
 | 48 | RealizedEquity | DECIMAL | YES | Realized equity (cash + credit + in-process cashouts) on the snapshot date. Direct passthrough from V_Liabilities.RealizedEquity. (Tier 2 — Fact_SnapshotEquity) |
 | 49 | TotalPositionsAmount | DECIMAL | YES | Total invested amount across all open positions on the snapshot date. Direct passthrough from V_Liabilities.TotalPositionsAmount. (Tier 2 — Fact_SnapshotEquity) |
 | 50 | PositionPnL | DECIMAL | YES | Unrealized position profit/loss on the snapshot date. Direct passthrough from V_Liabilities.PositionPnL. (Tier 2 — Fact_CustomerUnrealized_PnL) |
-| 51 | Credit | DECIMAL | YES | Outstanding credit/bonus balance from Fact_SnapshotEquity.Credit (last credit event per CID per day from History.ActiveCredit; negative values = outstanding obligations). (Tier 2 — DWH_dbo.Fact_SnapshotEquity) |
+| 51 | Credit | DECIMAL | YES | Outstanding credit/bonus balance on the snapshot date. From V_Liabilities.Credit; negative values represent outstanding obligations. (Tier 2 — Fact_SnapshotEquity via V_Liabilities) |
 | 52 | NumOfCopiers | INT | YES | Count of valid depositor customers currently copying this PI/Portfolio, from etoroGeneral_History_GuruCopiers where Timestamp = day-after-@date. Only counts IsValidCustomer=1 AND IsDepositor=1 copiers. (Tier 2 — etoroGeneral_History_GuruCopiers) |
 | 53 | CopyAUC | DECIMAL | YES | Total Assets Under Copy -- sum of Cash + Investment + PnL + DetachedPosInvestment + Dit_PnL across all valid copiers of this PI/Portfolio. (Tier 2 — etoroGeneral_History_GuruCopiers) |
 | 54 | CopyPnL | DECIMAL | YES | Total copy PnL -- sum of PnL + DetachedPosInvestment + Dit_PnL across all valid copiers of this PI/Portfolio. (Tier 2 — etoroGeneral_History_GuruCopiers) |
@@ -241,7 +241,7 @@ Of its 76 columns: 14 inherit byte-for-byte from upstream wikis (Tier 1), 62 are
 
 | Upstream | Role | Wiki |
 |----------|------|------|
-| `main.bi_output.bi_output_vg_date` | Primary | `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_date.md` |
+| `main.bi_output.bi_output_vg_date` | Primary | `knowledge\UC_generated\bi_output\Views\bi_output_vg_date.md` |
 | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy` | JOIN/UNION | `knowledge\synapse\Wiki\BI_DB_dbo\Tables\BI_DB_DailyPanel_Copy.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Customer.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_PlayerStatus.md` |
@@ -277,7 +277,7 @@ main.bi_dealing_stg.bi_output_dealing_bod_sp_kpis
 
 ### 6.1 References To (summary — see §5 for full table)
 
-- **Primary upstream**: `main.bi_output.bi_output_vg_date` (wiki: `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_date.md`)
+- **Primary upstream**: `main.bi_output.bi_output_vg_date` (wiki: `knowledge\UC_generated\bi_output\Views\bi_output_vg_date.md`)
 - **JOIN/UNION upstreams**: 8 additional object(s)
 - **Wiki coverage**: 8/8 JOIN/UNION upstreams have a cached upstream wiki (see `_discovery/upstream_wikis/_index.json`)
 
@@ -308,4 +308,4 @@ main.bi_dealing_stg.bi_output_dealing_bod_sp_kpis
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 6 | Formulas: 76 | Tiers: 14 T1, 62 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 76/76 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 6 | Formulas: 76 | Tiers: 10 T1, 66 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 76/76 | Source: view_definition*

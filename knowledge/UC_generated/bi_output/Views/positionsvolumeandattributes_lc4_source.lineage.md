@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\positionsvolumeandattributes_lc4_source.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\positionsvolumeandattributes_lc4_source.json` (rows: 15, mismatches: 8) |
 | **Primary upstream** | `main.dwh.dim_position` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 
@@ -40,8 +40,8 @@ main.bi_output.positionsvolumeandattributes_lc4_source   ←── this object
 
 | # | UC Column | Source UC Object | Source Column | Transform | Upstream Tier | Notes |
 |---|-----------|------------------|---------------|-----------|---------------|-------|
-| 1 | `AccountTypeID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` | `AccountTypeID` | `passthrough` | (Tier 1 — inherited from Fact_SnapshotCustomer wiki) | fsc.AccountTypeID |
-| 2 | `CountryID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` | `CountryID` | `passthrough` | (Tier 1 — inherited from Fact_SnapshotCustomer wiki) | fsc.CountryID AS CountryID |
+| 1 | `AccountTypeID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` | `AccountTypeID` | `passthrough` | (Tier 2 — inherited from Fact_SnapshotCustomer wiki) | fsc.AccountTypeID |
+| 2 | `CountryID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` | `CountryID` | `passthrough` | (Tier 2 — inherited from Fact_SnapshotCustomer wiki) | fsc.CountryID AS CountryID |
 | 3 | `Region` | `—` | `—` | `literal` | — | literal `NULL` — NULL AS Region |
 | 4 | `CountryName` | `—` | `—` | `literal` | — | literal `NULL` — NULL AS CountryName |
 | 5 | `SellCurrencyID` | `—` | `SellCurrencyID` | `passthrough` | — | bse.SellCurrencyID |

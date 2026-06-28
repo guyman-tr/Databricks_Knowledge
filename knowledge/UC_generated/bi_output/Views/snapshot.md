@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 1
 row_count: null
-generated_at: '2026-05-19T15:01:56Z'
+generated_at: '2026-06-19T14:36:01Z'
 upstreams:
 - main.bi_db.bronze_clubservice_clubs_userbalances
 - main.bi_db.bronze_clubservice_dictionary_balancesourcetypes
@@ -52,7 +52,7 @@ tier_breakdown:
 | **Column count** | 1 |
 | **Concepts** | 0 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Tue Jun 03 07:34:13 UTC 2025 |
 
 ---
@@ -61,7 +61,7 @@ tier_breakdown:
 
 `snapshot` is a view in `main.bi_output`. No discriminator concepts were detected in the source — see §2 for the transform pattern breakdown.
 
-Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.bi_db.bronze_clubservice_clubs_userbalances` → this object. Canonical upstream documentation: `knowledge/UC_generated/bi_db/<Tables|Views>/bronze_clubservice_clubs_userbalances.md`. Additional upstreams: 215 object(s), listed in §5 Lineage.
+Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.bi_db.bronze_clubservice_clubs_userbalances` → this object. Canonical upstream documentation: `knowledge/UC_generated/bi_db/<Tables|Views>/bronze_clubservice_clubs_userbalances.md`. Additional upstreams: 210 object(s), listed in §5 Lineage.
 
 Of its 1 columns: 0 inherit byte-for-byte from upstream wikis (Tier 1), 0 are formula-assembled from cached source code (Tier 2 — see §4 for the formula and §2 for the named concept), 0 are null-with-provenance (Tier N — terminal-no-wiki upstream).
 
@@ -189,4 +189,4 @@ main.bi_output.snapshot   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 0 | Formulas: 0 | Tiers: 0 T1, 0 T2, 0 T3, 0 T4, 0 T5, 0 TN, 1 U | Elements: 1/1 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 0 | Formulas: 0 | Tiers: 0 T1, 0 T2, 0 T3, 0 T4, 0 T5, 0 TN, 1 U | Elements: 1/1 | Source: view_definition*

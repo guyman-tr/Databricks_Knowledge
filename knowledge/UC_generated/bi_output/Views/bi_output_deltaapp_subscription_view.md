@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 21
 row_count: null
-generated_at: '2026-05-19T15:01:35Z'
+generated_at: '2026-06-19T14:35:45Z'
 upstreams:
 - main.bi_db.bronze_deltaapp_bronze_subscriptions
 writer:
@@ -43,7 +43,7 @@ tier_breakdown:
 | **Column count** | 21 |
 | **Concepts** | 0 (see §2) |
 | **Downstream consumers** | 1 (see §6.2) |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Sun Nov 23 08:59:06 UTC 2025 |
 
 ---
@@ -179,4 +179,4 @@ main.bi_output_stg.subscription
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 0 | Formulas: 21 | Tiers: 0 T1, 21 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 21/21 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 0 | Formulas: 21 | Tiers: 0 T1, 21 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 21/21 | Source: view_definition*

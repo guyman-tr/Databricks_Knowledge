@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 56
 row_count: null
-generated_at: '2026-05-19T15:01:49Z'
+generated_at: '2026-06-19T14:35:55Z'
 upstreams:
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked
 - main.bi_output.bi_output_vg_date
@@ -29,8 +29,8 @@ writer:
 concept_count: 14
 formula_count: 56
 tier_breakdown:
-  tier1_columns: 13
-  tier2_columns: 43
+  tier1_columns: 0
+  tier2_columns: 56
   tier3_columns: 0
   tier4_columns: 0
   tier5_columns: 0
@@ -52,7 +52,7 @@ tier_breakdown:
 | **Column count** | 56 |
 | **Concepts** | 14 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Sun Mar 08 13:20:38 UTC 2026 |
 
 ---
@@ -61,9 +61,9 @@ tier_breakdown:
 
 `bi_output_vg_customer_snapshot_test` is a view in `main.bi_output` that composes 1 CASE-based classifier flag(s) computed from upstream IDs, 13 JOIN-enriched dimension lookup(s).
 
-Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` → this object. Canonical upstream documentation: `knowledge\synapse\Wiki\DWH_dbo\Views\V_Fact_SnapshotCustomer_FromDateID.md`. Additional upstreams: 15 object(s), listed in §5 Lineage.
+Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` → this object. Canonical upstream documentation: `knowledge\synapse\Wiki\DWH_dbo\Views\V_Fact_SnapshotCustomer_FromDateID.md`. Additional upstreams: 14 object(s), listed in §5 Lineage.
 
-Of its 56 columns: 13 inherit byte-for-byte from upstream wikis (Tier 1), 43 are formula-assembled from cached source code (Tier 2 — see §4 for the formula and §2 for the named concept), 0 are null-with-provenance (Tier N — terminal-no-wiki upstream).
+Of its 56 columns: 0 inherit byte-for-byte from upstream wikis (Tier 1), 56 are formula-assembled from cached source code (Tier 2 — see §4 for the formula and §2 for the named concept), 0 are null-with-provenance (Tier N — terminal-no-wiki upstream).
 
 ---
 
@@ -261,7 +261,7 @@ Of its 56 columns: 13 inherit byte-for-byte from upstream wikis (Tier 1), 43 are
 | 29 | CanClosePosition | BOOLEAN | YES | Direct passthrough from upstream. Formula: `CanClosePosition`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus`) |
 | 30 | CanEditPosition | BOOLEAN | YES | Direct passthrough from upstream. Formula: `CanEditPosition`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus`) |
 | 31 | CanBeCopied | BOOLEAN | YES | Direct passthrough from upstream. Formula: `CanBeCopied`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus`) |
-| 32 | CanDeposit | BOOLEAN | YES | Whether the user can add funds to their account. False for full-block statuses (IsBlocked=1), close-only/pending statuses (9, 13, 15), status 10 (Deposit Blocked), and status 11 (Social Index). |
+| 32 | CanDeposit | BOOLEAN | YES | Direct passthrough from upstream. Formula: `CanDeposit`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus`) |
 | 33 | CanRequestWithdraw | BOOLEAN | YES | Direct passthrough from upstream. Formula: `CanRequestWithdraw`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus`) |
 | 34 | PlayerStatusReasonID | INT | YES | Direct passthrough from upstream. Formula: `PlayerStatusReasonID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 35 | PlayerStatusReasonName | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons`) |
@@ -295,7 +295,7 @@ Of its 56 columns: 13 inherit byte-for-byte from upstream wikis (Tier 1), 43 are
 | Upstream | Role | Wiki |
 |----------|------|------|
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` | Primary | `knowledge\synapse\Wiki\DWH_dbo\Views\V_Fact_SnapshotCustomer_FromDateID.md` |
-| `main.bi_output.bi_output_vg_date` | JOIN/UNION | `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_date.md` |
+| `main.bi_output.bi_output_vg_date` | JOIN/UNION | `knowledge\UC_generated\bi_output\Views\bi_output_vg_date.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_PlayerLevel.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Regulation.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_VerificationLevel.md` |
@@ -309,7 +309,6 @@ Of its 56 columns: 13 inherit byte-for-byte from upstream wikis (Tier 1), 43 are
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_PlayerStatusReasons.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_PlayerStatusSubReasons.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Customer.md` |
-| `main.bi_output_stg.guy_test_user_dim_ddr_scd_status` | JOIN/UNION | `(no wiki — see `.review-needed.md`)` |
 
 ### 5.2 Pipeline ASCII Diagram
 
@@ -317,7 +316,7 @@ Of its 56 columns: 13 inherit byte-for-byte from upstream wikis (Tier 1), 43 are
 main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked
 main.bi_output.bi_output_vg_date
 main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel
-... (13 more upstream(s))
+... (12 more upstream(s))
         │
         ▼
 main.bi_output.bi_output_vg_customer_snapshot_test   ←── this object
@@ -334,8 +333,8 @@ main.bi_output.bi_output_vg_customer_snapshot_test   ←── this object
 ### 6.1 References To (summary — see §5 for full table)
 
 - **Primary upstream**: `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` (wiki: `knowledge\synapse\Wiki\DWH_dbo\Views\V_Fact_SnapshotCustomer_FromDateID.md`)
-- **JOIN/UNION upstreams**: 15 additional object(s)
-- **Wiki coverage**: 14/15 JOIN/UNION upstreams have a cached upstream wiki (see `_discovery/upstream_wikis/_index.json`)
+- **JOIN/UNION upstreams**: 14 additional object(s)
+- **Wiki coverage**: 14/14 JOIN/UNION upstreams have a cached upstream wiki (see `_discovery/upstream_wikis/_index.json`)
 
 ### 6.2 Referenced By (downstream consumers)
 
@@ -363,4 +362,4 @@ main.bi_output.bi_output_vg_customer_snapshot_test   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 14 | Formulas: 56 | Tiers: 13 T1, 43 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 56/56 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 14 | Formulas: 56 | Tiers: 0 T1, 56 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 56/56 | Source: view_definition*

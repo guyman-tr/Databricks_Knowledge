@@ -6,7 +6,7 @@
       "source_column_name": "AmountUSD",
       "target_column_name": "AmountUSD_MIMO",
       "entity_type": null,
-      "event_count": 31
+      "event_count": 49
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
@@ -20,7 +20,7 @@
       "source_column_name": "Name",
       "target_column_name": "Club",
       "entity_type": null,
-      "event_count": 3
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
@@ -34,7 +34,7 @@
       "source_column_name": "Name",
       "target_column_name": "Country",
       "entity_type": null,
-      "event_count": 10
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
@@ -58,15 +58,15 @@
       "event_count": 4
     },
     {
-      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
-      "source_column_name": "Currency",
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
+      "source_column_name": "Abbreviation",
       "target_column_name": "Currency",
       "entity_type": "DBSQL_QUERY",
       "event_count": 1
     },
     {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
-      "source_column_name": "Abbreviation",
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "Currency",
       "target_column_name": "Currency",
       "entity_type": "DBSQL_QUERY",
       "event_count": 1
@@ -76,7 +76,7 @@
       "source_column_name": "Date",
       "target_column_name": "Date_MIMO",
       "entity_type": null,
-      "event_count": 14
+      "event_count": 17
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
@@ -90,28 +90,28 @@
       "source_column_name": "IsInternalTransfer",
       "target_column_name": "FundingType",
       "entity_type": null,
-      "event_count": 12
+      "event_count": 25
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype",
       "source_column_name": "Name",
       "target_column_name": "FundingType",
       "entity_type": null,
-      "event_count": 12
+      "event_count": 25
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
       "source_column_name": "MIMOPlatform",
       "target_column_name": "FundingType",
       "entity_type": null,
-      "event_count": 12
+      "event_count": 25
     },
     {
       "source_table_full_name": "main.bi_db.bronze_moneytransfer_billing_transfers",
       "source_column_name": "CID",
       "target_column_name": "FundingType",
       "entity_type": null,
-      "event_count": 12
+      "event_count": 25
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
@@ -174,7 +174,7 @@
       "source_column_name": "MIMOAction",
       "target_column_name": "MIMOAction",
       "entity_type": null,
-      "event_count": 5
+      "event_count": 7
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
@@ -188,7 +188,7 @@
       "source_column_name": "MIMOPlatform",
       "target_column_name": "MIMOPlatform",
       "entity_type": null,
-      "event_count": 8
+      "event_count": 14
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
@@ -216,7 +216,7 @@
       "source_column_name": "RealCID",
       "target_column_name": "RealCID",
       "entity_type": null,
-      "event_count": 10
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
@@ -230,7 +230,7 @@
       "source_column_name": "Name",
       "target_column_name": "Regulation",
       "entity_type": null,
-      "event_count": 5
+      "event_count": 6
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
@@ -252,7 +252,14 @@
       "target_column_name": "TransactionID",
       "entity_type": "DBSQL_QUERY",
       "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "source_column_name": "Date",
+      "target_column_name": "date_mimo",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
     }
   ],
-  "generated_at": "2026-05-19T14:58:19Z"
+  "generated_at": "2026-06-19T14:35:00Z"
 }

@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.vg_factbillingwithdraw_transactionsandattributes
--- Captured: 2026-05-19T14:58:04Z
+-- Captured: 2026-06-19T14:34:49Z
 -- ==========================================================================
 
 SELECT

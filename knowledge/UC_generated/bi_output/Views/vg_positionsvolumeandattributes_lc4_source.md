@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 15
 row_count: null
-generated_at: '2026-05-19T15:02:05Z'
+generated_at: '2026-06-19T14:36:08Z'
 upstreams:
 - main.dwh.dim_position
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument
@@ -51,7 +51,7 @@ tier_breakdown:
 | **Column count** | 15 |
 | **Concepts** | 7 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Sun Apr 26 18:22:39 UTC 2026 |
 
 ---
@@ -166,7 +166,7 @@ Of its 15 columns: 0 inherit byte-for-byte from upstream wikis (Tier 1), 15 are 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | AccountTypeID_as_of_position_date | INT | YES | Direct passthrough from upstream. Formula: `AccountTypeID`. (Tier 2 — computed in source) |
-| 1 | Region_as_of_position_date | STRING | YES | Marketing region label for this country. Loaded from Dictionary.MarketingRegion.Name via JOIN on MarketingRegionID. NOT the geographic region from Dictionary.Region. Up to 21 distinct values (e.g., "ROW", "Africa", "French", "Arabic"). Used for marketing campaign grouping. |
+| 1 | Region_as_of_position_date | STRING | YES | Computed in source (transform kind not classified). Formula: `AccountTypeID AS AccountTypeID_as_of_position_date , Region`. (Tier 2 — literal) |
 | 2 | CountryName_as_of_position_date | STRING | YES | Computed in source (transform kind not classified). Formula: `AccountTypeID AS AccountTypeID_as_of_position_date , Region AS Region_as_of_position_date , CountryName`. (Tier 2 — literal) |
 | 3 | SellCurrencyID | INT | YES | Direct passthrough from upstream. Formula: `SellCurrencyID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument`) |
 | 4 | InstrumentType | STRING | YES | Computed in source (transform kind not classified). Formula: `SellCurrencyID , InstrumentType`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument`) |
@@ -251,4 +251,4 @@ main.bi_output.vg_positionsvolumeandattributes_lc4_source   ←── this objec
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 7 | Formulas: 15 | Tiers: 0 T1, 15 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 15/15 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 7 | Formulas: 15 | Tiers: 0 T1, 15 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 15/15 | Source: view_definition*

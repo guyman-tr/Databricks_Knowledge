@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.negative_nmi
--- Captured: 2026-05-19T14:53:26Z
+-- Captured: 2026-06-19T14:32:29Z
 -- ==========================================================================
 
 SELECT

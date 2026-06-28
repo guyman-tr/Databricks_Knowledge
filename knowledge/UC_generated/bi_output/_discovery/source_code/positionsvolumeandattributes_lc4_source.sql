@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.positionsvolumeandattributes_lc4_source
--- Captured: 2026-05-19T14:53:45Z
+-- Captured: 2026-06-19T14:32:39Z
 -- ==========================================================================
 
 WITH BaseOpen AS (

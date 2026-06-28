@@ -2,6 +2,13 @@
   "object": "main.bi_output.bi_output_customer_social_social_feed",
   "rows": [
     {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "ActivitySubType",
+      "entity_type": "JOB",
+      "event_count": 182
+    },
+    {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_emotion",
       "source_column_name": "EventPayloadRowData_Entity_Parent_Type",
       "target_column_name": "ActivitySubType",
@@ -18,16 +25,9 @@
     {
       "source_table_full_name": null,
       "source_column_name": null,
-      "target_column_name": "ActivitySubType",
-      "entity_type": "JOB",
-      "event_count": 122
-    },
-    {
-      "source_table_full_name": null,
-      "source_column_name": null,
       "target_column_name": "ActivityType",
       "entity_type": "JOB",
-      "event_count": 244
+      "event_count": 364
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
@@ -41,7 +41,7 @@
       "source_column_name": null,
       "target_column_name": "CID",
       "entity_type": "JOB",
-      "event_count": 122
+      "event_count": 182
     },
     {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_post",
@@ -69,7 +69,14 @@
       "source_column_name": null,
       "target_column_name": "CreatedDate",
       "entity_type": "JOB",
-      "event_count": 122
+      "event_count": 182
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "HasAttachment",
+      "entity_type": "JOB",
+      "event_count": 182
     },
     {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_comment",
@@ -91,13 +98,6 @@
       "target_column_name": "HasAttachment",
       "entity_type": "JOB",
       "event_count": 182
-    },
-    {
-      "source_table_full_name": null,
-      "source_column_name": null,
-      "target_column_name": "HasAttachment",
-      "entity_type": "JOB",
-      "event_count": 122
     },
     {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_post",
@@ -125,11 +125,18 @@
       "source_column_name": null,
       "target_column_name": "HasMentions",
       "entity_type": "JOB",
-      "event_count": 122
+      "event_count": 182
     },
     {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_comment",
       "source_column_name": "EventPayloadRowData_Entity_Tags",
+      "target_column_name": "HasTags",
+      "entity_type": "JOB",
+      "event_count": 182
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
       "target_column_name": "HasTags",
       "entity_type": "JOB",
       "event_count": 182
@@ -149,15 +156,15 @@
       "event_count": 182
     },
     {
-      "source_table_full_name": null,
-      "source_column_name": null,
-      "target_column_name": "HasTags",
-      "entity_type": "JOB",
-      "event_count": 122
-    },
-    {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_comment",
       "source_column_name": "EventPayloadRowData_Entity_Id",
+      "target_column_name": "ID",
+      "entity_type": "JOB",
+      "event_count": 182
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
       "target_column_name": "ID",
       "entity_type": "JOB",
       "event_count": 182
@@ -175,13 +182,6 @@
       "target_column_name": "ID",
       "entity_type": "JOB",
       "event_count": 182
-    },
-    {
-      "source_table_full_name": null,
-      "source_column_name": null,
-      "target_column_name": "ID",
-      "entity_type": "JOB",
-      "event_count": 122
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_customer_social_social_feed",
@@ -202,7 +202,7 @@
       "source_column_name": null,
       "target_column_name": "IsLast",
       "entity_type": "JOB",
-      "event_count": 122
+      "event_count": 182
     },
     {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_comment",
@@ -219,18 +219,18 @@
       "event_count": 182
     },
     {
-      "source_table_full_name": "main.bi_output.bi_output_customer_social_social_feed",
-      "source_column_name": "LanguageCode",
+      "source_table_full_name": null,
+      "source_column_name": null,
       "target_column_name": "LanguageCode",
       "entity_type": "JOB",
       "event_count": 182
     },
     {
-      "source_table_full_name": null,
-      "source_column_name": null,
+      "source_table_full_name": "main.bi_output.bi_output_customer_social_social_feed",
+      "source_column_name": "LanguageCode",
       "target_column_name": "LanguageCode",
       "entity_type": "JOB",
-      "event_count": 122
+      "event_count": 182
     },
     {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_emotion",
@@ -247,18 +247,18 @@
       "event_count": 182
     },
     {
-      "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_comment",
-      "source_column_name": "EventPayloadRowData_Entity",
+      "source_table_full_name": null,
+      "source_column_name": null,
       "target_column_name": "ModifiedDate",
       "entity_type": "JOB",
       "event_count": 182
     },
     {
-      "source_table_full_name": null,
-      "source_column_name": null,
+      "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_comment",
+      "source_column_name": "EventPayloadRowData_Entity",
       "target_column_name": "ModifiedDate",
       "entity_type": "JOB",
-      "event_count": 122
+      "event_count": 182
     },
     {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_emotion",
@@ -286,7 +286,7 @@
       "source_column_name": null,
       "target_column_name": "OperationType",
       "entity_type": "JOB",
-      "event_count": 122
+      "event_count": 182
     },
     {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_emotion",
@@ -303,18 +303,18 @@
       "event_count": 182
     },
     {
-      "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_comment",
-      "source_column_name": "EventPayloadRowData_Entity_Parent_Id",
+      "source_table_full_name": null,
+      "source_column_name": null,
       "target_column_name": "ParentID",
       "entity_type": "JOB",
       "event_count": 182
     },
     {
-      "source_table_full_name": null,
-      "source_column_name": null,
+      "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_comment",
+      "source_column_name": "EventPayloadRowData_Entity_Parent_Id",
       "target_column_name": "ParentID",
       "entity_type": "JOB",
-      "event_count": 122
+      "event_count": 182
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_customer_social_social_feed",
@@ -335,7 +335,7 @@
       "source_column_name": null,
       "target_column_name": "PollID",
       "entity_type": "JOB",
-      "event_count": 122
+      "event_count": 182
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_customer_tmp_comments_tmp",
@@ -347,6 +347,13 @@
     {
       "source_table_full_name": "main.bi_output.bi_output_customer_social_social_feed",
       "source_column_name": "RootID",
+      "target_column_name": "RootID",
+      "entity_type": "JOB",
+      "event_count": 182
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
       "target_column_name": "RootID",
       "entity_type": "JOB",
       "event_count": 182
@@ -373,15 +380,15 @@
       "event_count": 182
     },
     {
-      "source_table_full_name": null,
-      "source_column_name": null,
-      "target_column_name": "RootID",
-      "entity_type": "JOB",
-      "event_count": 122
-    },
-    {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_comment",
       "source_column_name": "EventPayloadRowData_Entity_Id",
+      "target_column_name": "SID",
+      "entity_type": "JOB",
+      "event_count": 182
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
       "target_column_name": "SID",
       "entity_type": "JOB",
       "event_count": 182
@@ -401,15 +408,15 @@
       "event_count": 182
     },
     {
-      "source_table_full_name": null,
-      "source_column_name": null,
-      "target_column_name": "SID",
-      "entity_type": "JOB",
-      "event_count": 122
-    },
-    {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_post",
       "source_column_name": "EventPayloadRowData_Entity_Message_Text",
+      "target_column_name": "Text_message",
+      "entity_type": "JOB",
+      "event_count": 182
+    },
+    {
+      "source_table_full_name": null,
+      "source_column_name": null,
       "target_column_name": "Text_message",
       "entity_type": "JOB",
       "event_count": 182
@@ -420,20 +427,13 @@
       "target_column_name": "Text_message",
       "entity_type": "JOB",
       "event_count": 182
-    },
-    {
-      "source_table_full_name": null,
-      "source_column_name": null,
-      "target_column_name": "Text_message",
-      "entity_type": "JOB",
-      "event_count": 122
     },
     {
       "source_table_full_name": null,
       "source_column_name": null,
       "target_column_name": "UpdateDate",
       "entity_type": "JOB",
-      "event_count": 488
+      "event_count": 728
     },
     {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_post",
@@ -450,6 +450,13 @@
       "event_count": 182
     },
     {
+      "source_table_full_name": null,
+      "source_column_name": null,
+      "target_column_name": "UserName",
+      "entity_type": "JOB",
+      "event_count": 182
+    },
+    {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_emotion",
       "source_column_name": "EventPayloadRowData_Entity_Owner_Username",
       "target_column_name": "UserName",
@@ -459,9 +466,9 @@
     {
       "source_table_full_name": null,
       "source_column_name": null,
-      "target_column_name": "UserName",
+      "target_column_name": "etr_y",
       "entity_type": "JOB",
-      "event_count": 122
+      "event_count": 182
     },
     {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_comment",
@@ -487,9 +494,9 @@
     {
       "source_table_full_name": null,
       "source_column_name": null,
-      "target_column_name": "etr_y",
+      "target_column_name": "etr_ym",
       "entity_type": "JOB",
-      "event_count": 122
+      "event_count": 182
     },
     {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_post",
@@ -515,9 +522,9 @@
     {
       "source_table_full_name": null,
       "source_column_name": null,
-      "target_column_name": "etr_ym",
+      "target_column_name": "etr_ymd",
       "entity_type": "JOB",
-      "event_count": 122
+      "event_count": 182
     },
     {
       "source_table_full_name": "main.experience.bronze_event_hub_prod_event_streaming_we_streams_comment",
@@ -539,14 +546,7 @@
       "target_column_name": "etr_ymd",
       "entity_type": "JOB",
       "event_count": 182
-    },
-    {
-      "source_table_full_name": null,
-      "source_column_name": null,
-      "target_column_name": "etr_ymd",
-      "entity_type": "JOB",
-      "event_count": 122
     }
   ],
-  "generated_at": "2026-05-19T14:23:16Z"
+  "generated_at": "2026-06-19T14:22:31Z"
 }

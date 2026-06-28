@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.vg_fact_billingwithdraw_for_genie
--- Captured: 2026-05-19T14:57:42Z
+-- Captured: 2026-06-19T14:34:34Z
 -- ==========================================================================
 
 SELECT

@@ -1,6 +1,6 @@
 # Review-needed sidecar — `vg_positions_open_closed_iban_tp`
 
-Generated: 2026-05-19
+Generated: 2026-06-19
 Wiki: `knowledge/UC_generated/bi_output/Views/vg_positions_open_closed_iban_tp.md`
 
 ## UNVERIFIED columns

@@ -9,53 +9,53 @@
       "event_count": 65
     },
     {
-      "source_table_full_name": "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
-      "source_column_name": "lp_accounts",
-      "target_column_name": "AccountID",
-      "entity_type": "JOB",
-      "event_count": 49
-    },
-    {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
       "source_column_name": "lp_accounts",
       "target_column_name": "AccountID",
       "entity_type": "JOB",
-      "event_count": 16
+      "event_count": 39
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
+      "source_column_name": "lp_accounts",
+      "target_column_name": "AccountID",
+      "entity_type": "JOB",
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
       "source_column_name": "Account_Number",
       "target_column_name": "AccountID",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
       "source_column_name": "lp_accounts",
       "target_column_name": "AccountID",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
+      "source_column_name": "liquidity_provider",
+      "target_column_name": "Account_Name",
+      "entity_type": "JOB",
+      "event_count": 39
     },
     {
       "source_table_full_name": "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
       "source_column_name": "liquidity_provider",
       "target_column_name": "Account_Name",
       "entity_type": "JOB",
-      "event_count": 49
-    },
-    {
-      "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
-      "source_column_name": "liquidity_provider",
-      "target_column_name": "Account_Name",
-      "entity_type": "JOB",
-      "event_count": 16
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
       "source_column_name": "liquidity_provider",
       "target_column_name": "Account_Name",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
@@ -69,7 +69,7 @@
       "source_column_name": "Units",
       "target_column_name": "BNYACAT",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
@@ -83,7 +83,7 @@
       "source_column_name": "Units",
       "target_column_name": "BNYOmniUnits",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
@@ -97,7 +97,7 @@
       "source_column_name": "Country_of_Incorporation_Name",
       "target_column_name": "BnyCountryOfIncorporation",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
@@ -111,7 +111,7 @@
       "source_column_name": "Location_Name",
       "target_column_name": "BnyExchange",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
@@ -125,7 +125,7 @@
       "source_column_name": "Local_Currency_Code",
       "target_column_name": "BnyLocalCurrency",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
@@ -139,7 +139,7 @@
       "source_column_name": "Location_Code",
       "target_column_name": "BnyLocationCode",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
@@ -160,14 +160,14 @@
       "source_column_name": "CUSIP",
       "target_column_name": "CUSIP",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
       "source_column_name": "CUSIP_CINS",
       "target_column_name": "CUSIP",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
@@ -219,102 +219,102 @@
       "event_count": 65
     },
     {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity",
+      "target_column_name": "CalculatedClosingBalance",
+      "entity_type": "JOB",
+      "event_count": 39
+    },
+    {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "Units",
       "target_column_name": "CalculatedClosingBalance",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "IsBuy",
       "target_column_name": "CalculatedClosingBalance",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
+      "source_column_name": "Balance",
+      "target_column_name": "CalculatedClosingBalance",
+      "entity_type": "JOB",
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
       "source_column_name": "quantity_",
       "target_column_name": "CalculatedClosingBalance",
       "entity_type": "JOB",
-      "event_count": 49
-    },
-    {
-      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
-      "source_column_name": "quantity",
-      "target_column_name": "CalculatedClosingBalance",
-      "entity_type": "JOB",
-      "event_count": 16
-    },
-    {
-      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
-      "source_column_name": "Balance",
-      "target_column_name": "CalculatedClosingBalance",
-      "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
       "source_column_name": "Units",
       "target_column_name": "CalculatedClosingBalance",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Account_No",
       "target_column_name": "CalculatedClosingBalance",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
       "source_column_name": "isBuy",
       "target_column_name": "CalculatedClosingBalance",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Deliver_To_Account",
       "target_column_name": "CalculatedClosingBalance",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
       "source_column_name": "quantity",
       "target_column_name": "CalculatedClosingBalance",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Quantity",
       "target_column_name": "CalculatedClosingBalance",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Trade_Type",
       "target_column_name": "CalculatedClosingBalance",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
       "source_column_name": "Quantity",
       "target_column_name": "CalculatedClosingBalance",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "CalculatedClosingBalance",
       "entity_type": "NOTEBOOK",
-      "event_count": 2
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
@@ -349,14 +349,14 @@
       "source_column_name": "AmountInUnitsDecimal",
       "target_column_name": "ClientUnitsEOD",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
       "source_column_name": "IsBuy",
       "target_column_name": "ClientUnitsEOD",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
@@ -398,79 +398,79 @@
       "source_column_name": "Units",
       "target_column_name": "ClosingBalanceOmnibus",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "IsBuy",
       "target_column_name": "ClosingBalanceOmnibus",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "IsBuy",
       "target_column_name": "ClosingBalanceOmnibus",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "Units",
       "target_column_name": "ClosingBalanceOmnibus",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "ClosingBalanceOmnibus",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Trade_Type",
       "target_column_name": "ClosingBalanceOmnibus",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
       "source_column_name": "Quantity",
       "target_column_name": "ClosingBalanceOmnibus",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Deliver_To_Account",
       "target_column_name": "ClosingBalanceOmnibus",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Quantity",
       "target_column_name": "ClosingBalanceOmnibus",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Account_No",
       "target_column_name": "ClosingBalanceOmnibus",
       "entity_type": "NOTEBOOK",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
+      "source_column_name": "Balance",
+      "target_column_name": "ClosingBalanceOmnibus",
+      "entity_type": "NOTEBOOK",
       "event_count": 3
     },
     {
-      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
-      "source_column_name": "Balance",
-      "target_column_name": "ClosingBalanceOmnibus",
-      "entity_type": "NOTEBOOK",
-      "event_count": 2
-    },
-    {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "Units",
       "target_column_name": "ClosingBalanceOmnibus",
@@ -503,42 +503,42 @@
       "source_column_name": "IsBuy",
       "target_column_name": "ClosingBalanceTotalCustody",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "IsBuy",
       "target_column_name": "ClosingBalanceTotalCustody",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "Units",
       "target_column_name": "ClosingBalanceTotalCustody",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "Units",
       "target_column_name": "ClosingBalanceTotalCustody",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "ClosingBalanceTotalCustody",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "ClosingBalanceTotalCustody",
       "entity_type": "NOTEBOOK",
-      "event_count": 2
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
@@ -580,7 +580,7 @@
       "source_column_name": "Quantity",
       "target_column_name": "FromLendingOptIn",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
@@ -632,116 +632,116 @@
       "event_count": 65
     },
     {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity",
+      "target_column_name": "GapBalanceCalcVsOmni",
+      "entity_type": "JOB",
+      "event_count": 39
+    },
+    {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "IsBuy",
       "target_column_name": "GapBalanceCalcVsOmni",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "Units",
       "target_column_name": "GapBalanceCalcVsOmni",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "IsBuy",
       "target_column_name": "GapBalanceCalcVsOmni",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "Units",
       "target_column_name": "GapBalanceCalcVsOmni",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
+      "source_column_name": "Balance",
+      "target_column_name": "GapBalanceCalcVsOmni",
+      "entity_type": "JOB",
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
       "source_column_name": "quantity_",
       "target_column_name": "GapBalanceCalcVsOmni",
       "entity_type": "JOB",
-      "event_count": 49
-    },
-    {
-      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
-      "source_column_name": "quantity",
-      "target_column_name": "GapBalanceCalcVsOmni",
-      "entity_type": "JOB",
-      "event_count": 16
-    },
-    {
-      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
-      "source_column_name": "Balance",
-      "target_column_name": "GapBalanceCalcVsOmni",
-      "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Deliver_To_Account",
       "target_column_name": "GapBalanceCalcVsOmni",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
       "source_column_name": "Units",
       "target_column_name": "GapBalanceCalcVsOmni",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Quantity",
       "target_column_name": "GapBalanceCalcVsOmni",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
       "source_column_name": "quantity",
       "target_column_name": "GapBalanceCalcVsOmni",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Trade_Type",
       "target_column_name": "GapBalanceCalcVsOmni",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
       "source_column_name": "Quantity",
       "target_column_name": "GapBalanceCalcVsOmni",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Account_No",
       "target_column_name": "GapBalanceCalcVsOmni",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
       "source_column_name": "isBuy",
       "target_column_name": "GapBalanceCalcVsOmni",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "GapBalanceCalcVsOmni",
       "entity_type": "NOTEBOOK",
-      "event_count": 2
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
@@ -790,42 +790,42 @@
       "source_column_name": "isBuy",
       "target_column_name": "HedgeActions",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
       "source_column_name": "Units",
       "target_column_name": "HedgeActions",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "HedgeServerID",
       "target_column_name": "HedgeServerID",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "HedgeServerID",
       "target_column_name": "HedgeServerID",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "HedgeServerID",
       "target_column_name": "HedgeServerID",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "HedgeServerID",
       "target_column_name": "HedgeServerID",
       "entity_type": "NOTEBOOK",
-      "event_count": 2
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
@@ -867,21 +867,21 @@
       "source_column_name": "ISINCode",
       "target_column_name": "ISIN",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "source_column_name": "ISINCode",
       "target_column_name": "ISIN",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
       "source_column_name": "ISIN",
       "target_column_name": "ISIN",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
@@ -895,7 +895,7 @@
       "source_column_name": "InstrumentDisplayName",
       "target_column_name": "InstrumentDisplayName",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
@@ -909,35 +909,35 @@
       "source_column_name": "InstrumentID",
       "target_column_name": "InstrumentID",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "InstrumentID",
       "target_column_name": "InstrumentID",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "InstrumentID",
       "target_column_name": "InstrumentID",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "source_column_name": "InstrumentID",
       "target_column_name": "InstrumentID",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "InstrumentID",
       "target_column_name": "InstrumentID",
       "entity_type": "NOTEBOOK",
-      "event_count": 2
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
@@ -965,7 +965,7 @@
       "source_column_name": "Name",
       "target_column_name": "InstrumentName",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
@@ -1017,116 +1017,116 @@
       "event_count": 65
     },
     {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity",
+      "target_column_name": "IsGapBalanceCalcVsOmniEOD",
+      "entity_type": "JOB",
+      "event_count": 39
+    },
+    {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "Units",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "IsBuy",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "Units",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "IsBuy",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
+      "source_column_name": "Balance",
+      "target_column_name": "IsGapBalanceCalcVsOmniEOD",
+      "entity_type": "JOB",
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
       "source_column_name": "quantity_",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "JOB",
-      "event_count": 49
-    },
-    {
-      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
-      "source_column_name": "quantity",
-      "target_column_name": "IsGapBalanceCalcVsOmniEOD",
-      "entity_type": "JOB",
-      "event_count": 16
-    },
-    {
-      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
-      "source_column_name": "Balance",
-      "target_column_name": "IsGapBalanceCalcVsOmniEOD",
-      "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
       "source_column_name": "Quantity",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Trade_Type",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Deliver_To_Account",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Account_No",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
       "source_column_name": "isBuy",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
       "source_column_name": "Units",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Quantity",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
       "source_column_name": "quantity",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "NOTEBOOK",
-      "event_count": 2
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
@@ -1210,49 +1210,49 @@
       "source_column_name": "Quantity",
       "target_column_name": "IsGapLendingOptInEtoroVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Deliver_To_Account",
       "target_column_name": "IsGapLendingOptInEtoroVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Quantity",
       "target_column_name": "IsGapLendingOptInEtoroVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Trade_Type",
       "target_column_name": "IsGapLendingOptInEtoroVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
       "source_column_name": "Quantity",
       "target_column_name": "IsGapLendingOptInEtoroVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
       "source_column_name": "Units",
       "target_column_name": "IsGapLendingOptInEtoroVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Account_No",
       "target_column_name": "IsGapLendingOptInEtoroVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
@@ -1301,42 +1301,42 @@
       "source_column_name": "Account_No",
       "target_column_name": "IsGapLoansEquilendVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
       "source_column_name": "Units",
       "target_column_name": "IsGapLoansEquilendVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
       "source_column_name": "Quantity",
       "target_column_name": "IsGapLoansEquilendVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Deliver_To_Account",
       "target_column_name": "IsGapLoansEquilendVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Quantity",
       "target_column_name": "IsGapLoansEquilendVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Trade_Type",
       "target_column_name": "IsGapLoansEquilendVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
@@ -1385,84 +1385,84 @@
       "source_column_name": "Units",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "Units",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "IsBuy",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "IsBuy",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Trade_Type",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Deliver_To_Account",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
       "source_column_name": "Units",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
       "source_column_name": "Quantity",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Quantity",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Account_No",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 2
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
@@ -1539,70 +1539,70 @@
       "source_column_name": "Units",
       "target_column_name": "IsGapOpeningBalance",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "IsBuy",
       "target_column_name": "IsGapOpeningBalance",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "IsGapOpeningBalance",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Deliver_To_Account",
       "target_column_name": "IsGapOpeningBalance",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
       "source_column_name": "Quantity",
       "target_column_name": "IsGapOpeningBalance",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation",
       "source_column_name": "ClosingBalanceOmnibus",
       "target_column_name": "IsGapOpeningBalance",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Trade_Type",
       "target_column_name": "IsGapOpeningBalance",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Quantity",
       "target_column_name": "IsGapOpeningBalance",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Account_No",
       "target_column_name": "IsGapOpeningBalance",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "IsGapOpeningBalance",
       "entity_type": "NOTEBOOK",
-      "event_count": 2
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
@@ -1630,7 +1630,7 @@
       "source_column_name": "Units",
       "target_column_name": "LendingBnyOptIn",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
@@ -1644,7 +1644,7 @@
       "source_column_name": "etr_ymd",
       "target_column_name": "LendingEtoroDate",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
@@ -1693,42 +1693,42 @@
       "source_column_name": "Deliver_To_Account",
       "target_column_name": "LendingEtoroOptIn",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Trade_Type",
       "target_column_name": "LendingEtoroOptIn",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Account_No",
       "target_column_name": "LendingEtoroOptIn",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Quantity",
       "target_column_name": "LendingEtoroOptIn",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
       "source_column_name": "Quantity",
       "target_column_name": "LendingEtoroOptIn",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
       "source_column_name": "Quantity",
       "target_column_name": "LendingEtoroOptIn",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
@@ -1777,70 +1777,70 @@
       "source_column_name": "Quantity",
       "target_column_name": "LendingEtoroOptInPrev",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
       "source_column_name": "Quantity",
       "target_column_name": "LendingEtoroOptInPrev",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Account_No",
       "target_column_name": "LendingEtoroOptInPrev",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
       "source_column_name": "Quantity",
       "target_column_name": "LendingEtoroOptInPrev",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Trade_Type",
       "target_column_name": "LendingEtoroOptInPrev",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Deliver_To_Account",
       "target_column_name": "LendingEtoroOptInPrev",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "LiquidityAccountID",
       "target_column_name": "LiquidityAccountID",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "LiquidityAccountID",
       "target_column_name": "LiquidityAccountID",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "LiquidityAccountID",
       "target_column_name": "LiquidityAccountID",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "LiquidityAccountID",
       "target_column_name": "LiquidityAccountID",
       "entity_type": "NOTEBOOK",
-      "event_count": 2
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
@@ -1855,27 +1855,27 @@
       "target_column_name": "LiquidityAccountID",
       "entity_type": "NOTEBOOK",
       "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
+      "source_column_name": "liquidity_account_name",
+      "target_column_name": "LiquidityAccountName",
+      "entity_type": "JOB",
+      "event_count": 39
     },
     {
       "source_table_full_name": "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
       "source_column_name": "liquidity_account_name",
       "target_column_name": "LiquidityAccountName",
       "entity_type": "JOB",
-      "event_count": 49
-    },
-    {
-      "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
-      "source_column_name": "liquidity_account_name",
-      "target_column_name": "LiquidityAccountName",
-      "entity_type": "JOB",
-      "event_count": 16
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
       "source_column_name": "liquidity_account_name",
       "target_column_name": "LiquidityAccountName",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
@@ -1889,7 +1889,7 @@
       "source_column_name": "Units",
       "target_column_name": "LoansBNY",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
@@ -1931,77 +1931,77 @@
       "source_column_name": "Deliver_To_Account",
       "target_column_name": "LoansEquilend",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Account_No",
       "target_column_name": "LoansEquilend",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Trade_Type",
       "target_column_name": "LoansEquilend",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
       "source_column_name": "Quantity",
       "target_column_name": "LoansEquilend",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Quantity",
       "target_column_name": "LoansEquilend",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity",
+      "target_column_name": "ManualMoveInToOmni",
+      "entity_type": "JOB",
+      "event_count": 39
     },
     {
       "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
       "source_column_name": "quantity_",
       "target_column_name": "ManualMoveInToOmni",
       "entity_type": "JOB",
-      "event_count": 49
-    },
-    {
-      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
-      "source_column_name": "quantity",
-      "target_column_name": "ManualMoveInToOmni",
-      "entity_type": "JOB",
-      "event_count": 16
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
       "source_column_name": "quantity",
       "target_column_name": "ManualMoveInToOmni",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity",
+      "target_column_name": "ManualMoveOutOfOmni",
+      "entity_type": "JOB",
+      "event_count": 39
     },
     {
       "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
       "source_column_name": "quantity_",
       "target_column_name": "ManualMoveOutOfOmni",
       "entity_type": "JOB",
-      "event_count": 49
-    },
-    {
-      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
-      "source_column_name": "quantity",
-      "target_column_name": "ManualMoveOutOfOmni",
-      "entity_type": "JOB",
-      "event_count": 16
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
       "source_column_name": "quantity",
       "target_column_name": "ManualMoveOutOfOmni",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
@@ -2043,65 +2043,65 @@
       "source_column_name": "IsBuy",
       "target_column_name": "OpeningBalanceOmnibus",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "Units",
       "target_column_name": "OpeningBalanceOmnibus",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "OpeningBalanceOmnibus",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Account_No",
       "target_column_name": "OpeningBalanceOmnibus",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Trade_Type",
       "target_column_name": "OpeningBalanceOmnibus",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
       "source_column_name": "Quantity",
       "target_column_name": "OpeningBalanceOmnibus",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Deliver_To_Account",
       "target_column_name": "OpeningBalanceOmnibus",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Quantity",
       "target_column_name": "OpeningBalanceOmnibus",
       "entity_type": "NOTEBOOK",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
+      "source_column_name": "Balance",
+      "target_column_name": "OpeningBalanceOmnibus",
+      "entity_type": "NOTEBOOK",
       "event_count": 3
     },
     {
-      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
-      "source_column_name": "Balance",
-      "target_column_name": "OpeningBalanceOmnibus",
-      "entity_type": "NOTEBOOK",
-      "event_count": 2
-    },
-    {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "Units",
       "target_column_name": "OpeningBalanceOmnibus",
@@ -2120,28 +2120,28 @@
       "source_column_name": "Units",
       "target_column_name": "OpeningBalanceTotalCustody",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "IsBuy",
       "target_column_name": "OpeningBalanceTotalCustody",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "OpeningBalanceTotalCustody",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "OpeningBalanceTotalCustody",
       "entity_type": "NOTEBOOK",
-      "event_count": 2
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
@@ -2169,7 +2169,7 @@
       "source_column_name": "etr_ymd",
       "target_column_name": "SpirePositionDate",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
@@ -2183,7 +2183,7 @@
       "source_column_name": "Symbol",
       "target_column_name": "Symbol",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
@@ -2197,7 +2197,7 @@
       "source_column_name": "Quantity",
       "target_column_name": "ToLendingOptIn",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
@@ -2219,49 +2219,49 @@
       "target_column_name": "TotalMovements",
       "entity_type": "JOB",
       "event_count": 65
+    },
+    {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity",
+      "target_column_name": "TotalMovements",
+      "entity_type": "JOB",
+      "event_count": 39
     },
     {
       "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
       "source_column_name": "quantity_",
       "target_column_name": "TotalMovements",
       "entity_type": "JOB",
-      "event_count": 49
-    },
-    {
-      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
-      "source_column_name": "quantity",
-      "target_column_name": "TotalMovements",
-      "entity_type": "JOB",
-      "event_count": 16
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
       "source_column_name": "Units",
       "target_column_name": "TotalMovements",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
       "source_column_name": "quantity",
       "target_column_name": "TotalMovements",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
       "source_column_name": "isBuy",
       "target_column_name": "TotalMovements",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "source_column_name": "Quantity",
       "target_column_name": "TotalMovements",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 4
     }
   ],
-  "generated_at": "2026-05-19T14:33:26Z"
+  "generated_at": "2026-06-19T14:25:04Z"
 }

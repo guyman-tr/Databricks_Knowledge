@@ -5,9 +5,9 @@
 | **UC Object** | `main.bi_output.bi_output_vg_case` |
 | **Object Type** | `VIEW` |
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\bi_output_vg_case.sql` |
-| **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\bi_output_vg_case.json` (rows: 50, mismatches: 3) |
+| **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\bi_output_vg_case.json` (rows: 50, mismatches: 0) |
 | **Primary upstream** | `main.crm.silver_crm_case` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 
@@ -82,13 +82,7 @@ main.bi_output.bi_output_vg_case   ←── this object
 ## Cross-check vs system.access.column_lineage
 
 - Total target columns: **50**
-- OK: **47**, WARN: **0**, ERROR: **3**, INFO: **0**  ⚠
-
-| Target | Parsed | Runtime | Severity |
-|--------|--------|---------|----------|
-| `IsDuplicate` | — | `main.crm.silver_crm_case.duplicate__c`, `main.crm.silver_crm_case.origin`, `main.crm.silver_crm_case.status` | ERROR |
-| `FirstResponseDateTime` | — | `main.crm.silver_crm_case.createddate`, `main.crm.silver_crm_case.origin`, `main.crm.silver_crm_case.x1st_response_date_time__c` | ERROR |
-| `ChatSkill` | — | `main.crm.silver_crm_case.original_skillset__c` | ERROR |
+- OK: **5**, WARN: **0**, ERROR: **0**, INFO: **45**  ✓
 
 ## Lost / added columns
 

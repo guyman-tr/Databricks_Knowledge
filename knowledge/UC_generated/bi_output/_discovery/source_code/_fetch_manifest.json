@@ -1,15 +1,30 @@
 {
   "schema": "bi_output",
   "catalog": "main",
-  "generated_at": "2026-05-19T15:01:07Z",
+  "generated_at": "2026-06-19T14:35:33Z",
   "lineage_lookback_days": 90,
   "objects": [
+    {
+      "object": "main.bi_output.australia_tag_ob_june26",
+      "name": "australia_tag_ob_june26",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\australia_tag_ob_june26.json",
+      "column_lineage_row_count": 16,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\australia_tag_ob_june26.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
     {
       "object": "main.bi_output.bi_ouput_v_dim_instrumenttype",
       "name": "bi_ouput_v_dim_instrumenttype",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_ouput_v_dim_instrumenttype.json",
-      "column_lineage_row_count": 11,
+      "column_lineage_row_count": 13,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_ouput_v_dim_instrumenttype.sql",
       "writers": [
@@ -62,7 +77,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "553708992053298",
+          "entity_id": "1025680792183000",
           "event_count_lookback": 12,
           "role": "primary",
           "fetched": false,
@@ -70,7 +85,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "121903962414337",
+          "entity_id": "663808617993344",
           "event_count_lookback": 12,
           "role": "secondary",
           "fetched": false,
@@ -78,7 +93,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "365636647943809",
+          "entity_id": "618022750277599",
           "event_count_lookback": 12,
           "role": "secondary",
           "fetched": false,
@@ -86,7 +101,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "513799814970178",
+          "entity_id": "561459740946949",
           "event_count_lookback": 12,
           "role": "secondary",
           "fetched": false,
@@ -94,7 +109,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "931042621395701",
+          "entity_id": "1081790093279569",
           "event_count_lookback": 12,
           "role": "secondary",
           "fetched": false,
@@ -113,7 +128,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "452829038886114",
+          "entity_id": "955949856598095",
           "event_count_lookback": 25,
           "role": "primary",
           "fetched": false,
@@ -121,7 +136,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1049293600177185",
+          "entity_id": "279864630572033",
           "event_count_lookback": 25,
           "role": "secondary",
           "fetched": false,
@@ -129,7 +144,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "43616668268882",
+          "entity_id": "222389707369511",
           "event_count_lookback": 25,
           "role": "secondary",
           "fetched": false,
@@ -137,7 +152,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "523145378039789",
+          "entity_id": "1122565696520128",
           "event_count_lookback": 25,
           "role": "secondary",
           "fetched": false,
@@ -145,7 +160,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "839572198440513",
+          "entity_id": "281471392562933",
           "event_count_lookback": 25,
           "role": "secondary",
           "fetched": false,
@@ -164,7 +179,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "374814150093854",
+          "entity_id": "670422129595700",
           "event_count_lookback": 3,
           "role": "primary",
           "fetched": false,
@@ -172,7 +187,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "810925114521363",
+          "entity_id": "429334189316896",
           "event_count_lookback": 3,
           "role": "secondary",
           "fetched": false,
@@ -180,7 +195,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "938227598135468",
+          "entity_id": "1012572034272574",
           "event_count_lookback": 3,
           "role": "secondary",
           "fetched": false,
@@ -188,7 +203,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1005913687984284",
+          "entity_id": "883362946776015",
           "event_count_lookback": 3,
           "role": "secondary",
           "fetched": false,
@@ -196,7 +211,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "392817602714607",
+          "entity_id": "220942205955122",
           "event_count_lookback": 3,
           "role": "secondary",
           "fetched": false,
@@ -215,7 +230,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "323435626616999",
+          "entity_id": "499338347568739",
           "event_count_lookback": 5,
           "role": "primary",
           "fetched": false,
@@ -223,7 +238,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "492964131788276",
+          "entity_id": "601179742075768",
           "event_count_lookback": 5,
           "role": "secondary",
           "fetched": false,
@@ -231,7 +246,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "641564879231393",
+          "entity_id": "929833754867820",
           "event_count_lookback": 5,
           "role": "secondary",
           "fetched": false,
@@ -239,7 +254,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "77921288655923",
+          "entity_id": "70373372008829",
           "event_count_lookback": 5,
           "role": "secondary",
           "fetched": false,
@@ -247,7 +262,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "492768399853985",
+          "entity_id": "587995200469903",
           "event_count_lookback": 5,
           "role": "secondary",
           "fetched": false,
@@ -266,7 +281,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "110831025821996",
+          "entity_id": "170379646852059",
           "event_count_lookback": 7,
           "role": "primary",
           "fetched": false,
@@ -274,7 +289,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "542741219872423",
+          "entity_id": "756581871255143",
           "event_count_lookback": 7,
           "role": "secondary",
           "fetched": false,
@@ -282,7 +297,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "534967818664429",
+          "entity_id": "339913411887674",
           "event_count_lookback": 7,
           "role": "secondary",
           "fetched": false,
@@ -290,7 +305,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "69936325008235",
+          "entity_id": "816066254862110",
           "event_count_lookback": 7,
           "role": "secondary",
           "fetched": false,
@@ -298,7 +313,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "422076944607076",
+          "entity_id": "712506088821125",
           "event_count_lookback": 7,
           "role": "secondary",
           "fetched": false,
@@ -313,11 +328,11 @@
       "name": "bi_output_customer_customer_facing_club_club_equity",
       "table_type": "EXTERNAL",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_facing_club_club_equity.json",
-      "column_lineage_row_count": 88,
+      "column_lineage_row_count": 45,
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "783342669166219",
+          "entity_id": "818314403970549",
           "event_count_lookback": 9,
           "role": "primary",
           "fetched": false,
@@ -325,7 +340,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1017796813835243",
+          "entity_id": "553208297310097",
           "event_count_lookback": 9,
           "role": "secondary",
           "fetched": false,
@@ -333,7 +348,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "900509950879270",
+          "entity_id": "677862085317836",
           "event_count_lookback": 9,
           "role": "secondary",
           "fetched": false,
@@ -341,7 +356,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "119376001178234",
+          "entity_id": "226404971370100",
           "event_count_lookback": 9,
           "role": "secondary",
           "fetched": false,
@@ -349,7 +364,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "253640431463555",
+          "entity_id": "358106828382318",
           "event_count_lookback": 9,
           "role": "secondary",
           "fetched": false,
@@ -364,27 +379,9 @@
       "name": "bi_output_customer_customer_facing_club_club_offer_eligibilty",
       "table_type": "EXTERNAL",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_customer_customer_facing_club_club_offer_eligibilty.json",
-      "column_lineage_row_count": 79,
-      "writers": [
-        {
-          "kind": "NOTEBOOK",
-          "entity_id": "1200434159941085",
-          "event_count_lookback": 12,
-          "role": "primary",
-          "fetched": false,
-          "fetch_error": "workspace.export failed"
-        },
-        {
-          "kind": "JOB",
-          "entity_id": "525624360584016",
-          "event_count_lookback": 12,
-          "role": "secondary",
-          "fetched": false,
-          "fetch_error": "job has no notebook tasks"
-        }
-      ],
-      "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_customer_customer_facing_club_club_offer_eligibilty.json",
-      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+      "column_lineage_row_count": 0,
+      "status": "NO_LINEAGE",
+      "writers": []
     },
     {
       "object": "main.bi_output.bi_output_customer_customer_facing_pageviews_behaviour",
@@ -395,7 +392,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "98393716349984",
+          "entity_id": "348709059170768",
           "event_count_lookback": 6,
           "role": "primary",
           "fetched": false,
@@ -403,7 +400,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "767498751687355",
+          "entity_id": "487913648029560",
           "event_count_lookback": 6,
           "role": "secondary",
           "fetched": false,
@@ -411,7 +408,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1115194246640170",
+          "entity_id": "960284969933480",
           "event_count_lookback": 6,
           "role": "secondary",
           "fetched": false,
@@ -419,7 +416,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1092247851427176",
+          "entity_id": "587635128907748",
           "event_count_lookback": 6,
           "role": "secondary",
           "fetched": false,
@@ -427,7 +424,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "147790262536032",
+          "entity_id": "774903925524864",
           "event_count_lookback": 6,
           "role": "secondary",
           "fetched": false,
@@ -446,7 +443,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "705275531255649",
+          "entity_id": "470172202146095",
           "event_count_lookback": 2,
           "role": "primary",
           "fetched": false,
@@ -454,7 +451,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1032261611884529",
+          "entity_id": "967241002052106",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -462,7 +459,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1067804482238566",
+          "entity_id": "911890399949393",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -470,7 +467,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "931160506542812",
+          "entity_id": "269459036473483",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -478,7 +475,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "213935658623860",
+          "entity_id": "576394318257039",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -497,7 +494,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "1067804482238566",
+          "entity_id": "184982044232794",
           "event_count_lookback": 2,
           "role": "primary",
           "fetched": false,
@@ -505,7 +502,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1032261611884529",
+          "entity_id": "348629853631869",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -513,7 +510,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "738011865257471",
+          "entity_id": "124480325323336",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -521,7 +518,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "931160506542812",
+          "entity_id": "262916450261793",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -529,7 +526,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "440390444241455",
+          "entity_id": "440587294084588",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -548,9 +545,17 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "941099411255830",
+          "entity_id": "526880768777324",
           "event_count_lookback": 10,
           "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "JOB",
+          "entity_id": "941099411255830",
+          "event_count_lookback": 10,
+          "role": "secondary",
           "fetched": false,
           "fetch_error": "job has no notebook tasks"
         },
@@ -564,24 +569,16 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "194501561242339",
-          "event_count_lookback": 9,
+          "entity_id": "297119285187024",
+          "event_count_lookback": 10,
           "role": "secondary",
           "fetched": false,
           "fetch_error": "job has no notebook tasks"
         },
         {
           "kind": "JOB",
-          "entity_id": "547685931010570",
-          "event_count_lookback": 9,
-          "role": "secondary",
-          "fetched": false,
-          "fetch_error": "job has no notebook tasks"
-        },
-        {
-          "kind": "JOB",
-          "entity_id": "203108797970413",
-          "event_count_lookback": 8,
+          "entity_id": "177717837910259",
+          "event_count_lookback": 10,
           "role": "secondary",
           "fetched": false,
           "fetch_error": "job has no notebook tasks"
@@ -599,7 +596,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "1123572466349475",
+          "entity_id": "337070951076978",
           "event_count_lookback": 12,
           "role": "primary",
           "fetched": false,
@@ -607,7 +604,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "703435196816309",
+          "entity_id": "160147848549685",
           "event_count_lookback": 12,
           "role": "secondary",
           "fetched": false,
@@ -615,7 +612,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "941111178793767",
+          "entity_id": "978135959270698",
           "event_count_lookback": 12,
           "role": "secondary",
           "fetched": false,
@@ -623,7 +620,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1099205354005653",
+          "entity_id": "443375293390711",
           "event_count_lookback": 12,
           "role": "secondary",
           "fetched": false,
@@ -631,7 +628,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "890492072529400",
+          "entity_id": "699085147090827",
           "event_count_lookback": 12,
           "role": "secondary",
           "fetched": false,
@@ -650,7 +647,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "251824554559438",
+          "entity_id": "548310852548606",
           "event_count_lookback": 17,
           "role": "primary",
           "fetched": false,
@@ -658,7 +655,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "569767140828026",
+          "entity_id": "933199447417027",
           "event_count_lookback": 17,
           "role": "secondary",
           "fetched": false,
@@ -666,7 +663,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "939455828201778",
+          "entity_id": "62279987119405",
           "event_count_lookback": 17,
           "role": "secondary",
           "fetched": false,
@@ -674,7 +671,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "739031687300121",
+          "entity_id": "107252553349436",
           "event_count_lookback": 17,
           "role": "secondary",
           "fetched": false,
@@ -682,7 +679,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "267909903178263",
+          "entity_id": "859177127684486",
           "event_count_lookback": 17,
           "role": "secondary",
           "fetched": false,
@@ -702,7 +699,7 @@
         {
           "kind": "JOB",
           "entity_id": "418338092021449",
-          "event_count_lookback": 81,
+          "event_count_lookback": 83,
           "role": "primary",
           "fetched": false,
           "fetch_error": "job has no notebook tasks"
@@ -720,7 +717,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "911521582160615",
+          "entity_id": "682085686806950",
           "event_count_lookback": 1,
           "role": "primary",
           "fetched": false,
@@ -728,7 +725,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "555849343656950",
+          "entity_id": "527536423794632",
           "event_count_lookback": 1,
           "role": "secondary",
           "fetched": false,
@@ -736,7 +733,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "734237967276077",
+          "entity_id": "761384166406235",
           "event_count_lookback": 1,
           "role": "secondary",
           "fetched": false,
@@ -744,7 +741,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "778167258896804",
+          "entity_id": "1029608366399895",
           "event_count_lookback": 1,
           "role": "secondary",
           "fetched": false,
@@ -752,7 +749,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "749936095890123",
+          "entity_id": "431976950860942",
           "event_count_lookback": 1,
           "role": "secondary",
           "fetched": false,
@@ -771,7 +768,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "553082743927082",
+          "entity_id": "64316005359143",
           "event_count_lookback": 2,
           "role": "primary",
           "fetched": false,
@@ -779,7 +776,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "316761042674048",
+          "entity_id": "153991123112932",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -787,7 +784,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "949227768132298",
+          "entity_id": "435444359772474",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -795,7 +792,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1013765770330109",
+          "entity_id": "90060204710370",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -803,7 +800,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "868884686790272",
+          "entity_id": "657096554124182",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -822,7 +819,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "635177630152503",
+          "entity_id": "398151965794158",
           "event_count_lookback": 2,
           "role": "primary",
           "fetched": false,
@@ -830,7 +827,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "663582837398909",
+          "entity_id": "308432830127962",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -838,7 +835,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1024763679658203",
+          "entity_id": "970517768155837",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -846,7 +843,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "357349691239711",
+          "entity_id": "432497065914298",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -854,7 +851,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "746334764557185",
+          "entity_id": "351972312263625",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -873,7 +870,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "1065771415401276",
+          "entity_id": "650959273399544",
           "event_count_lookback": 2,
           "role": "primary",
           "fetched": false,
@@ -881,7 +878,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "561570059609104",
+          "entity_id": "1110578001411994",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -889,7 +886,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "802746391266075",
+          "entity_id": "460672992878487",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -897,7 +894,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "746180077717078",
+          "entity_id": "1032201014834226",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -905,7 +902,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "42798092229893",
+          "entity_id": "105213542138074",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -924,7 +921,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "454785896908590",
+          "entity_id": "883504690918861",
           "event_count_lookback": 1,
           "role": "primary",
           "fetched": false,
@@ -932,7 +929,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "653716170318283",
+          "entity_id": "782029496849871",
           "event_count_lookback": 1,
           "role": "secondary",
           "fetched": false,
@@ -940,7 +937,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1022911323332553",
+          "entity_id": "38033005864266",
           "event_count_lookback": 1,
           "role": "secondary",
           "fetched": false,
@@ -948,7 +945,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "402345041632305",
+          "entity_id": "776917258190624",
           "event_count_lookback": 1,
           "role": "secondary",
           "fetched": false,
@@ -956,7 +953,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "927849595684848",
+          "entity_id": "807063983627296",
           "event_count_lookback": 1,
           "role": "secondary",
           "fetched": false,
@@ -975,7 +972,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "264788163149603",
+          "entity_id": "334202823739693",
           "event_count_lookback": 5,
           "role": "primary",
           "fetched": false,
@@ -983,7 +980,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "911754404643932",
+          "entity_id": "889951792239493",
           "event_count_lookback": 5,
           "role": "secondary",
           "fetched": false,
@@ -991,7 +988,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "177765599221098",
+          "entity_id": "181841248689731",
           "event_count_lookback": 5,
           "role": "secondary",
           "fetched": false,
@@ -999,7 +996,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "402441936640766",
+          "entity_id": "333131744127313",
           "event_count_lookback": 5,
           "role": "secondary",
           "fetched": false,
@@ -1007,7 +1004,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "331483120022520",
+          "entity_id": "328284874328734",
           "event_count_lookback": 5,
           "role": "secondary",
           "fetched": false,
@@ -1026,7 +1023,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "467841512123679",
+          "entity_id": "245961776284010",
           "event_count_lookback": 15,
           "role": "primary",
           "fetched": false,
@@ -1034,7 +1031,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1046247837342443",
+          "entity_id": "918738567007259",
           "event_count_lookback": 15,
           "role": "secondary",
           "fetched": false,
@@ -1042,7 +1039,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "929729319572724",
+          "entity_id": "360704851405150",
           "event_count_lookback": 15,
           "role": "secondary",
           "fetched": false,
@@ -1050,7 +1047,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "388984772940028",
+          "entity_id": "595622049028029",
           "event_count_lookback": 15,
           "role": "secondary",
           "fetched": false,
@@ -1058,7 +1055,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "339954650798635",
+          "entity_id": "697362546546092",
           "event_count_lookback": 15,
           "role": "secondary",
           "fetched": false,
@@ -1077,7 +1074,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "46561576245848",
+          "entity_id": "416100247646985",
           "event_count_lookback": 11,
           "role": "primary",
           "fetched": false,
@@ -1085,7 +1082,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "401599839665697",
+          "entity_id": "618837202132963",
           "event_count_lookback": 11,
           "role": "secondary",
           "fetched": false,
@@ -1093,7 +1090,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "935151289384493",
+          "entity_id": "1056157752083445",
           "event_count_lookback": 11,
           "role": "secondary",
           "fetched": false,
@@ -1101,7 +1098,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "528561847699615",
+          "entity_id": "358489411289276",
           "event_count_lookback": 11,
           "role": "secondary",
           "fetched": false,
@@ -1109,7 +1106,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "219299298941907",
+          "entity_id": "76320129402262",
           "event_count_lookback": 11,
           "role": "secondary",
           "fetched": false,
@@ -1124,7 +1121,7 @@
       "name": "bi_output_deltaapp_subscription_view",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_deltaapp_subscription_view.json",
-      "column_lineage_row_count": 82,
+      "column_lineage_row_count": 84,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_deltaapp_subscription_view.sql",
       "writers": [
@@ -1143,7 +1140,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "366335424855208",
+          "entity_id": "240351224578654",
           "event_count_lookback": 16,
           "role": "primary",
           "fetched": false,
@@ -1151,7 +1148,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "680834468518019",
+          "entity_id": "226320803687083",
           "event_count_lookback": 16,
           "role": "secondary",
           "fetched": false,
@@ -1159,7 +1156,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "984427966039068",
+          "entity_id": "539911118913922",
           "event_count_lookback": 16,
           "role": "secondary",
           "fetched": false,
@@ -1167,7 +1164,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "98178902746257",
+          "entity_id": "222458845566518",
           "event_count_lookback": 16,
           "role": "secondary",
           "fetched": false,
@@ -1175,7 +1172,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "638748149782155",
+          "entity_id": "197222400001698",
           "event_count_lookback": 16,
           "role": "secondary",
           "fetched": false,
@@ -1194,7 +1191,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "333631390353161",
+          "entity_id": "365640599273994",
           "event_count_lookback": 7,
           "role": "primary",
           "fetched": false,
@@ -1202,7 +1199,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "164863133418087",
+          "entity_id": "90144617245260",
           "event_count_lookback": 7,
           "role": "secondary",
           "fetched": false,
@@ -1210,7 +1207,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "171289446369426",
+          "entity_id": "822851697992147",
           "event_count_lookback": 7,
           "role": "secondary",
           "fetched": false,
@@ -1218,7 +1215,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "438369326402471",
+          "entity_id": "706056708767005",
           "event_count_lookback": 7,
           "role": "secondary",
           "fetched": false,
@@ -1226,7 +1223,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "870179891053771",
+          "entity_id": "688769672887050",
           "event_count_lookback": 7,
           "role": "secondary",
           "fetched": false,
@@ -1241,44 +1238,44 @@
       "name": "bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "table_type": "EXTERNAL",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_hedge_nettingbalance.json",
-      "column_lineage_row_count": 31,
+      "column_lineage_row_count": 38,
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "564791906722426",
-          "event_count_lookback": 3,
+          "entity_id": "555571421675837",
+          "event_count_lookback": 4,
           "role": "primary",
           "fetched": false,
           "fetch_error": "job has no notebook tasks"
         },
         {
           "kind": "JOB",
-          "entity_id": "1032435984692804",
-          "event_count_lookback": 3,
+          "entity_id": "138804399199340",
+          "event_count_lookback": 4,
           "role": "secondary",
           "fetched": false,
           "fetch_error": "job has no notebook tasks"
         },
         {
           "kind": "JOB",
-          "entity_id": "323604495690947",
-          "event_count_lookback": 3,
+          "entity_id": "50023759390111",
+          "event_count_lookback": 4,
           "role": "secondary",
           "fetched": false,
           "fetch_error": "job has no notebook tasks"
         },
         {
           "kind": "JOB",
-          "entity_id": "581384956201308",
-          "event_count_lookback": 3,
+          "entity_id": "224599558969600",
+          "event_count_lookback": 4,
           "role": "secondary",
           "fetched": false,
           "fetch_error": "job has no notebook tasks"
         },
         {
           "kind": "JOB",
-          "entity_id": "850642533991707",
-          "event_count_lookback": 3,
+          "entity_id": "81825062106454",
+          "event_count_lookback": 4,
           "role": "secondary",
           "fetched": false,
           "fetch_error": "job has no notebook tasks"
@@ -1368,31 +1365,15 @@
       "name": "bi_output_finance_tables_bi_db_recurringinvestment_positions_parquet",
       "table_type": "EXTERNAL",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_recurringinvestment_positions_parquet.json",
-      "column_lineage_row_count": 4,
+      "column_lineage_row_count": 2,
       "writers": [
         {
           "kind": "DBSQL_QUERY",
           "entity_id": "05293a5b-1d3b-4302-9856-f4cbc6942396",
-          "event_count_lookback": 128,
+          "event_count_lookback": 182,
           "role": "primary",
           "fetched": false,
           "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
-        },
-        {
-          "kind": "DBSQL_QUERY",
-          "entity_id": "421b9943-9dae-4f4a-acc0-9272c4f2a70d",
-          "event_count_lookback": 54,
-          "role": "secondary",
-          "fetched": false,
-          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
-        },
-        {
-          "kind": "JOB",
-          "entity_id": "844382279060709",
-          "event_count_lookback": 2,
-          "role": "secondary",
-          "fetched": false,
-          "fetch_error": "job has no notebook tasks"
         }
       ],
       "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_finance_tables_bi_db_recurringinvestment_positions_parquet.json",
@@ -1407,7 +1388,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "1075774964365528",
+          "entity_id": "381656407003286",
           "event_count_lookback": 10,
           "role": "primary",
           "fetched": false,
@@ -1415,7 +1396,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "467145825982480",
+          "entity_id": "141843366577697",
           "event_count_lookback": 10,
           "role": "secondary",
           "fetched": false,
@@ -1423,7 +1404,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "96057006581011",
+          "entity_id": "732036234653109",
           "event_count_lookback": 10,
           "role": "secondary",
           "fetched": false,
@@ -1431,7 +1412,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "765545700561167",
+          "entity_id": "313671910134377",
           "event_count_lookback": 10,
           "role": "secondary",
           "fetched": false,
@@ -1439,7 +1420,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "388131355962550",
+          "entity_id": "671913878580811",
           "event_count_lookback": 10,
           "role": "secondary",
           "fetched": false,
@@ -1458,7 +1439,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "286906934457272",
+          "entity_id": "302687397161296",
           "event_count_lookback": 10,
           "role": "primary",
           "fetched": false,
@@ -1466,7 +1447,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "359550865941958",
+          "entity_id": "381656407003286",
           "event_count_lookback": 10,
           "role": "secondary",
           "fetched": false,
@@ -1474,7 +1455,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "386931753440702",
+          "entity_id": "141843366577697",
           "event_count_lookback": 10,
           "role": "secondary",
           "fetched": false,
@@ -1482,7 +1463,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "432697436883087",
+          "entity_id": "732036234653109",
           "event_count_lookback": 10,
           "role": "secondary",
           "fetched": false,
@@ -1490,7 +1471,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "302988174335890",
+          "entity_id": "313671910134377",
           "event_count_lookback": 10,
           "role": "secondary",
           "fetched": false,
@@ -1509,7 +1490,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "944212823380282",
+          "entity_id": "535412884148501",
           "event_count_lookback": 10,
           "role": "primary",
           "fetched": false,
@@ -1517,7 +1498,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "688149681306423",
+          "entity_id": "631610118933904",
           "event_count_lookback": 10,
           "role": "secondary",
           "fetched": false,
@@ -1525,7 +1506,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "47673804099153",
+          "entity_id": "433062061351945",
           "event_count_lookback": 10,
           "role": "secondary",
           "fetched": false,
@@ -1533,7 +1514,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "825621836382481",
+          "entity_id": "1060068365141672",
           "event_count_lookback": 10,
           "role": "secondary",
           "fetched": false,
@@ -1541,7 +1522,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "794589421869501",
+          "entity_id": "111578874992303",
           "event_count_lookback": 10,
           "role": "secondary",
           "fetched": false,
@@ -1561,14 +1542,14 @@
         {
           "kind": "NOTEBOOK",
           "entity_id": "929841887099956",
-          "event_count_lookback": 50,
+          "event_count_lookback": 66,
           "role": "primary",
           "fetched": false,
           "fetch_error": "workspace.export failed"
         },
         {
           "kind": "JOB",
-          "entity_id": "449177029092311",
+          "entity_id": "1102619228266846",
           "event_count_lookback": 17,
           "role": "secondary",
           "fetched": false,
@@ -1576,7 +1557,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "131261705122566",
+          "entity_id": "1107100763454375",
           "event_count_lookback": 17,
           "role": "secondary",
           "fetched": false,
@@ -1584,7 +1565,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "931695897996839",
+          "entity_id": "183521942812818",
           "event_count_lookback": 17,
           "role": "secondary",
           "fetched": false,
@@ -1592,7 +1573,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "821502515933568",
+          "entity_id": "320506974522760",
           "event_count_lookback": 17,
           "role": "secondary",
           "fetched": false,
@@ -1607,11 +1588,11 @@
       "name": "bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu",
       "table_type": "EXTERNAL",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu.json",
-      "column_lineage_row_count": 131,
+      "column_lineage_row_count": 128,
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "98910090369345",
+          "entity_id": "563614939872772",
           "event_count_lookback": 15,
           "role": "primary",
           "fetched": false,
@@ -1619,7 +1600,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1001204586163142",
+          "entity_id": "246004831725281",
           "event_count_lookback": 15,
           "role": "secondary",
           "fetched": false,
@@ -1627,7 +1608,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "958990206882230",
+          "entity_id": "374052096866804",
           "event_count_lookback": 15,
           "role": "secondary",
           "fetched": false,
@@ -1635,7 +1616,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "235947973569207",
+          "entity_id": "509740602067506",
           "event_count_lookback": 15,
           "role": "secondary",
           "fetched": false,
@@ -1643,7 +1624,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "208603954893821",
+          "entity_id": "211954960226899",
           "event_count_lookback": 15,
           "role": "secondary",
           "fetched": false,
@@ -1658,11 +1639,11 @@
       "name": "bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_uk",
       "table_type": "EXTERNAL",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_uk.json",
-      "column_lineage_row_count": 127,
+      "column_lineage_row_count": 124,
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "591258689062912",
+          "entity_id": "1001525122243808",
           "event_count_lookback": 14,
           "role": "primary",
           "fetched": false,
@@ -1670,7 +1651,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "886687968120294",
+          "entity_id": "232700456896323",
           "event_count_lookback": 14,
           "role": "secondary",
           "fetched": false,
@@ -1678,7 +1659,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "494279110328937",
+          "entity_id": "526829385709256",
           "event_count_lookback": 14,
           "role": "secondary",
           "fetched": false,
@@ -1686,7 +1667,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "824913801855994",
+          "entity_id": "600374966387328",
           "event_count_lookback": 14,
           "role": "secondary",
           "fetched": false,
@@ -1694,7 +1675,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "585180331385182",
+          "entity_id": "752895581345534",
           "event_count_lookback": 14,
           "role": "secondary",
           "fetched": false,
@@ -1713,7 +1694,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "138151664061318",
+          "entity_id": "141843366577697",
           "event_count_lookback": 11,
           "role": "primary",
           "fetched": false,
@@ -1721,7 +1702,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "659571473937788",
+          "entity_id": "732036234653109",
           "event_count_lookback": 11,
           "role": "secondary",
           "fetched": false,
@@ -1729,7 +1710,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "27544170671570",
+          "entity_id": "313671910134377",
           "event_count_lookback": 11,
           "role": "secondary",
           "fetched": false,
@@ -1737,7 +1718,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "74771781756749",
+          "entity_id": "671913878580811",
           "event_count_lookback": 11,
           "role": "secondary",
           "fetched": false,
@@ -1745,7 +1726,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1099456476947239",
+          "entity_id": "427126323990379",
           "event_count_lookback": 11,
           "role": "secondary",
           "fetched": false,
@@ -1764,7 +1745,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "138151664061318",
+          "entity_id": "467694890974417",
           "event_count_lookback": 11,
           "role": "primary",
           "fetched": false,
@@ -1772,7 +1753,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "659571473937788",
+          "entity_id": "753413660966215",
           "event_count_lookback": 11,
           "role": "secondary",
           "fetched": false,
@@ -1780,7 +1761,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "27544170671570",
+          "entity_id": "570194507367925",
           "event_count_lookback": 11,
           "role": "secondary",
           "fetched": false,
@@ -1788,7 +1769,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "74771781756749",
+          "entity_id": "183620499026206",
           "event_count_lookback": 11,
           "role": "secondary",
           "fetched": false,
@@ -1796,7 +1777,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1099456476947239",
+          "entity_id": "745937675176612",
           "event_count_lookback": 11,
           "role": "secondary",
           "fetched": false,
@@ -1815,7 +1796,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "467145825982480",
+          "entity_id": "433062061351945",
           "event_count_lookback": 11,
           "role": "primary",
           "fetched": false,
@@ -1823,7 +1804,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "388131355962550",
+          "entity_id": "1060068365141672",
           "event_count_lookback": 11,
           "role": "secondary",
           "fetched": false,
@@ -1831,7 +1812,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "96057006581011",
+          "entity_id": "111578874992303",
           "event_count_lookback": 11,
           "role": "secondary",
           "fetched": false,
@@ -1839,7 +1820,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "765545700561167",
+          "entity_id": "109464070728569",
           "event_count_lookback": 11,
           "role": "secondary",
           "fetched": false,
@@ -1847,7 +1828,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1118951765671794",
+          "entity_id": "48881563457537",
           "event_count_lookback": 11,
           "role": "secondary",
           "fetched": false,
@@ -1866,7 +1847,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "536770310918301",
+          "entity_id": "778092673417064",
           "event_count_lookback": 7,
           "role": "primary",
           "fetched": false,
@@ -1874,7 +1855,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "81764622456245",
+          "entity_id": "724102873694772",
           "event_count_lookback": 7,
           "role": "secondary",
           "fetched": false,
@@ -1882,7 +1863,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "832793623099840",
+          "entity_id": "1114694751327597",
           "event_count_lookback": 7,
           "role": "secondary",
           "fetched": false,
@@ -1890,7 +1871,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "718044804698590",
+          "entity_id": "830826560771696",
           "event_count_lookback": 7,
           "role": "secondary",
           "fetched": false,
@@ -1898,7 +1879,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "922788945759077",
+          "entity_id": "218161823942210",
           "event_count_lookback": 7,
           "role": "secondary",
           "fetched": false,
@@ -1917,7 +1898,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "899547074594827",
+          "entity_id": "858411640633051",
           "event_count_lookback": 7,
           "role": "primary",
           "fetched": false,
@@ -1925,7 +1906,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "472323883251842",
+          "entity_id": "502824593452804",
           "event_count_lookback": 7,
           "role": "secondary",
           "fetched": false,
@@ -1933,7 +1914,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "429057295408521",
+          "entity_id": "822851697992147",
           "event_count_lookback": 7,
           "role": "secondary",
           "fetched": false,
@@ -1941,7 +1922,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "720471926746870",
+          "entity_id": "706056708767005",
           "event_count_lookback": 7,
           "role": "secondary",
           "fetched": false,
@@ -1949,7 +1930,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "397807143223489",
+          "entity_id": "688769672887050",
           "event_count_lookback": 7,
           "role": "secondary",
           "fetched": false,
@@ -1968,7 +1949,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "90904867162520",
+          "entity_id": "746894475491944",
           "event_count_lookback": 2,
           "role": "primary",
           "fetched": false,
@@ -1976,7 +1957,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "1052308287267965",
+          "entity_id": "176591710044583",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -1984,7 +1965,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "301631128019800",
+          "entity_id": "351710420387445",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -1992,7 +1973,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "650499042068818",
+          "entity_id": "967143068489915",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -2000,7 +1981,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "422867527116039",
+          "entity_id": "201487292971665",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -2020,7 +2001,7 @@
         {
           "kind": "JOB",
           "entity_id": "384802822442789",
-          "event_count_lookback": 69,
+          "event_count_lookback": 74,
           "role": "primary",
           "notebooks": [
             {
@@ -2066,7 +2047,7 @@
         {
           "kind": "DBSQL_QUERY",
           "entity_id": "78916582-774e-46cc-8195-8a41a333aa6f",
-          "event_count_lookback": 5934,
+          "event_count_lookback": 5772,
           "role": "primary",
           "fetched": false,
           "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
@@ -2084,7 +2065,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "649649054957599",
+          "entity_id": "59232223804295",
           "event_count_lookback": 2,
           "role": "primary",
           "fetched": false,
@@ -2092,7 +2073,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "887462372922711",
+          "entity_id": "343908317077300",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -2100,7 +2081,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "437146905298849",
+          "entity_id": "449883173291466",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -2108,7 +2089,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "131117946631349",
+          "entity_id": "413081556480840",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -2116,7 +2097,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "775947482926248",
+          "entity_id": "57547043092165",
           "event_count_lookback": 2,
           "role": "secondary",
           "fetched": false,
@@ -2136,7 +2117,7 @@
         {
           "kind": "JOB",
           "entity_id": "362438626229151",
-          "event_count_lookback": 18009,
+          "event_count_lookback": 17676,
           "role": "primary",
           "fetched": false,
           "fetch_error": "job has no notebook tasks"
@@ -2150,7 +2131,7 @@
       "name": "bi_output_marketing_marketingcloud_user_behavior_instrument_v",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_marketing_marketingcloud_user_behavior_instrument_v.json",
-      "column_lineage_row_count": 48,
+      "column_lineage_row_count": 64,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_marketing_marketingcloud_user_behavior_instrument_v.sql",
       "writers": [
@@ -2165,7 +2146,7 @@
       "name": "bi_output_marketing_marketingcloud_user_behavior_pi_v",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_marketing_marketingcloud_user_behavior_pi_v.json",
-      "column_lineage_row_count": 39,
+      "column_lineage_row_count": 52,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_marketing_marketingcloud_user_behavior_pi_v.sql",
       "writers": [
@@ -2180,12 +2161,12 @@
       "name": "bi_output_marketing_promotion_bi_db_promo_card",
       "table_type": "EXTERNAL",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_marketing_promotion_bi_db_promo_card.json",
-      "column_lineage_row_count": 118,
+      "column_lineage_row_count": 116,
       "writers": [
         {
           "kind": "JOB",
           "entity_id": "1044486077439857",
-          "event_count_lookback": 683,
+          "event_count_lookback": 988,
           "role": "primary",
           "fetched": false,
           "fetch_error": "job has no notebook tasks"
@@ -2193,15 +2174,7 @@
         {
           "kind": "NOTEBOOK",
           "entity_id": "4212210221780631",
-          "event_count_lookback": 45,
-          "role": "secondary",
-          "fetched": false,
-          "fetch_error": "workspace.export failed"
-        },
-        {
-          "kind": "NOTEBOOK",
-          "entity_id": "2650238679543064",
-          "event_count_lookback": 36,
+          "event_count_lookback": 33,
           "role": "secondary",
           "fetched": false,
           "fetch_error": "workspace.export failed"
@@ -2219,7 +2192,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "451426030017327",
+          "entity_id": "249042399212379",
           "event_count_lookback": 6,
           "role": "primary",
           "fetched": false,
@@ -2227,7 +2200,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "691531654438458",
+          "entity_id": "980187300448532",
           "event_count_lookback": 6,
           "role": "secondary",
           "fetched": false,
@@ -2235,7 +2208,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "246629763380198",
+          "entity_id": "588836818631575",
           "event_count_lookback": 6,
           "role": "secondary",
           "fetched": false,
@@ -2243,7 +2216,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "373562646619705",
+          "entity_id": "152117219261793",
           "event_count_lookback": 6,
           "role": "secondary",
           "fetched": false,
@@ -2251,7 +2224,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "24862886087047",
+          "entity_id": "791230538980230",
           "event_count_lookback": 6,
           "role": "secondary",
           "fetched": false,
@@ -2270,7 +2243,7 @@
       "writers": [
         {
           "kind": "JOB",
-          "entity_id": "858981201252265",
+          "entity_id": "1051267733156670",
           "event_count_lookback": 8,
           "role": "primary",
           "fetched": false,
@@ -2278,7 +2251,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "839187636540229",
+          "entity_id": "936816198722762",
           "event_count_lookback": 8,
           "role": "secondary",
           "fetched": false,
@@ -2286,7 +2259,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "548001487452763",
+          "entity_id": "860664719458835",
           "event_count_lookback": 8,
           "role": "secondary",
           "fetched": false,
@@ -2294,7 +2267,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "607962715752985",
+          "entity_id": "225172972334477",
           "event_count_lookback": 8,
           "role": "secondary",
           "fetched": false,
@@ -2302,7 +2275,7 @@
         },
         {
           "kind": "JOB",
-          "entity_id": "549986057896970",
+          "entity_id": "924466721225132",
           "event_count_lookback": 8,
           "role": "secondary",
           "fetched": false,
@@ -2322,7 +2295,7 @@
         {
           "kind": "JOB",
           "entity_id": "909845381518474",
-          "event_count_lookback": 372,
+          "event_count_lookback": 364,
           "role": "primary",
           "fetched": false,
           "fetch_error": "job has no notebook tasks"
@@ -2341,7 +2314,7 @@
         {
           "kind": "JOB",
           "entity_id": "909845381518474",
-          "event_count_lookback": 186,
+          "event_count_lookback": 182,
           "role": "primary",
           "fetched": false,
           "fetch_error": "job has no notebook tasks"
@@ -2360,7 +2333,7 @@
         {
           "kind": "JOB",
           "entity_id": "909845381518474",
-          "event_count_lookback": 135,
+          "event_count_lookback": 176,
           "role": "primary",
           "fetched": false,
           "fetch_error": "job has no notebook tasks"
@@ -2379,17 +2352,10 @@
         {
           "kind": "JOB",
           "entity_id": "832857154712514",
-          "event_count_lookback": 32,
+          "event_count_lookback": 76,
           "role": "primary",
-          "notebooks": [
-            {
-              "task": "notebook_task_RegTech_WashTrading_Daily_Detection",
-              "path": "/Users/matanmo@etoro.com/market-abuse-monitor/RegTech_WashTrading_Daily_Detection",
-              "language": "PYTHON",
-              "fetched": true
-            }
-          ],
-          "fetched": true
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
         },
         {
           "kind": "NOTEBOOK",
@@ -2409,8 +2375,7 @@
         }
       ],
       "writers_manifest": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\_writers\\bi_output_regtechops_wash_trading_alerts_daily.json",
-      "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_regtechops_wash_trading_alerts_daily.py",
-      "status": "OK"
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
     },
     {
       "object": "main.bi_output.bi_output_urban_notifications_daily_panel",
@@ -2474,7 +2439,7 @@
       "name": "bi_output_v_recurring_investment",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_v_recurring_investment.json",
-      "column_lineage_row_count": 281,
+      "column_lineage_row_count": 270,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_v_recurring_investment.sql",
       "writers": [
@@ -2489,7 +2454,7 @@
       "name": "bi_output_vg_aum",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_aum.json",
-      "column_lineage_row_count": 197,
+      "column_lineage_row_count": 195,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_aum.sql",
       "writers": [
@@ -2504,7 +2469,7 @@
       "name": "bi_output_vg_case",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_case.json",
-      "column_lineage_row_count": 54,
+      "column_lineage_row_count": 2,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_case.sql",
       "writers": [
@@ -2519,7 +2484,7 @@
       "name": "bi_output_vg_case_event",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_case_event.json",
-      "column_lineage_row_count": 63,
+      "column_lineage_row_count": 38,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_case_event.sql",
       "writers": [
@@ -2534,7 +2499,7 @@
       "name": "bi_output_vg_cf_crm_contact",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_cf_crm_contact.json",
-      "column_lineage_row_count": 6,
+      "column_lineage_row_count": 40,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_cf_crm_contact.sql",
       "writers": [
@@ -2549,7 +2514,7 @@
       "name": "bi_output_vg_club",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_club.json",
-      "column_lineage_row_count": 191,
+      "column_lineage_row_count": 140,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_club.sql",
       "writers": [
@@ -2564,7 +2529,7 @@
       "name": "bi_output_vg_club_offers",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_club_offers.json",
-      "column_lineage_row_count": 130,
+      "column_lineage_row_count": 73,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_club_offers.sql",
       "writers": [
@@ -2579,7 +2544,7 @@
       "name": "bi_output_vg_copy_mimo",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_copy_mimo.json",
-      "column_lineage_row_count": 140,
+      "column_lineage_row_count": 84,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_copy_mimo.sql",
       "writers": [
@@ -2624,7 +2589,7 @@
       "name": "bi_output_vg_customer_first_dates",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_customer_first_dates.json",
-      "column_lineage_row_count": 166,
+      "column_lineage_row_count": 219,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_customer_first_dates.sql",
       "writers": [
@@ -2639,7 +2604,7 @@
       "name": "bi_output_vg_customer_snapshot",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_customer_snapshot.json",
-      "column_lineage_row_count": 200,
+      "column_lineage_row_count": 130,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_customer_snapshot.sql",
       "writers": [
@@ -2654,7 +2619,7 @@
       "name": "bi_output_vg_customer_snapshot_test",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_customer_snapshot_test.json",
-      "column_lineage_row_count": 106,
+      "column_lineage_row_count": 0,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_customer_snapshot_test.sql",
       "writers": [
@@ -2669,7 +2634,7 @@
       "name": "bi_output_vg_customer_snapshot_v2",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_customer_snapshot_v2.json",
-      "column_lineage_row_count": 1,
+      "column_lineage_row_count": 11,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_customer_snapshot_v2.sql",
       "writers": [
@@ -2699,7 +2664,7 @@
       "name": "bi_output_vg_date",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_date.json",
-      "column_lineage_row_count": 50,
+      "column_lineage_row_count": 52,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_date.sql",
       "writers": [
@@ -2714,7 +2679,7 @@
       "name": "bi_output_vg_ddr_customers_snapshot",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_ddr_customers_snapshot.json",
-      "column_lineage_row_count": 215,
+      "column_lineage_row_count": 116,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_ddr_customers_snapshot.sql",
       "writers": [
@@ -2729,7 +2694,7 @@
       "name": "bi_output_vg_mimo",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_mimo.json",
-      "column_lineage_row_count": 324,
+      "column_lineage_row_count": 239,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_mimo.sql",
       "writers": [
@@ -2744,7 +2709,7 @@
       "name": "bi_output_vg_parentcid",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_parentcid.json",
-      "column_lineage_row_count": 153,
+      "column_lineage_row_count": 102,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_parentcid.sql",
       "writers": [
@@ -2759,7 +2724,7 @@
       "name": "bi_output_vg_revenue",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_revenue.json",
-      "column_lineage_row_count": 142,
+      "column_lineage_row_count": 166,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_revenue.sql",
       "writers": [
@@ -2774,7 +2739,7 @@
       "name": "bi_output_vg_volume_amount",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_vg_volume_amount.json",
-      "column_lineage_row_count": 178,
+      "column_lineage_row_count": 171,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_vg_volume_amount.sql",
       "writers": [
@@ -2789,7 +2754,7 @@
       "name": "bi_output_wf_view",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\bi_output_wf_view.json",
-      "column_lineage_row_count": 116,
+      "column_lineage_row_count": 66,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\bi_output_wf_view.sql",
       "writers": [
@@ -2864,7 +2829,7 @@
       "name": "funded",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\funded.json",
-      "column_lineage_row_count": 0,
+      "column_lineage_row_count": 3,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\funded.sql",
       "writers": [
@@ -2879,7 +2844,7 @@
       "name": "limitation_to_normal_conversion",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\limitation_to_normal_conversion.json",
-      "column_lineage_row_count": 5,
+      "column_lineage_row_count": 0,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\limitation_to_normal_conversion.sql",
       "writers": [
@@ -3059,7 +3024,7 @@
       "name": "vg_emoney_card_transactions",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_emoney_card_transactions.json",
-      "column_lineage_row_count": 29,
+      "column_lineage_row_count": 20,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_emoney_card_transactions.sql",
       "writers": [
@@ -3164,7 +3129,7 @@
       "name": "vg_fact_billingdeposit_for_genie",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_fact_billingdeposit_for_genie.json",
-      "column_lineage_row_count": 2,
+      "column_lineage_row_count": 11,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_fact_billingdeposit_for_genie.sql",
       "writers": [
@@ -3284,7 +3249,7 @@
       "name": "vg_payments_mimo_allplatformddr_genienew",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_payments_mimo_allplatformddr_genienew.json",
-      "column_lineage_row_count": 36,
+      "column_lineage_row_count": 37,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_payments_mimo_allplatformddr_genienew.sql",
       "writers": [
@@ -3299,7 +3264,7 @@
       "name": "vg_payments_mimo_basedonddrallplatfrommimo_for_genie",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_payments_mimo_basedonddrallplatfrommimo_for_genie.json",
-      "column_lineage_row_count": 33,
+      "column_lineage_row_count": 31,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_payments_mimo_basedonddrallplatfrommimo_for_genie.sql",
       "writers": [
@@ -3314,7 +3279,7 @@
       "name": "vg_positions_open_closed_iban_tp",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\bi_output\\_discovery\\column_lineage\\vg_positions_open_closed_iban_tp.json",
-      "column_lineage_row_count": 0,
+      "column_lineage_row_count": 12,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\bi_output\\_discovery\\source_code\\vg_positions_open_closed_iban_tp.sql",
       "writers": [
@@ -3372,9 +3337,9 @@
   ],
   "stats": {
     "ok": 67,
-    "no_lineage": 0,
+    "no_lineage": 1,
     "no_view_def": 0,
     "errors": 0,
-    "wall_seconds": 2937.0
+    "wall_seconds": 1193.1
   }
 }

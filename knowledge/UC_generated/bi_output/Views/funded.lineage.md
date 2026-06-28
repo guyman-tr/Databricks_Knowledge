@@ -5,9 +5,9 @@
 | **UC Object** | `main.bi_output.funded` |
 | **Object Type** | `VIEW` |
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\funded.sql` |
-| **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\funded.json` (rows: 2, mismatches: 0) |
+| **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\funded.json` (rows: 2, mismatches: 1) |
 | **Primary upstream** | `main.dwh.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_monthlypanel_fulldata` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 
@@ -34,7 +34,11 @@ main.bi_output.funded   ←── this object
 ## Cross-check vs system.access.column_lineage
 
 - Total target columns: **2**
-- OK: **1**, WARN: **0**, ERROR: **0**, INFO: **1**  ✓
+- OK: **1**, WARN: **0**, ERROR: **1**, INFO: **0**  ⚠
+
+| Target | Parsed | Runtime | Severity |
+|--------|--------|---------|----------|
+| `Year` | — | `main.dwh.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_monthlypanel_fulldata.activedate` | ERROR |
 
 ## Lost / added columns
 

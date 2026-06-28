@@ -1,6 +1,6 @@
 # Review-needed sidecar — `v_external_france_wealth_contracts_transactions`
 
-Generated: 2026-05-19
+Generated: 2026-06-19
 Wiki: `knowledge/UC_generated/bi_output/Views/v_external_france_wealth_contracts_transactions.md`
 
 ## UNVERIFIED columns

@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.bi_output_vg_ddr_customers_snapshot
--- Captured: 2026-05-19T14:51:00Z
+-- Captured: 2026-06-19T14:31:02Z
 -- ==========================================================================
 
 select  

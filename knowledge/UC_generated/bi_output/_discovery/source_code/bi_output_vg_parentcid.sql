@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.bi_output_vg_parentcid
--- Captured: 2026-05-19T14:51:15Z
+-- Captured: 2026-06-19T14:31:18Z
 -- ==========================================================================
 
 select dd.DateID

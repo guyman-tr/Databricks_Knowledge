@@ -1,6 +1,6 @@
 # Review-needed sidecar — `nmi_by_portfoliopi_new`
 
-Generated: 2026-05-19
+Generated: 2026-06-19
 Wiki: `knowledge/UC_generated/bi_output/Views/nmi_by_portfoliopi_new.md`
 
 ## UNVERIFIED columns

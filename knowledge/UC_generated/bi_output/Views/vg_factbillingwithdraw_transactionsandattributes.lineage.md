@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\vg_factbillingwithdraw_transactionsandattributes.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\vg_factbillingwithdraw_transactionsandattributes.json` (rows: 17, mismatches: 0) |
 | **Primary upstream** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 
@@ -50,7 +50,7 @@ main.bi_output.vg_factbillingwithdraw_transactionsandattributes   ←── this
 | 6 | `Currency` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency` | `Abbreviation` | `join_enriched` | (Tier 1 - Dictionary.Currency upstream wiki) | cur.Abbreviation AS Currency |
 | 7 | `BaseExchangeRate` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw` | `BaseExchangeRate` | `passthrough` | (Tier 1 — Billing.WithdrawToFunding) | fw.BaseExchangeRate |
 | 8 | `ExchangeFee` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw` | `ExchangeFee` | `passthrough` | (Tier 1 — Billing.WithdrawToFunding) | fw.ExchangeFee |
-| 9 | `WithdrawStatus` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus` | `Name` | `join_enriched` | (Tier 1 - upstream wiki, Dictionary.CashoutStatus) | cs.Name AS WithdrawStatus /* ====================== */ /* Status */ /* ====================== */ |
+| 9 | `WithdrawStatus` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus` | `Name` | `join_enriched` | — | cs.Name AS WithdrawStatus /* ====================== */ /* Status */ /* ====================== */ |
 | 10 | `CashoutReason` | `main.general.bronze_etoro_dictionary_cashoutreason` | `Name` | `join_enriched` | — | cr.Name AS CashoutReason |
 | 11 | `PSP_Name` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_billingdepot` | `Name` | `join_enriched` | (Tier 1 - upstream wiki, Billing.Depot) | depot.Name AS PSP_Name /* ====================== */ /* PSP / Provider */ /* ====================== */ |
 | 12 | `MID_SettingsID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw` | `ProtocolMIDSettingsID` | `rename` | (Tier 1 — Billing.WithdrawToFunding) | fw.ProtocolMIDSettingsID AS MID_SettingsID |

@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\bi_output_v_recurring_investment.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\bi_output_v_recurring_investment.json` (rows: 3, mismatches: 2) |
 | **Primary upstream** | `main.general.bronze_recurringinvestment_recurringinvestment_planinstances` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 

@@ -9,32 +9,32 @@
       "event_count": 65
     },
     {
-      "source_table_full_name": "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
-      "source_column_name": "lp_accounts",
-      "target_column_name": "AccountID",
-      "entity_type": "JOB",
-      "event_count": 49
-    },
-    {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
       "source_column_name": "lp_accounts",
       "target_column_name": "AccountID",
       "entity_type": "JOB",
-      "event_count": 16
+      "event_count": 39
     },
     {
       "source_table_full_name": "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
-      "source_column_name": "liquidity_provider",
-      "target_column_name": "Account_Name",
+      "source_column_name": "lp_accounts",
+      "target_column_name": "AccountID",
       "entity_type": "JOB",
-      "event_count": 49
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
       "source_column_name": "liquidity_provider",
       "target_column_name": "Account_Name",
       "entity_type": "JOB",
-      "event_count": 16
+      "event_count": 39
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
+      "source_column_name": "liquidity_provider",
+      "target_column_name": "Account_Name",
+      "entity_type": "JOB",
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
@@ -142,39 +142,39 @@
       "event_count": 65
     },
     {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity",
+      "target_column_name": "CalculatedClosingBalance",
+      "entity_type": "JOB",
+      "event_count": 39
+    },
+    {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "Units",
       "target_column_name": "CalculatedClosingBalance",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "IsBuy",
       "target_column_name": "CalculatedClosingBalance",
       "entity_type": "JOB",
-      "event_count": 59
-    },
-    {
-      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
-      "source_column_name": "quantity_",
-      "target_column_name": "CalculatedClosingBalance",
-      "entity_type": "JOB",
-      "event_count": 49
-    },
-    {
-      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
-      "source_column_name": "quantity",
-      "target_column_name": "CalculatedClosingBalance",
-      "entity_type": "JOB",
-      "event_count": 16
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "CalculatedClosingBalance",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity_",
+      "target_column_name": "CalculatedClosingBalance",
+      "entity_type": "JOB",
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
@@ -230,70 +230,70 @@
       "source_column_name": "Units",
       "target_column_name": "ClosingBalanceOmnibus",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "IsBuy",
       "target_column_name": "ClosingBalanceOmnibus",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "IsBuy",
       "target_column_name": "ClosingBalanceOmnibus",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "Units",
       "target_column_name": "ClosingBalanceOmnibus",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "ClosingBalanceOmnibus",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "IsBuy",
       "target_column_name": "ClosingBalanceTotalCustody",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "IsBuy",
       "target_column_name": "ClosingBalanceTotalCustody",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "Units",
       "target_column_name": "ClosingBalanceTotalCustody",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "Units",
       "target_column_name": "ClosingBalanceTotalCustody",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "ClosingBalanceTotalCustody",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
@@ -352,53 +352,53 @@
       "event_count": 65
     },
     {
-      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
-      "source_column_name": "IsBuy",
-      "target_column_name": "GapBalanceCalcVsOmni",
-      "entity_type": "JOB",
-      "event_count": 59
-    },
-    {
-      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
-      "source_column_name": "Units",
-      "target_column_name": "GapBalanceCalcVsOmni",
-      "entity_type": "JOB",
-      "event_count": 59
-    },
-    {
-      "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
-      "source_column_name": "IsBuy",
-      "target_column_name": "GapBalanceCalcVsOmni",
-      "entity_type": "JOB",
-      "event_count": 59
-    },
-    {
-      "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
-      "source_column_name": "Units",
-      "target_column_name": "GapBalanceCalcVsOmni",
-      "entity_type": "JOB",
-      "event_count": 59
-    },
-    {
-      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
-      "source_column_name": "quantity_",
-      "target_column_name": "GapBalanceCalcVsOmni",
-      "entity_type": "JOB",
-      "event_count": 49
-    },
-    {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
       "source_column_name": "quantity",
       "target_column_name": "GapBalanceCalcVsOmni",
       "entity_type": "JOB",
-      "event_count": 16
+      "event_count": 39
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "GapBalanceCalcVsOmni",
+      "entity_type": "JOB",
+      "event_count": 36
+    },
+    {
+      "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
+      "source_column_name": "Units",
+      "target_column_name": "GapBalanceCalcVsOmni",
+      "entity_type": "JOB",
+      "event_count": 36
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
+      "source_column_name": "IsBuy",
+      "target_column_name": "GapBalanceCalcVsOmni",
+      "entity_type": "JOB",
+      "event_count": 36
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
+      "source_column_name": "Units",
+      "target_column_name": "GapBalanceCalcVsOmni",
+      "entity_type": "JOB",
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "GapBalanceCalcVsOmni",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity_",
+      "target_column_name": "GapBalanceCalcVsOmni",
+      "entity_type": "JOB",
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_executionlog",
@@ -419,21 +419,21 @@
       "source_column_name": "HedgeServerID",
       "target_column_name": "HedgeServerID",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "HedgeServerID",
       "target_column_name": "HedgeServerID",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "HedgeServerID",
       "target_column_name": "HedgeServerID",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
@@ -475,21 +475,21 @@
       "source_column_name": "InstrumentID",
       "target_column_name": "InstrumentID",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "InstrumentID",
       "target_column_name": "InstrumentID",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "InstrumentID",
       "target_column_name": "InstrumentID",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
@@ -548,53 +548,53 @@
       "event_count": 65
     },
     {
+      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity",
+      "target_column_name": "IsGapBalanceCalcVsOmniEOD",
+      "entity_type": "JOB",
+      "event_count": 39
+    },
+    {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "Units",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "IsBuy",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "Units",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "IsBuy",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
+    },
+    {
+      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
+      "source_column_name": "Balance",
+      "target_column_name": "IsGapBalanceCalcVsOmniEOD",
+      "entity_type": "JOB",
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
       "source_column_name": "quantity_",
       "target_column_name": "IsGapBalanceCalcVsOmniEOD",
       "entity_type": "JOB",
-      "event_count": 49
-    },
-    {
-      "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
-      "source_column_name": "quantity",
-      "target_column_name": "IsGapBalanceCalcVsOmniEOD",
-      "entity_type": "JOB",
-      "event_count": 16
-    },
-    {
-      "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
-      "source_column_name": "Balance",
-      "target_column_name": "IsGapBalanceCalcVsOmniEOD",
-      "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
@@ -734,35 +734,35 @@
       "source_column_name": "Units",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "Units",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "IsBuy",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "IsBuy",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "IsGapOmnibusEtoroVsBNY",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation",
@@ -811,21 +811,21 @@
       "source_column_name": "Units",
       "target_column_name": "IsGapOpeningBalance",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "IsBuy",
       "target_column_name": "IsGapOpeningBalance",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "IsGapOpeningBalance",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
@@ -930,35 +930,35 @@
       "source_column_name": "LiquidityAccountID",
       "target_column_name": "LiquidityAccountID",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.dealing.bronze_etoro_hedge_netting",
       "source_column_name": "LiquidityAccountID",
       "target_column_name": "LiquidityAccountID",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "LiquidityAccountID",
       "target_column_name": "LiquidityAccountID",
       "entity_type": "JOB",
-      "event_count": 6
-    },
-    {
-      "source_table_full_name": "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
-      "source_column_name": "liquidity_account_name",
-      "target_column_name": "LiquidityAccountName",
-      "entity_type": "JOB",
-      "event_count": 49
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
       "source_column_name": "liquidity_account_name",
       "target_column_name": "LiquidityAccountName",
       "entity_type": "JOB",
-      "event_count": 16
+      "event_count": 39
+    },
+    {
+      "source_table_full_name": "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
+      "source_column_name": "liquidity_account_name",
+      "target_column_name": "LiquidityAccountName",
+      "entity_type": "JOB",
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.general.gold_bny_custody_valuation_custodyvaluation",
@@ -1003,32 +1003,32 @@
       "event_count": 65
     },
     {
-      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
-      "source_column_name": "quantity_",
-      "target_column_name": "ManualMoveInToOmni",
-      "entity_type": "JOB",
-      "event_count": 49
-    },
-    {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
       "source_column_name": "quantity",
       "target_column_name": "ManualMoveInToOmni",
       "entity_type": "JOB",
-      "event_count": 16
+      "event_count": 39
     },
     {
       "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
       "source_column_name": "quantity_",
-      "target_column_name": "ManualMoveOutOfOmni",
+      "target_column_name": "ManualMoveInToOmni",
       "entity_type": "JOB",
-      "event_count": 49
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
       "source_column_name": "quantity",
       "target_column_name": "ManualMoveOutOfOmni",
       "entity_type": "JOB",
-      "event_count": 16
+      "event_count": 39
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity_",
+      "target_column_name": "ManualMoveOutOfOmni",
+      "entity_type": "JOB",
+      "event_count": 26
     },
     {
       "source_table_full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
@@ -1070,42 +1070,42 @@
       "source_column_name": "IsBuy",
       "target_column_name": "OpeningBalanceOmnibus",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "Units",
       "target_column_name": "OpeningBalanceOmnibus",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "OpeningBalanceOmnibus",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "Units",
       "target_column_name": "OpeningBalanceTotalCustody",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "source_column_name": "IsBuy",
       "target_column_name": "OpeningBalanceTotalCustody",
       "entity_type": "JOB",
-      "event_count": 59
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "source_column_name": "Balance",
       "target_column_name": "OpeningBalanceTotalCustody",
       "entity_type": "JOB",
-      "event_count": 6
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.general.gold_equilendspire_etoro_spire_position",
@@ -1150,19 +1150,19 @@
       "event_count": 65
     },
     {
-      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
-      "source_column_name": "quantity_",
-      "target_column_name": "TotalMovements",
-      "entity_type": "JOB",
-      "event_count": 49
-    },
-    {
       "source_table_full_name": "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
       "source_column_name": "quantity",
       "target_column_name": "TotalMovements",
       "entity_type": "JOB",
-      "event_count": 16
+      "event_count": 39
+    },
+    {
+      "source_table_full_name": "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
+      "source_column_name": "quantity_",
+      "target_column_name": "TotalMovements",
+      "entity_type": "JOB",
+      "event_count": 26
     }
   ],
-  "generated_at": "2026-05-19T14:23:53Z"
+  "generated_at": "2026-06-19T14:22:49Z"
 }

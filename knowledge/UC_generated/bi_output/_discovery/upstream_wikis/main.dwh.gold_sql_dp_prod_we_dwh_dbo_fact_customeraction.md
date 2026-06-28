@@ -148,7 +148,7 @@ HASH on **`RealCID`** — constrain filters/joins with **`RealCID`** + **`DateID
 | 12 | Leverage | int | NO | Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement posture. (Tier 1 — Trade.PositionTbl) |
 | 13 | NetProfit | money | NO | Realized PnL. 0 when open; populated on closes in position currency. (Tier 1 — Trade.PositionTbl) |
 | 14 | Commission | money | NO | Open commission in dollars (`/100` cents conversion on ingest per `Dim_Position` lineage notes). (Tier 1 — Trade.PositionTbl) |
-| 15 | PositionID | bigint | NO | Surrogate bigint from `Internal.GetPositionID_Bigint` domain; unique trade position key. (Tier 1 — Trade.PositionTbl) |
+| 15 | PositionID | bigint | NO | Position identifier from the source trading system. NOT a primary key of this table — defaults to 0 for non-position events, and the same PositionID appears in both open and close rows. |
 | 16 | CampaignID | int | NO | Marketing campaign identifier — 0 if not campaign-bound. References `Dim_Campaign`. (Tier 5 — domain expert) |
 | 17 | BonusTypeID | smallint | NO | Bonus classifier on bonus credit rows (`ActionTypeID=9`). 0 elsewhere. References `Dim_BonusType`. (Tier 5 — domain expert) |
 | 18 | FundingTypeID | smallint | NO | Ledger funding / wallet channel identifier (deposits & cash-outs). Nullable upstream coerced with `ISNULL(...,0)` sentinel row **`0`** (`Dim_FundingType.md`). **Value 27 pairs with redeem flag derivation on cash-outs.** References `Dim_FundingType`. (Tier 1 — History.Credit) |
@@ -197,7 +197,7 @@ HASH on **`RealCID`** — constrain filters/joins with **`RealCID`** + **`DateID
 | 61 | IsFeeDividend | int | YES | Fee subclass for **`ActionTypeID=35`** (1 nightly/weekend fee, 2 dividend, 3 SDRT, 4 ticket aggregates) encoded off **`Description`** heuristics (DSM‑1463). NULL off-fee rows. (Tier 2 — SP_Fact_CustomerAction) |
 | 62 | IsAirDrop | int | YES | **`JOIN`** to **`etoro_Trade_PositionAirdropLog`** path per `Dim_Position` — 1 denotes airdrop-sourced crypto open. NULL otherwise. (Tier 2 — SP_Dim_Position_DL_To_Synapse) |
 | 63 | DividendID | int | YES | Dividend event pointer for dividend-driven fee deductions. NULL off-dividend. (Tier 1 — Trade.Positions/dividends lineage) |
-| 64 | MoveMoneyReasonID | int | YES | Dictionary.MoveMoneyReason code on internal sweeps (**5/6**/recurring enums per prior audits). References dictionary dimension. Some low-volume codepoints flagged `[UNVERIFIED]` historically in **`Dim_MoveMoneyReason`** — revalidate joins. (Tier 1 — History.Credit) |
+| 64 | MoveMoneyReasonID | int | YES | NULL in all archive branches; natively populated only in History.ActiveCredit. Do not join from this view. (Tier 1 - History.Credit.md) |
 | 65 | SettlementTypeID | int | YES | **`Dictionary.SettlementTypes`** modern encoding (`0 CFD`, `1 REAL`, `2 TRS`, `3 CMT`, `4 REAL_FUTURES`, `5 MARGIN_TRADE`). Supersedes naïve `IsSettled` reads. (Tier 1 — Trade.PositionTbl) |
 | 66 | DLTOpen | smallint | YES | Distributed-ledger telemetry captured at OPEN (Prod addition 2024‑06‑02 per dim wiki). NULL historical. (Tier 2 — SP_Dim_Position_DL_To_Synapse) |
 | 67 | DLTClose | smallint | YES | Ledger telemetry captured at CLOSE mirroring **`DLTOpen`**. (Tier 2 — SP_Dim_Position_DL_To_Synapse) |

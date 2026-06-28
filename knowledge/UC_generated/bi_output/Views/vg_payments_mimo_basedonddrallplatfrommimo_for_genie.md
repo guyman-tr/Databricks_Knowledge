@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 19
 row_count: null
-generated_at: '2026-05-19T15:02:04Z'
+generated_at: '2026-06-19T14:36:07Z'
 upstreams:
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked
 - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms
@@ -52,7 +52,7 @@ tier_breakdown:
 | **Column count** | 19 |
 | **Concepts** | 1 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Thu Jan 29 12:55:09 UTC 2026 |
 
 ---
@@ -207,4 +207,4 @@ main.bi_output.vg_payments_mimo_basedonddrallplatfrommimo_for_genie   ←── 
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 1 | Formulas: 19 | Tiers: 0 T1, 19 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 19/19 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 1 | Formulas: 19 | Tiers: 0 T1, 19 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 19/19 | Source: view_definition*

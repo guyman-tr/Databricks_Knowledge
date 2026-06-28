@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 63
 row_count: null
-generated_at: '2026-05-19T15:01:51Z'
+generated_at: '2026-06-19T14:35:56Z'
 upstreams:
 - main.bi_output.bi_output_vg_date
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked
@@ -52,7 +52,7 @@ tier_breakdown:
 | **Column count** | 63 |
 | **Concepts** | 14 (see §2) |
 | **Downstream consumers** | 1 (see §6.2) |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Thu Jan 15 12:19:14 UTC 2026 |
 
 ---
@@ -61,7 +61,7 @@ tier_breakdown:
 
 `bi_output_vg_mimo` is a view in `main.bi_output` that composes 1 CASE-based classifier flag(s) computed from upstream IDs, 13 JOIN-enriched dimension lookup(s).
 
-Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.bi_output.bi_output_vg_date` → this object. Canonical upstream documentation: `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_date.md`. Additional upstreams: 15 object(s), listed in §5 Lineage.
+Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.bi_output.bi_output_vg_date` → this object. Canonical upstream documentation: `knowledge\UC_generated\bi_output\Views\bi_output_vg_date.md`. Additional upstreams: 15 object(s), listed in §5 Lineage.
 
 Of its 63 columns: 1 inherit byte-for-byte from upstream wikis (Tier 1), 62 are formula-assembled from cached source code (Tier 2 — see §4 for the formula and §2 for the named concept), 0 are null-with-provenance (Tier N — terminal-no-wiki upstream).
 
@@ -237,18 +237,18 @@ Of its 63 columns: 1 inherit byte-for-byte from upstream wikis (Tier 1), 62 are 
 | 5 | CalendarYear | INT | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear`. (Tier 2 — from `main.bi_output.bi_output_vg_date`) |
 | 6 | PlayerLevelID | INT | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID`. (Tier 2 — from `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 7 | ClubTier | STRING | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
-| 8 | RegulationID | INT | YES | Customer's assigned regulatory jurisdiction. DEFAULT 0. Sourced from Ext_FSC_BackOffice_RegulationChangeLog.ToRegulationID — end-of-day change. See §2.4. FK to Dim_Regulation. (Tier 2 — via Fact_SnapshotCustomer) |
+| 8 | RegulationID | INT | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 9 | Regulation | STRING | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
 | 10 | VerificationLevelID | INT | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
 | 11 | VerificationLevel | STRING | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
 | 12 | CountryID | INT | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
 | 13 | Country | STRING | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
 | 14 | Region | STRING | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
-| 15 | AccountManagerID | INT | YES | Assigned account manager (sales/retention). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.AccountManagerID (BO). FK to Dim_Manager. (Tier 2 — via Fact_SnapshotCustomer) |
+| 15 | AccountManagerID | INT | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
 | 16 | AccountManager | STRING | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
 | 17 | LanguageID | INT | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
 | 18 | Language | STRING | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
-| 19 | CommunicationLanguageID | INT | YES | Preferred communication language (may differ from interface language). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.CommunicationLanguageID (CC). FK to Dim_Language. (Tier 2 — via Fact_SnapshotCustomer) |
+| 19 | CommunicationLanguageID | INT | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
 | 20 | CommunicationLanguage | STRING | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
 | 21 | AccountTypeID | INT | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
 | 22 | AccountType | STRING | YES | Computed in source (transform kind not classified). Formula: `,Date ,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
@@ -263,7 +263,7 @@ Of its 63 columns: 1 inherit byte-for-byte from upstream wikis (Tier 1), 62 are 
 | 31 | CanClosePosition | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,WeekNumberYear ,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,Ver…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
 | 32 | CanEditPosition | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,CalendarYearMonth ,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`, `main.bi_output.bi_output_vg_date`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
 | 33 | CanBeCopied | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,CalendarQuarter ,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS Verifica…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`, `main.bi_output.bi_output_vg_date` (+2 more)) |
-| 34 | CanDeposit | BOOLEAN | YES | Whether the user can add funds to their account. False for full-block statuses (IsBlocked=1), close-only/pending statuses (9, 13, 15), status 10 (Deposit Blocked), and status 11 (Social Index). |
+| 34 | CanDeposit | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,CalendarYear ,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,fsc.…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`, `main.bi_output.bi_output_vg_date` (+2 more)) |
 | 35 | CanRequestWithdraw | BOOLEAN | YES | Computed in source (transform kind not classified). Formula: `,PlayerLevelID ,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Na…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country` (+2 more)) |
 | 36 | PlayerStatusReasonID | INT | YES | Computed in source (transform kind not classified). Formula: `,Name AS ClubTier ,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,M…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country` (+2 more)) |
 | 37 | PlayerStatusReasonName | STRING | YES | Computed in source (transform kind not classified). Formula: `,RegulationID ,Name AS Regulation ,VerificationLevelID ,Name AS VerificationLevel ,CountryID ,Name AS Country ,MarketingRegionManualName AS …`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` (+1 more)) |
@@ -301,7 +301,7 @@ Of its 63 columns: 1 inherit byte-for-byte from upstream wikis (Tier 1), 62 are 
 
 | Upstream | Role | Wiki |
 |----------|------|------|
-| `main.bi_output.bi_output_vg_date` | Primary | `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_date.md` |
+| `main.bi_output.bi_output_vg_date` | Primary | `knowledge\UC_generated\bi_output\Views\bi_output_vg_date.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Views\V_Fact_SnapshotCustomer_FromDateID.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_PlayerLevel.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Regulation.md` |
@@ -343,7 +343,7 @@ main.bi_dealing_stg.bi_output_dealing_bod_overview_investment_etoro
 
 ### 6.1 References To (summary — see §5 for full table)
 
-- **Primary upstream**: `main.bi_output.bi_output_vg_date` (wiki: `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_date.md`)
+- **Primary upstream**: `main.bi_output.bi_output_vg_date` (wiki: `knowledge\UC_generated\bi_output\Views\bi_output_vg_date.md`)
 - **JOIN/UNION upstreams**: 15 additional object(s)
 - **Wiki coverage**: 15/15 JOIN/UNION upstreams have a cached upstream wiki (see `_discovery/upstream_wikis/_index.json`)
 
@@ -373,4 +373,4 @@ main.bi_dealing_stg.bi_output_dealing_bod_overview_investment_etoro
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 14 | Formulas: 63 | Tiers: 1 T1, 62 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 63/63 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 14 | Formulas: 63 | Tiers: 1 T1, 62 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 63/63 | Source: view_definition*

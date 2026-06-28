@@ -90,81 +90,81 @@ Note: `TotalStockOrders` is a legacy column hardcoded to 0 since 2019 (see Fact_
 
 | # | Column | Source | Transformation | Tier |
 |---|--------|--------|----------------|------|
-| 1 | CID | Fact_SnapshotEquity.CID | Direct | T1 |
-| 2 | DateID | V_M2M_Date_DateRange.DateKey | Direct (alias DateKey → DateID) | T1 |
-| 3 | FullDate | V_M2M_Date_DateRange.FullDate | Direct | T1 |
-| 4 | RealizedEquity | Fact_SnapshotEquity.RealizedEquity | Direct | T1 |
-| 5 | TotalPositionsAmount | Fact_SnapshotEquity.TotalPositionsAmount | Direct | T1 |
-| 6 | TotalCash | Fact_SnapshotEquity.TotalCash | Direct | T1 |
-| 7 | InProcessCashouts | Fact_SnapshotEquity.InProcessCashouts | Direct | T1 |
-| 8 | TotalMirrorPositionsAmount | Fact_SnapshotEquity.TotalMirrorPositionsAmount | Direct | T1 |
-| 9 | TotalMirrorCash | Fact_SnapshotEquity.TotalMirrorCash | Direct | T1 |
-| 10 | TotalStockOrders | Fact_SnapshotEquity.TotalStockOrders | Direct (legacy — always 0 since 2019) | T1 |
-| 11 | TotalMirrorStockOrders | Fact_SnapshotEquity.TotalMirrorStockOrders | Direct (legacy — always 0 since 2019) | T1 |
-| 12 | Credit | Fact_SnapshotEquity.Credit | Direct | T1 |
-| 13 | AUM | Fact_SnapshotEquity.AUM | Direct | T1 |
-| 14 | BonusCredit | Fact_SnapshotEquity.BonusCredit | Direct | T1 |
-| 15 | TotalStockPositionAmount | Fact_SnapshotEquity.TotalStockPositionAmount | Direct | T1 |
-| 16 | TotalMirrorStockPositionAmount | Fact_SnapshotEquity.TotalMirrorStockPositionAmount | Direct | T1 |
-| 17 | PositionPnL | Fact_CustomerUnrealized_PnL.PositionPnL | Direct | T1 |
-| 18 | CopyPositionPnL | Fact_CustomerUnrealized_PnL.CopyPositionPnL | Direct | T1 |
-| 19 | StandardDeviation | Fact_CustomerUnrealized_PnL.StandardDeviation | Direct | T1 |
-| 20 | CommissionOnOpen | Fact_CustomerUnrealized_PnL.CommissionOnOpen | Direct | T1 |
+| 1 | CID | Fact_SnapshotEquity.CID | Customer ID. Grouping key for all equity aggregations. FK to Dim_Customer (CID = RealCID). HASH distribution key and part of PK. (Tier 2 — SP_Fact_SnapshotEquity) (via Fact_SnapshotEquity) | T2 |
+| 2 | DateID | V_M2M_Date_DateRange.DateKey | Primary key. Date encoded as integer YYYYMMDD (e.g. 20260101 for 2026-01-01). The join target for every date-keyed fact in the warehouse. (Tier 1 — DDL + SP_PopulateDimDate) (via Dim_Date); alias DateKey → DateID | T2 |
+| 3 | FullDate | V_M2M_Date_DateRange.FullDate | Native SQL date (e.g. 2026-01-01). 1:1 with DateKey. Use this when a date-typed comparison is needed; use DateKey for integer joins. (Tier 1 — DDL) (via Dim_Date) | T2 |
+| 4 | RealizedEquity | Fact_SnapshotEquity.RealizedEquity | Customer's **settled (realized) equity** — the realized portion of customer balance. **Excludes unrealized PnL on open positions** (the unrealized component is `Fact_CustomerUnrealized_PnL.PositionPnL`). Computed as `History.ActiveCredit.RealizedEquity` if non-zero, otherwise `TotalCash + TotalPositionsAmount + InProcessCashouts` (cash + invested principal in open positions + pending cashouts). Together with PositionPnL it sums to the customer's full `Balance` per V_Liabilities: `Balance = RealizedEquity + PositionPnL`. NOTE: the Confluence definition of **Unrealized Equity** ("the total funds in the account, including profit/loss from open positions … the Portfolio value figure represented on the platform is Unrealized equity") describes `Balance` (= RealizedEquity + PositionPnL), **not RealizedEquity itself** — do not confuse the two. (Tier 2 — SP_Fact_SnapshotEquity) (via Fact_SnapshotEquity) | T2 |
+| 5 | TotalPositionsAmount | Fact_SnapshotEquity.TotalPositionsAmount | Sum of all open position amounts (NewAmount) for this CID on this date. Includes all asset classes: CFD, stocks, crypto, futures, margin. Source: open positions (Trade.OpenPositionEndOfDay) + same-day closed positions (History.ClosePositionEndOfDay) minus History.Credit CreditTypeID=13 adjustments. (Tier 2 — SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_SnapshotEquity) | T2 |
+| 6 | TotalCash | Fact_SnapshotEquity.TotalCash | Customer's total cash balance for the day. Computed as: previous day's TotalCash (from last row in current year) + sum of TotalCashChange from History.ActiveCredit for @dt. This running-balance approach was introduced 2020-06-07 replacing the direct History.Credit.TotalCash read. (Tier 2 — SP_Fact_SnapshotEquity) (via Fact_SnapshotEquity) | T2 |
+| 7 | InProcessCashouts | Fact_SnapshotEquity.InProcessCashouts | Sum of pending withdrawal amounts for this CID that have not yet been finalized (statuses other than 3=Processed, 4=Cancelled, 5,6). Includes partially processed amounts for split-payment withdrawals plus associated fees. Computed by SP_Fact_SnapshotEquity_InProcessCashouts from Billing.Withdraw, History.WithdrawAction, and History.WithdrawToFundingAction. (Tier 2 — SP_Fact_SnapshotEquity_InProcessCashouts) (via Fact_SnapshotEquity) | T2 |
+| 8 | TotalMirrorPositionsAmount | Fact_SnapshotEquity.TotalMirrorPositionsAmount | Sum of position amounts where MirrorID > 0 AND ParentPositionID != 0 (copy-trading positions only, excluding the parent/guru's own positions). Represents the CID's total investment in copy relationships. (Tier 2 — SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_SnapshotEquity) | T2 |
+| 9 | TotalMirrorCash | Fact_SnapshotEquity.TotalMirrorCash | Cash available for copy-trading. Formula: TotalCash - Credit. (Tier 2 — SP_Fact_SnapshotEquity) (via Fact_SnapshotEquity) | T2 |
+| 10 | TotalStockOrders | Fact_SnapshotEquity.TotalStockOrders | Legacy column, hardcoded to 0. Removed 2019-03-03 (Boris Slutski) — no data in PROD since 2015. Kept for schema compatibility. (Tier 2 — SP_Fact_SnapshotEquity) (via Fact_SnapshotEquity); legacy — always 0 since 2019 | T2 |
+| 11 | TotalMirrorStockOrders | Fact_SnapshotEquity.TotalMirrorStockOrders | Legacy column, hardcoded to 0. Removed 2019-03-03 alongside TotalStockOrders. Kept for schema compatibility. (Tier 2 — SP_Fact_SnapshotEquity) (via Fact_SnapshotEquity); legacy — always 0 since 2019 | T2 |
+| 12 | Credit | Fact_SnapshotEquity.Credit | Outstanding credit/bonus balance from History.ActiveCredit. Last credit event per CID per day (selected via ROW_NUMBER partition by CID, ordered by Occurred DESC, CreditID DESC). Negative values represent outstanding obligations. (Tier 2 — SP_Fact_SnapshotEquity) (via Fact_SnapshotEquity) | T2 |
+| 13 | AUM | Fact_SnapshotEquity.AUM | Assets Under Management. Formula: TotalMirrorPositionAmount + TotalCash - Credit. For MERGE INSERT: computed as TotalMirrorPositionsAmount + TotalMirrorCash. Confluence: "AUC (or AUM) on PI Dashboard: Total Unrealized Copy Amount of the Copiers." (Tier 2 — SP_Fact_SnapshotEquity) (via Fact_SnapshotEquity) | T2 |
+| 14 | BonusCredit | Fact_SnapshotEquity.BonusCredit | Bonus credit balance from History.ActiveCredit.BonusCredit. Confluence: "History.Credit.CreditTypeID = 5, 7 → BackOffice.BonusType.BonusTypeID → History.Credit.BonusTypeID". ISNULL to 0 in ETL. (Tier 2 — SP_Fact_SnapshotEquity) (via Fact_SnapshotEquity) | T2 |
+| 15 | TotalStockPositionAmount | Fact_SnapshotEquity.TotalStockPositionAmount | Sum of position amounts where InstrumentTypeID IN (5,6) AND instrument is NOT a future. Represents CFD and real stock positions (excluding futures that also have InstrumentTypeID 5/6). Added with mutual exclusivity fix (Guy M, 2025-07-29). (Tier 2 — SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_SnapshotEquity) | T2 |
+| 16 | TotalMirrorStockPositionAmount | Fact_SnapshotEquity.TotalMirrorStockPositionAmount | Mirror (copy-trading) subset of TotalStockPositionAmount. Adds MirrorID > 0 AND ParentPositionID != 0. Same mutual exclusivity fix with futures. (Tier 2 — SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_SnapshotEquity) | T2 |
+| 17 | PositionPnL | Fact_CustomerUnrealized_PnL.PositionPnL | Total unrealized PnL in USD across all open positions for this CID on this date. Uses V1 formula (PnLInDollars from staging). This is the primary PnL metric. "The difference between Realized Equity and Unrealized Equity is the Position PnL" (Confluence). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 18 | CopyPositionPnL | Fact_CustomerUnrealized_PnL.CopyPositionPnL | Unrealized PnL from copy-trading positions only (MirrorID > 0). Includes all asset classes. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 19 | StandardDeviation | Fact_CustomerUnrealized_PnL.StandardDeviation | Portfolio risk measure: standard deviation of the customer's weighted portfolio computed from instrument covariance matrix. Only calculated for dates >= 2012-12-31. Formula: √(Σ weight_a × weight_b × covariance). NULL for pre-2013 data. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 20 | CommissionOnOpen | Fact_CustomerUnrealized_PnL.CommissionOnOpen | Sum of opening commissions (Commission) across all open positions for this CID. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
 | 21 | ActualNWA | Fact_SnapshotEquity, Fact_CustomerUnrealized_PnL | CASE WHEN NetEquity > BonusCredit THEN BonusCredit WHEN NetEquity < 0 THEN 0 ELSE NetEquity END. NetEquity = ISNULL(TotalPositionsAmount,0) + ISNULL(TotalCash,0) + ISNULL(TotalStockOrders,0) + ISNULL(PositionPnL,0) | T2 |
 | 22 | Liabilities | Fact_SnapshotEquity, Fact_CustomerUnrealized_PnL | ISNULL(InProcessCashouts,0) + CASE WHEN NetEquity - BonusCredit > 0 THEN NetEquity - BonusCredit WHEN NetEquity < 0 THEN NetEquity ELSE 0 END | T2 |
 | 23 | WA_Liabilities | Fact_SnapshotEquity, Fact_CustomerUnrealized_PnL | MIN(Liabilities_excl_cashouts, Credit) — credit-capped liabilities | T2 |
 | 24 | Liabilities_InUsedMargin | Fact_SnapshotEquity, Fact_CustomerUnrealized_PnL | MAX(Liabilities_excl_cashouts - Credit, 0) — liabilities beyond credit | T2 |
-| 25 | StocksPositionPnL | Fact_CustomerUnrealized_PnL.StocksPositionPnL | Direct | T1 |
+| 25 | StocksPositionPnL | Fact_CustomerUnrealized_PnL.StocksPositionPnL | Unrealized PnL from stock positions (InstrumentTypeID IN (5,6) AND NOT futures). Includes both real and CFD stocks, both manual and copy. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
 | 26 | TotalStockManualPosition | Fact_SnapshotEquity | TotalStockPositionAmount + TotalStockOrders - TotalMirrorStockPositionAmount | T2 |
 | 27 | ManualStockPositionPnL | Fact_CustomerUnrealized_PnL | StocksPositionPnL - MirrorStocksPositionPnL | T2 |
-| 28 | MirrorStocksPositionPnL | Fact_CustomerUnrealized_PnL.MirrorStocksPositionPnL | Direct | T1 |
-| 29 | CryptoPositionPnL | Fact_CustomerUnrealized_PnL.CryptoPositionPnL | Direct | T1 |
-| 30 | ManualCryptoPositionPnL | Fact_CustomerUnrealized_PnL.ManualCryptoPositionPnL | Direct | T1 |
-| 31 | CopyCryptoPositionPnL | Fact_CustomerUnrealized_PnL.CopyCryptoPositionPnL | Direct | T1 |
-| 32 | TotalCryptoPositionAmount | Fact_SnapshotEquity.TotalCryptoPositionAmount | Direct | T1 |
+| 28 | MirrorStocksPositionPnL | Fact_CustomerUnrealized_PnL.MirrorStocksPositionPnL | Unrealized PnL from copy-trading stock positions (InstrumentTypeID IN (5,6) AND NOT futures AND MirrorID > 0). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 29 | CryptoPositionPnL | Fact_CustomerUnrealized_PnL.CryptoPositionPnL | Unrealized PnL from all crypto positions (InstrumentTypeID = 10 AND NOT futures). Includes real, CFD, manual, and copy. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 30 | ManualCryptoPositionPnL | Fact_CustomerUnrealized_PnL.ManualCryptoPositionPnL | Unrealized PnL from manually-opened crypto positions (InstrumentTypeID = 10 AND NOT futures AND MirrorID = 0). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 31 | CopyCryptoPositionPnL | Fact_CustomerUnrealized_PnL.CopyCryptoPositionPnL | Unrealized PnL from copy-trading crypto positions (InstrumentTypeID = 10 AND NOT futures AND MirrorID > 0). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 32 | TotalCryptoPositionAmount | Fact_SnapshotEquity.TotalCryptoPositionAmount | Sum of position amounts where InstrumentTypeID = 10 AND instrument is NOT a future. Represents CFD and real crypto positions. Confluence: "TotalCryptoPositionAmount + TotalStockPositionAmount = TotalPositionsAmount" (approximately, excluding other types). (Tier 2 — SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_SnapshotEquity) | T2 |
 | 33 | TotalCryptoManualPosition | Fact_SnapshotEquity | TotalCryptoPositionAmount - TotalMirrorCryptoPositionAmount | T2 |
 | 34 | CopyFundAUM | Fact_SnapshotEquity.CopyFundAUM | Direct | T1 |
-| 35 | CopyFundPnL | Fact_CustomerUnrealized_PnL.CopyFundPnL | Direct | T1 |
-| 36 | NOP | Fact_CustomerUnrealized_PnL.NOP | Direct | T1 |
-| 37 | Notional | Fact_CustomerUnrealized_PnL.Notional | Direct | T1 |
-| 38 | NOP_Crypto | Fact_CustomerUnrealized_PnL.NOP_Crypto | Direct | T1 |
-| 39 | Notional_Crypto | Fact_CustomerUnrealized_PnL.Notional_Crypto | Direct | T1 |
-| 40 | NOP_CFD | Fact_CustomerUnrealized_PnL.NOP_CFD | Direct | T1 |
-| 41 | Notional_CFD | Fact_CustomerUnrealized_PnL.Notional_CFD | Direct | T1 |
-| 42 | NOP_Crypto_CFD | Fact_CustomerUnrealized_PnL.NOP_Crypto_CFD | Direct | T1 |
-| 43 | Notional_Crypto_CFD | Fact_CustomerUnrealized_PnL.Notional_Crypto_CFD | Direct | T1 |
-| 44 | PositionPnLStocksReal | Fact_CustomerUnrealized_PnL.PositionPnLStocksReal | Direct | T1 |
-| 45 | PositionPnLCryptoReal | Fact_CustomerUnrealized_PnL.PositionPnLCryptoReal | Direct | T1 |
-| 46 | TotalRealStocks | Fact_SnapshotEquity.TotalRealStocks | Direct | T1 |
-| 47 | TotalRealCrypto | Fact_SnapshotEquity.TotalRealCrypto | Direct | T1 |
+| 35 | CopyFundPnL | Fact_CustomerUnrealized_PnL.CopyFundPnL | Unrealized PnL from positions opened via copy-fund relationships (parent CID had AccountTypeID=9 at the time the copy was opened). Identified via History.BackOfficeCustomer + History.Mirror join. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 36 | NOP | Fact_CustomerUnrealized_PnL.NOP | Net Open Position — total signed directional USD exposure across all instruments. Positive = net long, negative = net short. "eToro holding of each instrument" (Confluence). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 37 | Notional | Fact_CustomerUnrealized_PnL.Notional | Total absolute USD exposure across all positions. Computed as SUM(ABS(per-position signed USD exposure)) grouped by CID — ABS is applied per position, not per instrument. Always >= 0. (via Fact_CustomerUnrealized_PnL) | T1 |
+| 38 | NOP_Crypto | Fact_CustomerUnrealized_PnL.NOP_Crypto | Net Open Position for crypto instruments only (InstrumentTypeID = 10 AND NOT futures). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 39 | Notional_Crypto | Fact_CustomerUnrealized_PnL.Notional_Crypto | Absolute USD exposure for crypto instruments only. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 40 | NOP_CFD | Fact_CustomerUnrealized_PnL.NOP_CFD | Net Open Position for all CFD positions (IsSettled = 0), all asset classes. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 41 | Notional_CFD | Fact_CustomerUnrealized_PnL.Notional_CFD | Absolute USD exposure for all CFD positions. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 42 | NOP_Crypto_CFD | Fact_CustomerUnrealized_PnL.NOP_Crypto_CFD | Net Open Position for crypto CFD positions (InstrumentTypeID = 10 AND IsSettled = 0). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 43 | Notional_Crypto_CFD | Fact_CustomerUnrealized_PnL.Notional_Crypto_CFD | Absolute USD exposure for crypto CFD positions. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 44 | PositionPnLStocksReal | Fact_CustomerUnrealized_PnL.PositionPnLStocksReal | Unrealized PnL from real (settled) stock positions only (IsSettled = 1 AND InstrumentTypeID IN (5,6) AND NOT futures). Uses PnLInDollars. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 45 | PositionPnLCryptoReal | Fact_CustomerUnrealized_PnL.PositionPnLCryptoReal | Unrealized PnL from real (settled) crypto positions only (IsSettled = 1 AND InstrumentTypeID = 10 AND NOT futures). Uses PnLInDollars. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 46 | TotalRealStocks | Fact_SnapshotEquity.TotalRealStocks | Sum of position amounts where IsSettled = 1 AND InstrumentTypeID IN (5,6) AND instrument is NOT a future. "Real" means the customer owns the underlying asset (settled/delivered). Updated via IsSettled change tracking from History.PositionChangeLog. (Tier 2 — SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_SnapshotEquity) | T2 |
+| 47 | TotalRealCrypto | Fact_SnapshotEquity.TotalRealCrypto | Sum of position amounts where IsSettled = 1 AND InstrumentTypeID = 10 AND instrument is NOT a future. Real crypto ownership (settled positions). Updated via IsSettled change tracking. (Tier 2 — SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_SnapshotEquity) | T2 |
 | 48 | LiabilitiesStockReal | Fact_SnapshotEquity, Fact_CustomerUnrealized_PnL | ISNULL(PositionPnLStocksReal, 0) + ISNULL(TotalRealStocks, 0) | T2 |
 | 49 | LiabilitiesCryptoReal | Fact_SnapshotEquity, Fact_CustomerUnrealized_PnL | ISNULL(PositionPnLCryptoReal, 0) + ISNULL(TotalRealCrypto, 0) | T2 |
-| 50 | CommissionByUnitsCrypto_TRS | Fact_CustomerUnrealized_PnL.CommissionByUnitsCrypto_TRS | Direct | T1 |
-| 51 | CopyCryptoPositionPnL_TRS | Fact_CustomerUnrealized_PnL.CopyCryptoPositionPnL_TRS | Direct | T1 |
-| 52 | CryptoPositionPnL_TRS | Fact_CustomerUnrealized_PnL.CryptoPositionPnL_TRS | Direct | T1 |
-| 53 | FullCommissionByUnitsCrypto_TRS | Fact_CustomerUnrealized_PnL.FullCommissionByUnitsCrypto_TRS | Direct | T1 |
-| 54 | ManualCryptoPositionPnL_TRS | Fact_CustomerUnrealized_PnL.ManualCryptoPositionPnL_TRS | Direct | T1 |
-| 55 | NOP_Crypto_TRS | Fact_CustomerUnrealized_PnL.NOP_Crypto_TRS | Direct | T1 |
-| 56 | Notional_Crypto_TRS | Fact_CustomerUnrealized_PnL.Notional_Crypto_TRS | Direct | T1 |
-| 57 | Total_TRSCrypto | Fact_SnapshotEquity.Total_TRSCrypto | Direct | T1 |
-| 58 | TotalCryptoPositionAmount_TRS | Fact_SnapshotEquity.TotalCryptoPositionAmount_TRS | Direct | T1 |
+| 50 | CommissionByUnitsCrypto_TRS | Fact_CustomerUnrealized_PnL.CommissionByUnitsCrypto_TRS | Prorated commission for crypto TRS positions (IsSettled = 0 AND InstrumentTypeID = 10 AND SettlementTypeID = 2). Added 2022-01-27 (Inbal BML). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 51 | CopyCryptoPositionPnL_TRS | Fact_CustomerUnrealized_PnL.CopyCryptoPositionPnL_TRS | Unrealized PnL from copy-trading crypto TRS positions (InstrumentTypeID = 10 AND MirrorID > 0 AND SettlementTypeID = 2). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 52 | CryptoPositionPnL_TRS | Fact_CustomerUnrealized_PnL.CryptoPositionPnL_TRS | Unrealized PnL from all crypto TRS positions (InstrumentTypeID = 10 AND SettlementTypeID = 2). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 53 | FullCommissionByUnitsCrypto_TRS | Fact_CustomerUnrealized_PnL.FullCommissionByUnitsCrypto_TRS | Full prorated commission for crypto TRS positions (IsSettled = 0 AND InstrumentTypeID = 10 AND SettlementTypeID = 2). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 54 | ManualCryptoPositionPnL_TRS | Fact_CustomerUnrealized_PnL.ManualCryptoPositionPnL_TRS | Unrealized PnL from manually-opened crypto TRS positions (InstrumentTypeID = 10 AND MirrorID = 0 AND SettlementTypeID = 2). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 55 | NOP_Crypto_TRS | Fact_CustomerUnrealized_PnL.NOP_Crypto_TRS | Net Open Position for crypto TRS positions (InstrumentTypeID = 10 AND IsSettled = 0 AND SettlementTypeID = 2). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 56 | Notional_Crypto_TRS | Fact_CustomerUnrealized_PnL.Notional_Crypto_TRS | Absolute USD exposure for crypto TRS positions. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 57 | Total_TRSCrypto | Fact_SnapshotEquity.Total_TRSCrypto | Sum of crypto position amounts where IsSettled = 0 AND InstrumentTypeID = 10 AND SettlementTypeID = 2. CFD-style crypto positions under TRS settlement (not yet settled to real ownership). Added 2022-01-27. (Tier 2 — SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_SnapshotEquity) | T2 |
+| 58 | TotalCryptoPositionAmount_TRS | Fact_SnapshotEquity.TotalCryptoPositionAmount_TRS | Sum of crypto position amounts where SettlementTypeID = 2 (TRS — Total Return Swap) AND instrument is NOT a future. Added 2022-01-27 (Inbal BML). TRS positions have different regulatory treatment than settled positions. (Tier 2 — SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_SnapshotEquity) | T2 |
 | 59 | TotalCryptoManualPosition_TRS | Fact_SnapshotEquity | TotalCryptoPositionAmount_TRS - TotalMirrorCryptoPositionAmount_TRS | T2 |
 | 60 | LiabilitiesCrypto_TRS | Fact_SnapshotEquity, Fact_CustomerUnrealized_PnL | ISNULL(CryptoPositionPnL_TRS, 0) + ISNULL(Total_TRSCrypto, 0) | T2 |
-| 61 | MirrorRealFuturesPositionPnL | Fact_CustomerUnrealized_PnL.MirrorRealFuturesPositionPnL | Direct | T1 |
-| 62 | ManualRealFuturesPositionPnL | Fact_CustomerUnrealized_PnL.ManualRealFuturesPositionPnL | Direct | T1 |
-| 63 | NOP_FuturesReal | Fact_CustomerUnrealized_PnL.NOP_FuturesReal | Direct | T1 |
-| 64 | Notional_FuturesReal | Fact_CustomerUnrealized_PnL.Notional_FuturesReal | Direct | T1 |
-| 65 | PositionPnLFuturesReal | Fact_CustomerUnrealized_PnL.PositionPnLFuturesReal | Direct | T1 |
-| 66 | FullCommissionByUnitsFuturesReal | Fact_CustomerUnrealized_PnL.FullCommissionByUnitsFuturesReal | Direct | T1 |
-| 67 | CommissionByUnitsFuturesReal | Fact_CustomerUnrealized_PnL.CommissionByUnitsFuturesReal | Direct | T1 |
-| 68 | TotalMirrorRealFuturesPositionAmount | Fact_SnapshotEquity.TotalMirrorRealFuturesPositionAmount | Direct | T1 |
-| 69 | TotalRealFutures | Fact_SnapshotEquity.TotalRealFutures | Direct | T1 |
-| 70 | TotalFuturesProviderMargin | Fact_SnapshotEquity.TotalFuturesProviderMargin | Direct | T1 |
+| 61 | MirrorRealFuturesPositionPnL | Fact_CustomerUnrealized_PnL.MirrorRealFuturesPositionPnL | Unrealized PnL from copy-trading futures positions (IsFuture = 1 AND MirrorID > 0). Uses PnLInDollars. Added 2024-11-10 (Daniel Kaplan). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 62 | ManualRealFuturesPositionPnL | Fact_CustomerUnrealized_PnL.ManualRealFuturesPositionPnL | Unrealized PnL from manually-opened futures positions (IsFuture = 1 AND MirrorID = 0). Uses PnLInDollars. Added 2024-11-10. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 63 | NOP_FuturesReal | Fact_CustomerUnrealized_PnL.NOP_FuturesReal | Net Open Position for futures instruments (IsFuture = 1). Added 2024-11-10. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 64 | Notional_FuturesReal | Fact_CustomerUnrealized_PnL.Notional_FuturesReal | Absolute USD exposure for futures instruments. Always positive (uses ABS for sell positions). Added 2024-11-10. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 65 | PositionPnLFuturesReal | Fact_CustomerUnrealized_PnL.PositionPnLFuturesReal | Total unrealized PnL from all futures positions (IsFuture = 1). Uses PnLInDollars. Added 2024-11-10. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 66 | FullCommissionByUnitsFuturesReal | Fact_CustomerUnrealized_PnL.FullCommissionByUnitsFuturesReal | Full prorated commission for futures positions (IsFuture = 1). Added 2024-11-10. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 67 | CommissionByUnitsFuturesReal | Fact_CustomerUnrealized_PnL.CommissionByUnitsFuturesReal | Prorated commission for futures positions (IsFuture = 1). Added 2024-11-10. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 68 | TotalMirrorRealFuturesPositionAmount | Fact_SnapshotEquity.TotalMirrorRealFuturesPositionAmount | Sum of futures position amounts where MirrorID > 0. From Dim_Instrument_Snapshot.IsFuture = 1. Added 2024-10-30 (Daniel Kaplan). (Tier 2 — SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_SnapshotEquity) | T2 |
+| 69 | TotalRealFutures | Fact_SnapshotEquity.TotalRealFutures | Sum of all futures position amounts. Identified via JOIN to Dim_Instrument_Snapshot where IsFuture = 1 for the snapshot DateID. Added 2024-10-30. (Tier 2 — SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_SnapshotEquity) | T2 |
+| 70 | TotalFuturesProviderMargin | Fact_SnapshotEquity.TotalFuturesProviderMargin | Sum of provider margin for futures positions: LotCountDecimal × Dim_Instrument_Snapshot.ProviderMarginPerLot. Represents the margin required by the futures provider. Added 2024-10-30. (Tier 2 — SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_SnapshotEquity) | T2 |
 | 71 | LiabilitiesFuturesReal | Fact_SnapshotEquity, Fact_CustomerUnrealized_PnL | ISNULL(PositionPnLFuturesReal, 0) + ISNULL(TotalRealFutures, 0) | T2 |
-| 72 | NOP_StocksMargin | Fact_CustomerUnrealized_PnL.NOP_StocksMargin | Direct | T1 |
-| 73 | PositionPnLStocksMargin | Fact_CustomerUnrealized_PnL.PositionPnLStocksMargin | Direct | T1 |
-| 74 | TotalStocksMargin | Fact_SnapshotEquity.TotalStocksMargin | Direct | T1 |
-| 75 | TotalStockMarginLoanValue | Fact_SnapshotEquity.TotalStockMarginLoanValue | Direct | T1 |
+| 72 | NOP_StocksMargin | Fact_CustomerUnrealized_PnL.NOP_StocksMargin | Net Open Position for stock margin positions (SettlementTypeID = 5). Added 2025-09-25 (Daniel Kaplan). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 73 | PositionPnLStocksMargin | Fact_CustomerUnrealized_PnL.PositionPnLStocksMargin | Unrealized PnL from stock margin positions (SettlementTypeID = 5). Uses PnLInDollars. Added 2025-09-25. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) (via Fact_CustomerUnrealized_PnL) | T2 |
+| 74 | TotalStocksMargin | Fact_SnapshotEquity.TotalStocksMargin | Sum of stock margin position amounts where SettlementTypeID = 5. Represents margin-traded stock positions (not fully settled). Added 2025-09-30 (Daniel Kaplan). (Tier 2 — SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_SnapshotEquity) | T2 |
+| 75 | TotalStockMarginLoanValue | Fact_SnapshotEquity.TotalStockMarginLoanValue | Loan value for leveraged stock margin positions: InitForexRate × AmountInUnitsDecimal × InitConversionRate - NewAmount. Only computed when SettlementTypeID = 5 AND Leverage <> 1. Formula updated 2025-12-10 to use InitConversionRate. (Tier 2 — SP_Fact_SnapshotEquity_TotalPositionAmount) (via Fact_SnapshotEquity) | T2 |
 
 ---
 

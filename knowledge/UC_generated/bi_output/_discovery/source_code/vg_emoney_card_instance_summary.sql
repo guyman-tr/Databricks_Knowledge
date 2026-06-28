@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.vg_emoney_card_instance_summary
--- Captured: 2026-05-19T14:54:51Z
+-- Captured: 2026-06-19T14:33:31Z
 -- ==========================================================================
 
 select CID, DWH_CardInstanceId as Customer_Card_ID, InstanceStatus as Customer_Card_Status,

@@ -2,8 +2,9 @@
   "schema": "bi_output",
   "catalog": "main",
   "framework": "uc-pipeline-doc",
-  "generated_at": "2026-05-19T15:01:11Z",
+  "generated_at": "2026-06-19T14:35:35Z",
   "per_object_upstreams": {
+    "australia_tag_ob_june26": [],
     "bi_ouput_v_dim_instrumenttype": [
       "main.general.bronze_etoro_dictionary_currencytype",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
@@ -98,20 +99,6 @@
       "main.bi_db.bronze_interest_history_interestconsent",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel"
     ],
-    "bi_output_customer_customer_facing_club_club_offer_eligibilty": [
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
-      "main.crm.silver_crm_inventory_asset__c",
-      "main.crm.silver_crm_loyalty_offer__c",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "main.crm.silver_crm_loyalty_offer_request__c",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
-      "main.crm.silver_crm_user"
-    ],
     "bi_output_customer_customer_facing_pageviews_behaviour": [
       "main.mixpanel.gold_mixpanel_userpageviews",
       "main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer",
@@ -186,8 +173,8 @@
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
       "main.sfmc.silver_sfmc_accountjourneylogtracking",
-      "main.general.bronze_fivetran_google_sheets_capital_guarantee",
       "main.sharepoint.silver_sharepoint_capital_guarantee",
+      "main.general.bronze_fivetran_google_sheets_capital_guarantee",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
       "main.dwh.dim_position",
@@ -204,21 +191,25 @@
       "main.bi_output.bi_output_customer_social_social_feed",
       "main.bi_output.bi_output_customer_tmp_comments_tmp"
     ],
+    "bi_output_dealing_markit_ca_stockdiv_spinoff_mapping": [],
+    "bi_output_dealing_markit_ca_stockdiv_spinoff_report": [],
     "bi_output_deltaapp_subscription_view": [
       "main.bi_db.bronze_deltaapp_bronze_subscriptions"
     ],
+    "bi_output_emoney_datapipeline_cardinstancelaststatus": [],
+    "bi_output_emoney_datapipeline_cardtokenseventlog": [],
     "bi_output_finance_external_table_bi_db_sharelending_custodyreconciliation_external": [
       "main.general.gold_bny_custody_valuation_custodyvaluation",
-      "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
       "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
+      "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
       "main.dealing.bronze_etoro_hedge_executionlog",
       "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
-      "main.bi_db.bronze_etoro_dwh_hedgenetting",
-      "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
       "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
+      "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
       "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
       "main.dealing.bronze_etoro_hedge_netting",
       "main.bi_db.bronze_etoro_history_instrumentmetadata",
@@ -229,14 +220,15 @@
       "main.general.gold_bny_custody_valuation_custodyvaluation",
       "main.general.gold_equilendspire_etoro_spire_position",
       "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
-      "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
       "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
       "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
       "main.bi_output.bi_output_finance_tables_bi_db_sharelending_reconciliation"
     ],
     "bi_output_finance_tables_bi_db_hedge_nettingbalance": [
       "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "main.dealing.bronze_etoro_hedge_netting",
+      "main.dealing.bronze_etoro_history_netting_history",
       "main.bi_output_stg.bi_output_finance_tables_bi_db_hedge_nettingbalance"
     ],
     "bi_output_finance_tables_bi_db_positions_closed_to_iban": [
@@ -300,16 +292,16 @@
     ],
     "bi_output_finance_tables_bi_db_sharelending_custodyreconciliation": [
       "main.general.gold_bny_custody_valuation_custodyvaluation",
-      "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
       "main.sharepoint.silver_sharepoint_dealing_active_hs_mappings",
+      "main.bi_db.bronze_fivetran_dealing_active_hs_mappings",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
       "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
       "main.dealing.bronze_etoro_hedge_executionlog",
       "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
-      "main.bi_db.bronze_etoro_dwh_hedgenetting",
-      "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
       "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "main.bi_db.bronze_etoro_dwh_hedgenetting",
       "main.bi_output.bi_output_finance_tables_bi_db_hedge_nettingbalance",
+      "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
       "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
       "main.dealing.bronze_etoro_hedge_netting",
       "main.bi_db.bronze_etoro_history_instrumentmetadata",
@@ -326,7 +318,6 @@
       "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
       "main.dwh.dim_position",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu",
       "main.bi_db.bronze_etoro_history_instrumentmetadata",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
       "main.general.gold_equilendspire_etoro_spire_position"
@@ -340,7 +331,6 @@
       "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
       "main.dwh.dim_position",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_uk",
       "main.bi_db.bronze_etoro_history_instrumentmetadata",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
       "main.general.gold_equilendspire_etoro_spire_position"
@@ -386,17 +376,12 @@
       "main.general.gold_bny_custody_valuation_custodyvaluation",
       "main.general.gold_equilendspire_etoro_spire_position",
       "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
-      "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
       "main.sharepoint.silver_sharepoint_stock_lending_finance_report_transfers",
+      "main.general.bronze_fivetran_google_sheets_stock_lending_finance_report_transfers",
       "main.security_lending.gold_de_security_lending_equilend_daily_settled_balance",
       "main.bi_output.bi_output_finance_tables_bi_db_sharelending_reconciliation"
     ],
     "bi_output_finance_tables_ptp_tax": [],
-    "bi_output_fullname_apiresults": [
-      "main.pyspark.sql",
-      "pyspark.sql.functions",
-      "main.delta.tables"
-    ],
     "bi_output_marketing_acquisition_demo": [
       "main.bi_output.bi_output_marketing_acquisition_demo",
       "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
@@ -541,7 +526,11 @@
     "bi_output_vg_cf_crm_contact": [
       "main.bi_output_stg.tf_crm_contact_user",
       "main.bi_output.bi_output_vg_crm_user",
+      "main.crm.silver_crm_task",
+      "main.crm.silver_crm_customer_engagement__c",
+      "main.crm.silver_crm_case",
       "main.crm.silver_crm_emailmessage",
+      "main.crm.silver_crm_nvmstatssf__nvm_call_summary__c",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
     ],
     "bi_output_vg_club": [
@@ -560,8 +549,7 @@
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
-      "main.bi_output_stg.bi_output_customer_customer_facing_stg_dim_club"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons"
     ],
     "bi_output_vg_club_offers": [
       "main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty",
@@ -641,8 +629,7 @@
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
-      "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailycluster"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons"
     ],
     "bi_output_vg_customer_snapshot_test": [
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
@@ -659,8 +646,7 @@
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
-      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
-      "main.bi_output_stg.guy_test_user_dim_ddr_scd_status"
+      "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons"
     ],
     "bi_output_vg_customer_snapshot_v2": [
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
@@ -732,6 +718,7 @@
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons"
     ],
+    "bi_output_vg_new_funded_2026_single_asset": [],
     "bi_output_vg_parentcid": [
       "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy",
       "main.bi_output.bi_output_vg_date",
@@ -995,6 +982,7 @@
       "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account",
       "main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban_parquet"
     ],
+    "vg_promo_card_cashback": [],
     "vg_trades": [
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
@@ -1542,10 +1530,10 @@
       "full_name": "main.bi_output.bi_ouput_v_dim_instrumenttype",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/bi_output/<Tables|Views>/bi_ouput_v_dim_instrumenttype.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_output.bi_ouput_v_dim_instrumenttype.md"
+      "wiki_path": "knowledge\\UC_generated\\bi_output\\Views\\bi_ouput_v_dim_instrumenttype.md",
+      "wiki_exists": true,
+      "blocked_on_upstream": false,
+      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\main.bi_output.bi_ouput_v_dim_instrumenttype.md"
     },
     {
       "full_name": "main.bi_output.bi_output_customer_customer_facing_triggers",
@@ -1701,24 +1689,6 @@
       "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation.md"
     },
     {
-      "full_name": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu",
-      "rule_matched": 2,
-      "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu.md"
-    },
-    {
-      "full_name": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_uk",
-      "rule_matched": 2,
-      "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_uk.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_uk.md"
-    },
-    {
       "full_name": "main.bi_output.bi_output_finance_tables_bi_db_sharelending_reconciliation",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
@@ -1767,10 +1737,10 @@
       "full_name": "main.bi_output.bi_output_regtechops_wash_trading_alerts_daily",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_regtechops_wash_trading_alerts_daily.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_output.bi_output_regtechops_wash_trading_alerts_daily.md"
+      "wiki_path": "knowledge\\UC_generated\\bi_output\\Tables\\bi_output_regtechops_wash_trading_alerts_daily.md",
+      "wiki_exists": true,
+      "blocked_on_upstream": false,
+      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\main.bi_output.bi_output_regtechops_wash_trading_alerts_daily.md"
     },
     {
       "full_name": "main.bi_output.bi_output_urban_notifications_daily_panel",
@@ -1794,19 +1764,19 @@
       "full_name": "main.bi_output.bi_output_vg_crm_user",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_crm_user.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_output.bi_output_vg_crm_user.md"
+      "wiki_path": "knowledge\\UC_generated\\bi_output\\Views\\bi_output_vg_crm_user.md",
+      "wiki_exists": true,
+      "blocked_on_upstream": false,
+      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\main.bi_output.bi_output_vg_crm_user.md"
     },
     {
       "full_name": "main.bi_output.bi_output_vg_date",
       "rule_matched": 2,
       "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_date.md",
-      "wiki_exists": false,
-      "blocked_on_upstream": true,
-      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_output.bi_output_vg_date.md"
+      "wiki_path": "knowledge\\UC_generated\\bi_output\\Views\\bi_output_vg_date.md",
+      "wiki_exists": true,
+      "blocked_on_upstream": false,
+      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\main.bi_output.bi_output_vg_date.md"
     },
     {
       "full_name": "main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity",
@@ -1823,25 +1793,11 @@
       "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty.md"
     },
     {
-      "full_name": "main.bi_output_stg.bi_output_customer_customer_facing_stg_dim_club",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "no rule matched",
-      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_output_stg.bi_output_customer_customer_facing_stg_dim_club.md"
-    },
-    {
       "full_name": "main.bi_output_stg.bi_output_finance_tables_bi_db_hedge_nettingbalance",
       "rule_matched": 6,
       "rule_name": "no_wiki",
       "reason": "no rule matched",
       "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_output_stg.bi_output_finance_tables_bi_db_hedge_nettingbalance.md"
-    },
-    {
-      "full_name": "main.bi_output_stg.guy_test_user_dim_ddr_scd_status",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "no rule matched",
-      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.bi_output_stg.guy_test_user_dim_ddr_scd_status.md"
     },
     {
       "full_name": "main.bi_output_stg.tf_crm_contact_user",
@@ -1852,54 +1808,54 @@
     },
     {
       "full_name": "main.billing.bronze_etoro_billing_badbin",
-      "rule_matched": 2,
-      "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/billing/Tables/bronze_etoro_billing_badbin.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Tables/Billing.BadBin.md",
       "wiki_exists": true,
       "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\main.billing.bronze_etoro_billing_badbin.md"
     },
     {
       "full_name": "main.billing.bronze_etoro_billing_deposit",
-      "rule_matched": 2,
-      "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/billing/Tables/bronze_etoro_billing_deposit.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Tables/Billing.Deposit.md",
       "wiki_exists": true,
       "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\main.billing.bronze_etoro_billing_deposit.md"
     },
     {
       "full_name": "main.billing.bronze_etoro_billing_depot",
-      "rule_matched": 2,
-      "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/billing/Tables/bronze_etoro_billing_depot.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Tables/Billing.Depot.md",
       "wiki_exists": true,
       "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\main.billing.bronze_etoro_billing_depot.md"
     },
     {
       "full_name": "main.billing.bronze_etoro_billing_vwithdrawtofunding",
-      "rule_matched": 2,
-      "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/billing/Tables/bronze_etoro_billing_vwithdrawtofunding.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md",
       "wiki_exists": true,
       "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\main.billing.bronze_etoro_billing_vwithdrawtofunding.md"
     },
     {
       "full_name": "main.billing.bronze_etoro_billing_withdraw",
-      "rule_matched": 2,
-      "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/billing/Tables/bronze_etoro_billing_withdraw.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Tables/Billing.Withdraw.md",
       "wiki_exists": true,
       "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\main.billing.bronze_etoro_billing_withdraw.md"
     },
     {
       "full_name": "main.billing.bronze_moneybusdb_moneybus_transactions",
-      "rule_matched": 2,
-      "rule_name": "uc_generated_sibling",
-      "wiki_path": "knowledge/UC_generated/billing/Tables/bronze_moneybusdb_moneybus_transactions.md",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki/MoneyBus/Tables/MoneyBus.Transactions.md",
       "wiki_exists": true,
       "via_global_index": true,
       "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\main.billing.bronze_moneybusdb_moneybus_transactions.md"
@@ -1986,25 +1942,11 @@
       "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.crm.silver_crm_emailmessage.md"
     },
     {
-      "full_name": "main.crm.silver_crm_inventory_asset__c",
+      "full_name": "main.crm.silver_crm_nvmstatssf__nvm_call_summary__c",
       "rule_matched": 6,
       "rule_name": "no_wiki",
       "reason": "no rule matched",
-      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.crm.silver_crm_inventory_asset__c.md"
-    },
-    {
-      "full_name": "main.crm.silver_crm_loyalty_offer__c",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "no rule matched",
-      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.crm.silver_crm_loyalty_offer__c.md"
-    },
-    {
-      "full_name": "main.crm.silver_crm_loyalty_offer_request__c",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "no rule matched",
-      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.crm.silver_crm_loyalty_offer_request__c.md"
+      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.crm.silver_crm_nvmstatssf__nvm_call_summary__c.md"
     },
     {
       "full_name": "main.crm.silver_crm_survey_question__c",
@@ -2060,6 +2002,15 @@
       "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\main.dealing.bronze_etoro_hedge_netting.md"
     },
     {
+      "full_name": "main.dealing.bronze_etoro_history_netting_history",
+      "rule_matched": 1,
+      "rule_name": "bronze_tier1_inheritance",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/History/Tables/History.Netting_History.md",
+      "wiki_exists": true,
+      "via_global_index": true,
+      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\main.dealing.bronze_etoro_history_netting_history.md"
+    },
+    {
       "full_name": "main.dealing.bronze_pricelog_candles_currencypricemaxdatewithsplit",
       "rule_matched": 4,
       "rule_name": "bronze_pure_ingest",
@@ -2072,13 +2023,6 @@
       "wiki_path": null,
       "wiki_exists": false,
       "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.dealing.bronze_pricelog_candles_currencypricemaxdatewithsplit.md"
-    },
-    {
-      "full_name": "main.delta.tables",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "no rule matched",
-      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.delta.tables.md"
     },
     {
       "full_name": "main.dwh.dim_position",
@@ -2774,13 +2718,6 @@
       "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer.md"
     },
     {
-      "full_name": "main.pyspark.sql",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "no rule matched",
-      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.pyspark.sql.md"
-    },
-    {
       "full_name": "main.security_lending.gold_de_security_lending_equilend_bnym_account_swing_daily",
       "rule_matched": 6,
       "rule_name": "no_wiki",
@@ -2971,25 +2908,18 @@
       "rule_name": "no_wiki",
       "reason": "no rule matched",
       "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__main.urban.gold_web_session.md"
-    },
-    {
-      "full_name": "pyspark.sql.functions",
-      "rule_matched": 6,
-      "rule_name": "no_wiki",
-      "reason": "no rule matched",
-      "cached_at": "knowledge\\UC_generated\\bi_output\\_discovery\\upstream_wikis\\_NO_WIKI__pyspark.sql.functions.md"
     }
   ],
   "stats": {
-    "total_upstreams": 221,
-    "rule1_synapse_mirror": 100,
-    "rule2_uc_generated": 67,
+    "total_upstreams": 213,
+    "rule1_synapse_mirror": 107,
+    "rule2_uc_generated": 59,
     "rule3_uc_domain": 0,
     "rule4_bronze_prod": 3,
     "rule5_uc_native_map": 1,
-    "rule6_no_wiki": 50,
-    "wikis_cached": 106,
-    "no_wiki_placeholders": 115,
-    "blocked_on_upstream": 61
+    "rule6_no_wiki": 43,
+    "wikis_cached": 111,
+    "no_wiki_placeholders": 102,
+    "blocked_on_upstream": 55
   }
 }

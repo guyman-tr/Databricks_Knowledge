@@ -3,11 +3,17 @@ schema: bi_output
 catalog: main
 display_name: bi_output — UC-Pipeline scope sheet
 framework: uc-pipeline-doc
-generated_at: "2026-05-18T07:02:44Z"
+generated_at: "2026-06-19T14:30:28Z"
 lineage_lookback_days: 90
-in_scope_count: 123
-out_of_scope_count: 21
+in_scope_count: 128
+out_of_scope_count: 22
 objects:
+  - name: australia_tag_ob_june26
+    full_name: main.bi_output.australia_tag_ob_june26
+    type: VIEW
+    writer:
+      kind: view_definition
+    in_scope: true
   - name: bi_ouput_mvg_etoro_emoney
     full_name: main.bi_output.bi_ouput_mvg_etoro_emoney
     type: METRIC_VIEW
@@ -59,170 +65,170 @@ objects:
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 623823172493742
+      path: 309351277641590
       lineage_source: system.access.table_lineage
       lineage_event_count: 12
       additional_producers:
         - entity_type: JOB
-          entity_id: 940506278148787
+          entity_id: 833530294335349
           workspace_id: 6358342630366312
           event_count: 12
-          first_event_time: "2026-05-05T04:16:32.851000+00:00"
-          last_event_time: "2026-05-05T04:16:32.851000+00:00"
+          first_event_time: "2026-06-08T04:10:39.183000+00:00"
+          last_event_time: "2026-06-08T04:10:39.183000+00:00"
         - entity_type: JOB
-          entity_id: 888499728849435
+          entity_id: 1110022035897935
           workspace_id: 6358342630366312
           event_count: 12
-          first_event_time: "2026-05-01T04:17:18.557000+00:00"
-          last_event_time: "2026-05-01T04:17:18.557000+00:00"
+          first_event_time: "2026-06-16T04:24:43.789000+00:00"
+          last_event_time: "2026-06-16T04:24:43.789000+00:00"
         - entity_type: JOB
-          entity_id: 533867685279299
+          entity_id: 835581948584997
           workspace_id: 6358342630366312
           event_count: 12
-          first_event_time: "2026-05-12T04:31:47.234000+00:00"
-          last_event_time: "2026-05-12T04:31:47.234000+00:00"
+          first_event_time: "2026-06-05T04:21:45.020000+00:00"
+          last_event_time: "2026-06-05T04:21:45.020000+00:00"
         - entity_type: JOB
-          entity_id: 945201763620557
+          entity_id: 591936365909804
           workspace_id: 6358342630366312
           event_count: 12
-          first_event_time: "2026-05-07T04:47:56.768000+00:00"
-          last_event_time: "2026-05-07T04:47:56.768000+00:00"
+          first_event_time: "2026-06-04T04:20:11.522000+00:00"
+          last_event_time: "2026-06-04T04:20:11.522000+00:00"
     in_scope: true
   - name: bi_output_customer_compliance_mas_population
     full_name: main.bi_output.bi_output_customer_compliance_mas_population
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 449767041129740
+      path: 805356250031497
       lineage_source: system.access.table_lineage
       lineage_event_count: 25
       additional_producers:
-        - entity_type: JOB
-          entity_id: 736335922052430
-          workspace_id: 6358342630366312
-          event_count: 25
-          first_event_time: "2026-04-14T06:45:07.614000+00:00"
-          last_event_time: "2026-04-14T06:45:07.614000+00:00"
-        - entity_type: JOB
-          entity_id: 628158787172301
-          workspace_id: 6358342630366312
-          event_count: 25
-          first_event_time: "2026-05-09T09:25:00.915000+00:00"
-          last_event_time: "2026-05-09T09:25:00.915000+00:00"
-        - entity_type: JOB
-          entity_id: 805356250031497
-          workspace_id: 6358342630366312
-          event_count: 25
-          first_event_time: "2026-04-05T05:57:25.163000+00:00"
-          last_event_time: "2026-04-05T05:57:25.163000+00:00"
         - entity_type: JOB
           entity_id: 865384098106911
           workspace_id: 6358342630366312
           event_count: 25
           first_event_time: "2026-04-13T06:36:27.539000+00:00"
           last_event_time: "2026-04-13T06:36:27.539000+00:00"
+        - entity_type: JOB
+          entity_id: 87526057583150
+          workspace_id: 6358342630366312
+          event_count: 25
+          first_event_time: "2026-06-10T10:20:43.232000+00:00"
+          last_event_time: "2026-06-10T10:20:43.232000+00:00"
+        - entity_type: JOB
+          entity_id: 485550692264663
+          workspace_id: 6358342630366312
+          event_count: 25
+          first_event_time: "2026-04-06T06:13:12.909000+00:00"
+          last_event_time: "2026-04-06T06:13:12.909000+00:00"
+        - entity_type: JOB
+          entity_id: 956270074536764
+          workspace_id: 6358342630366312
+          event_count: 25
+          first_event_time: "2026-04-09T07:13:33.962000+00:00"
+          last_event_time: "2026-04-09T07:13:33.962000+00:00"
     in_scope: true
   - name: bi_output_customer_compliance_uk_social_activity_monitoring
     full_name: main.bi_output.bi_output_customer_compliance_uk_social_activity_monitoring
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 938227598135468
+      path: 328065480649847
       lineage_source: system.access.table_lineage
       lineage_event_count: 3
       additional_producers:
         - entity_type: JOB
-          entity_id: 256653498237148
+          entity_id: 467666994190822
           workspace_id: 6358342630366312
           event_count: 3
-          first_event_time: "2026-02-28T04:28:23.703000+00:00"
-          last_event_time: "2026-02-28T04:28:23.703000+00:00"
+          first_event_time: "2026-06-05T05:22:50.425000+00:00"
+          last_event_time: "2026-06-05T05:22:50.425000+00:00"
         - entity_type: JOB
-          entity_id: 193206216692202
+          entity_id: 862511519794275
           workspace_id: 6358342630366312
           event_count: 3
-          first_event_time: "2026-03-01T04:43:22.203000+00:00"
-          last_event_time: "2026-03-01T04:43:22.203000+00:00"
+          first_event_time: "2026-03-24T05:02:41.339000+00:00"
+          last_event_time: "2026-03-24T05:02:41.339000+00:00"
         - entity_type: JOB
-          entity_id: 392817602714607
+          entity_id: 370885485193870
           workspace_id: 6358342630366312
           event_count: 3
-          first_event_time: "2026-02-22T04:40:44.160000+00:00"
-          last_event_time: "2026-02-22T04:40:44.160000+00:00"
+          first_event_time: "2026-06-12T05:08:47.085000+00:00"
+          last_event_time: "2026-06-12T05:08:47.085000+00:00"
         - entity_type: JOB
-          entity_id: 994672230455684
+          entity_id: 799892091715112
           workspace_id: 6358342630366312
           event_count: 3
-          first_event_time: "2026-02-27T04:28:10.137000+00:00"
-          last_event_time: "2026-02-27T04:28:10.137000+00:00"
+          first_event_time: "2026-06-02T05:25:26.179000+00:00"
+          last_event_time: "2026-06-02T05:25:26.179000+00:00"
     in_scope: true
   - name: bi_output_customer_compliance_uk_social_activity_monitoring_m
     full_name: main.bi_output.bi_output_customer_compliance_uk_social_activity_monitoring_m
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 949872433798828
+      path: 689337997854859
       lineage_source: system.access.table_lineage
       lineage_event_count: 5
       additional_producers:
         - entity_type: JOB
-          entity_id: 497762815369327
+          entity_id: 461720669120700
           workspace_id: 6358342630366312
           event_count: 5
-          first_event_time: "2026-04-25T05:04:10.868000+00:00"
-          last_event_time: "2026-04-25T05:04:10.868000+00:00"
+          first_event_time: "2026-06-10T05:14:54.530000+00:00"
+          last_event_time: "2026-06-10T05:14:54.530000+00:00"
         - entity_type: JOB
-          entity_id: 791139996560857
+          entity_id: 601179742075768
           workspace_id: 6358342630366312
           event_count: 5
-          first_event_time: "2026-03-04T04:35:10.072000+00:00"
-          last_event_time: "2026-03-04T04:35:10.072000+00:00"
+          first_event_time: "2026-05-31T04:55:33.126000+00:00"
+          last_event_time: "2026-05-31T04:55:33.126000+00:00"
         - entity_type: JOB
-          entity_id: 968807785808541
+          entity_id: 614280227833310
           workspace_id: 6358342630366312
           event_count: 5
-          first_event_time: "2026-04-16T05:07:15.403000+00:00"
-          last_event_time: "2026-04-16T05:07:15.403000+00:00"
+          first_event_time: "2026-06-13T05:13:24.801000+00:00"
+          last_event_time: "2026-06-13T05:13:24.801000+00:00"
         - entity_type: JOB
-          entity_id: 436710960468868
+          entity_id: 800200691196089
           workspace_id: 6358342630366312
           event_count: 5
-          first_event_time: "2026-04-17T05:03:05.717000+00:00"
-          last_event_time: "2026-04-17T05:03:05.717000+00:00"
+          first_event_time: "2026-06-02T05:21:40.561000+00:00"
+          last_event_time: "2026-06-02T05:21:40.561000+00:00"
     in_scope: true
   - name: bi_output_customer_customer_facing_agent_engagement
     full_name: main.bi_output.bi_output_customer_customer_facing_agent_engagement
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 717988584710279
+      path: 297355623751529
       lineage_source: system.access.table_lineage
       lineage_event_count: 7
       additional_producers:
         - entity_type: JOB
-          entity_id: 900484248914922
+          entity_id: 466278966866295
           workspace_id: 6358342630366312
           event_count: 7
-          first_event_time: "2026-03-09T04:51:09.438000+00:00"
-          last_event_time: "2026-03-09T04:51:34.140000+00:00"
+          first_event_time: "2026-03-23T04:58:46.278000+00:00"
+          last_event_time: "2026-03-23T04:59:06.957000+00:00"
         - entity_type: JOB
-          entity_id: 652763919191275
+          entity_id: 528269003055618
           workspace_id: 6358342630366312
           event_count: 7
-          first_event_time: "2026-05-07T05:49:56.465000+00:00"
-          last_event_time: "2026-05-07T05:50:24.171000+00:00"
+          first_event_time: "2026-06-09T05:32:31.786000+00:00"
+          last_event_time: "2026-06-09T05:33:31.308000+00:00"
         - entity_type: JOB
-          entity_id: 532784961098355
+          entity_id: 706912287692319
           workspace_id: 6358342630366312
           event_count: 7
-          first_event_time: "2026-03-13T04:50:22.263000+00:00"
-          last_event_time: "2026-03-13T04:50:43.796000+00:00"
+          first_event_time: "2026-03-21T10:37:44.465000+00:00"
+          last_event_time: "2026-03-21T10:38:16.066000+00:00"
         - entity_type: JOB
-          entity_id: 335644779362289
+          entity_id: 706881562897745
           workspace_id: 6358342630366312
           event_count: 7
-          first_event_time: "2026-03-07T11:14:57.508000+00:00"
-          last_event_time: "2026-03-07T11:15:18.591000+00:00"
+          first_event_time: "2026-03-24T05:06:10.008000+00:00"
+          last_event_time: "2026-03-24T05:06:34.702000+00:00"
     in_scope: true
   - name: bi_output_customer_customer_facing_am_survey
     full_name: main.bi_output.bi_output_customer_customer_facing_am_survey
@@ -237,51 +243,43 @@ objects:
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 769316685964205
+      path: 827827689353078
       lineage_source: system.access.table_lineage
       lineage_event_count: 9
       additional_producers:
         - entity_type: JOB
-          entity_id: 742209048604075
+          entity_id: 641000047176799
           workspace_id: 6358342630366312
           event_count: 9
-          first_event_time: "2026-03-28T05:37:40.650000+00:00"
-          last_event_time: "2026-03-28T05:38:24.118000+00:00"
+          first_event_time: "2026-04-07T05:43:45.223000+00:00"
+          last_event_time: "2026-04-07T05:44:25.243000+00:00"
         - entity_type: JOB
-          entity_id: 354872834152559
+          entity_id: 773586718759264
           workspace_id: 6358342630366312
           event_count: 9
-          first_event_time: "2026-03-28T05:36:29.529000+00:00"
-          last_event_time: "2026-03-28T05:37:22.171000+00:00"
+          first_event_time: "2026-04-08T05:42:48.327000+00:00"
+          last_event_time: "2026-04-08T05:43:29.508000+00:00"
         - entity_type: JOB
-          entity_id: 482926812443836
+          entity_id: 401089700247867
           workspace_id: 6358342630366312
           event_count: 9
-          first_event_time: "2026-03-28T05:53:59.150000+00:00"
-          last_event_time: "2026-03-28T05:54:35.607000+00:00"
+          first_event_time: "2026-04-05T05:40:02.734000+00:00"
+          last_event_time: "2026-04-05T05:40:47.186000+00:00"
         - entity_type: JOB
-          entity_id: 26228659937576
+          entity_id: 578423421935457
           workspace_id: 6358342630366312
           event_count: 9
-          first_event_time: "2026-03-26T05:39:17.213000+00:00"
-          last_event_time: "2026-03-26T05:40:00.278000+00:00"
+          first_event_time: "2026-04-06T05:55:43.468000+00:00"
+          last_event_time: "2026-04-06T05:56:18.805000+00:00"
     in_scope: true
   - name: bi_output_customer_customer_facing_club_club_offer_eligibilty
     full_name: main.bi_output.bi_output_customer_customer_facing_club_club_offer_eligibilty
     type: EXTERNAL
     writer:
-      kind: NOTEBOOK
-      path: 1200434159941085
-      lineage_source: system.access.table_lineage
-      lineage_event_count: 12
-      additional_producers:
-        - entity_type: JOB
-          entity_id: 525624360584016
-          workspace_id: 5142916747090026
-          event_count: 12
-          first_event_time: "2026-03-18T09:41:16.691000+00:00"
-          last_event_time: "2026-03-18T09:41:16.691000+00:00"
-    in_scope: true
+      kind: UNKNOWN
+      reason: no Spark-write producer in system.access.table_lineage (likely bronze ingest or stale)
+    in_scope: false
+    reason: no Spark-write producer in system.access.table_lineage (likely bronze ingest or stale)
   - name: bi_output_customer_customer_facing_club_inventory_asset
     full_name: main.bi_output.bi_output_customer_customer_facing_club_inventory_asset
     type: EXTERNAL
@@ -311,143 +309,143 @@ objects:
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 905616356190643
+      path: 700698749963412
       lineage_source: system.access.table_lineage
       lineage_event_count: 6
       additional_producers:
         - entity_type: JOB
-          entity_id: 684181068945337
+          entity_id: 357238997048383
           workspace_id: 6358342630366312
           event_count: 6
-          first_event_time: "2026-05-15T04:36:57.803000+00:00"
-          last_event_time: "2026-05-15T04:36:57.803000+00:00"
+          first_event_time: "2026-06-08T05:02:53.192000+00:00"
+          last_event_time: "2026-06-08T05:02:53.192000+00:00"
         - entity_type: JOB
-          entity_id: 436736205721924
+          entity_id: 25215901904242
           workspace_id: 6358342630366312
           event_count: 6
-          first_event_time: "2026-04-16T04:54:01.274000+00:00"
-          last_event_time: "2026-04-16T04:54:01.274000+00:00"
+          first_event_time: "2026-04-01T04:59:53.588000+00:00"
+          last_event_time: "2026-04-01T04:59:53.588000+00:00"
         - entity_type: JOB
-          entity_id: 786313220276200
+          entity_id: 1114675703180798
           workspace_id: 6358342630366312
           event_count: 6
-          first_event_time: "2026-05-13T04:42:20.877000+00:00"
-          last_event_time: "2026-05-13T04:42:20.877000+00:00"
+          first_event_time: "2026-06-17T05:11:04.908000+00:00"
+          last_event_time: "2026-06-17T05:11:04.908000+00:00"
         - entity_type: JOB
-          entity_id: 510664889888866
+          entity_id: 288070280167559
           workspace_id: 6358342630366312
           event_count: 6
-          first_event_time: "2026-05-14T05:04:25.359000+00:00"
-          last_event_time: "2026-05-14T05:04:25.359000+00:00"
+          first_event_time: "2026-06-05T05:12:08.244000+00:00"
+          last_event_time: "2026-06-05T05:12:08.244000+00:00"
     in_scope: true
   - name: bi_output_customer_customer_facing_survey
     full_name: main.bi_output.bi_output_customer_customer_facing_survey
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 688763458383547
+      path: 348629853631869
       lineage_source: system.access.table_lineage
       lineage_event_count: 2
       additional_producers:
         - entity_type: JOB
-          entity_id: 914824928659375
+          entity_id: 184982044232794
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-02-21T04:49:56.667000+00:00"
-          last_event_time: "2026-02-21T04:49:56.667000+00:00"
+          first_event_time: "2026-05-16T10:32:55.004000+00:00"
+          last_event_time: "2026-05-16T10:32:55.004000+00:00"
         - entity_type: JOB
-          entity_id: 46720532741539
+          entity_id: 747115244837338
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-04-03T05:47:10.751000+00:00"
-          last_event_time: "2026-04-03T05:47:10.751000+00:00"
+          first_event_time: "2026-04-08T07:51:13.688000+00:00"
+          last_event_time: "2026-04-08T07:51:13.688000+00:00"
         - entity_type: JOB
-          entity_id: 128310085598750
+          entity_id: 262916450261793
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-02-24T12:44:43.269000+00:00"
-          last_event_time: "2026-02-24T12:44:43.269000+00:00"
+          first_event_time: "2026-05-13T07:50:59.505000+00:00"
+          last_event_time: "2026-05-13T07:50:59.505000+00:00"
         - entity_type: JOB
-          entity_id: 9298462473686
+          entity_id: 183237473211861
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-02-19T04:40:18.619000+00:00"
-          last_event_time: "2026-02-19T04:40:18.619000+00:00"
+          first_event_time: "2026-05-12T07:50:49.226000+00:00"
+          last_event_time: "2026-05-12T07:50:49.226000+00:00"
     in_scope: true
   - name: bi_output_customer_customer_facing_survey_taker
     full_name: main.bi_output.bi_output_customer_customer_facing_survey_taker
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 213935658623860
+      path: 363858712091922
       lineage_source: system.access.table_lineage
       lineage_event_count: 2
       additional_producers:
         - entity_type: JOB
-          entity_id: 833167446274084
+          entity_id: 440390444241455
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-03-14T09:30:36.789000+00:00"
-          last_event_time: "2026-03-14T09:30:36.789000+00:00"
+          first_event_time: "2026-04-25T09:49:11.198000+00:00"
+          last_event_time: "2026-04-25T09:49:11.198000+00:00"
         - entity_type: JOB
-          entity_id: 434010216517611
+          entity_id: 975819301582794
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-04-13T06:44:59.362000+00:00"
-          last_event_time: "2026-04-13T06:44:59.362000+00:00"
+          first_event_time: "2026-05-21T07:54:01.823000+00:00"
+          last_event_time: "2026-05-21T07:54:01.823000+00:00"
         - entity_type: JOB
-          entity_id: 1067804482238566
+          entity_id: 716494960125859
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-04-24T05:46:10.494000+00:00"
-          last_event_time: "2026-04-24T05:46:10.494000+00:00"
+          first_event_time: "2026-03-23T08:45:09.146000+00:00"
+          last_event_time: "2026-03-23T08:45:09.146000+00:00"
         - entity_type: JOB
-          entity_id: 705275531255649
+          entity_id: 931160506542812
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-04-20T06:46:34.296000+00:00"
-          last_event_time: "2026-04-20T06:46:34.296000+00:00"
+          first_event_time: "2026-04-15T09:48:42.516000+00:00"
+          last_event_time: "2026-04-15T09:48:42.516000+00:00"
     in_scope: true
   - name: bi_output_customer_customer_facing_triggers
     full_name: main.bi_output.bi_output_customer_customer_facing_triggers
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 29439054239650
+      path: 680627382315032
       lineage_source: system.access.table_lineage
-      lineage_event_count: 8
+      lineage_event_count: 10
       additional_producers:
         - entity_type: JOB
-          entity_id: 859218245606552
+          entity_id: 707437118756601
           workspace_id: 6358342630366312
-          event_count: 8
-          first_event_time: "2026-05-13T08:59:15.530000+00:00"
-          last_event_time: "2026-05-13T08:59:15.530000+00:00"
+          event_count: 10
+          first_event_time: "2026-05-29T09:00:56.853000+00:00"
+          last_event_time: "2026-05-29T09:00:56.853000+00:00"
         - entity_type: JOB
-          entity_id: 203108797970413
+          entity_id: 299161491092090
           workspace_id: 6358342630366312
-          event_count: 8
-          first_event_time: "2026-05-15T09:03:54.051000+00:00"
-          last_event_time: "2026-05-15T09:03:54.051000+00:00"
+          event_count: 10
+          first_event_time: "2026-06-04T09:00:21.497000+00:00"
+          last_event_time: "2026-06-04T09:00:21.497000+00:00"
         - entity_type: JOB
-          entity_id: 1051497401291979
+          entity_id: 692883551968715
           workspace_id: 6358342630366312
-          event_count: 8
-          first_event_time: "2026-05-12T09:05:39.230000+00:00"
-          last_event_time: "2026-05-12T09:05:39.230000+00:00"
+          event_count: 10
+          first_event_time: "2026-06-17T09:03:42.652000+00:00"
+          last_event_time: "2026-06-17T09:03:42.652000+00:00"
         - entity_type: JOB
-          entity_id: 49110493072821
+          entity_id: 297119285187024
           workspace_id: 6358342630366312
-          event_count: 8
-          first_event_time: "2026-05-11T09:03:28.201000+00:00"
-          last_event_time: "2026-05-11T09:03:28.201000+00:00"
+          event_count: 10
+          first_event_time: "2026-05-20T08:58:07.221000+00:00"
+          last_event_time: "2026-05-20T08:58:07.221000+00:00"
     in_scope: true
   - name: bi_output_customer_customer_facing_triggers_filtered
     full_name: main.bi_output.bi_output_customer_customer_facing_triggers_filtered
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 890492072529400
+      path: 337070951076978
       lineage_source: system.access.table_lineage
       lineage_event_count: 12
       additional_producers:
@@ -458,57 +456,57 @@ objects:
           first_event_time: "2026-05-12T09:16:19.097000+00:00"
           last_event_time: "2026-05-12T09:16:19.097000+00:00"
         - entity_type: JOB
-          entity_id: 466715515241455
+          entity_id: 443375293390711
           workspace_id: 6358342630366312
           event_count: 12
-          first_event_time: "2026-05-13T09:10:22.612000+00:00"
-          last_event_time: "2026-05-13T09:10:22.612000+00:00"
+          first_event_time: "2026-06-17T09:12:37.146000+00:00"
+          last_event_time: "2026-06-17T09:12:37.146000+00:00"
         - entity_type: JOB
-          entity_id: 1099205354005653
+          entity_id: 386598941135872
           workspace_id: 6358342630366312
           event_count: 12
-          first_event_time: "2026-05-15T09:18:46.011000+00:00"
-          last_event_time: "2026-05-15T09:18:46.011000+00:00"
+          first_event_time: "2026-06-01T09:15:49.946000+00:00"
+          last_event_time: "2026-06-01T09:15:49.946000+00:00"
         - entity_type: JOB
-          entity_id: 1058731286398906
+          entity_id: 811193595328160
           workspace_id: 6358342630366312
           event_count: 12
-          first_event_time: "2026-05-14T09:17:56.374000+00:00"
-          last_event_time: "2026-05-14T09:17:56.374000+00:00"
+          first_event_time: "2026-05-25T09:10:05.265000+00:00"
+          last_event_time: "2026-05-25T09:10:05.265000+00:00"
     in_scope: true
   - name: bi_output_customer_customer_facing_triggers_lead_score
     full_name: main.bi_output.bi_output_customer_customer_facing_triggers_lead_score
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 986217717349184
+      path: 926643534805676
       lineage_source: system.access.table_lineage
       lineage_event_count: 17
       additional_producers:
         - entity_type: JOB
-          entity_id: 677382500207098
+          entity_id: 650615430265178
           workspace_id: 6358342630366312
           event_count: 17
-          first_event_time: "2026-03-09T09:03:58.988000+00:00"
-          last_event_time: "2026-03-09T09:05:19.545000+00:00"
+          first_event_time: "2026-04-17T09:10:11.740000+00:00"
+          last_event_time: "2026-04-17T09:11:44.567000+00:00"
         - entity_type: JOB
-          entity_id: 420670581755692
+          entity_id: 269625582921342
           workspace_id: 6358342630366312
           event_count: 17
-          first_event_time: "2026-04-22T09:08:11.669000+00:00"
-          last_event_time: "2026-04-22T09:09:56.839000+00:00"
+          first_event_time: "2026-05-12T09:10:56.021000+00:00"
+          last_event_time: "2026-05-12T09:14:29.286000+00:00"
         - entity_type: JOB
-          entity_id: 371521080270210
+          entity_id: 144317451888160
           workspace_id: 6358342630366312
           event_count: 17
-          first_event_time: "2026-03-16T09:09:24.533000+00:00"
-          last_event_time: "2026-03-16T09:10:44.570000+00:00"
+          first_event_time: "2026-03-23T16:45:39.804000+00:00"
+          last_event_time: "2026-03-23T16:46:59.770000+00:00"
         - entity_type: JOB
-          entity_id: 246140900910181
+          entity_id: 432696518149659
           workspace_id: 6358342630366312
           event_count: 17
-          first_event_time: "2026-03-12T09:03:47.555000+00:00"
-          last_event_time: "2026-03-12T09:05:15.679000+00:00"
+          first_event_time: "2026-04-23T09:11:57.325000+00:00"
+          last_event_time: "2026-04-23T09:13:29.757000+00:00"
     in_scope: true
   - name: bi_output_customer_customer_support_agent_user
     full_name: main.bi_output.bi_output_customer_customer_support_agent_user
@@ -517,63 +515,63 @@ objects:
       kind: JOB
       path: 418338092021449
       lineage_source: system.access.table_lineage
-      lineage_event_count: 80
+      lineage_event_count: 83
     in_scope: true
   - name: bi_output_customer_customer_support_aml_handling_days
     full_name: main.bi_output.bi_output_customer_customer_support_aml_handling_days
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 172887083112065
+      path: 173913543458804
       lineage_source: system.access.table_lineage
       lineage_event_count: 1
       additional_producers:
         - entity_type: JOB
-          entity_id: 7464022571998
+          entity_id: 166105248664680
           workspace_id: 6358342630366312
           event_count: 1
-          first_event_time: "2026-04-25T04:52:54.983000+00:00"
-          last_event_time: "2026-04-25T04:52:54.983000+00:00"
+          first_event_time: "2026-05-14T04:57:53.266000+00:00"
+          last_event_time: "2026-05-14T04:57:53.266000+00:00"
         - entity_type: JOB
-          entity_id: 555849343656950
+          entity_id: 661823576040753
           workspace_id: 6358342630366312
           event_count: 1
-          first_event_time: "2026-03-24T04:48:23.985000+00:00"
-          last_event_time: "2026-03-24T04:48:23.985000+00:00"
+          first_event_time: "2026-04-05T04:44:25.635000+00:00"
+          last_event_time: "2026-04-05T04:44:25.635000+00:00"
         - entity_type: JOB
-          entity_id: 369522992035066
+          entity_id: 783407768241031
           workspace_id: 6358342630366312
           event_count: 1
-          first_event_time: "2026-03-30T04:46:49.293000+00:00"
-          last_event_time: "2026-03-30T04:46:49.293000+00:00"
+          first_event_time: "2026-04-10T04:42:24.944000+00:00"
+          last_event_time: "2026-04-10T04:42:24.944000+00:00"
         - entity_type: JOB
-          entity_id: 878489164885696
+          entity_id: 454605672385462
           workspace_id: 6358342630366312
           event_count: 1
-          first_event_time: "2026-04-15T04:47:55.846000+00:00"
-          last_event_time: "2026-04-15T04:47:55.846000+00:00"
+          first_event_time: "2026-04-12T04:49:26.714000+00:00"
+          last_event_time: "2026-04-12T04:49:26.714000+00:00"
     in_scope: true
   - name: bi_output_customer_customer_support_case
     full_name: main.bi_output.bi_output_customer_customer_support_case
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 321086379460094
+      path: 156505882521332
       lineage_source: system.access.table_lineage
       lineage_event_count: 2
       additional_producers:
         - entity_type: JOB
-          entity_id: 1019491065757336
+          entity_id: 479992992206745
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-02-24T12:18:22.020000+00:00"
-          last_event_time: "2026-02-24T12:19:02.941000+00:00"
+          first_event_time: "2026-05-11T06:49:48.087000+00:00"
+          last_event_time: "2026-05-11T06:50:14.392000+00:00"
         - entity_type: JOB
-          entity_id: 846392669211384
+          entity_id: 808354099648126
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-05-06T04:21:51.361000+00:00"
-          last_event_time: "2026-05-06T04:22:52.973000+00:00"
+          first_event_time: "2026-06-18T05:24:25.685000+00:00"
+          last_event_time: "2026-06-18T05:25:09.724000+00:00"
         - entity_type: JOB
           entity_id: 991465691800539
           workspace_id: 6358342630366312
@@ -581,45 +579,45 @@ objects:
           first_event_time: "2026-05-17T04:53:04.355000+00:00"
           last_event_time: "2026-05-17T04:53:39.201000+00:00"
         - entity_type: JOB
-          entity_id: 249397539368244
+          entity_id: 855360547477935
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-02-28T04:17:03.970000+00:00"
-          last_event_time: "2026-02-28T04:17:49.892000+00:00"
+          first_event_time: "2026-05-13T04:21:24.826000+00:00"
+          last_event_time: "2026-05-13T04:22:37.871000+00:00"
     in_scope: true
   - name: bi_output_customer_customer_support_case_event
     full_name: main.bi_output.bi_output_customer_customer_support_case_event
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 275066326823389
+      path: 817003416693782
       lineage_source: system.access.table_lineage
       lineage_event_count: 2
       additional_producers:
         - entity_type: JOB
-          entity_id: 670148663191421
+          entity_id: 956103896720992
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-05-10T04:42:56.371000+00:00"
-          last_event_time: "2026-05-10T04:42:56.371000+00:00"
+          first_event_time: "2026-05-17T05:29:14.960000+00:00"
+          last_event_time: "2026-05-17T05:29:14.960000+00:00"
         - entity_type: JOB
-          entity_id: 519123432798630
+          entity_id: 141666308015503
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-05-01T04:59:42.960000+00:00"
-          last_event_time: "2026-05-01T04:59:42.960000+00:00"
+          first_event_time: "2026-05-17T05:17:19.344000+00:00"
+          last_event_time: "2026-05-17T05:17:19.344000+00:00"
         - entity_type: JOB
-          entity_id: 151890376065647
+          entity_id: 570891631132880
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-04-26T04:42:45.537000+00:00"
-          last_event_time: "2026-04-26T04:42:45.537000+00:00"
+          first_event_time: "2026-05-12T04:58:05.253000+00:00"
+          last_event_time: "2026-05-12T04:58:05.253000+00:00"
         - entity_type: JOB
-          entity_id: 27758263508770
+          entity_id: 963101461662211
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-05-02T04:38:02.972000+00:00"
-          last_event_time: "2026-05-02T04:38:02.972000+00:00"
+          first_event_time: "2026-05-15T04:45:23.485000+00:00"
+          last_event_time: "2026-05-15T04:45:23.485000+00:00"
     in_scope: true
   - name: bi_output_customer_customer_support_csat
     full_name: main.bi_output.bi_output_customer_customer_support_csat
@@ -634,16 +632,10 @@ objects:
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 130009652999855
+      path: 808715575048090
       lineage_source: system.access.table_lineage
       lineage_event_count: 2
       additional_producers:
-        - entity_type: JOB
-          entity_id: 720263335649092
-          workspace_id: 6358342630366312
-          event_count: 2
-          first_event_time: "2026-04-21T04:40:06.538000+00:00"
-          last_event_time: "2026-04-21T04:40:06.538000+00:00"
         - entity_type: JOB
           entity_id: 858516535844143
           workspace_id: 6358342630366312
@@ -651,17 +643,23 @@ objects:
           first_event_time: "2026-04-20T04:48:14.361000+00:00"
           last_event_time: "2026-04-20T04:48:14.361000+00:00"
         - entity_type: JOB
-          entity_id: 799379077970348
+          entity_id: 971704430367376
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-04-20T04:49:15.549000+00:00"
-          last_event_time: "2026-04-20T04:49:15.549000+00:00"
+          first_event_time: "2026-03-27T10:02:02.656000+00:00"
+          last_event_time: "2026-03-27T10:02:02.656000+00:00"
         - entity_type: JOB
-          entity_id: 702525644569038
+          entity_id: 1088546061823942
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-04-22T04:37:13.702000+00:00"
-          last_event_time: "2026-04-22T04:37:13.702000+00:00"
+          first_event_time: "2026-04-24T04:28:02.712000+00:00"
+          last_event_time: "2026-04-24T04:28:02.712000+00:00"
+        - entity_type: JOB
+          entity_id: 332795066347226
+          workspace_id: 6358342630366312
+          event_count: 2
+          first_event_time: "2026-04-18T09:47:28.567000+00:00"
+          last_event_time: "2026-04-18T09:47:28.567000+00:00"
     in_scope: true
   - name: bi_output_customer_customer_support_live_chat_transcript
     full_name: main.bi_output.bi_output_customer_customer_support_live_chat_transcript
@@ -684,34 +682,34 @@ objects:
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 594912967306162
+      path: 927849595684848
       lineage_source: system.access.table_lineage
       lineage_event_count: 1
       additional_producers:
         - entity_type: JOB
-          entity_id: 847858200256618
+          entity_id: 358399099403483
           workspace_id: 6358342630366312
           event_count: 1
-          first_event_time: "2026-02-20T04:25:37.905000+00:00"
-          last_event_time: "2026-02-20T04:25:37.905000+00:00"
+          first_event_time: "2026-05-07T04:43:38.555000+00:00"
+          last_event_time: "2026-05-07T04:43:38.555000+00:00"
         - entity_type: JOB
-          entity_id: 330217846958171
+          entity_id: 651630562857008
           workspace_id: 6358342630366312
           event_count: 1
-          first_event_time: "2026-05-09T04:35:08.112000+00:00"
-          last_event_time: "2026-05-09T04:35:08.112000+00:00"
+          first_event_time: "2026-05-04T04:29:51.466000+00:00"
+          last_event_time: "2026-05-04T04:29:51.466000+00:00"
         - entity_type: JOB
-          entity_id: 1115464703203343
+          entity_id: 402345041632305
           workspace_id: 6358342630366312
           event_count: 1
-          first_event_time: "2026-05-18T05:21:27.892000+00:00"
-          last_event_time: "2026-05-18T05:21:27.892000+00:00"
+          first_event_time: "2026-05-02T04:29:30.970000+00:00"
+          last_event_time: "2026-05-02T04:29:30.970000+00:00"
         - entity_type: JOB
-          entity_id: 570886942316559
+          entity_id: 385012607610026
           workspace_id: 6358342630366312
           event_count: 1
-          first_event_time: "2026-02-19T04:23:23.177000+00:00"
-          last_event_time: "2026-02-19T04:23:23.177000+00:00"
+          first_event_time: "2026-05-02T04:26:22.656000+00:00"
+          last_event_time: "2026-05-02T04:26:22.656000+00:00"
     in_scope: true
   - name: bi_output_customer_ddr_revenue_metrics
     full_name: main.bi_output.bi_output_customer_ddr_revenue_metrics
@@ -734,102 +732,146 @@ objects:
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 405360254380378
+      path: 804668736496677
       lineage_source: system.access.table_lineage
       lineage_event_count: 5
       additional_producers:
         - entity_type: JOB
-          entity_id: 277351509000785
+          entity_id: 262851652411206
           workspace_id: 6358342630366312
           event_count: 5
-          first_event_time: "2026-03-10T06:17:24.859000+00:00"
-          last_event_time: "2026-03-10T06:17:24.859000+00:00"
+          first_event_time: "2026-05-07T06:30:33.642000+00:00"
+          last_event_time: "2026-05-07T06:30:33.642000+00:00"
         - entity_type: JOB
-          entity_id: 331483120022520
+          entity_id: 281715674431792
           workspace_id: 6358342630366312
           event_count: 5
-          first_event_time: "2026-02-27T06:02:04.422000+00:00"
-          last_event_time: "2026-02-27T06:02:04.422000+00:00"
+          first_event_time: "2026-04-29T05:38:28.205000+00:00"
+          last_event_time: "2026-04-29T05:38:28.205000+00:00"
         - entity_type: JOB
-          entity_id: 911754404643932
+          entity_id: 618077673449321
           workspace_id: 6358342630366312
           event_count: 5
-          first_event_time: "2026-02-20T06:22:14.899000+00:00"
-          last_event_time: "2026-02-20T06:22:14.899000+00:00"
+          first_event_time: "2026-05-06T05:37:40.991000+00:00"
+          last_event_time: "2026-05-06T05:37:40.991000+00:00"
         - entity_type: JOB
-          entity_id: 103454990240311
+          entity_id: 273312553781832
           workspace_id: 6358342630366312
           event_count: 5
-          first_event_time: "2026-03-13T06:27:14.317000+00:00"
-          last_event_time: "2026-03-13T06:27:14.317000+00:00"
+          first_event_time: "2026-05-05T05:55:19.232000+00:00"
+          last_event_time: "2026-05-05T05:55:19.232000+00:00"
     in_scope: true
   - name: bi_output_customer_investment_capital_guarantee_capital_guarantee_q42024_global
     full_name: main.bi_output.bi_output_customer_investment_capital_guarantee_capital_guarantee_q42024_global
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 262147853791452
+      path: 582827302359479
       lineage_source: system.access.table_lineage
       lineage_event_count: 15
       additional_producers:
         - entity_type: JOB
-          entity_id: 780272643408661
+          entity_id: 754483241423377
           workspace_id: 6358342630366312
           event_count: 15
-          first_event_time: "2026-05-15T04:25:06.068000+00:00"
-          last_event_time: "2026-05-15T04:41:46.828000+00:00"
+          first_event_time: "2026-03-25T07:24:50.321000+00:00"
+          last_event_time: "2026-03-25T07:41:52.485000+00:00"
         - entity_type: JOB
-          entity_id: 806895664453077
+          entity_id: 302917138293222
           workspace_id: 6358342630366312
           event_count: 15
-          first_event_time: "2026-04-30T04:22:52.502000+00:00"
-          last_event_time: "2026-04-30T04:38:43.024000+00:00"
+          first_event_time: "2026-05-25T04:19:43.181000+00:00"
+          last_event_time: "2026-05-25T04:35:14.209000+00:00"
         - entity_type: JOB
-          entity_id: 736101695675964
+          entity_id: 1066198631386029
           workspace_id: 6358342630366312
           event_count: 15
-          first_event_time: "2026-04-30T04:39:05.511000+00:00"
-          last_event_time: "2026-04-30T04:51:44.902000+00:00"
+          first_event_time: "2026-03-26T04:24:23.124000+00:00"
+          last_event_time: "2026-03-26T04:40:30.455000+00:00"
         - entity_type: JOB
-          entity_id: 1079375864545522
+          entity_id: 387011138445363
           workspace_id: 6358342630366312
           event_count: 15
-          first_event_time: "2026-04-29T05:27:13.476000+00:00"
-          last_event_time: "2026-04-29T05:40:16.989000+00:00"
+          first_event_time: "2026-03-27T10:07:52.183000+00:00"
+          last_event_time: "2026-03-27T10:24:02.597000+00:00"
     in_scope: true
   - name: bi_output_customer_social_social_feed
     full_name: main.bi_output.bi_output_customer_social_social_feed
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 1046492620820074
+      path: 623028034157417
       lineage_source: system.access.table_lineage
       lineage_event_count: 11
       additional_producers:
         - entity_type: JOB
-          entity_id: 505677317422408
+          entity_id: 882045167727627
           workspace_id: 6358342630366312
           event_count: 11
-          first_event_time: "2026-04-25T04:48:48.191000+00:00"
-          last_event_time: "2026-04-25T04:57:13.250000+00:00"
+          first_event_time: "2026-05-04T04:27:56.129000+00:00"
+          last_event_time: "2026-05-04T04:34:58.740000+00:00"
         - entity_type: JOB
-          entity_id: 319567878929891
+          entity_id: 366811495035694
           workspace_id: 6358342630366312
           event_count: 11
-          first_event_time: "2026-04-20T04:50:26.732000+00:00"
-          last_event_time: "2026-04-20T04:53:05.994000+00:00"
+          first_event_time: "2026-05-25T04:27:28.320000+00:00"
+          last_event_time: "2026-05-25T04:30:03.868000+00:00"
         - entity_type: JOB
-          entity_id: 376838888807800
+          entity_id: 1125102807515321
           workspace_id: 6358342630366312
           event_count: 11
-          first_event_time: "2026-04-24T04:29:38.051000+00:00"
-          last_event_time: "2026-04-24T04:34:49.847000+00:00"
+          first_event_time: "2026-05-01T04:51:11.536000+00:00"
+          last_event_time: "2026-05-01T04:58:15.425000+00:00"
         - entity_type: JOB
-          entity_id: 411792205397931
+          entity_id: 174323637168473
           workspace_id: 6358342630366312
           event_count: 11
-          first_event_time: "2026-04-23T04:28:36.566000+00:00"
-          last_event_time: "2026-04-23T04:30:56.596000+00:00"
+          first_event_time: "2026-04-30T04:31:56.412000+00:00"
+          last_event_time: "2026-04-30T04:34:22.997000+00:00"
+    in_scope: true
+  - name: bi_output_dealing_markit_ca_stockdiv_spinoff_mapping
+    full_name: main.bi_output.bi_output_dealing_markit_ca_stockdiv_spinoff_mapping
+    type: EXTERNAL
+    writer:
+      kind: JOB
+      path: 371057093384848
+      lineage_source: system.access.table_lineage
+      lineage_event_count: 84
+      additional_producers:
+        - entity_type: JOB
+          entity_id: 565468663476942
+          workspace_id: 5142916747090026
+          event_count: 8
+          first_event_time: "2026-06-01T07:56:07.925000+00:00"
+          last_event_time: "2026-06-04T07:00:50.755000+00:00"
+        - entity_type: NOTEBOOK
+          entity_id: 4488277568373449
+          workspace_id: 6358342630366312
+          event_count: 2
+          first_event_time: "2026-05-18T11:31:41.475000+00:00"
+          last_event_time: "2026-05-18T11:31:41.475000+00:00"
+    in_scope: true
+  - name: bi_output_dealing_markit_ca_stockdiv_spinoff_report
+    full_name: main.bi_output.bi_output_dealing_markit_ca_stockdiv_spinoff_report
+    type: EXTERNAL
+    writer:
+      kind: JOB
+      path: 371057093384848
+      lineage_source: system.access.table_lineage
+      lineage_event_count: 84
+      additional_producers:
+        - entity_type: JOB
+          entity_id: 565468663476942
+          workspace_id: 5142916747090026
+          event_count: 8
+          first_event_time: "2026-06-01T07:56:04.739000+00:00"
+          last_event_time: "2026-06-04T07:00:45.334000+00:00"
+        - entity_type: NOTEBOOK
+          entity_id: 4488277568373449
+          workspace_id: 6358342630366312
+          event_count: 2
+          first_event_time: "2026-05-18T11:31:37.014000+00:00"
+          last_event_time: "2026-05-18T11:31:37.014000+00:00"
     in_scope: true
   - name: bi_output_dealing_tables_bi_db_latency_compensation
     full_name: main.bi_output.bi_output_dealing_tables_bi_db_latency_compensation
@@ -848,73 +890,105 @@ objects:
     upstreams_hint:
       - main.bi_db.bronze_deltaapp_bronze_subscriptions
     refs_source: view_definition (regex extract)
+  - name: bi_output_emoney_datapipeline_cardinstancelaststatus
+    full_name: main.bi_output.bi_output_emoney_datapipeline_cardinstancelaststatus
+    type: EXTERNAL
+    writer:
+      kind: JOB
+      path: 1033598147936602
+      lineage_source: system.access.table_lineage
+      lineage_event_count: 132
+      additional_producers:
+        - entity_type: NOTEBOOK
+          entity_id: 265530480782037
+          workspace_id: 5142916747090026
+          event_count: 110
+          first_event_time: "2026-06-01T12:35:32.634000+00:00"
+          last_event_time: "2026-06-03T08:01:16.023000+00:00"
+    in_scope: true
+  - name: bi_output_emoney_datapipeline_cardtokenseventlog
+    full_name: main.bi_output.bi_output_emoney_datapipeline_cardtokenseventlog
+    type: EXTERNAL
+    writer:
+      kind: JOB
+      path: 1033598147936602
+      lineage_source: system.access.table_lineage
+      lineage_event_count: 60
+      additional_producers:
+        - entity_type: NOTEBOOK
+          entity_id: 265530480782037
+          workspace_id: 5142916747090026
+          event_count: 50
+          first_event_time: "2026-06-01T12:29:54.006000+00:00"
+          last_event_time: "2026-06-03T07:56:52.156000+00:00"
+    in_scope: true
   - name: bi_output_finance_external_table_bi_db_sharelending_custodyreconciliation_external
     full_name: main.bi_output.bi_output_finance_external_table_bi_db_sharelending_custodyreconciliation_external
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 131261705122566
+      path: 1103202921978834
       lineage_source: system.access.table_lineage
       lineage_event_count: 16
       additional_producers:
         - entity_type: JOB
-          entity_id: 931695897996839
+          entity_id: 374194556838886
           workspace_id: 6358342630366312
           event_count: 16
-          first_event_time: "2026-03-26T06:47:30.827000+00:00"
-          last_event_time: "2026-03-26T06:47:30.827000+00:00"
+          first_event_time: "2026-05-01T06:56:00.834000+00:00"
+          last_event_time: "2026-05-01T06:56:00.834000+00:00"
         - entity_type: JOB
-          entity_id: 226320803687083
+          entity_id: 1090361414081291
           workspace_id: 6358342630366312
           event_count: 16
-          first_event_time: "2026-04-16T06:59:29.827000+00:00"
-          last_event_time: "2026-04-16T06:59:29.827000+00:00"
+          first_event_time: "2026-04-21T07:05:16.312000+00:00"
+          last_event_time: "2026-04-21T07:05:16.312000+00:00"
         - entity_type: JOB
-          entity_id: 53156131577032
+          entity_id: 539911118913922
           workspace_id: 6358342630366312
           event_count: 16
-          first_event_time: "2026-02-18T06:43:23.279000+00:00"
-          last_event_time: "2026-02-18T06:43:23.279000+00:00"
+          first_event_time: "2026-04-22T07:06:00.270000+00:00"
+          last_event_time: "2026-04-22T07:06:00.270000+00:00"
         - entity_type: JOB
-          entity_id: 300949838967607
+          entity_id: 366335424855208
           workspace_id: 6358342630366312
           event_count: 16
-          first_event_time: "2026-03-30T11:30:47.910000+00:00"
-          last_event_time: "2026-03-30T11:30:47.910000+00:00"
+          first_event_time: "2026-04-30T07:02:26.062000+00:00"
+          last_event_time: "2026-04-30T07:02:26.062000+00:00"
     in_scope: true
   - name: bi_output_finance_external_table_bi_db_sharelending_reconciliation_external
     full_name: main.bi_output.bi_output_finance_external_table_bi_db_sharelending_reconciliation_external
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 641107617594072
+      path: 684080773031278
       lineage_source: system.access.table_lineage
       lineage_event_count: 7
       additional_producers:
         - entity_type: JOB
-          entity_id: 735181929745148
+          entity_id: 112647244818706
           workspace_id: 6358342630366312
           event_count: 7
-          first_event_time: "2026-03-13T06:31:55.262000+00:00"
-          last_event_time: "2026-03-13T06:31:55.262000+00:00"
+          first_event_time: "2026-06-16T05:30:30.339000+00:00"
+          last_event_time: "2026-06-16T05:30:30.339000+00:00"
         - entity_type: JOB
-          entity_id: 563691875048770
+          entity_id: 500335043750087
           workspace_id: 6358342630366312
           event_count: 7
-          first_event_time: "2026-05-12T06:05:51.358000+00:00"
-          last_event_time: "2026-05-12T06:05:51.358000+00:00"
+          first_event_time: "2026-04-02T05:33:30.858000+00:00"
+          last_event_time: "2026-04-02T05:33:30.858000+00:00"
         - entity_type: JOB
-          entity_id: 306321581750495
+          entity_id: 90144617245260
           workspace_id: 6358342630366312
           event_count: 7
-          first_event_time: "2026-05-06T06:42:05.738000+00:00"
-          last_event_time: "2026-05-06T06:42:05.738000+00:00"
+          first_event_time: "2026-06-01T11:21:20.899000+00:00"
+          last_event_time: "2026-06-01T11:21:20.899000+00:00"
         - entity_type: JOB
-          entity_id: 236875100166818
+          entity_id: 342109409921578
           workspace_id: 6358342630366312
           event_count: 7
-          first_event_time: "2026-03-05T06:36:11.519000+00:00"
-          last_event_time: "2026-03-05T06:36:11.519000+00:00"
+          first_event_time: "2026-06-12T06:00:16.630000+00:00"
+          last_event_time: "2026-06-12T06:00:16.630000+00:00"
     in_scope: true
   - name: bi_output_finance_tables_all_trades_pivoted_net_vol
     full_name: main.bi_output.bi_output_finance_tables_all_trades_pivoted_net_vol
@@ -929,34 +1003,34 @@ objects:
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 737650008422339
+      path: 50023759390111
       lineage_source: system.access.table_lineage
-      lineage_event_count: 3
+      lineage_event_count: 4
       additional_producers:
         - entity_type: JOB
-          entity_id: 344696736933469
+          entity_id: 800786333882341
           workspace_id: 6358342630366312
-          event_count: 3
-          first_event_time: "2026-05-16T06:44:39.952000+00:00"
-          last_event_time: "2026-05-16T06:44:39.952000+00:00"
+          event_count: 4
+          first_event_time: "2026-06-09T10:30:58.979000+00:00"
+          last_event_time: "2026-06-09T10:30:58.979000+00:00"
         - entity_type: JOB
-          entity_id: 936849775220703
+          entity_id: 81825062106454
           workspace_id: 6358342630366312
-          event_count: 3
-          first_event_time: "2026-04-21T06:46:06.832000+00:00"
-          last_event_time: "2026-04-21T06:46:06.832000+00:00"
+          event_count: 4
+          first_event_time: "2026-06-13T06:42:39.499000+00:00"
+          last_event_time: "2026-06-13T06:42:39.499000+00:00"
         - entity_type: JOB
-          entity_id: 797379036984862
+          entity_id: 834705058058875
           workspace_id: 6358342630366312
-          event_count: 3
-          first_event_time: "2026-04-27T06:39:41.726000+00:00"
-          last_event_time: "2026-04-27T06:39:41.726000+00:00"
+          event_count: 4
+          first_event_time: "2026-06-09T10:47:53.814000+00:00"
+          last_event_time: "2026-06-09T10:47:53.814000+00:00"
         - entity_type: JOB
-          entity_id: 437602532532775
+          entity_id: 138804399199340
           workspace_id: 6358342630366312
-          event_count: 3
-          first_event_time: "2026-05-02T06:37:27.553000+00:00"
-          last_event_time: "2026-05-02T06:37:27.553000+00:00"
+          event_count: 4
+          first_event_time: "2026-06-12T06:47:14.285000+00:00"
+          last_event_time: "2026-06-12T06:47:14.285000+00:00"
     in_scope: true
   - name: bi_output_finance_tables_bi_db_positions_closed_to_iban
     full_name: main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban
@@ -1001,20 +1075,7 @@ objects:
       kind: DBSQL_QUERY
       path: 05293a5b-1d3b-4302-9856-f4cbc6942396
       lineage_source: system.access.table_lineage
-      lineage_event_count: 124
-      additional_producers:
-        - entity_type: DBSQL_QUERY
-          entity_id: 421b9943-9dae-4f4a-acc0-9272c4f2a70d
-          workspace_id: 6358342630366312
-          event_count: 56
-          first_event_time: "2026-02-17T07:21:18.117000+00:00"
-          last_event_time: "2026-03-16T07:26:24.698000+00:00"
-        - entity_type: JOB
-          entity_id: 844382279060709
-          workspace_id: 6256398679555083
-          event_count: 2
-          first_event_time: "2026-03-17T14:03:26.326000+00:00"
-          last_event_time: "2026-03-17T14:03:26.326000+00:00"
+      lineage_event_count: 182
     in_scope: true
   - name: bi_output_finance_tables_bi_db_share_lending_allocation
     full_name: main.bi_output.bi_output_finance_tables_bi_db_share_lending_allocation
@@ -1029,44 +1090,50 @@ objects:
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 725538823326366
+      path: 631610118933904
       lineage_source: system.access.table_lineage
       lineage_event_count: 10
       additional_producers:
         - entity_type: JOB
-          entity_id: 410199529526145
+          entity_id: 1110048568655576
           workspace_id: 6358342630366312
           event_count: 10
-          first_event_time: "2026-03-06T09:32:37.396000+00:00"
-          last_event_time: "2026-03-06T09:33:41.179000+00:00"
+          first_event_time: "2026-05-08T08:05:08.949000+00:00"
+          last_event_time: "2026-05-08T08:06:07.658000+00:00"
         - entity_type: JOB
-          entity_id: 138151664061318
+          entity_id: 473727521819142
           workspace_id: 6358342630366312
           event_count: 10
-          first_event_time: "2026-04-17T08:33:58.616000+00:00"
-          last_event_time: "2026-04-17T08:35:01.283000+00:00"
+          first_event_time: "2026-03-30T11:26:52.529000+00:00"
+          last_event_time: "2026-03-30T11:27:37.078000+00:00"
         - entity_type: JOB
-          entity_id: 866386262065602
+          entity_id: 302687397161296
           workspace_id: 6358342630366312
           event_count: 10
-          first_event_time: "2026-03-13T09:33:28.840000+00:00"
-          last_event_time: "2026-03-13T09:34:14.448000+00:00"
+          first_event_time: "2026-06-02T08:46:04.657000+00:00"
+          last_event_time: "2026-06-02T08:46:56.536000+00:00"
         - entity_type: JOB
-          entity_id: 788691645559539
+          entity_id: 729788907740893
           workspace_id: 6358342630366312
           event_count: 10
-          first_event_time: "2026-03-16T11:27:14.125000+00:00"
-          last_event_time: "2026-03-16T11:28:02.963000+00:00"
+          first_event_time: "2026-05-06T08:31:14.198000+00:00"
+          last_event_time: "2026-05-06T08:32:00.526000+00:00"
     in_scope: true
   - name: bi_output_finance_tables_bi_db_sharelending_collateraldetailesmain
     full_name: main.bi_output.bi_output_finance_tables_bi_db_sharelending_collateraldetailesmain
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 872666614904699
+      path: 467694890974417
       lineage_source: system.access.table_lineage
       lineage_event_count: 10
       additional_producers:
+        - entity_type: JOB
+          entity_id: 183620499026206
+          workspace_id: 6358342630366312
+          event_count: 10
+          first_event_time: "2026-06-11T08:30:03.907000+00:00"
+          last_event_time: "2026-06-11T08:31:29.630000+00:00"
         - entity_type: JOB
           entity_id: 388131355962550
           workspace_id: 6358342630366312
@@ -1074,57 +1141,51 @@ objects:
           first_event_time: "2026-04-09T08:29:00.473000+00:00"
           last_event_time: "2026-04-09T08:30:11.862000+00:00"
         - entity_type: JOB
-          entity_id: 433062061351945
+          entity_id: 973559680722200
           workspace_id: 6358342630366312
           event_count: 10
-          first_event_time: "2026-05-14T08:29:45.788000+00:00"
-          last_event_time: "2026-05-14T08:30:59.802000+00:00"
+          first_event_time: "2026-05-29T08:35:00.734000+00:00"
+          last_event_time: "2026-05-29T08:36:34.173000+00:00"
         - entity_type: JOB
-          entity_id: 558863821212423
+          entity_id: 745937675176612
           workspace_id: 6358342630366312
           event_count: 10
-          first_event_time: "2026-03-17T09:37:59.863000+00:00"
-          last_event_time: "2026-03-17T09:39:17.734000+00:00"
-        - entity_type: JOB
-          entity_id: 765545700561167
-          workspace_id: 6358342630366312
-          event_count: 10
-          first_event_time: "2026-04-03T08:05:37.842000+00:00"
-          last_event_time: "2026-04-03T08:06:55.361000+00:00"
+          first_event_time: "2026-06-17T08:28:41.529000+00:00"
+          last_event_time: "2026-06-17T08:30:00.470000+00:00"
     in_scope: true
   - name: bi_output_finance_tables_bi_db_sharelending_collateraldetailesuk
     full_name: main.bi_output.bi_output_finance_tables_bi_db_sharelending_collateraldetailesuk
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 47673804099153
+      path: 467694890974417
       lineage_source: system.access.table_lineage
       lineage_event_count: 10
       additional_producers:
         - entity_type: JOB
-          entity_id: 749377526361799
+          entity_id: 183620499026206
           workspace_id: 6358342630366312
           event_count: 10
-          first_event_time: "2026-03-19T09:36:16.999000+00:00"
-          last_event_time: "2026-03-19T09:37:03.368000+00:00"
+          first_event_time: "2026-06-11T08:31:33.958000+00:00"
+          last_event_time: "2026-06-11T08:32:26.272000+00:00"
         - entity_type: JOB
-          entity_id: 427126323990379
+          entity_id: 388131355962550
           workspace_id: 6358342630366312
           event_count: 10
-          first_event_time: "2026-05-01T08:33:05.159000+00:00"
-          last_event_time: "2026-05-01T08:34:00.077000+00:00"
+          first_event_time: "2026-04-09T08:30:17.209000+00:00"
+          last_event_time: "2026-04-09T08:31:15.128000+00:00"
         - entity_type: JOB
-          entity_id: 688149681306423
+          entity_id: 973559680722200
           workspace_id: 6358342630366312
           event_count: 10
-          first_event_time: "2026-03-23T11:25:18.446000+00:00"
-          last_event_time: "2026-03-23T11:26:27.108000+00:00"
+          first_event_time: "2026-05-29T08:36:38.215000+00:00"
+          last_event_time: "2026-05-29T08:37:45.719000+00:00"
         - entity_type: JOB
-          entity_id: 994244292293140
+          entity_id: 745937675176612
           workspace_id: 6358342630366312
           event_count: 10
-          first_event_time: "2026-03-26T09:30:53.513000+00:00"
-          last_event_time: "2026-03-26T09:31:55.274000+00:00"
+          first_event_time: "2026-06-17T08:30:04.281000+00:00"
+          last_event_time: "2026-06-17T08:30:52.713000+00:00"
     in_scope: true
   - name: bi_output_finance_tables_bi_db_sharelending_custodyreconciliation
     full_name: main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation
@@ -1133,184 +1194,178 @@ objects:
       kind: NOTEBOOK
       path: 929841887099956
       lineage_source: system.access.table_lineage
-      lineage_event_count: 50
+      lineage_event_count: 66
       additional_producers:
         - entity_type: JOB
-          entity_id: 774467620119768
+          entity_id: 580884697948262
           workspace_id: 6358342630366312
           event_count: 17
-          first_event_time: "2026-03-06T06:40:27.223000+00:00"
-          last_event_time: "2026-03-06T06:44:46.045000+00:00"
+          first_event_time: "2026-03-23T11:21:34.864000+00:00"
+          last_event_time: "2026-03-23T11:25:17.538000+00:00"
         - entity_type: JOB
-          entity_id: 1102619228266846
+          entity_id: 320506974522760
           workspace_id: 6358342630366312
           event_count: 17
-          first_event_time: "2026-04-10T06:45:36.331000+00:00"
-          last_event_time: "2026-04-10T06:52:54.534000+00:00"
+          first_event_time: "2026-04-07T06:45:00.632000+00:00"
+          last_event_time: "2026-04-07T06:50:38.742000+00:00"
         - entity_type: JOB
-          entity_id: 894362430532226
+          entity_id: 539911118913922
           workspace_id: 6358342630366312
           event_count: 17
-          first_event_time: "2026-03-05T06:42:10.923000+00:00"
-          last_event_time: "2026-03-05T06:45:31.840000+00:00"
+          first_event_time: "2026-04-22T06:55:48.186000+00:00"
+          last_event_time: "2026-04-22T07:00:09.665000+00:00"
         - entity_type: JOB
-          entity_id: 255636913522258
+          entity_id: 374194556838886
           workspace_id: 6358342630366312
           event_count: 17
-          first_event_time: "2026-03-18T06:38:56.695000+00:00"
-          last_event_time: "2026-03-18T06:43:00.040000+00:00"
+          first_event_time: "2026-05-01T06:45:47.108000+00:00"
+          last_event_time: "2026-05-01T06:52:19.758000+00:00"
     in_scope: true
   - name: bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu
     full_name: main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 886170903386595
+      path: 863862100713057
       lineage_source: system.access.table_lineage
       lineage_event_count: 15
       additional_producers:
         - entity_type: JOB
-          entity_id: 1101713962736244
+          entity_id: 964880925801670
           workspace_id: 6358342630366312
           event_count: 15
-          first_event_time: "2026-03-11T07:58:04.233000+00:00"
-          last_event_time: "2026-03-11T08:25:02.381000+00:00"
+          first_event_time: "2026-05-04T10:56:30.364000+00:00"
+          last_event_time: "2026-05-04T11:18:58.317000+00:00"
         - entity_type: JOB
-          entity_id: 32192209799931
+          entity_id: 790443493174283
           workspace_id: 6358342630366312
           event_count: 15
-          first_event_time: "2026-03-16T10:11:57.040000+00:00"
-          last_event_time: "2026-03-16T10:31:04.363000+00:00"
+          first_event_time: "2026-04-28T07:56:13.907000+00:00"
+          last_event_time: "2026-04-28T08:24:23.045000+00:00"
         - entity_type: JOB
-          entity_id: 850746051623358
+          entity_id: 574810617674878
           workspace_id: 6358342630366312
           event_count: 15
-          first_event_time: "2026-04-20T10:25:11.238000+00:00"
-          last_event_time: "2026-04-20T10:46:09.652000+00:00"
+          first_event_time: "2026-04-14T08:18:42.434000+00:00"
+          last_event_time: "2026-04-14T08:42:38.960000+00:00"
         - entity_type: JOB
-          entity_id: 1000493838267721
+          entity_id: 690838615381883
           workspace_id: 6358342630366312
           event_count: 15
-          first_event_time: "2026-04-20T09:48:04.148000+00:00"
-          last_event_time: "2026-04-20T10:16:17.191000+00:00"
+          first_event_time: "2026-05-12T14:18:29.001000+00:00"
+          last_event_time: "2026-05-12T14:44:38.632000+00:00"
     in_scope: true
   - name: bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_uk
     full_name: main.bi_output.bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_uk
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 790443493174283
+      path: 708395722314727
       lineage_source: system.access.table_lineage
       lineage_event_count: 14
       additional_producers:
         - entity_type: JOB
-          entity_id: 562622648116058
+          entity_id: 143998612309105
           workspace_id: 6358342630366312
           event_count: 14
-          first_event_time: "2026-03-23T10:12:39.949000+00:00"
-          last_event_time: "2026-03-23T10:23:04.357000+00:00"
+          first_event_time: "2026-04-06T10:33:33.210000+00:00"
+          last_event_time: "2026-04-06T10:42:07.220000+00:00"
         - entity_type: JOB
-          entity_id: 863862100713057
+          entity_id: 509740602067506
           workspace_id: 6358342630366312
           event_count: 14
-          first_event_time: "2026-04-13T11:01:10.465000+00:00"
-          last_event_time: "2026-04-13T11:10:52.280000+00:00"
+          first_event_time: "2026-05-04T09:46:38.711000+00:00"
+          last_event_time: "2026-05-04T10:02:05.742000+00:00"
         - entity_type: JOB
-          entity_id: 917376253168406
+          entity_id: 790443493174283
           workspace_id: 6358342630366312
           event_count: 14
-          first_event_time: "2026-04-30T08:17:08.504000+00:00"
-          last_event_time: "2026-04-30T08:29:55.556000+00:00"
+          first_event_time: "2026-04-28T07:55:52.695000+00:00"
+          last_event_time: "2026-04-28T08:11:34.619000+00:00"
         - entity_type: JOB
-          entity_id: 661894669513370
+          entity_id: 825485082107418
           workspace_id: 6358342630366312
           event_count: 14
-          first_event_time: "2026-05-06T08:11:44.535000+00:00"
-          last_event_time: "2026-05-06T08:25:09.882000+00:00"
+          first_event_time: "2026-05-07T08:09:51.100000+00:00"
+          last_event_time: "2026-05-07T08:21:50.896000+00:00"
     in_scope: true
   - name: bi_output_finance_tables_bi_db_sharelending_loansandcollateraleu
     full_name: main.bi_output.bi_output_finance_tables_bi_db_sharelending_loansandcollateraleu
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 230453999952504
+      path: 570194507367925
       lineage_source: system.access.table_lineage
       lineage_event_count: 11
       additional_producers:
         - entity_type: JOB
-          entity_id: 61622451211761
+          entity_id: 659571473937788
           workspace_id: 6358342630366312
           event_count: 11
-          first_event_time: "2026-02-20T09:35:34.799000+00:00"
-          last_event_time: "2026-02-20T09:36:10.155000+00:00"
+          first_event_time: "2026-04-24T08:45:35.630000+00:00"
+          last_event_time: "2026-04-24T08:46:31.611000+00:00"
         - entity_type: JOB
-          entity_id: 121635663285677
+          entity_id: 1110048568655576
           workspace_id: 6358342630366312
           event_count: 11
-          first_event_time: "2026-05-05T10:03:40.012000+00:00"
-          last_event_time: "2026-05-05T10:04:38.503000+00:00"
+          first_event_time: "2026-05-08T08:09:31.767000+00:00"
+          last_event_time: "2026-05-08T08:10:26.691000+00:00"
         - entity_type: JOB
-          entity_id: 626019493956399
+          entity_id: 183620499026206
           workspace_id: 6358342630366312
           event_count: 11
-          first_event_time: "2026-03-02T16:17:35.828000+00:00"
-          last_event_time: "2026-03-02T16:18:27.045000+00:00"
+          first_event_time: "2026-06-11T08:37:10.231000+00:00"
+          last_event_time: "2026-06-11T08:38:15.839000+00:00"
         - entity_type: JOB
-          entity_id: 432697436883087
+          entity_id: 842652738470732
           workspace_id: 6358342630366312
           event_count: 11
-          first_event_time: "2026-03-03T09:42:00.121000+00:00"
-          last_event_time: "2026-03-03T09:42:30.490000+00:00"
+          first_event_time: "2026-05-22T08:46:18.075000+00:00"
+          last_event_time: "2026-05-22T08:48:26.621000+00:00"
     in_scope: true
   - name: bi_output_finance_tables_bi_db_sharelending_loansandcollateralmain
     full_name: main.bi_output.bi_output_finance_tables_bi_db_sharelending_loansandcollateralmain
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 27544170671570
+      path: 111578874992303
       lineage_source: system.access.table_lineage
       lineage_event_count: 11
       additional_producers:
         - entity_type: JOB
-          entity_id: 302988174335890
+          entity_id: 109464070728569
           workspace_id: 6358342630366312
           event_count: 11
-          first_event_time: "2026-03-04T09:32:34.415000+00:00"
-          last_event_time: "2026-03-04T09:34:05.904000+00:00"
+          first_event_time: "2026-05-15T08:33:55.381000+00:00"
+          last_event_time: "2026-05-15T08:36:18.505000+00:00"
         - entity_type: JOB
-          entity_id: 558863821212423
+          entity_id: 313671910134377
           workspace_id: 6358342630366312
           event_count: 11
-          first_event_time: "2026-03-17T09:40:58.994000+00:00"
-          last_event_time: "2026-03-17T09:43:00.929000+00:00"
+          first_event_time: "2026-05-04T11:28:03.544000+00:00"
+          last_event_time: "2026-05-04T11:29:41.498000+00:00"
         - entity_type: JOB
-          entity_id: 1099456476947239
+          entity_id: 611419656643180
           workspace_id: 6358342630366312
           event_count: 11
-          first_event_time: "2026-04-23T08:38:22.253000+00:00"
-          last_event_time: "2026-04-23T08:40:50.058000+00:00"
+          first_event_time: "2026-04-14T08:46:43.764000+00:00"
+          last_event_time: "2026-04-14T08:48:59.061000+00:00"
         - entity_type: JOB
-          entity_id: 286906934457272
+          entity_id: 48881563457537
           workspace_id: 6358342630366312
           event_count: 11
-          first_event_time: "2026-02-23T11:26:57.877000+00:00"
-          last_event_time: "2026-02-23T11:28:39.451000+00:00"
+          first_event_time: "2026-05-12T08:46:21.101000+00:00"
+          last_event_time: "2026-05-12T08:48:19.259000+00:00"
     in_scope: true
   - name: bi_output_finance_tables_bi_db_sharelending_loansandcollateraluk
     full_name: main.bi_output.bi_output_finance_tables_bi_db_sharelending_loansandcollateraluk
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 470769329960226
+      path: 570194507367925
       lineage_source: system.access.table_lineage
       lineage_event_count: 11
       additional_producers:
-        - entity_type: JOB
-          entity_id: 453833154901946
-          workspace_id: 6358342630366312
-          event_count: 11
-          first_event_time: "2026-04-01T08:39:58.586000+00:00"
-          last_event_time: "2026-04-01T08:41:10.712000+00:00"
         - entity_type: JOB
           entity_id: 659571473937788
           workspace_id: 6358342630366312
@@ -1318,85 +1373,91 @@ objects:
           first_event_time: "2026-04-24T08:44:31.523000+00:00"
           last_event_time: "2026-04-24T08:45:32.184000+00:00"
         - entity_type: JOB
-          entity_id: 11029355838908
+          entity_id: 944212823380282
           workspace_id: 6358342630366312
           event_count: 11
-          first_event_time: "2026-03-31T08:45:05.423000+00:00"
-          last_event_time: "2026-03-31T08:46:36.903000+00:00"
+          first_event_time: "2026-03-24T09:42:15.276000+00:00"
+          last_event_time: "2026-03-24T09:44:13.529000+00:00"
         - entity_type: JOB
-          entity_id: 473727521819142
+          entity_id: 183620499026206
           workspace_id: 6358342630366312
           event_count: 11
-          first_event_time: "2026-03-30T11:29:53.287000+00:00"
-          last_event_time: "2026-03-30T11:31:57.377000+00:00"
+          first_event_time: "2026-06-11T08:35:58.881000+00:00"
+          last_event_time: "2026-06-11T08:37:03.891000+00:00"
+        - entity_type: JOB
+          entity_id: 842652738470732
+          workspace_id: 6358342630366312
+          event_count: 11
+          first_event_time: "2026-05-22T08:44:28.012000+00:00"
+          last_event_time: "2026-05-22T08:46:03.335000+00:00"
     in_scope: true
   - name: bi_output_finance_tables_bi_db_sharelending_price_estimated
     full_name: main.bi_output.bi_output_finance_tables_bi_db_sharelending_price_estimated
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 769525096189601
+      path: 391087506778862
       lineage_source: system.access.table_lineage
       lineage_event_count: 7
       additional_producers:
         - entity_type: JOB
-          entity_id: 1049427011165715
+          entity_id: 147168392664945
           workspace_id: 6358342630366312
           event_count: 7
-          first_event_time: "2026-03-17T07:35:44.343000+00:00"
-          last_event_time: "2026-03-17T07:37:33.632000+00:00"
+          first_event_time: "2026-05-06T07:45:42.296000+00:00"
+          last_event_time: "2026-05-06T07:47:39.699000+00:00"
         - entity_type: JOB
-          entity_id: 832793623099840
+          entity_id: 155981761884823
           workspace_id: 6358342630366312
           event_count: 7
-          first_event_time: "2026-03-06T07:35:27.584000+00:00"
-          last_event_time: "2026-03-06T07:37:21.665000+00:00"
+          first_event_time: "2026-04-04T07:33:27.814000+00:00"
+          last_event_time: "2026-04-04T07:35:22.771000+00:00"
         - entity_type: JOB
-          entity_id: 799335004139539
+          entity_id: 621208269726678
           workspace_id: 6358342630366312
           event_count: 7
-          first_event_time: "2026-03-12T07:33:10.147000+00:00"
-          last_event_time: "2026-03-12T07:35:07.561000+00:00"
+          first_event_time: "2026-05-04T07:38:00.278000+00:00"
+          last_event_time: "2026-05-04T07:40:09.562000+00:00"
         - entity_type: JOB
-          entity_id: 603733010544102
+          entity_id: 19321281211729
           workspace_id: 6358342630366312
           event_count: 7
-          first_event_time: "2026-03-16T07:30:51.469000+00:00"
-          last_event_time: "2026-03-16T07:32:44.768000+00:00"
+          first_event_time: "2026-05-07T07:45:12.251000+00:00"
+          last_event_time: "2026-05-07T07:47:10.745000+00:00"
     in_scope: true
   - name: bi_output_finance_tables_bi_db_sharelending_reconciliation
     full_name: main.bi_output.bi_output_finance_tables_bi_db_sharelending_reconciliation
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 333631390353161
+      path: 472323883251842
       lineage_source: system.access.table_lineage
       lineage_event_count: 7
       additional_producers:
         - entity_type: JOB
-          entity_id: 213353132127089
+          entity_id: 523512784446744
           workspace_id: 6358342630366312
           event_count: 7
-          first_event_time: "2026-04-21T05:45:17.414000+00:00"
-          last_event_time: "2026-04-21T05:45:17.414000+00:00"
+          first_event_time: "2026-05-07T07:45:43.212000+00:00"
+          last_event_time: "2026-05-07T07:45:43.212000+00:00"
         - entity_type: JOB
-          entity_id: 994228221968245
+          entity_id: 624116701835965
           workspace_id: 6358342630366312
           event_count: 7
-          first_event_time: "2026-04-06T11:23:58.147000+00:00"
-          last_event_time: "2026-04-06T11:23:58.147000+00:00"
+          first_event_time: "2026-04-10T06:01:31.543000+00:00"
+          last_event_time: "2026-04-10T06:01:31.543000+00:00"
         - entity_type: JOB
-          entity_id: 164863133418087
+          entity_id: 397807143223489
           workspace_id: 6358342630366312
           event_count: 7
-          first_event_time: "2026-03-26T06:32:50.611000+00:00"
-          last_event_time: "2026-03-26T06:32:50.611000+00:00"
+          first_event_time: "2026-04-28T06:18:06.085000+00:00"
+          last_event_time: "2026-04-28T06:18:06.085000+00:00"
         - entity_type: JOB
-          entity_id: 706056708767005
+          entity_id: 748330397000434
           workspace_id: 6358342630366312
           event_count: 7
-          first_event_time: "2026-04-22T05:50:23.773000+00:00"
-          last_event_time: "2026-04-22T05:50:23.773000+00:00"
+          first_event_time: "2026-05-08T06:01:45.919000+00:00"
+          last_event_time: "2026-05-08T06:01:45.919000+00:00"
     in_scope: true
   - name: bi_output_finance_tables_customer_customer_deceased
     full_name: main.bi_output.bi_output_finance_tables_customer_customer_deceased
@@ -1411,34 +1472,34 @@ objects:
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 681844067999280
+      path: 228839116876272
       lineage_source: system.access.table_lineage
       lineage_event_count: 2
       additional_producers:
         - entity_type: JOB
-          entity_id: 248748769988761
+          entity_id: 552422850718667
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-02-23T04:17:39.973000+00:00"
-          last_event_time: "2026-02-23T04:17:48.097000+00:00"
+          first_event_time: "2026-05-10T04:18:21.841000+00:00"
+          last_event_time: "2026-05-10T04:18:30.337000+00:00"
         - entity_type: JOB
-          entity_id: 90904867162520
+          entity_id: 639328211053905
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-03-14T04:15:47.007000+00:00"
-          last_event_time: "2026-03-14T04:15:54.272000+00:00"
+          first_event_time: "2026-05-03T04:17:08.205000+00:00"
+          last_event_time: "2026-05-03T04:17:15.622000+00:00"
         - entity_type: JOB
-          entity_id: 1098606014413123
+          entity_id: 905951852569141
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-03-12T04:16:17.470000+00:00"
-          last_event_time: "2026-03-12T04:16:25.016000+00:00"
+          first_event_time: "2026-04-14T04:20:40.291000+00:00"
+          last_event_time: "2026-04-14T04:20:48.243000+00:00"
         - entity_type: JOB
-          entity_id: 184700730709070
+          entity_id: 1086307712037023
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-03-11T04:14:52.096000+00:00"
-          last_event_time: "2026-03-11T04:14:59.375000+00:00"
+          first_event_time: "2026-05-13T04:18:11.909000+00:00"
+          last_event_time: "2026-05-13T04:18:20.084000+00:00"
     in_scope: true
   - name: bi_output_finance_tables_ptp_tax_backup
     full_name: main.bi_output.bi_output_finance_tables_ptp_tax_backup
@@ -1464,15 +1525,6 @@ objects:
       reason: no Spark-write producer in system.access.table_lineage (likely bronze ingest or stale)
     in_scope: false
     reason: no Spark-write producer in system.access.table_lineage (likely bronze ingest or stale)
-  - name: bi_output_fullname_apiresults
-    full_name: main.bi_output.bi_output_fullname_apiresults
-    type: MANAGED
-    writer:
-      kind: JOB
-      path: 384802822442789
-      lineage_source: system.access.table_lineage
-      lineage_event_count: 69
-    in_scope: true
   - name: bi_output_marketing_acquisition_anomaly
     full_name: main.bi_output.bi_output_marketing_acquisition_anomaly
     type: EXTERNAL
@@ -1488,7 +1540,7 @@ objects:
       kind: JOB
       path: 962658155699673
       lineage_source: system.access.table_lineage
-      lineage_event_count: 810
+      lineage_event_count: 819
     in_scope: true
   - name: bi_output_marketing_acquisition_liveacquisition
     full_name: main.bi_output.bi_output_marketing_acquisition_liveacquisition
@@ -1497,41 +1549,41 @@ objects:
       kind: DBSQL_QUERY
       path: 78916582-774e-46cc-8195-8a41a333aa6f
       lineage_source: system.access.table_lineage
-      lineage_event_count: 5922
+      lineage_event_count: 5772
     in_scope: true
   - name: bi_output_marketing_affiliate_payments_report_closed_position
     full_name: main.bi_output.bi_output_marketing_affiliate_payments_report_closed_position
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 131117946631349
+      path: 99690901680762
       lineage_source: system.access.table_lineage
       lineage_event_count: 2
       additional_producers:
         - entity_type: JOB
-          entity_id: 844558387923931
+          entity_id: 613058230054879
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-03-19T04:24:42.603000+00:00"
-          last_event_time: "2026-03-19T04:24:42.603000+00:00"
+          first_event_time: "2026-05-04T04:31:24.618000+00:00"
+          last_event_time: "2026-05-04T04:31:24.618000+00:00"
         - entity_type: JOB
-          entity_id: 649649054957599
+          entity_id: 278913061994684
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-03-10T04:22:37.837000+00:00"
-          last_event_time: "2026-03-10T04:22:37.837000+00:00"
+          first_event_time: "2026-04-08T04:22:48.457000+00:00"
+          last_event_time: "2026-04-08T04:22:48.457000+00:00"
         - entity_type: JOB
-          entity_id: 437146905298849
+          entity_id: 411802780068413
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-03-11T04:20:59.225000+00:00"
-          last_event_time: "2026-03-11T04:20:59.225000+00:00"
+          first_event_time: "2026-04-28T04:26:57.849000+00:00"
+          last_event_time: "2026-04-28T04:26:57.849000+00:00"
         - entity_type: JOB
-          entity_id: 1009570545612839
+          entity_id: 643760786947838
           workspace_id: 6358342630366312
           event_count: 2
-          first_event_time: "2026-03-14T04:22:20.864000+00:00"
-          last_event_time: "2026-03-14T04:22:20.864000+00:00"
+          first_event_time: "2026-05-02T04:32:34.602000+00:00"
+          last_event_time: "2026-05-02T04:32:34.602000+00:00"
     in_scope: true
   - name: bi_output_marketing_liveacquisitiondashboard
     full_name: main.bi_output.bi_output_marketing_liveacquisitiondashboard
@@ -1540,7 +1592,7 @@ objects:
       kind: JOB
       path: 362438626229151
       lineage_source: system.access.table_lineage
-      lineage_event_count: 17955
+      lineage_event_count: 17676
     in_scope: true
   - name: bi_output_marketing_marketingcloud_user_behavior_instrument
     full_name: main.bi_output.bi_output_marketing_marketingcloud_user_behavior_instrument
@@ -1583,88 +1635,82 @@ objects:
       kind: JOB
       path: 1044486077439857
       lineage_source: system.access.table_lineage
-      lineage_event_count: 661
+      lineage_event_count: 988
       additional_producers:
         - entity_type: NOTEBOOK
           entity_id: 4212210221780631
           workspace_id: 5142916747090026
-          event_count: 45
-          first_event_time: "2026-03-17T09:04:21.198000+00:00"
+          event_count: 33
+          first_event_time: "2026-03-30T07:42:46.287000+00:00"
           last_event_time: "2026-05-07T15:51:44.098000+00:00"
-        - entity_type: NOTEBOOK
-          entity_id: 2650238679543064
-          workspace_id: 5142916747090026
-          event_count: 36
-          first_event_time: "2026-03-15T07:56:03.336000+00:00"
-          last_event_time: "2026-03-15T11:35:52.529000+00:00"
     in_scope: true
   - name: bi_output_marketing_sfmc_sfmc_filter
     full_name: main.bi_output.bi_output_marketing_sfmc_sfmc_filter
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 618867936130004
+      path: 691531654438458
       lineage_source: system.access.table_lineage
       lineage_event_count: 6
       additional_producers:
+        - entity_type: JOB
+          entity_id: 639608189635008
+          workspace_id: 6358342630366312
+          event_count: 6
+          first_event_time: "2026-04-30T04:44:22.032000+00:00"
+          last_event_time: "2026-04-30T04:44:22.032000+00:00"
+        - entity_type: JOB
+          entity_id: 635647354324513
+          workspace_id: 6358342630366312
+          event_count: 6
+          first_event_time: "2026-04-08T04:51:40.986000+00:00"
+          last_event_time: "2026-04-08T04:51:40.986000+00:00"
+        - entity_type: JOB
+          entity_id: 618867936130004
+          workspace_id: 6358342630366312
+          event_count: 6
+          first_event_time: "2026-05-02T05:24:50.564000+00:00"
+          last_event_time: "2026-05-02T05:24:50.564000+00:00"
         - entity_type: JOB
           entity_id: 373562646619705
           workspace_id: 6358342630366312
           event_count: 6
           first_event_time: "2026-05-04T04:43:40.770000+00:00"
           last_event_time: "2026-05-04T04:43:40.770000+00:00"
-        - entity_type: JOB
-          entity_id: 125090249423859
-          workspace_id: 6358342630366312
-          event_count: 6
-          first_event_time: "2026-04-25T05:04:08.104000+00:00"
-          last_event_time: "2026-04-25T05:04:08.104000+00:00"
-        - entity_type: JOB
-          entity_id: 742616361281869
-          workspace_id: 6358342630366312
-          event_count: 6
-          first_event_time: "2026-04-26T04:29:35.699000+00:00"
-          last_event_time: "2026-04-26T04:29:35.699000+00:00"
-        - entity_type: JOB
-          entity_id: 24862886087047
-          workspace_id: 6358342630366312
-          event_count: 6
-          first_event_time: "2026-04-28T04:37:43.803000+00:00"
-          last_event_time: "2026-04-28T04:37:43.803000+00:00"
     in_scope: true
   - name: bi_output_marketing_sfmc_sfmc_report
     full_name: main.bi_output.bi_output_marketing_sfmc_sfmc_report
     type: EXTERNAL
     writer:
       kind: JOB
-      path: 127029817878171
+      path: 784387297730431
       lineage_source: system.access.table_lineage
       lineage_event_count: 8
       additional_producers:
         - entity_type: JOB
-          entity_id: 892273554309047
+          entity_id: 1081811243877959
           workspace_id: 6358342630366312
           event_count: 8
-          first_event_time: "2026-05-05T06:38:23.036000+00:00"
-          last_event_time: "2026-05-05T06:50:58.628000+00:00"
+          first_event_time: "2026-06-19T07:12:41.245000+00:00"
+          last_event_time: "2026-06-19T07:27:29.737000+00:00"
         - entity_type: JOB
-          entity_id: 384522260015343
+          entity_id: 759913136635000
           workspace_id: 6358342630366312
           event_count: 8
-          first_event_time: "2026-05-08T06:48:23.480000+00:00"
-          last_event_time: "2026-05-08T07:00:43.633000+00:00"
+          first_event_time: "2026-04-01T06:31:27.529000+00:00"
+          last_event_time: "2026-04-01T06:45:48.478000+00:00"
         - entity_type: JOB
-          entity_id: 386148503242687
+          entity_id: 1007463961052223
           workspace_id: 6358342630366312
           event_count: 8
-          first_event_time: "2026-05-05T07:05:45.867000+00:00"
-          last_event_time: "2026-05-05T07:19:02.672000+00:00"
+          first_event_time: "2026-03-31T05:55:09.098000+00:00"
+          last_event_time: "2026-03-31T06:10:02.084000+00:00"
         - entity_type: JOB
-          entity_id: 567515966787674
+          entity_id: 422964612662586
           workspace_id: 6358342630366312
           event_count: 8
-          first_event_time: "2026-05-08T07:01:15.092000+00:00"
-          last_event_time: "2026-05-08T07:14:25.961000+00:00"
+          first_event_time: "2026-03-31T06:41:09.976000+00:00"
+          last_event_time: "2026-03-31T06:53:58.066000+00:00"
     in_scope: true
   - name: bi_output_moneyfarm_customers
     full_name: main.bi_output.bi_output_moneyfarm_customers
@@ -1673,7 +1719,7 @@ objects:
       kind: JOB
       path: 909845381518474
       lineage_source: system.access.table_lineage
-      lineage_event_count: 372
+      lineage_event_count: 364
     in_scope: true
   - name: bi_output_moneyfarm_fact_portfolio_snapshot
     full_name: main.bi_output.bi_output_moneyfarm_fact_portfolio_snapshot
@@ -1682,7 +1728,7 @@ objects:
       kind: JOB
       path: 909845381518474
       lineage_source: system.access.table_lineage
-      lineage_event_count: 186
+      lineage_event_count: 182
     in_scope: true
   - name: bi_output_moneyfarm_fact_transactions
     full_name: main.bi_output.bi_output_moneyfarm_fact_transactions
@@ -1691,7 +1737,7 @@ objects:
       kind: JOB
       path: 909845381518474
       lineage_source: system.access.table_lineage
-      lineage_event_count: 133
+      lineage_event_count: 176
     in_scope: true
   - name: bi_output_operations_documentanalysis
     full_name: main.bi_output.bi_output_operations_documentanalysis
@@ -1708,7 +1754,7 @@ objects:
       kind: JOB
       path: 832857154712514
       lineage_source: system.access.table_lineage
-      lineage_event_count: 30
+      lineage_event_count: 76
       additional_producers:
         - entity_type: NOTEBOOK
           entity_id: 4404603554302505
@@ -1730,7 +1776,7 @@ objects:
       kind: DBSQL_QUERY
       path: 1e56fdd1-177f-4f99-ac29-1aa01e651514
       lineage_source: system.access.table_lineage
-      lineage_event_count: 1170
+      lineage_event_count: 1183
     in_scope: true
   - name: bi_output_urban_notifications_daily_panel_agg
     full_name: main.bi_output.bi_output_urban_notifications_daily_panel_agg
@@ -1739,7 +1785,7 @@ objects:
       kind: DBSQL_QUERY
       path: 259a1f94-441c-43c2-bd95-11b2ed9d69fa
       lineage_source: system.access.table_lineage
-      lineage_event_count: 90
+      lineage_event_count: 91
     in_scope: true
   - name: bi_output_urban_notifications_monthly_lsd
     full_name: main.bi_output.bi_output_urban_notifications_monthly_lsd
@@ -2037,6 +2083,18 @@ objects:
       - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel
       - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus
       - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus
+    refs_source: view_definition (regex extract)
+  - name: bi_output_vg_new_funded_2026_single_asset
+    full_name: main.bi_output.bi_output_vg_new_funded_2026_single_asset
+    type: VIEW
+    writer:
+      kind: view_definition
+    in_scope: true
+    upstreams_hint:
+      - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status
+      - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction
+      - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument
+      - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked
     refs_source: view_definition (regex extract)
   - name: bi_output_vg_parentcid
     full_name: main.bi_output.bi_output_vg_parentcid
@@ -2531,6 +2589,15 @@ objects:
       - main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account
       - main.bi_output.BI_OUTPUT_Finance_Tables_bi_db_positions_closed_to_iban_parquet
     refs_source: view_definition (regex extract)
+  - name: vg_promo_card_cashback
+    full_name: main.bi_output.vg_promo_card_cashback
+    type: VIEW
+    writer:
+      kind: view_definition
+    in_scope: true
+    upstreams_hint:
+      - main.bi_output.bi_output_marketing_promotion_bi_db_promo_card
+    refs_source: view_definition (regex extract)
   - name: vg_trades
     full_name: main.bi_output.vg_trades
     type: VIEW
@@ -2552,7 +2619,7 @@ objects:
 
 # bi_output — Schema Card
 
-> UC-Pipeline scope sheet for `main.bi_output`. **123 in-scope** / **21 out-of-scope** objects (lookback `90` days).
+> UC-Pipeline scope sheet for `main.bi_output`. **128 in-scope** / **22 out-of-scope** objects (lookback `90` days).
 
 ## What this schema is
 
@@ -2562,62 +2629,65 @@ _TODO (human): one paragraph on what role this UC schema plays in the eToro name
 
 | Object | Type | Writer | Producer |
 |--------|------|--------|----------|
+| `australia_tag_ob_june26` | `VIEW` | `view_definition` | `view_definition` |
 | `bi_ouput_v_dim_instrumenttype` | `VIEW` | `view_definition` | `view_definition` |
 | `bi_ouput_vg_etoro_emoney` | `VIEW` | `view_definition` | `view_definition` |
 | `bi_output_compliance_kycscreeninglimitation` | `EXTERNAL` | `DBSQL_QUERY` | `982b26eb-dea3-4ee6-847b-81a6b3aa146d` |
-| `bi_output_customer_compliance_mas_daily_client_metrics` | `EXTERNAL` | `JOB` | `623823172493742` |
-| `bi_output_customer_compliance_mas_population` | `EXTERNAL` | `JOB` | `449767041129740` |
-| `bi_output_customer_compliance_uk_social_activity_monitoring` | `EXTERNAL` | `JOB` | `938227598135468` |
-| `bi_output_customer_compliance_uk_social_activity_monitoring_m` | `EXTERNAL` | `JOB` | `949872433798828` |
-| `bi_output_customer_customer_facing_agent_engagement` | `EXTERNAL` | `JOB` | `717988584710279` |
-| `bi_output_customer_customer_facing_club_club_equity` | `EXTERNAL` | `JOB` | `769316685964205` |
-| `bi_output_customer_customer_facing_club_club_offer_eligibilty` | `EXTERNAL` | `NOTEBOOK` | `1200434159941085` |
-| `bi_output_customer_customer_facing_pageviews_behaviour` | `EXTERNAL` | `JOB` | `905616356190643` |
-| `bi_output_customer_customer_facing_survey` | `EXTERNAL` | `JOB` | `688763458383547` |
-| `bi_output_customer_customer_facing_survey_taker` | `EXTERNAL` | `JOB` | `213935658623860` |
-| `bi_output_customer_customer_facing_triggers` | `EXTERNAL` | `JOB` | `29439054239650` |
-| `bi_output_customer_customer_facing_triggers_filtered` | `EXTERNAL` | `JOB` | `890492072529400` |
-| `bi_output_customer_customer_facing_triggers_lead_score` | `EXTERNAL` | `JOB` | `986217717349184` |
+| `bi_output_customer_compliance_mas_daily_client_metrics` | `EXTERNAL` | `JOB` | `309351277641590` |
+| `bi_output_customer_compliance_mas_population` | `EXTERNAL` | `JOB` | `805356250031497` |
+| `bi_output_customer_compliance_uk_social_activity_monitoring` | `EXTERNAL` | `JOB` | `328065480649847` |
+| `bi_output_customer_compliance_uk_social_activity_monitoring_m` | `EXTERNAL` | `JOB` | `689337997854859` |
+| `bi_output_customer_customer_facing_agent_engagement` | `EXTERNAL` | `JOB` | `297355623751529` |
+| `bi_output_customer_customer_facing_club_club_equity` | `EXTERNAL` | `JOB` | `827827689353078` |
+| `bi_output_customer_customer_facing_pageviews_behaviour` | `EXTERNAL` | `JOB` | `700698749963412` |
+| `bi_output_customer_customer_facing_survey` | `EXTERNAL` | `JOB` | `348629853631869` |
+| `bi_output_customer_customer_facing_survey_taker` | `EXTERNAL` | `JOB` | `363858712091922` |
+| `bi_output_customer_customer_facing_triggers` | `EXTERNAL` | `JOB` | `680627382315032` |
+| `bi_output_customer_customer_facing_triggers_filtered` | `EXTERNAL` | `JOB` | `337070951076978` |
+| `bi_output_customer_customer_facing_triggers_lead_score` | `EXTERNAL` | `JOB` | `926643534805676` |
 | `bi_output_customer_customer_support_agent_user` | `EXTERNAL` | `JOB` | `418338092021449` |
-| `bi_output_customer_customer_support_aml_handling_days` | `EXTERNAL` | `JOB` | `172887083112065` |
-| `bi_output_customer_customer_support_case` | `EXTERNAL` | `JOB` | `321086379460094` |
-| `bi_output_customer_customer_support_case_event` | `EXTERNAL` | `JOB` | `275066326823389` |
-| `bi_output_customer_customer_support_customer_engagement` | `EXTERNAL` | `JOB` | `130009652999855` |
-| `bi_output_customer_customer_support_task` | `EXTERNAL` | `JOB` | `594912967306162` |
-| `bi_output_customer_external_table_isa` | `EXTERNAL` | `JOB` | `405360254380378` |
-| `bi_output_customer_investment_capital_guarantee_capital_guarantee_q42024_global` | `EXTERNAL` | `JOB` | `262147853791452` |
-| `bi_output_customer_social_social_feed` | `EXTERNAL` | `JOB` | `1046492620820074` |
+| `bi_output_customer_customer_support_aml_handling_days` | `EXTERNAL` | `JOB` | `173913543458804` |
+| `bi_output_customer_customer_support_case` | `EXTERNAL` | `JOB` | `156505882521332` |
+| `bi_output_customer_customer_support_case_event` | `EXTERNAL` | `JOB` | `817003416693782` |
+| `bi_output_customer_customer_support_customer_engagement` | `EXTERNAL` | `JOB` | `808715575048090` |
+| `bi_output_customer_customer_support_task` | `EXTERNAL` | `JOB` | `927849595684848` |
+| `bi_output_customer_external_table_isa` | `EXTERNAL` | `JOB` | `804668736496677` |
+| `bi_output_customer_investment_capital_guarantee_capital_guarantee_q42024_global` | `EXTERNAL` | `JOB` | `582827302359479` |
+| `bi_output_customer_social_social_feed` | `EXTERNAL` | `JOB` | `623028034157417` |
+| `bi_output_dealing_markit_ca_stockdiv_spinoff_mapping` | `EXTERNAL` | `JOB` | `371057093384848` |
+| `bi_output_dealing_markit_ca_stockdiv_spinoff_report` | `EXTERNAL` | `JOB` | `371057093384848` |
 | `bi_output_deltaapp_subscription_view` | `VIEW` | `view_definition` | `view_definition` |
-| `bi_output_finance_external_table_bi_db_sharelending_custodyreconciliation_external` | `EXTERNAL` | `JOB` | `131261705122566` |
-| `bi_output_finance_external_table_bi_db_sharelending_reconciliation_external` | `EXTERNAL` | `JOB` | `641107617594072` |
-| `bi_output_finance_tables_bi_db_hedge_nettingbalance` | `EXTERNAL` | `JOB` | `737650008422339` |
+| `bi_output_emoney_datapipeline_cardinstancelaststatus` | `EXTERNAL` | `JOB` | `1033598147936602` |
+| `bi_output_emoney_datapipeline_cardtokenseventlog` | `EXTERNAL` | `JOB` | `1033598147936602` |
+| `bi_output_finance_external_table_bi_db_sharelending_custodyreconciliation_external` | `EXTERNAL` | `JOB` | `1103202921978834` |
+| `bi_output_finance_external_table_bi_db_sharelending_reconciliation_external` | `EXTERNAL` | `JOB` | `684080773031278` |
+| `bi_output_finance_tables_bi_db_hedge_nettingbalance` | `EXTERNAL` | `JOB` | `50023759390111` |
 | `bi_output_finance_tables_bi_db_positions_closed_to_iban` | `EXTERNAL` | `DBSQL_QUERY` | `88a61c9d-50c8-4516-a27d-ed802ebae419` |
 | `bi_output_finance_tables_bi_db_positions_closed_to_iban_parquet` | `EXTERNAL` | `DBSQL_QUERY` | `88a61c9d-50c8-4516-a27d-ed802ebae419` |
 | `bi_output_finance_tables_bi_db_positions_opened_from_iban` | `EXTERNAL` | `DBSQL_QUERY` | `6db2e20c-4cb2-4bbb-86ae-fbb3baeae78c` |
 | `bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet` | `EXTERNAL` | `DBSQL_QUERY` | `6db2e20c-4cb2-4bbb-86ae-fbb3baeae78c` |
 | `bi_output_finance_tables_bi_db_recurringinvestment_positions_parquet` | `EXTERNAL` | `DBSQL_QUERY` | `05293a5b-1d3b-4302-9856-f4cbc6942396` |
-| `bi_output_finance_tables_bi_db_sharelending_collateraldetaileseu` | `EXTERNAL` | `JOB` | `725538823326366` |
-| `bi_output_finance_tables_bi_db_sharelending_collateraldetailesmain` | `EXTERNAL` | `JOB` | `872666614904699` |
-| `bi_output_finance_tables_bi_db_sharelending_collateraldetailesuk` | `EXTERNAL` | `JOB` | `47673804099153` |
+| `bi_output_finance_tables_bi_db_sharelending_collateraldetaileseu` | `EXTERNAL` | `JOB` | `631610118933904` |
+| `bi_output_finance_tables_bi_db_sharelending_collateraldetailesmain` | `EXTERNAL` | `JOB` | `467694890974417` |
+| `bi_output_finance_tables_bi_db_sharelending_collateraldetailesuk` | `EXTERNAL` | `JOB` | `467694890974417` |
 | `bi_output_finance_tables_bi_db_sharelending_custodyreconciliation` | `EXTERNAL` | `NOTEBOOK` | `929841887099956` |
-| `bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu` | `EXTERNAL` | `JOB` | `886170903386595` |
-| `bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_uk` | `EXTERNAL` | `JOB` | `790443493174283` |
-| `bi_output_finance_tables_bi_db_sharelending_loansandcollateraleu` | `EXTERNAL` | `JOB` | `230453999952504` |
-| `bi_output_finance_tables_bi_db_sharelending_loansandcollateralmain` | `EXTERNAL` | `JOB` | `27544170671570` |
-| `bi_output_finance_tables_bi_db_sharelending_loansandcollateraluk` | `EXTERNAL` | `JOB` | `470769329960226` |
-| `bi_output_finance_tables_bi_db_sharelending_price_estimated` | `EXTERNAL` | `JOB` | `769525096189601` |
-| `bi_output_finance_tables_bi_db_sharelending_reconciliation` | `EXTERNAL` | `JOB` | `333631390353161` |
-| `bi_output_finance_tables_ptp_tax` | `EXTERNAL` | `JOB` | `681844067999280` |
-| `bi_output_fullname_apiresults` | `MANAGED` | `JOB` | `384802822442789` |
+| `bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu` | `EXTERNAL` | `JOB` | `863862100713057` |
+| `bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_uk` | `EXTERNAL` | `JOB` | `708395722314727` |
+| `bi_output_finance_tables_bi_db_sharelending_loansandcollateraleu` | `EXTERNAL` | `JOB` | `570194507367925` |
+| `bi_output_finance_tables_bi_db_sharelending_loansandcollateralmain` | `EXTERNAL` | `JOB` | `111578874992303` |
+| `bi_output_finance_tables_bi_db_sharelending_loansandcollateraluk` | `EXTERNAL` | `JOB` | `570194507367925` |
+| `bi_output_finance_tables_bi_db_sharelending_price_estimated` | `EXTERNAL` | `JOB` | `391087506778862` |
+| `bi_output_finance_tables_bi_db_sharelending_reconciliation` | `EXTERNAL` | `JOB` | `472323883251842` |
+| `bi_output_finance_tables_ptp_tax` | `EXTERNAL` | `JOB` | `228839116876272` |
 | `bi_output_marketing_acquisition_demo` | `EXTERNAL` | `JOB` | `962658155699673` |
 | `bi_output_marketing_acquisition_liveacquisition` | `EXTERNAL` | `DBSQL_QUERY` | `78916582-774e-46cc-8195-8a41a333aa6f` |
-| `bi_output_marketing_affiliate_payments_report_closed_position` | `EXTERNAL` | `JOB` | `131117946631349` |
+| `bi_output_marketing_affiliate_payments_report_closed_position` | `EXTERNAL` | `JOB` | `99690901680762` |
 | `bi_output_marketing_liveacquisitiondashboard` | `EXTERNAL` | `JOB` | `362438626229151` |
 | `bi_output_marketing_marketingcloud_user_behavior_instrument_v` | `VIEW` | `view_definition` | `view_definition` |
 | `bi_output_marketing_marketingcloud_user_behavior_pi_v` | `VIEW` | `view_definition` | `view_definition` |
 | `bi_output_marketing_promotion_bi_db_promo_card` | `EXTERNAL` | `JOB` | `1044486077439857` |
-| `bi_output_marketing_sfmc_sfmc_filter` | `EXTERNAL` | `JOB` | `618867936130004` |
-| `bi_output_marketing_sfmc_sfmc_report` | `EXTERNAL` | `JOB` | `127029817878171` |
+| `bi_output_marketing_sfmc_sfmc_filter` | `EXTERNAL` | `JOB` | `691531654438458` |
+| `bi_output_marketing_sfmc_sfmc_report` | `EXTERNAL` | `JOB` | `784387297730431` |
 | `bi_output_moneyfarm_customers` | `EXTERNAL` | `JOB` | `909845381518474` |
 | `bi_output_moneyfarm_fact_portfolio_snapshot` | `EXTERNAL` | `JOB` | `909845381518474` |
 | `bi_output_moneyfarm_fact_transactions` | `EXTERNAL` | `JOB` | `909845381518474` |
@@ -2643,6 +2713,7 @@ _TODO (human): one paragraph on what role this UC schema plays in the eToro name
 | `bi_output_vg_date` | `VIEW` | `view_definition` | `view_definition` |
 | `bi_output_vg_ddr_customers_snapshot` | `VIEW` | `view_definition` | `view_definition` |
 | `bi_output_vg_mimo` | `VIEW` | `view_definition` | `view_definition` |
+| `bi_output_vg_new_funded_2026_single_asset` | `VIEW` | `view_definition` | `view_definition` |
 | `bi_output_vg_parentcid` | `VIEW` | `view_definition` | `view_definition` |
 | `bi_output_vg_revenue` | `VIEW` | `view_definition` | `view_definition` |
 | `bi_output_vg_volume_amount` | `VIEW` | `view_definition` | `view_definition` |
@@ -2684,6 +2755,7 @@ _TODO (human): one paragraph on what role this UC schema plays in the eToro name
 | `vg_positions_open_closed_iban_tp` | `VIEW` | `view_definition` | `view_definition` |
 | `vg_positionsvolumeandattributes_lc4_source` | `VIEW` | `view_definition` | `view_definition` |
 | `vg_positionsvolumeandattributes_lc4_source_test1` | `VIEW` | `view_definition` | `view_definition` |
+| `vg_promo_card_cashback` | `VIEW` | `view_definition` | `view_definition` |
 | `vg_trades` | `VIEW` | `view_definition` | `view_definition` |
 
 ## Out-of-scope objects
@@ -2692,6 +2764,7 @@ _TODO (human): one paragraph on what role this UC schema plays in the eToro name
 |--------|------|--------|
 | `bi_ouput_mvg_etoro_emoney` | `METRIC_VIEW` | VIEW has empty view_definition (catalog metadata broken) |
 | `bi_output_customer_customer_facing_am_survey` | `EXTERNAL` | no Spark-write producer in system.access.table_lineage (likely bronze ingest or stale) |
+| `bi_output_customer_customer_facing_club_club_offer_eligibilty` | `EXTERNAL` | no Spark-write producer in system.access.table_lineage (likely bronze ingest or stale) |
 | `bi_output_customer_customer_facing_club_inventory_asset` | `EXTERNAL` | no Spark-write producer in system.access.table_lineage (likely bronze ingest or stale) |
 | `bi_output_customer_customer_facing_club_loyalty_offer` | `EXTERNAL` | no Spark-write producer in system.access.table_lineage (likely bronze ingest or stale) |
 | `bi_output_customer_customer_facing_club_loyalty_offer_request` | `EXTERNAL` | no Spark-write producer in system.access.table_lineage (likely bronze ingest or stale) |

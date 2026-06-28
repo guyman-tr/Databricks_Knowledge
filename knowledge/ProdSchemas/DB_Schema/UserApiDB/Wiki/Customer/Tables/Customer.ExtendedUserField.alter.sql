@@ -66,6 +66,7 @@ ALTER TABLE main.compliance.bronze_userapidb_customer_extendeduserfield_masked A
 ALTER TABLE main.compliance.bronze_userapidb_customer_extendeduserfield_masked ALTER COLUMN CountryId COMMENT 'Part of unique clustered key. Country context for this field value. Allows per-country field values. (Tier 1 - upstream wiki, UserApiDB.Customer.ExtendedUserField)';
 ALTER TABLE main.compliance.bronze_userapidb_customer_extendeduserfield_masked ALTER COLUMN AdditionalDetails COMMENT 'JSON or freeform additional data (e.g., document details, validation metadata). (Tier 1 - upstream wiki, UserApiDB.Customer.ExtendedUserField)';
 -- == LAST EXECUTION ==
--- Timestamp: 2026-05-03 09:48:45 UTC
+-- Timestamp: 2026-05-03 09:48:45 UTC (batch 1 — both targets)
+-- Redeploy pii_data column comments: 2026-06-23 (drift fix — see Customer.ExtendedUserField.redeploy_pii_data_comments.sql)
 -- Bronze deploy: UserApiDB batch 1
 -- ====================

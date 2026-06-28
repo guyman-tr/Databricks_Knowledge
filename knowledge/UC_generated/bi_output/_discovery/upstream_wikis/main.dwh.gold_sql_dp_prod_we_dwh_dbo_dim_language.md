@@ -81,17 +81,17 @@ REPLICATE-distributed (29 rows), HEAP. Zero JOIN overhead on any node. HEAP is a
 | Stars | Tier | Tag |
 |-------|------|-----|
 | ★★★★ | Tier 1 -- Upstream dictionary | `(Tier 1 — Dictionary.Language)` |
-| ★★★ | Tier 2 -- Synapse SP code / DDL | `(Tier 2 -- SP_Dictionaries_DL_To_Synapse)` |
-| ★★ | Tier 3 -- live data / structure | `(Tier 3 -- live data)` |
+| ★★★ | Tier 2 -- Synapse SP code / DDL | `(Tier 2 -SP_Dictionaries_DL_To_Synapse)` |
+| ★★ | Tier 3 -- live data / structure | `(Tier 3 -live data)` |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | LanguageID | int | NO | Primary key identifying the language. 1=English(UK), 2=German, 3=Arabic, 4=Chinese, 5=Russian, 6=Spanish, 7=French, 8=Italian, 9=Japanese, 10=Portuguese(BR), 11=Turkish, 12=Greek, 13=Korean, 14=Swedish, 15=Norwegian, 16=Hungarian, 17=Polish, 18=ChineseTraditional, 19=Dutch, 20=EuropeanPortuguese, 21=Czech, 22=Malay, 23=Danish, 24=Romanian, 25=EnglishUS, 26=Vietnamese, 27=Thai, 28=Finnish. Referenced by Dictionary.Country.LanguageID. (Tier 1 — Dictionary.Language) |
 | 2 | Name | char(50) | NO | Language display name. UNIQUE constraint. Used in back-office language selectors and reporting. (Tier 1 — Dictionary.Language) |
-| 3 | DWHLanguageID | int | YES | Always equal to LanguageID. Standard DWH DWH{X}ID redundancy pattern. Do not use for JOINs. (Tier 2 -- SP_Dictionaries_DL_To_Synapse) |
-| 4 | StatusID | int | YES | Hardcoded to 1 for all rows. Conveys no business information. (Tier 2 -- SP_Dictionaries_DL_To_Synapse) |
-| 5 | UpdateDate | datetime | YES | ETL load timestamp -- GETDATE() at load time. Does not reflect production modification date. (Tier 2 -- SP_Dictionaries_DL_To_Synapse) |
-| 6 | InsertDate | datetime | YES | ETL load timestamp -- GETDATE() at load time, same as UpdateDate. (Tier 2 -- SP_Dictionaries_DL_To_Synapse) |
+| 3 | DWHLanguageID | int | YES | Always equal to LanguageID. Standard DWH DWH{X}ID redundancy pattern. Do not use for JOINs. (Tier 2 -SP_Dictionaries_DL_To_Synapse) |
+| 4 | StatusID | int | YES | Hardcoded to 1 for all rows. Conveys no business information. (Tier 2 -SP_Dictionaries_DL_To_Synapse) |
+| 5 | UpdateDate | datetime | YES | ETL load timestamp -- GETDATE() at load time. Does not reflect production modification date. (Tier 2 -SP_Dictionaries_DL_To_Synapse) |
+| 6 | InsertDate | datetime | YES | ETL load timestamp -- GETDATE() at load time, same as UpdateDate. (Tier 2 -SP_Dictionaries_DL_To_Synapse) |
 | 7 | IsoCode | nchar(10) | YES | ISO 639-1 two-letter language code (e.g., 'en', 'de', 'ar'). Used for URL routing, API locale headers, and content management. (Tier 1 — Dictionary.Language) |
 | 8 | CultureCode | nchar(10) | YES | .NET culture code for full locale specification (e.g., 'en-GB', 'de-DE', 'zh-CN'). Used for number formatting, date formatting, and currency display. (Tier 1 — Dictionary.Language) |
 

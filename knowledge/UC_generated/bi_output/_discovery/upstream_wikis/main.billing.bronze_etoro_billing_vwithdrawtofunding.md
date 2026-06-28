@@ -1,199 +1,184 @@
----
-object_fqn: main.billing.bronze_etoro_billing_vwithdrawtofunding
-object_type: EXTERNAL
-producer_kind: bronze_tier1_inheritance
-generator: tools/uc_pipelines/generate_wiki.py
-object: main.billing.bronze_etoro_billing_vwithdrawtofunding
-schema: billing
-framework: uc-pipeline-doc
-table_type: EXTERNAL
-format: null
-column_count: 33
-row_count: null
-generated_at: '2026-05-18T10:58:39Z'
-upstreams:
-- etoro.Billing.vWithdrawToFunding
-writer:
-  kind: bronze_tier1_inheritance
-  path: knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md
-  source_database: etoro
-  source_schema: Billing
-  source_table: vWithdrawToFunding
-  source_repo: DB_Schema
-  datalake_path: Bronze/etoro/Billing/vWithdrawToFunding
-  copy_strategy: Merge
-  source_code_snapshot: null
-tier_breakdown:
-  tier1_columns: 30
-  tier2_columns: 0
-  tier3_columns: 0
-  tier4_columns: 0
-  tier5_columns: 3
-  unverified_columns: 0
----
+# Billing.vWithdrawToFunding
 
-# bronze_etoro_billing_vwithdrawtofunding
-
-> Bronze ingest in `main.billing` (1:1 passthrough of `etoro.Billing.vWithdrawToFunding`). 30 of 33 columns inherited from Tier 1 source wiki; 3 columns null-with-provenance.
+> Full-projection view of Billing.WithdrawToFunding with WITH(NOLOCK) hint and the addition of ExchangeFeeInUSD and ExchangeFeeInPercentage columns (added Ran Ovadia 17/09/2024). Provides the complete withdrawal payment leg dataset for external consumers.
 
 | Property | Value |
 |----------|-------|
-| **UC Object** | `main.billing.bronze_etoro_billing_vwithdrawtofunding` |
-| **Type** | EXTERNAL |
-| **Format** | n/a |
-| **Owner** | fb0e925c-48b1-48f5-a619-6579d42fb7d4 |
-| **Row count** | n/a |
-| **Column count** | 33 |
-| **Generated** | 2026-05-18 |
-| **Created** | Wed Sep 25 11:15:20 UTC 2024 |
+| **Schema** | Billing |
+| **Object Type** | View |
+| **Key Identifier** | ID (WithdrawToFunding.ID) |
+| **Partition** | N/A |
+| **Indexes** | N/A for view |
 
 ---
 
-## 1. What it is
+## 1. Business Meaning
 
-Bronze ingest table populated from production source `etoro.Billing.vWithdrawToFunding` (`DB_Schema` repo). This UC object is a 1:1 passthrough of the source table; no transform is applied during ingest. All column descriptions are inherited byte-for-byte from the Tier 1 source wiki at `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md`.
+`Billing.vWithdrawToFunding` is a near-verbatim projection of `Billing.WithdrawToFunding` that exposes all columns including the two most recently added fields: `ExchangeFeeInUSD` and `ExchangeFeeInPercentage`. The view applies `WITH(NOLOCK)` to prevent the base table's transaction locks from blocking reads.
 
-- Lake path: `Bronze/etoro/Billing/vWithdrawToFunding`
-- Copy strategy: `Merge`
-- Source database: `etoro` (`DB_Schema`)
-- Source schema/table: `Billing.vWithdrawToFunding`
-- 30 of 33 columns inherited; 3 columns null-with-provenance.
+The view exists to provide downstream consumers (microservices, BI tools, Data Factory pipelines) with a stable query interface to the WithdrawToFunding table. As new columns are added to the base table, the view is updated to include them (as was done for ExchangeFeeInUSD/ExchangeFeeInPercentage), giving consumers a single versioned entry point that tracks the latest schema.
 
----
+Unlike `Billing.GetWithdrawToFundingFXFeeAmount` (which computes derived FX fee metrics for account statements), this view is a raw data view with no computed columns or filters.
 
-## 2. Transform Logic
-
-Pure ingest passthrough — no UC-side transform. The producer is the generic bronze ingest pipeline (Synapse/lake → UC), not a notebook or SP authored in this repo. Refer to the Tier 1 source wiki for the canonical column semantics.
+1,071,509 rows. No stored procedure callers in the SQL codebase - used by external tools/microservices.
 
 ---
 
-## 3. Elements
+## 2. Business Logic
 
-| # | Element | Type | Nullable | Description |
-|---|---------|------|----------|-------------|
-| 1 | WithdrawID | INT | YES | FK to Billing.Withdraw. The parent withdrawal request. One WithdrawID can have multiple payment legs (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 1 | FundingID | INT | YES | FK to Billing.Funding. The payment instrument used for this withdrawal leg (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 2 | CashoutStatusID | INT | YES | Current status of this withdrawal leg. References Dictionary.CashoutStatus. 3=Processed (money sent). NOT filtered in this view - all statuses returned (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 3 | ProcessCurrencyID | INT | YES | Currency in which the withdrawal was processed. References Dictionary.Currency (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 4 | ManagerID | INT | YES | Assigned manager/agent ID for manual review of this withdrawal leg (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 5 | ExchangeRate | DECIMAL | YES | Exchange rate applied to convert the withdrawal to USD. The customer-facing rate including FX markup (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 6 | Amount | DECIMAL | YES | Withdrawal leg amount in ProcessCurrencyID (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 7 | ModificationDate | TIMESTAMP | YES | Last modification timestamp of this withdrawal leg record (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 8 | ID | INT | YES | PK of Billing.WithdrawToFunding. Unique identifier for this withdrawal payment leg (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 9 | DepositID | INT | YES | FK to Billing.Deposit. Set when the withdrawal is a refund of a specific deposit (e.g., credit card refund must go back to original deposit's card) (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 10 | RefundAmountInDepositCurrency | DECIMAL | YES | The USD-equivalent amount of this withdrawal leg. Used in FX fee calculations in GetWithdrawToFundingFXFeeAmount (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 11 | CashoutTypeID | INT | YES | Type of cashout/withdrawal. References Dictionary.CashoutType (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 12 | VerificationCode | STRING | YES | Verification/confirmation code for this withdrawal leg (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 13 | ProcessorValueDate | TIMESTAMP | YES | Value date from the payment processor for this leg (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 14 | MatchStatusID | INT | YES | Reconciliation matching status (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 15 | DepotID | INT | YES | FK to Billing.Depot. Gateway/depot that processed this withdrawal leg (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 16 | BaseExchangeRate | DECIMAL | YES | Market/interbank exchange rate (without FX markup) at time of processing. Used with ExchangeRate to compute FX fee spread (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 17 | CashoutModeID | INT | YES | Mode of the cashout operation. References Dictionary.CashoutMode (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 18 | AutoPaymentStartDate | TIMESTAMP | YES | Start date of the automatic payment schedule (for recurring withdrawals) (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 19 | ProtocolMIDSettingsID | INT | YES | FK to Billing.ProtocolMIDSettings. The specific MID configuration used for this withdrawal (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 20 | ExchangeFee | INT | YES | Raw FX fee value in the rate's decimal form. Used in BaseExchangeRate derivation (WireTransfer path): BaseRate = ExchangeRate - ExchangeFee/10^Multiplier (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 21 | CreationDate | TIMESTAMP | YES | Timestamp when this withdrawal leg was created (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 22 | AdditionalInformation | STRING | YES | Free-text additional context for this withdrawal leg (notes, processor responses) (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 23 | VendorCode | STRING | YES | Vendor/processor-specific reference code for this withdrawal (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 24 | MerchantAccountID | INT | YES | FK to merchant account used for processing (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 25 | SchemeId | STRING | YES | Payment scheme identifier (e.g., Visa, Mastercard scheme for card withdrawals) (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 26 | ResponseID | INT | YES | Payment processor response identifier for this withdrawal leg (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 27 | RequestExecuteEntryMethodId | INT | YES | Entry method used when this withdrawal request was executed (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 28 | etr_y | STRING | YES | Source: etoro.Billing.vWithdrawToFunding.etr_y. No upstream wiki cached as of 2026-05-18 (Tier 5 — bronze-passthrough; column not documented in Tier 1 source wiki). |
-| 29 | etr_ym | STRING | YES | Source: etoro.Billing.vWithdrawToFunding.etr_ym. No upstream wiki cached as of 2026-05-18 (Tier 5 — bronze-passthrough; column not documented in Tier 1 source wiki). |
-| 30 | etr_ymd | STRING | YES | Source: etoro.Billing.vWithdrawToFunding.etr_ymd. No upstream wiki cached as of 2026-05-18 (Tier 5 — bronze-passthrough; column not documented in Tier 1 source wiki). |
-| 31 | ExchangeFeeInUSD | DECIMAL | YES | FX fee expressed in USD. Added 17/09/2024 by Ran Ovadia. Part of the 2024 FX fee transparency initiative. NULL for pre-2024 records (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
-| 32 | ExchangeFeeInPercentage | DECIMAL | YES | FX fee expressed as a percentage of the withdrawal amount. Added 17/09/2024. NULL for pre-2024 records (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding). |
+### 2.1 Full Table Projection (No Filters)
+
+**What**: All rows and all meaningful columns from Billing.WithdrawToFunding are returned with no WHERE clause.
+
+**Columns/Parameters Involved**: All columns
+
+**Rules**:
+- No CashoutStatusID filter - all statuses (pending, processed, canceled, rejected) are included
+- No date range filter - full historical data
+- WITH(NOLOCK) hint prevents read operations from being blocked by ongoing write transactions
+- Callers should apply their own filters (e.g., CashoutStatusID=3 for processed only)
+
+### 2.2 ExchangeFeeInUSD and ExchangeFeeInPercentage (Added 17/09/2024)
+
+**What**: Two fee columns added by Ran Ovadia in September 2024 to expose FX fee amounts in standardised USD and percentage form.
+
+**Columns/Parameters Involved**: `ExchangeFeeInUSD`, `ExchangeFeeInPercentage`
+
+**Rules**:
+- `ExchangeFeeInUSD`: the FX fee expressed in USD (distinct from ExchangeFee which is in raw decimal form)
+- `ExchangeFeeInPercentage`: the FX fee expressed as a percentage of the withdrawal amount
+- These columns were added to the base table in the 2024 FX fee transparency initiative and are exposed here for consumers
+- Values may be NULL for pre-2024 records where the columns were not populated
 
 ---
 
-## 4. Lineage
+## 3. Data Overview
 
-### 4.1 Upstream UC Objects
+**Row count**: 1,071,509 (all withdrawal payment legs, all statuses)
 
-| Upstream | Role | Wiki |
-|----------|------|------|
-| `etoro.Billing.vWithdrawToFunding` | Primary | `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` |
+For column-level data distributions, see `Billing.WithdrawToFunding` table documentation (the base table). This view adds no transformations.
 
-### 4.2 Pipeline ASCII Diagram
+---
+
+## 4. Elements
+
+| # | Element | Type | Nullable | Default | Confidence | Description |
+|---|---------|------|----------|---------|------------|-------------|
+| 1 | WithdrawID | int | NO | - | CODE-BACKED | FK to Billing.Withdraw. The parent withdrawal request. One WithdrawID can have multiple payment legs. |
+| 2 | FundingID | int | YES | - | CODE-BACKED | FK to Billing.Funding. The payment instrument used for this withdrawal leg. |
+| 3 | CashoutStatusID | int | NO | - | CODE-BACKED | Current status of this withdrawal leg. References Dictionary.CashoutStatus. 3=Processed (money sent). NOT filtered in this view - all statuses returned. |
+| 4 | ProcessCurrencyID | int | YES | - | CODE-BACKED | Currency in which the withdrawal was processed. References Dictionary.Currency. |
+| 5 | ManagerID | int | YES | - | CODE-BACKED | Assigned manager/agent ID for manual review of this withdrawal leg. |
+| 6 | ExchangeRate | decimal | YES | - | CODE-BACKED | Exchange rate applied to convert the withdrawal to USD. The customer-facing rate including FX markup. |
+| 7 | Amount | money | NO | - | CODE-BACKED | Withdrawal leg amount in ProcessCurrencyID. |
+| 8 | ModificationDate | datetime | YES | - | CODE-BACKED | Last modification timestamp of this withdrawal leg record. |
+| 9 | ID | int | NO | - | CODE-BACKED | PK of Billing.WithdrawToFunding. Unique identifier for this withdrawal payment leg. |
+| 10 | DepositID | int | YES | - | CODE-BACKED | FK to Billing.Deposit. Set when the withdrawal is a refund of a specific deposit (e.g., credit card refund must go back to original deposit's card). |
+| 11 | RefundAmountInDepositCurrency | money | YES | - | CODE-BACKED | The USD-equivalent amount of this withdrawal leg. Used in FX fee calculations in GetWithdrawToFundingFXFeeAmount. |
+| 12 | CashoutTypeID | int | YES | - | CODE-BACKED | Type of cashout/withdrawal. References Dictionary.CashoutType. |
+| 13 | VerificationCode | varchar | YES | - | CODE-BACKED | Verification/confirmation code for this withdrawal leg. |
+| 14 | ProcessorValueDate | datetime | YES | - | CODE-BACKED | Value date from the payment processor for this leg. |
+| 15 | MatchStatusID | int | YES | - | CODE-BACKED | Reconciliation matching status. |
+| 16 | DepotID | int | YES | - | CODE-BACKED | FK to Billing.Depot. Gateway/depot that processed this withdrawal leg. |
+| 17 | BaseExchangeRate | decimal | YES | - | CODE-BACKED | Market/interbank exchange rate (without FX markup) at time of processing. Used with ExchangeRate to compute FX fee spread. |
+| 18 | CashoutModeID | int | YES | - | CODE-BACKED | Mode of the cashout operation. References Dictionary.CashoutMode. |
+| 19 | AutoPaymentStartDate | datetime | YES | - | CODE-BACKED | Start date of the automatic payment schedule (for recurring withdrawals). |
+| 20 | ProtocolMIDSettingsID | int | YES | - | CODE-BACKED | FK to Billing.ProtocolMIDSettings. The specific MID configuration used for this withdrawal. |
+| 21 | ExchangeFee | decimal | YES | - | CODE-BACKED | Raw FX fee value in the rate's decimal form. Used in BaseExchangeRate derivation (WireTransfer path): BaseRate = ExchangeRate - ExchangeFee/10^Multiplier. |
+| 22 | CreationDate | datetime | YES | - | CODE-BACKED | Timestamp when this withdrawal leg was created. |
+| 23 | AdditionalInformation | nvarchar | YES | - | CODE-BACKED | Free-text additional context for this withdrawal leg (notes, processor responses). |
+| 24 | VendorCode | varchar | YES | - | CODE-BACKED | Vendor/processor-specific reference code for this withdrawal. |
+| 25 | MerchantAccountID | int | YES | - | CODE-BACKED | FK to merchant account used for processing. |
+| 26 | SchemeId | int | YES | - | CODE-BACKED | Payment scheme identifier (e.g., Visa, Mastercard scheme for card withdrawals). |
+| 27 | ResponseID | int | YES | - | CODE-BACKED | Payment processor response identifier for this withdrawal leg. |
+| 28 | RequestExecuteEntryMethodId | int | YES | - | CODE-BACKED | Entry method used when this withdrawal request was executed. |
+| 29 | ExchangeFeeInUSD | money | YES | - | CODE-BACKED | FX fee expressed in USD. Added 17/09/2024 by Ran Ovadia. Part of the 2024 FX fee transparency initiative. NULL for pre-2024 records. |
+| 30 | ExchangeFeeInPercentage | decimal | YES | - | CODE-BACKED | FX fee expressed as a percentage of the withdrawal amount. Added 17/09/2024. NULL for pre-2024 records. |
+
+---
+
+## 5. Relationships
+
+### 5.1 References To (this object points to)
+
+| Element | Related Object | Relationship Type | Description |
+|---------|---------------|-------------------|-------------|
+| All 30 columns | Billing.WithdrawToFunding | Source (full projection, no filter) | All withdrawal payment leg records |
+
+### 5.2 Referenced By (other objects point to this)
+
+| Source Object | Source Element | Relationship Type | Description |
+|--------------|---------------|-------------------|-------------|
+| No stored procedure callers found in SQL codebase | - | - | Likely consumed by microservices or BI/Data Factory tools |
+
+---
+
+## 6. Dependencies
+
+### 6.0 Dependency Chain
 
 ```
-etoro.Billing.vWithdrawToFunding
-        │
-        ▼
-main.billing.bronze_etoro_billing_vwithdrawtofunding   ←── this object
-        │
-        ▼
-main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban
+Billing.vWithdrawToFunding (view)
+└── Billing.WithdrawToFunding (table)
 ```
 
-### 4.3 Cross-check vs system.access.column_lineage
+---
 
-`parsed=0 runtime=0 mismatches=0` — see `.lineage.md` `## Cross-check` section for per-column detail.
+### 6.1 Objects This Depends On
+
+| Object | Type | How Used |
+|--------|------|----------|
+| Billing.WithdrawToFunding | Table | Full SELECT of all 30 columns; WITH(NOLOCK); no WHERE filter |
+
+### 6.2 Objects That Depend On This
+
+| Object | Type | How Used |
+|--------|------|----------|
+| No code-level dependents discovered | - | No stored procedures reference this view in the SSDT repo |
 
 ---
 
-## 5. Sample Queries & Common JOINs
+## 7. Technical Details
 
-### 5.1 Sample queries
+### 7.1 Indexes
 
-> Sample queries are not auto-generated in this pack; refer to `knowledge/skills/_de_existing/` and `system.query.history` for analyst usage.
+N/A for view. 1,071,509 rows. Performance relies on Billing.WithdrawToFunding indexes. Callers should filter on WithdrawID (clustered), ID (PK), or CashoutStatusID (indexed) as appropriate.
 
-### 5.2 Common JOIN partners
+### 7.2 Constraints
 
-| JOIN to | Condition | Purpose |
-|---------|-----------|---------|
-| (none discovered from upstream JOINs in `.lineage.md`) | — | — |
-
-### 5.3 Gotchas
-
-- See `.review-needed.md` for parser warnings, UNVERIFIED columns, and any Tier-4 sample-only candidates.
+N/A for view. WITH(NOLOCK) is built into the view definition - dirty reads are possible but typically acceptable for withdrawal reporting. No SCHEMABINDING. No computed columns or filters. ExchangeFeeInUSD and ExchangeFeeInPercentage may be NULL for records predating September 2024.
 
 ---
 
-## 6. Deploy / UC ALTER provenance
+## 8. Sample Queries
 
-| Column | Description source | Tier | Cited as |
-|--------|--------------------|------|----------|
-| WithdrawID | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| FundingID | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| CashoutStatusID | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| ProcessCurrencyID | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| ManagerID | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| ExchangeRate | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| Amount | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| ModificationDate | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| ID | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| DepositID | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| RefundAmountInDepositCurrency | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| CashoutTypeID | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| VerificationCode | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| ProcessorValueDate | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| MatchStatusID | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| DepotID | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| BaseExchangeRate | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| CashoutModeID | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| AutoPaymentStartDate | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| ProtocolMIDSettingsID | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| ExchangeFee | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| CreationDate | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| AdditionalInformation | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| VendorCode | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| MerchantAccountID | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| SchemeId | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| ResponseID | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| RequestExecuteEntryMethodId | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| etr_y | would inherit from `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` but column `etr_y` not present in source wiki | 5 | (Tier 5 — bronze-passthrough-no-source-row) |
-| etr_ym | would inherit from `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` but column `etr_ym` not present in source wiki | 5 | (Tier 5 — bronze-passthrough-no-source-row) |
-| etr_ymd | would inherit from `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` but column `etr_ymd` not present in source wiki | 5 | (Tier 5 — bronze-passthrough-no-source-row) |
-| ExchangeFeeInUSD | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
-| ExchangeFeeInPercentage | upstream wiki `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Views/Billing.vWithdrawToFunding.md` (bronze passthrough) | 1 | (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding) |
+### 8.1 Get all processed withdrawal legs for a customer's withdrawal
+
+```sql
+SELECT ID, WithdrawID, FundingID, Amount, ProcessCurrencyID, ExchangeRate, BaseExchangeRate, CashoutStatusID, ExchangeFeeInUSD, ExchangeFeeInPercentage
+FROM Billing.vWithdrawToFunding WITH (NOLOCK)
+WHERE WithdrawID = @WithdrawID
+```
+
+### 8.2 Find withdrawal legs with exchange fee data (2024+)
+
+```sql
+SELECT ID, WithdrawID, Amount, ExchangeFeeInUSD, ExchangeFeeInPercentage
+FROM Billing.vWithdrawToFunding WITH (NOLOCK)
+WHERE ExchangeFeeInUSD IS NOT NULL
+  AND CashoutStatusID = 3
+ORDER BY ID DESC
+```
 
 ---
 
-## 7. Tier Legend
+## 9. Atlassian Knowledge Sources
 
-- **Tier 1** — column inherited byte-for-byte from a documented Tier-1 upstream wiki (passthrough).
-- **Tier 5** — null-with-provenance: column present in bronze ingest but not yet documented in the Tier 1 source wiki (schema drift or post-ingest addition).
+No Atlassian sources found for this object.
 
-*Generated: 2026-05-18 | Tiers: 30 T1, 0 T2, 0 T3, 0 T4, 3 T5, 0 U | Elements: 33/33 | Source: bronze_tier1_inheritance*
+---
+
+*Generated: 2026-03-17 | Enriched: 2026-03-17 | Quality: 8.3/10 (Elements: 9/10, Logic: 8/10, Relationships: 6/10, Sources: 4/10)*
+*Confidence: 0 EXPERT, 0 VERIFIED, 30 CODE-BACKED, 0 ATLASSIAN-ONLY, 0 NAME-INFERRED | Phases: 1,2,5,7,8,10,11*
+*Sources: Atlassian: 0 Confluence + 0 Jira | Procedures: 0 analyzed | App Code: 0 repos / 0 files | Corrections: 0 applied*
+*Object: Billing.vWithdrawToFunding | Type: View | Source: etoro/etoro/Billing/Views/Billing.vWithdrawToFunding.sql*

@@ -6,7 +6,7 @@
       "source_column_name": "AccountActive",
       "target_column_name": "AccountActive",
       "entity_type": null,
-      "event_count": 25
+      "event_count": 19
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -17,10 +17,17 @@
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "AccountActive",
+      "target_column_name": "AccountActive",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
       "source_column_name": "AccountInActive",
       "target_column_name": "AccountInActive",
       "entity_type": null,
-      "event_count": 24
+      "event_count": 18
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -30,18 +37,39 @@
       "event_count": 2
     },
     {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "AccountInActive",
+      "target_column_name": "AccountInActive",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
       "source_column_name": "FirstName",
       "target_column_name": "AccountManager",
       "entity_type": null,
-      "event_count": 38
+      "event_count": 25
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
       "source_column_name": "LastName",
       "target_column_name": "AccountManager",
       "entity_type": null,
-      "event_count": 38
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "LastName",
+      "target_column_name": "AccountManager",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "source_column_name": "FirstName",
+      "target_column_name": "AccountManager",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
@@ -62,7 +90,7 @@
       "source_column_name": "AccountManagerID",
       "target_column_name": "AccountManagerID",
       "entity_type": null,
-      "event_count": 24
+      "event_count": 18
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
@@ -70,13 +98,20 @@
       "target_column_name": "AccountManagerID",
       "entity_type": "NOTEBOOK",
       "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "AccountManagerID",
+      "target_column_name": "AccountManagerID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "AccountStatusID",
       "target_column_name": "AccountStatusID",
       "entity_type": null,
-      "event_count": 24
+      "event_count": 18
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
@@ -86,11 +121,25 @@
       "event_count": 5
     },
     {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "AccountStatusID",
+      "target_column_name": "AccountStatusID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus",
       "source_column_name": "AccountStatusName",
       "target_column_name": "AccountStatusName",
       "entity_type": null,
-      "event_count": 31
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus",
+      "source_column_name": "AccountStatusName",
+      "target_column_name": "AccountStatusName",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus",
@@ -104,7 +153,7 @@
       "source_column_name": "Name",
       "target_column_name": "AccountType",
       "entity_type": null,
-      "event_count": 39
+      "event_count": 29
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
@@ -114,11 +163,18 @@
       "event_count": 4
     },
     {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+      "source_column_name": "Name",
+      "target_column_name": "AccountType",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "AccountTypeID",
       "target_column_name": "AccountTypeID",
       "entity_type": null,
-      "event_count": 25
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
@@ -128,11 +184,18 @@
       "event_count": 5
     },
     {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "AccountTypeID",
+      "target_column_name": "AccountTypeID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
       "source_column_name": "ActiveTraded",
       "target_column_name": "ActiveTraded",
       "entity_type": null,
-      "event_count": 29
+      "event_count": 22
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -142,11 +205,18 @@
       "event_count": 2
     },
     {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "ActiveTraded",
+      "target_column_name": "ActiveTraded",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "AffiliateID",
       "target_column_name": "AffiliateID",
       "entity_type": null,
-      "event_count": 85
+      "event_count": 74
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
@@ -156,16 +226,44 @@
       "event_count": 6
     },
     {
-      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
-      "source_column_name": "BalanceOnlyAccount",
-      "target_column_name": "BalanceOnlyAccount",
-      "entity_type": null,
-      "event_count": 24
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "AffiliateID",
+      "target_column_name": "AffiliateID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
       "source_column_name": "BalanceOnlyAccount",
       "target_column_name": "BalanceOnlyAccount",
+      "entity_type": null,
+      "event_count": 19
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "BalanceOnlyAccount",
+      "target_column_name": "BalanceOnlyAccount",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "BalanceOnlyAccount",
+      "target_column_name": "BalanceOnlyAccount",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "source_column_name": "CanBeCopied",
+      "target_column_name": "CanBeCopied",
+      "entity_type": null,
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "source_column_name": "CanBeCopied",
+      "target_column_name": "CanBeCopied",
       "entity_type": "NOTEBOOK",
       "event_count": 2
     },
@@ -173,22 +271,15 @@
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
       "source_column_name": "CanBeCopied",
       "target_column_name": "CanBeCopied",
-      "entity_type": null,
-      "event_count": 24
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
-      "source_column_name": "CanBeCopied",
-      "target_column_name": "CanBeCopied",
-      "entity_type": "NOTEBOOK",
-      "event_count": 2
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
       "source_column_name": "CanClosePosition",
       "target_column_name": "CanClosePosition",
       "entity_type": null,
-      "event_count": 24
+      "event_count": 18
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
@@ -199,15 +290,43 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
-      "source_column_name": "CanDeposit",
-      "target_column_name": "CanDeposit",
-      "entity_type": null,
-      "event_count": 24
+      "source_column_name": "CanClosePosition",
+      "target_column_name": "CanClosePosition",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
       "source_column_name": "CanDeposit",
       "target_column_name": "CanDeposit",
+      "entity_type": null,
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "source_column_name": "CanDeposit",
+      "target_column_name": "CanDeposit",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "source_column_name": "CanDeposit",
+      "target_column_name": "CanDeposit",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "source_column_name": "CanEditPosition",
+      "target_column_name": "CanEditPosition",
+      "entity_type": null,
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "source_column_name": "CanEditPosition",
+      "target_column_name": "CanEditPosition",
       "entity_type": "NOTEBOOK",
       "event_count": 2
     },
@@ -215,22 +334,15 @@
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
       "source_column_name": "CanEditPosition",
       "target_column_name": "CanEditPosition",
-      "entity_type": null,
-      "event_count": 24
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
-      "source_column_name": "CanEditPosition",
-      "target_column_name": "CanEditPosition",
-      "entity_type": "NOTEBOOK",
-      "event_count": 2
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
       "source_column_name": "CanOpenPosition",
       "target_column_name": "CanOpenPosition",
       "entity_type": null,
-      "event_count": 24
+      "event_count": 18
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
@@ -241,10 +353,17 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "source_column_name": "CanOpenPosition",
+      "target_column_name": "CanOpenPosition",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
       "source_column_name": "CanRequestWithdraw",
       "target_column_name": "CanRequestWithdraw",
       "entity_type": null,
-      "event_count": 24
+      "event_count": 18
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
@@ -254,25 +373,32 @@
       "event_count": 2
     },
     {
-      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
-      "source_column_name": "Channel",
-      "target_column_name": "Channel",
-      "entity_type": null,
-      "event_count": 164
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "source_column_name": "CanRequestWithdraw",
+      "target_column_name": "CanRequestWithdraw",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
       "source_column_name": "Channel",
       "target_column_name": "Channel",
-      "entity_type": "NOTEBOOK",
-      "event_count": 32
+      "entity_type": null,
+      "event_count": 131
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
       "source_column_name": "Channel",
       "target_column_name": "Channel",
       "entity_type": "DASHBOARD_V3",
-      "event_count": 26
+      "event_count": 45
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "source_column_name": "Channel",
+      "target_column_name": "Channel",
+      "entity_type": "NOTEBOOK",
+      "event_count": 24
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
@@ -286,7 +412,7 @@
       "source_column_name": "Name",
       "target_column_name": "CitizenshipCountry",
       "entity_type": null,
-      "event_count": 33
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
@@ -296,11 +422,18 @@
       "event_count": 2
     },
     {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "CitizenshipCountry",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "CitizenshipCountryID",
       "target_column_name": "CitizenshipCountryID",
       "entity_type": null,
-      "event_count": 24
+      "event_count": 18
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
@@ -310,109 +443,137 @@
       "event_count": 2
     },
     {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "CitizenshipCountryID",
+      "target_column_name": "CitizenshipCountryID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
       "source_column_name": "Name",
       "target_column_name": "ClubTier",
       "entity_type": null,
-      "event_count": 59
+      "event_count": 42
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
       "source_column_name": "Name",
       "target_column_name": "ClubTier",
       "entity_type": "DASHBOARD_V3",
-      "event_count": 27
+      "event_count": 31
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_column_name": "Name",
+      "target_column_name": "ClubTier",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
       "source_column_name": "Name",
       "target_column_name": "ClubTier",
       "entity_type": "NOTEBOOK",
-      "event_count": 8
+      "event_count": 7
     },
     {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
       "source_column_name": "Name",
-      "target_column_name": "ClubTier",
+      "target_column_name": "CommunicationLanguage",
+      "entity_type": null,
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+      "source_column_name": "Name",
+      "target_column_name": "CommunicationLanguage",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+      "source_column_name": "Name",
+      "target_column_name": "CommunicationLanguage",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "CommunicationLanguageID",
+      "target_column_name": "CommunicationLanguageID",
+      "entity_type": null,
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "CommunicationLanguageID",
+      "target_column_name": "CommunicationLanguageID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "CommunicationLanguageID",
+      "target_column_name": "CommunicationLanguageID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "Country",
+      "entity_type": null,
+      "event_count": 80
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "Country",
+      "entity_type": "DASHBOARD_V3",
+      "event_count": 25
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "Country",
+      "entity_type": "NOTEBOOK",
+      "event_count": 11
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "source_column_name": "Name",
+      "target_column_name": "Country",
       "entity_type": "DBSQL_QUERY",
       "event_count": 6
     },
     {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
-      "source_column_name": "Name",
-      "target_column_name": "CommunicationLanguage",
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "CountryID",
+      "target_column_name": "CountryID",
       "entity_type": null,
-      "event_count": 35
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
-      "source_column_name": "Name",
-      "target_column_name": "CommunicationLanguage",
-      "entity_type": "NOTEBOOK",
-      "event_count": 2
+      "event_count": 18
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "source_column_name": "CommunicationLanguageID",
-      "target_column_name": "CommunicationLanguageID",
-      "entity_type": null,
-      "event_count": 24
+      "source_column_name": "CountryID",
+      "target_column_name": "CountryID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "source_column_name": "CommunicationLanguageID",
-      "target_column_name": "CommunicationLanguageID",
-      "entity_type": "NOTEBOOK",
-      "event_count": 2
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
-      "source_column_name": "Name",
-      "target_column_name": "Country",
-      "entity_type": null,
-      "event_count": 101
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
-      "source_column_name": "Name",
-      "target_column_name": "Country",
-      "entity_type": "NOTEBOOK",
-      "event_count": 29
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
-      "source_column_name": "Name",
-      "target_column_name": "Country",
-      "entity_type": "DASHBOARD_V3",
-      "event_count": 22
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
-      "source_column_name": "Name",
-      "target_column_name": "Country",
+      "source_column_name": "CountryID",
+      "target_column_name": "CountryID",
       "entity_type": "DBSQL_QUERY",
-      "event_count": 5
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "source_column_name": "CountryID",
-      "target_column_name": "CountryID",
-      "entity_type": null,
-      "event_count": 24
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "source_column_name": "CountryID",
-      "target_column_name": "CountryID",
-      "entity_type": "NOTEBOOK",
-      "event_count": 5
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
       "source_column_name": "EmailVerifiedDate",
       "target_column_name": "EmailVerifiedDate",
       "entity_type": null,
-      "event_count": 30
+      "event_count": 22
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
@@ -422,11 +583,18 @@
       "event_count": 7
     },
     {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "source_column_name": "EmailVerifiedDate",
+      "target_column_name": "EmailVerifiedDate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
       "source_column_name": "FullDate",
       "target_column_name": "FirstActionDate",
       "entity_type": null,
-      "event_count": 52
+      "event_count": 44
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
@@ -436,11 +604,18 @@
       "event_count": 6
     },
     {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+      "source_column_name": "FullDate",
+      "target_column_name": "FirstActionDate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
       "source_column_name": "FirstActionType",
       "target_column_name": "FirstActionType",
       "entity_type": null,
-      "event_count": 90
+      "event_count": 77
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -450,11 +625,18 @@
       "event_count": 8
     },
     {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "FirstActionType",
+      "target_column_name": "FirstActionType",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
       "source_column_name": "CurrentClub",
       "target_column_name": "FirstClub",
       "entity_type": null,
-      "event_count": 31
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
@@ -464,32 +646,46 @@
       "event_count": 2
     },
     {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "CurrentClub",
+      "target_column_name": "FirstClub",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
       "source_column_name": "FullDate",
       "target_column_name": "FirstFundedDate",
       "entity_type": null,
-      "event_count": 36
+      "event_count": 28
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
       "source_column_name": "FullDate",
       "target_column_name": "FirstFundedDate",
       "entity_type": "DASHBOARD_V3",
-      "event_count": 14
+      "event_count": 9
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
       "source_column_name": "FullDate",
       "target_column_name": "FirstFundedDate",
       "entity_type": "NOTEBOOK",
-      "event_count": 4
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+      "source_column_name": "FullDate",
+      "target_column_name": "FirstFundedDate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
       "source_column_name": "FirstIOBTime",
       "target_column_name": "FirstIOBTime",
       "entity_type": null,
-      "event_count": 29
+      "event_count": 19
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -499,11 +695,18 @@
       "event_count": 3
     },
     {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "FirstIOBTime",
+      "target_column_name": "FirstIOBTime",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
       "source_column_name": "Date",
       "target_column_name": "FirstTimeClubDate",
       "entity_type": null,
-      "event_count": 24
+      "event_count": 18
     },
     {
       "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
@@ -513,11 +716,18 @@
       "event_count": 2
     },
     {
+      "source_table_full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct",
+      "source_column_name": "Date",
+      "target_column_name": "FirstTimeClubDate",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
       "source_column_name": "FirstTimeFunded",
       "target_column_name": "FirstTimeFunded",
       "entity_type": null,
-      "event_count": 29
+      "event_count": 21
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -527,209 +737,286 @@
       "event_count": 4
     },
     {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "FirstTimeFunded",
+      "target_column_name": "FirstTimeFunded",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "GCID",
       "target_column_name": "GCID",
       "entity_type": "DBSQL_QUERY",
-      "event_count": 156
+      "event_count": 158
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "GCID",
       "target_column_name": "GCID",
       "entity_type": "NOTEBOOK",
-      "event_count": 117
+      "event_count": 99
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "GCID",
       "target_column_name": "GCID",
       "entity_type": null,
-      "event_count": 49
+      "event_count": 23
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "Global_FTDA",
+      "target_column_name": "Global_FTDA",
+      "entity_type": "DASHBOARD_V3",
+      "event_count": 232
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
       "source_column_name": "Global_FTDA",
       "target_column_name": "Global_FTDA",
       "entity_type": null,
-      "event_count": 162
+      "event_count": 140
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
       "source_column_name": "Global_FTDA",
       "target_column_name": "Global_FTDA",
       "entity_type": "NOTEBOOK",
-      "event_count": 110
+      "event_count": 102
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
       "source_column_name": "Global_FTDA",
       "target_column_name": "Global_FTDA",
       "entity_type": "DBSQL_QUERY",
-      "event_count": 60
-    },
-    {
-      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
-      "source_column_name": "Global_FTD_Date",
-      "target_column_name": "Global_FTD_Date",
-      "entity_type": null,
-      "event_count": 461
+      "event_count": 63
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
       "source_column_name": "Global_FTD_Date",
       "target_column_name": "Global_FTD_Date",
       "entity_type": "DASHBOARD_V3",
-      "event_count": 205
+      "event_count": 520
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "Global_FTD_Date",
+      "target_column_name": "Global_FTD_Date",
+      "entity_type": null,
+      "event_count": 391
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
       "source_column_name": "Global_FTD_Date",
       "target_column_name": "Global_FTD_Date",
       "entity_type": "NOTEBOOK",
-      "event_count": 146
+      "event_count": 105
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
       "source_column_name": "Global_FTD_Date",
       "target_column_name": "Global_FTD_Date",
       "entity_type": "DBSQL_QUERY",
-      "event_count": 59
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "source_column_name": "GuruStatusID",
-      "target_column_name": "GuruStatusID",
-      "entity_type": null,
-      "event_count": 30
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "source_column_name": "GuruStatusID",
-      "target_column_name": "GuruStatusID",
-      "entity_type": "NOTEBOOK",
-      "event_count": 4
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
-      "source_column_name": "GuruStatusName",
-      "target_column_name": "GuruStatusName",
-      "entity_type": null,
-      "event_count": 45
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
-      "source_column_name": "GuruStatusName",
-      "target_column_name": "GuruStatusName",
-      "entity_type": "NOTEBOOK",
-      "event_count": 2
-    },
-    {
-      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
-      "source_column_name": "IBAN_FTDA",
-      "target_column_name": "IBAN_FTDA",
-      "entity_type": null,
-      "event_count": 32
-    },
-    {
-      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
-      "source_column_name": "IBAN_FTDA",
-      "target_column_name": "IBAN_FTDA",
-      "entity_type": "NOTEBOOK",
-      "event_count": 4
-    },
-    {
-      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
-      "source_column_name": "IBAN_FTD_Date",
-      "target_column_name": "IBAN_FTD_Date",
-      "entity_type": null,
       "event_count": 61
     },
     {
-      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
-      "source_column_name": "IBAN_FTD_Date",
-      "target_column_name": "IBAN_FTD_Date",
-      "entity_type": "NOTEBOOK",
-      "event_count": 6
-    },
-    {
-      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
-      "source_column_name": "IsFunded",
-      "target_column_name": "IsFunded",
-      "entity_type": null,
-      "event_count": 45
-    },
-    {
-      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
-      "source_column_name": "IsFunded",
-      "target_column_name": "IsFunded",
-      "entity_type": "NOTEBOOK",
-      "event_count": 5
-    },
-    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "GuruStatusID",
-      "target_column_name": "IsPI",
+      "target_column_name": "GuruStatusID",
       "entity_type": null,
       "event_count": 24
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "GuruStatusID",
-      "target_column_name": "IsPI",
+      "target_column_name": "GuruStatusID",
       "entity_type": "NOTEBOOK",
       "event_count": 4
     },
     {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
-      "source_column_name": "Name",
-      "target_column_name": "Language",
-      "entity_type": null,
-      "event_count": 34
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
-      "source_column_name": "Name",
-      "target_column_name": "Language",
-      "entity_type": "NOTEBOOK",
-      "event_count": 14
-    },
-    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "source_column_name": "LanguageID",
-      "target_column_name": "LanguageID",
-      "entity_type": null,
-      "event_count": 24
+      "source_column_name": "GuruStatusID",
+      "target_column_name": "GuruStatusID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
     },
     {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "source_column_name": "LanguageID",
-      "target_column_name": "LanguageID",
-      "entity_type": "NOTEBOOK",
-      "event_count": 4
-    },
-    {
-      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
-      "source_column_name": "Options_FTDA",
-      "target_column_name": "Options_FTDA",
-      "entity_type": null,
-      "event_count": 30
-    },
-    {
-      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
-      "source_column_name": "Options_FTDA",
-      "target_column_name": "Options_FTDA",
-      "entity_type": "NOTEBOOK",
-      "event_count": 2
-    },
-    {
-      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
-      "source_column_name": "Options_FTD_Date",
-      "target_column_name": "Options_FTD_Date",
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "source_column_name": "GuruStatusName",
+      "target_column_name": "GuruStatusName",
       "entity_type": null,
       "event_count": 33
     },
     {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "source_column_name": "GuruStatusName",
+      "target_column_name": "GuruStatusName",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "source_column_name": "GuruStatusName",
+      "target_column_name": "GuruStatusName",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "IBAN_FTDA",
+      "target_column_name": "IBAN_FTDA",
+      "entity_type": null,
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "IBAN_FTDA",
+      "target_column_name": "IBAN_FTDA",
+      "entity_type": "NOTEBOOK",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "IBAN_FTDA",
+      "target_column_name": "IBAN_FTDA",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "IBAN_FTD_Date",
+      "target_column_name": "IBAN_FTD_Date",
+      "entity_type": null,
+      "event_count": 51
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "IBAN_FTD_Date",
+      "target_column_name": "IBAN_FTD_Date",
+      "entity_type": "NOTEBOOK",
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "IBAN_FTD_Date",
+      "target_column_name": "IBAN_FTD_Date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "IsFunded",
+      "target_column_name": "IsFunded",
+      "entity_type": null,
+      "event_count": 39
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "IsFunded",
+      "target_column_name": "IsFunded",
+      "entity_type": "NOTEBOOK",
+      "event_count": 5
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "IsFunded",
+      "target_column_name": "IsFunded",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "GuruStatusID",
+      "target_column_name": "IsPI",
+      "entity_type": null,
+      "event_count": 19
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "GuruStatusID",
+      "target_column_name": "IsPI",
+      "entity_type": "NOTEBOOK",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "GuruStatusID",
+      "target_column_name": "IsPI",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+      "source_column_name": "Name",
+      "target_column_name": "Language",
+      "entity_type": null,
+      "event_count": 24
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+      "source_column_name": "Name",
+      "target_column_name": "Language",
+      "entity_type": "NOTEBOOK",
+      "event_count": 14
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+      "source_column_name": "Name",
+      "target_column_name": "Language",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "LanguageID",
+      "target_column_name": "LanguageID",
+      "entity_type": null,
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "LanguageID",
+      "target_column_name": "LanguageID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "LanguageID",
+      "target_column_name": "LanguageID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "Options_FTDA",
+      "target_column_name": "Options_FTDA",
+      "entity_type": null,
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "Options_FTDA",
+      "target_column_name": "Options_FTDA",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "Options_FTDA",
+      "target_column_name": "Options_FTDA",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "Options_FTD_Date",
+      "target_column_name": "Options_FTD_Date",
+      "entity_type": null,
+      "event_count": 23
+    },
+    {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
       "source_column_name": "Options_FTD_Date",
       "target_column_name": "Options_FTD_Date",
@@ -737,11 +1024,18 @@
       "event_count": 2
     },
     {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "Options_FTD_Date",
+      "target_column_name": "Options_FTD_Date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "PlayerLevelID",
       "target_column_name": "PlayerLevelID",
       "entity_type": null,
-      "event_count": 25
+      "event_count": 19
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
@@ -752,10 +1046,17 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "PlayerLevelID",
+      "target_column_name": "PlayerLevelID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "PlayerStatusID",
       "target_column_name": "PlayerStatusID",
       "entity_type": null,
-      "event_count": 24
+      "event_count": 19
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
@@ -765,123 +1066,144 @@
       "event_count": 3
     },
     {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "PlayerStatusID",
+      "target_column_name": "PlayerStatusID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
+    },
+    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
       "source_column_name": "Name",
       "target_column_name": "PlayerStatusName",
       "entity_type": "DASHBOARD_V3",
-      "event_count": 187
+      "event_count": 510
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
       "source_column_name": "Name",
       "target_column_name": "PlayerStatusName",
       "entity_type": null,
-      "event_count": 56
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
-      "source_column_name": "Name",
-      "target_column_name": "PlayerStatusName",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 10
+      "event_count": 48
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
       "source_column_name": "Name",
       "target_column_name": "PlayerStatusName",
       "entity_type": "NOTEBOOK",
-      "event_count": 8
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "source_column_name": "Name",
+      "target_column_name": "PlayerStatusName",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 14
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "PlayerStatusReasonID",
       "target_column_name": "PlayerStatusReasonID",
       "entity_type": null,
-      "event_count": 24
+      "event_count": 19
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "PlayerStatusReasonID",
       "target_column_name": "PlayerStatusReasonID",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "PlayerStatusReasonID",
+      "target_column_name": "PlayerStatusReasonID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
       "source_column_name": "Name",
       "target_column_name": "PlayerStatusReasonName",
       "entity_type": "DASHBOARD_V3",
-      "event_count": 187
+      "event_count": 510
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
       "source_column_name": "Name",
       "target_column_name": "PlayerStatusReasonName",
       "entity_type": null,
-      "event_count": 52
+      "event_count": 44
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
       "source_column_name": "Name",
       "target_column_name": "PlayerStatusReasonName",
       "entity_type": "DBSQL_QUERY",
-      "event_count": 10
+      "event_count": 12
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
       "source_column_name": "Name",
       "target_column_name": "PlayerStatusReasonName",
       "entity_type": "NOTEBOOK",
-      "event_count": 4
+      "event_count": 9
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "PlayerStatusSubReasonID",
       "target_column_name": "PlayerStatusSubReasonID",
       "entity_type": null,
-      "event_count": 24
+      "event_count": 19
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "PlayerStatusSubReasonID",
       "target_column_name": "PlayerStatusSubReasonID",
       "entity_type": "NOTEBOOK",
-      "event_count": 3
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "PlayerStatusSubReasonID",
+      "target_column_name": "PlayerStatusSubReasonID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
       "source_column_name": "PlayerStatusSubReasonName",
       "target_column_name": "PlayerStatusSubReasonName",
       "entity_type": "DASHBOARD_V3",
-      "event_count": 187
+      "event_count": 510
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
       "source_column_name": "PlayerStatusSubReasonName",
       "target_column_name": "PlayerStatusSubReasonName",
       "entity_type": null,
-      "event_count": 53
+      "event_count": 44
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
       "source_column_name": "PlayerStatusSubReasonName",
       "target_column_name": "PlayerStatusSubReasonName",
       "entity_type": "DBSQL_QUERY",
-      "event_count": 10
+      "event_count": 12
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
       "source_column_name": "PlayerStatusSubReasonName",
       "target_column_name": "PlayerStatusSubReasonName",
       "entity_type": "NOTEBOOK",
-      "event_count": 4
+      "event_count": 9
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
       "source_column_name": "Portfolio_Only",
       "target_column_name": "Portfolio_Only",
       "entity_type": null,
-      "event_count": 24
+      "event_count": 18
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -891,39 +1213,46 @@
       "event_count": 2
     },
     {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "Portfolio_Only",
+      "target_column_name": "Portfolio_Only",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "RealCID",
       "target_column_name": "RealCID",
       "entity_type": null,
-      "event_count": 765
+      "event_count": 679
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "RealCID",
       "target_column_name": "RealCID",
       "entity_type": "DASHBOARD_V3",
-      "event_count": 199
+      "event_count": 469
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "RealCID",
       "target_column_name": "RealCID",
       "entity_type": "NOTEBOOK",
-      "event_count": 53
+      "event_count": 48
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "RealCID",
       "target_column_name": "RealCID",
       "entity_type": "DBSQL_QUERY",
-      "event_count": 20
+      "event_count": 16
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
       "source_column_name": "MarketingRegionManualName",
       "target_column_name": "Region",
       "entity_type": null,
-      "event_count": 181
+      "event_count": 150
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
@@ -937,63 +1266,63 @@
       "source_column_name": "MarketingRegionManualName",
       "target_column_name": "Region",
       "entity_type": "DBSQL_QUERY",
-      "event_count": 6
+      "event_count": 2
     },
     {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
-      "source_column_name": "MarketingRegionManualName",
-      "target_column_name": "Region",
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RegisteredReal",
+      "target_column_name": "RegistrationDate",
       "entity_type": "DASHBOARD_V3",
-      "event_count": 1
+      "event_count": 511
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "RegisteredReal",
       "target_column_name": "RegistrationDate",
       "entity_type": null,
-      "event_count": 205
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
-      "source_column_name": "RegisteredReal",
-      "target_column_name": "RegistrationDate",
-      "entity_type": "DASHBOARD_V3",
-      "event_count": 188
+      "event_count": 177
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "RegisteredReal",
       "target_column_name": "RegistrationDate",
       "entity_type": "DBSQL_QUERY",
-      "event_count": 65
+      "event_count": 69
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "RegisteredReal",
       "target_column_name": "RegistrationDate",
       "entity_type": "NOTEBOOK",
-      "event_count": 42
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
-      "source_column_name": "Name",
-      "target_column_name": "Regulation",
-      "entity_type": null,
       "event_count": 56
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
       "source_column_name": "Name",
       "target_column_name": "Regulation",
+      "entity_type": null,
+      "event_count": 43
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "source_column_name": "Name",
+      "target_column_name": "Regulation",
       "entity_type": "NOTEBOOK",
-      "event_count": 23
+      "event_count": 5
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "source_column_name": "Name",
+      "target_column_name": "Regulation",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "RegulationID",
       "target_column_name": "RegulationID",
       "entity_type": null,
-      "event_count": 26
+      "event_count": 20
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
@@ -1003,18 +1332,25 @@
       "event_count": 5
     },
     {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RegulationID",
+      "target_column_name": "RegulationID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
       "source_column_name": "SubChannel",
       "target_column_name": "SubChannel",
       "entity_type": null,
-      "event_count": 81
+      "event_count": 61
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
       "source_column_name": "SubChannel",
       "target_column_name": "SubChannel",
       "entity_type": "DASHBOARD_V3",
-      "event_count": 26
+      "event_count": 45
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
@@ -1024,11 +1360,25 @@
       "event_count": 15
     },
     {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "source_column_name": "SubChannel",
+      "target_column_name": "SubChannel",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
       "source_column_name": "TP_FTDA",
       "target_column_name": "TP_FTDA",
       "entity_type": null,
-      "event_count": 32
+      "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "TP_FTDA",
+      "target_column_name": "TP_FTDA",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -1042,7 +1392,7 @@
       "source_column_name": "TP_FTD_Date",
       "target_column_name": "TP_FTD_Date",
       "entity_type": null,
-      "event_count": 54
+      "event_count": 44
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
@@ -1052,11 +1402,25 @@
       "event_count": 6
     },
     {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "source_column_name": "TP_FTD_Date",
+      "target_column_name": "TP_FTD_Date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
       "source_column_name": "Name",
       "target_column_name": "VerificationLevel",
       "entity_type": null,
-      "event_count": 49
+      "event_count": 37
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+      "source_column_name": "Name",
+      "target_column_name": "VerificationLevel",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
@@ -1070,14 +1434,14 @@
       "source_column_name": "VerificationLevel1Date",
       "target_column_name": "VerificationLevel1Date",
       "entity_type": "DASHBOARD_V3",
-      "event_count": 188
+      "event_count": 511
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
       "source_column_name": "VerificationLevel1Date",
       "target_column_name": "VerificationLevel1Date",
       "entity_type": null,
-      "event_count": 45
+      "event_count": 36
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
@@ -1091,28 +1455,28 @@
       "source_column_name": "VerificationLevel1Date",
       "target_column_name": "VerificationLevel1Date",
       "entity_type": "DBSQL_QUERY",
-      "event_count": 6
+      "event_count": 8
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
       "source_column_name": "VerificationLevel2Date",
       "target_column_name": "VerificationLevel2Date",
       "entity_type": "DASHBOARD_V3",
-      "event_count": 188
+      "event_count": 511
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
       "source_column_name": "VerificationLevel2Date",
       "target_column_name": "VerificationLevel2Date",
       "entity_type": null,
-      "event_count": 74
+      "event_count": 66
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
       "source_column_name": "VerificationLevel2Date",
       "target_column_name": "VerificationLevel2Date",
       "entity_type": "DBSQL_QUERY",
-      "event_count": 6
+      "event_count": 8
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
@@ -1126,35 +1490,35 @@
       "source_column_name": "VerificationLevel3Date",
       "target_column_name": "VerificationLevel3Date",
       "entity_type": "DASHBOARD_V3",
-      "event_count": 188
+      "event_count": 554
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
       "source_column_name": "VerificationLevel3Date",
       "target_column_name": "VerificationLevel3Date",
       "entity_type": null,
-      "event_count": 38
-    },
-    {
-      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
-      "source_column_name": "VerificationLevel3Date",
-      "target_column_name": "VerificationLevel3Date",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 6
+      "event_count": 31
     },
     {
       "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
       "source_column_name": "VerificationLevel3Date",
       "target_column_name": "VerificationLevel3Date",
       "entity_type": "NOTEBOOK",
-      "event_count": 4
+      "event_count": 15
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "source_column_name": "VerificationLevel3Date",
+      "target_column_name": "VerificationLevel3Date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 9
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
       "source_column_name": "VerificationLevelID",
       "target_column_name": "VerificationLevelID",
       "entity_type": null,
-      "event_count": 45
+      "event_count": 31
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
@@ -1162,7 +1526,14 @@
       "target_column_name": "VerificationLevelID",
       "entity_type": "NOTEBOOK",
       "event_count": 5
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "VerificationLevelID",
+      "target_column_name": "VerificationLevelID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 2
     }
   ],
-  "generated_at": "2026-05-19T14:48:25Z"
+  "generated_at": "2026-06-19T14:30:26Z"
 }

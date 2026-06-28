@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\vg_positionsvolumeandattributes_lc4_source_test1.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\vg_positionsvolumeandattributes_lc4_source_test1.json` (rows: 15, mismatches: 0) |
 | **Primary upstream** | `main.dwh.dim_position` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 
@@ -44,8 +44,8 @@ main.bi_output.vg_positionsvolumeandattributes_lc4_source_test1   ←── this
 
 | # | UC Column | Source UC Object | Source Column | Transform | Upstream Tier | Notes |
 |---|-----------|------------------|---------------|-----------|---------------|-------|
-| 1 | `AccountTypeID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` | `AccountTypeID` | `passthrough` | (Tier 1 — inherited from Fact_SnapshotCustomer wiki) | fsc.AccountTypeID |
-| 2 | `Region` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country` | `Region` | `passthrough` | (Tier 2 - SP_Dictionaries_Country_DL_To_Synapse) | c.Region |
+| 1 | `AccountTypeID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` | `AccountTypeID` | `passthrough` | (Tier 2 — inherited from Fact_SnapshotCustomer wiki) | fsc.AccountTypeID |
+| 2 | `Region` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country` | `Region` | `passthrough` | — | c.Region |
 | 3 | `CountryName` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country` | `Name` | `rename` | (Tier 1 - Dictionary.Country upstream wiki) | c.Name AS CountryName |
 | 4 | `SellCurrencyID` | `—` | `SellCurrencyID` | `passthrough` | — | bse.SellCurrencyID |
 | 5 | `InstrumentType` | `—` | `InstrumentType` | `passthrough` | — | bse.InstrumentType |

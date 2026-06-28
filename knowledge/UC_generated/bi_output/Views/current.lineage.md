@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\current.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\current.json` (rows: 1, mismatches: 0) |
 | **Primary upstream** | `main.csv.abfss://analysis@stgdpdlwe.dfs.core.windows.net/bi_output/finance/uploads/guy_m/current_isfundedthisyear` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 

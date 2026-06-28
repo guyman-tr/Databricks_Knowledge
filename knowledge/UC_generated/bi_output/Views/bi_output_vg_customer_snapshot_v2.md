@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 62
 row_count: null
-generated_at: '2026-05-19T15:01:49Z'
+generated_at: '2026-06-19T14:35:55Z'
 upstreams:
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked
 - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status / main.bi_output.bi_output_vg_date
@@ -29,8 +29,8 @@ writer:
 concept_count: 15
 formula_count: 62
 tier_breakdown:
-  tier1_columns: 13
-  tier2_columns: 49
+  tier1_columns: 0
+  tier2_columns: 62
   tier3_columns: 0
   tier4_columns: 0
   tier5_columns: 0
@@ -52,7 +52,7 @@ tier_breakdown:
 | **Column count** | 62 |
 | **Concepts** | 15 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Wed Jan 21 15:41:05 UTC 2026 |
 
 ---
@@ -63,7 +63,7 @@ tier_breakdown:
 
 Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` → this object. Canonical upstream documentation: `knowledge\synapse\Wiki\DWH_dbo\Views\V_Fact_SnapshotCustomer_FromDateID.md`. Additional upstreams: 19 object(s), listed in §5 Lineage.
 
-Of its 62 columns: 13 inherit byte-for-byte from upstream wikis (Tier 1), 49 are formula-assembled from cached source code (Tier 2 — see §4 for the formula and §2 for the named concept), 0 are null-with-provenance (Tier N — terminal-no-wiki upstream).
+Of its 62 columns: 0 inherit byte-for-byte from upstream wikis (Tier 1), 62 are formula-assembled from cached source code (Tier 2 — see §4 for the formula and §2 for the named concept), 0 are null-with-provenance (Tier N — terminal-no-wiki upstream).
 
 ---
 
@@ -238,24 +238,24 @@ Of its 62 columns: 13 inherit byte-for-byte from upstream wikis (Tier 1), 49 are
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | RealCID | STRING | YES | Real (funded) customer ID. Hash distribution key. Primary customer identifier. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
-| 1 | GCID | INT | YES | Global Customer ID — cross-platform identifier linking RealCID to demo and external systems. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
+| 1 | RealCID | STRING | YES | Real (funded) customer ID. Hash distribution key. The primary customer identifier in the DWH ecosystem. FK to Dim_Customer (if exists). 46.4M distinct values. (Tier 2 — via Fact_SnapshotCustomer) |
+| 1 | GCID | INT | YES | Global Customer ID — the cross-platform identifier linking RealCID to demo and external systems. Source: Ext_FSC_Real_Customer_Customer (primary), Ext_Dim_Customer_CustomerIdentification_DLT (fallback). (Tier 2 — via Fact_SnapshotCustomer) |
 | 2 | Date | TIMESTAMP | YES | COALESCE / null-replacement of upstream values. Formula: `coalesce(date, Date)`. (Tier 2 — from `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status`) |
 | 3 | DateID | INT | YES | COALESCE / null-replacement of upstream values. Formula: `coalesce(DateID, DateID)`. (Tier 2 — from `main.bi_output.bi_output_vg_date`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status`) |
 | 4 | PlayerLevelID | INT | YES | Account tier (4=demo, other=real tiers). FK to Dim_PlayerLevel. Critical for IsValidCustomer. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 5 | ClubTier | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`) |
-| 6 | RegulationID | INT | YES | Customer's assigned regulatory jurisdiction. FK to Dim_Regulation. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
+| 6 | RegulationID | INT | YES | Customer's assigned regulatory jurisdiction. DEFAULT 0. Sourced from Ext_FSC_BackOffice_RegulationChangeLog.ToRegulationID — end-of-day change. See §2.4. FK to Dim_Regulation. (Tier 2 — via Fact_SnapshotCustomer) |
 | 7 | Regulation | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`) |
 | 8 | VerificationLevelID | INT | YES | KYC verification level. FK to Dim_VerificationLevel. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 9 | VerificationLevel | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`) |
 | 10 | CountryID | INT | YES | Customer's registered country. FK to Dim_Country. Key filter for valid customer segmentation. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 11 | Country | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country`) |
 | 12 | Region | STRING | YES | Direct passthrough from upstream. Formula: `MarketingRegionManualName`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country`) |
-| 13 | AccountManagerID | INT | YES | Assigned account manager (sales/retention). FK to Dim_Manager. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
+| 13 | AccountManagerID | INT | YES | Assigned account manager (sales/retention). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.AccountManagerID (BO). FK to Dim_Manager. (Tier 2 — via Fact_SnapshotCustomer) |
 | 14 | AccountManager | STRING | YES | Function call computed in source. Formula: `concat(FirstName, ' ', LastName)`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager`) |
 | 15 | LanguageID | INT | YES | Customer's preferred interface language. FK to Dim_Language. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 16 | Language | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language`) |
-| 17 | CommunicationLanguageID | INT | YES | Preferred communication language (may differ from interface language). FK to Dim_Language. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
+| 17 | CommunicationLanguageID | INT | YES | Preferred communication language (may differ from interface language). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.CommunicationLanguageID (CC). FK to Dim_Language. (Tier 2 — via Fact_SnapshotCustomer) |
 | 18 | CommunicationLanguage | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language`) |
 | 19 | AccountTypeID | INT | YES | Account type (e.g., 7=Employee, 9=excluded). FK to Dim_AccountType. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 20 | AccountType | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype`) |
@@ -323,7 +323,7 @@ Of its 62 columns: 13 inherit byte-for-byte from upstream wikis (Tier 1), 49 are
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_PlayerStatus.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_PlayerStatusReasons.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_PlayerStatusSubReasons.md` |
-| `main.bi_output.bi_output_vg_date` | JOIN/UNION | `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_date.md` |
+| `main.bi_output.bi_output_vg_date` | JOIN/UNION | `knowledge\UC_generated\bi_output\Views\bi_output_vg_date.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Customer.md` |
 | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status` | JOIN/UNION | `knowledge\synapse\Wiki\BI_DB_dbo\Tables\BI_DB_DDR_Customer_Daily_Status.md` |
 | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status` | JOIN/UNION | `knowledge\synapse\Wiki\BI_DB_dbo\Tables\BI_DB_DDR_Customer_Periodic_Status.md` |
@@ -382,4 +382,4 @@ main.bi_output.bi_output_vg_customer_snapshot_v2   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 15 | Formulas: 62 | Tiers: 13 T1, 49 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 62/62 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 15 | Formulas: 62 | Tiers: 0 T1, 62 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 62/62 | Source: view_definition*

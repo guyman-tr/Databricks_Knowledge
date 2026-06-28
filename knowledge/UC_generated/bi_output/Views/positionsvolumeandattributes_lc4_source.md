@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 15
 row_count: null
-generated_at: '2026-05-19T15:01:55Z'
+generated_at: '2026-06-19T14:36:00Z'
 upstreams:
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel
@@ -26,8 +26,8 @@ writer:
 concept_count: 3
 formula_count: 15
 tier_breakdown:
-  tier1_columns: 3
-  tier2_columns: 12
+  tier1_columns: 1
+  tier2_columns: 14
   tier3_columns: 0
   tier4_columns: 0
   tier5_columns: 0
@@ -49,7 +49,7 @@ tier_breakdown:
 | **Column count** | 15 |
 | **Concepts** | 3 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Wed Dec 03 15:29:08 UTC 2025 |
 
 ---
@@ -60,7 +60,7 @@ tier_breakdown:
 
 Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` → this object. Canonical upstream documentation: `knowledge\synapse\Wiki\DWH_dbo\Views\V_Fact_SnapshotCustomer_FromDateID.md`. Additional upstreams: 6 object(s), listed in §5 Lineage.
 
-Of its 15 columns: 3 inherit byte-for-byte from upstream wikis (Tier 1), 12 are formula-assembled from cached source code (Tier 2 — see §4 for the formula and §2 for the named concept), 0 are null-with-provenance (Tier N — terminal-no-wiki upstream).
+Of its 15 columns: 1 inherit byte-for-byte from upstream wikis (Tier 1), 14 are formula-assembled from cached source code (Tier 2 — see §4 for the formula and §2 for the named concept), 0 are null-with-provenance (Tier N — terminal-no-wiki upstream).
 
 ---
 
@@ -211,4 +211,4 @@ main.bi_output.positionsvolumeandattributes_lc4_source   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 3 | Formulas: 15 | Tiers: 3 T1, 12 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 15/15 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 3 | Formulas: 15 | Tiers: 1 T1, 14 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 15/15 | Source: view_definition*

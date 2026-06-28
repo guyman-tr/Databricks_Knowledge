@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 9
 row_count: null
-generated_at: '2026-05-19T15:01:59Z'
+generated_at: '2026-06-19T14:36:04Z'
 upstreams:
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel
@@ -48,7 +48,7 @@ tier_breakdown:
 | **Column count** | 9 |
 | **Concepts** | 5 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Tue Dec 09 19:44:12 UTC 2025 |
 
 ---
@@ -228,4 +228,4 @@ main.bi_output.vg_emoney_potentialclients_attributes   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 5 | Formulas: 9 | Tiers: 0 T1, 9 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 9/9 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 5 | Formulas: 9 | Tiers: 0 T1, 9 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 9/9 | Source: view_definition*

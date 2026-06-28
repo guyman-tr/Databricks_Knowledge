@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 21
 row_count: null
-generated_at: '2026-05-19T15:02:02Z'
+generated_at: '2026-06-19T14:36:06Z'
 upstreams:
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype
@@ -46,7 +46,7 @@ tier_breakdown:
 | **Column count** | 21 |
 | **Concepts** | 1 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Wed Feb 04 14:34:23 UTC 2026 |
 
 ---
@@ -139,7 +139,7 @@ Of its 21 columns: 11 inherit byte-for-byte from upstream wikis (Tier 1), 10 are
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw` | Primary | `knowledge\synapse\Wiki\DWH_dbo\Tables\Fact_BillingWithdraw.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_FundingType.md` |
 | `main.bi_db.bronze_etoro_dictionary_withdrawtype` | JOIN/UNION | `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.WithdrawType.md` |
-| `main.billing.bronze_etoro_billing_depot` | JOIN/UNION | `knowledge/UC_generated/billing/Tables/bronze_etoro_billing_depot.md` |
+| `main.billing.bronze_etoro_billing_depot` | JOIN/UNION | `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Tables/Billing.Depot.md` |
 
 ### 5.2 Pipeline ASCII Diagram
 
@@ -193,4 +193,4 @@ main.bi_output.vg_fact_billingwithdraw_for_genie   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 1 | Formulas: 21 | Tiers: 11 T1, 10 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 21/21 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 1 | Formulas: 21 | Tiers: 11 T1, 10 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 21/21 | Source: view_definition*

@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 7
 row_count: null
-generated_at: '2026-05-19T15:02:03Z'
+generated_at: '2026-06-19T14:36:07Z'
 upstreams:
 - main.general.bronze_etoro_dictionary_countrybin
 - main.general.bronze_etoro_dictionary_country
@@ -46,7 +46,7 @@ tier_breakdown:
 | **Column count** | 7 |
 | **Concepts** | 0 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Tue Apr 14 13:41:23 UTC 2026 |
 
 ---
@@ -119,7 +119,7 @@ Pure passthrough — no discriminator concepts detected in source. Refer to upst
 | `main.general.bronze_etoro_dictionary_countrybin` | Primary | `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Views/Dictionary.CountryBin.md` |
 | `main.general.bronze_etoro_dictionary_country` | JOIN/UNION | `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.Country.md` |
 | `main.general.bronze_etoro_dictionary_cardtype` | JOIN/UNION | `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CardType.md` |
-| `main.billing.bronze_etoro_billing_badbin` | JOIN/UNION | `knowledge/UC_generated/billing/Tables/bronze_etoro_billing_badbin.md` |
+| `main.billing.bronze_etoro_billing_badbin` | JOIN/UNION | `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Tables/Billing.BadBin.md` |
 
 ### 5.2 Pipeline ASCII Diagram
 
@@ -173,4 +173,4 @@ main.bi_output.vg_fullbincodelist   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 0 | Formulas: 7 | Tiers: 4 T1, 3 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 7/7 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 0 | Formulas: 7 | Tiers: 4 T1, 3 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 7/7 | Source: view_definition*

@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\positive_nmi_commodities.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\positive_nmi_commodities.json` (rows: 5, mismatches: 5) |
 | **Primary upstream** | `main.general.bronze_etoro_history_credit` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 

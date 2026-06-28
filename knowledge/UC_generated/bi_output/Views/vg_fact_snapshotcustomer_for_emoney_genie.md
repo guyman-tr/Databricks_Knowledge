@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 26
 row_count: null
-generated_at: '2026-05-19T15:02:02Z'
+generated_at: '2026-06-19T14:36:06Z'
 upstreams:
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked
@@ -23,8 +23,8 @@ writer:
 concept_count: 3
 formula_count: 26
 tier_breakdown:
-  tier1_columns: 16
-  tier2_columns: 10
+  tier1_columns: 0
+  tier2_columns: 26
   tier3_columns: 0
   tier4_columns: 0
   tier5_columns: 0
@@ -46,7 +46,7 @@ tier_breakdown:
 | **Column count** | 26 |
 | **Concepts** | 3 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Sun Jan 04 12:57:19 UTC 2026 |
 
 ---
@@ -57,7 +57,7 @@ tier_breakdown:
 
 Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range` → this object. Canonical upstream documentation: `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Range.md`. Additional upstreams: 3 object(s), listed in §5 Lineage.
 
-Of its 26 columns: 16 inherit byte-for-byte from upstream wikis (Tier 1), 10 are formula-assembled from cached source code (Tier 2 — see §4 for the formula and §2 for the named concept), 0 are null-with-provenance (Tier N — terminal-no-wiki upstream).
+Of its 26 columns: 0 inherit byte-for-byte from upstream wikis (Tier 1), 26 are formula-assembled from cached source code (Tier 2 — see §4 for the formula and §2 for the named concept), 0 are null-with-provenance (Tier N — terminal-no-wiki upstream).
 
 ---
 
@@ -128,24 +128,24 @@ Of its 26 columns: 16 inherit byte-for-byte from upstream wikis (Tier 1), 10 are
 | 1 | ToDateID | INT | YES | Direct passthrough from upstream. Formula: `ToDateID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range`) |
 | 2 | GCID | INT | YES | Global Customer ID — the cross-platform identifier linking RealCID to demo and external systems. Source: Ext_FSC_Real_Customer_Customer (primary), Ext_Dim_Customer_CustomerIdentification_DLT (fallback). (Tier 2 — via Fact_SnapshotCustomer) |
 | 3 | CID | INT | YES | Real (funded) customer ID. Hash distribution key. The primary customer identifier in the DWH ecosystem. FK to Dim_Customer (if exists). 46.4M distinct values. (Tier 2 — via Fact_SnapshotCustomer) |
-| 4 | CountryID_FromDate_ToDate | INT | YES | Customer's registered country. FK to Dim_Country. Key filter for valid customer segmentation. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 4 | CountryID_FromDate_ToDate | INT | YES | Customer's registered country. FK to Dim_Country. Key filter for valid customer segmentation. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 5 | RegionID_FromDate_ToDate | INT | YES | Direct passthrough from upstream. Formula: `RegionID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 6 | RegulationID_FromDate_ToDate | INT | YES | Customer's assigned regulatory jurisdiction. DEFAULT 0. Sourced from Ext_FSC_BackOffice_RegulationChangeLog.ToRegulationID — end-of-day change. See §2.4. FK to Dim_Regulation. (Tier 2 — via Fact_SnapshotCustomer) |
-| 7 | LanguageID_FromDate_ToDate | INT | YES | Customer's preferred interface language. FK to Dim_Language. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 7 | LanguageID_FromDate_ToDate | INT | YES | Customer's preferred interface language. FK to Dim_Language. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 8 | CommunicationLanguageID_FromDate_ToDate | INT | YES | Preferred communication language (may differ from interface language). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.CommunicationLanguageID (CC). FK to Dim_Language. (Tier 2 — via Fact_SnapshotCustomer) |
-| 9 | VerificationLevelID_FromDate_ToDate | INT | YES | KYC verification level. FK to Dim_VerificationLevel. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
-| 10 | PlayerStatusID_FromDate_ToDate | INT | YES | Customer lifecycle status. FK to Dim_PlayerStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
-| 11 | RiskStatusID_FromDate_ToDate | INT | YES | Customer risk assessment status. FK to Dim_RiskStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
-| 12 | RiskClassificationID_FromDate_ToDate | INT | YES | Risk classification tier for compliance. FK to Dim_RiskClassification. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
-| 13 | AccountStatusID_FromDate_ToDate | INT | YES | Account enabled/suspended status. FK to Dim_AccountStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 9 | VerificationLevelID_FromDate_ToDate | INT | YES | KYC verification level. FK to Dim_VerificationLevel. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
+| 10 | PlayerStatusID_FromDate_ToDate | INT | YES | Customer lifecycle status. FK to Dim_PlayerStatus. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
+| 11 | RiskStatusID_FromDate_ToDate | INT | YES | Customer risk assessment status. FK to Dim_RiskStatus. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
+| 12 | RiskClassificationID_FromDate_ToDate | INT | YES | Risk classification tier for compliance. FK to Dim_RiskClassification. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
+| 13 | AccountStatusID_FromDate_ToDate | INT | YES | Account enabled/suspended status. FK to Dim_AccountStatus. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 14 | IsValidCustomer_FromDate_ToDate | INT | YES | Direct passthrough from upstream. Formula: `IsValidCustomer`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 15 | IsEmailVerified_FromDate_ToDate | INT | YES | Direct passthrough from upstream. Formula: `IsEmailVerified`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 16 | IsPhoneVerified_FromDate_ToDate | BOOLEAN | YES | Direct passthrough from upstream. Formula: `IsPhoneVerified`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
-| 17 | PlayerLevelID_FromDate_ToDate | INT | YES | Account tier (4=demo, other=real tiers). FK to Dim_PlayerLevel. Critical for IsValidCustomer. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 17 | PlayerLevelID_FromDate_ToDate | INT | YES | Account tier (4=demo, other=real tiers). FK to Dim_PlayerLevel. Critical for IsValidCustomer. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 18 | Club_FromDate_ToDate | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`) |
-| 19 | AccountTypeID_FromDate_ToDate | INT | YES | Account type (e.g., 7=Employee, 9=excluded). FK to Dim_AccountType. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 19 | AccountTypeID_FromDate_ToDate | INT | YES | Account type (e.g., 7=Employee, 9=excluded). FK to Dim_AccountType. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 20 | IsDepositor_FromDate_ToDate | BOOLEAN | YES | 1 if the customer has made at least one real-money deposit (FTD detected). Set when CID appears in Ext_FSC_Customer_FirstTimeDeposits. Never reverted to 0 once set. DEFAULT 0. (Tier 2 — via Fact_SnapshotCustomer) |
-| 21 | GuruStatusID_FromDate_ToDate | INT | YES | Popular Investor (Guru) program status. FK to Dim_GuruStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 21 | GuruStatusID_FromDate_ToDate | INT | YES | Popular Investor (Guru) program status. FK to Dim_GuruStatus. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 22 | AccountManagerID_FromDate_ToDate | INT | YES | Assigned account manager (sales/retention). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.AccountManagerID (BO). FK to Dim_Manager. (Tier 2 — via Fact_SnapshotCustomer) |
 | 23 | City_FromDate_ToDate | STRING | YES | Arithmetic combination of upstream columns. Formula: `-- Location (valid in snapshot period) City`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 24 | Address_FromDate_ToDate | STRING | YES | Direct passthrough from upstream. Formula: `Address`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
@@ -216,4 +216,4 @@ main.bi_output.vg_fact_snapshotcustomer_for_emoney_genie   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 3 | Formulas: 26 | Tiers: 16 T1, 10 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 26/26 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 3 | Formulas: 26 | Tiers: 0 T1, 26 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 26/26 | Source: view_definition*

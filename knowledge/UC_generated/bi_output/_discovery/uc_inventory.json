@@ -2,8 +2,101 @@
   "schema": "bi_output",
   "catalog": "main",
   "framework": "uc-pipeline-doc",
-  "generated_at": "2026-05-19T12:07:40Z",
+  "generated_at": "2026-06-19T14:31:16Z",
   "objects": [
+    {
+      "name": "australia_tag_ob_june26",
+      "full_name": "main.bi_output.australia_tag_ob_june26",
+      "in_scope": true,
+      "table_type": "VIEW",
+      "writer": {
+        "kind": "view_definition"
+      },
+      "format": null,
+      "location": null,
+      "owner": "barar@etoro.com",
+      "created_at": "Sun Jun 14 12:11:12 UTC 2026",
+      "uc_comment": null,
+      "row_count": null,
+      "column_count": 8,
+      "view_definition": "SELECT\n  `$distinct_id`,\n  `$name`,\n  `$email`,\n  `$last_seen`,\n  `$country_code`,\n  `$region`,\n  `$city`,\n  `$GCID`\nFROM read_files(\n  'abfss://analysis@stgdpdlwe.dfs.core.windows.net/BI_OUTPUT/Marketing/Bar/Australia_Tag_OB_June26.csv',\n  format => 'csv',\n  header => true\n)",
+      "columns": [
+        {
+          "name": "$distinct_id",
+          "ordinal": 0,
+          "type": "STRING",
+          "nullable": true,
+          "comment": null,
+          "is_partition": false,
+          "samples": []
+        },
+        {
+          "name": "$name",
+          "ordinal": 1,
+          "type": "STRING",
+          "nullable": true,
+          "comment": null,
+          "is_partition": false,
+          "samples": []
+        },
+        {
+          "name": "$email",
+          "ordinal": 2,
+          "type": "STRING",
+          "nullable": true,
+          "comment": null,
+          "is_partition": false,
+          "samples": []
+        },
+        {
+          "name": "$last_seen",
+          "ordinal": 3,
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "comment": null,
+          "is_partition": false,
+          "samples": []
+        },
+        {
+          "name": "$country_code",
+          "ordinal": 4,
+          "type": "STRING",
+          "nullable": true,
+          "comment": null,
+          "is_partition": false,
+          "samples": []
+        },
+        {
+          "name": "$region",
+          "ordinal": 5,
+          "type": "STRING",
+          "nullable": true,
+          "comment": null,
+          "is_partition": false,
+          "samples": []
+        },
+        {
+          "name": "$city",
+          "ordinal": 6,
+          "type": "STRING",
+          "nullable": true,
+          "comment": null,
+          "is_partition": false,
+          "samples": []
+        },
+        {
+          "name": "$GCID",
+          "ordinal": 7,
+          "type": "INT",
+          "nullable": true,
+          "comment": null,
+          "is_partition": false,
+          "samples": []
+        }
+      ],
+      "sample_rows": null,
+      "describe_error": null
+    },
     {
       "name": "bi_ouput_v_dim_instrumenttype",
       "full_name": "main.bi_output.bi_ouput_v_dim_instrumenttype",
@@ -35393,13 +35486,13 @@
     }
   ],
   "stats": {
-    "objects_total": 123,
-    "objects_refreshed_this_run": 123,
-    "tables": 58,
-    "views": 65,
-    "columns_total": 3475,
-    "columns_with_uc_comment": 2139,
+    "objects_total": 124,
+    "objects_refreshed_this_run": 1,
+    "tables": 0,
+    "views": 1,
+    "columns_total": 8,
+    "columns_with_uc_comment": 0,
     "objects_with_uc_comment": 0,
-    "wall_seconds": 78.4
+    "wall_seconds": 502.3
   }
 }

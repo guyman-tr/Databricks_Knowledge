@@ -10,11 +10,15 @@ table_type: VIEW
 format: null
 column_count: 58
 row_count: null
-generated_at: '2026-05-19T15:01:46Z'
+generated_at: '2026-06-19T14:35:53Z'
 upstreams:
 - main.bi_output_stg.
 - main.bi_output.bi_output_vg_crm_user
+- main.crm.silver_crm_task
+- main.crm.silver_crm_customer_engagement__c
+- main.crm.silver_crm_case
 - main.crm.silver_crm_emailmessage
+- main.crm.silver_crm_nvmstatssf__nvm_call_summary__c
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked
 writer:
   kind: view_definition
@@ -46,7 +50,7 @@ tier_breakdown:
 | **Column count** | 58 |
 | **Concepts** | 0 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Mon Jan 19 12:20:11 UTC 2026 |
 
 ---
@@ -55,7 +59,7 @@ tier_breakdown:
 
 `bi_output_vg_cf_crm_contact` is a view in `main.bi_output`. No discriminator concepts were detected in the source — see §2 for the transform pattern breakdown.
 
-Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.bi_output_stg.` → this object. The primary upstream has no cached wiki yet (see `.review-needed.md`). Additional upstreams: 3 object(s), listed in §5 Lineage.
+Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.bi_output_stg.` → this object. The primary upstream has no cached wiki yet (see `.review-needed.md`). Additional upstreams: 7 object(s), listed in §5 Lineage.
 
 Of its 58 columns: 0 inherit byte-for-byte from upstream wikis (Tier 1), 26 are formula-assembled from cached source code (Tier 2 — see §4 for the formula and §2 for the named concept), 0 are null-with-provenance (Tier N — terminal-no-wiki upstream).
 
@@ -168,8 +172,12 @@ Pure passthrough — no discriminator concepts detected in source. Refer to upst
 | Upstream | Role | Wiki |
 |----------|------|------|
 | `main.bi_output_stg.` | Primary | `(no wiki — see `.review-needed.md`)` |
-| `main.bi_output.bi_output_vg_crm_user` | JOIN/UNION | `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_crm_user.md` |
+| `main.bi_output.bi_output_vg_crm_user` | JOIN/UNION | `knowledge\UC_generated\bi_output\Views\bi_output_vg_crm_user.md` |
+| `main.crm.silver_crm_task` | JOIN/UNION | `(no wiki — see `.review-needed.md`)` |
+| `main.crm.silver_crm_customer_engagement__c` | JOIN/UNION | `(no wiki — see `.review-needed.md`)` |
+| `main.crm.silver_crm_case` | JOIN/UNION | `(no wiki — see `.review-needed.md`)` |
 | `main.crm.silver_crm_emailmessage` | JOIN/UNION | `(no wiki — see `.review-needed.md`)` |
+| `main.crm.silver_crm_nvmstatssf__nvm_call_summary__c` | JOIN/UNION | `(no wiki — see `.review-needed.md`)` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Customer.md` |
 
 ### 5.2 Pipeline ASCII Diagram
@@ -177,8 +185,8 @@ Pure passthrough — no discriminator concepts detected in source. Refer to upst
 ```
 main.bi_output_stg.
 main.bi_output.bi_output_vg_crm_user
-main.crm.silver_crm_emailmessage
-... (1 more upstream(s))
+main.crm.silver_crm_task
+... (5 more upstream(s))
         │
         ▼
 main.bi_output.bi_output_vg_cf_crm_contact   ←── this object
@@ -195,8 +203,8 @@ main.bi_output.bi_output_vg_cf_crm_contact   ←── this object
 ### 6.1 References To (summary — see §5 for full table)
 
 - **Primary upstream**: `main.bi_output_stg.` (wiki: `(no wiki)`)
-- **JOIN/UNION upstreams**: 3 additional object(s)
-- **Wiki coverage**: 2/3 JOIN/UNION upstreams have a cached upstream wiki (see `_discovery/upstream_wikis/_index.json`)
+- **JOIN/UNION upstreams**: 7 additional object(s)
+- **Wiki coverage**: 2/7 JOIN/UNION upstreams have a cached upstream wiki (see `_discovery/upstream_wikis/_index.json`)
 
 ### 6.2 Referenced By (downstream consumers)
 
@@ -224,4 +232,4 @@ main.bi_output.bi_output_vg_cf_crm_contact   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 0 | Formulas: 26 | Tiers: 0 T1, 26 T2, 0 T3, 0 T4, 0 T5, 0 TN, 32 U | Elements: 58/58 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 0 | Formulas: 26 | Tiers: 0 T1, 26 T2, 0 T3, 0 T4, 0 T5, 0 TN, 32 U | Elements: 58/58 | Source: view_definition*

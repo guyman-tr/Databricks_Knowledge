@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.vg_bidb_alldeposits_for_genie
--- Captured: 2026-05-19T14:54:44Z
+-- Captured: 2026-06-19T14:33:25Z
 -- ==========================================================================
 
 SELECT

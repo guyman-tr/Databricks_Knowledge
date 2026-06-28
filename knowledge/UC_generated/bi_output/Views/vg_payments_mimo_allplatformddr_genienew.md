@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 14
 row_count: null
-generated_at: '2026-05-19T15:02:03Z'
+generated_at: '2026-06-19T14:36:07Z'
 upstreams:
 - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country
@@ -52,7 +52,7 @@ tier_breakdown:
 | **Column count** | 14 |
 | **Concepts** | 6 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Thu May 14 13:10:51 UTC 2026 |
 
 ---
@@ -163,7 +163,7 @@ Of its 14 columns: 2 inherit byte-for-byte from upstream wikis (Tier 1), 12 are 
 | 1 | MIMOAction | STRING | YES | Stable label `'Deposit'` or `'Withdraw'` from UNION halves. (Tier 2 — SP_DDR_Fact_MIMO_Trading_Platform) |
 | 1 | TransactionID | INT | YES | `DepositID` for deposits (`ActionTypeID` 7/44) OR `WithdrawPaymentID` for withdraw rows (`ActionTypeID` 8/45). ROW_NUMBER dedupe trims duplicate `(MIMOAction, TransactionID)` pairs (`BI_DB_DDR_Fact_MIMO_Trading_Platform` lineage baseline). **AllPlatforms transforms:** `CAST(f.TransactionID AS varchar(50))` persisted into `INT` from `#final`; `UPDATE #final SET TransactionID=NULL WHERE MIMOPlatform='Options'`; Options **`INSERT`** uses literal `0 AS TransactionID`; MoneyFarm literals `0` with outer **`isnull(TransactionID,-1)`** guard. **Not all platforms joinable naïvely.** (Tier 2 — Fact_CustomerAction) |
 | 2 | RealCID | INT | YES | Global Real Customer Identifier on the ledger row (`fca.RealCID`). (Tier 1 — Customer.CustomerStatic) |
-| 3 | MarketingRegionManualName | STRING | YES | Direct passthrough from upstream. Formula: `MarketingRegionManualName`. (Tier 3 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country`) |
+| 3 | MarketingRegionManualName | STRING | YES | Direct passthrough from upstream. Formula: `MarketingRegionManualName`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country`) |
 | 4 | Country | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country`) |
 | 5 | Club | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`) |
 | 6 | Regulation | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`) |
@@ -247,4 +247,4 @@ main.bi_output.vg_payments_mimo_allplatformddr_genienew   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 6 | Formulas: 14 | Tiers: 2 T1, 12 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 14/14 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 6 | Formulas: 14 | Tiers: 2 T1, 12 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 14/14 | Source: view_definition*

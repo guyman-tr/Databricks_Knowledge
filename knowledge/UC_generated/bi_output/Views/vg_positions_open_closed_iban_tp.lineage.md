@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\vg_positions_open_closed_iban_tp.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\vg_positions_open_closed_iban_tp.json` (rows: 47, mismatches: 0) |
 | **Primary upstream** | `main.dwh.dim_position` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 
@@ -55,23 +55,23 @@ main.bi_output.vg_positions_open_closed_iban_tp   ←── this object
 | 15 | `CountryID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `CountryID` | `join_enriched` | (Tier 1 — Customer.CustomerStatic) | dc.CountryID |
 | 16 | `LanguageID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `LanguageID` | `join_enriched` | (Tier 1 — Customer.CustomerStatic) | dc.LanguageID |
 | 17 | `PlayerLevelID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `PlayerLevelID` | `join_enriched` | (Tier 1 — Customer.CustomerStatic) | dc.PlayerLevelID |
-| 18 | `AccountStatusID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `AccountStatusID` | `join_enriched` | (Tier 1 — Customer.CustomerStatic) | dc.AccountStatusID |
+| 18 | `AccountStatusID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `AccountStatusID` | `join_enriched` | — | dc.AccountStatusID |
 | 19 | `AccountTypeID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `AccountTypeID` | `join_enriched` | (Tier 1 — BackOffice.Customer) | dc.AccountTypeID |
 | 20 | `RegulationID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `RegulationID` | `join_enriched` | (Tier 1 — BackOffice.Customer) | dc.RegulationID |
 | 21 | `RiskStatusID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `RiskStatusID` | `join_enriched` | (Tier 1 — BackOffice.Customer) | dc.RiskStatusID |
 | 22 | `RiskClassificationID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `RiskClassificationID` | `join_enriched` | (Tier 1 — BackOffice.Customer) | dc.RiskClassificationID |
 | 23 | `IsValidCustomer` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `IsValidCustomer` | `join_enriched` | (Tier 2 — SP_Dim_Customer) | dc.IsValidCustomer |
 | 24 | `PlayerStatusID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `PlayerStatusID` | `join_enriched` | (Tier 1 — Customer.CustomerStatic) | dc.PlayerStatusID |
-| 25 | `VerificationLevelID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `VerificationLevelID` | `join_enriched` | (Tier 1 — BackOffice.Customer) | dc.VerificationLevelID |
+| 25 | `VerificationLevelID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `VerificationLevelID` | `join_enriched` | — | dc.VerificationLevelID |
 | 26 | `RegionID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `RegionID` | `join_enriched` | (Tier 1 — Customer.CustomerStatic) | dc.RegionID |
 | 27 | `IsDepositor` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `IsDepositor` | `join_enriched` | (Tier 2 — SP_Dim_Customer) | dc.IsDepositor |
 | 28 | `FirstDepositDate` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `FirstDepositDate` | `join_enriched` | (Tier 2 — SP_Dim_Customer) | dc.FirstDepositDate |
 | 29 | `AccountManagerID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `AccountManagerID` | `join_enriched` | (Tier 1 — BackOffice.Customer) | dc.AccountManagerID |
 | 30 | `PremiumAccount` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `PremiumAccount` | `join_enriched` | (Tier 2 — SP_Dim_Customer) | dc.PremiumAccount |
 | 31 | `AffiliateID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `AffiliateID` | `join_enriched` | (Tier 1 — Customer.CustomerStatic) | dc.AffiliateID |
-| 32 | `CampaignID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `CampaignID` | `join_enriched` | (Tier 1 — Customer.CustomerStatic) | dc.CampaignID |
+| 32 | `CampaignID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `CampaignID` | `join_enriched` | — | dc.CampaignID |
 | 33 | `SubChannelID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `SubChannelID` | `join_enriched` | (Tier 2 — SP_Dim_Customer) | dc.SubChannelID |
-| 34 | `LabelID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `LabelID` | `join_enriched` | (Tier 1 — Customer.CustomerStatic) | dc.LabelID |
+| 34 | `LabelID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `LabelID` | `join_enriched` | — | dc.LabelID |
 | 35 | `RegisteredReal` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `RegisteredReal` | `join_enriched` | (Tier 1 — Customer.CustomerStatic) | dc.RegisteredReal |
 | 36 | `RegisteredDemo` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `RegisteredDemo` | `join_enriched` | (Tier 2 — SP_Dim_Customer) | dc.RegisteredDemo |
 | 37 | `ReferralID` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `ReferralID` | `join_enriched` | (Tier 1 — Customer.CustomerStatic) | dc.ReferralID |
@@ -89,7 +89,7 @@ main.bi_output.vg_positions_open_closed_iban_tp   ←── this object
 ## Cross-check vs system.access.column_lineage
 
 - Total target columns: **47**
-- OK: **3**, WARN: **0**, ERROR: **0**, INFO: **44**  ✓
+- OK: **15**, WARN: **0**, ERROR: **0**, INFO: **32**  ✓
 
 ## Lost / added columns
 

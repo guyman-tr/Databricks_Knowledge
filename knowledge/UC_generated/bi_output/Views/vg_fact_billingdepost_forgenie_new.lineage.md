@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\vg_fact_billingdepost_forgenie_new.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\vg_fact_billingdepost_forgenie_new.json` (rows: 21, mismatches: 0) |
 | **Primary upstream** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 

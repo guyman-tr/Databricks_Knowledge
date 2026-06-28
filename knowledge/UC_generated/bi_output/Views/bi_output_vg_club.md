@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 69
 row_count: null
-generated_at: '2026-05-19T15:01:46Z'
+generated_at: '2026-06-19T14:35:53Z'
 upstreams:
 - main.bi_output.bi_output_vg_date
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked
@@ -52,7 +52,7 @@ tier_breakdown:
 | **Column count** | 69 |
 | **Concepts** | 16 (see §2) |
 | **Downstream consumers** | _(none tracked)_ |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Mon Mar 09 13:52:41 UTC 2026 |
 
 ---
@@ -61,7 +61,7 @@ tier_breakdown:
 
 `bi_output_vg_club` is a view in `main.bi_output` that composes 2 CASE-based classifier flag(s) computed from upstream IDs, 13 JOIN-enriched dimension lookup(s).
 
-Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.bi_output.bi_output_vg_date` → this object. Canonical upstream documentation: `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_date.md`. Additional upstreams: 16 object(s), listed in §5 Lineage.
+Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.bi_output.bi_output_vg_date` → this object. Canonical upstream documentation: `knowledge\UC_generated\bi_output\Views\bi_output_vg_date.md`. Additional upstreams: 15 object(s), listed in §5 Lineage.
 
 Of its 69 columns: 1 inherit byte-for-byte from upstream wikis (Tier 1), 68 are formula-assembled from cached source code (Tier 2 — see §4 for the formula and §2 for the named concept), 0 are null-with-provenance (Tier N — terminal-no-wiki upstream).
 
@@ -277,18 +277,18 @@ Of its 69 columns: 1 inherit byte-for-byte from upstream wikis (Tier 1), 68 are 
 | 30 | MoneyFarmBalance | DECIMAL | YES | Direct passthrough from upstream. Formula: `MoneyFarmBalance`. (Tier 2 — from `main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity`) |
 | 31 | PlayerLevelID | INT | YES | Direct passthrough from upstream. Formula: `PlayerLevelID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 32 | ClubTier | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`) |
-| 33 | RegulationID | INT | YES | Customer's assigned regulatory jurisdiction. DEFAULT 0. Sourced from Ext_FSC_BackOffice_RegulationChangeLog.ToRegulationID — end-of-day change. See §2.4. FK to Dim_Regulation. (Tier 2 — via Fact_SnapshotCustomer) |
+| 33 | RegulationID | INT | YES | Direct passthrough from upstream. Formula: `RegulationID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 34 | Regulation | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`) |
 | 35 | VerificationLevelID | INT | YES | Direct passthrough from upstream. Formula: `VerificationLevelID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 36 | VerificationLevel | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`) |
 | 37 | CountryID | INT | YES | Direct passthrough from upstream. Formula: `CountryID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 38 | Country | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country`) |
 | 39 | Region | STRING | YES | Direct passthrough from upstream. Formula: `MarketingRegionManualName`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country`) |
-| 40 | AccountManagerID | INT | YES | Assigned account manager (sales/retention). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.AccountManagerID (BO). FK to Dim_Manager. (Tier 2 — via Fact_SnapshotCustomer) |
+| 40 | AccountManagerID | INT | YES | Direct passthrough from upstream. Formula: `AccountManagerID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 41 | AccountManager | STRING | YES | Function call computed in source. Formula: `concat_ws(FirstName, '', LastName)`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager`) |
 | 42 | LanguageID | INT | YES | Direct passthrough from upstream. Formula: `LanguageID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 43 | Language | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language`) |
-| 44 | CommunicationLanguageID | INT | YES | Preferred communication language (may differ from interface language). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.CommunicationLanguageID (CC). FK to Dim_Language. (Tier 2 — via Fact_SnapshotCustomer) |
+| 44 | CommunicationLanguageID | INT | YES | Direct passthrough from upstream. Formula: `CommunicationLanguageID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 45 | CommunicationLanguage | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language`) |
 | 46 | AccountTypeID | INT | YES | Direct passthrough from upstream. Formula: `AccountTypeID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 47 | AccountType | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype`) |
@@ -304,7 +304,7 @@ Of its 69 columns: 1 inherit byte-for-byte from upstream wikis (Tier 1), 68 are 
 | 57 | CanClosePosition | BOOLEAN | YES | Direct passthrough from upstream. Formula: `CanClosePosition`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus`) |
 | 58 | CanEditPosition | BOOLEAN | YES | Direct passthrough from upstream. Formula: `CanEditPosition`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus`) |
 | 59 | CanBeCopied | BOOLEAN | YES | Direct passthrough from upstream. Formula: `CanBeCopied`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus`) |
-| 60 | CanDeposit | BOOLEAN | YES | Whether the user can add funds to their account. False for full-block statuses (IsBlocked=1), close-only/pending statuses (9, 13, 15), status 10 (Deposit Blocked), and status 11 (Social Index). |
+| 60 | CanDeposit | BOOLEAN | YES | Direct passthrough from upstream. Formula: `CanDeposit`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus`) |
 | 61 | CanRequestWithdraw | BOOLEAN | YES | Direct passthrough from upstream. Formula: `CanRequestWithdraw`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus`) |
 | 62 | PlayerStatusReasonID | INT | YES | Direct passthrough from upstream. Formula: `PlayerStatusReasonID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
 | 63 | PlayerStatusReasonName | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons`) |
@@ -322,7 +322,7 @@ Of its 69 columns: 1 inherit byte-for-byte from upstream wikis (Tier 1), 68 are 
 
 | Upstream | Role | Wiki |
 |----------|------|------|
-| `main.bi_output.bi_output_vg_date` | Primary | `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_date.md` |
+| `main.bi_output.bi_output_vg_date` | Primary | `knowledge\UC_generated\bi_output\Views\bi_output_vg_date.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Customer.md` |
 | `main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity` | JOIN/UNION | `(no wiki — see `.review-needed.md`)` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Views\V_Fact_SnapshotCustomer_FromDateID.md` |
@@ -338,7 +338,6 @@ Of its 69 columns: 1 inherit byte-for-byte from upstream wikis (Tier 1), 68 are 
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_PlayerStatus.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_PlayerStatusReasons.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_PlayerStatusSubReasons.md` |
-| `main.bi_output_stg.bi_output_customer_customer_facing_stg_dim_club` | JOIN/UNION | `(no wiki — see `.review-needed.md`)` |
 
 ### 5.2 Pipeline ASCII Diagram
 
@@ -346,7 +345,7 @@ Of its 69 columns: 1 inherit byte-for-byte from upstream wikis (Tier 1), 68 are 
 main.bi_output.bi_output_vg_date
 main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked
 main.bi_output_stg.bi_output_customer_customer_facing_club_club_equity
-... (14 more upstream(s))
+... (13 more upstream(s))
         │
         ▼
 main.bi_output.bi_output_vg_club   ←── this object
@@ -362,9 +361,9 @@ main.bi_output.bi_output_vg_club   ←── this object
 
 ### 6.1 References To (summary — see §5 for full table)
 
-- **Primary upstream**: `main.bi_output.bi_output_vg_date` (wiki: `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_vg_date.md`)
-- **JOIN/UNION upstreams**: 16 additional object(s)
-- **Wiki coverage**: 14/16 JOIN/UNION upstreams have a cached upstream wiki (see `_discovery/upstream_wikis/_index.json`)
+- **Primary upstream**: `main.bi_output.bi_output_vg_date` (wiki: `knowledge\UC_generated\bi_output\Views\bi_output_vg_date.md`)
+- **JOIN/UNION upstreams**: 15 additional object(s)
+- **Wiki coverage**: 14/15 JOIN/UNION upstreams have a cached upstream wiki (see `_discovery/upstream_wikis/_index.json`)
 
 ### 6.2 Referenced By (downstream consumers)
 
@@ -392,4 +391,4 @@ main.bi_output.bi_output_vg_club   ←── this object
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 16 | Formulas: 69 | Tiers: 1 T1, 68 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 69/69 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 16 | Formulas: 69 | Tiers: 1 T1, 68 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 69/69 | Source: view_definition*

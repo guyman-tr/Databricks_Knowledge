@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\nmi_by_portfoliopi_new.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\nmi_by_portfoliopi_new.json` (rows: 7, mismatches: 6) |
 | **Primary upstream** | `main.bi_db.bronze_etoro_dwh_v_historymirrorhourly` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 
@@ -39,7 +39,7 @@ main.bi_output.nmi_by_portfoliopi_new   ←── this object
 | 1 | `ParentCID` | `—` | `ParentCID` | `join_enriched` | — | mirror.ParentCID |
 | 2 | `CopyType` | `main.bi_db.bronze_etoro_dwh_v_historymirrorhourly` | `CopyType` | `passthrough` | — | CopyType |
 | 3 | `UserName` | `—` | `ParentUserName` | `join_enriched` | — | mirror.ParentUserName AS UserName |
-| 4 | `Region` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country` | `Region` | `join_enriched` | (Tier 2 - SP_Dictionaries_Country_DL_To_Synapse) | dc.Region AS Region |
+| 4 | `Region` | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country` | `Region` | `join_enriched` | — | dc.Region AS Region |
 | 5 | `MoneyIn` | `main.bi_db.bronze_etoro_dwh_v_historymirrorhourly` | `MoneyIn` | `cast` | — | cast to DECIMAL(12, 2) — CAST(MoneyIn AS DECIMAL(12, 2)) AS MoneyIn |
 | 6 | `MoneyOut` | `main.bi_db.bronze_etoro_dwh_v_historymirrorhourly` | `MoneyOut` | `cast` | — | cast to DECIMAL(12, 2) — CAST(MoneyOut AS DECIMAL(12, 2)) AS MoneyOut |
 | 7 | `NetMoneyIn` | `main.bi_db.bronze_etoro_dwh_v_historymirrorhourly` | `—` | `unknown` | — | CAST((MoneyIn + MoneyOut) AS DECIMAL(12, 2)) AS NetMoneyIn |

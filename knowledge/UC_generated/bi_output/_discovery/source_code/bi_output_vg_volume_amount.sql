@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.bi_output_vg_volume_amount
--- Captured: 2026-05-19T14:51:30Z
+-- Captured: 2026-06-19T14:31:29Z
 -- ==========================================================================
 
 select  dd.WeekNumberYear

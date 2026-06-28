@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.funded
--- Captured: 2026-05-19T14:53:10Z
+-- Captured: 2026-06-19T14:32:17Z
 -- ==========================================================================
 
 SELECT year(ActiveDate) Year ,CID

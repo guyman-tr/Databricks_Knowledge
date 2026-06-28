@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\bi_output\_discovery\source_code\vg_fullbincodelist.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\bi_output\_discovery\column_lineage\vg_fullbincodelist.json` (rows: 7, mismatches: 1) |
 | **Primary upstream** | `main.general.bronze_etoro_dictionary_countrybin` |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 
 ## Upstream Objects
 
@@ -16,7 +16,7 @@
 | `main.general.bronze_etoro_dictionary_countrybin` | Primary (FROM) | ✓ `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Views/Dictionary.CountryBin.md` |
 | `main.general.bronze_etoro_dictionary_country` | JOIN / referenced | ✓ `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.Country.md` |
 | `main.general.bronze_etoro_dictionary_cardtype` | JOIN / referenced | ✓ `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CardType.md` |
-| `main.billing.bronze_etoro_billing_badbin` | JOIN / referenced | ✓ `knowledge/UC_generated/billing/Tables/bronze_etoro_billing_badbin.md` |
+| `main.billing.bronze_etoro_billing_badbin` | JOIN / referenced | ✓ `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Tables/Billing.BadBin.md` |
 
 ## Lineage Chain
 

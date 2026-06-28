@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.bi_output.vg_acquisitionfunnel_em1
--- Captured: 2026-05-19T14:54:37Z
+-- Captured: 2026-06-19T14:33:18Z
 -- ==========================================================================
 
 SELECT

@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 21
 row_count: null
-generated_at: '2026-05-19T15:01:47Z'
+generated_at: '2026-06-19T14:35:54Z'
 upstreams:
 - main.crm.silver_crm_user
 writer:
@@ -43,7 +43,7 @@ tier_breakdown:
 | **Column count** | 21 |
 | **Concepts** | 1 (see §2) |
 | **Downstream consumers** | 2 (see §6.2) |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Mon Jan 26 07:45:15 UTC 2026 |
 
 ---
@@ -186,4 +186,4 @@ main.bi_output.bi_output_vg_customer_assignment
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 1 | Formulas: 21 | Tiers: 0 T1, 21 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 21/21 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 1 | Formulas: 21 | Tiers: 0 T1, 21 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 21/21 | Source: view_definition*

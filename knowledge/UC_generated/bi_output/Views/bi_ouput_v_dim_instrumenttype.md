@@ -10,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 2
 row_count: null
-generated_at: '2026-05-19T15:01:29Z'
+generated_at: '2026-06-19T14:35:41Z'
 upstreams:
 - main.general.bronze_etoro_dictionary_currencytype
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument
@@ -44,7 +44,7 @@ tier_breakdown:
 | **Column count** | 2 |
 | **Concepts** | 0 (see §2) |
 | **Downstream consumers** | 9 (see §6.2) |
-| **Generated** | 2026-05-19 |
+| **Generated** | 2026-06-19 |
 | **Created** | Tue Nov 11 08:31:11 UTC 2025 |
 
 ---
@@ -176,4 +176,4 @@ main.bi_output_stg.vg_ddr_fact_revenue
 - **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
 - **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
 
-*Generated: 2026-05-19 | Concepts: 0 | Formulas: 2 | Tiers: 1 T1, 1 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 2/2 | Source: view_definition*
+*Generated: 2026-06-19 | Concepts: 0 | Formulas: 2 | Tiers: 1 T1, 1 T2, 0 T3, 0 T4, 0 T5, 0 TN, 0 U | Elements: 2/2 | Source: view_definition*
